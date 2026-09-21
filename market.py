@@ -153,7 +153,8 @@ def pivots(daily):
     h, l, c = float(d["high"]), float(d["low"]), float(d["close"])
     p = (h + l + c) / 3
     return {"P": round(p, 1), "R1": round(2 * p - l, 1), "S1": round(2 * p - h, 1),
-            "R2": round(p + (h - l), 1), "S2": round(p - (h - l), 1), "PDH": h, "PDL": l}
+            "R2": round(p + (h - l), 1), "S2": round(p - (h - l), 1),
+            "R3": round(h + 2 * (p - l), 1), "S3": round(l - 2 * (h - p), 1), "PDH": h, "PDL": l}
 
 
 def iv_label(iv, rv):
@@ -179,6 +180,21 @@ def combine_bias(trend, buildup, pcr):
 
 
 # ─────────────── option chain ───────────────
+def _wall(df, typ, F, atm_iv, T):
+    """NEAREST strike with heavy OI on the correct side of price (calls above = resistance, puts below = support).
+    'Heavy' = at least WALL_MIN_SHARE of the biggest OI within WALL_EM_RANGE expected moves."""
+    d = df[df.typ == typ]
+    d = d[d["K"] > F] if typ == "CE" else d[d["K"] < F]
+    if atm_iv:
+        em = F * atm_iv / 100 * math.sqrt(max(T, 1 / 365))
+        near = d[(d["K"] - F).abs() <= C.WALL_EM_RANGE * em]
+        d = near if not near.empty and near["oi"].sum() > 0 else d[(d["K"] - F).abs() <= 0.03 * F]
+    if d.empty or d["oi"].max() <= 0:
+        return None
+    heavy = d[d["oi"] >= C.WALL_MIN_SHARE * d["oi"].max()]
+    return float(heavy.iloc[(heavy["K"] - F).abs().argsort().iloc[0]]["K"])
+
+
 def build_chain(api, master, name, expiry, spot, width_pct=0.08, exch="NFO"):
     exp = pd.Timestamp(expiry)
     ch = master[(master["name"] == name) & (master["expiry_dt"] == exp) & (master["exch_seg"] == exch)
@@ -241,8 +257,8 @@ def build_chain(api, master, name, expiry, spot, width_pct=0.08, exch="NFO"):
     return {
         "df": df, "F": F, "T": T, "spot": spot, "expiry": exp,
         "pcr": round(pe_oi / ce_oi, 2) if ce_oi else None,
-        "call_wall": float(df[df.typ == "CE"].sort_values("oi").iloc[-1]["K"]) if ce_oi else None,
-        "put_wall": float(df[df.typ == "PE"].sort_values("oi").iloc[-1]["K"]) if pe_oi else None,
+        "call_wall": _wall(df, "CE", F, atm_iv, T),
+        "put_wall": _wall(df, "PE", F, atm_iv, T),
         "atm_iv": round(atm_iv, 2) if atm_iv else None,
         "exp_move": round(F * atm_iv / 100 * math.sqrt(T), 1) if atm_iv else None,   # 1 SD to expiry
         "skew": round(pe25 - ce25, 1) if pe25 and ce25 else None,                  # + = puts richer

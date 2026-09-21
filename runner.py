@@ -127,12 +127,22 @@ def confidence(t, td, bu, ch):
 
 
 def sr_text(ch):
-    """Support / resistance from option OI walls + yesterday's pivots."""
+    """Nearest support BELOW and resistance ABOVE the current price:
+    option-OI walls + pivot levels from yesterday (S2, S1, P, R1, R2, prev-day high/low)."""
+    px = ch.get("F") or ch.get("spot")
+    sup = [(ch["put_wall"], f"{k_(ch['put_wall'])} (OI)")] if ch.get("put_wall") and ch["put_wall"] < px else []
+    res = [(ch["call_wall"], f"{k_(ch['call_wall'])} (OI)")] if ch.get("call_wall") and ch["call_wall"] > px else []
     pv = ch.get("pivots") or {}
-    sup = [f"{k_(ch['put_wall'])} (OI)"] if ch.get("put_wall") else []
-    res = [f"{k_(ch['call_wall'])} (OI)"] if ch.get("call_wall") else []
-    if pv:
-        sup.append(f"{pv['S1']:,.0f} (S1)"); res.append(f"{pv['R1']:,.0f} (R1)")
+    names = {"S3": "S3", "S2": "S2", "S1": "S1", "P": "Pivot", "R1": "R1", "R2": "R2", "R3": "R3",
+             "PDH": "Prev high", "PDL": "Prev low"}
+    below = sorted(((v, k) for k, v in pv.items() if v < px), reverse=True)
+    above = sorted((v, k) for k, v in pv.items() if v > px)
+    if below:
+        sup.append((below[0][0], f"{below[0][0]:,.0f} ({names[below[0][1]]})"))
+    if above:
+        res.append((above[0][0], f"{above[0][0]:,.0f} ({names[above[0][1]]})"))
+    sup = [t for _, t in sorted(sup, reverse=True)]          # nearest first
+    res = [t for _, t in sorted(res)]
     return f"Support {' · '.join(sup) or '-'} | Resistance {' · '.join(res) or '-'}"
 
 
@@ -495,7 +505,8 @@ class Bot:
             idea = {"BULLISH": "PE-sell side", "BEARISH": "CE-sell side", "NEUTRAL": "no clear side"}[v["bias"]]
             if ch["iv_label"] == "CHEAP":
                 idea = "premium cheap – avoid"
-            L.append(f"*{name}* {v['spot']:,.1f} {arrow} | premium {ch['iv_label'].lower()} → {idea}")
+            fut_lbl = f" ({pd.Timestamp(v['fut']['expiry_dt']):%b} fut)" if v.get("fut") else ""
+            L.append(f"*{name}*{fut_lbl} {v['spot']:,.1f} {arrow} | premium {ch['iv_label'].lower()} → {idea}")
             L.append(f"   OI today: {stt['day'] or 'building (needs a few runs)'}"
                      + (f" · last 1h: {stt['hour']}" if stt["hour"] else ""))
             L.append(f"   📍 {sr_text(ch)}\n")

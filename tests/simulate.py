@@ -228,7 +228,24 @@ def main():
     p = nk[0]
     gain, loss = p["credit"] - p["target_val"], p["sl_val"] - p["credit"]
     assert gain >= loss - 1e-6 and p["confidence"] >= C.MIN_CONFIDENCE and p["spot_stop"] < p["spot_at_entry"]
-    assert any("📍 Support" in m and "(S1)" in m for m in SENT if "SELL NIFTY" in m), "S/R line missing"
+    assert any("📍 Support" in m and "Resistance" in m for m in SENT if "SELL NIFTY" in m), "S/R line missing"
+    # Crude case from live data: price 8,766 after a big fall -> every support must be BELOW, resistance ABOVE
+    txt = runner.sr_text({"F": 8766, "put_wall": 9000, "call_wall": 10000,
+                          "pivots": {"S3": 8570, "S2": 8900, "S1": 9071, "P": 9235, "R1": 9400, "R2": 9570, "R3": 9900,
+                                     "PDH": 9480, "PDL": 9060}})
+    print("Crude S/R:", txt)
+    import greeks as _g
+    rows = []                                           # NIFTY at 23,414: big far wall 24,500, heavy near 23,500
+    for k, oi in [(23450, 2e5), (23500, 9e5), (23600, 6e5), (24500, 1.5e6)]:
+        rows.append({"K": k, "typ": "CE", "oi": oi})
+    for k, oi in [(23400, 8e5), (23300, 5e5), (22500, 1.4e6)]:
+        rows.append({"K": k, "typ": "PE", "oi": oi})
+    dfw = pd.DataFrame(rows)
+    cw, pw = market._wall(dfw, "CE", 23414, 14, 3 / 365), market._wall(dfw, "PE", 23414, 14, 3 / 365)
+    print("NIFTY walls:", pw, cw)
+    assert cw == 23500 and pw == 23400
+    sup, res = txt.split("|")
+    assert "9000" not in sup and "8,570" in sup and "8,900" in res
     print("naked NIFTY:", p["legs"][0]["K"], p["legs"][0]["typ"], "sell", p["credit"], "T", p["target_val"],
           "SL", p["sl_val"], "price stop", p["spot_stop"], "conf", p["confidence"])
     UND["NIFTY"][0] = p["spot_stop"] - 10                    # price falls through the price-stop

@@ -13,6 +13,10 @@ ALLOW_STRANGLE        = False    # NAKED + sideways market: False = no call; Tru
 DELTA_BAND            = {"intraday": (0.18, 0.35), "weekly": (0.15, 0.30), "monthly": (0.15, 0.30)}
 SAFE_EM_DISTANCE      = 0.6
 
+# ═════════════ SUPPORT / RESISTANCE ═════════════
+WALL_EM_RANGE         = 1.5      # look for OI support/resistance within 1.5 expected moves of price
+WALL_MIN_SHARE        = 0.6      # a strike counts as a wall if its OI >= 60% of the biggest nearby OI
+
 # ═════════════ ⚡ OI / VOLUME ACTIVITY ALERTS (futures) ═════════════
 FLOW_ENABLED          = True
 FLOW_VOL_SPIKE_X      = 2.0      # last-hour volume >= 2x the day's normal hourly pace
