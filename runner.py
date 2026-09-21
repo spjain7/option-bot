@@ -10,7 +10,8 @@ OPTION-SELLING SIGNAL BOT  (runs in the cloud every 15 min via GitHub Actions)
 python runner.py auto      # what GitHub runs - decides by clock what to do
 python runner.py test      # login + send test message
 python runner.py report    # force daily report now
-python runner.py mcx       # MCX market view now (+ MCX scan if market open)
+python runner.py mcx       # MCX market view now (view only)
+python runner.py view      # NIFTY / BANKNIFTY / SENSEX view now (view only)
 """
 import sys, traceback
 import pandas as pd
@@ -125,6 +126,16 @@ def confidence(t, td, bu, ch):
     return min(pts, 100), why
 
 
+def sr_text(ch):
+    """Support / resistance from option OI walls + yesterday's pivots."""
+    pv = ch.get("pivots") or {}
+    sup = [f"{k_(ch['put_wall'])} (OI)"] if ch.get("put_wall") else []
+    res = [f"{k_(ch['call_wall'])} (OI)"] if ch.get("call_wall") else []
+    if pv:
+        sup.append(f"{pv['S1']:,.0f} (S1)"); res.append(f"{pv['R1']:,.0f} (R1)")
+    return f"Support {' · '.join(sup) or '-'} | Resistance {' · '.join(res) or '-'}"
+
+
 def exit_by(t):
     if t["mode"] == "intraday":
         return f"{t.get('exit_time')} today"
@@ -133,7 +144,7 @@ def exit_by(t):
     return f"{pd.Timestamp(t['expiry']) - pd.Timedelta(days=C.MONTHLY_EXIT_DTE):%d %b}"
 
 
-def fmt_naked(t, conf, why):
+def fmt_naked(t, conf, why, ch=None, status=None):
     l = [x for x in t["legs"] if x["side"] == "SELL"][0]
     lot = t["lot"]
     icon = "🔴" if l["typ"] == "CE" else "🟢"
@@ -153,6 +164,11 @@ def fmt_naked(t, conf, why):
          "",
          f"Confidence: *{conf}/100* | Reward:Risk 1:{round(gain / loss, 1) if loss else '-'} | "
          f"Chance of profit ≈ {t['pop']}%"]
+    if ch:
+        L.append(f"📍 {sr_text(ch)}")
+    if status and (status.get("day") or status.get("hour")):
+        L.append(f"📊 OI today: {status.get('day') or 'building'}" +
+                 (f" · last 1h: {status['hour']}" if status.get("hour") else ""))
     if why:
         L += ["*Why:*"] + [f"• {w}" for w in why]
     L += ["", f"Lots: {t['lots']} | Margin ≈ {rs(t['margin_rs'])}/lot (estimate – Angel One shows exact)",
@@ -287,17 +303,24 @@ class Bot:
         cd = self.candles(tok, trend_interval, 25 if is_hourly else 200, seg)
         trend, td = M.trend_score(cd, 9, 21) if is_hourly else M.trend_score(cd, 20, 50)
         bu = M.futures_buildup(self.api, self.master, name, exch, fut)
+        f_row = fut or M.near_future(self.master, name, exch)
+        fut_tok = str(f_row["token"]) if f_row is not None else None
+        if bu is None and fut_tok:                      # e.g. MCX: build OI status from our own snapshots
+            bu = flow.buildup_dict(self.st.s, fut_tok)
         rng = C.MCX_CHAIN_RANGE_PCT.get(mode, 0.1) if exch == "MCX" else C.CHAIN_RANGE_PCT["stock" if stock else mode]
         ch = M.build_chain(self.api, self.master, name, expiry, spot, rng, exch)
         if not ch:
             print(f"{name}: no option chain"); return None
         ch["dte"] = M.dte(expiry)
-        rv = M.hv20(cd if not is_hourly else self.candles(tok, "ONE_DAY", 60, seg))
+        daily = cd if not is_hourly else self.candles(tok, "ONE_DAY", 60, seg)
+        rv = M.hv20(daily)
         ch["iv_label"], ch["iv_rv"] = M.iv_label(ch["atm_iv"], rv)
         ch["rv"] = rv or 0.0
+        ch["pivots"] = M.pivots(daily)
         bias, score = M.combine_bias(trend, bu, ch["pcr"])
         return {"spot": spot, "tok": tok, "fut": fut, "td": td, "bu": bu, "ch": ch, "rv": rv,
-                "bias": bias, "score": score}
+                "bias": bias, "score": score, "fut_tok": fut_tok,
+                "status": flow.status(self.st.s, fut_tok) if fut_tok else {"day": None, "hour": None}}
 
     def try_open(self, name, mode, expiry, trend_interval, stock=False, exch="NFO"):
         why = self.blocked(mode)
@@ -351,7 +374,7 @@ class Bot:
                   "exit_time": C.MCX_INTRADAY_EXIT if exch == "MCX" else C.INTRADAY_EXIT_TIME})
         self.st.add(t)
         if len(t["legs"]) == 1:
-            notify.send(fmt_naked(t, conf, reasons))
+            notify.send(fmt_naked(t, conf, reasons, ch, v.get("status")))
         else:
             notify.send(fmt_entry(t, ch, view_text(bias, score, td, bu, ch, vix, ivr), simple_why(td, bu, ch)))
 
@@ -455,28 +478,41 @@ class Bot:
                 except Exception as e:
                     print(name, "MCX error", e)
 
-    def mcx_snapshot(self):
-        """On-demand MCX market view in simple words (no trade, no RSI)."""
-        L = [f"🛢️ *MCX VIEW* – {now_ist():%d %b %H:%M}", ""]
-        for name in C.MCX_UNDERLYINGS:
-            exp = self.mcx_expiry(name)
+    def snapshot(self, items, title):
+        """On-demand market view in simple words (no trade, no RSI)."""
+        L = [f"{title} – {now_ist():%d %b %H:%M}", ""]
+        for name, exch, exp in items:
             if exp is None:
-                L.append(f"*{name}*: no option contract found"); continue
+                L.append(f"*{name}*: no option contract found\n"); continue
             try:
-                v = self.view(name, exp, "ONE_HOUR", "MCX")
+                v = self.view(name, exp, "ONE_HOUR", exch)
             except Exception as e:
                 v = None; print(name, e)
             if not v:
                 L.append(f"*{name}*: data not available now\n"); continue
-            ch = v["ch"]
+            ch, stt = v["ch"], v["status"]
             arrow = {"BULLISH": "⬆️ up", "BEARISH": "⬇️ down", "NEUTRAL": "↔️ sideways"}[v["bias"]]
             idea = {"BULLISH": "PE-sell side", "BEARISH": "CE-sell side", "NEUTRAL": "no clear side"}[v["bias"]]
             if ch["iv_label"] == "CHEAP":
                 idea = "premium cheap – avoid"
             L.append(f"*{name}* {v['spot']:,.1f} {arrow} | premium {ch['iv_label'].lower()} → {idea}")
-        L.append("\n_View only – a SELL call comes only after confirmation and confidence ≥ "
+            L.append(f"   OI today: {stt['day'] or 'building (needs a few runs)'}"
+                     + (f" · last 1h: {stt['hour']}" if stt["hour"] else ""))
+            L.append(f"   📍 {sr_text(ch)}\n")
+        L.append("_View only – a SELL call comes only after confirmation and confidence ≥ "
                  f"{C.MIN_CONFIDENCE}/100._")
         notify.send("\n".join(L))
+
+    def mcx_snapshot(self):
+        self.snapshot([(n, "MCX", self.mcx_expiry(n)) for n in C.MCX_UNDERLYINGS], "🛢️ *MCX VIEW*")
+
+    def index_snapshot(self):
+        items = []
+        for n in C.INTRADAY_UNDERLYINGS:
+            ex = M.deriv_exch(n)
+            exps = M.expiries(self.master, n, ex)
+            items.append((n, ex, exps[0] if exps else None))
+        self.snapshot(items, "📈 *INDEX VIEW*")
 
     # ---------- manage open trades ----------
     def monitor(self):
@@ -560,8 +596,12 @@ class Bot:
             bu = M.futures_buildup(self.api, self.master, name, ex)
             bias, sc = M.combine_bias(trend, bu, ch["pcr"])
             move = {"BULLISH": "leaning UP ⬆️", "BEARISH": "leaning DOWN ⬇️", "NEUTRAL": "sideways ↔️"}[bias]
-            L.append(f"\n*{name}* {spot:,.1f} → {move}\n PCR {ch['pcr']} | Support {ch['put_wall']:.0f} | "
-                     f"Resistance {ch['call_wall']:.0f}\n ATM IV {ch['atm_iv']} | IV Rank "
+            daily = self.candles(tok, "ONE_DAY", 60, M.spot_seg(name))
+            ch["pivots"] = M.pivots(daily)
+            f_row = M.near_future(self.master, name, ex)
+            stt = flow.status(self.st.s, f_row["token"]) if f_row is not None else {"day": None}
+            L.append(f"\n*{name}* {spot:,.1f} → {move}\n 📍 {sr_text(ch)}\n PCR {ch['pcr']} | "
+                     f"OI today: {stt.get('day') or '-'}\n ATM IV {ch['atm_iv']} | IV Rank "
                      f"{self.st.iv_rank(name, ch['atm_iv']) or 'building'} | {bu['label'] if bu else ''}\n"
                      f" 📖 {simple_why(td, bu, ch).capitalize()}.")
         op = self.st.s["positions"]
@@ -625,8 +665,10 @@ def main():
             bot.report(force=True)
             return
         mcx_on = C.MCX_OPTIONS_ENABLED and at("09:00") <= now <= at("23:59") and bot.mcx_open_today()
-        if mode == "mcx":
-            bot.mcx_snapshot()                # view only - never an instant call
+        if mode in ("mcx", "view"):          # view only - never an instant call
+            if C.FLOW_ENABLED:
+                flow.run(bot, mode == "view", mode == "mcx")      # fresh OI snapshot first
+            bot.mcx_snapshot() if mode == "mcx" else bot.index_snapshot()
             return
         nse_on = at("09:15") <= now <= at("18:00") and bot.market_open_today()
         if nse_on or mcx_on:

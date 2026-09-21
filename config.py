@@ -22,6 +22,12 @@ FLOW_COOLDOWN_MIN     = 120      # same instrument not re-alerted within 2 hours
 FLOW_MAX_PER_MSG      = 8
 FLOW_STRIKE_IDEAS     = 3        # add a "best strike to sell" idea for the top N buildups
 
+# ═════════════ 🚨 BIG-MOVE EARLY ALERTS (cannot predict – catches a big move as it starts) ═════════════
+BIGMOVE_ENABLED       = True
+FAST_MOVE_PCT         = {"index": 0.4, "stock": 1.2, "mcx": 0.8}   # % move within ~15 min
+BREAKOUT_VOL_X        = 2.0      # new day high/low counts only with volume >= 2x normal pace + rising OI
+BIGMOVE_COOLDOWN_MIN  = 60
+
 # ═════════════ WHEN IS A CALL "CONFIDENT"? ═════════════
 MIN_CONFIDENCE        = 70       # 0-100 score; below this -> no call
 CONFIRM_CHECKS        = 2        # intraday: same direction on this many hourly checks in a row

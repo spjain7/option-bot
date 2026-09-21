@@ -144,6 +144,18 @@ def trend_score(df, fast, slow):
                "adx": round(a, 1), "regime": regime}
 
 
+def pivots(daily):
+    """Classic floor pivots from the last COMPLETED day."""
+    if daily is None or len(daily) < 2:
+        return None
+    today = now_ist().normalize()
+    d = daily.iloc[-2] if daily["time"].iloc[-1].normalize() == today else daily.iloc[-1]
+    h, l, c = float(d["high"]), float(d["low"]), float(d["close"])
+    p = (h + l + c) / 3
+    return {"P": round(p, 1), "R1": round(2 * p - l, 1), "S1": round(2 * p - h, 1),
+            "R2": round(p + (h - l), 1), "S2": round(p - (h - l), 1), "PDH": h, "PDL": l}
+
+
 def iv_label(iv, rv):
     """How expensive options are vs how much the market is actually moving."""
     if not iv or not rv:

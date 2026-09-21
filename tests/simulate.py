@@ -228,6 +228,7 @@ def main():
     p = nk[0]
     gain, loss = p["credit"] - p["target_val"], p["sl_val"] - p["credit"]
     assert gain >= loss - 1e-6 and p["confidence"] >= C.MIN_CONFIDENCE and p["spot_stop"] < p["spot_at_entry"]
+    assert any("📍 Support" in m and "(S1)" in m for m in SENT if "SELL NIFTY" in m), "S/R line missing"
     print("naked NIFTY:", p["legs"][0]["K"], p["legs"][0]["typ"], "sell", p["credit"], "T", p["target_val"],
           "SL", p["sl_val"], "price stop", p["spot_stop"], "conf", p["confidence"])
     UND["NIFTY"][0] = p["spot_stop"] - 10                    # price falls through the price-stop
@@ -252,6 +253,16 @@ def main():
     run_at("2026-09-23 12:00", lambda: flow.run(bot, True, False))
     fl = [m for m in SENT[n1:] if "OI / VOLUME ALERT" in m]
     assert fl and "LONG BUILDUP" in fl[0] and "NIFTY" in fl[0], SENT[n1:]
+    st_ = flow.status(st.s, fut_tok)
+    print("OI status:", st_)
+    assert st_["day"] and st_["hour"]
+
+    print("\n=== 🚨 big-move early alert ===")
+    FUT_STATE[fut_tok] = {"ltp": 25020, "oi": 10_600_000, "vol": 420_000}    # -0.7% in 15 min
+    n2 = len(SENT)
+    run_at("2026-09-23 12:15", lambda: flow.run(bot, True, False))
+    bm = [m for m in SENT[n2:] if "BIG MOVE ALERT" in m]
+    assert bm and "NIFTY" in bm[0] and "fell" in bm[0], SENT[n2:]
     FUT_STATE.clear()
     UND["NIFTY"][0] = 25000
     C.SELL_STYLE = "HEDGED"; st.s["positions"].clear()

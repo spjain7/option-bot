@@ -66,7 +66,7 @@ def run(bot, nse_on, mcx_on):
         by_ex.setdefault(u["exch"], []).append(u["token"])
     qs = bot.api.quotes(by_ex)
 
-    events = []
+    events, big = [], []
     for u in live:
         q = qs.get(u["token"])
         if not q or not q.get("ltp"):
@@ -76,11 +76,16 @@ def run(bot, nse_on, mcx_on):
         if rec["day"] != day:                                   # new day: remember yesterday's last OI
             rec["prev_oi"] = rec["hist"][-1][2] if rec["hist"] else None
             rec["hist"], rec["day"] = [], day
-        rec["hist"].append([str(now), ltp, oi, vol])
+        rec["hist"].append([str(now), ltp, oi, vol, float(q.get("high") or ltp), float(q.get("low") or ltp)])
         rec["hist"] = rec["hist"][-12:]
         rec["pchg"] = float(q.get("percentChange") or 0)
         rec["oi_day"] = (oi / rec["prev_oi"] - 1) * 100 if rec.get("prev_oi") else None
         rec["kind"], rec["exch"], rec["ltp"] = u["kind"], u["exch"], ltp
+
+        if C.BIGMOVE_ENABLED:
+            bm = big_move(u, rec, now, ltp, oi, vol)
+            if bm:
+                big.append(bm)
 
         # compare with the snapshot taken >= 45 min ago (today)
         ref = [h for h in rec["hist"][:-1] if now - pd.Timestamp(h[0]) >= pd.Timedelta(minutes=45)]
@@ -103,6 +108,8 @@ def run(bot, nse_on, mcx_on):
         events.append({**u, "ltp": ltp, "dpx": dpx, "doi": doi, "spike": spike, "icon": icon, "label": label,
                        "meaning": meaning, "bias": bias, "score": spike * abs(doi)})
 
+    if big:
+        send_big(bot, big, now)
     if not events:
         return
     events.sort(key=lambda e: e["score"], reverse=True)
@@ -162,3 +169,108 @@ def stock_picks(bot):
         rows.append((abs(p) * (1 + max(oid or 0, 0) / 5), r["name"]))
     rows.sort(reverse=True)
     return [n for _, n in rows[:C.AUTO_STOCK_PICKS]]
+
+
+# ─────────────── OI status (used in views, calls, report) ───────────────
+def _lab(px, oi):
+    icon, label, _, _ = LABEL[(px > 0, oi > 0)]
+    return f"{icon} {label.capitalize()}"
+
+
+def status(st, token):
+    """{'day': text or None, 'hour': text or None} from stored futures snapshots."""
+    rec = st.get("snap", {}).get(str(token))
+    out = {"day": None, "hour": None}
+    if not rec or not rec.get("hist"):
+        return out
+    h = rec["hist"]
+    last = h[-1]
+    if rec.get("prev_oi"):
+        oi_d = (last[2] / rec["prev_oi"] - 1) * 100
+        out["day"] = f"{_lab(rec.get('pchg', 0), oi_d)} (price {rec.get('pchg', 0):+.1f}%, OI {oi_d:+.1f}%)"
+    elif len(h) >= 2 and h[0][2]:
+        px, oi_d = (last[1] / h[0][1] - 1) * 100, (last[2] / h[0][2] - 1) * 100
+        out["day"] = f"{_lab(px, oi_d)} since {pd.Timestamp(h[0][0]):%H:%M} (price {px:+.1f}%, OI {oi_d:+.1f}%)"
+    now = pd.Timestamp(last[0])
+    ref = [x for x in h[:-1] if now - pd.Timestamp(x[0]) >= pd.Timedelta(minutes=45)]
+    if ref and ref[-1][2]:
+        px, oi_d = (last[1] / ref[-1][1] - 1) * 100, (last[2] / ref[-1][2] - 1) * 100
+        out["hour"] = f"{_lab(px, oi_d)} ({px:+.1f}%, OI {oi_d:+.1f}%)"
+    return out
+
+
+def buildup_dict(st, token):
+    """Same shape as market.futures_buildup(), built from snapshots (works for MCX too)."""
+    rec = st.get("snap", {}).get(str(token))
+    if not rec or not rec.get("hist"):
+        return None
+    last, h = rec["hist"][-1], rec["hist"]
+    if rec.get("prev_oi"):
+        px, oi_d = rec.get("pchg", 0), (last[2] / rec["prev_oi"] - 1) * 100
+    elif len(h) >= 2 and h[0][2]:
+        px, oi_d = (last[1] / h[0][1] - 1) * 100, (last[2] / h[0][2] - 1) * 100
+    else:
+        return None
+    label = {(True, True): "Long buildup", (False, True): "Short buildup",
+             (True, False): "Short covering", (False, False): "Long unwinding"}[(px >= 0, oi_d >= 0)]
+    score = {"Long buildup": 1, "Short buildup": -1, "Short covering": 0.5, "Long unwinding": -0.5}[label]
+    return {"label": label, "score": score, "px_chg": round(px, 2), "oi_chg": round(oi_d, 2)}
+
+
+# ─────────────── 🚨 big-move early warning ───────────────
+def big_move(u, rec, now, ltp, oi, vol):
+    h = rec["hist"]
+    prev = [x for x in h[:-1] if pd.Timedelta(minutes=10) <= now - pd.Timestamp(x[0]) <= pd.Timedelta(minutes=35)]
+    if not prev:
+        return None
+    p = prev[-1]
+    if len(p) < 6 or not p[1]:
+        return None
+    mins = (now - pd.Timestamp(p[0])).total_seconds() / 60
+    d = (ltp / p[1] - 1) * 100
+    session_min = max((now - _t(OPEN[u["exch"]][0])).total_seconds() / 60, mins)
+    normal = vol / session_min * mins
+    spike = (vol - p[3]) / normal if normal > 0 else 0
+    doi = (oi / p[2] - 1) * 100 if p[2] else 0
+    kind = None
+    if abs(d) >= C.FAST_MOVE_PCT[u["kind"]]:
+        kind = "FAST RISE" if d > 0 else "FAST FALL"
+    elif ltp > p[4] and spike >= C.BREAKOUT_VOL_X and doi > 0:
+        kind = "BREAKOUT"
+    elif ltp < p[5] and spike >= C.BREAKOUT_VOL_X and doi > 0:
+        kind = "BREAKDOWN"
+    if not kind:
+        return None
+    return {**u, "ltp": ltp, "d": d, "mins": mins, "spike": spike, "doi": doi, "move": kind,
+            "hi": p[4], "lo": p[5]}
+
+
+def send_big(bot, big, now):
+    last = bot.st.s.setdefault("big_last", {})
+    big = [b for b in big if not (last.get(b["token"]) and
+                                  now - pd.Timestamp(last[b["token"]]) < pd.Timedelta(minutes=C.BIGMOVE_COOLDOWN_MIN))]
+    if not big:
+        return
+    big.sort(key=lambda b: abs(b["d"]) * max(b["spike"], 1), reverse=True)
+    L = [f"🚨 *BIG MOVE ALERT* – {now:%d %b %H:%M}", ""]
+    for b in big[:C.FLOW_MAX_PER_MSG]:
+        last[b["token"]] = str(now)
+        up = b["move"] in ("FAST RISE", "BREAKOUT")
+        icon = "🚀" if up else "🔻"
+        what = {"FAST RISE": f"jumped {b['d']:+.2f}% in {b['mins']:.0f} min",
+                "FAST FALL": f"fell {b['d']:+.2f}% in {b['mins']:.0f} min",
+                "BREAKOUT": f"broke day high {b['hi']:,.1f} with {b['spike']:.1f}x volume & fresh OI",
+                "BREAKDOWN": f"broke day low {b['lo']:,.1f} with {b['spike']:.1f}x volume & fresh OI"}[b["move"]]
+        st = status(bot.st.s, b["token"])
+        L.append(f"{icon} *{b['name']}* {b['ltp']:,.1f} – {what}")
+        if st["hour"]:
+            L.append(f"    OI last 1h: {st['hour']}")
+        for p in bot.st.s.get("positions", []):
+            if p["name"] != b["name"] or len(p["legs"]) != 1:
+                continue
+            l = p["legs"][0]
+            if (l["typ"] == "CE" and up) or (l["typ"] == "PE" and not up):
+                L.append(f"    ⚠️ Your open SELL #{p['id']} {p['name']} {S.k_(l['K'])} {l['typ']} is at risk – "
+                         f"keep SL ₹{p['sl_val']} ready")
+    L += ["", "📖 _Nobody can predict big moves. This flags one as it STARTS – moves can continue or reverse._"]
+    notify.send("\n".join(L))
