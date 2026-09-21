@@ -93,7 +93,7 @@ def load_master():
             old.unlink()
         f.write_bytes(requests.get(SCRIP_URL, timeout=180).content)
     df = pd.DataFrame(json.loads(f.read_text()))
-    keep = df["instrumenttype"].isin(["OPTIDX", "OPTSTK", "FUTIDX", "FUTSTK"]) & (df["exch_seg"] == "NFO")
+    keep = df["instrumenttype"].isin(["OPTIDX", "OPTSTK", "FUTIDX", "FUTSTK"]) & df["exch_seg"].isin(["NFO", "BFO"])
     eq = (df["exch_seg"] == "NSE") & df["symbol"].str.endswith("-EQ")
     mcx = (df["exch_seg"] == "MCX") & df["instrumenttype"].isin(["FUTCOM", "OPTFUT", "OPTCOM"])
     df = df[keep | eq | mcx].copy()

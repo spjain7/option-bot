@@ -5,24 +5,27 @@ from pathlib import Path
 import numpy as np, pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-import greeks as G, config as C, market, positions, runner, notify, strategy, rsi_alert
+import greeks as G, config as C, market, positions, runner, notify, strategy, rsi_alert, flow
 
 SENT = []
 notify.send = lambda text, *a, **k: (SENT.append(text), print("\n" + "─" * 60 + "\n" + text))
 CLOCK = {"now": pd.Timestamp("2026-09-21 11:20")}
-for mod in (market, positions, runner, rsi_alert):
+for mod in (market, positions, runner, rsi_alert, flow):
     mod.now_ist = lambda: CLOCK["now"]
 
 UND = {  # name: spot, iv, strike step, lot, trend(+1/-1)
     "NIFTY": [25000.0, 0.12, 50, 75, 1], "BANKNIFTY": [55000.0, 0.14, 100, 35, -1],
     "RELIANCE": [1400.0, 0.30, 10, 500, -1], "HDFCBANK": [1900.0, 0.15, 10, 550, 1],
     "CRUDEOIL": [6000.0, 0.35, 50, 100, -1],
+    "SENSEX": [82000.0, 0.16, 100, 20, 1],
 }
 EXPS = {"NIFTY": ["2026-09-22", "2026-09-29", "2026-10-06", "2026-10-27"],
         "BANKNIFTY": ["2026-09-29", "2026-10-27"], "RELIANCE": ["2026-09-29", "2026-10-27"],
-        "HDFCBANK": ["2026-09-29", "2026-10-27"]}
+        "HDFCBANK": ["2026-09-29", "2026-10-27"], "SENSEX": ["2026-09-24", "2026-10-29"]}
+FUT_STATE = {}       # token -> {"ltp","oi","vol"} overrides for flow tests
 CRUDE_DROP = [1.0]
-SPOT_TOK = {"NIFTY": "99926000", "BANKNIFTY": "99926009", "RELIANCE": "2885", "HDFCBANK": "1333"}
+SPOT_TOK = {"NIFTY": "99926000", "BANKNIFTY": "99926009", "RELIANCE": "2885", "HDFCBANK": "1333",
+            "SENSEX": "99919000"}
 
 
 def build_master():
@@ -34,19 +37,20 @@ def build_master():
             rows.append(dict(token=SPOT_TOK[n], symbol=f"{n}-EQ", name=n, expiry="", strike="-1", lotsize="1",
                              instrumenttype="", exch_seg="NSE"))
         itype = "IDX" if n in C.INDEX_TOKENS else "STK"
+        seg = "BFO" if n == "SENSEX" else "NFO"
         for e in EXPS[n]:
             ed = pd.Timestamp(e)
             if ed == max(x for x in map(pd.Timestamp, EXPS[n]) if x.month == ed.month):
                 tok += 1
                 rows.append(dict(token=str(tok), symbol=f"{n}{ed:%d%b%y}FUT".upper(), name=n, expiry=ed.strftime("%d%b%Y").upper(),
-                                 strike="-1", lotsize=str(lot), instrumenttype="FUT" + itype, exch_seg="NFO"))
+                                 strike="-1", lotsize=str(lot), instrumenttype="FUT" + itype, exch_seg=seg))
             for k in np.arange(s * 0.85, s * 1.15, step):
                 k = round(k / step) * step
                 for typ in ("CE", "PE"):
                     tok += 1
                     rows.append(dict(token=str(tok), symbol=f"{n}{ed:%d%b%y}{int(k)}{typ}".upper(), name=n,
                                      expiry=ed.strftime("%d%b%Y").upper(), strike=f"{k*100:.6f}", lotsize=str(lot),
-                                     instrumenttype="OPT" + itype, exch_seg="NFO"))
+                                     instrumenttype="OPT" + itype, exch_seg=seg))
     rows.append(dict(token="900001", symbol="CRUDEOIL19OCT26FUT", name="CRUDEOIL", expiry="19OCT2026", strike="-1",
                      lotsize="100", instrumenttype="FUTCOM", exch_seg="MCX"))
     for k in range(4800, 7250, 50):                      # MCX crude options (on the Oct future), expiry 15 Oct
@@ -77,7 +81,9 @@ class FakeAngel:
                     out[t] = {"ltp": UND[name][0], "percentChange": 0.6 * UND[name][4]}; continue
                 r = BY_TOK[t]; n = r["name"]; s, iv, *_ = UND[n]
                 if r["instrumenttype"].startswith("FUT"):
-                    out[t] = {"ltp": s, "opnInterest": 1_050_000, "percentChange": 0.6 * UND[n][4]}; continue
+                    f = FUT_STATE.get(t, {})
+                    out[t] = {"ltp": f.get("ltp", s), "opnInterest": f.get("oi", 1_050_000),
+                              "tradeVolume": f.get("vol", 100000), "percentChange": 0.6 * UND[n][4]}; continue
                 K = r["strike"] / 100; typ = r["symbol"][-2:]
                 T = market.time_to_expiry(r["expiry_dt"])
                 skew = iv * (1 + 0.8 * abs(math.log(K / s)))
@@ -127,6 +133,8 @@ def main():
     positions.STATE_FILE = ROOT / "tests" / "_sim_state.json"
     positions.STATE_FILE.unlink(missing_ok=True)
     C.MONTHLY_STOCKS = ["RELIANCE", "HDFCBANK"]
+    C.SELL_STYLE, C.CONFIRM_CHECKS, C.INTRADAY_STOCKS, C.GAMMA_BLOCK = "HEDGED", 1, [], "EXTREME"   # part 1: hedged engine
+    C.INTRADAY_UNDERLYINGS, C.WEEKLY_UNDERLYINGS = ["NIFTY", "BANKNIFTY"], ["NIFTY"]
     st = positions.Store()
     bot = runner.Bot(FakeAngel(), MASTER, st)
 
@@ -191,9 +199,11 @@ def main():
     n0 = len(SENT)
     def mcx_now():
         assert bot.mcx_open_today()
-        bot.mcx_snapshot(); bot.mcx_intraday_scan(force=True)
+        bot.mcx_snapshot()
+        assert not st.open_positions("intraday", "CRUDEOIL"), "view must never create a call"
+        bot.mcx_intraday_scan(force=True)
     run_at("2026-09-21 21:10", mcx_now)
-    assert any("MCX MARKET VIEW" in m for m in SENT[n0:])
+    assert any("MCX VIEW" in m for m in SENT[n0:])
     cr = st.open_positions("intraday", "CRUDEOIL")
     assert cr and cr[0]["exch"] == "MCX" and cr[0]["lot"] == 100, cr
     print("MCX call:", cr[0]["strategy"], [(l["side"], l["K"], l["typ"]) for l in cr[0]["legs"]])
@@ -206,12 +216,44 @@ def main():
     src = (ROOT / "rsi_alert.py").read_text()
     assert not any(f"import {m}" in src for m in ("strategy", "market", "positions", "greeks"))
 
-    print("\n=== NAKED style + event-day block ===")
-    C.SELL_STYLE = "NAKED"
-    st.s["positions"].clear()
-    run_at("2026-09-23 11:20", bot.intraday_scan)
+    print("\n=== NAKED single-leg sells: confirmation, confidence, clear SL/target ===")
+    C.SELL_STYLE, C.CONFIRM_CHECKS, C.GAMMA_BLOCK = "NAKED", 2, "HIGH"
+    st.s["positions"].clear(); st.s["bias_hist"] = {}
+    n0 = len(SENT)
+    run_at("2026-09-23 11:20", bot.intraday_scan)            # 1st hourly check -> only remembered
+    assert not st.open_positions("intraday") and len(SENT) == n0, "must not call on first check"
+    run_at("2026-09-23 12:20", bot.intraday_scan)            # 2nd check, same direction -> call
     nk = st.open_positions("intraday", "NIFTY")
-    assert nk and nk[0]["strategy"] == "Single PE Sell" and nk[0]["max_loss"] is None
+    assert nk and nk[0]["strategy"] == "Single PE Sell" and len(nk[0]["legs"]) == 1
+    p = nk[0]
+    gain, loss = p["credit"] - p["target_val"], p["sl_val"] - p["credit"]
+    assert gain >= loss - 1e-6 and p["confidence"] >= C.MIN_CONFIDENCE and p["spot_stop"] < p["spot_at_entry"]
+    print("naked NIFTY:", p["legs"][0]["K"], p["legs"][0]["typ"], "sell", p["credit"], "T", p["target_val"],
+          "SL", p["sl_val"], "price stop", p["spot_stop"], "conf", p["confidence"])
+    UND["NIFTY"][0] = p["spot_stop"] - 10                    # price falls through the price-stop
+    run_at("2026-09-23 12:50", bot.monitor)
+    assert st.s["closed"][-1]["exit_reason"] in ("SPOT", "SL")
+    assert any("Trade closed" in m and "Today:" in m for m in SENT[-3:]), "P&L tally missing"
+
+    print("\n=== SENSEX (BSE) naked call ===")
+    C.INTRADAY_UNDERLYINGS = ["SENSEX"]; st.s["bias_hist"] = {}; UND["NIFTY"][0] = 25000
+    run_at("2026-09-22 13:20", bot.intraday_scan); run_at("2026-09-22 14:20", bot.intraday_scan)
+    sx = st.open_positions("intraday", "SENSEX")
+    assert sx and sx[0]["exch"] == "BFO", "SENSEX call missing"
+    print("SENSEX call:", sx[0]["legs"][0]["K"], sx[0]["legs"][0]["typ"], "conf", sx[0]["confidence"])
+
+    print("\n=== ⚡ OI / volume flow alert ===")
+    C.INTRADAY_UNDERLYINGS = ["NIFTY", "BANKNIFTY", "SENSEX"]
+    fut_tok = MASTER[(MASTER.name == "NIFTY") & (MASTER.instrumenttype == "FUTIDX")].sort_values("expiry_dt").iloc[0]["token"]
+    FUT_STATE[fut_tok] = {"ltp": 25000, "oi": 10_000_000, "vol": 50_000}
+    run_at("2026-09-23 11:00", lambda: flow.run(bot, True, False))       # first snapshot
+    FUT_STATE[fut_tok] = {"ltp": 25200, "oi": 10_400_000, "vol": 350_000}  # +0.8% price, +4% OI, 2.4x volume
+    n1 = len(SENT)
+    run_at("2026-09-23 12:00", lambda: flow.run(bot, True, False))
+    fl = [m for m in SENT[n1:] if "OI / VOLUME ALERT" in m]
+    assert fl and "LONG BUILDUP" in fl[0] and "NIFTY" in fl[0], SENT[n1:]
+    FUT_STATE.clear()
+    UND["NIFTY"][0] = 25000
     C.SELL_STYLE = "HEDGED"; st.s["positions"].clear()
     C.EVENT_DATES = {"2026-09-24": "RBI policy"}
     n2 = len(SENT)

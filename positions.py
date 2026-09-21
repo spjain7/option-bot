@@ -98,6 +98,9 @@ def check(p, qs, spot, T, now):
         return "TARGET", value, info
     if value >= p["sl_val"]:
         return "SL", value, info
+    ss = p.get("spot_stop")
+    if ss and ((p["legs"][0]["typ"] == "CE" and spot >= ss) or (p["legs"][0]["typ"] == "PE" and spot <= ss)):
+        return "SPOT", value, info
     if p["mode"] == "intraday" and (now >= now.normalize() + _hm(p.get("exit_time", C.INTRADAY_EXIT_TIME))
                                     or pd.Timestamp(p["opened"]).normalize() < now.normalize()):
         return "TIME", value, info
@@ -105,7 +108,7 @@ def check(p, qs, spot, T, now):
         return "TIME", value, info
     if p["mode"] == "monthly" and (exp - now.normalize()).days <= C.MONTHLY_EXIT_DTE:
         return "TIME", value, info
-    if any(abs(d) >= p["adjust_delta"] for _, d in deltas) and "adjust" not in p["flags"]:
+    if not p.get("spot_stop") and any(abs(d) >= p["adjust_delta"] for _, d in deltas) and "adjust" not in p["flags"]:
         return "ADJUST", value, info
     return None, value, info
 

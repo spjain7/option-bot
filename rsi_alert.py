@@ -12,8 +12,8 @@ import notify
 from angel import now_ist
 
 STATE_FILE = Path(__file__).parent / "state" / "rsi_state.json"
-SESSION_CLOSE = {"NSE": "15:30", "MCX": "23:55"}
-SESSION_OPEN = {"NSE": "09:15", "MCX": "09:00"}
+SESSION_CLOSE = {"NSE": "15:30", "BSE": "15:30", "MCX": "23:55"}
+SESSION_OPEN = {"NSE": "09:15", "BSE": "09:15", "MCX": "09:00"}
 
 
 def rsi(close, n):
@@ -41,7 +41,7 @@ def history_stats(df, r, z):
 
 
 def _instruments(master):
-    out = [("NSE", n, C.INDEX_TOKENS[n], n) for n in C.RSI_NSE if n in C.INDEX_TOKENS]
+    out = [("BSE" if n in C.BSE_INDICES else "NSE", n, C.INDEX_TOKENS[n], n) for n in C.RSI_NSE if n in C.INDEX_TOKENS]
     today = now_ist().normalize()
     mcx = master[(master["exch_seg"] == "MCX") & (master["instrumenttype"] == "FUTCOM")]
     for n in C.RSI_MCX:

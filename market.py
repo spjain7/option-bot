@@ -10,9 +10,17 @@ MIN_PER_YEAR = 365 * 24 * 60
 
 
 # ─────────────── expiries ───────────────
-OPT_TYPES = {"NFO": ["OPTIDX", "OPTSTK"], "MCX": ["OPTFUT", "OPTCOM"]}
-FUT_TYPES = {"NFO": ["FUTIDX", "FUTSTK"], "MCX": ["FUTCOM"]}
-EXPIRY_TIME = {"NFO": "15:30", "MCX": "23:30"}
+OPT_TYPES = {"NFO": ["OPTIDX", "OPTSTK"], "BFO": ["OPTIDX"], "MCX": ["OPTFUT", "OPTCOM"]}
+FUT_TYPES = {"NFO": ["FUTIDX", "FUTSTK"], "BFO": ["FUTIDX"], "MCX": ["FUTCOM"]}
+EXPIRY_TIME = {"NFO": "15:30", "BFO": "15:30", "MCX": "23:30"}
+
+
+def deriv_exch(name):
+    return "BFO" if name in C.BSE_INDICES else "NFO"
+
+
+def spot_seg(name):
+    return "BSE" if name in C.BSE_INDICES else "NSE"
 
 
 def expiries(master, name, exch="NFO"):
@@ -227,5 +235,5 @@ def build_chain(api, master, name, expiry, spot, width_pct=0.08, exch="NFO"):
         "exp_move": round(F * atm_iv / 100 * math.sqrt(T), 1) if atm_iv else None,   # 1 SD to expiry
         "skew": round(pe25 - ce25, 1) if pe25 and ce25 else None,                  # + = puts richer
         "lot": int(C.MCX_RS_PER_POINT.get(name, df["lotsize"].iloc[0])) if exch == "MCX" else int(df["lotsize"].iloc[0]),
-        "exch": exch,
+        "exch": exch, "name": name,
     }

@@ -6,14 +6,21 @@ The bot sends **alerts only**; it never places orders. Data comes from the free 
 | | Engine A: Option Selling | Engine B: RSI Extreme Alerts |
 |---|---|---|
 | Markets | NIFTY, BANKNIFTY, F&O stocks | NIFTY, BANKNIFTY, FINNIFTY + MCX (Gold, Silver, Crude, NG, Copper, Zinc, Aluminium…) |
-| Output | Sell calls with entry / SL / target, then book / adjust / exit alerts | "RSI < 20" or "RSI > 80" on 1-hour candles, information only |
+| Output | Naked single CE / PE sell calls (index, stock, MCX) with sell price, target, stop-loss, price-stop and exit time; then book / stop / exit alerts | "RSI < 20" or "RSI > 80" on 1-hour candles, information only |
 | Module | `strategy.py` `market.py` `positions.py` | `rsi_alert.py` |
 | Switch | `OPTION_ENGINE_ENABLED` | `RSI_ENGINE_ENABLED` |
 
 RSI **never** touches the option engine: no score, no direction, no strike, no entry.
 The two modules don't import each other; they share only market data and Telegram. This is tested in `tests/simulate.py`.
 
-## Engine A: how a sell call is made
+## Engine A: when a call is sent (default: NAKED single-leg sells)
+- Confidence score must be **≥ 70/100** (trend, futures OI, PCR, rich premium, strike beyond the OI wall, gamma).
+- **Intraday:** the same direction must show on **2 hourly checks in a row**, so there's never an instant call.
+- **Reward ≥ risk:** intraday target −35% / SL +35%; weekly and monthly −50% / +50%.
+- An extra **price stop** triggers if the underlying moves half-way to your sold strike.
+- Lot suggestion is capped by 2% risk **and** by estimated margin (≤ 50% of capital).
+
+## Engine A: how a sell call is made (details)
 1. **Regime / direction:**
    - trend from EMA (1-hour for intraday, daily for positional), with **ADX < 18 treated as RANGE**
    - futures **OI buildup**

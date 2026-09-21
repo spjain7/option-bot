@@ -25,6 +25,7 @@ import market as M
 import strategy as S
 import notify
 import rsi_alert                      # Engine B - separate module, shares only data + Telegram
+import flow                           # OI / volume activity alerts (part of Engine A, no RSI)
 from angel import Angel, load_master, now_ist
 from positions import Store, check, _hm
 
@@ -71,17 +72,92 @@ def plain_entry(t, ch, why):
     else:
         lo = min(l["K"] for l in sells); hi = max(l["K"] for l in sells)
         view = f"{name} will stay between {k_(lo)} and {k_(hi)}"
+    till = (f"for the rest of today (intraday – exit by {t.get('exit_time', C.INTRADAY_EXIT_TIME)})"
+            if t["mode"] == "intraday" else f"till expiry {pd.Timestamp(t['expiry']):%d %b}")
     L = ["📖 *In simple words*",
-         f"• The bot expects {view} (now {t['spot_at_entry']:,.1f}) till expiry {pd.Timestamp(t['expiry']):%d %b}.",
+         f"• The bot expects {view} (now {t['spot_at_entry']:,.1f}) {till}.",
          f"• You receive about {rs(t['credit'] * lot)} per lot today by selling the option(s)."]
     if buys:
         L.append(f"• The option you BUY is insurance: worst-case loss is capped at {rs(t['max_loss'] * lot)} per lot.")
     else:
         L.append("• ⚠️ No insurance leg (naked): loss is NOT capped – the stop-loss is a must.")
-    L += [f"• Plan: take profit at +{rs(t['reward_rs'])}, cut loss at -{rs(t['risk_rs'])} – whichever comes first.",
+    L += [f"• Plan: take profit at +{rs(t['reward_rs'])}, cut loss at -{rs(t['risk_rs'])} – whichever comes first "
+          f"(sellers win small & often; the stop keeps losses limited).",
           f"• Why: {why}." if why else "",
           f"• Chance this ends in profit ≈ {t['pop']}% (estimate – losses happen)."]
     return [x for x in L if x]
+
+
+def confidence(t, td, bu, ch):
+    """0-100: how many independent things agree with this sell. No RSI here."""
+    bias, pts, why = t["bias"], 0, []
+    up = bias == "BULLISH"
+    if td and td["regime"] == ("UPTREND" if up else "DOWNTREND"):
+        pts += 25; why.append(f"Trend is {'UP' if up else 'DOWN'} on the chart")
+        if td["adx"] >= 25:
+            pts += 5; why[-1] += " (strong)"
+    elif td and bias == "NEUTRAL" and td["regime"] == "RANGE":
+        pts += 25; why.append("Price is moving sideways")
+    if bu is None:
+        pts += 10
+    elif bu["label"] == ("Long buildup" if up else "Short buildup"):
+        pts += 20; why.append(f"Fresh {'buying' if up else 'selling'} in futures (OI {bu['oi_chg']:+}%)")
+    elif bu["label"] == ("Short covering" if up else "Long unwinding"):
+        pts += 8
+    p = ch.get("pcr")
+    if p is not None:
+        if (up and p >= C.PCR_BULL) or (not up and bias == "BEARISH" and p <= C.PCR_BEAR):
+            pts += 15; why.append(f"Option writers agree (PCR {p})")
+        elif C.PCR_BEAR < p < C.PCR_BULL:
+            pts += 7
+    x = ch.get("iv_rv") or 0
+    if x >= 1.5:
+        pts += 20; why.append(f"Premium is very rich (IV {ch['atm_iv']} vs normal {ch['rv']:.0f})")
+    elif x >= 1.1:
+        pts += 15; why.append(f"Premium is rich (IV {ch['atm_iv']} vs normal {ch['rv']:.0f})")
+    elif x >= 0.9:
+        pts += 5
+    leg = [l for l in t["legs"] if l["side"] == "SELL"][0]
+    wall = ch.get("call_wall") if leg["typ"] == "CE" else ch.get("put_wall")
+    if wall and ((leg["typ"] == "CE" and leg["K"] >= wall) or (leg["typ"] == "PE" and leg["K"] <= wall)):
+        pts += 10; why.append(f"Strike is beyond the big {'resistance' if leg['typ']=='CE' else 'support'} at {k_(wall)}")
+    pts += {"LOW": 5, "MEDIUM": 3}.get(t["gamma_risk"], 0)
+    return min(pts, 100), why
+
+
+def exit_by(t):
+    if t["mode"] == "intraday":
+        return f"{t.get('exit_time')} today"
+    if t["mode"] == "weekly":
+        return f"{pd.Timestamp(t['expiry']):%d %b} {C.WEEKLY_EXIT_TIME}"
+    return f"{pd.Timestamp(t['expiry']) - pd.Timedelta(days=C.MONTHLY_EXIT_DTE):%d %b}"
+
+
+def fmt_naked(t, conf, why):
+    l = [x for x in t["legs"] if x["side"] == "SELL"][0]
+    lot = t["lot"]
+    icon = "🔴" if l["typ"] == "CE" else "🟢"
+    ex = {"MCX": "MCX", "BFO": "BSE"}.get(t.get("exch"), "NSE")
+    kind = {"intraday": "Intraday", "weekly": "Weekly (positional)", "monthly": "Monthly (positional)"}[t["mode"]]
+    gain = (t["credit"] - t["target_val"]) * lot
+    loss = (t["sl_val"] - t["credit"]) * lot
+    direction = "above" if l["typ"] == "CE" else "below"
+    L = [f"{icon} *SELL {t['name']} {k_(l['K'])} {l['typ']}*  ({ex}) #{t['id']}",
+         f"{kind} | Expiry {pd.Timestamp(t['expiry']):%d %b} | {t['name']} now {t['spot_at_entry']:,.1f}",
+         "",
+         f"💰 Sell at: *₹{l['entry']}*",
+         f"🎯 Target: *₹{t['target_val']}* → buy back (profit ≈ {rs(gain)}/lot)",
+         f"🛑 Stop-loss: *₹{t['sl_val']}* → buy back (loss ≈ {rs(loss)}/lot)",
+         f"🛑 Also exit if {t['name']} goes {direction} *{t['spot_stop']:,.1f}*",
+         f"⏰ Exit latest: {exit_by(t)}",
+         "",
+         f"Confidence: *{conf}/100* | Reward:Risk 1:{round(gain / loss, 1) if loss else '-'} | "
+         f"Chance of profit ≈ {t['pop']}%"]
+    if why:
+        L += ["*Why:*"] + [f"• {w}" for w in why]
+    L += ["", f"Lots: {t['lots']} | Margin ≈ {rs(t['margin_rs'])}/lot (estimate – Angel One shows exact)",
+          "_Place the SL order at Angel One right after selling. Estimates, not certainty._"]
+    return "\n".join(L)
 
 
 EXPLAIN = {
@@ -97,7 +173,7 @@ EXPLAIN = {
 # ─────────────── message formats ───────────────
 def fmt_entry(t, ch, view, why=""):
     icon = {"BULLISH": "🟢", "BEARISH": "🔴", "NEUTRAL": "🟡"}[t["bias"]]
-    ex = "MCX" if t.get("exch") == "MCX" else "NSE"
+    ex = {"MCX": "MCX", "BFO": "BSE"}.get(t.get("exch"), "NSE")
     L = [f"{icon} *SELL CALL #{t['id']}* – {t['name']} {t['strategy']} ({ex})",
          f"_{t['mode'].upper()} | Expiry {pd.Timestamp(t['expiry']):%d %b} ({t['dte']}d)_", ""]
     for l in t["legs"]:
@@ -156,11 +232,11 @@ class Bot:
         if exch == "MCX":                                          # MCX options are on the future
             tok, seg = str(fut_token), "MCX"
         else:
-            tok, seg = M.spot_token(self.master, name), "NSE"
+            tok, seg = M.spot_token(self.master, name), M.spot_seg(name)
         q = self.api.quotes({seg: [tok]}).get(str(tok), {}) if tok else {}
         self._fresh = True
         t = pd.to_datetime(q.get("exchFeedTime"), errors="coerce", dayfirst=True)
-        live = (at("09:20"), at("15:30")) if exch == "NFO" else (at("09:05"), at("23:25"))
+        live = (at("09:05"), at("23:25")) if exch == "MCX" else (at("09:20"), at("15:30"))
         if pd.notna(t) and live[0] <= now_ist() <= live[1] and now_ist() - t > pd.Timedelta(minutes=10):
             self._fresh = False                                    # stale quote -> no new signal
         return float(q.get("ltp") or 0), tok
@@ -206,7 +282,7 @@ class Bot:
         spot, tok = self.spot(name, exch, fut["token"] if fut else None)
         if not spot or not self._fresh:
             print(f"{name}: NO TRADE - missing/stale price data"); return None
-        seg = "MCX" if exch == "MCX" else "NSE"
+        seg = "MCX" if exch == "MCX" else M.spot_seg(name)
         is_hourly = trend_interval == "ONE_HOUR"
         cd = self.candles(tok, trend_interval, 25 if is_hourly else 200, seg)
         trend, td = M.trend_score(cd, 9, 21) if is_hourly else M.trend_score(cd, 20, 50)
@@ -231,6 +307,15 @@ class Bot:
         if not v:
             return
         spot, td, bu, ch, rv, bias, score = v["spot"], v["td"], v["bu"], v["ch"], v["rv"], v["bias"], v["score"]
+        # confirmation: intraday direction must repeat on consecutive hourly checks
+        hist = self.st.s.setdefault("bias_hist", {})
+        hk, now = f"{exch}|{name}|{mode}", now_ist()
+        prev = hist.get(hk)
+        n = prev["n"] + 1 if prev and prev["bias"] == bias and \
+            now - pd.Timestamp(prev["t"]) <= pd.Timedelta(hours=2, minutes=30) else 1
+        hist[hk] = {"bias": bias, "t": str(now), "n": n}
+        if mode == "intraday" and n < C.CONFIRM_CHECKS:
+            print(f"{name}: {bias} seen {n}x - waiting for confirmation"); return
         ivl, ivx = ch["iv_label"], ch["iv_rv"]
         if ivl == "CHEAP":
             print(f"{name}: NO TRADE - options CHEAP (IV {ch['atm_iv']} vs RV {rv:.1f})"); return
@@ -257,12 +342,18 @@ class Bot:
         order = ["LOW", "MEDIUM", "HIGH", "EXTREME"]
         if t["gamma_risk"] in order and order.index(t["gamma_risk"]) >= order.index(C.GAMMA_BLOCK):
             print(f"{name}: NO TRADE - gamma risk {t['gamma_risk']}"); return
-        t.update({"name": name, "mode": mode, "expiry": str(pd.Timestamp(expiry).date()),
+        conf, reasons = confidence(t, td, bu, ch)
+        if C.SELL_STYLE == "NAKED" and conf < C.MIN_CONFIDENCE:
+            print(f"{name} {mode}: NO CALL - confidence {conf} < {C.MIN_CONFIDENCE}"); return
+        t.update({"name": name, "mode": mode, "expiry": str(pd.Timestamp(expiry).date()), "confidence": conf,
                   "dte": M.dte(expiry), "spot_at_entry": spot, "exch": exch,
                   "fut_token": str(v["fut"]["token"]) if v["fut"] else None,
                   "exit_time": C.MCX_INTRADAY_EXIT if exch == "MCX" else C.INTRADAY_EXIT_TIME})
         self.st.add(t)
-        notify.send(fmt_entry(t, ch, view_text(bias, score, td, bu, ch, vix, ivr), simple_why(td, bu, ch)))
+        if len(t["legs"]) == 1:
+            notify.send(fmt_naked(t, conf, reasons))
+        else:
+            notify.send(fmt_entry(t, ch, view_text(bias, score, td, bu, ch, vix, ivr), simple_why(td, bu, ch)))
 
     # ---------- scans ----------
     def intraday_scan(self):
@@ -271,14 +362,19 @@ class Bot:
             return
         slot = now.normalize() + pd.Timedelta(hours=9, minutes=15) + \
             pd.Timedelta(hours=int((now - now.normalize() - pd.Timedelta(hours=9, minutes=15)) / pd.Timedelta(hours=1)))
-        for name in C.INTRADAY_UNDERLYINGS:
+        for name in C.INTRADAY_UNDERLYINGS + C.INTRADAY_STOCKS:
             key = f"hourly|{name}|{slot:%Y-%m-%d %H:%M}"
             if self.st.done(key) or self.st.open_positions("intraday", name):
                 continue
             self.st.mark(key)
-            exps = M.expiries(self.master, name)
+            stock = name not in C.INDEX_TOKENS
+            ex = M.deriv_exch(name)
+            exps = [e for e in M.expiries(self.master, name, ex) if not stock or M.dte(e) >= 2]
             if exps:
-                self.try_open(name, "intraday", exps[0], "ONE_HOUR")
+                try:
+                    self.try_open(name, "intraday", exps[0], "ONE_HOUR", stock=stock, exch=ex)
+                except Exception as e:
+                    print(name, "error", e)
 
     def positional_scan(self):
         now = now_ist()
@@ -291,17 +387,20 @@ class Bot:
         for name in C.WEEKLY_UNDERLYINGS:
             if self.st.open_positions("weekly", name):
                 continue
-            exps = [e for e in M.expiries(self.master, name) if 0 < M.dte(e) <= C.WEEKLY_MAX_DTE]
+            ex = M.deriv_exch(name)
+            exps = [e for e in M.expiries(self.master, name, ex) if 0 < M.dte(e) <= C.WEEKLY_MAX_DTE]
             if exps:
-                self.try_open(name, "weekly", exps[0], "ONE_DAY")
-        for name in C.MONTHLY_UNDERLYINGS + C.MONTHLY_STOCKS:
+                self.try_open(name, "weekly", exps[0], "ONE_DAY", exch=ex)
+        stocks = flow.stock_picks(self) if C.MONTHLY_STOCKS == "AUTO" else C.MONTHLY_STOCKS
+        for name in C.MONTHLY_UNDERLYINGS + list(stocks):
             if self.st.open_positions("monthly", name):
                 continue
             lo, hi = C.MONTHLY_DTE_RANGE
-            exps = [e for e in M.monthly_expiries(M.expiries(self.master, name)) if lo <= M.dte(e) <= hi]
+            ex = M.deriv_exch(name)
+            exps = [e for e in M.monthly_expiries(M.expiries(self.master, name, ex)) if lo <= M.dte(e) <= hi]
             if exps:
                 try:
-                    self.try_open(name, "monthly", exps[0], "ONE_DAY", stock=name not in C.INDEX_TOKENS)
+                    self.try_open(name, "monthly", exps[0], "ONE_DAY", stock=name not in C.INDEX_TOKENS, exch=ex)
                 except Exception as e:
                     print(name, "error", e)
 
@@ -358,7 +457,7 @@ class Bot:
 
     def mcx_snapshot(self):
         """On-demand MCX market view in simple words (no trade, no RSI)."""
-        L = [f"🛢️ *MCX MARKET VIEW* – {now_ist():%d %b %H:%M}", ""]
+        L = [f"🛢️ *MCX VIEW* – {now_ist():%d %b %H:%M}", ""]
         for name in C.MCX_UNDERLYINGS:
             exp = self.mcx_expiry(name)
             if exp is None:
@@ -369,18 +468,14 @@ class Bot:
                 v = None; print(name, e)
             if not v:
                 L.append(f"*{name}*: data not available now\n"); continue
-            ch, td, bu = v["ch"], v["td"], v["bu"]
-            move = {"BULLISH": "leaning UP ⬆️", "BEARISH": "leaning DOWN ⬇️", "NEUTRAL": "sideways ↔️"}[v["bias"]]
-            idea = {"BULLISH": "put-side selling favoured", "BEARISH": "call-side selling favoured",
-                    "NEUTRAL": "both-side (range) selling favoured"}[v["bias"]]
+            ch = v["ch"]
+            arrow = {"BULLISH": "⬆️ up", "BEARISH": "⬇️ down", "NEUTRAL": "↔️ sideways"}[v["bias"]]
+            idea = {"BULLISH": "PE-sell side", "BEARISH": "CE-sell side", "NEUTRAL": "no clear side"}[v["bias"]]
             if ch["iv_label"] == "CHEAP":
-                idea = "premiums are cheap – better to avoid selling now"
-            L += [f"*{name}* {v['spot']:,.1f} (fut, option expiry {pd.Timestamp(exp):%d %b}) → {move}",
-                  f" Trend: {td['regime'] if td else '-'} | Futures: {bu['label'] if bu else 'n/a'} | PCR {ch['pcr']}",
-                  f" Support {ch['put_wall']:.0f} / Resistance {ch['call_wall']:.0f} | "
-                  f"IV {ch['atm_iv']} vs RV {ch['rv']:.1f} ({ch['iv_label']}) | Expected move ±{ch['exp_move']}",
-                  f" 📖 {simple_why(td, bu, ch).capitalize()}. → {idea}.", ""]
-        L.append("_View only. A SELL CALL comes only when all rules pass._")
+                idea = "premium cheap – avoid"
+            L.append(f"*{name}* {v['spot']:,.1f} {arrow} | premium {ch['iv_label'].lower()} → {idea}")
+        L.append("\n_View only – a SELL call comes only after confirmation and confidence ≥ "
+                 f"{C.MIN_CONFIDENCE}/100._")
         notify.send("\n".join(L))
 
     # ---------- manage open trades ----------
@@ -398,7 +493,7 @@ class Bot:
             ex = p.get("exch", "NFO")
             if ex == "MCX" and not (at("09:00") <= now <= at("23:30")):
                 continue
-            if ex == "NFO" and not (at("09:15") <= now <= at("15:45")):
+            if ex in ("NFO", "BFO") and not (at("09:15") <= now <= at("15:45")):
                 continue
             key = (p["name"], ex, p.get("fut_token"))
             if key not in spots:
@@ -417,11 +512,28 @@ class Bot:
                             f"Sold-option delta now {info['short_deltas']} (limit {p['adjust_delta']}) | "
                             f"Value {info['value']} vs credit {p['credit']} | P&L now {rs(pnl)}/lot")
                 continue
-            msg = {"TARGET": "✅ *BOOK PROFIT*", "SL": "🛑 *STOP-LOSS HIT – EXIT*", "TIME": "⏰ *TIME EXIT*"}[action]
             self.st.close(p, value, action)
-            notify.send(f"{msg} {head}\n📖 {EXPLAIN[action]}\n\n"
-                        f"P&L: *{info['pnl']:+} pts = {rs(pnl)}/lot* (exit value ≈ {info['value']}, credit {p['credit']})\n"
-                        f"How: first BUY back the option you sold, then SELL the insurance option you bought.")
+            costs = C.COST_PER_ORDER_RS * len(p["legs"]) * 2
+            net = pnl - costs
+            today = [c for c in self.st.s["closed"] if c["closed"].startswith(f"{now:%Y-%m-%d}")]
+            day_net = sum(c["pnl_rs_per_lot"] - C.COST_PER_ORDER_RS * len(c["legs"]) * 2 for c in today)
+            wins = sum(c["pnl_pts"] > 0 for c in today)
+            tally = (f"\n📊 *Trade closed: {'+' if net >= 0 else ''}{rs(net)} per lot* (after ≈{rs(costs)} costs)"
+                     f"\nToday: {'+' if day_net >= 0 else ''}{rs(day_net)}/lot from {len(today)} closed calls "
+                     f"({wins} profit, {len(today) - wins} loss)")
+            if len(p["legs"]) == 1:
+                l = p["legs"][0]
+                what = f"{p['name']} {k_(l['K'])} {l['typ']} #{p['id']}"
+                head = {"TARGET": "✅ *BOOK PROFIT*", "SL": "🛑 *STOP-LOSS HIT*",
+                        "SPOT": f"🛑 *PRICE STOP* – {p['name']} crossed {p['spot_stop']:,.1f}",
+                        "TIME": "⏰ *TIME EXIT*"}[action]
+                notify.send(f"{head}\n{what}\nBuy back now at ≈ ₹{info['value']} (sold at ₹{p['credit']})"
+                            + ("\n_Don't wait for recovery._" if action in ("SL", "SPOT") else "") + tally)
+            else:
+                msg = {"TARGET": "✅ *BOOK PROFIT*", "SL": "🛑 *STOP-LOSS HIT – EXIT*", "TIME": "⏰ *TIME EXIT*",
+                       "SPOT": "🛑 *PRICE STOP*"}[action]
+                notify.send(f"{msg} {head}\n📖 {EXPLAIN.get(action, '')}\n\n"
+                            f"Exit value ≈ {info['value']} (credit {p['credit']})" + tally)
 
     # ---------- report ----------
     def report(self, force=False):
@@ -436,15 +548,16 @@ class Bot:
         L.append(f"India VIX {v['vix']} ({v['chg']:+}%) – {v['pctile']} percentile of 1 year → {calm}")
         for name in dict.fromkeys(C.INTRADAY_UNDERLYINGS + C.WEEKLY_UNDERLYINGS):
             spot, tok = self.spot(name)
-            exps = M.expiries(self.master, name)
+            ex = M.deriv_exch(name)
+            exps = M.expiries(self.master, name, ex)
             if not spot or not exps:
                 continue
-            ch = M.build_chain(self.api, self.master, name, exps[0], spot)
+            ch = M.build_chain(self.api, self.master, name, exps[0], spot, 0.06, ex)
             if not ch:
                 continue
             self.st.record_iv(name, ch["atm_iv"])
-            trend, td = M.trend_score(self.candles(tok, "ONE_DAY", 200), 20, 50)
-            bu = M.futures_buildup(self.api, self.master, name)
+            trend, td = M.trend_score(self.candles(tok, "ONE_DAY", 200, M.spot_seg(name)), 20, 50)
+            bu = M.futures_buildup(self.api, self.master, name, ex)
             bias, sc = M.combine_bias(trend, bu, ch["pcr"])
             move = {"BULLISH": "leaning UP ⬆️", "BEARISH": "leaning DOWN ⬇️", "NEUTRAL": "sideways ↔️"}[bias]
             L.append(f"\n*{name}* {spot:,.1f} → {move}\n PCR {ch['pcr']} | Support {ch['put_wall']:.0f} | "
@@ -513,13 +626,16 @@ def main():
             return
         mcx_on = C.MCX_OPTIONS_ENABLED and at("09:00") <= now <= at("23:59") and bot.mcx_open_today()
         if mode == "mcx":
-            bot.mcx_snapshot()
-            if mcx_on:
-                bot.mcx_intraday_scan(force=True)
+            bot.mcx_snapshot()                # view only - never an instant call
             return
         nse_on = at("09:15") <= now <= at("18:00") and bot.market_open_today()
         if nse_on or mcx_on:
             bot.monitor()                     # exits / adjust alerts for every open call
+            if C.FLOW_ENABLED:
+                try:
+                    flow.run(bot, nse_on, mcx_on)
+                except Exception as e:
+                    traceback.print_exc(); print("flow error", e)
         if nse_on and now <= at("15:31"):
             bot.intraday_scan()
             bot.positional_scan()
