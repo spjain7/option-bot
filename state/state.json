@@ -1,7 +1,110 @@
 {
- "next_id": 1,
- "positions": [],
+ "next_id": 2,
+ "positions": [
+  {
+   "strategy": "Iron Condor",
+   "bias": "NEUTRAL",
+   "legs": [
+    {
+     "symbol": "NATURALGAS23SEP26265PE",
+     "token": "578351",
+     "K": 265.0,
+     "typ": "PE",
+     "side": "SELL",
+     "entry": 1.35,
+     "delta": -0.22,
+     "iv": 51.9,
+     "gamma": 0.027718592066439878,
+     "theta": -0.74965315861386,
+     "vega": 0.060989919791871926
+    },
+    {
+     "symbol": "NATURALGAS23SEP26260PE",
+     "token": "578352",
+     "K": 260.0,
+     "typ": "PE",
+     "side": "BUY",
+     "entry": 0.55,
+     "delta": -0.102,
+     "iv": 51.5,
+     "gamma": 0.01684490565527596,
+     "theta": -0.4500109305153282,
+     "vega": 0.03677693009388641
+    },
+    {
+     "symbol": "NATURALGAS23SEP26285CE",
+     "token": "578267",
+     "K": 285.0,
+     "typ": "CE",
+     "side": "SELL",
+     "entry": 1.0,
+     "delta": 0.166,
+     "iv": 57.7,
+     "gamma": 0.020927793046414844,
+     "theta": -0.7191534867930447,
+     "vega": 0.05124860401033587
+    },
+    {
+     "symbol": "NATURALGAS23SEP26290CE",
+     "token": "578266",
+     "K": 290.0,
+     "typ": "CE",
+     "side": "BUY",
+     "entry": 0.55,
+     "delta": 0.093,
+     "iv": 59.8,
+     "gamma": 0.013520283197656259,
+     "theta": -0.49717657817082966,
+     "vega": 0.03428489112157932
+    }
+   ],
+   "lot": 1250,
+   "lots": 2,
+   "credit": 1.25,
+   "width": 5.0,
+   "max_loss": 3.75,
+   "risk_rs": 1562,
+   "reward_rs": 781,
+   "rr": 0.5,
+   "costs_rs": 320,
+   "rom_pct": 33.3,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.71,
+   "breakevens": [
+    263.8,
+    286.2
+   ],
+   "pos_greeks": {
+    "delta": 56.25,
+    "gamma": -22.85,
+    "theta": 652.02,
+    "vega": -51.47
+   },
+   "target_val": 0.62,
+   "sl_val": 2.5,
+   "adjust_delta": 0.4,
+   "pop": 61,
+   "name": "NATURALGAS",
+   "mode": "intraday",
+   "expiry": "2026-09-23",
+   "dte": 2,
+   "spot_at_entry": 273.0,
+   "exch": "MCX",
+   "fut_token": "568245",
+   "exit_time": "23:00",
+   "id": 1,
+   "opened": "2026-09-21 21:34",
+   "flags": []
+  }
+ ],
  "closed": [],
- "done": {},
+ "done": {
+  "mcx_hourly|CRUDEOIL|2026-09-21 21:00": "2026-09-21",
+  "mcx_hourly|NATURALGAS|2026-09-21 21:00": "2026-09-21",
+  "mcx_hourly|GOLD|2026-09-21 21:00": "2026-09-21",
+  "mcx_hourly|SILVER|2026-09-21 21:00": "2026-09-21",
+  "mcx_hourly|GOLDM|2026-09-21 21:00": "2026-09-21",
+  "mcx_hourly|SILVERM|2026-09-21 21:00": "2026-09-21"
+ },
  "iv_hist": {}
 }
