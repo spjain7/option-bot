@@ -72,9 +72,25 @@ EVENT_DATES = {
 # ═════════════ RISK LIMITS ═════════════
 CAPITAL_RS           = 500000    # your trading capital
 MAX_RISK_PER_TRADE   = 0.02      # 2% of capital max loss per trade -> suggested lots
-MAX_OPEN_POSITIONS   = 6         # no new calls when this many are open
+MAX_OPEN_POSITIONS   = 10        # no new calls when this many are open (NSE + MCX together)
 MAX_DAILY_LOSS_RS    = 15000     # no new calls today after this closed loss (per-lot basis)
 COST_PER_ORDER_RS    = 40        # brokerage + STT + exchange + GST per order (approx.)
+
+# ═════════════ MCX OPTION SELLING (commodity options on futures) ═════════════
+MCX_OPTIONS_ENABLED  = True
+MCX_UNDERLYINGS      = ["CRUDEOIL", "NATURALGAS", "GOLD", "SILVER", "GOLDM", "SILVERM"]
+MCX_FIRST_SCAN       = "10:00"   # after first 1-hour candle (09:00-10:00)
+MCX_LAST_ENTRY       = "22:30"
+MCX_INTRADAY_EXIT    = "23:00"
+MCX_POSITIONAL_WINDOW = ("22:30", "23:15")
+MCX_MIN_DTE          = 2         # skip option expiries closer than this
+MCX_MONTHLY_DTE      = (7, 40)   # positional MCX trade when option expiry is 7-40 days away
+MCX_MIN_SHORT_OI     = 50        # MCX strikes have lower OI than NSE
+MCX_CHAIN_RANGE_PCT  = {"intraday": 0.25, "monthly": 0.30}   # commodities are volatile: load wide
+# Rupees gained/lost per 1 point move, per lot (exchange contract size). Check with your broker.
+MCX_RS_PER_POINT     = {"CRUDEOIL": 100, "CRUDEOILM": 10, "NATURALGAS": 1250, "NATGASMINI": 250,
+                        "GOLD": 100, "GOLDM": 10, "SILVER": 30, "SILVERM": 5,
+                        "COPPER": 2500, "ZINC": 5000, "ALUMINIUM": 5000}
 
 # ═════════════ ENGINE B: RSI EXTREME ALERTS (independent - never affects option calls) ═════════════
 RSI_PERIOD           = 14

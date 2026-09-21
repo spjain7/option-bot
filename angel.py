@@ -95,7 +95,7 @@ def load_master():
     df = pd.DataFrame(json.loads(f.read_text()))
     keep = df["instrumenttype"].isin(["OPTIDX", "OPTSTK", "FUTIDX", "FUTSTK"]) & (df["exch_seg"] == "NFO")
     eq = (df["exch_seg"] == "NSE") & df["symbol"].str.endswith("-EQ")
-    mcx = (df["exch_seg"] == "MCX") & (df["instrumenttype"] == "FUTCOM")      # for RSI engine
+    mcx = (df["exch_seg"] == "MCX") & df["instrumenttype"].isin(["FUTCOM", "OPTFUT", "OPTCOM"])
     df = df[keep | eq | mcx].copy()
     df["expiry_dt"] = pd.to_datetime(df["expiry"], format="%d%b%Y", errors="coerce")
     df["strike"] = pd.to_numeric(df["strike"], errors="coerce")

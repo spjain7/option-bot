@@ -98,7 +98,7 @@ def check(p, qs, spot, T, now):
         return "TARGET", value, info
     if value >= p["sl_val"]:
         return "SL", value, info
-    if p["mode"] == "intraday" and (now >= now.normalize() + _hm(C.INTRADAY_EXIT_TIME)
+    if p["mode"] == "intraday" and (now >= now.normalize() + _hm(p.get("exit_time", C.INTRADAY_EXIT_TIME))
                                     or pd.Timestamp(p["opened"]).normalize() < now.normalize()):
         return "TIME", value, info
     if p["mode"] == "weekly" and now.normalize() >= exp and now >= now.normalize() + _hm(C.WEEKLY_EXIT_TIME):

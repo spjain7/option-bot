@@ -16,6 +16,7 @@ for mod in (market, positions, runner, rsi_alert):
 UND = {  # name: spot, iv, strike step, lot, trend(+1/-1)
     "NIFTY": [25000.0, 0.12, 50, 75, 1], "BANKNIFTY": [55000.0, 0.14, 100, 35, -1],
     "RELIANCE": [1400.0, 0.30, 10, 500, -1], "HDFCBANK": [1900.0, 0.15, 10, 550, 1],
+    "CRUDEOIL": [6000.0, 0.35, 50, 100, -1],
 }
 EXPS = {"NIFTY": ["2026-09-22", "2026-09-29", "2026-10-06", "2026-10-27"],
         "BANKNIFTY": ["2026-09-29", "2026-10-27"], "RELIANCE": ["2026-09-29", "2026-10-27"],
@@ -27,6 +28,8 @@ SPOT_TOK = {"NIFTY": "99926000", "BANKNIFTY": "99926009", "RELIANCE": "2885", "H
 def build_master():
     rows, tok = [], 100000
     for n, (s, iv, step, lot, _) in UND.items():
+        if n not in EXPS:
+            continue
         if n in ("RELIANCE", "HDFCBANK"):
             rows.append(dict(token=SPOT_TOK[n], symbol=f"{n}-EQ", name=n, expiry="", strike="-1", lotsize="1",
                              instrumenttype="", exch_seg="NSE"))
@@ -46,6 +49,11 @@ def build_master():
                                      instrumenttype="OPT" + itype, exch_seg="NFO"))
     rows.append(dict(token="900001", symbol="CRUDEOIL19OCT26FUT", name="CRUDEOIL", expiry="19OCT2026", strike="-1",
                      lotsize="100", instrumenttype="FUTCOM", exch_seg="MCX"))
+    for k in range(4800, 7250, 50):                      # MCX crude options (on the Oct future), expiry 15 Oct
+        for typ in ("CE", "PE"):
+            tok += 1
+            rows.append(dict(token=str(tok), symbol=f"CRUDEOIL15OCT26{k}{typ}", name="CRUDEOIL", expiry="15OCT2026",
+                             strike=f"{k*100:.6f}", lotsize="1", instrumenttype="OPTFUT", exch_seg="MCX"))
     m = pd.DataFrame(rows).drop_duplicates("token")
     m["expiry_dt"] = pd.to_datetime(m["expiry"], format="%d%b%Y", errors="coerce")
     m["strike"] = pd.to_numeric(m["strike"]); m["lotsize"] = pd.to_numeric(m["lotsize"])
@@ -176,6 +184,21 @@ def main():
     run_at("2026-09-21 21:05", lambda: rsi_alert.run(FakeAngel(), MASTER))    # next candle -> continuation
     assert [m for m in SENT[n1:] if "CRUDEOIL" in m and "STILL" in m]
     C.OPTION_ENGINE_ENABLED = True
+
+    print("\n=== MCX option selling: on-demand view + hourly scan (evening) ===")
+    C.MCX_UNDERLYINGS = ["CRUDEOIL"]
+    st.s["positions"].clear()
+    n0 = len(SENT)
+    def mcx_now():
+        assert bot.mcx_open_today()
+        bot.mcx_snapshot(); bot.mcx_intraday_scan(force=True)
+    run_at("2026-09-21 21:10", mcx_now)
+    assert any("MCX MARKET VIEW" in m for m in SENT[n0:])
+    cr = st.open_positions("intraday", "CRUDEOIL")
+    assert cr and cr[0]["exch"] == "MCX" and cr[0]["lot"] == 100, cr
+    print("MCX call:", cr[0]["strategy"], [(l["side"], l["K"], l["typ"]) for l in cr[0]["legs"]])
+    run_at("2026-09-21 23:05", bot.monitor)                 # MCX intraday exit at 23:00
+    assert not st.open_positions("intraday", "CRUDEOIL") and st.s["closed"][-1]["exch"] == "MCX"
 
     print("\n=== Separation check: engines never import each other ===")
     for f in ("strategy.py", "market.py", "positions.py", "greeks.py"):

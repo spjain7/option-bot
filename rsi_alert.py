@@ -96,7 +96,11 @@ def run(api, master):
                 L.append("\n_Past 90 days after entering this zone (stats only):_")
                 for k, (avg, med, pos, n) in hs.items():
                     L.append(f" {k}: avg {avg:+}% | median {med:+}% | up {pos}% of {n} cases")
-        L += ["", "_Independent RSI alert. Not an option-selling signal. No trade recommendation._"]
+        L += ["", "📖 " + ("Price has fallen very fast in the last few hours (sellers exhausted?). "
+                          "It can bounce – or keep falling in a strong downtrend." if z == "OVERSOLD" else
+                          "Price has risen very fast in the last few hours (buyers exhausted?). "
+                          "It can cool off – or keep rising in a strong uptrend."),
+              "_Independent RSI alert. Not an option-selling signal. No trade recommendation._"]
         notify.send("\n".join(L))
         st["log"].append({"time": str(df["time"].iloc[-1]), "exch": exch, "name": name, "rsi": round(cur, 1),
                           "prev": round(prev, 1), "status": z, "price": float(df["close"].iloc[-1])})

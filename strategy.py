@@ -30,13 +30,13 @@ def _leg(o, side):
             "gamma": float(o["gamma"]), "theta": float(o["theta"]), "vega": float(o["vega"])}
 
 
-def _liquid(o):
-    return o is not None and o["ba_pct"] <= C.MAX_BID_ASK_PCT and o["oi"] >= C.MIN_SHORT_OI
+def _liquid(o, min_oi):
+    return o is not None and o["ba_pct"] <= C.MAX_BID_ASK_PCT and o["oi"] >= min_oi
 
 
-def _spread(df, typ, d_short, d_hedge):
+def _spread(df, typ, d_short, d_hedge, min_oi=None):
     s = _pick(df, typ, d_short)
-    if not _liquid(s):
+    if not _liquid(s, C.MIN_SHORT_OI if min_oi is None else min_oi):
         return None
     if C.SELL_STYLE == "NAKED":
         return [_leg(s, "SELL")]
@@ -70,16 +70,17 @@ def build_trade(chain, bias, mode, allow_condor=True):
     """mode: intraday | intraday_expiry | weekly | monthly"""
     df, lot = chain["df"], chain["lot"]
     d = C.DELTA[mode]
+    oi = C.MCX_MIN_SHORT_OI if chain.get("exch") == "MCX" else C.MIN_SHORT_OI
     strat = NAMES[C.SELL_STYLE][bias]
     if bias == "BULLISH":
-        legs = _spread(df, "PE", d["short"], d["hedge"])
+        legs = _spread(df, "PE", d["short"], d["hedge"], oi)
     elif bias == "BEARISH":
-        legs = _spread(df, "CE", d["short"], d["hedge"])
+        legs = _spread(df, "CE", d["short"], d["hedge"], oi)
     else:
         if not allow_condor:
             return None
-        p = _spread(df, "PE", d["condor_short"], d["hedge"])
-        c = _spread(df, "CE", d["condor_short"], d["hedge"])
+        p = _spread(df, "PE", d["condor_short"], d["hedge"], oi)
+        c = _spread(df, "CE", d["condor_short"], d["hedge"], oi)
         legs = p + c if p and c else None
     if not legs:
         return None

@@ -10,9 +10,15 @@ MIN_PER_YEAR = 365 * 24 * 60
 
 
 # ─────────────── expiries ───────────────
-def expiries(master, name):
+OPT_TYPES = {"NFO": ["OPTIDX", "OPTSTK"], "MCX": ["OPTFUT", "OPTCOM"]}
+FUT_TYPES = {"NFO": ["FUTIDX", "FUTSTK"], "MCX": ["FUTCOM"]}
+EXPIRY_TIME = {"NFO": "15:30", "MCX": "23:30"}
+
+
+def expiries(master, name, exch="NFO"):
     today = now_ist().normalize()
-    e = master[(master["name"] == name) & master["instrumenttype"].isin(["OPTIDX", "OPTSTK"])]["expiry_dt"]
+    e = master[(master["name"] == name) & (master["exch_seg"] == exch)
+               & master["instrumenttype"].isin(OPT_TYPES[exch])]["expiry_dt"]
     return sorted(d for d in e.dropna().unique() if pd.Timestamp(d) >= today)
 
 
@@ -21,8 +27,9 @@ def monthly_expiries(exps):
     return sorted(s.groupby(s.dt.to_period("M")).max().tolist())
 
 
-def time_to_expiry(expiry):
-    exp = pd.Timestamp(expiry) + pd.Timedelta(hours=15, minutes=30)
+def time_to_expiry(expiry, exch="NFO"):
+    h, mi = map(int, EXPIRY_TIME[exch].split(":"))
+    exp = pd.Timestamp(expiry) + pd.Timedelta(hours=h, minutes=mi)
     return max((exp - now_ist()).total_seconds() / 60, 1) / MIN_PER_YEAR
 
 
@@ -38,20 +45,21 @@ def spot_token(master, name):
     return None if m.empty else str(m.iloc[0]["token"])
 
 
-def near_future(master, name):
-    today = now_ist().normalize()
-    m = master[(master["name"] == name) & master["instrumenttype"].isin(["FUTIDX", "FUTSTK"])
-               & (master["expiry_dt"] >= today)].sort_values("expiry_dt")
+def near_future(master, name, exch="NFO", on_or_after=None):
+    """Nearest future; for MCX options pass the option expiry to get its underlying future."""
+    start = pd.Timestamp(on_or_after) if on_or_after is not None else now_ist().normalize()
+    m = master[(master["name"] == name) & (master["exch_seg"] == exch)
+               & master["instrumenttype"].isin(FUT_TYPES[exch]) & (master["expiry_dt"] >= start)].sort_values("expiry_dt")
     return None if m.empty else m.iloc[0].to_dict()
 
 
-def futures_buildup(api, master, name):
+def futures_buildup(api, master, name, exch="NFO", fut=None):
     """Price vs OI change of near-month future since yesterday."""
-    fut = near_future(master, name)
+    fut = fut or near_future(master, name, exch)
     if fut is None:
         return None
-    q = api.quotes({"NFO": [fut["token"]]}).get(str(fut["token"]))
-    oi = api.oi_history("NFO", fut["token"], "ONE_DAY", now_ist() - pd.Timedelta(days=10), now_ist())
+    q = api.quotes({exch: [fut["token"]]}).get(str(fut["token"]))
+    oi = api.oi_history(exch, fut["token"], "ONE_DAY", now_ist() - pd.Timedelta(days=10), now_ist())
     if not q or oi is None or oi.empty:
         return None
     today = now_ist().normalize()
@@ -151,10 +159,10 @@ def combine_bias(trend, buildup, pcr):
 
 
 # ─────────────── option chain ───────────────
-def build_chain(api, master, name, expiry, spot, width_pct=0.08):
+def build_chain(api, master, name, expiry, spot, width_pct=0.08, exch="NFO"):
     exp = pd.Timestamp(expiry)
-    ch = master[(master["name"] == name) & (master["expiry_dt"] == exp)
-                & master["instrumenttype"].isin(["OPTIDX", "OPTSTK"])].copy()
+    ch = master[(master["name"] == name) & (master["expiry_dt"] == exp) & (master["exch_seg"] == exch)
+                & master["instrumenttype"].isin(OPT_TYPES[exch])].copy()
     if ch.empty:
         return None
     # Angel stores strike x100 for NFO; pick the scale closest to spot
@@ -165,7 +173,7 @@ def build_chain(api, master, name, expiry, spot, width_pct=0.08):
     if ch.empty:
         return None
 
-    qs = api.quotes({"NFO": ch["token"].astype(str).tolist()})
+    qs = api.quotes({exch: ch["token"].astype(str).tolist()})
 
     def field(tok, key):
         return qs.get(str(tok), {}).get(key)
@@ -185,7 +193,7 @@ def build_chain(api, master, name, expiry, spot, width_pct=0.08):
     ch["mid"] = np.where((ch["bid"] > 0) & (ch["ask"] > 0), (ch["bid"] + ch["ask"]) / 2, ch["ltp"])
     ch["ba_pct"] = np.where((ch["bid"] > 0) & (ch["ask"] > 0), (ch["ask"] - ch["bid"]) / ch["mid"] * 100, 0)
 
-    T, r = time_to_expiry(exp), C.RISK_FREE
+    T, r = time_to_expiry(exp, exch), C.RISK_FREE
     # implied forward from put-call parity at the strike where |C-P| is smallest
     piv = ch.pivot_table(index="K", columns="typ", values="mid", aggfunc="first").dropna()
     if not piv.empty and {"CE", "PE"} <= set(piv.columns):
@@ -218,5 +226,6 @@ def build_chain(api, master, name, expiry, spot, width_pct=0.08):
         "atm_iv": round(atm_iv, 2) if atm_iv else None,
         "exp_move": round(F * atm_iv / 100 * math.sqrt(T), 1) if atm_iv else None,   # 1 SD to expiry
         "skew": round(pe25 - ce25, 1) if pe25 and ce25 else None,                  # + = puts richer
-        "lot": int(df["lotsize"].iloc[0]),
+        "lot": int(C.MCX_RS_PER_POINT.get(name, df["lotsize"].iloc[0])) if exch == "MCX" else int(df["lotsize"].iloc[0]),
+        "exch": exch,
     }
