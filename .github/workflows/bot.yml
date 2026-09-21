@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "auto / test / report / mcx"
+        description: "auto / test / report / mcx / view"
         default: "test"
 
 concurrency:
