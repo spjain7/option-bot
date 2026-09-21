@@ -257,8 +257,8 @@ def build_chain(api, master, name, expiry, spot, width_pct=0.08, exch="NFO"):
     return {
         "df": df, "F": F, "T": T, "spot": spot, "expiry": exp,
         "pcr": round(pe_oi / ce_oi, 2) if ce_oi else None,
-        "call_wall": _wall(df, "CE", F, atm_iv, T),
-        "put_wall": _wall(df, "PE", F, atm_iv, T),
+        "call_wall": _wall(df, "CE", spot, atm_iv, T),       # levels relative to CMP (not the forward)
+        "put_wall": _wall(df, "PE", spot, atm_iv, T),
         "atm_iv": round(atm_iv, 2) if atm_iv else None,
         "exp_move": round(F * atm_iv / 100 * math.sqrt(T), 1) if atm_iv else None,   # 1 SD to expiry
         "skew": round(pe25 - ce25, 1) if pe25 and ce25 else None,                  # + = puts richer

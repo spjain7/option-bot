@@ -129,7 +129,7 @@ def confidence(t, td, bu, ch):
 def sr_text(ch):
     """Nearest support BELOW and resistance ABOVE the current price:
     option-OI walls + pivot levels from yesterday (S2, S1, P, R1, R2, prev-day high/low)."""
-    px = ch.get("F") or ch.get("spot")
+    px = ch.get("spot") or ch.get("F")                    # judge levels against the CMP shown to you
     sup = [(ch["put_wall"], f"{k_(ch['put_wall'])} (OI)")] if ch.get("put_wall") and ch["put_wall"] < px else []
     res = [(ch["call_wall"], f"{k_(ch['call_wall'])} (OI)")] if ch.get("call_wall") and ch["call_wall"] > px else []
     pv = ch.get("pivots") or {}

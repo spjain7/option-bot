@@ -243,6 +243,12 @@ def main():
     dfw = pd.DataFrame(rows)
     cw, pw = market._wall(dfw, "CE", 23414, 14, 3 / 365), market._wall(dfw, "PE", 23414, 14, 3 / 365)
     print("NIFTY walls:", pw, cw)
+    # live case: CMP 23,414 but forward 23,460 -> R2 23,443 must be RESISTANCE, never support
+    t2 = runner.sr_text({"spot": 23414.3, "F": 23460, "put_wall": 23400, "call_wall": 23500,
+                         "pivots": {"S1": 23292, "P": 23340, "R1": 23395, "R2": 23443, "R3": 23497}})
+    print("NIFTY S/R:", t2)
+    s2, r2 = t2.split("|")
+    assert "23,443" in r2 and "23,443" not in s2 and "23,395" in s2
     assert cw == 23500 and pw == 23400
     sup, res = txt.split("|")
     assert "9000" not in sup and "8,570" in sup and "8,900" in res
