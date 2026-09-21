@@ -1,1 +1,63 @@
+name: Option Selling Bot
 
+on:
+  schedule:
+    # every 15 min, 08:30-16:15 IST, Mon-Fri (GitHub uses UTC; IST = UTC + 5:30)
+    - cron: "*/15 3-10 * * 1-5"
+    # hourly at hh:05 IST, 16:05-23:05 - MCX evening session (RSI alerts)
+    - cron: "35 10-17 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "auto / test / report"
+        default: "test"
+
+concurrency:
+  group: option-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - id: day
+        run: echo "d=$(TZ=Asia/Kolkata date +%F)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4                 # re-use today's instrument list (saves time/minutes)
+        with:
+          path: .cache
+          key: scrip-${{ steps.day.outputs.d }}
+
+      - name: Run bot
+        run: python runner.py ${{ github.event.inputs.mode || 'auto' }}
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+          TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+          CALLMEBOT_PHONE:   ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY:  ${{ secrets.CALLMEBOT_APIKEY }}
+
+      - name: Save open positions / history
+        if: always()
+        run: |
+          git config user.name "option-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add state/*.json 2>/dev/null || true
+          git diff --staged --quiet || (git commit -m "state $(date -u +%F_%H%M)" && git pull --rebase && git push)
