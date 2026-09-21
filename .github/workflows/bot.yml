@@ -4,12 +4,13 @@ on:
   schedule:
     # every 15 min, 08:30-16:15 IST, Mon-Fri (GitHub uses UTC; IST = UTC + 5:30)
     - cron: "*/15 3-10 * * 1-5"
-    # hourly at hh:05 IST, 16:05-23:05 - MCX evening session (RSI alerts)
+    # every 30 min, 16:05-23:35 IST - MCX evening session (MCX calls, exits, RSI)
     - cron: "35 10-17 * * 1-5"
+    - cron: "5 11-18 * * 1-5"
   workflow_dispatch:
     inputs:
       mode:
-        description: "auto / test / report"
+        description: "auto / test / report / mcx"
         default: "test"
 
 concurrency:
