@@ -6,238 +6,6 @@
    "bias": "BEARISH",
    "legs": [
     {
-     "symbol": "GOLD25SEP26155000CE",
-     "token": "556441",
-     "K": 155000.0,
-     "typ": "CE",
-     "side": "SELL",
-     "entry": 495.5,
-     "delta": 0.242,
-     "iv": 23.8,
-     "gamma": 8.889831429173027e-05,
-     "theta": -166.02131977919726,
-     "vega": 46.23588781828578
-    }
-   ],
-   "lot": 100,
-   "lots": 1,
-   "credit": 495.5,
-   "width": null,
-   "max_loss": null,
-   "risk_rs": 17343,
-   "reward_rs": 17342,
-   "rr": 1.0,
-   "costs_rs": 80,
-   "rom_pct": null,
-   "gamma_risk": "MEDIUM",
-   "strike_em": 0.74,
-   "breakevens": [
-    155495.5
-   ],
-   "pos_greeks": {
-    "delta": -24.2,
-    "gamma": -0.01,
-    "theta": 16602.13,
-    "vega": -4623.59
-   },
-   "target_val": 322.07,
-   "sl_val": 668.93,
-   "adjust_delta": 0.4,
-   "spot_stop": 153754.0,
-   "margin_rs": 1879646,
-   "pop": 76,
-   "name": "GOLD",
-   "mode": "intraday",
-   "expiry": "2026-09-25",
-   "confidence": 76,
-   "dte": 3,
-   "spot_at_entry": 152508.0,
-   "exch": "MCX",
-   "fut_token": "483079",
-   "exit_time": "23:00",
-   "id": 3,
-   "opened": "2026-09-22 12:53",
-   "flags": []
-  },
-  {
-   "strategy": "Single CE Sell",
-   "bias": "BEARISH",
-   "legs": [
-    {
-     "symbol": "SILVER24SEP26242000CE",
-     "token": "559861",
-     "K": 242000.0,
-     "typ": "CE",
-     "side": "SELL",
-     "entry": 1070.0,
-     "delta": 0.27,
-     "iv": 35.0,
-     "gamma": 4.8654161720180655e-05,
-     "theta": -470.8141954379259,
-     "vega": 64.213918488977
-    }
-   ],
-   "lot": 30,
-   "lots": 1,
-   "credit": 1070.0,
-   "width": null,
-   "max_loss": null,
-   "risk_rs": 11235,
-   "reward_rs": 11235,
-   "rr": 1.0,
-   "costs_rs": 80,
-   "rom_pct": null,
-   "gamma_risk": "MEDIUM",
-   "strike_em": 0.66,
-   "breakevens": [
-    243070.0
-   ],
-   "pos_greeks": {
-    "delta": -8.1,
-    "gamma": -0.0,
-    "theta": 14124.43,
-    "vega": -1926.42
-   },
-   "target_val": 695.5,
-   "sl_val": 1444.5,
-   "adjust_delta": 0.4,
-   "spot_stop": 239826.0,
-   "margin_rs": 887647,
-   "pop": 73,
-   "name": "SILVER",
-   "mode": "intraday",
-   "expiry": "2026-09-24",
-   "confidence": 63,
-   "dte": 2,
-   "spot_at_entry": 237652.0,
-   "exch": "MCX",
-   "fut_token": "495214",
-   "exit_time": "23:00",
-   "id": 4,
-   "opened": "2026-09-22 12:54",
-   "flags": []
-  },
-  {
-   "strategy": "Single CE Sell",
-   "bias": "BEARISH",
-   "legs": [
-    {
-     "symbol": "GOLDM25SEP26155000CE",
-     "token": "578842",
-     "K": 155000.0,
-     "typ": "CE",
-     "side": "SELL",
-     "entry": 502.5,
-     "delta": 0.245,
-     "iv": 23.7,
-     "gamma": 8.968344152848367e-05,
-     "theta": -166.69214223265354,
-     "vega": 46.53263728841295
-    }
-   ],
-   "lot": 10,
-   "lots": 1,
-   "credit": 502.5,
-   "width": null,
-   "max_loss": null,
-   "risk_rs": 1759,
-   "reward_rs": 1759,
-   "rr": 1.0,
-   "costs_rs": 80,
-   "rom_pct": null,
-   "gamma_risk": "MEDIUM",
-   "strike_em": 0.72,
-   "breakevens": [
-    155502.5
-   ],
-   "pos_greeks": {
-    "delta": -2.45,
-    "gamma": -0.0,
-    "theta": 1666.92,
-    "vega": -465.33
-   },
-   "target_val": 326.62,
-   "sl_val": 678.38,
-   "adjust_delta": 0.4,
-   "spot_stop": 153750.0,
-   "margin_rs": 188025,
-   "pop": 76,
-   "name": "GOLDM",
-   "mode": "intraday",
-   "expiry": "2026-09-25",
-   "confidence": 93,
-   "dte": 3,
-   "spot_at_entry": 152500.0,
-   "exch": "MCX",
-   "fut_token": "569003",
-   "exit_time": "23:00",
-   "id": 5,
-   "opened": "2026-09-22 12:54",
-   "flags": []
-  },
-  {
-   "strategy": "Single CE Sell",
-   "bias": "BEARISH",
-   "legs": [
-    {
-     "symbol": "SILVERM24SEP26244000CE",
-     "token": "560367",
-     "K": 244000.0,
-     "typ": "CE",
-     "side": "SELL",
-     "entry": 1044.5,
-     "delta": 0.261,
-     "iv": 34.4,
-     "gamma": 4.823183578574449e-05,
-     "theta": -459.79393163325284,
-     "vega": 63.66561098407026
-    }
-   ],
-   "lot": 5,
-   "lots": 1,
-   "credit": 1044.5,
-   "width": null,
-   "max_loss": null,
-   "risk_rs": 1828,
-   "reward_rs": 1828,
-   "rr": 1.0,
-   "costs_rs": 80,
-   "rom_pct": null,
-   "gamma_risk": "MEDIUM",
-   "strike_em": 0.67,
-   "breakevens": [
-    245044.5
-   ],
-   "pos_greeks": {
-    "delta": -1.31,
-    "gamma": -0.0,
-    "theta": 2298.97,
-    "vega": -318.33
-   },
-   "target_val": 678.93,
-   "sl_val": 1410.08,
-   "adjust_delta": 0.4,
-   "spot_stop": 241765.5,
-   "margin_rs": 148941,
-   "pop": 74,
-   "name": "SILVERM",
-   "mode": "intraday",
-   "expiry": "2026-09-24",
-   "confidence": 63,
-   "dte": 2,
-   "spot_at_entry": 239531.0,
-   "exch": "MCX",
-   "fut_token": "483080",
-   "exit_time": "23:00",
-   "id": 6,
-   "opened": "2026-09-22 12:54",
-   "flags": []
-  },
-  {
-   "strategy": "Single CE Sell",
-   "bias": "BEARISH",
-   "legs": [
-    {
      "symbol": "NIFTY29SEP2623600CE",
      "token": "74003",
      "K": 23600.0,
@@ -464,122 +232,6 @@
    "id": 10,
    "opened": "2026-09-22 14:51",
    "flags": []
-  },
-  {
-   "strategy": "Single CE Sell",
-   "bias": "BEARISH",
-   "legs": [
-    {
-     "symbol": "CRUDEOIL15OCT269500CE",
-     "token": "580489",
-     "K": 9500.0,
-     "typ": "CE",
-     "side": "SELL",
-     "entry": 213.6,
-     "delta": 0.3,
-     "iv": 54.7,
-     "gamma": 0.0002884834272613363,
-     "theta": -9.403685375221972,
-     "vega": 7.668741349319163
-    }
-   ],
-   "lot": 100,
-   "lots": 1,
-   "credit": 213.6,
-   "width": null,
-   "max_loss": null,
-   "risk_rs": 7476,
-   "reward_rs": 7476,
-   "rr": 1.0,
-   "costs_rs": 80,
-   "rom_pct": null,
-   "gamma_risk": "MEDIUM",
-   "strike_em": 0.64,
-   "breakevens": [
-    9713.6
-   ],
-   "pos_greeks": {
-    "delta": -30.0,
-    "gamma": -0.03,
-    "theta": 940.37,
-    "vega": -766.87
-   },
-   "target_val": 138.84,
-   "sl_val": 288.36,
-   "adjust_delta": 0.4,
-   "spot_stop": 9121.0,
-   "margin_rs": 126264,
-   "pop": 70,
-   "name": "CRUDEOIL",
-   "mode": "intraday",
-   "expiry": "2026-10-15",
-   "confidence": 75,
-   "dte": 23,
-   "spot_at_entry": 8742.0,
-   "exch": "MCX",
-   "fut_token": "569900",
-   "exit_time": "23:00",
-   "id": 11,
-   "opened": "2026-09-22 14:52",
-   "flags": []
-  },
-  {
-   "strategy": "Single PE Sell",
-   "bias": "BULLISH",
-   "legs": [
-    {
-     "symbol": "NATURALGAS23OCT26270PE",
-     "token": "581238",
-     "K": 270.0,
-     "typ": "PE",
-     "side": "SELL",
-     "entry": 5.85,
-     "delta": -0.232,
-     "iv": 47.1,
-     "gamma": 0.007554681254839006,
-     "theta": -0.1853879884903441,
-     "vega": 0.2621655191110805
-    }
-   ],
-   "lot": 1250,
-   "lots": 3,
-   "credit": 5.85,
-   "width": null,
-   "max_loss": null,
-   "risk_rs": 2559,
-   "reward_rs": 2559,
-   "rr": 1.0,
-   "costs_rs": 80,
-   "rom_pct": null,
-   "gamma_risk": "MEDIUM",
-   "strike_em": 0.64,
-   "breakevens": [
-    264.1
-   ],
-   "pos_greeks": {
-    "delta": 290.0,
-    "gamma": -9.44,
-    "theta": 231.73,
-    "vega": -327.71
-   },
-   "target_val": 3.8,
-   "sl_val": 7.9,
-   "adjust_delta": 0.4,
-   "spot_stop": 282.9,
-   "margin_rs": 51682,
-   "pop": 77,
-   "name": "NATURALGAS",
-   "mode": "intraday",
-   "expiry": "2026-10-23",
-   "confidence": 83,
-   "dte": 31,
-   "spot_at_entry": 295.8,
-   "exch": "MCX",
-   "fut_token": "570750",
-   "exit_time": "23:00",
-   "id": 12,
-   "opened": "2026-09-22 21:21",
-   "flags": []
   }
  ],
  "closed": [
@@ -745,6 +397,384 @@
    "pnl_rs_per_lot": -9535.0,
    "closed": "2026-09-22 16:13",
    "exit_reason": "SL"
+  },
+  {
+   "strategy": "Single CE Sell",
+   "bias": "BEARISH",
+   "legs": [
+    {
+     "symbol": "GOLD25SEP26155000CE",
+     "token": "556441",
+     "K": 155000.0,
+     "typ": "CE",
+     "side": "SELL",
+     "entry": 495.5,
+     "delta": 0.242,
+     "iv": 23.8,
+     "gamma": 8.889831429173027e-05,
+     "theta": -166.02131977919726,
+     "vega": 46.23588781828578
+    }
+   ],
+   "lot": 100,
+   "lots": 1,
+   "credit": 495.5,
+   "width": null,
+   "max_loss": null,
+   "risk_rs": 17343,
+   "reward_rs": 17342,
+   "rr": 1.0,
+   "costs_rs": 80,
+   "rom_pct": null,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.74,
+   "breakevens": [
+    155495.5
+   ],
+   "pos_greeks": {
+    "delta": -24.2,
+    "gamma": -0.01,
+    "theta": 16602.13,
+    "vega": -4623.59
+   },
+   "target_val": 322.07,
+   "sl_val": 668.93,
+   "adjust_delta": 0.4,
+   "spot_stop": 153754.0,
+   "margin_rs": 1879646,
+   "pop": 76,
+   "name": "GOLD",
+   "mode": "intraday",
+   "expiry": "2026-09-25",
+   "confidence": 76,
+   "dte": 3,
+   "spot_at_entry": 152508.0,
+   "exch": "MCX",
+   "fut_token": "483079",
+   "exit_time": "23:00",
+   "id": 3,
+   "opened": "2026-09-22 12:53",
+   "flags": [],
+   "exit_value": 416.75,
+   "pnl_pts": 78.75,
+   "pnl_rs_per_lot": 7875.0,
+   "closed": "2026-09-22 23:06",
+   "exit_reason": "TIME"
+  },
+  {
+   "strategy": "Single CE Sell",
+   "bias": "BEARISH",
+   "legs": [
+    {
+     "symbol": "SILVER24SEP26242000CE",
+     "token": "559861",
+     "K": 242000.0,
+     "typ": "CE",
+     "side": "SELL",
+     "entry": 1070.0,
+     "delta": 0.27,
+     "iv": 35.0,
+     "gamma": 4.8654161720180655e-05,
+     "theta": -470.8141954379259,
+     "vega": 64.213918488977
+    }
+   ],
+   "lot": 30,
+   "lots": 1,
+   "credit": 1070.0,
+   "width": null,
+   "max_loss": null,
+   "risk_rs": 11235,
+   "reward_rs": 11235,
+   "rr": 1.0,
+   "costs_rs": 80,
+   "rom_pct": null,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.66,
+   "breakevens": [
+    243070.0
+   ],
+   "pos_greeks": {
+    "delta": -8.1,
+    "gamma": -0.0,
+    "theta": 14124.43,
+    "vega": -1926.42
+   },
+   "target_val": 695.5,
+   "sl_val": 1444.5,
+   "adjust_delta": 0.4,
+   "spot_stop": 239826.0,
+   "margin_rs": 887647,
+   "pop": 73,
+   "name": "SILVER",
+   "mode": "intraday",
+   "expiry": "2026-09-24",
+   "confidence": 63,
+   "dte": 2,
+   "spot_at_entry": 237652.0,
+   "exch": "MCX",
+   "fut_token": "495214",
+   "exit_time": "23:00",
+   "id": 4,
+   "opened": "2026-09-22 12:54",
+   "flags": [],
+   "exit_value": 1280.0,
+   "pnl_pts": -210.0,
+   "pnl_rs_per_lot": -6300.0,
+   "closed": "2026-09-22 23:06",
+   "exit_reason": "TIME"
+  },
+  {
+   "strategy": "Single CE Sell",
+   "bias": "BEARISH",
+   "legs": [
+    {
+     "symbol": "GOLDM25SEP26155000CE",
+     "token": "578842",
+     "K": 155000.0,
+     "typ": "CE",
+     "side": "SELL",
+     "entry": 502.5,
+     "delta": 0.245,
+     "iv": 23.7,
+     "gamma": 8.968344152848367e-05,
+     "theta": -166.69214223265354,
+     "vega": 46.53263728841295
+    }
+   ],
+   "lot": 10,
+   "lots": 1,
+   "credit": 502.5,
+   "width": null,
+   "max_loss": null,
+   "risk_rs": 1759,
+   "reward_rs": 1759,
+   "rr": 1.0,
+   "costs_rs": 80,
+   "rom_pct": null,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.72,
+   "breakevens": [
+    155502.5
+   ],
+   "pos_greeks": {
+    "delta": -2.45,
+    "gamma": -0.0,
+    "theta": 1666.92,
+    "vega": -465.33
+   },
+   "target_val": 326.62,
+   "sl_val": 678.38,
+   "adjust_delta": 0.4,
+   "spot_stop": 153750.0,
+   "margin_rs": 188025,
+   "pop": 76,
+   "name": "GOLDM",
+   "mode": "intraday",
+   "expiry": "2026-09-25",
+   "confidence": 93,
+   "dte": 3,
+   "spot_at_entry": 152500.0,
+   "exch": "MCX",
+   "fut_token": "569003",
+   "exit_time": "23:00",
+   "id": 5,
+   "opened": "2026-09-22 12:54",
+   "flags": [],
+   "exit_value": 435.25,
+   "pnl_pts": 67.25,
+   "pnl_rs_per_lot": 672.0,
+   "closed": "2026-09-22 23:06",
+   "exit_reason": "TIME"
+  },
+  {
+   "strategy": "Single CE Sell",
+   "bias": "BEARISH",
+   "legs": [
+    {
+     "symbol": "SILVERM24SEP26244000CE",
+     "token": "560367",
+     "K": 244000.0,
+     "typ": "CE",
+     "side": "SELL",
+     "entry": 1044.5,
+     "delta": 0.261,
+     "iv": 34.4,
+     "gamma": 4.823183578574449e-05,
+     "theta": -459.79393163325284,
+     "vega": 63.66561098407026
+    }
+   ],
+   "lot": 5,
+   "lots": 1,
+   "credit": 1044.5,
+   "width": null,
+   "max_loss": null,
+   "risk_rs": 1828,
+   "reward_rs": 1828,
+   "rr": 1.0,
+   "costs_rs": 80,
+   "rom_pct": null,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.67,
+   "breakevens": [
+    245044.5
+   ],
+   "pos_greeks": {
+    "delta": -1.31,
+    "gamma": -0.0,
+    "theta": 2298.97,
+    "vega": -318.33
+   },
+   "target_val": 678.93,
+   "sl_val": 1410.08,
+   "adjust_delta": 0.4,
+   "spot_stop": 241765.5,
+   "margin_rs": 148941,
+   "pop": 74,
+   "name": "SILVERM",
+   "mode": "intraday",
+   "expiry": "2026-09-24",
+   "confidence": 63,
+   "dte": 2,
+   "spot_at_entry": 239531.0,
+   "exch": "MCX",
+   "fut_token": "483080",
+   "exit_time": "23:00",
+   "id": 6,
+   "opened": "2026-09-22 12:54",
+   "flags": [],
+   "exit_value": 1191.25,
+   "pnl_pts": -146.75,
+   "pnl_rs_per_lot": -734.0,
+   "closed": "2026-09-22 23:06",
+   "exit_reason": "TIME"
+  },
+  {
+   "strategy": "Single CE Sell",
+   "bias": "BEARISH",
+   "legs": [
+    {
+     "symbol": "CRUDEOIL15OCT269500CE",
+     "token": "580489",
+     "K": 9500.0,
+     "typ": "CE",
+     "side": "SELL",
+     "entry": 213.6,
+     "delta": 0.3,
+     "iv": 54.7,
+     "gamma": 0.0002884834272613363,
+     "theta": -9.403685375221972,
+     "vega": 7.668741349319163
+    }
+   ],
+   "lot": 100,
+   "lots": 1,
+   "credit": 213.6,
+   "width": null,
+   "max_loss": null,
+   "risk_rs": 7476,
+   "reward_rs": 7476,
+   "rr": 1.0,
+   "costs_rs": 80,
+   "rom_pct": null,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.64,
+   "breakevens": [
+    9713.6
+   ],
+   "pos_greeks": {
+    "delta": -30.0,
+    "gamma": -0.03,
+    "theta": 940.37,
+    "vega": -766.87
+   },
+   "target_val": 138.84,
+   "sl_val": 288.36,
+   "adjust_delta": 0.4,
+   "spot_stop": 9121.0,
+   "margin_rs": 126264,
+   "pop": 70,
+   "name": "CRUDEOIL",
+   "mode": "intraday",
+   "expiry": "2026-10-15",
+   "confidence": 75,
+   "dte": 23,
+   "spot_at_entry": 8742.0,
+   "exch": "MCX",
+   "fut_token": "569900",
+   "exit_time": "23:00",
+   "id": 11,
+   "opened": "2026-09-22 14:52",
+   "flags": [],
+   "exit_value": 207.75,
+   "pnl_pts": 5.85,
+   "pnl_rs_per_lot": 585.0,
+   "closed": "2026-09-22 23:07",
+   "exit_reason": "TIME"
+  },
+  {
+   "strategy": "Single PE Sell",
+   "bias": "BULLISH",
+   "legs": [
+    {
+     "symbol": "NATURALGAS23OCT26270PE",
+     "token": "581238",
+     "K": 270.0,
+     "typ": "PE",
+     "side": "SELL",
+     "entry": 5.85,
+     "delta": -0.232,
+     "iv": 47.1,
+     "gamma": 0.007554681254839006,
+     "theta": -0.1853879884903441,
+     "vega": 0.2621655191110805
+    }
+   ],
+   "lot": 1250,
+   "lots": 3,
+   "credit": 5.85,
+   "width": null,
+   "max_loss": null,
+   "risk_rs": 2559,
+   "reward_rs": 2559,
+   "rr": 1.0,
+   "costs_rs": 80,
+   "rom_pct": null,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.64,
+   "breakevens": [
+    264.1
+   ],
+   "pos_greeks": {
+    "delta": 290.0,
+    "gamma": -9.44,
+    "theta": 231.73,
+    "vega": -327.71
+   },
+   "target_val": 3.8,
+   "sl_val": 7.9,
+   "adjust_delta": 0.4,
+   "spot_stop": 282.9,
+   "margin_rs": 51682,
+   "pop": 77,
+   "name": "NATURALGAS",
+   "mode": "intraday",
+   "expiry": "2026-10-23",
+   "confidence": 83,
+   "dte": 31,
+   "spot_at_entry": 295.8,
+   "exch": "MCX",
+   "fut_token": "570750",
+   "exit_time": "23:00",
+   "id": 12,
+   "opened": "2026-09-22 21:21",
+   "flags": [],
+   "exit_value": 5.65,
+   "pnl_pts": 0.2,
+   "pnl_rs_per_lot": 250.0,
+   "closed": "2026-09-22 23:07",
+   "exit_reason": "TIME"
   }
  ],
  "done": {
@@ -1011,14 +1041,6 @@
    "name": "ALUMINIUM",
    "hist": [
     [
-     "2026-09-22 20:12:28.585638",
-     348.8,
-     11005.0,
-     1852.0,
-     350.7,
-     347.05
-    ],
-    [
      "2026-09-22 20:24:47.938692",
      349.0,
      10990.0,
@@ -1105,27 +1127,27 @@
      1928.0,
      350.7,
      347.05
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     348.35,
+     10870.0,
+     1939.0,
+     350.7,
+     347.05
     ]
    ],
    "prev_oi": 13395.0,
    "day": "2026-09-22",
-   "pchg": -0.21,
-   "oi_day": -18.477043673012318,
+   "pchg": -0.19,
+   "oi_day": -18.85031728256812,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 348.25
+   "ltp": 348.35
   },
   "571298": {
    "name": "COPPER",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     1414.25,
-     18815000.0,
-     6133.0,
-     1420.0,
-     1408.85
-    ],
     [
      "2026-09-22 20:24:47.938692",
      1414.9,
@@ -1213,27 +1235,27 @@
      6884.0,
      1420.0,
      1408.85
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     1414.9,
+     18370000.0,
+     6947.0,
+     1420.0,
+     1408.85
     ]
    ],
    "prev_oi": 19070000.0,
    "day": "2026-09-22",
-   "pchg": 0.14,
-   "oi_day": -3.251179863660203,
+   "pchg": 0.17,
+   "oi_day": -3.6706869428421607,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 1414.45
+   "ltp": 1414.9
   },
   "569900": {
    "name": "CRUDEOIL",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     8772.0,
-     1359300.0,
-     59676.0,
-     9008.0,
-     8529.0
-    ],
     [
      "2026-09-22 20:24:47.938692",
      8728.0,
@@ -1321,27 +1343,27 @@
      70671.0,
      9008.0,
      8529.0
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     8704.0,
+     1295400.0,
+     71361.0,
+     9008.0,
+     8529.0
     ]
    ],
    "prev_oi": 1272800.0,
    "day": "2026-09-22",
-   "pchg": -1.19,
-   "oi_day": 3.0169704588309143,
+   "pchg": -1.49,
+   "oi_day": 1.7756128221244394,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 8731.0
+   "ltp": 8704.0
   },
   "483079": {
    "name": "GOLD",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     152054.0,
-     7406.0,
-     6174.0,
-     153497.0,
-     151581.0
-    ],
     [
      "2026-09-22 20:24:47.938692",
      152259.0,
@@ -1429,27 +1451,27 @@
      6696.0,
      153497.0,
      151581.0
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     152566.0,
+     7364.0,
+     6714.0,
+     153497.0,
+     151581.0
     ]
    ],
    "prev_oi": 7833.0,
    "day": "2026-09-22",
-   "pchg": -0.32,
-   "oi_day": -5.872590322992465,
+   "pchg": -0.34,
+   "oi_day": -5.987488829311882,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 152600.0
+   "ltp": 152566.0
   },
   "569003": {
    "name": "GOLDM",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     152060.0,
-     3925700.0,
-     38995.0,
-     153490.0,
-     151575.0
-    ],
     [
      "2026-09-22 20:24:47.938692",
      152301.0,
@@ -1537,27 +1559,27 @@
      43824.0,
      153490.0,
      151575.0
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     152557.0,
+     3871800.0,
+     43995.0,
+     153490.0,
+     151575.0
     ]
    ],
    "prev_oi": 3803500.0,
    "day": "2026-09-22",
-   "pchg": -0.42,
-   "oi_day": 1.9613513868804944,
+   "pchg": -0.4,
+   "oi_day": 1.795714473511234,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 152537.0
+   "ltp": 152557.0
   },
   "568246": {
    "name": "NATGASMINI",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     278.9,
-     5425000.0,
-     89416.0,
-     279.0,
-     270.0
-    ],
     [
      "2026-09-22 20:24:47.938692",
      279.8,
@@ -1645,27 +1667,27 @@
      128199.0,
      283.5,
      270.0
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     282.5,
+     4244500.0,
+     129786.0,
+     283.5,
+     270.0
     ]
    ],
    "prev_oi": 9112000.0,
    "day": "2026-09-22",
-   "pchg": 3.7,
-   "oi_day": -52.622914837576815,
+   "pchg": 3.52,
+   "oi_day": -53.41856892010536,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 283.0
+   "ltp": 282.5
   },
   "568245": {
    "name": "NATURALGAS",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     278.9,
-     22207500.0,
-     60656.0,
-     279.2,
-     270.0
-    ],
     [
      "2026-09-22 20:24:47.938692",
      279.9,
@@ -1753,27 +1775,27 @@
      88721.0,
      283.6,
      270.0
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     282.7,
+     18168750.0,
+     90184.0,
+     283.6,
+     270.0
     ]
    ],
    "prev_oi": 33596250.0,
    "day": "2026-09-22",
-   "pchg": 3.7,
-   "oi_day": -45.064553335565726,
+   "pchg": 3.59,
+   "oi_day": -45.920303605313094,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 283.0
+   "ltp": 282.7
   },
   "495214": {
    "name": "SILVER",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     237610.0,
-     400560.0,
-     8578.0,
-     240529.0,
-     235691.0
-    ],
     [
      "2026-09-22 20:24:47.938692",
      238219.0,
@@ -1861,27 +1883,27 @@
      9928.0,
      240529.0,
      235691.0
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     239440.0,
+     395280.0,
+     9981.0,
+     240529.0,
+     235691.0
     ]
    ],
    "prev_oi": 381060.0,
    "day": "2026-09-22",
-   "pchg": -0.03,
-   "oi_day": 3.8734057628719842,
+   "pchg": 0.05,
+   "oi_day": 3.7316957959376396,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 239249.0
+   "ltp": 239440.0
   },
   "483080": {
    "name": "SILVERM",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     239575.0,
-     165430.0,
-     35304.0,
-     241909.0,
-     237587.0
-    ],
     [
      "2026-09-22 20:24:47.938692",
      240060.0,
@@ -1969,27 +1991,27 @@
      41497.0,
      241909.0,
      237587.0
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     241151.0,
+     163930.0,
+     41897.0,
+     241909.0,
+     237587.0
     ]
    ],
    "prev_oi": 164945.0,
    "day": "2026-09-22",
-   "pchg": -0.11,
-   "oi_day": -0.59413743975264,
+   "pchg": 0.0,
+   "oi_day": -0.6153566340295291,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 240891.0
+   "ltp": 241151.0
   },
   "571303": {
    "name": "ZINC",
    "hist": [
-    [
-     "2026-09-22 20:12:28.585638",
-     434.4,
-     8150.0,
-     1858.0,
-     438.1,
-     432.75
-    ],
     [
      "2026-09-22 20:24:47.938692",
      434.6,
@@ -2077,15 +2099,23 @@
      2124.0,
      438.1,
      432.75
+    ],
+    [
+     "2026-09-22 23:07:01.681192",
+     434.6,
+     7900.0,
+     2147.0,
+     438.1,
+     432.75
     ]
    ],
    "prev_oi": 8960.0,
    "day": "2026-09-22",
-   "pchg": -0.47,
-   "oi_day": -11.49553571428571,
+   "pchg": -0.28,
+   "oi_day": -11.830357142857139,
    "kind": "mcx",
    "exch": "MCX",
-   "ltp": 433.75
+   "ltp": 434.6
   },
   "843857": {
    "name": "",
