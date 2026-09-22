@@ -37,16 +37,31 @@ class Angel:
             time.sleep(gap - d)
         self._last = time.time()
 
+    # Angel limits historical APIs to ~3 req/sec (and less per minute); stay safely under it.
+    HIST_GAP, QUOTE_GAP = 0.75, 1.1
+
     def _call(self, fn, *a, retries=3):
+        self._cache = getattr(self, "_cache", {})
+        key = (fn.__name__, repr(a))
+        if key in self._cache:                       # same request twice in one run -> reuse
+            return self._cache[key]
         for i in range(retries):
-            self._wait()
+            self._wait(self.HIST_GAP)
             try:
                 r = fn(*a)
-                if r and r.get("status") and r.get("data") is not None:
-                    return r["data"]
-            except Exception as e:
-                print("API error:", e)
-            time.sleep(1 + i)
+            except Exception as e:                   # rate limit shows up as a non-JSON reply
+                msg = str(e)
+                print("API error:", msg[:120])
+                time.sleep(3 + 2 * i if "rate" in msg.lower() else 1)
+                continue
+            if r and r.get("status") and r.get("data") is not None:
+                self._cache[key] = r["data"]
+                return r["data"]
+            if r and "rate" in str(r.get("message", "")).lower():
+                time.sleep(3 + 2 * i)
+                continue
+            break                                    # real "bad request / no data" -> don't retry
+        self._cache[key] = None
         return None
 
     def candles(self, exch, token, interval, frm, to):
@@ -60,6 +75,8 @@ class Angel:
         return df
 
     def oi_history(self, exch, token, interval, frm, to):
+        if exch == "MCX":                            # Angel does not serve OI history for MCX (AB1012)
+            return None
         d = self._call(self.api.getOIData, {
             "exchange": exch, "symboltoken": str(token), "interval": interval,
             "fromdate": frm.strftime("%Y-%m-%d %H:%M"), "todate": to.strftime("%Y-%m-%d %H:%M")})
@@ -75,13 +92,16 @@ class Angel:
         for ex, toks in exch_tokens.items():
             toks = [str(t) for t in toks]
             for i in range(0, len(toks), 50):
-                self._wait(0.6)
-                try:
-                    r = self.api.getMarketData("FULL", {ex: toks[i:i + 50]})
-                    for q in (r.get("data") or {}).get("fetched", []):
-                        out[str(q["symbolToken"])] = q
-                except Exception as e:
-                    print("quote error:", e)
+                for attempt in range(3):
+                    self._wait(self.QUOTE_GAP)
+                    try:
+                        r = self.api.getMarketData("FULL", {ex: toks[i:i + 50]})
+                        for q in (r.get("data") or {}).get("fetched", []):
+                            out[str(q["symbolToken"])] = q
+                        break
+                    except Exception as e:
+                        print("quote error:", str(e)[:120])
+                        time.sleep(3 + 2 * attempt)
         return out
 
 
