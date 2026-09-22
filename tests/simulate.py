@@ -224,9 +224,9 @@ def main():
     run_at("2026-09-23 11:20", bot.intraday_scan)            # 1st hourly check -> only remembered
     assert not st.open_positions("intraday") and len(SENT) == n0, "must not call on first check"
     run_at("2026-09-23 11:20", bot.send_scan_summary)
-    assert "Hourly scan" in SENT[-1] and "waiting 2nd hourly confirmation" in SENT[-1], SENT[-1]
+    assert "Scan" in SENT[-1] and "waiting confirmation" in SENT[-1], SENT[-1]
     bot.notes = []; n0 = len(SENT)
-    run_at("2026-09-23 12:20", bot.intraday_scan)            # 2nd check, same direction -> call
+    run_at("2026-09-23 11:35", bot.intraday_scan)            # next scan (15 min later), same direction -> call
     nk = st.open_positions("intraday", "NIFTY")
     assert nk and nk[0]["strategy"] == "Single PE Sell" and len(nk[0]["legs"]) == 1
     p = nk[0]
@@ -265,7 +265,7 @@ def main():
 
     print("\n=== SENSEX (BSE) naked call ===")
     C.INTRADAY_UNDERLYINGS = ["SENSEX"]; st.s["bias_hist"] = {}; UND["NIFTY"][0] = 25000
-    run_at("2026-09-22 13:20", bot.intraday_scan); run_at("2026-09-22 14:20", bot.intraday_scan)
+    run_at("2026-09-22 13:50", bot.intraday_scan); run_at("2026-09-22 14:05", bot.intraday_scan)
     sx = st.open_positions("intraday", "SENSEX")
     assert sx and sx[0]["exch"] == "BFO", "SENSEX call missing"
     print("SENSEX call:", sx[0]["legs"][0]["K"], sx[0]["legs"][0]["typ"], "conf", sx[0]["confidence"])
@@ -280,6 +280,13 @@ def main():
     run_at("2026-09-23 12:00", lambda: flow.run(bot, True, False))
     fl = [m for m in SENT[n1:] if "OI / VOLUME ALERT" in m]
     assert fl and "LONG BUILDUP" in fl[0] and "NIFTY" in fl[0], SENT[n1:]
+    # ⚡ fast track: the buildup itself confirms -> sell call in the SAME run (no waiting)
+    C.SELL_STYLE = "NAKED"; st.s["positions"].clear(); st.s["closed"].clear(); st.s["bias_hist"] = {}
+    run_at("2026-09-23 12:00", lambda: bot.fast_track(bot.flow_events))
+    ft = st.open_positions("intraday", "NIFTY")
+    assert ft and ft[0]["legs"][0]["typ"] == "PE", "fast-track call missing"
+    print("fast-track call:", ft[0]["legs"][0]["K"], ft[0]["legs"][0]["typ"], "conf", ft[0]["confidence"])
+    st.s["positions"].clear(); C.SELL_STYLE = "HEDGED"
     st_ = flow.status(st.s, fut_tok)
     print("OI status:", st_)
     assert st_["day"] and st_["hour"]

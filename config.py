@@ -33,9 +33,14 @@ BREAKOUT_VOL_X        = 2.0      # new day high/low counts only with volume >= 2
 BIGMOVE_COOLDOWN_MIN  = 60
 
 # ═════════════ WHEN IS A CALL "CONFIDENT"? ═════════════
-MIN_CONFIDENCE        = 70       # 0-100 score; below this -> no call
-CONFIRM_CHECKS        = 2        # intraday: same direction on this many hourly checks in a row
-MIN_PREMIUM_RS_PER_LOT = 1500    # skip if selling brings in less than this per lot
+CALL_MODE             = "ACTIVE" # "ACTIVE" = scan every run (~15 min), faster confirmation, buildups become calls
+                                 # "STRICT" = hourly scans, 2-hour confirmation, fewer but slower calls
+MIN_CONFIDENCE        = 60 if CALL_MODE == "ACTIVE" else 70      # 0-100 score; below this -> no call
+CONFIRM_CHECKS        = 2        # intraday: same direction on this many scans in a row
+CONFIRM_WINDOW_MIN    = 45 if CALL_MODE == "ACTIVE" else 150     # ...and the previous scan must be this recent
+FLOW_FAST_TRACK       = CALL_MODE == "ACTIVE"  # ⚡ buildup (price + OI + volume agree) counts as confirmation
+MAX_CALLS_PER_NAME_DAY = 2       # max intraday calls on the same script per day
+MIN_PREMIUM_RS_PER_LOT = 1000 if CALL_MODE == "ACTIVE" else 1500  # skip if premium per lot is below this
 MIN_RR                = 1.0      # reward must be >= risk (target profit >= stop-loss loss)
 SCAN_SUMMARY          = True     # hourly "🔎 why no call" message (set False to silence)
 SPOT_STOP_FRACTION    = 0.5      # also exit if price covers half the distance to your sold strike

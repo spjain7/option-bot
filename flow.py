@@ -110,6 +110,7 @@ def run(bot, nse_on, mcx_on):
 
     if big:
         send_big(bot, big, now)
+    bot.flow_events = [e for e in events if e.get("bias")]      # used by the fast-track in runner
     if not events:
         return
     events.sort(key=lambda e: e["score"], reverse=True)

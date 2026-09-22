@@ -258,13 +258,17 @@ class Bot:
         """One short message per hourly scan: which scripts were checked and why no call was sent."""
         if not self.notes or not C.SCAN_SUMMARY:
             return
+        hk = f"summary|{now_ist():%Y-%m-%d %H}"
+        if self.st.done(hk):                     # at most one summary per hour
+            return
+        self.st.mark(hk)
         seen, rows = set(), []
         for n, r in self.notes:
             if n not in seen:
                 seen.add(n); rows.append((n, r))
         idx = [f"• *{n}*: {r}" for n, r in rows if n in C.INDEX_TOKENS or n in C.MCX_UNDERLYINGS]
         stocks = [(n, r) for n, r in rows if n not in C.INDEX_TOKENS and n not in C.MCX_UNDERLYINGS]
-        L = [f"🔎 *Hourly scan {now_ist():%H:%M}* – no new SELL call", ""] + idx
+        L = [f"🔎 *Scan {now_ist():%H:%M}* – why no new SELL call", ""] + idx
         if stocks:
             waiting = [n for n, r in stocks if "waiting" in r]
             close = [f"{n} ({r.split('confidence ')[1].split('/')[0]})" for n, r in stocks if "confidence" in r]
@@ -357,8 +361,13 @@ class Bot:
                 "bias": bias, "score": score, "fut_tok": fut_tok,
                 "status": flow.status(self.st.s, fut_tok) if fut_tok else {"day": None, "hour": None}}
 
-    def try_open(self, name, mode, expiry, trend_interval, stock=False, exch="NFO"):
+    def try_open(self, name, mode, expiry, trend_interval, stock=False, exch="NFO", fast=None):
         why = self.blocked(mode)
+        today = f"{now_ist():%Y-%m-%d}"
+        n_today = sum(1 for p in self.st.s["positions"] + self.st.s["closed"]
+                      if p["name"] == name and p["mode"] == mode and p.get("opened", "").startswith(today))
+        if not why and mode == "intraday" and n_today >= C.MAX_CALLS_PER_NAME_DAY:
+            why = f"already {n_today} calls today"
         if why:
             self.why(name, why); return
         v = self.view(name, expiry, trend_interval, exch, stock, mode)
@@ -370,10 +379,12 @@ class Bot:
         hk, now = f"{exch}|{name}|{mode}", now_ist()
         prev = hist.get(hk)
         n = prev["n"] + 1 if prev and prev["bias"] == bias and \
-            now - pd.Timestamp(prev["t"]) <= pd.Timedelta(hours=2, minutes=30) else 1
+            now - pd.Timestamp(prev["t"]) <= pd.Timedelta(minutes=C.CONFIRM_WINDOW_MIN) else 1
         hist[hk] = {"bias": bias, "t": str(now), "n": n}
+        if fast and fast == bias:                        # ⚡ futures buildup already confirms this direction
+            n = max(n, C.CONFIRM_CHECKS)
         if mode == "intraday" and n < C.CONFIRM_CHECKS:
-            self.why(name, f"{bias.lower()} – waiting 2nd hourly confirmation" if bias != "NEUTRAL"
+            self.why(name, f"{bias.lower()} – waiting confirmation on next scan" if bias != "NEUTRAL"
                      else "sideways – no side to sell"); return
         ivl, ivx = ch["iv_label"], ch["iv_rv"]
         if ivl == "CHEAP":
@@ -420,7 +431,7 @@ class Bot:
         now = now_ist()
         if not (at(C.INTRADAY_FIRST_SCAN) <= now <= at(C.INTRADAY_LAST_ENTRY)):
             return
-        slot = now.normalize() + pd.Timedelta(hours=9, minutes=15) + \
+        slot = now.floor("15min") if C.CALL_MODE == "ACTIVE" else now.normalize() + pd.Timedelta(hours=9, minutes=15) + \
             pd.Timedelta(hours=int((now - now.normalize() - pd.Timedelta(hours=9, minutes=15)) / pd.Timedelta(hours=1)))
         for name in C.INTRADAY_UNDERLYINGS + C.INTRADAY_STOCKS:
             key = f"hourly|{name}|{slot:%Y-%m-%d %H:%M}"
@@ -464,6 +475,36 @@ class Bot:
                 except Exception as e:
                     print(name, "error", e)
 
+    # ---------- ⚡ fast track: strong futures buildup -> evaluate a sell call right away ----------
+    def fast_track(self, events):
+        if not C.FLOW_FAST_TRACK:
+            return
+        now = now_ist()
+        for e in events:
+            if not e.get("bias") or self.st.open_positions("intraday", e["name"]):
+                continue
+            ex = e["exch"]
+            if ex == "MCX":
+                if not (at(C.MCX_FIRST_SCAN) <= now <= at(C.MCX_LAST_ENTRY)):
+                    continue
+                exp = self.mcx_expiry(e["name"])
+            else:
+                if not (at(C.INTRADAY_FIRST_SCAN) <= now <= at(C.INTRADAY_LAST_ENTRY)):
+                    continue
+                if e["name"] not in C.INDEX_TOKENS and e["name"] not in C.INTRADAY_STOCKS and \
+                        e["name"] not in flow.stock_picks(self):
+                    continue                                   # only liquid / strongest stocks
+                stock = e["name"] not in C.INDEX_TOKENS
+                exps = [x for x in M.expiries(self.master, e["name"], ex) if not stock or M.dte(x) >= 2]
+                exp = exps[0] if exps else None
+            if exp is None:
+                continue
+            try:
+                self.try_open(e["name"], "intraday", exp, "ONE_HOUR", stock=e["name"] not in C.INDEX_TOKENS and ex != "MCX",
+                              exch=ex, fast=e["bias"])
+            except Exception as err:
+                print(e["name"], "fast-track error", err)
+
     # ---------- MCX ----------
     def mcx_expiry(self, name, lo=None, hi=None):
         exps = [e for e in M.expiries(self.master, name, "MCX") if M.dte(e) >= C.MCX_MIN_DTE]
@@ -484,7 +525,7 @@ class Bot:
         now = now_ist()
         if not force and not (at(C.MCX_FIRST_SCAN) <= now <= at(C.MCX_LAST_ENTRY)):
             return
-        slot = now.floor("h")
+        slot = now.floor("15min") if C.CALL_MODE == "ACTIVE" else now.floor("h")
         for name in C.MCX_UNDERLYINGS:
             key = f"mcx_hourly|{name}|{slot:%Y-%m-%d %H:%M}"
             if self.st.done(key) or self.st.open_positions("intraday", name):
@@ -714,6 +755,7 @@ def main():
             if C.FLOW_ENABLED:
                 try:
                     flow.run(bot, nse_on, mcx_on)
+                    bot.fast_track(getattr(bot, "flow_events", []))
                 except Exception as e:
                     traceback.print_exc(); print("flow error", e)
         if nse_on and now <= at("15:31"):
