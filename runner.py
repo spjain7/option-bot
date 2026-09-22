@@ -248,6 +248,31 @@ class Bot:
     def __init__(self, api, master, store):
         self.api, self.master, self.st = api, master, store
         self._vix = None
+        self.notes = []                 # (name, reason) for the hourly "why no call" summary
+
+    def why(self, name, reason):
+        print(f"{name}: {reason}")
+        self.notes.append((name, reason))
+
+    def send_scan_summary(self):
+        """One short message per hourly scan: which scripts were checked and why no call was sent."""
+        if not self.notes or not C.SCAN_SUMMARY:
+            return
+        seen, rows = set(), []
+        for n, r in self.notes:
+            if n not in seen:
+                seen.add(n); rows.append((n, r))
+        idx = [f"• *{n}*: {r}" for n, r in rows if n in C.INDEX_TOKENS or n in C.MCX_UNDERLYINGS]
+        stocks = [(n, r) for n, r in rows if n not in C.INDEX_TOKENS and n not in C.MCX_UNDERLYINGS]
+        L = [f"🔎 *Hourly scan {now_ist():%H:%M}* – no new SELL call", ""] + idx
+        if stocks:
+            waiting = [n for n, r in stocks if "waiting" in r]
+            close = [f"{n} ({r.split('confidence ')[1].split('/')[0]})" for n, r in stocks if "confidence" in r]
+            L.append(f"• *Stocks checked*: {len(stocks)}"
+                     + (f" | waiting confirmation: {', '.join(waiting[:8])}" if waiting else "")
+                     + (f" | low confidence: {', '.join(close[:6])}" if close else ""))
+        L += ["", "_A call is sent only when every rule passes – no call is also a decision._"]
+        notify.send("\n".join(L))
 
     def vix(self):
         if self._vix is None:
@@ -307,7 +332,7 @@ class Bot:
             return None
         spot, tok = self.spot(name, exch, fut["token"] if fut else None)
         if not spot or not self._fresh:
-            print(f"{name}: NO TRADE - missing/stale price data"); return None
+            self.why(name, "price data missing/stale"); return None
         seg = "MCX" if exch == "MCX" else M.spot_seg(name)
         is_hourly = trend_interval == "ONE_HOUR"
         cd = self.candles(tok, trend_interval, 25 if is_hourly else 200, seg)
@@ -320,7 +345,7 @@ class Bot:
         rng = C.MCX_CHAIN_RANGE_PCT.get(mode, 0.1) if exch == "MCX" else C.CHAIN_RANGE_PCT["stock" if stock else mode]
         ch = M.build_chain(self.api, self.master, name, expiry, spot, rng, exch)
         if not ch:
-            print(f"{name}: no option chain"); return None
+            self.why(name, "no option chain"); return None
         ch["dte"] = M.dte(expiry)
         daily = cd if not is_hourly else self.candles(tok, "ONE_DAY", 60, seg)
         rv = M.hv20(daily)
@@ -335,7 +360,7 @@ class Bot:
     def try_open(self, name, mode, expiry, trend_interval, stock=False, exch="NFO"):
         why = self.blocked(mode)
         if why:
-            print(f"{name} {mode}: NO TRADE - {why}"); return
+            self.why(name, why); return
         v = self.view(name, expiry, trend_interval, exch, stock, mode)
         if not v:
             return
@@ -348,21 +373,22 @@ class Bot:
             now - pd.Timestamp(prev["t"]) <= pd.Timedelta(hours=2, minutes=30) else 1
         hist[hk] = {"bias": bias, "t": str(now), "n": n}
         if mode == "intraday" and n < C.CONFIRM_CHECKS:
-            print(f"{name}: {bias} seen {n}x - waiting for confirmation"); return
+            self.why(name, f"{bias.lower()} – waiting 2nd hourly confirmation" if bias != "NEUTRAL"
+                     else "sideways – no side to sell"); return
         ivl, ivx = ch["iv_label"], ch["iv_rv"]
         if ivl == "CHEAP":
-            print(f"{name}: NO TRADE - options CHEAP (IV {ch['atm_iv']} vs RV {rv:.1f})"); return
+            self.why(name, "premium cheap (IV below normal)"); return
         vix = None if (stock or exch == "MCX") else self.vix()
         ivr = self.st.iv_rank(name, ch["atm_iv"])
 
         allow_condor = True
         if vix:
             if vix["chg"] > C.VIX_SPIKE_BLOCK_PCT:
-                print(f"{name}: VIX spiking {vix['chg']}% - no new shorts"); return
+                self.why(name, f"VIX jumping {vix['chg']}% – no new sells"); return
             allow_condor = vix["pctile"] >= C.VIX_LOW_PCTILE
         if stock:
             if not ivx or ivx < C.STOCK_MIN_IV_HV:
-                print(f"{name}: IV {ch['atm_iv']} not rich vs RV {rv}"); return
+                self.why(name, "stock premium not rich enough"); return
             if bias == "NEUTRAL":
                 return                                   # stocks: directional spreads only
 
@@ -371,13 +397,14 @@ class Bot:
             m = "intraday_expiry"
         t = S.build_trade(ch, bias, m, allow_condor)
         if not t:
-            print(f"{name} {mode}: {bias} - no trade meets rules"); return
+            self.why(name, "sideways – no side to sell" if bias == "NEUTRAL" else
+                     f"{bias.lower()} but no strike passes (premium < ₹{C.MIN_PREMIUM_RS_PER_LOT}/lot, liquidity or R:R)"); return
         order = ["LOW", "MEDIUM", "HIGH", "EXTREME"]
         if t["gamma_risk"] in order and order.index(t["gamma_risk"]) >= order.index(C.GAMMA_BLOCK):
-            print(f"{name}: NO TRADE - gamma risk {t['gamma_risk']}"); return
+            self.why(name, f"gamma risk {t['gamma_risk']} (too close to expiry)"); return
         conf, reasons = confidence(t, td, bu, ch)
         if C.SELL_STYLE == "NAKED" and conf < C.MIN_CONFIDENCE:
-            print(f"{name} {mode}: NO CALL - confidence {conf} < {C.MIN_CONFIDENCE}"); return
+            self.why(name, f"{bias.lower()} but confidence {conf}/100 (need {C.MIN_CONFIDENCE})"); return
         t.update({"name": name, "mode": mode, "expiry": str(pd.Timestamp(expiry).date()), "confidence": conf,
                   "dte": M.dte(expiry), "spot_at_entry": spot, "exch": exch,
                   "fut_token": str(v["fut"]["token"]) if v["fut"] else None,
@@ -695,6 +722,7 @@ def main():
         if mcx_on:
             bot.mcx_intraday_scan()
             bot.mcx_positional_scan()
+        bot.send_scan_summary()
         if nse_on:
             bot.report()
     except Exception as e:

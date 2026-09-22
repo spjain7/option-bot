@@ -220,8 +220,12 @@ def main():
     C.SELL_STYLE, C.CONFIRM_CHECKS, C.GAMMA_BLOCK = "NAKED", 2, "HIGH"
     st.s["positions"].clear(); st.s["bias_hist"] = {}
     n0 = len(SENT)
+    bot.notes = []
     run_at("2026-09-23 11:20", bot.intraday_scan)            # 1st hourly check -> only remembered
     assert not st.open_positions("intraday") and len(SENT) == n0, "must not call on first check"
+    run_at("2026-09-23 11:20", bot.send_scan_summary)
+    assert "Hourly scan" in SENT[-1] and "waiting 2nd hourly confirmation" in SENT[-1], SENT[-1]
+    bot.notes = []; n0 = len(SENT)
     run_at("2026-09-23 12:20", bot.intraday_scan)            # 2nd check, same direction -> call
     nk = st.open_positions("intraday", "NIFTY")
     assert nk and nk[0]["strategy"] == "Single PE Sell" and len(nk[0]["legs"]) == 1

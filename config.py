@@ -37,6 +37,7 @@ MIN_CONFIDENCE        = 70       # 0-100 score; below this -> no call
 CONFIRM_CHECKS        = 2        # intraday: same direction on this many hourly checks in a row
 MIN_PREMIUM_RS_PER_LOT = 1500    # skip if selling brings in less than this per lot
 MIN_RR                = 1.0      # reward must be >= risk (target profit >= stop-loss loss)
+SCAN_SUMMARY          = True     # hourly "🔎 why no call" message (set False to silence)
 SPOT_STOP_FRACTION    = 0.5      # also exit if price covers half the distance to your sold strike
 
 # ═════════════ WHAT TO TRADE ═════════════
