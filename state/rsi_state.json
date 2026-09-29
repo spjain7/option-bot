@@ -528,7 +528,12 @@
   "MCX|NATURALGAS|2026-09-29 09:00": "2026-09-29",
   "MCX|NATGASMINI|2026-09-29 09:00": "2026-09-29",
   "MCX|ALUMINIUM|2026-09-29 09:00": "2026-09-29",
-  "MCX|ZINC|2026-09-29 09:00": "2026-09-29"
+  "MCX|ZINC|2026-09-29 09:00": "2026-09-29",
+  "NSE|NIFTY|2026-09-29 09:15": "2026-09-29",
+  "NSE|BANKNIFTY|2026-09-29 09:15": "2026-09-29",
+  "NSE|FINNIFTY|2026-09-29 09:15": "2026-09-29",
+  "BSE|SENSEX|2026-09-29 09:15": "2026-09-29",
+  "MCX|GOLD|2026-09-29 09:00": "2026-09-29"
  },
  "log": [
   {
@@ -710,6 +715,42 @@
    "prev": 77.1,
    "status": "OVERBOUGHT",
    "price": 447.25
+  },
+  {
+   "time": "2026-09-29 09:15:00",
+   "exch": "NSE",
+   "name": "NIFTY",
+   "rsi": 16.7,
+   "prev": 23.3,
+   "status": "OVERSOLD",
+   "price": 22578.75
+  },
+  {
+   "time": "2026-09-29 09:15:00",
+   "exch": "NSE",
+   "name": "BANKNIFTY",
+   "rsi": 15.9,
+   "prev": 22.6,
+   "status": "OVERSOLD",
+   "price": 53818.6
+  },
+  {
+   "time": "2026-09-29 09:15:00",
+   "exch": "NSE",
+   "name": "FINNIFTY",
+   "rsi": 19.4,
+   "prev": 27.2,
+   "status": "OVERSOLD",
+   "price": 24384.95
+  },
+  {
+   "time": "2026-09-29 09:15:00",
+   "exch": "BSE",
+   "name": "SENSEX",
+   "rsi": 17.5,
+   "prev": 24.3,
+   "status": "OVERSOLD",
+   "price": 72118.93
   }
  ]
 }
