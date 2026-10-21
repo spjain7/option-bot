@@ -66,6 +66,8 @@ def test_roll_equivalence():
     rows = []
     for i, d in enumerate(days):
         for e, base in ((days[20], 100.0), (days[39], 110.0)):
+            if d > e:
+                continue                                              # expired contracts stop trading
             p = base + i
             rows.append(dict(date=d, symbol="NIFTY", expiry=e, open=p, high=p + 1, low=p - 1, close=p, settle=p,
                              contracts=10, oi=100, chg_oi=0))
@@ -79,6 +81,22 @@ def test_roll_equivalence():
     new_close_roll = 110.0 + 17
     leg2 = b.raw_open - new_close_roll                                          # new contract: roll close -> exit
     check("adjusted P&L equals contract legs", abs(adj_pnl - (leg1 + leg2)) < 1e-9)
+
+
+def test_relabel_and_weekly():
+    """Exchange re-labels an expiry (29th -> 28th) and lists illiquid weekly futures: keep one monthly series."""
+    days = pd.bdate_range("2023-05-01", "2023-07-31")
+    rows = []
+    for d in days:
+        jun = pd.Timestamp("2023-06-29") if d < pd.Timestamp("2023-06-20") else pd.Timestamp("2023-06-28")
+        for e in (pd.Timestamp("2023-05-25"), jun, pd.Timestamp("2023-07-27"), pd.Timestamp("2023-06-08")):
+            if d <= e:
+                rows.append(dict(date=d, symbol="X", expiry=e, open=100, high=101, low=99, close=100, settle=100,
+                                 contracts=5, oi=10, chg_oi=0))
+    c = CO.build_nse("X", pd.DataFrame(rows), roll_days=3)
+    upto = days[days <= pd.Timestamp("2023-07-24")]                  # last contract rolls 3 days before its expiry
+    check("no trading days lost to a re-labelled expiry", set(upto) <= set(c.time))
+    check("weekly future ignored, one roll per month", c.roll.sum() == 2)
 
 
 def test_costs():
@@ -102,6 +120,6 @@ def test_portfolio():
 
 
 if __name__ == "__main__":
-    for f in (test_no_lookahead, test_gap_and_fills, test_roll_equivalence, test_costs, test_portfolio):
+    for f in (test_no_lookahead, test_gap_and_fills, test_roll_equivalence, test_relabel_and_weekly, test_costs, test_portfolio):
         f()
     print(f"\nALL {len(OK)} RESEARCH CHECKS PASSED")

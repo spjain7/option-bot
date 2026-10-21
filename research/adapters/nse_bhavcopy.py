@@ -37,7 +37,7 @@ def parse(raw, d):
     df.columns = [c.strip() for c in df.columns]
     if "INSTRUMENT" in df.columns:                                   # old format
         df = df[df["INSTRUMENT"].str.strip() == "FUTIDX"]
-        out = pd.DataFrame({"symbol": df["SYMBOL"].str.strip(), "expiry": pd.to_datetime(df["EXPIRY_DT"], format="%d-%b-%Y"),
+        out = pd.DataFrame({"symbol": df["SYMBOL"].str.strip(), "expiry": pd.to_datetime(df["EXPIRY_DT"], format="mixed", dayfirst=True),
                             "open": df["OPEN"], "high": df["HIGH"], "low": df["LOW"], "close": df["CLOSE"],
                             "settle": df["SETTLE_PR"], "contracts": df["CONTRACTS"], "oi": df["OPEN_INT"],
                             "chg_oi": df["CHG_IN_OI"]})
