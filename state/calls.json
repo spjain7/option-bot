@@ -1,0 +1,36 @@
+{
+ "open": [],
+ "closed": [],
+ "pending": [],
+ "done": {
+  "intra|GOLD|2026-10-21 19:00": "2026-10-21",
+  "intra|SILVER|2026-10-21 19:00": "2026-10-21",
+  "intra|CRUDEOIL|2026-10-21 19:00": "2026-10-21",
+  "intra|NATURALGAS|2026-10-21 19:00": "2026-10-21",
+  "intra|COPPER|2026-10-21 19:00": "2026-10-21",
+  "intra|ZINC|2026-10-21 19:00": "2026-10-21",
+  "intra|ALUMINIUM|2026-10-21 19:00": "2026-10-21",
+  "pos|GOLD|2026-10-20": "2026-10-20",
+  "pos|SILVER|2026-10-20": "2026-10-20",
+  "pos|CRUDEOIL|2026-10-20": "2026-10-20",
+  "pos|NATURALGAS|2026-10-20": "2026-10-20",
+  "pos|COPPER|2026-10-20": "2026-10-20",
+  "pos|ZINC|2026-10-20": "2026-10-20",
+  "pos|ALUMINIUM|2026-10-20": "2026-10-20",
+  "pos|NIFTY|2026-10-21": "2026-10-21",
+  "pos|BANKNIFTY|2026-10-21": "2026-10-21"
+ },
+ "last_state": {
+  "pos|GOLD": null,
+  "pos|SILVER": null,
+  "pos|CRUDEOIL": null,
+  "pos|NATURALGAS": null,
+  "pos|COPPER": null,
+  "pos|ZINC": null,
+  "pos|ALUMINIUM": null,
+  "pos|NIFTY": null,
+  "pos|BANKNIFTY": null
+ },
+ "summary": {},
+ "next_id": 1
+}
