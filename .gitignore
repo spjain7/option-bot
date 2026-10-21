@@ -3,3 +3,4 @@ backtest/data/
 backtest/*.csv
 research/data/
 research/output/
+research/output_smoke/
