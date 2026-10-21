@@ -1,1 +1,3 @@
 __pycache__/
+backtest/data/
+backtest/*.csv
