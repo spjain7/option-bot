@@ -137,6 +137,9 @@ MCX_RS_PER_POINT     = {"CRUDEOIL": 100, "CRUDEOILM": 10, "NATURALGAS": 1250, "N
                         "GOLD": 100, "GOLDM": 10, "SILVER": 30, "SILVERM": 5,
                         "COPPER": 2500, "ZINC": 5000, "ALUMINIUM": 5000}
 
+# ═════════════ ENGINE D: TELEGRAM TRADING CALLS (intraday + positional, MCX + NIFTY/BANKNIFTY) – calls/ ═════════════
+CALLS_ENABLED        = True      # alerts only, no orders. Rules in calls/rules.py, settings in calls/engine.py
+
 # ═════════════ ENGINE C: MCX BUY / SELL (futures + option buying) – alerts only ═════════════
 MCXT_ENABLED         = False     # disabled 21-Oct-2026: backtests negative after costs (research/). Only call site: runner.py
 # Main contract analysed; mini contract shown as a smaller-size alternative (same price scale)

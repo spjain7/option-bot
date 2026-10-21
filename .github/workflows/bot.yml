@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "auto / test / chatid (Telegram check) / mcxtrade (MCX buy-sell scan now) / report / mcx / view"
+        description: "auto / test / chatid (Telegram check) / calls (trading-call scan now) / report / mcx / view"
         default: "test"
 
 concurrency:
