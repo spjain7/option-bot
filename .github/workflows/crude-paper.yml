@@ -1,8 +1,11 @@
 name: Crude Oil PAPER engine
 
-# Separate Crude Oil futures signal engine (crude/). PAPER ONLY – market data is read-only, no order API exists in crude/.
-# Modes: probe (inspect raw Angel fields) / health (status only, never opens positions) / scan (normal paper scan).
-# Push to the feature branch = offline tests + probe + health (no Telegram).
+# Separate Crude Oil futures signal engine (crude/). PAPER ONLY – market data is read-only; crude/ contains no order code.
+#   scan   = normal paper scan (opens/manages PAPER positions, saves state to branch "crude-state")
+#   health = status only: fetch + evaluate + report; never opens/closes positions, never saves state
+#   probe  = print what Angel actually returns for CRUDEOIL (candles, OI, quote fields)
+# Telegram is sent only AFTER the state push succeeded (crude.run flush). Any failure fails the run (GitHub notifies).
+# Own concurrency group: never cancels or delays the existing option-bot runs.
 
 on:
   push:
@@ -28,6 +31,11 @@ defaults:
   run:
     shell: bash -euo pipefail {0}
 
+env:
+  MODE: ${{ github.event_name == 'schedule' && 'scan' || github.event_name == 'push' && 'health' || inputs.mode }}
+  CRUDE_TELEGRAM: ${{ github.event_name == 'schedule' && '1' || github.event_name == 'push' && '0' || inputs.telegram }}
+  CRUDE_STATE_DIR: state/crude
+
 jobs:
   crude:
     runs-on: ubuntu-24.04
@@ -39,10 +47,77 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
+
+      - name: Offline tests (the scan does not run if these fail)
+        run: python -m crude.tests.test_crude
+
+      - name: Restore paper state (stop on any unexpected failure)
+        run: |
+          set +e
+          git ls-remote --exit-code --heads origin crude-state > /dev/null
+          rc=$?
+          set -e
+          mkdir -p state/crude
+          if [ "$rc" -eq 0 ]; then
+            git fetch -q origin crude-state
+            git archive FETCH_HEAD crude | tar -x -C state
+            test -f state/crude/state.json || { echo "::error::crude-state branch exists but state.json is missing"; exit 1; }
+            echo "CRUDE_NEW_ACCOUNT=0" >> "$GITHUB_ENV"
+            echo "Restored paper state from branch crude-state"
+          elif [ "$rc" -eq 2 ]; then
+            echo "CRUDE_NEW_ACCOUNT=1" >> "$GITHUB_ENV"
+            echo "::notice::No crude-state branch yet – a NEW paper account will be created"
+          else
+            echo "::error::could not check for the crude-state branch (git exit $rc) – stopping"; exit 1
+          fi
+
       - name: Probe raw Angel fields
+        if: env.MODE == 'probe'
         run: python -m crude.probe
         env:
           ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
           ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
           ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
           ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+
+      - name: Crude engine (${{ env.MODE }})
+        id: scan
+        if: env.MODE == 'scan' || env.MODE == 'health'
+        run: python -m crude.run "$MODE"
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+
+      - name: Save state to branch crude-state (fails the run on error)
+        id: save
+        if: always() && env.MODE == 'scan' && hashFiles('state/crude/state.json') != ''
+        run: |
+          mkdir -p /tmp/crude_out
+          for f in state.json scan_log.jsonl last_run.json; do
+            if [ -f "state/crude/$f" ]; then cp "state/crude/$f" /tmp/crude_out/; fi
+          done
+          git config user.name "option-bot crude"
+          git config user.email "bot@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            rm -rf /tmp/cs && git worktree prune
+            if git ls-remote --exit-code --heads origin crude-state > /dev/null; then
+              git fetch -q origin crude-state && git worktree add -q /tmp/cs FETCH_HEAD
+            else
+              git worktree add -q --detach /tmp/cs && (cd /tmp/cs && git checkout -q --orphan crude-state && git rm -rqf --ignore-unmatch .)
+            fi
+            mkdir -p /tmp/cs/crude && cp /tmp/crude_out/* /tmp/cs/crude/
+            (cd /tmp/cs && git add crude && (git diff --cached --quiet || git commit -qm "crude paper state $(date -u +%F_%H%M)") \
+              && git push -q origin HEAD:refs/heads/crude-state) && { echo "state saved"; exit 0; }
+            echo "push attempt $attempt failed, retrying"; sleep 5
+          done
+          echo "::error::could not push crude-state after 3 attempts"; exit 1
+
+      - name: Send Telegram (only after the state push) and job summary
+        if: always() && (env.MODE == 'scan' || env.MODE == 'health')
+        run: python -m crude.run flush
+        env:
+          SAVE_OK: ${{ (steps.save.outcome == 'success' || (env.MODE == 'health' && steps.save.outcome == 'skipped')) && 'success' || 'failure' }}
+          TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
