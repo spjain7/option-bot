@@ -50,6 +50,11 @@ def scan(api, master, now, mode="scan", state_path="state/crude/state.json", all
         return rec, [REP.error_msg(now, "STATE LOAD FAILED – scan stopped, nothing evaluated", str(e))], 3
     if created:
         rec["actions"].append("new paper account created")
+    prev = state.get("day")
+    if mode == "scan" and prev and prev["date"] != str(now.date()) and not prev["eod_sent"]:
+        if K.TELEGRAM["eod"]:                       # winter close 23:55 -> first scan after it is already tomorrow
+            outbox.append(REP.eod(state, rec))
+        prev["eod_sent"] = True
     _new_day(state, now)
     code = 0
     try:

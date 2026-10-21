@@ -42,11 +42,14 @@ def slot_volume_ratio(df, slots=10, min_slots=5):
     """Volume vs the average volume of the SAME time-of-day candle over the previous `slots` sessions.
     MCX volume has a strong intraday pattern (the US-hours evening is far busier), so a plain rolling mean would
     flag every evening candle as 'high volume'. Returns (ratio, n_used); ratio is NaN when < min_slots comparables."""
-    key = df["time"].dt.strftime("%H:%M")
-    vol = df["volume"].astype(float).where(df["volume"] > 0)
-    prev = vol.groupby(key).transform(lambda s: s.shift(1).rolling(slots, min_periods=1).mean())
-    n = vol.groupby(key).transform(lambda s: s.shift(1).rolling(slots, min_periods=1).count())
+    key = (df["time"].dt.hour * 60 + df["time"].dt.minute).values
+    vol = df["volume"].astype(float).where(df["volume"] > 0).reset_index(drop=True)
+    sh = vol.groupby(key).shift(1)
+    r = sh.groupby(key).rolling(slots, min_periods=1)
+    prev = r.mean().reset_index(level=0, drop=True).sort_index()
+    n = r.count().reset_index(level=0, drop=True).sort_index()
     ratio = (vol / prev).where(n >= min_slots)
+    ratio.index, n.index = df.index, df.index
     return ratio, n
 
 

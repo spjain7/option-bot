@@ -296,6 +296,12 @@ def test_engine_flow():
             rec5, out5, code5 = _engine_run("2026-10-21 12:17", F.real_api(None), sp)
         check("state save failure -> exit 3 and only a 'STATE SAVE FAILED' message (no success report)",
               code5 == 3 and len(out5) == 1 and "STATE SAVE FAILED" in out5[0])
+    # end-of-day summary for the previous session is not lost when the first later scan is already the next date
+    st = json.loads(sp.read_text()); st["day"]["date"] = "2026-10-20"; st["day"]["eod_sent"] = False
+    sp.write_text(json.dumps(st))
+    r8, o8, c8 = _engine_run("2026-10-21 13:02", F.real_api(None), sp)
+    check("previous day's end-of-day summary sent once on the next date (winter close 23:55)",
+          sum("END OF DAY 20-Oct-2026" in m for m in o8) == 1 and json.loads(sp.read_text())["day"]["date"] == "2026-10-21")
     # missing / corrupt state
     r6, o6, c6 = _engine_run("2026-10-21 12:17", F.real_api(None), Path(tempfile.mkdtemp()) / "none.json", allow_new=False)
     check("missing state without permission to create -> stops (no silent reset)", c6 == 3 and "STATE LOAD FAILED" in o6[0])

@@ -51,7 +51,7 @@ def health(rec, title="HEALTH CHECK"):
          f"Paper fills: {tr.get('symbol', '—')} (₹{_n(tr.get('lotsize'))}/pt per lot, tick ₹{tr.get('tick', '—')})",
          f"API: {'✅ all calls ok' if api_ok else '❌ ' + '; '.join(f'{k}: {v}' for k, v in rec['api'].items() if not str(v).startswith('ok'))}",
          f"Last closed candles: 15m {_t(d.get('last_closed_15m'))} · 1h {_t(d.get('last_closed_1h'))} · 3h {_t(d.get('last_closed_3h'))}",
-         f"Freshness: 15m candle age {_n(d.get('age_15m_min'), 0)} min · quote age {_n(d.get('quote_age_min'), 1)} min"
+         f"Freshness: 15m candle age {_n(d.get('age_15m_min'), 0)} min · quote age {_n(None if d.get('quote_age_min') is None else max(0.0, d['quote_age_min']), 1)} min"
          + (" ✅" if not rec.get("stale") else " ⚠️ STALE"),
          f"Volume: {d.get('volume', '—')} (today {_n(d.get('day_volume'))} lots) · OI now: {_n(d.get('oi_current'))}",
          f"OI change: {oi.get('label', 'UNAVAILABLE')}" + (f" ({oi.get('d_oi_pct'):+.2f}% in {oi.get('gap_min'):.0f} min)" if oi.get("status") == "OK" else f" – {oi.get('reason', '')}")

@@ -110,7 +110,7 @@ def _ends(times, minutes):
     return pd.Series([D.bar_end(t, minutes) for t in times], index=times.index)
 
 
-def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False):
+def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=False):
     """One engine, its own book. Returns (trades DataFrame, decision counter dict)."""
     n = len(a)
     T = a["time"]
@@ -153,8 +153,11 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False):
             pos, last_exit_i = None, i
         return t
 
+    # fills, stops, P&L and charges use REAL (unadjusted) prices; indicators use the back-adjusted series.
+    off = a["offset"].values
+    ro, rh, rl, rc = (a[k].values - off for k in ("open", "high", "low", "close"))
     for i in range(warm, n - 1):
-        bar = dict(open=a.at[i, "open"], high=a.at[i, "high"], low=a.at[i, "low"], close=a.at[i, "close"])
+        bar = dict(open=ro[i], high=rh[i], low=rl[i], close=rc[i])
         cs = closes[T.iloc[i].normalize()]
         # 1) fill a pending entry at this candle's open
         if pending is not None:
@@ -163,11 +166,13 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False):
             if j == i and seg[i] == seg[i - 1]:
                 o = bar["open"]
                 atr = sig["plan"]["atr"]
-                if abs(o - sig["signal_close"]) > P_["max_chase_atr"] * atr:
+                if abs(o - (sig["signal_close"] - off[i - 1])) > P_["max_chase_atr"] * atr:
                     cnt["ignored"] += 1
                     cnt["reasons"]["ignored: chase"] = cnt["reasons"].get("ignored: chase", 0) + 1
                 else:
                     lots, budget, per_lot = P.size(cap, sig["plan"]["stop_dist"], o, MULT, TICK)
+                    if unit_size:                       # diagnostic: every signal at 1 mini lot (R-multiples only)
+                        lots = 1
                     if lots < 1:
                         cnt["ignored"] += 1
                         cnt["reasons"]["ignored: 1 lot > risk budget"] = cnt["reasons"].get("ignored: 1 lot > risk budget", 0) + 1
@@ -187,7 +192,7 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False):
         # 2) manage the open position with this candle
         if pos is not None and pos["entry_i"] <= i:
             if seg[i] != seg[pos["entry_i"]]:                       # must never happen (flat before expiry) – guard
-                _close(pos, a.at[i - 1, "close"], "roll guard", i - 1)
+                _close(pos, rc[i - 1], "roll guard", i - 1)
             elif engine == "intraday" and (D.bar_end(T.iloc[i], 15) > cs - pd.Timedelta(minutes=K.SQUARE_OFF_BEFORE_CLOSE_MIN)
                                            or T.iloc[i].normalize() != T.iloc[pos["entry_i"]].normalize()):
                 px = P.slip(pos["side"], bar["open"], TICK, False, ticks)
@@ -205,7 +210,7 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False):
                 elif engine == "positional":
                     nd = T.iloc[i + 1].normalize()
                     if tdl[i + 1] <= K.FLAT_BEFORE_EXPIRY_DAYS and nd != T.iloc[i].normalize():
-                        _close(pos, P.slip(pos["side"], a.at[i + 1, "open"], TICK, False, ticks), "roll: flat before expiry", i + 1)
+                        _close(pos, P.slip(pos["side"], ro[i + 1], TICK, False, ticks), "roll: flat before expiry", i + 1)
                     elif i in ev_idx:
                         j = ev_idx[i]
                         c3 = h3.iloc[max(0, j - 300):j + 1]
@@ -213,9 +218,9 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False):
                         sgn = 1 if pos["side"] == "BUY" else -1
                         sess = len(set(T.iloc[pos["entry_i"]:i + 1].dt.normalize()))
                         if sgn * (c3["close"].iloc[-1] - e50) < 0:
-                            _close(pos, P.slip(pos["side"], a.at[i + 1, "open"], TICK, False, ticks), "3h close beyond EMA50", i + 1)
+                            _close(pos, P.slip(pos["side"], ro[i + 1], TICK, False, ticks), "3h close beyond EMA50", i + 1)
                         elif sess > K.POS["max_hold_sessions"]:
-                            _close(pos, P.slip(pos["side"], a.at[i + 1, "open"], TICK, False, ticks), "time stop", i + 1)
+                            _close(pos, P.slip(pos["side"], ro[i + 1], TICK, False, ticks), "time stop", i + 1)
         # 3) evaluate a new signal on the candle that just closed
         if pos is not None or pending is not None:
             continue
@@ -282,8 +287,8 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False):
         pending = (dec, i + 1)
     if pos is not None:
         if pos.get("leg_a"):
-            _close(pos.pop("leg_a"), a.at[n - 1, "close"], "end of data", n - 1)
-        _close(pos, a.at[n - 1, "close"], "end of data", n - 1)
+            _close(pos.pop("leg_a"), rc[n - 1], "end of data", n - 1)
+        _close(pos, rc[n - 1], "end of data", n - 1)
     t = pd.DataFrame(trades)
     if baseline and len(t):                                        # merge the two halves of each baseline trade
         t = t.groupby("id").agg(side=("side", "first"), entry_time=("entry_time", "first"), exit_time=("exit_time", "last"),
@@ -341,6 +346,17 @@ def criteria(m, m2):
     return dict(passed=all(c.values()), checks=c)
 
 
+def _job(args):
+    eng, base, a, h1, h3, rolls = args
+    out = {}
+    for cx in K.COST_STRESS:
+        out[cx] = simulate(eng, a, h1, h3, rolls, cost_x=cx, baseline=base)
+        print(("baseline-" if base else "") + eng, cx, len(out[cx][0]), flush=True)
+    for cx in (1.0, 2.0):
+        out[("unit", cx)] = simulate(eng, a, h1, h3, rolls, cost_x=cx, baseline=base, unit_size=True)
+    return out
+
+
 def run(write=True):
     d, row = load_15m()
     rolls = roll_table(d)
@@ -362,14 +378,13 @@ def run(write=True):
                  rolls_proxy_missing=int(rolls["proxy_missing"].sum()),
                  ema200_1h_available_from=str(h1["time"].iloc[K.INTRA["ema_long_min_bars"]]),
                  h3_complete_pct=round(float(h3["complete"].mean() * 100), 1))
+    import multiprocessing as mp
+    jobs = [("intraday", False), ("positional", False), ("intraday", True)]
+    with mp.get_context("fork").Pool(len(jobs)) as pool:
+        outs = pool.map(_job, [(e, b_, a, h1, h3, rolls) for e, b_ in jobs])
     res = {}
-    for eng, base in (("intraday", False), ("positional", False), ("intraday", True)):
+    for (eng, base), out in zip(jobs, outs):
         name = ("baseline-" if base else "") + eng
-        out = {}
-        for cx in K.COST_STRESS:
-            t, cnt = simulate(eng, a, h1, h3, rolls, cost_x=cx, baseline=base)
-            out[cx] = (t, cnt)
-            print(name, cx, len(t), flush=True)
         t, cnt = out[1.0]
         if len(t):
             t["year"] = pd.to_datetime(t["entry_time"]).dt.year
@@ -387,7 +402,15 @@ def run(write=True):
                 wf[f"{s:%Y-%m}…{e - pd.Timedelta(days=1):%Y-%m}"] = dict(trades=len(g), expectancy_r=round(float(g["r"].mean()), 3) if len(g) else None,
                                                                            net_rs=round(float(g["pnl"].sum()), 0))
                 s += pd.DateOffset(months=6)
-        res[name] = dict(cost={str(k): v for k, v in m.items()}, decisions=cnt, by_year=by("year"), by_regime=by("regime"),
+        tu = out[("unit", 1.0)][0]
+        mu = metrics(tu); mu2 = metrics(out[("unit", 2.0)][0])
+        bu = {str(k): metrics(g) for k, g in tu.groupby(pd.to_datetime(tu["entry_time"]).dt.year)} if len(tu) else {}
+        hu = {h: metrics(g) for h, g in tu.groupby(np.where(pd.to_datetime(tu["entry_time"]) < SPLIT, "2020-10…2023", "2024…2026-10"))} if len(tu) else {}
+        if write and len(tu):
+            OUT.mkdir(parents=True, exist_ok=True)
+            tu.drop(columns=[c for c in ("reasons", "leg_a") if c in tu], errors="ignore").to_csv(OUT / f"trades_{name}_1lot.csv", index=False)
+        res[name] = dict(cost={str(k): v for k, v in m.items()}, decisions=cnt,
+                         unit_size=dict(cost1=mu, cost2=mu2, by_year=bu, by_half=hu, criteria=criteria(mu, mu2)), by_year=by("year"), by_regime=by("regime"),
                          by_half=by("half"), walk_forward=wf, criteria=criteria(m[1.0], m[2.0]),
                          exit_reasons=t["exit_reason"].value_counts().to_dict() if len(t) else {})
         if write and len(t):
