@@ -21,8 +21,12 @@ def master(extra=()):
     return pd.DataFrame(rows + list(extra))
 
 
+FIX = Path(__file__).resolve().parent / "fixtures"     # real Angel candles (Jul–Oct 2026) committed for CI
+
+
 def load(sym, iv):
-    f = DATA / f"{sym}_{iv}.csv"
+    f = FIX / f"{sym}_{iv}.csv"
+    f = f if f.exists() else DATA / f"{sym}_{iv}.csv"
     return pd.read_csv(f, parse_dates=["time"])[["time", "open", "high", "low", "close", "volume"]] if f.exists() else None
 
 
@@ -69,5 +73,6 @@ def real_api(now):
             d = load(sym, iv)
             if d is not None:
                 s[(tok, iv)] = d
-    s[("573500", "FIFTEEN_MINUTE")] = s[("573422", "FIFTEEN_MINUTE")]     # mini mirrors main (offline only)
+    if ("573422", "FIFTEEN_MINUTE") in s:
+        s[("573500", "FIFTEEN_MINUTE")] = s[("573422", "FIFTEEN_MINUTE")]     # mini mirrors main (offline only)
     return FakeAngel(s, now=now)
