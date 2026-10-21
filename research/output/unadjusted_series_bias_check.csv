@@ -1,0 +1,5 @@
+instrument,strategy,unadjusted_trades,unadjusted_exp_R,adjusted_trades,adjusted_exp_R
+NIFTY,B,137,-0.084,138,-0.076
+NIFTY,C,75,-0.153,72,-0.369
+BANKNIFTY,B,130,0.172,124,0.118
+BANKNIFTY,C,62,0.195,61,0.023

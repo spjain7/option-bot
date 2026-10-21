@@ -1,0 +1,44 @@
+group,instrument,source,grade,start,end,bars,rolls,untraded_days,volume,oi,note
+INDEX_DAILY_REAL,NIFTY,"NSE F&O bhavcopy (contract level, back-adjusted at our rolls)",REAL,2011-01-03 00:00:00,2026-10-19 00:00:00,3895,189,0.0,True,True,
+INDEX_DAILY_REAL,BANKNIFTY,"NSE F&O bhavcopy (contract level, back-adjusted at our rolls)",REAL,2011-01-03 00:00:00,2026-10-19 00:00:00,3895,189,0.0,True,True,
+INDEX_DAILY_REAL,FINNIFTY,"NSE F&O bhavcopy (contract level, back-adjusted at our rolls)",REAL,2021-01-11 00:00:00,2026-10-19 00:00:00,1424,69,0.0,True,True,
+INDEX_DAILY_REAL,MIDCPNIFTY,"NSE F&O bhavcopy (contract level, back-adjusted at our rolls)",REAL,2022-01-24 00:00:00,2026-10-19 00:00:00,1168,57,155.0,True,True,
+INDEX_DAILY_REAL,NIFTYNXT50,"NSE F&O bhavcopy (contract level, back-adjusted at our rolls)",REAL,2024-04-24 00:00:00,2026-10-19 00:00:00,615,29,0.0,True,True,
+MCX_DAILY_PROXY,GOLD,"Yahoo GC=F (international front month, unadjusted)",PROXY,2005-01-03 00:00:00,2026-10-21 00:00:00,5481,unknown,,True,False,
+MCX_HOURLY_PROXY,GOLD,"Yahoo GC=F (international front month, unadjusted)",PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13721,unknown,,True,False,
+MCX_DAILY_PROXY,SILVER,"Yahoo SI=F (international front month, unadjusted)",PROXY,2005-01-03 00:00:00,2026-10-21 00:00:00,5481,unknown,,True,False,
+MCX_HOURLY_PROXY,SILVER,"Yahoo SI=F (international front month, unadjusted)",PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13718,unknown,,True,False,
+MCX_DAILY_PROXY,CRUDEOIL,"Yahoo CL=F (international front month, unadjusted)",PROXY,2005-01-03 00:00:00,2026-10-21 00:00:00,5483,unknown,,True,False,
+MCX_HOURLY_PROXY,CRUDEOIL,"Yahoo CL=F (international front month, unadjusted)",PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13546,unknown,,True,False,
+MCX_DAILY_PROXY,NATURALGAS,"Yahoo NG=F (international front month, unadjusted)",PROXY,2005-01-03 00:00:00,2026-10-21 00:00:00,5485,unknown,,True,False,
+MCX_HOURLY_PROXY,NATURALGAS,"Yahoo NG=F (international front month, unadjusted)",PROXY,2024-05-30 12:30:00,2026-10-21 15:30:00,13524,unknown,,True,False,
+MCX_DAILY_PROXY,COPPER,"Yahoo HG=F (international front month, unadjusted)",PROXY,2005-01-03 00:00:00,2026-10-21 00:00:00,5484,unknown,,True,False,
+MCX_HOURLY_PROXY,COPPER,"Yahoo HG=F (international front month, unadjusted)",PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13711,unknown,,True,False,
+MCX_DAILY_PROXY,ZINC,none,MISSING,,,0,,,,,no free history (Yahoo lists no zinc future; MCX bhavcopy blocked here)
+MCX_HOURLY_PROXY,ZINC,none,MISSING,,,0,,,,,no free history (Yahoo lists no zinc future; MCX bhavcopy blocked here)
+MCX_DAILY_PROXY,ALUMINIUM,"Yahoo ALI=F (international front month, unadjusted)",PROXY,2014-05-06 00:00:00,2026-10-21 00:00:00,3098,unknown,,True,False,
+MCX_HOURLY_PROXY,ALUMINIUM,"Yahoo ALI=F (international front month, unadjusted)",PROXY,2024-05-30 09:30:00,2026-10-21 13:30:00,10193,unknown,,True,False,
+INDEX_HOURLY_PROXY,NIFTY,Yahoo ^NSEI (cash index),PROXY,2023-11-06 09:15:00,2026-10-21 15:15:00,5075,,,False,False,
+INDEX_HOURLY_PROXY,BANKNIFTY,Yahoo ^NSEBANK (cash index),PROXY,2023-11-06 09:15:00,2026-10-21 15:15:00,5075,,,False,False,
+INDEX_HOURLY_PROXY,FINNIFTY,none,MISSING,,,0,,,,,no free hourly history
+INDEX_HOURLY_PROXY,MIDCPNIFTY,none,MISSING,,,0,,,,,no free hourly history
+INDEX_HOURLY_PROXY,NIFTYNXT50,none,MISSING,,,0,,,,,no free hourly history
+MCX_DAILY_REAL,GOLD,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2005-12-31 00:00:00,2026-10-21 00:00:00,5623,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_DAILY_REAL,SILVER,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2005-12-31 00:00:00,2026-10-21 00:00:00,5686,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_DAILY_REAL,CRUDEOIL,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2011-03-15 00:00:00,2026-10-21 00:00:00,4036,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_DAILY_REAL,NATURALGAS,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2016-05-27 00:00:00,2026-10-21 00:00:00,2578,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_DAILY_REAL,COPPER,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2005-12-31 00:00:00,2026-10-21 00:00:00,5634,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_DAILY_REAL,ZINC,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2006-03-27 00:00:00,2026-10-21 00:00:00,5548,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_DAILY_REAL,ALUMINIUM,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2005-12-31 00:00:00,2026-10-21 00:00:00,5595,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_HOURLY_REAL,GOLD,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-15 09:00:00,2026-10-21 16:00:00,15046,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_HOURLY_REAL,SILVER,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-15 09:00:00,2026-10-21 16:00:00,15825,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_HOURLY_REAL,CRUDEOIL,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-15 09:00:00,2026-10-21 16:00:00,15978,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_HOURLY_REAL,NATURALGAS,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-15 09:00:00,2026-10-21 16:00:00,15954,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_HOURLY_REAL,COPPER,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-15 09:00:00,2026-10-21 16:00:00,15137,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_HOURLY_REAL,ZINC,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-15 09:00:00,2026-10-21 16:00:00,14739,at expiry (vendor),,True,False,MCX OI history not served by Angel
+MCX_HOURLY_REAL,ALUMINIUM,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-15 09:00:00,2026-10-21 16:00:00,14580,at expiry (vendor),,True,False,MCX OI history not served by Angel
+INDEX_HOURLY_REAL,NIFTY,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-18 09:15:00,2026-10-21 15:15:00,7357,at expiry (vendor),,True,False,MCX OI history not served by Angel
+INDEX_HOURLY_REAL,BANKNIFTY,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-18 09:15:00,2026-10-21 15:15:00,7360,at expiry (vendor),,True,False,MCX OI history not served by Angel
+INDEX_HOURLY_REAL,FINNIFTY,Angel One (front-month stitched by vendor),MISSING,,,0,,,,,not downloaded or too short
+INDEX_HOURLY_REAL,MIDCPNIFTY,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2022-07-20 09:15:00,2026-10-21 15:15:00,5992,at expiry (vendor),,True,False,MCX OI history not served by Angel
+INDEX_HOURLY_REAL,NIFTYNXT50,"Angel One (front-month stitched by vendor, NOT back-adjusted)",REAL-UNADJ,2025-09-29 09:15:00,2026-10-21 15:15:00,1819,at expiry (vendor),,True,False,MCX OI history not served by Angel

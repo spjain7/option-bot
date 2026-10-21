@@ -20,6 +20,7 @@
    flow alerts and MCX buy/sell (Engine C) were all rule-based without backtests. RSI alerts are informational.
 2. The only backtests (`backtest/`) use proxy data, unadjusted continuous series and simplified costs; their holdouts
    are no longer untouched (disclosed in `CRITERIA.md`).
-3. MCX historical data is the main gap: MCX's own bhavcopy service blocks automated access from this workspace,
-   and Angel only serves candles for contracts that are still trading, with no MCX OI history.
+3. MCX historical data: MCX's own bhavcopy blocks automated access. Angel One serves a vendor-stitched front-month
+   history (daily from 2006, hourly from Jul-2022) on the nearest contract's token, but it is not back-adjusted and has
+   no MCX OI history.
 4. NSE index futures have complete REAL end-of-day contract data (bhavcopy, with volume and OI) back to 2011.
