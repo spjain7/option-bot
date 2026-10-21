@@ -1,76 +1,91 @@
 {
- "time": "2026-10-21 22:06:08.234634",
+ "time": "2026-10-22 01:53:12.299296",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
-  "event": "workflow_dispatch",
-  "number": "7"
+  "event": "schedule",
+  "number": "12",
+  "delay_min": 6.2,
+  "previous_run": {
+   "number": 11,
+   "event": "workflow_dispatch",
+   "conclusion": "success",
+   "started": "2026-10-21T17:30:06Z"
+  }
  },
  "api": {
-  "15m": "ok (781 candles, last start 21-Oct 22:00)",
-  "1h": "ok (1049 candles, last start 21-Oct 22:00)",
-  "quote": "ok"
+  "15m": "ok (781 candles, last start 21-Oct 23:15)",
+  "1h": "ok (1049 candles, last start 21-Oct 23:00)",
+  "quote": "ok",
+  "1h-next(roll check)": "ok (525 candles, last start 21-Oct 23:00)"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-21 21:45:00",
-  "bars_15m": 780,
-  "last_closed_1h": "2026-10-21 21:00:00",
-  "bars_1h": 537,
-  "last_closed_3h": "2026-10-21 18:00:00",
-  "bars_3h": 178,
-  "age_15m_min": 6.1,
-  "quote_age_min": -0.1,
-  "ltp": 9230.0,
-  "day_volume": 44799,
+  "last_closed_15m": "2026-10-21 23:15:00",
+  "bars_15m": 781,
+  "last_closed_1h": "2026-10-21 23:00:00",
+  "bars_1h": 539,
+  "last_closed_3h": "2026-10-21 21:00:00",
+  "bars_3h": 179,
+  "age_15m_min": 143.2,
+  "quote_age_min": 113.4,
+  "ltp": 9200.0,
+  "day_volume": 49598,
+  "quality": {
+   "blocks": [],
+   "notes": [],
+   "quote_vs_candle_atr": 0.0
+  },
   "volume": "available",
-  "oi_current": 1409900,
+  "oi_current": 1348400,
   "oi_change": {
    "status": "UNAVAILABLE",
    "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
-  "daily_pnl": 0.0
+  "daily_pnl": 0.0,
+  "drawdown_pct": 0.0,
+  "open_risk_rs": 0
  },
  "decisions": {
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "1-hour trend MIXED: close 9231 EMA20 9299 EMA50 9180 EMA200 8804 ADX 18.9"
+    "1-hour trend MIXED: close 9200 EMA20 9282 EMA50 9182 EMA200 8812 ADX 17.9"
    ],
    "metrics": {
     "trend_1h": "MIXED",
-    "trend_1h_detail": "close 9231 EMA20 9299 EMA50 9180 EMA200 8804 ADX 18.9",
-    "adx_1h": 18.86765218970122,
-    "rsi": 41.301943843673065
+    "trend_1h_detail": "close 9200 EMA20 9282 EMA50 9182 EMA200 8812 ADX 17.9",
+    "adx_1h": 17.934603239636495,
+    "rsi": 41.120633425863716
    },
-   "bar_time": "2026-10-21 21:45:00",
-   "new_candle": false
+   "bar_time": "2026-10-21 23:15:00",
+   "new_candle": true
   },
   "positional": {
    "decision": "NONE",
    "side": "BUY",
    "blocks": [
-    "no setup: no confirmed breakout and no pullback-and-resume candle"
+    "swing structure not HH/HL: swings H 9544\u21929533, L 8555\u21929063"
    ],
    "metrics": {
     "trend_3h": "UP",
-    "trend_3h_detail": "close 9188 EMA20 9119 EMA50 8869 EMA200 n/a (history 178 bars) ADX 37.3",
-    "adx_3h": 37.34636498222661,
-    "rsi": 55.689248476507636,
-    "vol_x": 1.1906661193763988,
-    "atr": 175.50849924736195,
-    "atr_x": 0.9918704586141036,
-    "structure": "swings H 9257\u21929544, L 8555\u21929063"
+    "trend_3h_detail": "close 9200 EMA20 9127 EMA50 8882 EMA200 n/a (history 179 bars) ADX 37.0",
+    "adx_3h": 36.95348323400212,
+    "rsi": 56.09282812449567,
+    "vol_x": 0.7671145742227876,
+    "atr": 170.54360644397897,
+    "atr_x": 0.9696094002046073,
+    "structure": "swings H 9544\u21929533, L 8555\u21929063"
    },
-   "bar_time": "2026-10-21 18:00:00",
-   "new_candle": false
+   "bar_time": "2026-10-21 21:00:00",
+   "new_candle": true
   }
  },
  "actions": [],
  "errors": [],
- "session": "OPEN",
+ "session": "PRE-OPEN",
  "contract": {
   "signal": {
    "symbol": "CRUDEOIL19NOV26FUT",
@@ -78,7 +93,7 @@
    "expiry": "2026-11-19",
    "lotsize": 100.0,
    "tick": 1.0,
-   "days_left": 21
+   "days_left": 20
   },
   "trade": {
    "symbol": "CRUDEOILM19NOV26FUT",

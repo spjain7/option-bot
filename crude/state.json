@@ -9,13 +9,13 @@
   "intraday": {
    "open": [],
    "closed": [],
-   "last_eval_bar": "2026-10-21 21:45:00",
+   "last_eval_bar": "2026-10-21 23:15:00",
    "last_exit_bar": null
   },
   "positional": {
    "open": [],
    "closed": [],
-   "last_eval_bar": "2026-10-21 18:00:00",
+   "last_eval_bar": "2026-10-21 21:00:00",
    "last_exit_bar": null
   }
  },
@@ -34,10 +34,17 @@
    "oi": 1409900,
    "ltp": 9230.0,
    "volume": 44799
+  },
+  {
+   "time": "2026-10-21 23:59:50",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1348400,
+   "ltp": 9200.0,
+   "volume": 49598
   }
  ],
  "switches": {
-  "CRUDEOIL19NOV26FUT|2026-10-21": [
+  "CRUDEOIL19NOV26FUT|2026-10-22": [
    [
     "2026-08-20 09:00:00",
     0.0,
@@ -56,7 +63,7 @@
   ]
  },
  "day": {
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "realized": {
    "intraday": 0.0,
    "positional": 0.0
@@ -172,7 +179,66 @@
    },
    "actions": [],
    "errors": []
+  },
+  {
+   "time": "2026-10-22 01:53:12.299296",
+   "session": "PRE-OPEN",
+   "api": {
+    "15m": "ok (781 candles, last start 21-Oct 23:15)",
+    "1h": "ok (1049 candles, last start 21-Oct 23:00)",
+    "quote": "ok",
+    "1h-next(roll check)": "ok (525 candles, last start 21-Oct 23:00)"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": "2026-10-21 23:15:00",
+    "bars_15m": 781,
+    "last_closed_1h": "2026-10-21 23:00:00",
+    "bars_1h": 539,
+    "last_closed_3h": "2026-10-21 21:00:00",
+    "bars_3h": 179,
+    "age_15m_min": 143.2,
+    "quote_age_min": 113.4,
+    "ltp": 9200.0,
+    "day_volume": 49598,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "quote_vs_candle_atr": 0.0
+    },
+    "volume": "available",
+    "oi_current": 1348400,
+    "oi_change": {
+     "status": "UNAVAILABLE",
+     "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "1-hour trend MIXED: close 9200 EMA20 9282 EMA50 9182 EMA200 8812 ADX 17.9"
+     ],
+     "bar": "2026-10-21 23:15:00"
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "swing structure not HH/HL: swings H 9544\u21929533, L 8555\u21929063"
+     ],
+     "bar": "2026-10-21 21:00:00"
+    }
+   },
+   "actions": [],
+   "errors": []
   }
  ],
- "last_error": null
+ "last_error": null,
+ "peak_equity": 500000.0
 }
