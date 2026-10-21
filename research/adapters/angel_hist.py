@@ -18,8 +18,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 OUT = ROOT / "research" / "data" / "angel"
-LIMIT_DAYS = {"ONE_DAY": 1900, "ONE_HOUR": 390}       # Angel per-request window limits (kept under)
-MAX_PAGES = 4                                        # up to ~20 years daily / ~4 years hourly
+LIMIT_DAYS = {"ONE_DAY": 1900, "ONE_HOUR": 390, "FIFTEEN_MINUTE": 190}   # Angel per-request window limits (kept under)
+MAX_PAGES = {"ONE_DAY": 4, "ONE_HOUR": 4, "FIFTEEN_MINUTE": 12}       # ~20 y daily / ~4 y hourly / ~6 y 15-min
 
 
 def contracts(master, names):
@@ -39,7 +39,7 @@ def fetch_all(api, master, names, intervals=("ONE_DAY", "ONE_HOUR")):
             # Angel serves a vendor-stitched FRONT-MONTH history on the nearest contract's token
             # (verified against NSE bhavcopy: same close as the front contract on 96% of days).
             # Page backwards for that token; other contracts only have their own short life.
-            pages = MAX_PAGES if str(c["token"]) in nearest else 1
+            pages = MAX_PAGES[iv] if str(c["token"]) in nearest else 1
             parts, to = [], now
             for _ in range(pages):
                 frm = to - pd.Timedelta(days=LIMIT_DAYS[iv])
@@ -63,7 +63,8 @@ def fetch_all(api, master, names, intervals=("ONE_DAY", "ONE_HOUR")):
     old = OUT / "manifest.csv"
     if old.exists():                                   # partial re-fetch: keep rows of instruments not re-fetched
         prev = pd.read_csv(old)
-        man = pd.concat([prev[~prev["name"].isin(man["name"].unique())], man], ignore_index=True)
+        keep = ~(prev["name"].isin(man["name"].unique()) & prev["interval"].isin(man["interval"].unique()))
+        man = pd.concat([prev[keep], man], ignore_index=True)
     man.to_csv(OUT / "manifest.csv", index=False)
     return man
 
@@ -75,7 +76,8 @@ def main():
     names = [k for k, v in REGISTRY.items() if v["exchange"] in ("MCX", "NSE")]
     only = [x.strip() for x in os.getenv("RESEARCH_NAMES", "").split(",") if x.strip()]
     names = [n for n in names if n in only] if only else names
-    fetch_all(Angel(), load_master(), names)
+    ivs = tuple(x.strip() for x in os.getenv("RESEARCH_INTERVALS", "ONE_DAY,ONE_HOUR").split(",") if x.strip())
+    fetch_all(Angel(), load_master(), names, ivs)
 
 
 if __name__ == "__main__":

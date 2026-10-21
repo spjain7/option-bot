@@ -1,0 +1,48 @@
+name: Crude Oil PAPER engine
+
+# Separate Crude Oil futures signal engine (crude/). PAPER ONLY – market data is read-only, no order API exists in crude/.
+# Modes: probe (inspect raw Angel fields) / health (status only, never opens positions) / scan (normal paper scan).
+# Push to the feature branch = offline tests + probe + health (no Telegram).
+
+on:
+  push:
+    branches: [feature/crude-oil-paper]
+    paths: ["crude/**", ".github/workflows/crude-paper.yml"]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "health / scan / probe"
+        default: "health"
+      telegram:
+        description: "Send Telegram messages? 1 = yes, 0 = no"
+        default: "1"
+
+concurrency:
+  group: crude-paper
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash -euo pipefail {0}
+
+jobs:
+  crude:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Probe raw Angel fields
+        run: python -m crude.probe
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
