@@ -1,0 +1,46 @@
+name: Research data (manual, no alerts)
+
+# Downloads REAL MCX + NSE index-futures candles from Angel One for backtesting.
+# Manual only. Shares the live bot's concurrency group so it never runs at the same time
+# as the live bot (no competition for the Angel API quota). Sends no Telegram messages.
+# Results are pushed to the separate branch "research-data" (main is never touched).
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: option-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Fetch Angel history (research only)
+        run: python -m research.adapters.angel_hist
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+      - name: Push to research-data branch
+        run: |
+          mkdir -p /tmp/out && cp -r research/data/angel /tmp/out/
+          git config user.name "option-bot research"
+          git config user.email "bot@users.noreply.github.com"
+          git fetch origin research-data && git checkout research-data || git checkout --orphan research-data
+          git rm -rq --cached . 2>/dev/null || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          mkdir -p research/data && cp -r /tmp/out/angel research/data/
+          git add research/data/angel
+          git commit -qm "Angel research data $(date -u +%F_%H%M)" && git push -q origin research-data
