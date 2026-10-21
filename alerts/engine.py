@@ -96,35 +96,120 @@ def _f(x):
     return f"{x:,.2f}" if abs(x) < 1000 else f"{x:,.0f}"
 
 
-def call_msg(name, ex, c, sig):
+LINE = "━━━━━━━━━━━━━━━━━━"
+TFNAME = {"15m": "15-MIN (intraday)", "1h": "1-HOUR (intraday)", "3h": "POSITIONAL (3-hour candles)"}
+
+
+def _lv(xs):
+    return " · ".join(f"{_f(v)} ({n})" for v, n in xs) or "none nearby"
+
+
+def _oi_line(oi):
+    if not oi or oi.get("oi") is None:
+        return "OI     : not available from the live quote"
+    s = f"OI     : {oi['oi']:,.0f}"
+    if oi.get("chg_pct") is None:
+        return s + " · change: first reading this session (needs a 2nd scan 10-40 min later)"
+    return s + f" ({oi['chg_pct']:+.2f}% in {oi['gap_min']:.0f} min, price {oi['d_price']:+.2f}) → {oi['label'] or 'flat – no clear buildup'}"
+
+
+def _vol_line(sig, q):
+    v = f"Volume : {sig['vol_x']}× usual for this time" if sig.get("vol_x") else "Volume : same-time comparison not available"
+    if q and q.get("tradeVolume") is not None:
+        v += f" · today {q['tradeVolume']:,.0f} lots"
+    return v
+
+
+def _why(sig, side, oi, sr_near):
+    s = 1 if side == "BUY" else -1
+    bits = [f"RSI {'dropped below 25 (oversold – sellers stretched)' if s > 0 else 'rose above 75 (overbought – buyers stretched)'}",
+            f"the {sig['tf']} candle closed as {', '.join(p.split(' (')[0].lower() for p in sig['patterns'])}, showing "
+            f"{'buyers pushing back from the lows' if s > 0 else 'sellers pushing back from the highs'}"]
+    if sig.get("vol_x") and sig["vol_x"] >= 1.2:
+        bits.append(f"on {sig['vol_x']}× normal volume (real participation)")
+    elif sig.get("vol_x"):
+        bits.append(f"but volume is only {sig['vol_x']}× normal (weaker confirmation)")
+    if sr_near:
+        bits.append(f"near {'support' if s > 0 else 'resistance'} {_f(sr_near[0])} ({sr_near[1]})")
+    if oi and oi.get("label"):
+        good = {"BUY": ("Short covering", "Long buildup"), "SELL": ("Long unwinding", "Short buildup")}[side]
+        bits.append(f"OI shows {oi['label'].lower()}" + (" (supports the call)" if oi["label"] in good else " (does NOT support the call – caution)"))
+    counter = (s > 0 and sig["trend"] == "DOWN") or (s < 0 and sig["trend"] == "UP")
+    tail = (" This is a counter-trend reversal against the main " + sig["trend"].lower() + "trend, so risk is higher – smaller size.") if counter else ""
+    return "Why this call: " + "; ".join(bits) + "." + tail
+
+
+def call_msg(name, ex, c, sig, oi=None, q=None):
     side = sig["kind"]
     s = 1 if side == "BUY" else -1
-    tf = {"15m": "15-MIN", "1h": "1-HOUR", "3h": "POSITIONAL (3-hour candles)"}[sig["tf"]]
-    rsi_txt = (f"RSI(14) {sig['rsi_max']:.1f} > 75 → overbought" if side == "SELL" else f"RSI(14) {sig['rsi_min']:.1f} < 25 → oversold")
-    trend = sig["trend"]
-    counter = (side == "BUY" and trend == "DOWN") or (side == "SELL" and trend == "UP")
-    L = [f"{'🟢' if side == 'BUY' else '🔴'} {side} ALERT – {name} ({tf})",
-         f"Contract: {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}, exp {pd.Timestamp(c['expiry']):%d-%b-%Y})",
-         f"Signal candle: {pd.Timestamp(sig['candle']):%d-%b %H:%M} (closed) · price {_f(sig['close'])}",
-         "Why:",
-         f"• {rsi_txt} (current {sig['rsi']:.1f})",
-         *[f"• {p}" for p in sig["patterns"]],
-         f"• Volume {sig['vol_x']}× usual for this time" if sig.get("vol_x") else "• Volume comparison not available",
-         f"• Trend {trend} (EMA20 {_f(sig['ema20'])} / EMA50 {_f(sig['ema50'])}" + (f", ADX {sig['adx']:.0f})" if sig.get("adx") else ")")
-         + (" → COUNTER-TREND reversal: higher risk, consider smaller size" if counter else ""),
-         f"Plan: entry ~{_f(sig['entry'])} · SL {_f(sig['sl'])} ({'below' if s > 0 else 'above'} the pattern + buffer) · "
-         f"T1 {_f(sig['t1'])} (1R) · T2 {_f(sig['t2'])} (2R)",
-         f"After T1: book half, move SL to entry. Invalid if a candle closes {'below' if s > 0 else 'above'} {_f(sig['sl'])}."
-         + (" Intraday: exit by session close." if sig["tf"] != "3h" else " Positional: max 10 sessions, exit before expiry."),
+    a = sig["atr"]
+    lv = sig.get("levels") or dict(support=[], resistance=[])
+    near = (lv["support"][:1] if s > 0 else lv["resistance"][:1])
+    near = near[0] if near and abs(near[0][0] - sig["entry"]) <= 1.5 * a else None
+    block = lv["resistance"] if s > 0 else lv["support"]
+    warn = ""
+    if block and s * (block[0][0] - sig["entry"]) < sig["risk"]:
+        warn = f"\n⚠️ {'Resistance' if s > 0 else 'Support'} {_f(block[0][0])} ({block[0][1]}) comes before T1 – consider booking there."
+    L = [f"{'🟢 BUY' if s > 0 else '🔴 SELL'} CALL – {name} FUT | {TFNAME[sig['tf']]}", LINE,
+         f"Contract : {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · expiry {pd.Timestamp(c['expiry']):%d-%b-%Y}",
+         f"Entry    : {_f(sig['entry'] - 0.1 * a)} – {_f(sig['entry'] + 0.1 * a)} ({side} zone, signal close {_f(sig['entry'])})",
+         f"Stop loss: {_f(sig['sl'])} ({'below' if s > 0 else 'above'} the reversal candles)",
+         f"Target 1 : {_f(sig['t1'])} (1R) → book 50%, move SL to entry",
+         f"Target 2 : {_f(sig['t2'])} (2R)",
+         f"Risk/Reward: 1 : 2 · risk {_f(sig['risk'])} pts", LINE,
+         f"Resistance : {_lv(lv['resistance'])}",
+         f"Support    : {_lv(lv['support'])}", LINE,
+         _vol_line(sig, q), _oi_line(oi),
+         f"RSI(14): {sig['rsi_min'] if s > 0 else sig['rsi_max']:.1f} ({'oversold < 25' if s > 0 else 'overbought > 75'}) · now {sig['rsi']:.1f}",
+         f"Candle : {', '.join(sig['patterns'])}",
+         f"Trend  : {sig['trend']} (EMA20 {_f(sig['ema20'])} / EMA50 {_f(sig['ema50'])}" + (f", ADX {sig['adx']:.0f})" if sig.get("adx") else ")"),
+         LINE, _why(sig, side, oi, near) + warn,
+         f"Signal candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} (closed). Invalid if a candle closes {'below' if s > 0 else 'above'} {_f(sig['sl'])}."
+         + (" Exit by session close." if sig["tf"] != "3h" else " Max 10 sessions, exit before expiry."),
          WARN]
     return "\n".join(L)
 
 
-def watch_msg(name, sig):
+def watch_msg(name, ex, c, sig, oi=None, q=None):
     side = "BUY" if sig["kind"] == "WATCH_BUY" else "SELL"
-    return (f"🟡 WATCH {side} – {name} ({sig['tf']}) RSI {sig['rsi']:.1f} {'< 25 oversold' if side == 'BUY' else '> 75 overbought'} "
-            f"at {pd.Timestamp(sig['candle']):%d-%b %H:%M}, price {_f(sig['close'])}. No {'bullish' if side == 'BUY' else 'bearish'} "
-            f"reversal candle yet – a {side} alert follows only if one forms. {WARN}")
+    s = 1 if side == "BUY" else -1
+    a = sig["atr"]
+    lv = sig.get("levels") or dict(support=[], resistance=[])
+    trig = sig["last_high"] if s > 0 else sig["last_low"]
+    sl = (sig["swing_low3"] - 0.2 * a) if s > 0 else (sig["swing_high3"] + 0.2 * a)
+    risk = max(s * (trig - sl), a)
+    L = [f"🟡 WATCH {side} – {name} FUT | {TFNAME[sig['tf']]}", LINE,
+         f"Contract : {c['symbol']} · expiry {pd.Timestamp(c['expiry']):%d-%b-%Y}",
+         f"Price    : {_f(sig['close'])} · RSI(14) {sig['rsi']:.1f} ({'oversold < 25' if s > 0 else 'overbought > 75'})",
+         f"No {'bullish' if s > 0 else 'bearish'} reversal candle yet – NOT a call.",
+         f"Possible {side} if a {'bullish' if s > 0 else 'bearish'} reversal candle closes {'above' if s > 0 else 'below'} {_f(trig)}:",
+         f"  SL ~{_f(trig - s * risk)} · T1 ~{_f(trig + s * risk)} · T2 ~{_f(trig + 2 * s * risk)} (final levels come with the call)", LINE,
+         f"Resistance : {_lv(lv['resistance'])}",
+         f"Support    : {_lv(lv['support'])}", LINE,
+         _vol_line(sig, q), _oi_line(oi),
+         f"Trend  : {sig['trend']}" + (f" (ADX {sig['adx']:.0f})" if sig.get("adx") else ""),
+         f"Candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} (closed).", WARN]
+    return "\n".join(L)
+
+
+def oi_reading(state, symbol, q, now):
+    """Current OI from the live quote; change only vs this engine's own snapshot 10-40 min earlier (never invented)."""
+    if not q or not isinstance(q.get("opnInterest"), (int, float)) or q["opnInterest"] <= 0:
+        return None
+    snaps = state.setdefault("oi", {})
+    prev = snaps.get(symbol)
+    out = dict(oi=float(q["opnInterest"]), chg_pct=None)
+    if prev:
+        gap = (now - pd.Timestamp(prev["time"])).total_seconds() / 60
+        if 10 <= gap <= 40 and pd.Timestamp(prev["time"]).normalize() == now.normalize() and prev["oi"] > 0:
+            ch = (out["oi"] - prev["oi"]) / prev["oi"] * 100
+            dp = (q.get("ltp") or 0) - prev["ltp"]
+            lab = ("Flat OI" if abs(ch) < 0.2 or dp == 0 else
+                   ("Long buildup" if ch > 0 else "Short covering") if dp > 0 else ("Short buildup" if ch > 0 else "Long unwinding"))
+            out.update(chg_pct=ch, gap_min=gap, d_price=dp, label=lab if lab != "Flat OI" else None)
+    if not prev or (now - pd.Timestamp(prev["time"])).total_seconds() / 60 >= 10:
+        snaps[symbol] = dict(time=str(now), oi=out["oi"], ltp=q.get("ltp") or 0)
+    return out
 
 
 # ─────────────── scan ───────────────
@@ -143,6 +228,19 @@ def scan(api, master, now, state, only=None):
     names = [(n, "MCX") for n in MCX] + [(n, "NFO") for n in NFO]
     if only:
         names = [x for x in names if x[0] in only]
+    quotes, cmap = {}, {}
+    for name, ex in names:
+        if is_open(ex, now) or _just_closed(ex, now):
+            cc = contracts(master, name, ex, now)
+            if cc:
+                cmap[name] = cc
+    for ex in ("MCX", "NFO"):
+        toks = [cmap[n]["token"] for n, e in names if e == ex and n in cmap]
+        if toks:
+            try:
+                quotes.update(api.quotes({ex: toks}))
+            except Exception as e:
+                rep["errors"].append(f"quotes {ex}: {type(e).__name__}")
     for name, ex in names:
         info = rep["instruments"].setdefault(name, {})
         if not is_open(ex, now) and not _just_closed(ex, now):
@@ -180,6 +278,9 @@ def scan(api, master, now, state, only=None):
         if cl.get("1h") is not None:
             cl["3h"] = positional_candles(cl["1h"], ex, now)
         _follow_up(state, msgs, name, ex, cl.get("15m"), now)
+        q = quotes.get(c["token"])
+        oi = oi_reading(state, c["symbol"], q, now)
+        info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
         for tf, _, mins, _ in TFS:
             dfc = cl.get(tf)
             if dfc is None or len(dfc) < 60:
@@ -192,7 +293,7 @@ def scan(api, master, now, state, only=None):
             age = (now - min(dfc["time"].iloc[-1] + pd.Timedelta(minutes=mins), s_close(ex, dfc["time"].iloc[-1]))).total_seconds() / 60
             if is_open(ex, now) and age > max(2 * mins, 40) and tf != "3h":
                 info[tf] = f"STALE (last candle ended {age:.0f} min ago)"; continue
-            sig = S.evaluate(dfc, tf)
+            sig = S.evaluate(dfc, tf, cl.get("1h"))
             info[tf] = f"{sig['kind'] or 'none'} · RSI {sig.get('rsi')} · {sig.get('why', ', '.join(sig.get('patterns', [])))}"
             sid = f"{k}|{last}|{sig['kind']}"
             if not sig["kind"] or sid in state["seen"]:
@@ -200,12 +301,12 @@ def scan(api, master, now, state, only=None):
             state["seen"] = (state["seen"] + [sid])[-2000:]
             if sig["kind"] in ("BUY", "SELL"):
                 # adjusted history never changes the signal candle itself (offset 0 after the last switch)
-                msgs.append(call_msg(name, ex, c, sig))
+                msgs.append(call_msg(name, ex, c, sig, oi, q))
                 state["day"]["alerts"] += 1
                 state["active"].append(dict(id=sid, name=name, ex=ex, tf=tf, side=sig["kind"], entry=sig["entry"], sl=sig["sl"],
                                             t1=sig["t1"], t2=sig["t2"], time=last, t1_hit=False, contract=c["symbol"], expiry=c["expiry"]))
             else:
-                msgs.append(watch_msg(name, sig))
+                msgs.append(watch_msg(name, ex, c, sig, oi, q))
                 state["day"]["watches"] += 1
     if not state["day"]["startup_sent"]:
         msgs.insert(0, startup_msg(now, rep))

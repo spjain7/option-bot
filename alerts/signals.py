@@ -61,6 +61,34 @@ def patterns(df, atr):
     return bull, bear
 
 
+def levels(df, h1, price, atr):
+    """Support / resistance from REAL completed candles:
+       previous session high/low/close + classic pivots (P, R1, R2, S1, S2) from the 1-hour candles,
+       and confirmed swing highs/lows (3 candles each side) of this timeframe. Nearest 2 each side of price."""
+    lv = []
+    if h1 is not None and len(h1):
+        days = h1["time"].dt.normalize()
+        prev = h1[days < days.iloc[-1]]
+        if len(prev):
+            pd_ = prev[prev["time"].dt.normalize() == prev["time"].dt.normalize().iloc[-1]]
+            H, L, C = float(pd_["high"].max()), float(pd_["low"].min()), float(pd_["close"].iloc[-1])
+            P = (H + L + C) / 3
+            lv += [(H, "prev-day high"), (L, "prev-day low"), (P, "pivot P"), (2 * P - L, "pivot R1"), (2 * P - H, "pivot S1"),
+                   (P + (H - L), "pivot R2"), (P - (H - L), "pivot S2")]
+    hi, lo = I.pivots(df.iloc[-150:].reset_index(drop=True), 3)
+    lv += [(float(v), "swing high") for _, v in hi[-6:]] + [(float(v), "swing low") for _, v in lo[-6:]]
+    gap = 0.15 * atr
+    sup = sorted([x for x in lv if x[0] < price - gap], key=lambda x: -x[0])
+    res = sorted([x for x in lv if x[0] > price + gap], key=lambda x: x[0])
+    def dedupe(xs):
+        out = []
+        for v, n in xs:
+            if not out or abs(v - out[-1][0]) > 0.3 * atr:
+                out.append((round(v, 2), n))
+        return out[:2]
+    return dict(support=dedupe(sup), resistance=dedupe(res))
+
+
 def context(df):
     c = df["close"]
     e20, e50 = I.ema(c, 20).iloc[-1], I.ema(c, 50).iloc[-1]
@@ -72,7 +100,7 @@ def context(df):
                 adx=None if pd.isna(adx) else float(adx))
 
 
-def evaluate(df, label):
+def evaluate(df, label, h1=None):
     """df: closed candles, oldest first (≥ 60). Returns dict(kind=BUY|SELL|WATCH_BUY|WATCH_SELL|None, ...)."""
     if df is None or len(df) < 60:
         return dict(kind=None, why=f"only {0 if df is None else len(df)} candles")
@@ -85,6 +113,11 @@ def evaluate(df, label):
                 rsi_min=round(float(rr.min()), 1), rsi_max=round(float(rr.max()), 1), atr=atr, **context(df))
     vr, _ = I.slot_volume_ratio(df) if (df["volume"] > 0).mean() > 0.9 else (pd.Series([np.nan]), None)
     base["vol_x"] = None if pd.isna(vr.iloc[-1]) else round(float(vr.iloc[-1]), 2)
+    base["candle_volume"] = float(x.volume)
+    base["levels"] = levels(df, h1, float(x.close), atr)
+    base["last_high"], base["last_low"] = float(x.high), float(x.low)
+    w3 = df.iloc[-3:]
+    base["swing_low3"], base["swing_high3"] = float(w3["low"].min()), float(w3["high"].max())
     for side, extreme, pats in (("SELL", rr.max() > RSI_SELL, bear), ("BUY", rr.min() < RSI_BUY, bull)):
         if extreme and pats:
             s = 1 if side == "BUY" else -1
