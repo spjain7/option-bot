@@ -59,6 +59,7 @@ def signals(d, p):
 
 def run(name, raw, overrides=None, cost_x=1.0):
     r = REGISTRY[name]; exch = r["exchange"]; S = SESS[exch]
+    proxy = "contract" in raw and bool((raw["contract"] == "PROXY").all()) and r["kind"] == "commodity"
     p = {**BASE, **(overrides or {})}
     d = indicators(session_bars(raw, exch), p)
     s = signals(d, p)
@@ -95,7 +96,7 @@ def run(name, raw, overrides=None, cost_x=1.0):
             k -= 1; x, why = C[k], "time"
         rest = 0.5 if got1 else 1.0
         gross_R = booked + rest * side * (x - e) / R
-        cpts = trade_cost_points(name, e, r["kind"] == "commodity", cost_x) * (1.5 if got1 else 1.0)    # half booked at T1 = one extra exit order
+        cpts = trade_cost_points(name, e, proxy, cost_x) * (1.5 if got1 else 1.0)    # half booked at T1 = one extra exit order
         out.append(dict(instrument=name, signal_time=t[i], entry_time=t[j], exit_time=t[k],
                         side="LONG" if side > 0 else "SHORT", entry_px=e, exit_px=x, stop_px=e - side * R, R_pts=R,
                         cost_pts=cpts, gross_R=gross_R, net_R=gross_R - cpts / R, mae_R=mae / R, mfe_R=mfe / R,
@@ -103,8 +104,7 @@ def run(name, raw, overrides=None, cost_x=1.0):
         i = k + 1
     t = pd.DataFrame(out)
     if not t.empty:
-        proxy_c = r["kind"] == "commodity"                     # commodity hourly data is always a proxy here
-        t["pt_scale"] = (mcx_ref_price(name) / t["entry_px"].abs()) if proxy_c else 1.0
+        t["pt_scale"] = (mcx_ref_price(name) / t["entry_px"].abs()) if proxy else 1.0
         t["net_pts"] = t["net_R"] * t["R_pts"]; t["pnl_rs_1lot"] = t["net_pts"] * t["pt_scale"] * r["mult"]
         t["cost_rs_1lot"] = t["cost_pts"] * t["pt_scale"] * r["mult"]
     return t

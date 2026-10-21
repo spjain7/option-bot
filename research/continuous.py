@@ -85,3 +85,25 @@ def load_proxy(name, tf):
     d["offset"], d["roll"], d["roll_gap"] = 0.0, False, 0.0
     d["contract"], d["oi"], d["traded"] = "PROXY", np.nan, True
     return d
+
+
+def load_angel(name, interval):
+    """Angel One vendor-stitched FRONT-MONTH series (REAL exchange prices, NOT back-adjusted; the vendor switches
+    contract at expiry, so each roll shows up as a price jump). Returns None when not downloaded."""
+    man = DATA / "angel" / "manifest.csv"
+    if not man.exists():
+        return None
+    m = pd.read_csv(man)
+    m = m[(m["name"] == name) & (m["interval"] == interval) & (m["bars"] > 0)]
+    if "front_stitched" in m:
+        m = m[m["front_stitched"]]
+    if m.empty:
+        return None
+    r = m.sort_values("bars").iloc[-1]
+    d = pd.read_csv(DATA / "angel" / r["exch"] / f"{r['symbol']}_{interval}.csv", parse_dates=["time"])
+    d = d[(d["open"] > 0) & (d["close"] > 0)].reset_index(drop=True)
+    for k in ("open", "high", "low", "close"):
+        d["raw_" + k] = d[k]
+    d["offset"], d["roll"], d["roll_gap"] = 0.0, False, 0.0
+    d["contract"], d["oi"], d["traded"] = "ANGEL-FRONT", np.nan, d["volume"] > 0
+    return d

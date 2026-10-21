@@ -65,4 +65,12 @@ Grades: **PASS** = REAL data, clean OOS, all 9 met. **PAPER-CANDIDATE** = all co
 missed, or all met on proxy / already-seen data. **FAIL** = anything else. A positive total return alone never passes.
 
 ## Change log
-(none)
+- 21-Oct-2026, before any index or Angel results were looked at: Angel One turned out to serve a vendor-stitched
+  **front-month** history on the nearest contract's token (checked against NSE bhavcopy: identical close to the front
+  contract on 96% of days; it switches at expiry and is NOT back-adjusted). Added groups MCX_DAILY_REAL,
+  MCX_HOURLY_REAL and INDEX_HOURLY_REAL from this series, graded **REAL-UNADJ** (real prices, but roll jumps remain
+  in the series, so it cannot reach PASS). Their periods are proportional: first 50% train, next 25% validation,
+  last 25% OOS. Hourly groups use the same proportional rule. Commodity markets stay "already seen".
+  Added a bias check: strategy B/C on Angel's unadjusted NIFTY/BANKNIFTY vs the back-adjusted bhavcopy series.
+- Proxy costs: charged as the MCX cost *fraction* at today's MCX-equivalent price (proxy price × USD/INR × unit
+  conversion), because MCX point costs cannot be applied to USD prices.
