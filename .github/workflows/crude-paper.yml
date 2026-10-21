@@ -30,6 +30,7 @@ concurrency:
 
 permissions:
   contents: write
+  actions: read          # read the previous run's result for the health report
 
 defaults:
   run:
@@ -89,6 +90,7 @@ jobs:
         if: env.MODE == 'scan' || env.MODE == 'health'
         run: python -m crude.run "$MODE"
         env:
+          GITHUB_TOKEN:      ${{ github.token }}
           ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
           ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
           ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
