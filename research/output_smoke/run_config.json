@@ -1,0 +1,178 @@
+{
+ "run_at": "2026-10-21T10:32:06.302057",
+ "git_commit": "cc7c6c9",
+ "capital_rs": 2500000,
+ "risk_per_trade": 0.02,
+ "max_positions": 6,
+ "max_open_risk": 0.08,
+ "groups": {
+  "MCX_DAILY_PROXY": {
+   "names": [
+    "GOLD",
+    "SILVER",
+    "CRUDEOIL",
+    "NATURALGAS",
+    "COPPER",
+    "ZINC",
+    "ALUMINIUM"
+   ],
+   "grade": "PROXY",
+   "clean": false,
+   "periods": [
+    "2005-01-01",
+    "2013-01-01",
+    "2018-01-01"
+   ],
+   "wf_from": 2013
+  }
+ },
+ "daily_strategies": {
+  "B": {
+   "entry": 20,
+   "exit": 10,
+   "stop": 2.0,
+   "trend": false
+  },
+  "C": {},
+  "D": {
+   "rsi_block": true
+  },
+  "E": {
+   "vol": 1.5
+  },
+  "F": {
+   "oi": true
+  },
+  "G": {
+   "regime": true
+  },
+  "H1": {
+   "rsi_block": true,
+   "regime": true
+  },
+  "H2": {
+   "vol": 1.5,
+   "regime": true
+  },
+  "H3": {
+   "oi": true,
+   "regime": true
+  },
+  "H4": {
+   "rsi_block": true,
+   "vol": 1.5
+  },
+  "I": {
+   "sides": [
+    1
+   ]
+  }
+ },
+ "daily_base": {
+  "entry": 55,
+  "exit": 20,
+  "stop": 2.0,
+  "trend": true,
+  "rsi_block": false,
+  "vol": null,
+  "oi": false,
+  "regime": false,
+  "sides": [
+   1,
+   -1
+  ]
+ },
+ "hourly_base": {
+  "fast": 20,
+  "slow": 50,
+  "trend": 200,
+  "min_adx": 20,
+  "brk": 5,
+  "rsi_buy": [
+   55,
+   75
+  ],
+  "rsi_sell": [
+   25,
+   45
+  ],
+  "vol_x": 1.2,
+  "sl_atr": [
+   1.0,
+   2.0
+  ],
+  "t1": 1.0,
+  "t2": 2.0,
+  "chase": 0.5,
+  "spike": 2.5,
+  "max_day": 2
+ },
+ "hourly_sessions": {
+  "MCX": {
+   "first": "10:00",
+   "last": "22:00",
+   "exit": "22:30",
+   "open": "09:00",
+   "close": "23:30"
+  },
+  "NSE": {
+   "first": "10:15",
+   "last": "14:30",
+   "exit": "15:15",
+   "open": "09:15",
+   "close": "15:30"
+  }
+ },
+ "costs": {
+  "NSE": {
+   "tax_sell": 0.0005,
+   "exch": 1.83e-05,
+   "sebi": 1e-06,
+   "stamp_buy": 2e-05,
+   "gst": 0.18,
+   "brokerage": 20.0
+  },
+  "MCX": {
+   "tax_sell": 0.0001,
+   "exch": 2.1e-05,
+   "sebi": 1e-06,
+   "stamp_buy": 2e-05,
+   "gst": 0.18,
+   "brokerage": 20.0
+  }
+ },
+ "slippage_pts": {
+  "NIFTY": 1.0,
+  "BANKNIFTY": 3.0,
+  "FINNIFTY": 2.0,
+  "MIDCPNIFTY": 1.0,
+  "NIFTYNXT50": 15.0,
+  "CRUDEOIL": 2.0,
+  "NATURALGAS": 0.3,
+  "GOLD": 5.0,
+  "SILVER": 20.0,
+  "COPPER": 0.3,
+  "ZINC": 0.2,
+  "ALUMINIUM": 0.2
+ },
+ "roll_days": {
+  "NIFTY": 3,
+  "BANKNIFTY": 3,
+  "FINNIFTY": 3,
+  "MIDCPNIFTY": 3,
+  "NIFTYNXT50": 3,
+  "CRUDEOIL": 5,
+  "NATURALGAS": 5,
+  "GOLD": 5,
+  "SILVER": 5,
+  "COPPER": 5,
+  "ZINC": 5,
+  "ALUMINIUM": 5
+ },
+ "variants_run_this_project": 245,
+ "variants_inspected_before_plan": 30,
+ "bootstrap": {
+  "resamples": 5000,
+  "seed": 12345
+ }
+}

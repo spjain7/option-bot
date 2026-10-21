@@ -1,0 +1,21 @@
+instrument,dataset,source,grade,start,end,bars,rolls,volume,oi,note
+GOLD,daily,"Yahoo GC=F (international, unadjusted)",PROXY,2005-01-03,2026-10-21,5481.0,unknown,exchange volume of proxy,False,
+SILVER,daily,"Yahoo SI=F (international, unadjusted)",PROXY,2005-01-03,2026-10-21,5481.0,unknown,exchange volume of proxy,False,
+CRUDEOIL,daily,"Yahoo CL=F (international, unadjusted)",PROXY,2005-01-03,2026-10-21,5483.0,unknown,exchange volume of proxy,False,
+NATURALGAS,daily,"Yahoo NG=F (international, unadjusted)",PROXY,2005-01-03,2026-10-21,5485.0,unknown,exchange volume of proxy,False,
+COPPER,daily,"Yahoo HG=F (international, unadjusted)",PROXY,2005-01-03,2026-10-21,5484.0,unknown,exchange volume of proxy,False,
+ZINC,daily,none,MISSING,,,0.0,,,,no free daily history found (Yahoo has no zinc future); MCX bhavcopy blocked here
+ALUMINIUM,daily,"Yahoo ALI=F (international, unadjusted)",PROXY,2014-05-06,2026-10-21,3098.0,unknown,exchange volume of proxy,False,
+NIFTY,hourly,Yahoo ^NSEI (cash index),PROXY,2023-11-06 09:15:00,2026-10-21 15:15:00,5075.0,,False,False,
+BANKNIFTY,hourly,Yahoo ^NSEBANK (cash index),PROXY,2023-11-06 09:15:00,2026-10-21 15:15:00,5075.0,,False,False,
+FINNIFTY,hourly,none,MISSING,,,0.0,,,,no free hourly history
+MIDCPNIFTY,hourly,none,MISSING,,,0.0,,,,no free hourly history
+NIFTYNXT50,hourly,none,MISSING,,,0.0,,,,no free hourly history
+CRUDEOIL,hourly,Yahoo CL=F (international future),PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13546.0,,True,False,
+NATURALGAS,hourly,Yahoo NG=F (international future),PROXY,2024-05-30 12:30:00,2026-10-21 15:30:00,13524.0,,True,False,
+GOLD,hourly,Yahoo GC=F (international future),PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13721.0,,True,False,
+SILVER,hourly,Yahoo SI=F (international future),PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13718.0,,True,False,
+COPPER,hourly,Yahoo HG=F (international future),PROXY,2024-05-30 09:30:00,2026-10-21 15:30:00,13711.0,,True,False,
+ZINC,hourly,none,MISSING,,,0.0,,,,no free hourly history
+ALUMINIUM,hourly,Yahoo ALI=F (international future),PROXY,2024-05-30 09:30:00,2026-10-21 13:30:00,10193.0,,True,False,
+MCX (all),angel,Angel One SmartAPI,MISSING,,,,,,,"run the 'Research data' workflow, then fetch branch research-data"

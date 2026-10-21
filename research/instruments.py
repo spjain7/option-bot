@@ -80,3 +80,32 @@ def round_trip_cost_rs(name, entry, exit_, lots=1, mult_override=None, cost_x=1.
 def cost_points(name, price, cost_x=1.0):
     """Round-trip cost per lot expressed in price points (for R-based results)."""
     return round_trip_cost_rs(name, price, price, cost_x=cost_x) / REGISTRY[name]["mult"]
+
+
+# ───────────── proxies: cost must be charged as the MCX cost FRACTION, not MCX points on a USD price ─────────────
+# MCX-equivalent price = proxy price x USD/INR x unit conversion (import duty ignored; only used to size costs).
+UNIT_CONV = {"GOLD": 10 / 31.1035, "SILVER": 32.1507, "CRUDEOIL": 1.0, "NATURALGAS": 1.0, "COPPER": 2.20462,
+             "ALUMINIUM": 1 / 1000}
+_REF = {}
+
+
+def mcx_ref_price(name):
+    """Latest proxy close converted to MCX quote units (cached)."""
+    if name not in _REF:
+        import pandas as pd
+        from pathlib import Path
+        d = Path(__file__).resolve().parent / "data" / "proxy"
+        px = pd.read_csv(d / f"{name}_1d.csv")["close"].iloc[-1]
+        fx = pd.read_csv(d / "USDINR_1d.csv")["close"].iloc[-1]
+        _REF[name] = float(px * fx * UNIT_CONV[name])
+    return _REF[name]
+
+
+def cost_frac(name, cost_x=1.0):
+    ref = mcx_ref_price(name)
+    return cost_points(name, ref, cost_x) / ref
+
+
+def trade_cost_points(name, price, proxy, cost_x=1.0):
+    """Round-trip cost in the series' own points: exact for REAL contracts, fraction-based for proxies."""
+    return cost_frac(name, cost_x) * price if proxy else cost_points(name, price, cost_x)

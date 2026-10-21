@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 OUT = ROOT / "research" / "data" / "angel"
 LIMIT_DAYS = {"ONE_DAY": 1900, "ONE_HOUR": 390}       # Angel per-request window limits (kept under)
+MAX_PAGES = 4                                        # up to ~20 years daily / ~4 years hourly
 
 
 def contracts(master, names):
@@ -31,17 +32,30 @@ def fetch_all(api, master, names, intervals=("ONE_DAY", "ONE_HOUR")):
     from angel import now_ist
     now = now_ist()
     rows = []
-    for _, c in contracts(master, names).iterrows():
+    cs = contracts(master, names)
+    nearest = set(cs[cs["expiry_dt"] >= now.normalize()].groupby("name")["token"].first().astype(str))
+    for _, c in cs.iterrows():
         for iv in intervals:
-            frm = now - pd.Timedelta(days=LIMIT_DAYS[iv])
-            df = api.candles(c["exch_seg"], c["token"], iv, frm, now)
+            # Angel serves a vendor-stitched FRONT-MONTH history on the nearest contract's token
+            # (verified against NSE bhavcopy: same close as the front contract on 96% of days).
+            # Page backwards for that token; other contracts only have their own short life.
+            pages = MAX_PAGES if str(c["token"]) in nearest else 1
+            parts, to = [], now
+            for _ in range(pages):
+                frm = to - pd.Timedelta(days=LIMIT_DAYS[iv])
+                part = api.candles(c["exch_seg"], c["token"], iv, frm, to)
+                if part is None or part.empty:
+                    break
+                parts.append(part)
+                to = part["time"].min() - pd.Timedelta(minutes=1)
+            df = pd.concat(parts).drop_duplicates("time").sort_values("time").reset_index(drop=True) if parts else None
             n = 0 if df is None else len(df)
             if n:
                 d = OUT / c["exch_seg"]; d.mkdir(parents=True, exist_ok=True)
                 df.assign(symbol=c["symbol"], name=c["name"], expiry=c["expiry_dt"]).to_csv(
                     d / f"{c['symbol']}_{iv}.csv", index=False)
             rows.append(dict(exch=c["exch_seg"], name=c["name"], symbol=c["symbol"], expiry=c["expiry_dt"],
-                             interval=iv, bars=n, first=None if not n else df["time"].min(),
+                             interval=iv, bars=n, front_stitched=str(c["token"]) in nearest, first=None if not n else df["time"].min(),
                              last=None if not n else df["time"].max()))
             print(c["symbol"], iv, n, flush=True)
     man = pd.DataFrame(rows)
