@@ -1,0 +1,22 @@
+{
+ "schema": 3,
+ "strategy": "MCX_DAILY_TREND_v3",
+ "created": "2026-10-21 14:18:22.748470",
+ "cash": 2500000,
+ "positions": [],
+ "pending": [],
+ "closed": [],
+ "sent": {},
+ "last_state": {},
+ "processed": {
+  "__day__": "2026-10-20"
+ },
+ "day_open_equity": {
+  "2026-10-20": 2500000
+ },
+ "day_close_equity": {
+  "2026-10-20": 2500000
+ },
+ "next_id": 1,
+ "marks": {}
+}

@@ -1,0 +1,72 @@
+{
+ "GOLD04DEC26FUT": {
+  "name": "GOLD",
+  "token": "495213",
+  "expiry": "2026-12-04"
+ },
+ "GOLD05FEB27FUT": {
+  "name": "GOLD",
+  "token": "559933",
+  "expiry": "2027-02-05"
+ },
+ "SILVER04DEC26FUT": {
+  "name": "SILVER",
+  "token": "495214",
+  "expiry": "2026-12-04"
+ },
+ "SILVER05MAR27FUT": {
+  "name": "SILVER",
+  "token": "564619",
+  "expiry": "2027-03-05"
+ },
+ "CRUDEOIL19NOV26FUT": {
+  "name": "CRUDEOIL",
+  "token": "573422",
+  "expiry": "2026-11-19"
+ },
+ "CRUDEOIL18DEC26FUT": {
+  "name": "CRUDEOIL",
+  "token": "576264",
+  "expiry": "2026-12-18"
+ },
+ "NATURALGAS27OCT26FUT": {
+  "name": "NATURALGAS",
+  "token": "570750",
+  "expiry": "2026-10-27"
+ },
+ "NATURALGAS24NOV26FUT": {
+  "name": "NATURALGAS",
+  "token": "574319",
+  "expiry": "2026-11-24"
+ },
+ "COPPER30OCT26FUT": {
+  "name": "COPPER",
+  "token": "574829",
+  "expiry": "2026-10-30"
+ },
+ "COPPER30NOV26FUT": {
+  "name": "COPPER",
+  "token": "578634",
+  "expiry": "2026-11-30"
+ },
+ "ZINC30OCT26FUT": {
+  "name": "ZINC",
+  "token": "574834",
+  "expiry": "2026-10-30"
+ },
+ "ZINC30NOV26FUT": {
+  "name": "ZINC",
+  "token": "578638",
+  "expiry": "2026-11-30"
+ },
+ "ALUMINIUM30OCT26FUT": {
+  "name": "ALUMINIUM",
+  "token": "574828",
+  "expiry": "2026-10-30"
+ },
+ "ALUMINIUM30NOV26FUT": {
+  "name": "ALUMINIUM",
+  "token": "578633",
+  "expiry": "2026-11-30"
+ }
+}
