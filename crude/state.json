@@ -1,0 +1,121 @@
+{
+ "schema": 1,
+ "version": "crude-paper 1.0.0",
+ "mode": "PAPER",
+ "created": "2026-10-21 22:04:59.657358",
+ "capital": 500000.0,
+ "realized": 0.0,
+ "engines": {
+  "intraday": {
+   "open": [],
+   "closed": [],
+   "last_eval_bar": "2026-10-21 21:45:00",
+   "last_exit_bar": null
+  },
+  "positional": {
+   "open": [],
+   "closed": [],
+   "last_eval_bar": "2026-10-21 18:00:00",
+   "last_exit_bar": null
+  }
+ },
+ "seen": [],
+ "oi_snaps": [
+  {
+   "time": "2026-10-21 22:05:08",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1411500,
+   "ltp": 9230.0,
+   "volume": 44725
+  }
+ ],
+ "switches": {
+  "CRUDEOIL19NOV26FUT|2026-10-21": [
+   [
+    "2026-08-20 09:00:00",
+    0.0,
+    "unmeasured"
+   ],
+   [
+    "2026-09-22 09:00:00",
+    293.0,
+    "measured"
+   ],
+   [
+    "2026-10-20 17:00:00",
+    345.0,
+    "measured"
+   ]
+  ]
+ },
+ "day": {
+  "date": "2026-10-21",
+  "realized": {
+   "intraday": 0.0,
+   "positional": 0.0
+  },
+  "generated": 0,
+  "blocked": 0,
+  "ignored": 0,
+  "startup_sent": true,
+  "eod_sent": false,
+  "alerted": [],
+  "trades": []
+ },
+ "runs": [
+  {
+   "time": "2026-10-21 22:04:59.657358",
+   "session": "OPEN",
+   "api": {
+    "15m": "ok (781 candles, last start 21-Oct 22:00)",
+    "1h": "ok (1049 candles, last start 21-Oct 22:00)",
+    "quote": "ok",
+    "1h-next(roll check)": "ok (524 candles, last start 21-Oct 22:00)"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": "2026-10-21 21:45:00",
+    "bars_15m": 780,
+    "last_closed_1h": "2026-10-21 21:00:00",
+    "bars_1h": 537,
+    "last_closed_3h": "2026-10-21 18:00:00",
+    "bars_3h": 178,
+    "age_15m_min": 5.0,
+    "quote_age_min": -0.1,
+    "ltp": 9230.0,
+    "day_volume": 44725,
+    "volume": "available",
+    "oi_current": 1411500,
+    "oi_change": {
+     "status": "UNAVAILABLE",
+     "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "1-hour trend MIXED: close 9231 EMA20 9299 EMA50 9180 EMA200 8804 ADX 18.9"
+     ],
+     "bar": "2026-10-21 21:45:00"
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "no setup: no confirmed breakout and no pullback-and-resume candle"
+     ],
+     "bar": "2026-10-21 18:00:00"
+    }
+   },
+   "actions": [
+    "new paper account created"
+   ],
+   "errors": []
+  }
+ ],
+ "last_error": null
+}
