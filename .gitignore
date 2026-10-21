@@ -5,3 +5,5 @@ research/data/
 research/output/
 research/output_smoke/
 tests/_sim*.json
+paper/reports/state/
+state/paper_mcx_daily*

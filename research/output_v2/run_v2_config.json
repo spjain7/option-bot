@@ -1,0 +1,34 @@
+{
+ "periods": [
+  "2005-12-31",
+  "2016-05-27",
+  "2021-08-08"
+ ],
+ "wf_from": 2017,
+ "capital": 2500000,
+ "base": {},
+ "features": {
+  "base (C)": {},
+  "+RSI block (>70 no BUY, <30 no SELL)": {
+   "rsi_block": true
+  },
+  "+lagged volume \u22651.5x": {
+   "vol": 1.5,
+   "vol_lag": true
+  },
+  "+regime (ADX\u226520, ATR% 10-90 pct)": {
+   "regime": true
+  },
+  "exit: 10-day channel": {
+   "exit": 10
+  },
+  "exit: 3 ATR trailing stop": {
+   "exit_mode": "trail",
+   "trail_atr": 3.0
+  },
+  "+chase limit 0.5 ATR": {
+   "chase": 0.5
+  }
+ },
+ "variants_run": 924
+}

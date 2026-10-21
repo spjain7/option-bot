@@ -1,0 +1,7 @@
+variant,risk_per_trade_pct,label,closed_trades,alerts,rejected,missed_fills_chase,start_equity,end_equity,net_pnl_rs,costs_rs,win_pct,avg_R,stop_slippage_rs,long_pnl_rs,short_pnl_rs,max_dd_pct,return_pct,alerts_by_state
+long_short,0.25,replay_long_short_risk0.25,22,534,489,0,2500000,2629376,129376,5984,27.3,1.022,1395,178359,-48983,-3.8,5.2,"{""NO TRADE"": 277, ""WATCHLIST"": 235, ""CONFIRMED PAPER SIGNAL"": 22}"
+long_short,0.5,replay_long_short_risk0.5,37,484,414,1,2500000,2771288,271288,15981,32.4,0.617,4775,432924,-161636,-10.5,12.5,"{""NO TRADE"": 232, ""WATCHLIST"": 212, ""CONFIRMED PAPER SIGNAL"": 40}"
+long_short,1.0,replay_long_short_risk1,42,423,322,2,2500000,3898686,1398686,33253,31.0,2.232,8197,1725797,-327110,-33.2,61.0,"{""NO TRADE"": 192, ""WATCHLIST"": 185, ""CONFIRMED PAPER SIGNAL"": 46}"
+long_only,0.25,replay_long_only_risk0.25,10,367,362,0,2500000,2678359,178359,3013,60.0,3.249,550,178359,0,-2.3,7.1,"{""NO TRADE"": 194, ""WATCHLIST"": 163, ""CONFIRMED PAPER SIGNAL"": 10}"
+long_only,0.5,replay_long_only_risk0.5,19,321,302,1,2500000,2919927,419927,8585,63.2,2.048,1831,419927,0,-7.5,18.2,"{""NO TRADE"": 158, ""WATCHLIST"": 142, ""CONFIRMED PAPER SIGNAL"": 21}"
+long_only,1.0,replay_long_only_risk1,25,273,217,2,2500000,4312741,1812741,19775,48.0,4.297,4637,1812741,0,-31.4,76.8,"{""NO TRADE"": 128, ""WATCHLIST"": 117, ""CONFIRMED PAPER SIGNAL"": 28}"

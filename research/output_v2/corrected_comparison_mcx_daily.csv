@@ -1,0 +1,17 @@
+strategy,data,oos_trades,oos_exp_R,oos_pf,oos_boot_p5,val_exp_R,stability_pct,wf_exp_R,grade,missed
+B,unadjusted+holes,263,0.086,1.15,-0.107,0.123,100,0.052,FAIL,exp>0.10R; boot p5>0; PF≥1.2; validation+years; DD≤25R
+B,est-adjusted+holes,257,0.171,1.28,-0.052,0.149,100,0.14,FAIL,boot p5>0; validation+years; DD≤25R
+C,unadjusted+holes,114,0.884,2.3,-0.039,0.163,100,1.139,FAIL,boot p5>0; validation+years; DD≤25R
+C,est-adjusted+holes,113,1.024,2.61,0.197,0.172,100,0.886,FAIL,validation+years; DD≤25R
+D,unadjusted+holes,75,1.393,3.08,0.052,0.176,100,2.734,FAIL,validation+years; DD≤25R
+D,est-adjusted+holes,78,1.505,3.42,0.356,0.329,100,1.84,PAPER-CANDIDATE,validation+years; proxy/unadjusted or already-seen data
+E,unadjusted+holes,69,0.983,2.43,-0.064,0.059,100,1.471,FAIL,boot p5>0; validation+years
+E,est-adjusted+holes,67,1.098,2.66,0.185,0.198,100,1.421,PAPER-CANDIDATE,validation+years; proxy/unadjusted or already-seen data
+G,unadjusted+holes,74,1.206,2.77,0.085,0.284,100,1.169,PAPER-CANDIDATE,validation+years; proxy/unadjusted or already-seen data
+G,est-adjusted+holes,86,1.119,2.72,0.181,0.328,100,0.949,FAIL,validation+years; DD≤25R
+H1,unadjusted+holes,37,1.386,2.88,-0.142,0.567,100,1.304,FAIL,boot p5>0; ≥50 trades; validation+years
+H1,est-adjusted+holes,44,1.568,3.36,0.257,0.692,100,1.506,FAIL,≥50 trades; validation+years
+H2,unadjusted+holes,45,1.564,3.53,0.223,0.262,100,1.744,FAIL,≥50 trades; validation+years
+H2,est-adjusted+holes,46,1.552,3.6,0.417,0.512,100,1.62,FAIL,≥50 trades; validation+years
+H4,unadjusted+holes,31,1.233,2.6,-0.27,0.271,100,1.81,FAIL,boot p5>0; ≥50 trades; validation+years
+H4,est-adjusted+holes,33,1.1,2.6,-0.066,0.41,100,1.201,FAIL,boot p5>0; ≥50 trades; validation+years

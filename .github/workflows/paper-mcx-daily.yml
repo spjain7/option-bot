@@ -1,0 +1,55 @@
+name: Paper MCX daily trend (manual, research only)
+
+# PAPER engine (paper/mcx_daily.py). Manual only - no schedule is enabled, so nothing changes in the
+# live alerts. Telegram stays OFF unless you pick telegram = 1 when you run it.
+# State and event log are kept on the separate branch "paper-state" (main is never touched).
+# To make it run daily later (only after approval), add:  schedule: - cron: "45 18 * * 1-5"   (00:15 IST)
+
+on:
+  workflow_dispatch:
+    inputs:
+      telegram:
+        description: "Send paper alerts to Telegram? 0 = no (default), 1 = yes"
+        default: "0"
+
+concurrency:
+  group: option-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  paper:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Restore paper state
+        run: |
+          git fetch -q origin paper-state && git archive FETCH_HEAD state | tar -x -C . || true
+      - name: Run paper engine
+        run: python -m paper.mcx_daily
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+          TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+          PAPER_TELEGRAM:    ${{ github.event.inputs.telegram }}
+      - name: Save paper state to branch paper-state
+        run: |
+          mkdir -p /tmp/ps && cp state/paper_mcx_daily* /tmp/ps/ 2>/dev/null || true
+          git config user.name "option-bot paper"
+          git config user.email "bot@users.noreply.github.com"
+          git fetch origin paper-state && git checkout -q paper-state || git checkout -q --orphan paper-state
+          git rm -rq --cached . 2>/dev/null || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          mkdir -p state && cp /tmp/ps/* state/ 2>/dev/null || true
+          git add state && git commit -qm "paper state $(date -u +%F_%H%M)" && git push -q origin paper-state || echo "nothing to save"

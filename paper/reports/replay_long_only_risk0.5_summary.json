@@ -1,0 +1,36 @@
+{
+ "label": "replay_long_only_risk0.5",
+ "closed_trades": 19,
+ "alerts": 321,
+ "alerts_by_state": {
+  "NO TRADE": 158,
+  "WATCHLIST": 142,
+  "CONFIRMED PAPER SIGNAL": 21
+ },
+ "rejected": 302,
+ "missed_fills_chase": 1,
+ "start_equity": 2500000,
+ "end_equity": 2919927,
+ "net_pnl_rs": 419927,
+ "costs_rs": 8585,
+ "win_pct": 63.2,
+ "avg_R": 2.048,
+ "stop_slippage_rs": 1831,
+ "long_pnl_rs": 419927,
+ "short_pnl_rs": 0,
+ "by_instrument": {
+  "ALUMINIUM": 236863,
+  "CRUDEOIL": 152921,
+  "GOLD": 6950,
+  "NATURALGAS": 3994,
+  "SILVER": -25616,
+  "ZINC": 44815
+ },
+ "by_exit": {
+  "channel exit": 12,
+  "stop": 6,
+  "gap through stop": 1
+ },
+ "max_dd_pct": -7.5,
+ "return_pct": 18.2
+}

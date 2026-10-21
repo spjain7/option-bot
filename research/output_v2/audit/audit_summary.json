@@ -1,0 +1,103 @@
+{
+ "roll_estimator_validation": {
+  "n": 374,
+  "corr": 0.714,
+  "mean_true": 0.424,
+  "mean_est": 0.341,
+  "mae": 0.215,
+  "cum_true": 158.8,
+  "cum_est": 127.5
+ },
+ "C": {
+  "trades": 514,
+  "total_R": 170.6,
+  "top5_share_pct": 87,
+  "trades_gt10R": 10,
+  "R_from_2026": 128.1,
+  "best_month": "2026-03",
+  "best_month_R": 94.1,
+  "trades_spanning_data_hole": 4,
+  "R_of_trades_spanning_hole": -2.9,
+  "est_roll_jump_R_total": -27.7,
+  "R_ok_all": true,
+  "entries_next_open_all": true,
+  "rupee_calc_ok": true,
+  "reconcile_oos": {
+   "v1_closed_trade_fixed_capital": {
+    "return_pct": 124.8,
+    "max_dd_pct": -62.1,
+    "taken": 101
+   },
+   "v2_mtm_fixed_capital_sizing": {
+    "return_pct": 136.4,
+    "max_dd_pct": -42.1,
+    "taken": 85
+   },
+   "v2_mtm_same_limits": {
+    "return_pct": 65.7,
+    "max_dd_pct": -46.9,
+    "taken": 106
+   },
+   "v2_mtm_with_margin_group_daily_loss": {
+    "return_pct": 63.9,
+    "max_dd_pct": -50.0,
+    "taken": 101,
+    "skips": {
+     "skip_size": 16,
+     "skip_margin": 0,
+     "skip_max_pos": 0,
+     "skip_risk": 3,
+     "skip_group": 0,
+     "skip_held": 0,
+     "skip_daily_loss": 5
+    }
+   }
+  }
+ },
+ "G": {
+  "trades": 353,
+  "total_R": 136.8,
+  "top5_share_pct": 91,
+  "trades_gt10R": 6,
+  "R_from_2026": 105.3,
+  "best_month": "2026-03",
+  "best_month_R": 76.8,
+  "trades_spanning_data_hole": 2,
+  "R_of_trades_spanning_hole": -2.1,
+  "est_roll_jump_R_total": -19.4,
+  "R_ok_all": true,
+  "entries_next_open_all": true,
+  "rupee_calc_ok": true,
+  "reconcile_oos": {
+   "v1_closed_trade_fixed_capital": {
+    "return_pct": 136.7,
+    "max_dd_pct": -35.1,
+    "taken": 62
+   },
+   "v2_mtm_fixed_capital_sizing": {
+    "return_pct": 145.0,
+    "max_dd_pct": -34.8,
+    "taken": 64
+   },
+   "v2_mtm_same_limits": {
+    "return_pct": 124.7,
+    "max_dd_pct": -36.6,
+    "taken": 72
+   },
+   "v2_mtm_with_margin_group_daily_loss": {
+    "return_pct": 128.6,
+    "max_dd_pct": -36.4,
+    "taken": 68,
+    "skips": {
+     "skip_size": 7,
+     "skip_margin": 0,
+     "skip_max_pos": 0,
+     "skip_risk": 0,
+     "skip_group": 1,
+     "skip_held": 0,
+     "skip_daily_loss": 3
+    }
+   }
+  }
+ }
+}

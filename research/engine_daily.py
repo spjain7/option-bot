@@ -37,7 +37,13 @@ def add_indicators(d):
 
 
 BASE = dict(entry=55, exit=20, stop=2.0, trend=True, rsi_block=False, vol=None, oi=False, regime=False,
-            sides=(1, -1))
+            sides=(1, -1),
+            # v2 options (defaults reproduce v1 exactly)
+            vol_lag=False,      # volume confirmation uses the PREVIOUS day's volume ratio (no same-bar dependence)
+            exit_mode="channel",  # "channel" = opposite N-day channel | "trail" = trailing stop trail_atr x ATR from best close
+            trail_atr=3.0,
+            chase=None,         # skip entry if the next open is already > chase x ATR beyond the signal close
+            hole_block=60)      # bars blocked for new signals after a data hole (only if the frame has a "hole" column)
 STRATS = {
     "B": dict(entry=20, exit=10, stop=2.0, trend=False),
     "C": dict(),
@@ -63,7 +69,8 @@ def signals(d, p):
     if p["rsi_block"]:
         long_ &= ~(d["rsi"] > 70); short &= ~(d["rsi"] < 30)
     if p["vol"]:
-        ok = d["vol_x"] >= p["vol"]
+        vx = d["vol_x"].shift(1) if p.get("vol_lag") else d["vol_x"]
+        ok = vx >= p["vol"]
         long_ &= ok; short &= ok
     if p["oi"]:
         ok = d["oi_up"] == True                                          # noqa: E712 (NaN -> False)
@@ -73,6 +80,10 @@ def signals(d, p):
         long_ &= ok; short &= ok
     s = np.where(long_, 1, np.where(short, -1, 0))
     s[d["atr"].isna().values | d["sma200"].isna().values] = 0
+    if "hole" in d:                                                      # indicators are unreliable after a data hole
+        h = np.where(d["hole"].values)[0]
+        for k in h:
+            s[k:k + p.get("hole_block", 60)] = 0
     return s
 
 
@@ -86,15 +97,20 @@ def run(name, d, overrides=None, cost_x=1.0):
     off, roll, T = d["offset"].values, d["roll"].values, d["time"].values
     con = d["contract"].values
     proxy = bool((d["contract"] == "PROXY").all())
+    hole = d["hole"].values if "hole" in d else np.zeros(len(d), bool)
     out, i, n = [], 0, len(d)
     while i < n - 1:
         side = s[i]
         if side == 0 or side not in p["sides"]:
             i += 1; continue
         j = i + 1
+        if p.get("chase") and side * (O[j] - C[i]) > p["chase"] * A[i]:   # opened too far beyond the signal: no trade
+            i += 1; continue
         e = O[j]; R = p["stop"] * A[i]; stop = e - side * R
-        mae = mfe = 0.0; rolls = 0; k = j; x = None; why = None
+        mae = mfe = 0.0; rolls = 0; k = j; x = None; why = None; best = e
         while k < n:
+            if hole[k] and k > j:                                         # data missing in between: trade not valid
+                k -= 1; x, why = C[k], "data_hole"; break
             if k > j and side * (O[k] - stop) <= 0:                       # gapped through the stop
                 x, why = O[k], "gap_stop"; break
             lo_, hi_ = (L[k], H[k])
@@ -102,7 +118,11 @@ def run(name, d, overrides=None, cost_x=1.0):
             mfe = max(mfe, side * ((hi_ if side > 0 else lo_) - e))
             if side * ((lo_ if side > 0 else hi_) - stop) <= 0:
                 x, why = stop, "stop"; break
-            if side * (C[k] - (xo_lo[k] if side > 0 else xo_hi[k])) < 0 and k + 1 < n:
+            if p.get("exit_mode") == "trail":
+                best = max(best, C[k]) if side > 0 else min(best, C[k])
+                tstop = best - side * p["trail_atr"] * A[k]
+                stop = max(stop, tstop) if side > 0 else min(stop, tstop)  # only tightens, applies from next bar
+            elif side * (C[k] - (xo_lo[k] if side > 0 else xo_hi[k])) < 0 and k + 1 < n:
                 rolls += int(bool(roll[k]))                               # rolled at that close, exits next open
                 x, why, k = O[k + 1], "channel", k + 1                    # decided at close, filled next open
                 mae = min(mae, side * (x - e)); mfe = max(mfe, side * (x - e))
@@ -117,12 +137,13 @@ def run(name, d, overrides=None, cost_x=1.0):
         gross = side * (x - e)
         out.append(dict(instrument=name, signal_time=T[i], entry_time=T[j], exit_time=T[k], side="LONG" if side > 0 else "SHORT",
                         entry_contract=con[j], exit_contract=con[k], entry_px=round(raw_e, 2), exit_px=round(raw_x, 2),
+                        entry_adj=e, exit_adj=x, entry_i=j, exit_i=k,
                         stop_px=round(stop - off[j], 2), R_pts=R, rolls=rolls, cost_pts=cpts,
                         gross_R=gross / R, net_R=(gross - cpts) / R, mae_R=mae / R, mfe_R=mfe / R,
-                        exit_reason=why, days=int((pd.Timestamp(T[k]) - pd.Timestamp(T[j])).days) + 1,
+                        exit_reason=why, valid=why != "data_hole", days=int((pd.Timestamp(T[k]) - pd.Timestamp(T[j])).days) + 1,
                         adx=d["adx"].values[i], atrp_pct=d["atrp_pct"].values[i],
                         trend_up=bool(C[i] > d["sma200"].values[i])))
-        i = k if why in ("channel", "gap_stop") else k                   # flat from bar k; may re-enter on close k
+        i = max(k, i + 1)                                                 # flat from bar k; may re-enter on close k
         if why == "open_at_end":
             break
     t = pd.DataFrame(out)

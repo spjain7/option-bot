@@ -1,0 +1,8 @@
+instrument,first,last,bars,data_holes,holes,saturday_sundays,note_weekend,illiquid_days_vol_lt_1pct_median,rolls_detected,rolls_expected_per_year,rolls_detected_per_year,est_roll_gap_mean_pct,est_cum_roll_drift_pct
+GOLD,2005-12-31,2026-10-21,5623,2,2022-02-04 → 2022-05-02 (87d); 2022-08-05 → 2022-10-06 (62d),395,MCX had Saturday sessions until 2013 + special sessions,166,121,6,5.8,0.399,48.3
+SILVER,2005-12-31,2026-10-21,5686,1,2022-03-04 → 2022-05-02 (59d),395,MCX had Saturday sessions until 2013 + special sessions,142,103,5,5.0,1.192,122.8
+CRUDEOIL,2011-03-15,2026-10-21,4036,1,2021-12-17 → 2022-05-02 (136d),136,MCX had Saturday sessions until 2013 + special sessions,3,106,12,6.8,0.169,17.9
+NATURALGAS,2016-05-27,2026-10-21,2578,1,2021-12-28 → 2022-05-02 (125d),7,MCX had Saturday sessions until 2013 + special sessions,0,90,12,8.7,2.267,204.0
+COPPER,2005-12-31,2026-10-21,5634,1,2021-12-31 → 2022-05-02 (122d),395,MCX had Saturday sessions until 2013 + special sessions,218,213,12,10.2,0.245,52.2
+ZINC,2006-03-27,2026-10-21,5548,2,2019-12-31 → 2020-01-09 (9d); 2021-12-31 → 2022-05-02 (122d),381,MCX had Saturday sessions until 2013 + special sessions,299,231,12,11.2,-0.165,-38.0
+ALUMINIUM,2005-12-31,2026-10-21,5595,3,2020-02-05 → 2020-02-20 (15d); 2020-02-24 → 2020-03-03 (8d); 2021-12-31 → 2022-05-02 (122d),395,MCX had Saturday sessions until 2013 + special sessions,304,231,12,11.1,0.124,28.6

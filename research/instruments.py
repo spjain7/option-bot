@@ -109,3 +109,13 @@ def cost_frac(name, cost_x=1.0):
 def trade_cost_points(name, price, proxy, cost_x=1.0):
     """Round-trip cost in the series' own points: exact for REAL contracts, fraction-based for proxies."""
     return cost_frac(name, cost_x) * price if proxy else cost_points(name, price, cost_x)
+
+
+# Approximate initial margin as a fraction of contract value (SPAN + exposure). Exchange margins change with
+# volatility - these are planning assumptions only; verify with the broker. Used for capital-usage checks.
+MARGIN_PCT = {"GOLD": 0.10, "SILVER": 0.12, "CRUDEOIL": 0.30, "NATURALGAS": 0.35, "COPPER": 0.10, "ZINC": 0.10,
+              "ALUMINIUM": 0.10, "NIFTY": 0.12, "BANKNIFTY": 0.12, "FINNIFTY": 0.12, "MIDCPNIFTY": 0.14, "NIFTYNXT50": 0.15}
+# Correlated groups for portfolio-wide exposure limits
+GROUP = {"GOLD": "precious", "SILVER": "precious", "CRUDEOIL": "energy", "NATURALGAS": "energy",
+         "COPPER": "base", "ZINC": "base", "ALUMINIUM": "base",
+         "NIFTY": "index", "BANKNIFTY": "index", "FINNIFTY": "index", "MIDCPNIFTY": "index", "NIFTYNXT50": "index"}

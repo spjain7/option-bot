@@ -1,0 +1,32 @@
+{
+ "label": "replay_long_only_risk0.25",
+ "closed_trades": 10,
+ "alerts": 367,
+ "alerts_by_state": {
+  "NO TRADE": 194,
+  "WATCHLIST": 163,
+  "CONFIRMED PAPER SIGNAL": 10
+ },
+ "rejected": 362,
+ "missed_fills_chase": 0,
+ "start_equity": 2500000,
+ "end_equity": 2678359,
+ "net_pnl_rs": 178359,
+ "costs_rs": 3013,
+ "win_pct": 60.0,
+ "avg_R": 3.249,
+ "stop_slippage_rs": 550,
+ "long_pnl_rs": 178359,
+ "short_pnl_rs": 0,
+ "by_instrument": {
+  "ALUMINIUM": 117131,
+  "CRUDEOIL": 63554,
+  "NATURALGAS": -2326
+ },
+ "by_exit": {
+  "channel exit": 6,
+  "stop": 4
+ },
+ "max_dd_pct": -2.3,
+ "return_pct": 7.1
+}
