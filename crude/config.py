@@ -16,6 +16,15 @@ CAPITAL = 500000.0                  # paper capital (₹)
 RISK_PCT = 0.0025                   # 0.25% of capital per trade
 DAILY_LOSS_PCT = 0.01               # per engine: no new entries that day once its realised+open loss reaches 1% of equity
 MAX_OPEN = {"intraday": 1, "positional": 1}
+# portfolio-level controls (both engines together). When a limit is breached NEW entries stop; open positions keep
+# their own stop/target/exit rules (they are never force-closed by a limit, so a limit can't create extra slippage).
+ACCOUNT_DAILY_LOSS_PCT = 0.015      # realised + open loss today, both engines
+MAX_OPEN_RISK_PCT = 0.005           # sum of open initial risk across engines ≤ 0.5% of equity
+DRAWDOWN_LOCK_PCT = 0.05            # equity (incl. open P&L) 5% below its peak -> entries locked until manually unlocked
+                                    # (set state "dd_lock" to false on branch crude-state, see crude/RUNBOOK.md)
+QUOTE_VS_CANDLE_MAX_ATR = 3.0       # live price further than this from the last closed candle -> data suspect, no entries
+GAP_CHECK_BARS = 8                  # a missing 15-min candle inside the last 8 (same session) -> no entries
+RUN_DELAY_WARN_MIN = 20             # scheduled run started this late -> warning (GitHub cron can be delayed)
 MIN_RR = 1.5                        # reward:risk must be ≥ 1.5 to the nearest obstacle
 COOLDOWN_BARS = {"intraday": 4, "positional": 2}   # no new entry this many signal bars after an exit (same engine)
 

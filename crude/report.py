@@ -43,7 +43,9 @@ def health(rec, title="HEALTH CHECK"):
     m_i, m_p = (dec.get("intraday") or {}).get("metrics", {}), (dec.get("positional") or {}).get("metrics", {})
     oi = d.get("oi_change") or {}
     L = [f"🛢 CRUDE OIL ENGINE – {title}",
-         f"Run: {now:%d-%b-%Y %H:%M:%S} IST · {rec['version']} · {run.get('event', 'manual')} #{run.get('number', '-')}",
+         f"Run: {now:%d-%b-%Y %H:%M:%S} IST · {rec['version']} · {run.get('event', 'manual')} #{run.get('number', '-')}"
+         + (f" · started {run['delay_min']:.0f} min after its slot" if run.get("delay_min") is not None else "")
+         + (f" · previous run: {run['previous_run'].get('conclusion')}" if run.get("previous_run") else ""),
          "Mode: PAPER (no real orders – there is no order code in this engine)",
          f"Session: {rec['session']} (today closes {D.session_close(now):%H:%M})",
          f"Contract: {sig.get('symbol', '—')} exp {sig.get('expiry', '—')} ({sig.get('days_left', '—')} trading days)"
@@ -57,6 +59,11 @@ def health(rec, title="HEALTH CHECK"):
          f"OI change: {oi.get('label', 'UNAVAILABLE')}" + (f" ({oi.get('d_oi_pct'):+.2f}% in {oi.get('gap_min'):.0f} min)" if oi.get("status") == "OK" else f" – {oi.get('reason', '')}")
          + f" · OI policy: {K.OI_POLICY} · OI history: unavailable (AB1012)",
          f"Roll continuity: {d.get('roll', '—')}",
+         f"Data checks: missing 15m today {(d.get('quality') or {}).get('missing_15m_today', 0)} · quote vs candle "
+         f"{_n((d.get('quality') or {}).get('quote_vs_candle_atr'), 1)} ATR · "
+         + ("; ".join((d.get('quality') or {}).get('blocks', [])) or "timestamps/duplicates OK"),
+         f"Risk: drawdown {_n(d.get('drawdown_pct'), 2)}% (lock at −{K.DRAWDOWN_LOCK_PCT:.0%}) · open risk ₹{_n(d.get('open_risk_rs'))}"
+         f" (cap {K.MAX_OPEN_RISK_PCT:.1%}) · account daily loss cap {K.ACCOUNT_DAILY_LOSS_PCT:.1%}",
          f"Trend: 1h {m_i.get('trend_1h', '—')} (ADX {_n(m_i.get('adx_1h'), 1)}) · 3h {m_p.get('trend_3h', '—')} (ADX {_n(m_p.get('adx_3h'), 1)})",
          f"RSI(14): 15m {_n(m_i.get('rsi'), 1)} · 3h {_n(m_p.get('rsi'), 1)}  (BUY blocked < 25, SELL blocked > 75)",
          _dec_line("Intraday", dec.get("intraday")),
@@ -117,6 +124,10 @@ def eod(state, rec):
         if c:
             w = sum(1 for t in c if t["pnl"] > 0)
             L.append(f"{e.title()} all-time: {len(c)} trades · win {w / len(c):.0%} · net ₹{sum(t['pnl'] for t in c):,.0f} · avg {sum(t['r'] for t in c) / len(c):+.2f}R")
+    sh = [t.get("shadow") for e in state["engines"].values() for t in e["closed"] if t.get("exit_time", "")[:10] == day["date"] and t.get("shadow")]
+    if sh:
+        es = [x["entry_slip_pts"] for x in sh]; xs = [x["exit_slip_pts"] for x in sh if x["exit_slip_pts"] is not None]
+        L.append(f"Shadow fills: entry vs signal {sum(es) / len(es):+.1f} pts avg" + (f" · exit vs level {sum(xs) / len(xs):+.1f} pts avg" if xs else ""))
     L.append("Errors today: " + (", ".join(a.replace("err:", "") for a in day["alerted"]) or "none"))
     L.append(FOOT)
     return "\n".join(L)

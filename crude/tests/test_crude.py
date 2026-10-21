@@ -368,8 +368,66 @@ def test_flush_and_workflow():
     check("runner.py does not import or call the crude engine (independent)", "crude" not in (ROOT / "runner.py").read_text())
 
 
+# ─────────────── phase 3/5/6 controls ───────────────
+def test_controls():
+    d = D.closed(F.load("CRUDEOIL19NOV26FUT", "FIFTEEN_MINUTE"), 15, pd.Timestamp("2026-10-21 14:20")) if F.load("CRUDEOIL19NOV26FUT", "FIFTEEN_MINUTE") is not None else bars15(end="2026-10-21 14:00")
+    now = pd.Timestamp("2026-10-21 14:20")
+    q = E._data_quality(d, to_h1(d), dict(ltp=float(d["close"].iloc[-1])), now)
+    check("clean real candles pass the data checks", q["blocks"] == [])
+    bad = d.copy(); bad.loc[bad.index[-1], "time"] = bad["time"].iloc[-1] + pd.Timedelta(minutes=7)
+    check("misaligned timestamp blocks entries", any("aligned" in b for b in E._data_quality(bad, None, None, now)["blocks"]))
+    gap = d.drop(index=d.index[-3])
+    check("a missing recent 15-min candle blocks entries", any("missing" in b for b in E._data_quality(gap, None, None, now)["blocks"]))
+    far = E._data_quality(d, None, dict(ltp=float(d["close"].iloc[-1]) * 1.05), now)
+    check("live price far from the last candle (> 3 ATR) blocks entries", any("data suspect" in b for b in far["blocks"]))
+    from crude import run as RUN
+    with mock.patch.dict(os.environ, {"GITHUB_EVENT_NAME": "schedule", "GITHUB_TOKEN": "", "GITHUB_REPOSITORY": ""}):
+        ctx = RUN.run_context(pd.Timestamp("2026-10-21 14:40"))
+    check("scheduled-run delay measured from its slot (14:32 slot, started 14:40 -> 8 min)", ctx["delay_min"] == 8.0)
+    sp = Path(tempfile.mkdtemp()) / "state.json"
+    api = F.real_api(None)
+    if ("573422", "FIFTEEN_MINUTE") not in api.series:
+        return
+    _engine_run("2026-10-21 11:02", api, sp)
+    st = json.loads(sp.read_text()); st["realized"] = -30000.0; st["peak_equity"] = 500000.0
+    sp.write_text(json.dumps(st))
+    rec, out, code = _engine_run("2026-10-21 11:17", api, sp)
+    st2 = json.loads(sp.read_text())
+    check("equity 6% below peak -> drawdown lock: alert sent, new entries stopped, lock persisted",
+          st2.get("dd_lock") and any("DRAWDOWN LOCK" in m for m in out) and not st2["engines"]["intraday"]["open"]
+          and (rec["decisions"]["intraday"].get("decision") != "SIGNAL" or "drawdown lock" in rec["decisions"]["intraday"].get("ignored", "")))
+
+
+def test_research_controls():
+    from crude.research import exp001 as X
+    t = pd.date_range("2025-01-01", periods=400, freq="B")
+    a = pd.DataFrame(dict(time=t, high=np.linspace(100, 200, 400) + 1, low=np.linspace(100, 200, 400) - 1,
+                          close=np.linspace(100, 200, 400), offset=0.0))
+    lab = X.regime_labels(a)
+    b = a.copy(); b.loc[b.index[-1], ["high", "low", "close"]] = [1000, 900, 950]      # shock on the LAST day only
+    lab2 = X.regime_labels(b)
+    check("regime of a session uses only earlier sessions (a shock on day d changes only day d+1 onward)",
+          (lab.iloc[:-1] == lab2.iloc[:-1]).all() and lab.iloc[-1] == lab2.iloc[-1])
+    c = a.copy(); c["offset"] = -50.0; c[["high", "low", "close"]] = c[["high", "low", "close"]] - 50
+    check("corrected regime: ATR% divides by the REAL close, so a later roll offset cannot change the label",
+          (X.regime_labels(c) == lab).all())
+    m = X.stats(pd.DataFrame(dict(pnl=[100.0, -50, -50, 200], r=[1.0, -0.5, -0.5, 2.0], charges=[10.0] * 4,
+                                   risk_pts=[10.0] * 4, units=[10] * 4)))
+    check("stats: expectancy, PF, R drawdown and bootstrap CI are computed deterministically",
+          m["expectancy_r"] == 0.5 and m["profit_factor"] == 3.0 and m["max_dd_r"] == -1.0
+          and m == X.stats(pd.DataFrame(dict(pnl=[100.0, -50, -50, 200], r=[1.0, -0.5, -0.5, 2.0], charges=[10.0] * 4, risk_pts=[10.0] * 4, units=[10] * 4))))
+    c1 = X.criteria(dict(trades=80, expectancy_r=0.3, profit_factor=1.5, bootstrap=dict(p5=0.05)), dict(expectancy_r=0.1),
+                    dict(pooled_expectancy_r=0.2), independent=False, post_hoc=True)
+    check("a post-hoc subgroup on already-seen data can never be awarded PASS", c1["verdict"].startswith("PAPER-CANDIDATE"))
+    import inspect
+    from crude import backtest as BT
+    sig = inspect.signature(BT.simulate)
+    check("research hooks default to the original behaviour (opts=None)", sig.parameters["opts"].default is None)
+    check("research results live outside the paper ledger", "research/results" in str(X.OUT) and "state" not in str(X.OUT))
+
+
 if __name__ == "__main__":
     for t in (test_rsi_boundaries, test_closed_candles_and_htf, test_trend_conflict, test_three_hour, test_oi_and_volume,
-              test_stops_targets, test_costs_sizing, test_session_expiry, test_engine_flow, test_replay_day, test_flush_and_workflow):
+              test_stops_targets, test_costs_sizing, test_session_expiry, test_engine_flow, test_replay_day, test_flush_and_workflow, test_controls, test_research_controls):
         t()
     print(f"\nALL {len(OK)} CRUDE ENGINE CHECKS PASSED")

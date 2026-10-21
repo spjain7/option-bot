@@ -162,6 +162,8 @@ def _scan(api, master, now, mode, state, rec, outbox):
         else:                                             # nothing trading: holiday / session break / feed down
             rec["warnings"] = rec.get("warnings", []) + ["NO FRESH DATA: " + rec["stale"] + "; live quote also not current – exchange closed (holiday?) or feed down"]
             _alert_once(state, outbox, "nofresh", REP.error_msg(now, "No fresh Crude data", rec["warnings"][-1]))
+    dq = _data_quality(c15c, h1c, qs, now)
+    rec["data"]["quality"] = dq
     rec["data"]["volume"] = "available" if c15c is not None and len(c15c) and (c15c["volume"] > 0).mean() > 0.9 else "UNAVAILABLE/partial"
     # OI from live snapshots only
     snap = None
@@ -194,6 +196,23 @@ def _scan(api, master, now, mode, state, rec, outbox):
         gates.append("paper-contract quote missing")
     if cs["issues"]:
         gates.append("contract data issue")
+    gates += rec["data"]["quality"]["blocks"]
+    # portfolio-level limits (both engines)
+    eq = state["capital"] + state["realized"]
+    open_mtm = sum(P.mtm(p, ltp_t) for e in state["engines"].values() for p in e["open"]) if ltp_t else 0.0
+    state["peak_equity"] = max(state.get("peak_equity", state["capital"]), eq + open_mtm)
+    dd = (eq + open_mtm) / state["peak_equity"] - 1
+    rec["data"]["drawdown_pct"] = round(dd * 100, 2)
+    if dd <= -K.DRAWDOWN_LOCK_PCT and not state.get("dd_lock"):
+        state["dd_lock"] = dict(time=str(now), drawdown_pct=round(dd * 100, 2))
+        _alert_once(state, outbox, "ddlock", REP.error_msg(now, "DRAWDOWN LOCK – new paper entries stopped",
+                    f"Paper equity {dd:.1%} below its peak (limit {K.DRAWDOWN_LOCK_PCT:.0%}). Open positions keep their stops. "
+                    "Unlock manually after review (crude/RUNBOOK.md)."))
+    if state.get("dd_lock"):
+        gates.append(f"drawdown lock since {state['dd_lock']['time'][:16]} ({state['dd_lock']['drawdown_pct']}%)")
+    if loss_today <= -K.ACCOUNT_DAILY_LOSS_PCT * eq:
+        gates.append(f"account daily loss limit {K.ACCOUNT_DAILY_LOSS_PCT:.1%} reached")
+    rec["data"]["open_risk_rs"] = round(sum(p["risk_pts"] * p["units"] for e in state["engines"].values() for p in e["open"]), 2)
     if qs and (qs.get("tradeVolume") or 0) < K.MIN_DAY_VOLUME["signal"]:
         gates.append(f"signal contract illiquid today ({qs.get('tradeVolume')} lots < {K.MIN_DAY_VOLUME['signal']})")
     if qt and (qt.get("tradeVolume") or 0) < K.MIN_DAY_VOLUME["trade"]:
@@ -268,7 +287,10 @@ def _decide(state, rec, outbox, now, engine, dec, bar, gates, oi, cs, qs, qt, mo
     if not why:
         cap = state["capital"] + state["realized"]
         lots, budget, per_lot = P.size(cap, plan["stop_dist"], qt["ltp"], t["lotsize"], t["tick"])
-        if lots < 1:
+        new_risk = plan["stop_dist"] * lots * t["lotsize"]
+        if lots >= 1 and rec["data"]["open_risk_rs"] + new_risk > K.MAX_OPEN_RISK_PCT * cap:
+            why = f"combined open risk would be ₹{rec['data']['open_risk_rs'] + new_risk:,.0f} > {K.MAX_OPEN_RISK_PCT:.1%} of equity"
+        elif lots < 1:
             why = f"1 lot of {t['symbol']} risks ₹{per_lot:,.0f} > budget ₹{budget:,.0f} ({K.RISK_PCT:.2%} of ₹{cap:,.0f})"
     state["seen"] = (state["seen"] + [sid])[-500:]
     if why:
@@ -280,12 +302,45 @@ def _decide(state, rec, outbox, now, engine, dec, bar, gates, oi, cs, qs, qt, mo
     pos = P.open_position(engine, dec["side"], fill, plan, lots, t["lotsize"], t["tick"], t["symbol"],
                           dict(id=sid, time=str(now), last_bar=None, signal_contract=cs["signal"]["symbol"],
                                expiry=t["expiry"], setup=dec["setup"], oi=dec.get("oi"), signal_bar=bar,
-                               reasons=dec["reasons"], ltp_at_entry=qt["ltp"]))
+                               reasons=dec["reasons"], ltp_at_entry=qt["ltp"],
+                               expected_entry=dec["signal_close"] + (qt["ltp"] - qs["ltp"])))   # signal close in paper-contract terms
     pos["last_bar"] = str(D.floor15(now) - pd.Timedelta(minutes=15))
     eng["open"].append(pos)
     rec["actions"].append(f"{engine} {dec['side']} opened {lots} lot(s) {t['symbol']} @ {fill}")
     if K.TELEGRAM["signals"]:
         outbox.append(REP.entry_msg(pos, dec, cs, state))
+
+
+def _data_quality(c15c, h1c, qs, now):
+    """Timestamp alignment, missing candles, duplicates and quote-vs-candle reconciliation. Problems -> 'blocks'."""
+    q = dict(blocks=[], notes=[])
+    if c15c is None or c15c.empty:
+        return q
+    t = c15c["time"]
+    if (t.dt.minute % 15 != 0).any() or (t.dt.second != 0).any():
+        q["blocks"].append("15-min timestamps not aligned to :00/:15/:30/:45")
+    if t.duplicated().any() or not t.is_monotonic_increasing:
+        q["blocks"].append("duplicate / unordered 15-min candles")
+    if h1c is not None and len(h1c) and (h1c["time"].dt.minute != 0).any():
+        q["blocks"].append("1-hour timestamps not on the hour")
+    if "offset" in c15c and c15c["offset"].iloc[-1] != 0:
+        q["blocks"].append("latest candle carries a roll adjustment (raw/adjusted mix-up)")
+    today = c15c[t.dt.normalize() == now.normalize()]
+    if len(today) >= 2:
+        steps = today["time"].diff().dt.total_seconds().div(60).iloc[1:]
+        missing = int((steps / 15 - 1).clip(lower=0).sum())
+        q["missing_15m_today"] = missing
+        recent = today.tail(K.GAP_CHECK_BARS)["time"].diff().dt.total_seconds().div(60).iloc[1:]
+        if (recent > 15).any():
+            q["blocks"].append(f"missing 15-min candle(s) in the last {K.GAP_CHECK_BARS}")
+    if qs and qs.get("ltp") and len(c15c) > 15:
+        from crude.indicators import atr
+        a = float(atr(c15c).iloc[-1])
+        dev = abs(qs["ltp"] - c15c["close"].iloc[-1])
+        q["quote_vs_candle_atr"] = round(dev / a, 2) if a else None
+        if a and dev > K.QUOTE_VS_CANDLE_MAX_ATR * a:
+            q["blocks"].append(f"live price {qs['ltp']} is {dev / a:.1f} ATR from the last candle close – data suspect")
+    return q
 
 
 def _bars_since(a, b, engine):
@@ -341,6 +396,10 @@ def _manage(api, master, state, rec, outbox, now, cs, h3c, ltp):
             exit_ = _positional_rules(p, h3c, ltp_by.get(tok), now, cs)
         if exit_:
             done = P.close_position(p, exit_[0], exit_[1], exit_[2])
+            sgn = 1 if p["side"] == "BUY" else -1
+            lvl = p["stop"] if "stop" in exit_[1] else p["target"] if "target" in exit_[1] else None
+            done["shadow"] = dict(entry_slip_pts=round(sgn * (p["entry"] - p.get("expected_entry", p["entry"])), 2),
+                                  exit_slip_pts=None if lvl is None else round(sgn * (lvl - exit_[0]), 2))
             eng = state["engines"][e]
             eng["open"] = [x for x in eng["open"] if x["id"] != p["id"]]
             eng["closed"] = (eng["closed"] + [done])[-400:]

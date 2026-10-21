@@ -34,6 +34,28 @@ def telegram(text):
         return False, f"{type(e).__name__}"
 
 
+def run_context(now):
+    """Phase-6 monitoring: how late this scheduled run started, and how the PREVIOUS run of this workflow ended
+    (catches failed state pushes / Telegram deliveries of the last run). Never prints the token."""
+    import pandas as pd
+    info = dict(event=os.getenv("GITHUB_EVENT_NAME", "local"), number=os.getenv("GITHUB_RUN_NUMBER", "-"))
+    slot = (now - pd.Timedelta(minutes=2)).floor("15min") + pd.Timedelta(minutes=2)
+    info["delay_min"] = round((now - slot).total_seconds() / 60, 1) if info["event"] == "schedule" else None
+    tok, repo = os.getenv("GITHUB_TOKEN"), os.getenv("GITHUB_REPOSITORY")
+    if tok and repo:
+        try:
+            r = requests.get(f"https://api.github.com/repos/{repo}/actions/workflows/crude-paper.yml/runs",
+                             params={"per_page": 5, "status": "completed"}, timeout=15,
+                             headers={"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json"})
+            runs = [x for x in r.json().get("workflow_runs", []) if str(x.get("run_number")) != info["number"]]
+            if runs:
+                info["previous_run"] = dict(number=runs[0]["run_number"], event=runs[0]["event"],
+                                            conclusion=runs[0]["conclusion"], started=runs[0]["run_started_at"])
+        except Exception as e:
+            info["previous_run"] = dict(conclusion=f"unknown ({type(e).__name__})")
+    return info
+
+
 def _write_outputs(rec, outbox, code):
     from crude import report as REP
     SD.mkdir(parents=True, exist_ok=True)
@@ -59,7 +81,7 @@ def run(mode):
     import pandas as pd
     from angel import now_ist
     now = now_ist()
-    info = dict(event=os.getenv("GITHUB_EVENT_NAME", "local"), number=os.getenv("GITHUB_RUN_NUMBER", "-"))
+    info = run_context(now)
     if not K.ENABLED and mode == "scan":
         print("crude engine disabled in crude/config.py (ENABLED = False) – nothing done")
         _write_outputs(dict(time=str(now), session="-", api={}, data={}, decisions={}, actions=["disabled"], errors=[],
@@ -85,6 +107,11 @@ def run(mode):
         return 2
     rec, outbox, code = E.scan(api, master, now, mode=mode, state_path=SD / "state.json",
                                allow_new=os.getenv("CRUDE_NEW_ACCOUNT") == "1", run_info=info)
+    if info.get("delay_min") is not None and info["delay_min"] > K.RUN_DELAY_WARN_MIN:
+        rec.setdefault("warnings", []).append(f"scheduled run started {info['delay_min']:.0f} min late (GitHub cron delay)")
+    pr = info.get("previous_run") or {}
+    if pr.get("conclusion") not in (None, "success"):
+        rec.setdefault("warnings", []).append(f"previous run #{pr.get('number')} ended '{pr.get('conclusion')}' – check Actions")
     print(REP.health(rec))
     for k, v in rec["decisions"].items():
         print(f"[decision] {k}: {v.get('decision')} {v.get('side', '')} bar={v.get('bar_time')} blocks={v.get('blocks')} reasons={v.get('reasons')}")

@@ -110,7 +110,13 @@ def _ends(times, minutes):
     return pd.Series([D.bar_end(t, minutes) for t in times], index=times.index)
 
 
-def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=False):
+def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=False, opts=None):
+    """opts (research experiments only, defaults reproduce the original backtest exactly):
+       entry_filter(i, side) -> reason|None  pre-entry filter evaluated at the signal candle i
+       slip_ticks   slippage ticks per side (default 2 × cost_x)
+       miss_rate    probability that an otherwise valid entry is not filled (seeded, deterministic)
+       no_switch_day  no entries on a contract-switch day (its roll gap is only known at that day's close)"""
+    opts = opts or {}
     """One engine, its own book. Returns (trades DataFrame, decision counter dict)."""
     n = len(a)
     T = a["time"]
@@ -122,7 +128,10 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=Fal
     closes = {dd: D.session_close(dd) for dd in pd.unique(T.dt.normalize())}
     h1_end = _ends(h1["time"], 60).values
     h3_end = h3["end"].values if len(h3) else np.array([])
-    ticks = K.SLIPPAGE_TICKS * cost_x
+    ticks = opts.get("slip_ticks", K.SLIPPAGE_TICKS * cost_x)
+    rng = np.random.default_rng(opts.get("seed", 0))
+    switch_days = set(pd.to_datetime(rolls["switch_day"]).dt.normalize())
+    in_pos_bars = 0
     cap = K.CAPITAL
     trades, cnt = [], dict(evaluated=0, signal=0, blocked=0, ignored=0, none=0, reasons={})
     pos, last_exit_i, pending = None, -10 ** 9, None
@@ -173,12 +182,16 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=Fal
                     lots, budget, per_lot = P.size(cap, sig["plan"]["stop_dist"], o, MULT, TICK)
                     if unit_size:                       # diagnostic: every signal at 1 mini lot (R-multiples only)
                         lots = 1
-                    if lots < 1:
+                    if lots >= 1 and opts.get("miss_rate") and rng.random() < opts["miss_rate"]:
+                        lots = -1
+                        cnt["ignored"] += 1
+                        cnt["reasons"]["ignored: missed fill (simulated)"] = cnt["reasons"].get("ignored: missed fill (simulated)", 0) + 1
+                    elif lots < 1:
                         cnt["ignored"] += 1
                         cnt["reasons"]["ignored: 1 lot > risk budget"] = cnt["reasons"].get("ignored: 1 lot > risk budget", 0) + 1
                     else:
                         fill = P.slip(sig["side"], o, TICK, True, ticks)
-                        meta = dict(id=f"{engine}|{T.iloc[i]}", time=str(T.iloc[i]), setup=sig.get("setup"), signal_bar=sig["bar_time"],
+                        meta = dict(id=f"{engine}|{T.iloc[i]}", time=str(T.iloc[i]), signal_i=int(i - 1), setup=sig.get("setup"), signal_bar=sig["bar_time"],
                                     expiry=str(pd.Timestamp(nxt_exp[i]).date()), oi="UNAVAILABLE (no historical MCX OI)",
                                     trend=sig["metrics"].get("trend_1h") or sig["metrics"].get("trend_3h"))
                         eng_name = "baseline-intraday" if baseline and engine == "intraday" else engine
@@ -191,6 +204,7 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=Fal
                             pos["units"] = pos["units"] / 2
         # 2) manage the open position with this candle
         if pos is not None and pos["entry_i"] <= i:
+            in_pos_bars += 1
             if seg[i] != seg[pos["entry_i"]]:                       # must never happen (flat before expiry) – guard
                 _close(pos, rc[i - 1], "roll guard", i - 1)
             elif engine == "intraday" and (D.bar_end(T.iloc[i], 15) > cs - pd.Timedelta(minutes=K.SQUARE_OFF_BEFORE_CLOSE_MIN)
@@ -269,7 +283,15 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=Fal
             continue
         cnt["signal"] += 1
         gate = None
-        if not win:
+        flt = opts.get("entry_filter")
+        why_f = flt(i, dec["side"]) if flt else None
+        if why_f:
+            cnt["filtered"] = cnt.get("filtered", 0) + 1
+            cnt["reasons"]["filtered: " + why_f] = cnt["reasons"].get("filtered: " + why_f, 0) + 1
+            continue
+        if opts.get("no_switch_day") and T.iloc[i].normalize() in switch_days:
+            gate = "contract-switch day (roll gap not yet known)"
+        elif not win:
             gate = "outside entry window"
         elif tdl[i] <= K.ROLL_TRADING_DAYS:
             gate = "expiry week (live trades next contract; no history)"
@@ -296,6 +318,7 @@ def simulate(engine, a, h1, h3, rolls, cost_x=1.0, baseline=False, unit_size=Fal
                                 pnl=("pnl", "sum"), charges=("charges", "sum"), risk_pts=("risk_pts", "first"),
                                 units=("units", "sum"), lots=("lots", "first")).reset_index()
         t["r"] = t["pnl"] / (t["risk_pts"] * t["units"])
+    cnt["exposure_pct"] = round(in_pos_bars / max(1, n - 1 - warm) * 100, 2)
     return t, cnt
 
 

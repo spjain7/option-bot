@@ -1,0 +1,122 @@
+{
+ "experiment": "EXP-001",
+ "run_id": "EXP-001-7d19c73-ca3faa5b",
+ "created": "2026-10-21T22:58:41.515907+05:30",
+ "code_revision": "7d19c736436fb006717b93acda0e8c65d4621d59",
+ "working_tree_clean": true,
+ "data": {
+  "file": "research/data/angel/MCX/CRUDEOIL19NOV26FUT_FIFTEEN_MINUTE.csv",
+  "sha256_16": "ca3faa5ba0d3b3fd",
+  "first": "2020-10-12 09:00:00",
+  "last": "2026-10-21 20:45:00",
+  "bars": 82561,
+  "source": "Angel One getCandleData (vendor-stitched front month)",
+  "holes": [
+   "09-Apr-2021 \u2192 16-Apr-2021",
+   "17-Dec-2021 \u2192 02-May-2022"
+  ],
+  "oi": "none (Angel AB1012) \u2013 every variant ran without an OI filter"
+ },
+ "config": {
+  "version": "crude-paper 1.0.0",
+  "INTRA": {
+   "ema_fast": 20,
+   "ema_slow": 50,
+   "ema_long": 200,
+   "ema_long_min_bars": 250,
+   "adx_len": 14,
+   "adx_min": 20.0,
+   "rsi_len": 14,
+   "rsi_block_buy_below": 25.0,
+   "rsi_block_sell_above": 75.0,
+   "atr_len": 14,
+   "breakout_bars": 8,
+   "breakout_buffer_atr": 0.1,
+   "close_pos_min": 0.65,
+   "body_min": 0.5,
+   "max_bar_atr": 2.5,
+   "max_chase_atr": 0.5,
+   "pullback_lookback": 6,
+   "pullback_touch_atr": 0.25,
+   "vol_slots": 10,
+   "vol_slots_min": 5,
+   "vol_min_x_breakout": 1.3,
+   "vol_min_x_pullback": 1.0,
+   "atr_regime_max": 2.5,
+   "atr_regime_len": 200,
+   "sl_swing_bars": 4,
+   "sl_buffer_atr": 0.1,
+   "sl_min_atr": 1.0,
+   "sl_max_atr": 2.5,
+   "target_r": 2.0,
+   "breakeven_at_r": 1.0,
+   "obstacle_bars_1h": 20
+  },
+  "risk_pct": 0.0025,
+  "capital": 500000.0,
+  "min_rr": 1.5,
+  "roll_trading_days": 4,
+  "cooldown": {
+   "intraday": 4,
+   "positional": 2
+  },
+  "daily_loss_pct": 0.01
+ },
+ "costs": {
+  "brokerage_per_order": 20.0,
+  "ctt_sell": 0.0001,
+  "exch_txn": 2.6e-05,
+  "sebi": 1e-06,
+  "stamp_buy": 2e-05,
+  "gst": 0.18,
+  "slippage_ticks": 2,
+  "tick": 1.0,
+  "rs_per_point": 10
+ },
+ "frozen": {
+  "regime": "uptrend/high-vol",
+  "sma_n": 100,
+  "sma_min": 60,
+  "atr_n": 20,
+  "med_n": 250,
+  "med_min": 100,
+  "costs": [
+   1.0,
+   2.0,
+   3.0
+  ],
+  "slip_ticks": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "miss_rate": 0.1,
+  "miss_seeds": [
+   1,
+   2,
+   3
+  ],
+  "neighbours": [
+   [
+    80,
+    250
+   ],
+   [
+    120,
+    250
+   ],
+   [
+    100,
+    200
+   ],
+   [
+    100,
+    300
+   ]
+  ],
+  "bootstrap": 5000
+ },
+ "deterministic_seed": 7,
+ "runtime_sec": 883
+}
