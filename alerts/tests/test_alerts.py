@@ -105,10 +105,14 @@ def test_engine_replay():
         api.now = now
         st, msgs, rep = E.scan(api, F.master(), now, st, only=["CRUDEOIL"])
         sent += msgs
-    calls = [m for m in sent if " ALERT – " in m]
+    calls = [m for m in sent if " CALL – " in m]
     check("replay on real CRUDEOIL candles (6 sessions) runs and produces messages", len(sent) > 0)
     check("every BUY/SELL alert carries reasoning, entry, SL, targets and the no-auto-trade warning",
-          all(all(k in m for k in ("Why:", "RSI(14)", "SL", "T1", "T2", "Alert only")) for m in calls))
+          all(all(k in m for k in ("Why this call:", "RSI(14)", "Stop loss", "Target 1", "Target 2", "Entry", "Support", "Resistance",
+                                   "Volume", "OI", "Alert only")) for m in calls))
+    watches = [m for m in sent if m.startswith("🟡 WATCH")]
+    check("watch messages also carry trigger, provisional SL/targets, support/resistance, volume and OI",
+          all(all(k in m for k in ("Possible", "SL ~", "T1 ~", "Support", "Resistance", "Volume", "OI")) for m in watches))
     ids = st["seen"]
     check("no duplicate alerts for the same candle", len(ids) == len(set(ids)))
     check("daily startup message sent once per day", sum("ALERTS ACTIVE" in m for m in sent) <= 6)
@@ -128,6 +132,24 @@ def test_follow_up():
           any("T1 hit" in m for m in msgs) and any("Exit at cost" in m for m in msgs) and not st["active"])
 
 
+def test_levels_and_oi():
+    d = _series(400)
+    h = d.groupby(d["time"].dt.floor("h")).agg(time=("time", "first"), open=("open", "first"), high=("high", "max"),
+                                                low=("low", "min"), close=("close", "last"), volume=("volume", "sum")).reset_index(drop=True)
+    px = float(d["close"].iloc[-1])
+    lv = S.levels(d, h, px, 2.0)
+    check("supports are below price and resistances above it (nearest first)",
+          all(v < px for v, _ in lv["support"]) and all(v > px for v, _ in lv["resistance"])
+          and lv["support"] == sorted(lv["support"], key=lambda x: -x[0]) and lv["resistance"] == sorted(lv["resistance"]))
+    st = {}
+    now = pd.Timestamp("2026-10-21 14:02")
+    a = E.oi_reading(st, "X", dict(opnInterest=100000, ltp=100.0), now)
+    check("first OI reading: current OI shown, change marked unavailable (never zero)", a["oi"] == 100000 and a["chg_pct"] is None)
+    b = E.oi_reading(st, "X", dict(opnInterest=101000, ltp=101.0), now + pd.Timedelta(minutes=15))
+    check("OI change from two real readings 15 min apart: price up + OI up = Long buildup", round(b["chg_pct"], 2) == 1.0 and b["label"] == "Long buildup")
+    check("missing OI in the quote -> None, not 0", E.oi_reading(st, "Y", dict(ltp=5.0), now) is None)
+
+
 def test_no_orders():
     src = "\n".join(f.read_text() for f in (ROOT / "alerts").rglob("*.py") if "tests" not in f.parts)
     check("alerts package has no order API (alert-only, no auto trading)", not re.search(r"placeOrder|modifyOrder|cancelOrder|place_order", src))
@@ -137,6 +159,6 @@ def test_no_orders():
 
 
 if __name__ == "__main__":
-    for t in (test_patterns, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_no_orders):
+    for t in (test_patterns, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_no_orders):
         t()
     print(f"\nALL {len(OK)} ALERT CHECKS PASSED")
