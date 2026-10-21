@@ -65,6 +65,17 @@ class Angel:
         return None
 
     def candles(self, exch, token, interval, frm, to):
+        # same series asked again in this run (e.g. RSI engine, then MCX buy/sell engine) -> reuse, saves API quota
+        self._cc = getattr(self, "_cc", {})
+        hit = self._cc.get((exch, str(token), interval))
+        if hit is not None and hit[0] <= frm and abs((to - hit[1]).total_seconds()) <= 300:
+            return hit[2][hit[2]["time"] >= frm].reset_index(drop=True)
+        df = self._candles(exch, token, interval, frm, to)
+        if df is not None:
+            self._cc[(exch, str(token), interval)] = (frm, to, df)
+        return df
+
+    def _candles(self, exch, token, interval, frm, to):
         d = self._call(self.api.getCandleData, {
             "exchange": exch, "symboltoken": str(token), "interval": interval,
             "fromdate": frm.strftime("%Y-%m-%d %H:%M"), "todate": to.strftime("%Y-%m-%d %H:%M")})

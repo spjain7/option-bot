@@ -27,6 +27,7 @@ import strategy as S
 import notify
 import rsi_alert                      # Engine B - separate module, shares only data + Telegram
 import flow                           # OI / volume activity alerts (part of Engine A, no RSI)
+import mcx_trade                      # Engine C - MCX buy/sell alerts (futures + option buying)
 from angel import Angel, load_master, now_ist
 from positions import Store, check, _hm
 
@@ -716,6 +717,8 @@ def main():
     if mode == "auto" and (now.weekday() >= 5 or not (at("09:00") <= now <= at("23:59"))):
         print("Outside market hours - nothing to do."); return
     store = None
+    if mode == "chatid":                  # Telegram check: lists chats that messaged the bot + sends a test
+        notify.telegram_check(); return
     try:
         api = Angel()
         if mode == "test":
@@ -736,6 +739,16 @@ def main():
             except Exception as e:
                 traceback.print_exc()
                 notify.send(f"⚠️ RSI engine error: {type(e).__name__}: {str(e)[:200]}")
+
+        # ENGINE C - MCX buy/sell: independent, its failure never stops the other engines
+        if C.MCXT_ENABLED and mode in ("auto", "mcxtrade"):
+            try:
+                mcx_trade.run(api, master, force=mode == "mcxtrade")
+            except Exception as e:
+                traceback.print_exc()
+                notify.send(f"⚠️ MCX buy/sell engine error: {type(e).__name__}: {str(e)[:200]}")
+            if mode == "mcxtrade":
+                return
 
         # ENGINE A - option selling (NSE + MCX)
         store = Store()

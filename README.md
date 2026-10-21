@@ -72,3 +72,13 @@ The two modules don't import each other; they share only market data and Telegra
 See **SETUP_GUIDE.md**. It needs only a browser, takes about 30 minutes, and runs on GitHub's free tier (about 1,300 of the 2,000 free minutes a month).
 
 Not investment advice. All numbers are estimates. Paper-trade for 3–4 weeks first, and keep stop-loss orders at your broker.
+
+## Engine C: MCX Buy / Sell alerts (futures + option buying)
+Module `mcx_trade.py`, switch `MCXT_ENABLED`, state `state/mcx_trades.json`. Alerts only.
+- **Markets:** GOLD, SILVER, CRUDEOIL, NATURALGAS (mini contract lots shown too), COPPER, ZINC, ALUMINIUM.
+- **BUY:** price > EMA20 > EMA50 and above EMA200 (1H), ADX ≥ 20, close breaks the last 5-hour high, RSI 55–75, volume ≥ 1.2×. **SELL** is the mirror.
+- **Plan:** entry at live price, SL beyond the 5-hour swing (1–2 ATR), T1 = 1R (book half, SL to cost), T2 = 2R, exit all by 23:00.
+- **Option idea:** buy ~ATM CE (BUY) / PE (SELL) on the nearest liquid expiry; exits follow the future, plus a 40% premium stop.
+- Lots sized to risk 1% of capital. Daily summary after 23:00.
+- Manual scan now: Actions → Run workflow → mode `mcxtrade`. Telegram check: mode `chatid`.
+- Test offline: `python tests/sim_mcx_trade.py`

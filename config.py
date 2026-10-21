@@ -137,6 +137,32 @@ MCX_RS_PER_POINT     = {"CRUDEOIL": 100, "CRUDEOILM": 10, "NATURALGAS": 1250, "N
                         "GOLD": 100, "GOLDM": 10, "SILVER": 30, "SILVERM": 5,
                         "COPPER": 2500, "ZINC": 5000, "ALUMINIUM": 5000}
 
+# ═════════════ ENGINE C: MCX BUY / SELL (futures + option buying) – alerts only ═════════════
+MCXT_ENABLED         = True
+# Main contract analysed; mini contract shown as a smaller-size alternative (same price scale)
+MCXT_UNDERLYINGS     = {"GOLD": "GOLDM", "SILVER": "SILVERM", "CRUDEOIL": "CRUDEOILM",
+                        "NATURALGAS": "NATGASMINI", "COPPER": None, "ZINC": None, "ALUMINIUM": None}
+MCXT_OPTIONS         = True      # also suggest buying CE (on BUY) / PE (on SELL) when options are liquid
+MCXT_FIRST_SCAN      = "10:00"   # after the first 1-hour candle
+MCXT_LAST_ENTRY      = "22:00"
+MCXT_EXIT_TIME       = "23:00"   # intraday: square off anything still open
+MCXT_EMA_FAST, MCXT_EMA_SLOW, MCXT_EMA_TREND = 20, 50, 200   # 1-hour EMAs (200 = higher-timeframe trend)
+MCXT_MIN_ADX         = 20        # trend strength needed
+MCXT_BREAKOUT_BARS   = 5         # close must break the high (BUY) / low (SELL) of the previous 5 hours
+MCXT_RSI_BUY         = (55, 75)  # momentum zone for BUY (not overbought)
+MCXT_RSI_SELL        = (25, 45)  # momentum zone for SELL (not oversold)
+MCXT_MIN_VOL_X       = 1.2       # signal candle volume >= 1.2x the 20-hour average
+MCXT_SL_ATR          = (1.0, 2.0)  # stop-loss distance kept between 1 and 2 ATR (placed beyond the swing)
+MCXT_T1_R, MCXT_T2_R = 1.0, 2.0  # targets in R (R = entry-to-SL distance). After T1, SL moves to cost
+MCXT_MAX_CHASE_ATR   = 0.5       # skip if live price already ran > 0.5 ATR past the signal close
+MCXT_RISK_PCT        = 0.01      # risk 1% of capital per trade -> suggested lots
+MCXT_MAX_OPEN        = 4         # max open MCX buy/sell calls at once
+MCXT_MAX_PER_NAME_DAY = 2
+MCXT_OPT_MIN_DTE     = 3         # option expiry at least 3 days away
+MCXT_OPT_MAX_BA_PCT  = 6.0       # option bid-ask spread limit (%)
+MCXT_OPT_MIN_OI      = 50
+MCXT_OPT_SL_PCT      = 40        # also exit the option if its premium falls 40% (time decay / IV drop)
+
 # ═════════════ ENGINE B: RSI EXTREME ALERTS (independent - never affects option calls) ═════════════
 RSI_PERIOD           = 14
 RSI_OVERSOLD         = 20
