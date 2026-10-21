@@ -11,6 +11,9 @@ on:
       names:
         description: "Only these instruments, comma separated (empty = all)"
         default: ""
+      intervals:
+        description: "Candle intervals, comma separated (ONE_DAY, ONE_HOUR, FIFTEEN_MINUTE)"
+        default: "ONE_DAY,ONE_HOUR"
 
 concurrency:
   group: option-bot
@@ -41,6 +44,7 @@ jobs:
           ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
           ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
           RESEARCH_NAMES:    ${{ github.event.inputs.names }}
+          RESEARCH_INTERVALS: ${{ github.event.inputs.intervals || 'ONE_DAY,ONE_HOUR' }}
       - name: Push to research-data branch
         run: |
           mkdir -p /tmp/out && cp -r research/data/angel /tmp/out/
