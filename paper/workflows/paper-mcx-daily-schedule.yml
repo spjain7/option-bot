@@ -1,0 +1,12 @@
+# PREPARED BUT DISABLED. This file is outside .github/workflows/, so GitHub never runs it.
+# Enable only after explicit approval: copy it to .github/workflows/paper-mcx-daily-schedule.yml
+# It calls the same manual workflow logic at 00:15 Asia/Kolkata (18:45 UTC, Monday-Friday nights,
+# i.e. after the Monday-Friday MCX sessions close). Telegram stays OFF here as well.
+name: Paper MCX daily trend (scheduled – DISABLED until approved)
+on:
+  schedule:
+    - cron: "45 18 * * 1-5"
+jobs:
+  call:
+    uses: ./.github/workflows/paper-mcx-daily.yml
+    secrets: inherit

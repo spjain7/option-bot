@@ -138,7 +138,7 @@ MCX_RS_PER_POINT     = {"CRUDEOIL": 100, "CRUDEOILM": 10, "NATURALGAS": 1250, "N
                         "COPPER": 2500, "ZINC": 5000, "ALUMINIUM": 5000}
 
 # ═════════════ ENGINE C: MCX BUY / SELL (futures + option buying) – alerts only ═════════════
-MCXT_ENABLED         = True
+MCXT_ENABLED         = False     # disabled 21-Oct-2026: backtests negative after costs (research/). Only call site: runner.py
 # Main contract analysed; mini contract shown as a smaller-size alternative (same price scale)
 MCXT_UNDERLYINGS     = {"GOLD": "GOLDM", "SILVER": "SILVERM", "CRUDEOIL": "CRUDEOILM",
                         "NATURALGAS": "NATGASMINI", "COPPER": None, "ZINC": None, "ALUMINIUM": None}

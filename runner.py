@@ -719,6 +719,8 @@ def main():
     store = None
     if mode == "chatid":                  # Telegram check: lists chats that messaged the bot + sends a test
         notify.telegram_check(); return
+    if mode == "mcxtrade" and not C.MCXT_ENABLED:   # without this, a manual "mcxtrade" run would fall through to Engine A
+        print("MCX buy/sell engine is disabled (MCXT_ENABLED = False) - nothing to do."); return
     try:
         api = Angel()
         if mode == "test":

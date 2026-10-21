@@ -1,15 +1,23 @@
 name: Paper MCX daily trend (manual, research only)
 
-# PAPER engine (paper/mcx_daily.py). Manual only - no schedule is enabled, so nothing changes in the
-# live alerts. Telegram stays OFF unless you pick telegram = 1 when you run it.
-# State and event log are kept on the separate branch "paper-state" (main is never touched).
-# To make it run daily later (only after approval), add:  schedule: - cron: "45 18 * * 1-5"   (00:15 IST)
+# PAPER engine v3 (paper/mcx_daily.py) – market data is read-only, no order API is ever called.
+# Manual only: no schedule here. Telegram is OFF unless you choose telegram = 1.
+# State (account, positions, alert history, risk locks, recorded contract candles) lives on branch "paper-state".
+#   - branch missing           -> a NEW paper account is created (logged)
+#   - branch present but restore fails or state file missing -> the run STOPS (no silent reset)
+#   - saving / pushing state fails -> the run FAILS
+# Shares the live bot's concurrency group, so two runs never overlap and never collide with the live bot.
 
 on:
   workflow_dispatch:
     inputs:
       telegram:
         description: "Send paper alerts to Telegram? 0 = no (default), 1 = yes"
+        default: "0"
+  workflow_call:          # used only by the prepared (disabled) schedule file in paper/workflows/
+    inputs:
+      telegram:
+        type: string
         default: "0"
 
 concurrency:
@@ -19,10 +27,14 @@ concurrency:
 permissions:
   contents: write
 
+defaults:
+  run:
+    shell: bash -euo pipefail {0}
+
 jobs:
   paper:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,9 +42,25 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Restore paper state
+      - name: Restore paper state (stop on any unexpected failure)
         run: |
-          git fetch -q origin paper-state && git archive FETCH_HEAD state | tar -x -C . || true
+          set +e
+          git ls-remote --exit-code --heads origin paper-state > /dev/null
+          rc=$?
+          set -e
+          if [ "$rc" -eq 0 ]; then
+            git fetch -q origin paper-state
+            mkdir -p state
+            git archive FETCH_HEAD paper | tar -x -C state
+            test -f state/paper/paper_state.json || { echo "::error::paper-state branch exists but paper_state.json is missing"; exit 1; }
+            echo "PAPER_NEW_ACCOUNT=0" >> "$GITHUB_ENV"
+            echo "Restored paper state from branch paper-state"
+          elif [ "$rc" -eq 2 ]; then
+            echo "PAPER_NEW_ACCOUNT=1" >> "$GITHUB_ENV"
+            echo "::notice::No paper-state branch yet – creating a NEW paper account"
+          else
+            echo "::error::could not check for the paper-state branch (git exit $rc) – stopping"; exit 1
+          fi
       - name: Run paper engine
         run: python -m paper.mcx_daily
         env:
@@ -42,14 +70,26 @@ jobs:
           ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
           TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
-          PAPER_TELEGRAM:    ${{ github.event.inputs.telegram }}
-      - name: Save paper state to branch paper-state
+          PAPER_TELEGRAM:    ${{ inputs.telegram || '0' }}
+          PAPER_STATE_DIR:   state/paper
+      - name: Save paper state to branch paper-state (fails the run on error)
         run: |
-          mkdir -p /tmp/ps && cp state/paper_mcx_daily* /tmp/ps/ 2>/dev/null || true
+          cp -r state/paper /tmp/paper_state_out
           git config user.name "option-bot paper"
           git config user.email "bot@users.noreply.github.com"
-          git fetch origin paper-state && git checkout -q paper-state || git checkout -q --orphan paper-state
-          git rm -rq --cached . 2>/dev/null || true
+          if [ "$PAPER_NEW_ACCOUNT" = "1" ]; then
+            git checkout -q --orphan paper-state
+          else
+            git checkout -q -B paper-state FETCH_HEAD
+          fi
+          git rm -rq --cached . > /dev/null 2>&1 || true
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          mkdir -p state && cp /tmp/ps/* state/ 2>/dev/null || true
-          git add state && git commit -qm "paper state $(date -u +%F_%H%M)" && git push -q origin paper-state || echo "nothing to save"
+          cp -r /tmp/paper_state_out paper
+          git add paper
+          if git diff --cached --quiet; then
+            echo "State unchanged – nothing to save"
+          else
+            git commit -qm "paper state $(date -u +%F_%H%M)"
+            git push -q origin HEAD:paper-state
+            echo "Saved paper state"
+          fi
