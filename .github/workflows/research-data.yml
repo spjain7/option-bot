@@ -32,7 +32,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Restore earlier research data (for partial re-fetch)
         run: |
-          git fetch -q origin research-data && git archive origin/research-data research/data/angel | tar -x -C . || true
+          git fetch -q origin research-data && git archive FETCH_HEAD research/data/angel | tar -x -C . || true
       - name: Fetch Angel history (research only)
         run: python -m research.adapters.angel_hist
         env:
