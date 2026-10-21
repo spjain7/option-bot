@@ -42,7 +42,7 @@
 - **Not touched:** `runner.py`, `config.py`, `bot.yml`, `calls/`, `mcx_trade.py`, `notify.py`, `angel.py`.
 
 ## Tests that prove it
-`python -m crude.tests.test_crude` (85 checks) covers:
+`python -m crude.tests.test_crude` (86 checks) covers:
 - RSI 25/75 boundaries.
 - Closed-candle-only evaluation and 1-hour no-look-ahead.
 - 3-hour construction.
