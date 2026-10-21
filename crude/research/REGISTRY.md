@@ -6,7 +6,7 @@ Every experiment is recorded here BEFORE it runs, failed ones included. Results 
 | ID | Registered | Question | Data | Status | Verdict |
 |---|---|---|---|---|---|
 | EXP-000 | 21-Oct-2026 | Original intraday (15m+1h) and positional (3h) rules, fixed parameters | Angel CRUDEOIL 15m, 12-Oct-2020 → 21-Oct-2026 | done (`crude/BACKTEST.md`) | FAIL (−0.19R intraday; positional 1 trade) |
-| EXP-001 | 21-Oct-2026 | Does a pre-entry regime filter improve intraday out of sample? | same as EXP-000 (**already examined → exploratory only**) | registered | – |
+| EXP-001 | 21-Oct-2026 | Does a pre-entry regime filter improve intraday out of sample? | same as EXP-000 (**already examined → exploratory only**) | done (`results/EXP-001/REPORT.md`) | FAIL – A −0.155R, B +0.136R but p5 −0.13 and −0.07R at 2× costs, C −0.176R |
 
 ## EXP-001 – frozen definitions (do not edit after the run)
 - **A baseline**: intraday engine exactly as in `crude/config.py` 1.0.0.
