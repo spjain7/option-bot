@@ -60,6 +60,10 @@ def fetch_all(api, master, names, intervals=("ONE_DAY", "ONE_HOUR")):
             print(c["symbol"], iv, n, flush=True)
     man = pd.DataFrame(rows)
     OUT.mkdir(parents=True, exist_ok=True)
+    old = OUT / "manifest.csv"
+    if old.exists():                                   # partial re-fetch: keep rows of instruments not re-fetched
+        prev = pd.read_csv(old)
+        man = pd.concat([prev[~prev["name"].isin(man["name"].unique())], man], ignore_index=True)
     man.to_csv(OUT / "manifest.csv", index=False)
     return man
 
@@ -67,7 +71,10 @@ def fetch_all(api, master, names, intervals=("ONE_DAY", "ONE_HOUR")):
 def main():
     from angel import Angel, load_master
     from research.instruments import REGISTRY
+    import os
     names = [k for k, v in REGISTRY.items() if v["exchange"] in ("MCX", "NSE")]
+    only = [x.strip() for x in os.getenv("RESEARCH_NAMES", "").split(",") if x.strip()]
+    names = [n for n in names if n in only] if only else names
     fetch_all(Angel(), load_master(), names)
 
 

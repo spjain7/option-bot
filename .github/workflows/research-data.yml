@@ -7,6 +7,10 @@ name: Research data (manual, no alerts)
 
 on:
   workflow_dispatch:
+    inputs:
+      names:
+        description: "Only these instruments, comma separated (empty = all)"
+        default: ""
 
 concurrency:
   group: option-bot
@@ -26,6 +30,9 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Restore earlier research data (for partial re-fetch)
+        run: |
+          git fetch -q origin research-data && git archive origin/research-data research/data/angel | tar -x -C . || true
       - name: Fetch Angel history (research only)
         run: python -m research.adapters.angel_hist
         env:
@@ -33,6 +40,7 @@ jobs:
           ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
           ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
           ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+          RESEARCH_NAMES:    ${{ github.event.inputs.names }}
       - name: Push to research-data branch
         run: |
           mkdir -p /tmp/out && cp -r research/data/angel /tmp/out/
