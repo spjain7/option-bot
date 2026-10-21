@@ -8,6 +8,10 @@ name: Crude Oil PAPER engine
 # Own concurrency group: never cancels or delays the existing option-bot runs.
 
 on:
+  schedule:
+    # PAPER scans every 15 min, 2 min after each 15-min candle closes: 08:32 → 00:17 IST, Mon–Fri
+    # (UTC 03:02–18:47; GitHub may start scheduled runs late – every run records its actual time)
+    - cron: "2,17,32,47 3-18 * * 1-5"
   push:
     branches: [feature/crude-oil-paper]
     paths: ["crude/**", ".github/workflows/crude-paper.yml"]
