@@ -8,3 +8,4 @@ tests/_sim*.json
 paper/reports/state/
 state/paper_mcx_daily*
 state/crude/
+state/alerts/
