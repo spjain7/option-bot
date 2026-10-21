@@ -4,3 +4,4 @@ backtest/*.csv
 research/data/
 research/output/
 research/output_smoke/
+tests/_sim*.json
