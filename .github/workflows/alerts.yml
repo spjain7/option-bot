@@ -5,8 +5,7 @@ name: Buy-Sell alerts (RSI + candlestick, Telegram)
 # MCX futures + NIFTY/BANKNIFTY futures. State on branch "alerts-state"; Telegram sent only after the state push.
 
 on:
-  schedule:
-    - cron: "2,17,32,47 3-18 * * 1-5"      # 08:32 → 00:17 IST, every 15 min, 2 min after each candle closes
+  # scheduled scans now run inside .github/workflows/market-loop.yml (GitHub cron skipped most runs)
   workflow_dispatch:
     inputs:
       telegram:

@@ -1,0 +1,69 @@
+name: Market loop (alerts + crude paper, every 15 min)
+
+# GitHub's cron skips most 15-minute scheduled runs, so ONE run per day loops inside the job instead:
+# three back-to-back jobs (each < 6 h) scan every 15 min from start until 00:20 IST.
+# Backup start times restart the loop if a run fails; a run that starts after the day's loop just waits in the
+# queue (same concurrency group) and exits immediately once the session is over. ALERTS / PAPER only – no orders.
+
+on:
+  schedule:
+    - cron: "25 3 * * 1-5"     # 08:55 IST start
+    - cron: "40 4 * * 1-5"     # backups (queue if the loop is already running)
+    - cron: "10 8 * * 1-5"
+    - cron: "10 12 * * 1-5"
+  workflow_dispatch:
+
+concurrency:
+  group: market-loop
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: read
+
+env:
+  ALERTS_STATE_DIR: state/alerts
+  ALERTS_TELEGRAM: "1"
+  CRUDE_STATE_DIR: state/crude
+  CRUDE_TELEGRAM: "1"
+  ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+  ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+  ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+  ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+  TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
+  TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+  GITHUB_TOKEN:      ${{ github.token }}
+
+jobs:
+  morning:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - run: python -m alerts.tests.test_alerts
+      - run: bash scripts/market_loop.sh 14:50
+  afternoon:
+    needs: morning
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - run: bash scripts/market_loop.sh 20:50
+  evening:
+    needs: afternoon
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - run: bash scripts/market_loop.sh 00:20
