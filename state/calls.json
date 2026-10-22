@@ -1,7 +1,26 @@
 {
  "open": [],
  "closed": [],
- "pending": [],
+ "pending": [
+  {
+   "id": 1,
+   "mode": "positional",
+   "name": "GOLD",
+   "exch": "MCX",
+   "side": "SELL",
+   "symbol": "GOLD04DEC26FUT",
+   "token": "495213",
+   "expiry": "2026-12-04",
+   "mult": 100,
+   "signal_close": 143303.0,
+   "level": 143548.0,
+   "atr": 2171.25,
+   "candle": "2026-10-22",
+   "created": "2026-10-22 23:56",
+   "opt": null,
+   "lots_text": "0 (1 lot risks \u20b9434,250 = 86.9% of capital) | mini GOLDM: 0 lot(s) (\u20b943,425/lot)"
+  }
+ ],
  "done": {
   "intra|GOLD|2026-10-21 19:00": "2026-10-21",
   "intra|SILVER|2026-10-21 19:00": "2026-10-21",
@@ -95,11 +114,20 @@
   "intra|NATURALGAS|2026-10-22 20:00": "2026-10-22",
   "intra|COPPER|2026-10-22 20:00": "2026-10-22",
   "intra|ZINC|2026-10-22 20:00": "2026-10-22",
-  "intra|ALUMINIUM|2026-10-22 20:00": "2026-10-22"
+  "intra|ALUMINIUM|2026-10-22 20:00": "2026-10-22",
+  "pos|GOLD|2026-10-22": "2026-10-22",
+  "pos|GOLD|2026-10-22|call": "2026-10-22",
+  "pos|SILVER|2026-10-22": "2026-10-22",
+  "pos|SILVER|2026-10-22|nt": "2026-10-22",
+  "pos|CRUDEOIL|2026-10-22": "2026-10-22",
+  "pos|NATURALGAS|2026-10-22": "2026-10-22",
+  "pos|COPPER|2026-10-22": "2026-10-22",
+  "pos|ZINC|2026-10-22": "2026-10-22",
+  "pos|ALUMINIUM|2026-10-22": "2026-10-22"
  },
  "last_state": {
-  "pos|GOLD": null,
-  "pos|SILVER": "WATCH|SELL",
+  "pos|GOLD": "CALL|SELL",
+  "pos|SILVER": "BLOCKED|SELL",
   "pos|CRUDEOIL": null,
   "pos|NATURALGAS": null,
   "pos|COPPER": null,
@@ -114,5 +142,5 @@
  "summary": {
   "2026-10-22": true
  },
- "next_id": 1
+ "next_id": 2
 }
