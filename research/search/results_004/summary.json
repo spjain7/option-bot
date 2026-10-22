@@ -1,0 +1,176 @@
+{
+ "eligible": 71,
+ "qualifying": [
+  {
+   "combo": "1d|obv_breakout|none|trail",
+   "n_A": 141,
+   "n_B": 266,
+   "win_A": 0.426,
+   "win_B": 0.462,
+   "e1_A": 0.067,
+   "e1_B": 0.187,
+   "e2_A": 0.027,
+   "e2_B": 0.159,
+   "win_all": 0.45,
+   "worst_e2": 0.027
+  },
+  {
+   "combo": "1d|vol_breakout|none|fixed",
+   "n_A": 51,
+   "n_B": 143,
+   "win_A": 0.608,
+   "win_B": 0.566,
+   "e1_A": 0.174,
+   "e1_B": 0.082,
+   "e2_A": 0.124,
+   "e2_B": 0.048,
+   "win_all": 0.577,
+   "worst_e2": 0.048
+  },
+  {
+   "combo": "1d|vol_breakout|none|trail",
+   "n_A": 43,
+   "n_B": 112,
+   "win_A": 0.442,
+   "win_B": 0.455,
+   "e1_A": 0.254,
+   "e1_B": 0.298,
+   "e2_A": 0.218,
+   "e2_B": 0.27,
+   "win_all": 0.452,
+   "worst_e2": 0.218
+  },
+  {
+   "combo": "3h|cmf_trend|none|trail",
+   "n_A": 461,
+   "n_B": 649,
+   "win_A": 0.38,
+   "win_B": 0.391,
+   "e1_A": 0.094,
+   "e1_B": 0.184,
+   "e2_A": 0.017,
+   "e2_B": 0.124,
+   "win_all": 0.386,
+   "worst_e2": 0.017
+  },
+  {
+   "combo": "3h|keltner_bo|none|trail",
+   "n_A": 429,
+   "n_B": 590,
+   "win_A": 0.401,
+   "win_B": 0.381,
+   "e1_A": 0.14,
+   "e1_B": 0.121,
+   "e2_A": 0.063,
+   "e2_B": 0.062,
+   "win_all": 0.39,
+   "worst_e2": 0.062
+  },
+  {
+   "combo": "3h|obv_breakout|none|trail",
+   "n_A": 593,
+   "n_B": 822,
+   "win_A": 0.388,
+   "win_B": 0.386,
+   "e1_A": 0.12,
+   "e1_B": 0.144,
+   "e2_A": 0.044,
+   "e2_B": 0.082,
+   "win_all": 0.387,
+   "worst_e2": 0.044
+  },
+  {
+   "combo": "3h|vol_breakout|none|trail",
+   "n_A": 338,
+   "n_B": 495,
+   "win_A": 0.408,
+   "win_B": 0.4,
+   "e1_A": 0.198,
+   "e1_B": 0.202,
+   "e2_A": 0.122,
+   "e2_B": 0.141,
+   "win_all": 0.403,
+   "worst_e2": 0.122
+  }
+ ],
+ "families": [
+  {
+   "combo": "cci_trend",
+   "combos": 5.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.06
+  },
+  {
+   "combo": "cmf_trend",
+   "combos": 6.0,
+   "both_pos_2x": 1.0,
+   "avg_e1": -0.017
+  },
+  {
+   "combo": "ha_trend",
+   "combos": 6.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": 0.054
+  },
+  {
+   "combo": "ichimoku",
+   "combos": 6.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.051
+  },
+  {
+   "combo": "keltner_bo",
+   "combos": 6.0,
+   "both_pos_2x": 1.0,
+   "avg_e1": 0.006
+  },
+  {
+   "combo": "mfi_rev",
+   "combos": 4.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.105
+  },
+  {
+   "combo": "nr7_bo",
+   "combos": 6.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.074
+  },
+  {
+   "combo": "obv_breakout",
+   "combos": 6.0,
+   "both_pos_2x": 2.0,
+   "avg_e1": 0.016
+  },
+  {
+   "combo": "psar_flip",
+   "combos": 6.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.042
+  },
+  {
+   "combo": "squeeze_bo",
+   "combos": 4.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.021
+  },
+  {
+   "combo": "stoch_trend",
+   "combos": 6.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.023
+  },
+  {
+   "combo": "vol_breakout",
+   "combos": 6.0,
+   "both_pos_2x": 3.0,
+   "avg_e1": 0.092
+  },
+  {
+   "combo": "vol_climax",
+   "combos": 4.0,
+   "both_pos_2x": 0.0,
+   "avg_e1": -0.051
+  }
+ ]
+}
