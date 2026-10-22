@@ -477,32 +477,12 @@
   ]
  },
  "day": {
-  "date": "2026-10-22",
-  "alerts": 51,
-  "watches": 5,
-  "startup_sent": true,
-  "eod_sent": true,
-  "outcomes": [
-   {
-    "name": "GOLD",
-    "tf": "15m",
-    "side": "BUY",
-    "result": "\u274c SL hit"
-   },
-   {
-    "name": "COPPER",
-    "tf": "15m",
-    "side": "BUY",
-    "result": "\u274c SL hit"
-   },
-   {
-    "name": "NATURALGAS",
-    "tf": "1h",
-    "side": "BUY",
-    "result": "\u274c SL hit"
-   }
-  ],
-  "suppressed": 3
+  "date": "2026-10-23",
+  "alerts": 0,
+  "watches": 0,
+  "startup_sent": false,
+  "eod_sent": false,
+  "outcomes": []
  },
  "history": [],
  "oi": {
