@@ -139,6 +139,13 @@
    "oi": 1381200,
    "ltp": 9502.0,
    "volume": 9927
+  },
+  {
+   "time": "2026-10-22 13:49:54",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1395500,
+   "ltp": 9496.0,
+   "volume": 10410
   }
  ],
  "switches": {
@@ -1211,11 +1218,73 @@
    },
    "actions": [],
    "errors": []
+  },
+  {
+   "time": "2026-10-22 13:49:28.586992",
+   "session": "OPEN",
+   "api": {
+    "15m": "FAILED: no candles returned (API error, rate limit or no trading)",
+    "1h": "ok (1049 candles, last start 22-Oct 13:00)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": null,
+    "bars_15m": 0,
+    "last_closed_1h": "2026-10-22 12:00:00",
+    "bars_1h": 543,
+    "last_closed_3h": "2026-10-22 09:00:00",
+    "bars_3h": 180,
+    "quote_age_min": -0.4,
+    "ltp": 9496.0,
+    "day_volume": 10410,
+    "quality": {
+     "blocks": [],
+     "notes": []
+    },
+    "volume": "UNAVAILABLE/partial",
+    "oi_current": 1395500,
+    "oi_change": {
+     "status": "OK",
+     "label": "Short buildup",
+     "d_oi_pct": 1.035,
+     "d_price": -6.0,
+     "gap_min": 15.8,
+     "oi": 1395500,
+     "oi_prev": 1381200
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "no 15-min / 1-hour data"
+     ],
+     "bar": null
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "swing structure not HH/HL: swings H 9544\u21929533, L 8555\u21929063"
+     ],
+     "bar": "2026-10-22 09:00:00"
+    }
+   },
+   "actions": [],
+   "errors": [
+    "STALE CANDLES: no 15-min candles returned while the live quote is current"
+   ]
   }
  ],
  "last_error": {
-  "time": "2026-10-22 13:20:29.869950",
-  "error": "NO 1-HOUR DATA during the session"
+  "time": "2026-10-22 13:49:28.586992",
+  "error": "STALE CANDLES: no 15-min candles returned while the live quote is current"
  },
  "peak_equity": 500000.0
 }
