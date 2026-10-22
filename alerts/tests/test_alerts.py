@@ -41,6 +41,20 @@ def test_bounce():
     check("V-bounce: strong green candle closing above the previous high counts as bullish confirmation", any("reversal close" in x for x in b))
 
 
+def test_quality_gold_case():
+    """The 22-Oct GOLD 15-min BUY that hit SL: strong downtrend (ADX 34), no support nearby, volume 0.99x."""
+    sig = dict(trend="DOWN", adx=34.0, atr=150.0, close=144385.0, vol_x=0.99,
+               patterns=["Bullish reversal close (strong green candle closed above the previous high)"],
+               levels=dict(support=[], resistance=[(145026.0, "pivot S2"), (145525.0, "prev-day low")]))
+    q = S.quality(sig, "BUY")
+    check("GOLD 22-Oct case is now suppressed (falling knife, no support, weak volume)",
+          len(q) == 3 and any("falling knife" in x for x in q) and any("support" in x for x in q) and any("volume" in x for x in q))
+    ok = dict(sig, trend="DOWN", adx=22.0, vol_x=1.8, patterns=["Hammer"], levels=dict(support=[(144300.0, "prev-day low")], resistance=[]))
+    check("a hammer at support with 1.8x volume in a weak trend still passes", S.quality(ok, "BUY") == [])
+    sell = dict(ok, trend="UP", adx=40.0, levels=dict(support=[], resistance=[(150000.0, "swing high")]), close=144385.0)
+    check("SELL against a strong uptrend far from resistance is suppressed", any("falling knife" in x for x in S.quality(sell, "SELL")))
+
+
 def _series(n=300, drift=0.0, seed=1):
     rng = np.random.default_rng(seed)
     t = [x for x in pd.date_range("2026-09-01", periods=n * 3, freq="15min") if 9 <= x.hour < 23 and x.weekday() < 5][:n]
@@ -51,6 +65,8 @@ def _series(n=300, drift=0.0, seed=1):
 
 def test_rsi_direction():
     d = _series()
+    _q = S.quality
+    S.quality = lambda sig, side: []          # this test is about RSI direction only
     with mock.patch.object(S.I, "rsi", lambda c, n=14: pd.Series(80.0, index=c.index)), \
          mock.patch.object(S, "patterns", lambda df, atr: ([], ["Bearish engulfing"])):
         r = S.evaluate(d, "15m")
@@ -82,6 +98,7 @@ def test_rsi_direction():
          mock.patch.object(S, "patterns", lambda df, atr: (["Bullish engulfing"], [])):
         r = S.evaluate(d, "15m")
     check("reversal candle up to 2 candles after the RSI extreme still gives the BUY alert", r["kind"] == "BUY")
+    S.quality = _q
 
 
 def test_sessions_and_candles():
@@ -164,6 +181,6 @@ def test_no_orders():
 
 
 if __name__ == "__main__":
-    for t in (test_patterns, test_bounce, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_no_orders):
+    for t in (test_patterns, test_bounce, test_quality_gold_case, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_no_orders):
         t()
     print(f"\nALL {len(OK)} ALERT CHECKS PASSED")
