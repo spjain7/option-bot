@@ -1,0 +1,1630 @@
+{
+ "results": {
+  "oi_breakout|oi2%|t1r|long": {
+   "design": {
+    "trades": 257,
+    "exp_r": 0.062,
+    "win": 54.1,
+    "pf": 1.17,
+    "p5": -0.026
+   },
+   "design_2x": 0.043,
+   "shortlisted": false
+  },
+  "oi_breakout|oi2%|t1r|long+short": {
+   "design": {
+    "trades": 286,
+    "exp_r": 0.04,
+    "win": 52.4,
+    "pf": 1.11,
+    "p5": -0.039
+   },
+   "design_2x": 0.021,
+   "shortlisted": false
+  },
+  "oi_breakout|oi2%|t2r|long": {
+   "design": {
+    "trades": 252,
+    "exp_r": 0.146,
+    "win": 46.8,
+    "pf": 1.29,
+    "p5": 0.011
+   },
+   "design_2x": 0.12,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 416,
+    "exp_r": -0.109,
+    "win": 37.7,
+    "pf": 0.81,
+    "p5": -0.201
+   },
+   "holdout_2x": -0.134,
+   "PASS": false
+  },
+  "oi_breakout|oi2%|t2r|long+short": {
+   "design": {
+    "trades": 281,
+    "exp_r": 0.102,
+    "win": 45.6,
+    "pf": 1.2,
+    "p5": -0.022
+   },
+   "design_2x": 0.076,
+   "shortlisted": false
+  },
+  "oi_breakout|oi2%|trail|long": {
+   "design": {
+    "trades": 246,
+    "exp_r": 0.243,
+    "win": 49.6,
+    "pf": 1.59,
+    "p5": 0.096
+   },
+   "design_2x": 0.224,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 406,
+    "exp_r": -0.06,
+    "win": 40.9,
+    "pf": 0.88,
+    "p5": -0.153
+   },
+   "holdout_2x": -0.079,
+   "PASS": false
+  },
+  "oi_breakout|oi2%|trail|long+short": {
+   "design": {
+    "trades": 275,
+    "exp_r": 0.195,
+    "win": 48.4,
+    "pf": 1.47,
+    "p5": 0.056
+   },
+   "design_2x": 0.175,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 638,
+    "exp_r": 0.085,
+    "win": 47.3,
+    "pf": 1.2,
+    "p5": 0.002
+   },
+   "holdout_2x": 0.066,
+   "PASS": true
+  },
+  "oi_breakout|oi5%|t1r|long": {
+   "design": {
+    "trades": 183,
+    "exp_r": 0.056,
+    "win": 54.6,
+    "pf": 1.15,
+    "p5": -0.055
+   },
+   "design_2x": 0.037,
+   "shortlisted": false
+  },
+  "oi_breakout|oi5%|t1r|long+short": {
+   "design": {
+    "trades": 210,
+    "exp_r": 0.033,
+    "win": 52.9,
+    "pf": 1.09,
+    "p5": -0.066
+   },
+   "design_2x": 0.014,
+   "shortlisted": false
+  },
+  "oi_breakout|oi5%|t2r|long": {
+   "design": {
+    "trades": 180,
+    "exp_r": 0.151,
+    "win": 47.2,
+    "pf": 1.31,
+    "p5": -0.007
+   },
+   "design_2x": 0.125,
+   "shortlisted": false
+  },
+  "oi_breakout|oi5%|t2r|long+short": {
+   "design": {
+    "trades": 207,
+    "exp_r": 0.097,
+    "win": 45.9,
+    "pf": 1.2,
+    "p5": -0.04
+   },
+   "design_2x": 0.072,
+   "shortlisted": false
+  },
+  "oi_breakout|oi5%|trail|long": {
+   "design": {
+    "trades": 178,
+    "exp_r": 0.186,
+    "win": 48.3,
+    "pf": 1.43,
+    "p5": 0.027
+   },
+   "design_2x": 0.167,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 231,
+    "exp_r": -0.069,
+    "win": 41.1,
+    "pf": 0.86,
+    "p5": -0.189
+   },
+   "holdout_2x": -0.087,
+   "PASS": false
+  },
+  "oi_breakout|oi5%|trail|long+short": {
+   "design": {
+    "trades": 205,
+    "exp_r": 0.136,
+    "win": 47.3,
+    "pf": 1.32,
+    "p5": -0.009
+   },
+   "design_2x": 0.117,
+   "shortlisted": false
+  },
+  "oi_market|oi2%|t1r|long": {
+   "design": {
+    "trades": 242,
+    "exp_r": -0.016,
+    "win": 50.4,
+    "pf": 0.96,
+    "p5": -0.103
+   },
+   "design_2x": -0.036,
+   "shortlisted": false
+  },
+  "oi_market|oi2%|t1r|long+short": {
+   "design": {
+    "trades": 245,
+    "exp_r": -0.028,
+    "win": 49.8,
+    "pf": 0.93,
+    "p5": -0.12
+   },
+   "design_2x": -0.047,
+   "shortlisted": false
+  },
+  "oi_market|oi2%|t2r|long": {
+   "design": {
+    "trades": 239,
+    "exp_r": 0.005,
+    "win": 42.3,
+    "pf": 1.01,
+    "p5": -0.125
+   },
+   "design_2x": -0.021,
+   "shortlisted": false
+  },
+  "oi_market|oi2%|t2r|long+short": {
+   "design": {
+    "trades": 242,
+    "exp_r": -0.008,
+    "win": 41.7,
+    "pf": 0.99,
+    "p5": -0.131
+   },
+   "design_2x": -0.033,
+   "shortlisted": false
+  },
+  "oi_market|oi2%|trail|long": {
+   "design": {
+    "trades": 234,
+    "exp_r": 0.149,
+    "win": 46.2,
+    "pf": 1.33,
+    "p5": 0.002
+   },
+   "design_2x": 0.13,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 313,
+    "exp_r": -0.031,
+    "win": 41.5,
+    "pf": 0.93,
+    "p5": -0.132
+   },
+   "holdout_2x": -0.051,
+   "PASS": false
+  },
+  "oi_market|oi2%|trail|long+short": {
+   "design": {
+    "trades": 237,
+    "exp_r": 0.135,
+    "win": 45.6,
+    "pf": 1.3,
+    "p5": -0.01
+   },
+   "design_2x": 0.116,
+   "shortlisted": false
+  },
+  "oi_market|oi5%|t1r|long": {
+   "design": {
+    "trades": 168,
+    "exp_r": -0.027,
+    "win": 50.6,
+    "pf": 0.94,
+    "p5": -0.133
+   },
+   "design_2x": -0.046,
+   "shortlisted": false
+  },
+  "oi_market|oi5%|t1r|long+short": {
+   "design": {
+    "trades": 170,
+    "exp_r": -0.038,
+    "win": 50.0,
+    "pf": 0.91,
+    "p5": -0.152
+   },
+   "design_2x": -0.057,
+   "shortlisted": false
+  },
+  "oi_market|oi5%|t2r|long": {
+   "design": {
+    "trades": 166,
+    "exp_r": 0.011,
+    "win": 42.2,
+    "pf": 1.02,
+    "p5": -0.148
+   },
+   "design_2x": -0.014,
+   "shortlisted": false
+  },
+  "oi_market|oi5%|t2r|long+short": {
+   "design": {
+    "trades": 168,
+    "exp_r": -0.001,
+    "win": 41.7,
+    "pf": 1.0,
+    "p5": -0.152
+   },
+   "design_2x": -0.027,
+   "shortlisted": false
+  },
+  "oi_market|oi5%|trail|long": {
+   "design": {
+    "trades": 165,
+    "exp_r": 0.095,
+    "win": 44.8,
+    "pf": 1.2,
+    "p5": -0.078
+   },
+   "design_2x": 0.076,
+   "shortlisted": false
+  },
+  "oi_market|oi5%|trail|long+short": {
+   "design": {
+    "trades": 167,
+    "exp_r": 0.082,
+    "win": 44.3,
+    "pf": 1.17,
+    "p5": -0.083
+   },
+   "design_2x": 0.063,
+   "shortlisted": false
+  },
+  "oi_pullback|oi2%|t1r|long": {
+   "design": {
+    "trades": 60,
+    "exp_r": 0.172,
+    "win": 65.0,
+    "pf": 1.59,
+    "p5": -0.039
+   },
+   "design_2x": 0.154,
+   "shortlisted": false
+  },
+  "oi_pullback|oi2%|t1r|long+short": {
+   "design": {
+    "trades": 99,
+    "exp_r": 0.064,
+    "win": 56.6,
+    "pf": 1.19,
+    "p5": -0.087
+   },
+   "design_2x": 0.045,
+   "shortlisted": false
+  },
+  "oi_pullback|oi2%|t2r|long": {
+   "design": {
+    "trades": 60,
+    "exp_r": 0.301,
+    "win": 58.3,
+    "pf": 1.7,
+    "p5": -0.015
+   },
+   "design_2x": 0.277,
+   "shortlisted": false
+  },
+  "oi_pullback|oi2%|t2r|long+short": {
+   "design": {
+    "trades": 99,
+    "exp_r": 0.08,
+    "win": 49.5,
+    "pf": 1.16,
+    "p5": -0.141
+   },
+   "design_2x": 0.055,
+   "shortlisted": false
+  },
+  "oi_pullback|oi2%|trail|long": {
+   "design": {
+    "trades": 60,
+    "exp_r": 0.301,
+    "win": 61.7,
+    "pf": 1.86,
+    "p5": 0.032
+   },
+   "design_2x": 0.283,
+   "shortlisted": false
+  },
+  "oi_pullback|oi2%|trail|long+short": {
+   "design": {
+    "trades": 98,
+    "exp_r": 0.067,
+    "win": 51.0,
+    "pf": 1.17,
+    "p5": -0.116
+   },
+   "design_2x": 0.049,
+   "shortlisted": false
+  },
+  "oi_pullback|oi5%|t1r|long": {
+   "design": {
+    "trades": 30,
+    "exp_r": 0.376,
+    "win": 70.0,
+    "pf": 3.46,
+    "p5": 0.174
+   },
+   "design_2x": 0.358,
+   "shortlisted": false
+  },
+  "oi_pullback|oi5%|t1r|long+short": {
+   "design": {
+    "trades": 45,
+    "exp_r": 0.275,
+    "win": 62.2,
+    "pf": 2.36,
+    "p5": 0.1
+   },
+   "design_2x": 0.256,
+   "shortlisted": false
+  },
+  "oi_pullback|oi5%|t2r|long": {
+   "design": {
+    "trades": 30,
+    "exp_r": 0.541,
+    "win": 63.3,
+    "pf": 2.85,
+    "p5": 0.185
+   },
+   "design_2x": 0.517,
+   "shortlisted": false
+  },
+  "oi_pullback|oi5%|t2r|long+short": {
+   "design": {
+    "trades": 45,
+    "exp_r": 0.299,
+    "win": 53.3,
+    "pf": 1.82,
+    "p5": 0.024
+   },
+   "design_2x": 0.274,
+   "shortlisted": false
+  },
+  "oi_pullback|oi5%|trail|long": {
+   "design": {
+    "trades": 30,
+    "exp_r": 0.644,
+    "win": 70.0,
+    "pf": 4.55,
+    "p5": 0.324
+   },
+   "design_2x": 0.626,
+   "shortlisted": false
+  },
+  "oi_pullback|oi5%|trail|long+short": {
+   "design": {
+    "trades": 45,
+    "exp_r": 0.361,
+    "win": 55.6,
+    "pf": 2.37,
+    "p5": 0.102
+   },
+   "design_2x": 0.342,
+   "shortlisted": false
+  },
+  "oi_support|oi2%|t1r|long": {
+   "design": {
+    "trades": 6,
+    "exp_r": -0.54,
+    "win": 0.0,
+    "pf": 0.0,
+    "p5": -0.797
+   },
+   "design_2x": -0.559,
+   "shortlisted": false
+  },
+  "oi_support|oi2%|t1r|long+short": {
+   "design": {
+    "trades": 9,
+    "exp_r": -0.24,
+    "win": 22.2,
+    "pf": 0.38,
+    "p5": -0.535
+   },
+   "design_2x": -0.26,
+   "shortlisted": false
+  },
+  "oi_support|oi2%|t2r|long": {
+   "design": {
+    "trades": 6,
+    "exp_r": -0.753,
+    "win": 0.0,
+    "pf": 0.0,
+    "p5": -0.938
+   },
+   "design_2x": -0.778,
+   "shortlisted": false
+  },
+  "oi_support|oi2%|t2r|long+short": {
+   "design": {
+    "trades": 9,
+    "exp_r": -0.41,
+    "win": 22.2,
+    "pf": 0.24,
+    "p5": -0.741
+   },
+   "design_2x": -0.436,
+   "shortlisted": false
+  },
+  "oi_support|oi2%|trail|long": {
+   "design": {
+    "trades": 6,
+    "exp_r": -0.54,
+    "win": 0.0,
+    "pf": 0.0,
+    "p5": -0.796
+   },
+   "design_2x": -0.559,
+   "shortlisted": false
+  },
+  "oi_support|oi2%|trail|long+short": {
+   "design": {
+    "trades": 9,
+    "exp_r": -0.291,
+    "win": 22.2,
+    "pf": 0.25,
+    "p5": -0.556
+   },
+   "design_2x": -0.31,
+   "shortlisted": false
+  },
+  "oi_support|oi5%|t1r|long": {
+   "design": {
+    "trades": 1,
+    "exp_r": -0.125,
+    "win": 0.0,
+    "pf": 0.0,
+    "p5": -0.125
+   },
+   "design_2x": -0.149,
+   "shortlisted": false
+  },
+  "oi_support|oi5%|t1r|long+short": {
+   "design": {
+    "trades": 3,
+    "exp_r": 0.087,
+    "win": 33.3,
+    "pf": 1.68,
+    "p5": -0.215
+   },
+   "design_2x": 0.068,
+   "shortlisted": false
+  },
+  "oi_support|oi5%|t2r|long": {
+   "design": {
+    "trades": 1,
+    "exp_r": -1.033,
+    "win": 0.0,
+    "pf": 0.0,
+    "p5": -1.033
+   },
+   "design_2x": -1.066,
+   "shortlisted": false
+  },
+  "oi_support|oi5%|t2r|long+short": {
+   "design": {
+    "trades": 3,
+    "exp_r": -0.172,
+    "win": 33.3,
+    "pf": 0.63,
+    "p5": -0.804
+   },
+   "design_2x": -0.198,
+   "shortlisted": false
+  },
+  "oi_support|oi5%|trail|long": {
+   "design": {
+    "trades": 1,
+    "exp_r": -0.125,
+    "win": 0.0,
+    "pf": 0.0,
+    "p5": -0.125
+   },
+   "design_2x": -0.149,
+   "shortlisted": false
+  },
+  "oi_support|oi5%|trail|long+short": {
+   "design": {
+    "trades": 3,
+    "exp_r": 0.087,
+    "win": 33.3,
+    "pf": 1.68,
+    "p5": -0.215
+   },
+   "design_2x": 0.068,
+   "shortlisted": false
+  },
+  "oi_trend|oi2%|t1r|long": {
+   "design": {
+    "trades": 547,
+    "exp_r": 0.122,
+    "win": 57.8,
+    "pf": 1.37,
+    "p5": 0.061
+   },
+   "design_2x": 0.103,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 989,
+    "exp_r": -0.124,
+    "win": 44.7,
+    "pf": 0.72,
+    "p5": -0.167
+   },
+   "holdout_2x": -0.143,
+   "PASS": false
+  },
+  "oi_trend|oi2%|t1r|long+short": {
+   "design": {
+    "trades": 623,
+    "exp_r": 0.09,
+    "win": 56.2,
+    "pf": 1.27,
+    "p5": 0.033
+   },
+   "design_2x": 0.071,
+   "shortlisted": false
+  },
+  "oi_trend|oi2%|t2r|long": {
+   "design": {
+    "trades": 537,
+    "exp_r": 0.175,
+    "win": 49.3,
+    "pf": 1.36,
+    "p5": 0.085
+   },
+   "design_2x": 0.15,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 983,
+    "exp_r": -0.102,
+    "win": 37.6,
+    "pf": 0.82,
+    "p5": -0.163
+   },
+   "holdout_2x": -0.128,
+   "PASS": false
+  },
+  "oi_trend|oi2%|t2r|long+short": {
+   "design": {
+    "trades": 608,
+    "exp_r": 0.123,
+    "win": 47.7,
+    "pf": 1.25,
+    "p5": 0.035
+   },
+   "design_2x": 0.098,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 1810,
+    "exp_r": -0.034,
+    "win": 41.1,
+    "pf": 0.94,
+    "p5": -0.078
+   },
+   "holdout_2x": -0.058,
+   "PASS": false
+  },
+  "oi_trend|oi2%|trail|long": {
+   "design": {
+    "trades": 485,
+    "exp_r": 0.263,
+    "win": 53.2,
+    "pf": 1.71,
+    "p5": 0.164
+   },
+   "design_2x": 0.244,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 924,
+    "exp_r": -0.081,
+    "win": 40.4,
+    "pf": 0.83,
+    "p5": -0.137
+   },
+   "holdout_2x": -0.1,
+   "PASS": false
+  },
+  "oi_trend|oi2%|trail|long+short": {
+   "design": {
+    "trades": 554,
+    "exp_r": 0.203,
+    "win": 50.9,
+    "pf": 1.53,
+    "p5": 0.109
+   },
+   "design_2x": 0.184,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 1697,
+    "exp_r": -0.002,
+    "win": 43.5,
+    "pf": 1.0,
+    "p5": -0.049
+   },
+   "holdout_2x": -0.02,
+   "PASS": false
+  },
+  "oi_trend|oi5%|t1r|long": {
+   "design": {
+    "trades": 319,
+    "exp_r": 0.166,
+    "win": 57.7,
+    "pf": 1.55,
+    "p5": 0.091
+   },
+   "design_2x": 0.147,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 405,
+    "exp_r": -0.146,
+    "win": 43.2,
+    "pf": 0.68,
+    "p5": -0.216
+   },
+   "holdout_2x": -0.165,
+   "PASS": false
+  },
+  "oi_trend|oi5%|t1r|long+short": {
+   "design": {
+    "trades": 355,
+    "exp_r": 0.145,
+    "win": 56.6,
+    "pf": 1.47,
+    "p5": 0.076
+   },
+   "design_2x": 0.126,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 760,
+    "exp_r": -0.057,
+    "win": 47.9,
+    "pf": 0.86,
+    "p5": -0.106
+   },
+   "holdout_2x": -0.074,
+   "PASS": false
+  },
+  "oi_trend|oi5%|t2r|long": {
+   "design": {
+    "trades": 310,
+    "exp_r": 0.219,
+    "win": 48.7,
+    "pf": 1.49,
+    "p5": 0.103
+   },
+   "design_2x": 0.194,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 405,
+    "exp_r": -0.134,
+    "win": 36.5,
+    "pf": 0.77,
+    "p5": -0.23
+   },
+   "holdout_2x": -0.159,
+   "PASS": false
+  },
+  "oi_trend|oi5%|t2r|long+short": {
+   "design": {
+    "trades": 345,
+    "exp_r": 0.168,
+    "win": 47.5,
+    "pf": 1.37,
+    "p5": 0.063
+   },
+   "design_2x": 0.143,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 761,
+    "exp_r": -0.031,
+    "win": 41.4,
+    "pf": 0.94,
+    "p5": -0.099
+   },
+   "holdout_2x": -0.054,
+   "PASS": false
+  },
+  "oi_trend|oi5%|trail|long": {
+   "design": {
+    "trades": 294,
+    "exp_r": 0.347,
+    "win": 52.4,
+    "pf": 1.99,
+    "p5": 0.208
+   },
+   "design_2x": 0.328,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 392,
+    "exp_r": -0.107,
+    "win": 39.8,
+    "pf": 0.79,
+    "p5": -0.199
+   },
+   "holdout_2x": -0.126,
+   "PASS": false
+  },
+  "oi_trend|oi5%|trail|long+short": {
+   "design": {
+    "trades": 328,
+    "exp_r": 0.294,
+    "win": 50.9,
+    "pf": 1.83,
+    "p5": 0.166
+   },
+   "design_2x": 0.275,
+   "shortlisted": true,
+   "holdout": {
+    "trades": 732,
+    "exp_r": 0.039,
+    "win": 45.1,
+    "pf": 1.09,
+    "p5": -0.035
+   },
+   "holdout_2x": 0.021,
+   "PASS": false
+  }
+ },
+ "coverage": [
+  {
+   "name": "DRREDDY",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "KFINTECH",
+   "oi_days": 327,
+   "first_oi": "2025-06-27"
+  },
+  {
+   "name": "SBILIFE",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TATACONSUM",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ULTRACEMCO",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BPCL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BSE",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "CONCOR",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "SBICARD",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "RVNL",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "POLICYBZR",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "INDUSTOWER",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "MCX",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "KAYNES",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "KALYANKJIL",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "JUBLFOOD",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ICICIGI",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HINDALCO",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HDFCLIFE",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HDFCAMC",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "DELHIVERY",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "CDSL",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "CAMS",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "BHARTIARTL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "KEI",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "BANKBARODA",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "GLENMARK",
+   "oi_days": 1056,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BLUESTARCO",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "LT",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "LTF",
+   "oi_days": 621,
+   "first_oi": "2024-04-23"
+  },
+  {
+   "name": "ABB",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "MAZDOCK",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "NESTLEIND",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "AMBER",
+   "oi_days": 327,
+   "first_oi": "2025-06-27"
+  },
+  {
+   "name": "AMBUJACEM",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PIDILITIND",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "POWERINDIA",
+   "oi_days": 261,
+   "first_oi": "2025-10-01"
+  },
+  {
+   "name": "RELIANCE",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "FORTIS",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "SHRIRAMFIN",
+   "oi_days": 952,
+   "first_oi": "2022-12-20"
+  },
+  {
+   "name": "SONACOMS",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "TATAELXSI",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "TECHM",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TIINDIA",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "360ONE",
+   "oi_days": 327,
+   "first_oi": "2025-06-27"
+  },
+  {
+   "name": "ADANIENSOL",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "ASIANPAINT",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BAJAJ-AUTO",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "SOLARINDS",
+   "oi_days": 426,
+   "first_oi": "2025-01-31"
+  },
+  {
+   "name": "LICHSGFIN",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ASTRAL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "VOLTAS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PHOENIXLTD",
+   "oi_days": 426,
+   "first_oi": "2025-01-31"
+  },
+  {
+   "name": "PNBHOUSING",
+   "oi_days": 387,
+   "first_oi": "2025-03-28"
+  },
+  {
+   "name": "PRESTIGE",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "VBL",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "COFORGE",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "CGPOWER",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "BEL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ADANIENT",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "UPL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TITAN",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PGEL",
+   "oi_days": 327,
+   "first_oi": "2025-06-27"
+  },
+  {
+   "name": "TCS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "SBIN",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "POLYCAB",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PIIND",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PETRONET",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "NATIONALUM",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "LODHA",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "KPITTECH",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "JIOFIN",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "ITC",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "GODREJPROP",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TATASTEEL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "APOLLOHOSP",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "MARICO",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "KOTAKBANK",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TVSMOTOR",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "SRF",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "RECLTD",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PAYTM",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "OIL",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "MPHASIS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "MFSL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "LICI",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "LAURUSLABS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "JSWENERGY",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "LUPIN",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "GODREJCP",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "APLAPOLLO",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "ADANIGREEN",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "ADANIPORTS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "DLF",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "FEDERALBNK",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HAVELLS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HINDPETRO",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "INDUSINDBK",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "JINDALSTEL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HDFCBANK",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "DIXON",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "CROMPTON",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PATANJALI",
+   "oi_days": 406,
+   "first_oi": "2025-02-28"
+  },
+  {
+   "name": "SIEMENS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "POWERGRID",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "OBEROIRLTY",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "INFY",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TATAPOWER",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "INDIANB",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "ICICIBANK",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HINDZINC",
+   "oi_days": 387,
+   "first_oi": "2025-03-28"
+  },
+  {
+   "name": "COLPAL",
+   "oi_days": 1056,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "COALINDIA",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BHARATFORG",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ICICIPRULI",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BAJFINANCE",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TRENT",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "UNITDSPR",
+   "oi_days": 589,
+   "first_oi": "2024-06-07"
+  },
+  {
+   "name": "BOSCHLTD",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BRITANNIA",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "DIVISLAB",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ETERNAL",
+   "oi_days": 380,
+   "first_oi": "2025-04-09"
+  },
+  {
+   "name": "HCLTECH",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "JSWSTEEL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "UNOMINDA",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "M&M",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "NAUKRI",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "OFSS",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PAGEIND",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "VEDL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PERSISTENT",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "SUNPHARMA",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "MUTHOOTFIN",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "AUBANK",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ALKEM",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "GRASIM",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "EICHERMOT",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "CIPLA",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "DABUR",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "DMART",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "CUMMINSIND",
+   "oi_days": 1056,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "CHOLAFIN",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BAJAJFINSV",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HEROMOTOCO",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "INDHOTEL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "AXISBANK",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "INDIGO",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "HAL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "AUROPHARMA",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BIOCON",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BDL",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "ZYDUSLIFE",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "TORNTPHARM",
+   "oi_days": 1056,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "SUPREMEIND",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "SHREECEM",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "BHEL",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ONGC",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "PFC",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "MAXHEALTH",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "MARUTI",
+   "oi_days": 1056,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "ANGELONE",
+   "oi_days": 470,
+   "first_oi": "2024-11-29"
+  },
+  {
+   "name": "MANKIND",
+   "oi_days": 347,
+   "first_oi": "2025-05-30"
+  },
+  {
+   "name": "HINDUNILVR",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  },
+  {
+   "name": "NTPC",
+   "oi_days": 1057,
+   "first_oi": "2022-07-18"
+  }
+ ]
+}
