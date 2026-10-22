@@ -1,11 +1,11 @@
 {
- "time": "2026-10-22 14:35:28.492956",
+ "time": "2026-10-22 14:44:02.333006",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "workflow_dispatch",
-  "number": "4",
+  "number": "5",
   "delay_min": null,
   "previous_run": {
    "number": 12,
@@ -15,37 +15,34 @@
   }
  },
  "api": {
-  "15m": "ok (781 candles, last start 22-Oct 14:30)",
-  "1h": "ok (1049 candles, last start 22-Oct 14:00)",
+  "15m": "FAILED: no candles returned (API error, rate limit or no trading)",
+  "1h": "FAILED: no candles returned (API error, rate limit or no trading)",
   "quote": "ok"
  },
  "data": {
-  "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-22 14:15:00",
-  "bars_15m": 780,
-  "last_closed_1h": "2026-10-22 13:00:00",
-  "bars_1h": 544,
-  "last_closed_3h": "2026-10-22 09:00:00",
-  "bars_3h": 180,
-  "age_15m_min": 5.5,
-  "quote_age_min": -0.3,
-  "ltp": 9489.0,
-  "day_volume": 12486,
+  "roll": "signal contract is not the stitched front token \u2013 its own data, no adjustment",
+  "last_closed_15m": null,
+  "bars_15m": 0,
+  "last_closed_1h": null,
+  "bars_1h": 0,
+  "last_closed_3h": null,
+  "bars_3h": 0,
+  "quote_age_min": -0.6,
+  "ltp": 9436.0,
+  "day_volume": 13143,
   "quality": {
    "blocks": [],
-   "notes": [],
-   "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.69
+   "notes": []
   },
-  "volume": "available",
-  "oi_current": 1480900,
+  "volume": "UNAVAILABLE/partial",
+  "oi_current": 1483600,
   "oi_change": {
    "status": "OK",
    "label": "Short buildup",
-   "d_oi_pct": 2.11,
-   "d_price": -10.0,
-   "gap_min": 16.3,
-   "oi": 1480900,
+   "d_oi_pct": 2.296,
+   "d_price": -63.0,
+   "gap_min": 25.1,
+   "oi": 1483600,
    "oi_prev": 1450300
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
@@ -57,39 +54,21 @@
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "1-hour trend RANGE: close 9499 EMA20 9344 EMA50 9228 EMA200 8842 ADX 18.6"
-   ],
-   "metrics": {
-    "trend_1h": "RANGE",
-    "trend_1h_detail": "close 9499 EMA20 9344 EMA50 9228 EMA200 8842 ADX 18.6",
-    "adx_1h": 18.6351393545822,
-    "rsi": 72.67571373648491
-   },
-   "bar_time": "2026-10-22 14:15:00",
-   "new_candle": true
+    "no 15-min / 1-hour data"
+   ]
   },
   "positional": {
    "decision": "NONE",
-   "side": "BUY",
    "blocks": [
-    "swing structure not HH/HL: swings H 9544\u21929533, L 8555\u21929063"
-   ],
-   "metrics": {
-    "trend_3h": "UP",
-    "trend_3h_detail": "close 9452 EMA20 9158 EMA50 8905 EMA200 n/a (history 180 bars) ADX 37.5",
-    "adx_3h": 37.49377100592067,
-    "rsi": 63.59210931365803,
-    "vol_x": 0.9463286247334755,
-    "atr": 176.57620598369476,
-    "atr_x": 1.003907169222995,
-    "structure": "swings H 9544\u21929533, L 8555\u21929063"
-   },
-   "bar_time": "2026-10-22 09:00:00",
-   "new_candle": false
+    "no completed 3-hour candles"
+   ]
   }
  },
  "actions": [],
- "errors": [],
+ "errors": [
+  "NO 1-HOUR DATA during the session",
+  "STALE CANDLES: no 15-min candles returned while the live quote is current"
+ ],
  "session": "OPEN",
  "contract": {
   "signal": {
@@ -111,8 +90,9 @@
   "rolled": false,
   "issues": []
  },
+ "stale": "no 15-min candles returned",
  "last_error": {
-  "time": "2026-10-22 14:04:43.760777",
+  "time": "2026-10-22 14:44:02.333006",
   "error": "STALE CANDLES: no 15-min candles returned while the live quote is current"
  },
  "state_summary": {
@@ -126,5 +106,5 @@
    "ignored": 0
   }
  },
- "exit_code": 0
+ "exit_code": 2
 }
