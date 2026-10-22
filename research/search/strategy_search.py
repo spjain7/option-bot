@@ -83,7 +83,8 @@ def supertrend(df, n=10, k=3.0):
     c = df["close"].values
     trend = np.ones(len(df))
     fu, fl = up.copy(), dn.copy()
-    for i in range(1, len(df)):
+    start = int(np.argmax(np.isfinite(a)))            # bands only exist once ATR has warmed up (NaN otherwise)
+    for i in range(start + 1, len(df)):
         fu[i] = up[i] if (up[i] < fu[i - 1] or c[i - 1] > fu[i - 1]) else fu[i - 1]
         fl[i] = dn[i] if (dn[i] > fl[i - 1] or c[i - 1] < fl[i - 1]) else fl[i - 1]
         trend[i] = 1 if c[i] > fu[i - 1] else -1 if c[i] < fl[i - 1] else trend[i - 1]
