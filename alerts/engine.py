@@ -334,6 +334,12 @@ def scan(api, master, now, state, only=None):
             else:
                 msgs.append(watch_msg(name, ex, c, sig, oi, q))
                 state["day"]["watches"] += 1
+    try:                                                   # stock futures – never allowed to break the MCX/index alerts
+        import sys
+        from alerts import stocks as STK
+        STK.scan(api, master, now, state, msgs, rep, sys.modules[__name__])
+    except Exception as e:
+        rep["errors"].append(f"stock futures scan failed: {type(e).__name__}: {str(e)[:100]}")
     if not state["day"]["startup_sent"] and now.hour >= 8 and any(is_open(e, now) for e in ("MCX", "NFO")):
         msgs.insert(0, startup_msg(now, rep))
         state["day"]["startup_sent"] = True
@@ -369,6 +375,10 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         state["last_eval"][k] = last
         sig = BO.evaluate(fr)
         info[f"bo_{tf}"] = f"{sig['side'] or 'none'} · {sig.get('why', '')} · vol {sig.get('vol_x') or 0:.2f}×"
+        if sig.get("hh") is not None:
+            state.setdefault("status", {})[f"{name}|{tf}"] = dict(candle=last, close=round(sig["close"], 2), buy_above=round(sig["hh"], 2),
+                                                                   sell_below=round(sig["ll"], 2), ema200=round(sig["ema200"], 2),
+                                                                   vol_x=round(sig.get("vol_x") or 0, 2), result=sig["side"] or sig.get("why"))
         if not sig["side"]:
             continue
         if sw_day is not None and pd.Timestamp(sig["candle"]).normalize() == sw_day:

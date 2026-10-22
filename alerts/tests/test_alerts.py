@@ -212,6 +212,42 @@ def test_breakout():
           all(k in w for k in ("WHY THIS BUY", "Breakout", "Volume", "200 EMA", "ADX", "RSI", "OI", "Long buildup", "Backtest")))
 
 
+def test_stocks():
+    from alerts import stocks as STK
+    m = pd.DataFrame([dict(name="TCS", exch_seg="NFO", instrumenttype="FUTSTK", symbol="TCS27OCT26FUT", token="1", lotsize=175, expiry_dt=pd.Timestamp("2026-10-27")),
+                      dict(name="TCS", exch_seg="NFO", instrumenttype="FUTSTK", symbol="TCS24NOV26FUT", token="2", lotsize=175, expiry_dt=pd.Timestamp("2026-11-24")),
+                      dict(name="IDEA", exch_seg="NFO", instrumenttype="FUTSTK", symbol="IDEA27OCT26FUT", token="3", lotsize=70000, expiry_dt=pd.Timestamp("2026-10-27"))])
+    u = STK.universe(m, pd.Timestamp("2026-10-22 12:20"))
+    check("stock universe: lot size < 3000 only (IDEA 70,000 excluded)", list(u) == ["TCS"] and u["TCS"]["lot"] == 175)
+    u2 = STK.universe(m, pd.Timestamp("2026-10-26 12:20"))
+    check("stock contract rolls to next month within 2 trading days of expiry", u2["TCS"]["symbol"] == "TCS24NOV26FUT")
+    check("full stock scan only after an NSE 3-hour block closes", STK.last_block_end(pd.Timestamp("2026-10-22 11:50")) is None
+          and STK.last_block_end(pd.Timestamp("2026-10-22 12:17")).endswith("12:15:00") and STK.last_block_end(pd.Timestamp("2026-10-22 15:32")).endswith("15:30:00"))
+    check("no stock signal on the first session after the monthly expiry (roll jump)", STK.first_session_after_expiry("2026-10-28")
+          and not STK.first_session_after_expiry("2026-10-22"))
+    # end-to-end: a stock that breaks out with volume on the 09:15-12:15 block
+    days = [d for d in pd.bdate_range("2025-09-01", "2026-10-22")]
+    rows, px = [], 1000.0
+    for d in days:
+        for hh, mm in ((9, 15), (10, 15), (11, 15), (12, 15), (13, 15), (14, 15), (15, 15)):
+            px *= 1.0004
+            rows.append(dict(time=d + pd.Timedelta(hours=hh, minutes=mm), open=px, high=px * 1.002, low=px * 0.998, close=px, volume=1000.0))
+    h = pd.DataFrame(rows)
+    last = h["time"].dt.normalize() == pd.Timestamp("2026-10-22")
+    h.loc[last & (h["time"].dt.hour < 12), ["close", "high"]] = [px * 1.05, px * 1.051]
+    h.loc[last & (h["time"].dt.hour < 12), "volume"] = 5000.0
+    api = F.FakeAngel({("1", "ONE_HOUR"): h}, now=pd.Timestamp("2026-10-22 12:17"))
+    st = E.new_state(); st["day"] = dict(date="2026-10-22", alerts=0, watches=0, startup_sent=True, eod_sent=False, outcomes=[])
+    msgs, rep = [], dict(errors=[])
+    import sys
+    STK.scan(api, m, pd.Timestamp("2026-10-22 12:17"), st, msgs, rep, sys.modules["alerts.engine"])
+    check("stock futures BUY breakout call + WHY message with lot size", any("BUY | TCS FUT" in x and "Lot size: 175" in x for x in msgs)
+          and any("WHY THIS BUY – TCS" in x for x in msgs))
+    msgs2 = []
+    STK.scan(api, m, pd.Timestamp("2026-10-22 12:32"), st, msgs2, rep, sys.modules["alerts.engine"])
+    check("no re-scan / duplicate call until the next block closes", not any("CALL" in x or "BUY |" in x for x in msgs2))
+
+
 def test_no_orders():
     src = "\n".join(f.read_text() for f in (ROOT / "alerts").rglob("*.py") if "tests" not in f.parts)
     check("alerts package has no order API (alert-only, no auto trading)", not re.search(r"placeOrder|modifyOrder|cancelOrder|place_order", src))
@@ -221,6 +257,6 @@ def test_no_orders():
 
 
 if __name__ == "__main__":
-    for t in (test_patterns, test_bounce, test_quality_gold_case, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_breakout, test_no_orders):
+    for t in (test_patterns, test_bounce, test_quality_gold_case, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_breakout, test_stocks, test_no_orders):
         t()
     print(f"\nALL {len(OK)} ALERT CHECKS PASSED")
