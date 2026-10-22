@@ -36,6 +36,11 @@ def test_patterns():
     check("tiny candles are not patterns (noise filter)", not b and not s)
 
 
+def test_bounce():
+    b, s = S.patterns(frame([(100, 100.5, 97, 97.5), (97.5, 98, 96, 96.5), (96.6, 99.2, 96.4, 99.0)]), atr=2.0)
+    check("V-bounce: strong green candle closing above the previous high counts as bullish confirmation", any("reversal close" in x for x in b))
+
+
 def _series(n=300, drift=0.0, seed=1):
     rng = np.random.default_rng(seed)
     t = [x for x in pd.date_range("2026-09-01", periods=n * 3, freq="15min") if 9 <= x.hour < 23 and x.weekday() < 5][:n]
@@ -159,6 +164,6 @@ def test_no_orders():
 
 
 if __name__ == "__main__":
-    for t in (test_patterns, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_no_orders):
+    for t in (test_patterns, test_bounce, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_no_orders):
         t()
     print(f"\nALL {len(OK)} ALERT CHECKS PASSED")

@@ -252,10 +252,16 @@ def scan(api, master, now, state, only=None):
         info["contract"] = c["symbol"]
         frames = {}
         for tf, iv, mins, days in TFS[:2]:
-            try:
-                df = api.candles(ex, c["token"], iv, now - pd.Timedelta(days=days), now)
-            except Exception as e:
-                df = None; rep["errors"].append(f"{name} {tf}: {type(e).__name__}")
+            df = None
+            for attempt in range(3):                       # Angel rate limit (AB1021) returns nothing -> wait and retry
+                try:
+                    df = api.candles(ex, c["token"], iv, now - pd.Timedelta(days=days), now + pd.Timedelta(minutes=attempt))   # new minute = bypass the per-run cache
+                except Exception as e:
+                    rep["errors"].append(f"{name} {tf}: {type(e).__name__}")
+                if df is not None and not df.empty:
+                    break
+                if attempt < 2 and hasattr(api, "api"):
+                    import time; time.sleep(2 + 2 * attempt)
             if df is None or df.empty:
                 info[tf] = "NO DATA"; rep["errors"].append(f"{name} {tf}: no candles"); continue
             frames[tf] = df.sort_values("time").drop_duplicates("time").reset_index(drop=True)

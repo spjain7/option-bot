@@ -3,10 +3,10 @@
 Rule (same on 15-min, 1-hour and positional candles):
   SELL alert: RSI(14) > 75 on the signal candle or one of the 2 before it (overbought)
               AND the signal candle is a bearish reversal pattern
-              (bearish engulfing, shooting star, dark cloud cover, evening star).
+              (bearish engulfing, shooting star, dark cloud cover, evening star, or a strong close below the previous low).
   BUY alert : RSI(14) < 25 on the signal candle or one of the 2 before it (oversold)
               AND the signal candle is a bullish reversal pattern
-              (bullish engulfing, hammer, piercing line, morning star).
+              (bullish engulfing, hammer, piercing line, morning star, or a strong close above the previous high).
   WATCH     : RSI first crosses beyond 75 / 25 without a reversal candle yet -> "watch" message so a setup is
               never missed silently; the BUY/SELL alert follows only when a reversal candle confirms.
 Plan: entry = signal close; SL beyond the pattern's extreme + 0.2 ATR (at least 1 ATR); T1 = 1R, T2 = 2R.
@@ -58,6 +58,11 @@ def patterns(df, atr):
         bull.append("Morning star (3-candle reversal)")
     if qc > qo and qbody >= 0.5 * qrng and pbody <= 0.35 * prng and red and cl < (qo + qc) / 2:
         bear.append("Evening star (3-candle reversal)")
+    # momentum reversal: strong candle closing beyond the previous candle's extreme (catches V-shaped bounces)
+    if green and cl > ph and body >= 0.5 * rng and not bull:
+        bull.append("Bullish reversal close (strong green candle closed above the previous high)")
+    if red and cl < pl and body >= 0.5 * rng and not bear:
+        bear.append("Bearish reversal close (strong red candle closed below the previous low)")
     return bull, bear
 
 
