@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs the alert engine and the crude PAPER engine every 15 minutes (2 min after each candle closes) until END (IST HH:MM).
+# Runs the option-selling engine, the alert engine and the crude PAPER engine every 15 minutes (2 min after each candle closes) until END (IST HH:MM).
 # Used because GitHub's cron skips most scheduled runs. State is restored/saved to its branch around every scan;
 # Telegram is sent only after the save. A failed iteration is reported and the loop continues.
 set -uo pipefail
@@ -35,7 +35,23 @@ save() {     # $1 branch  $2 subdir  files...
   return 1
 }
 
+options() {
+  # ---- option-selling engine (runner.py auto, same as the Option Selling Bot workflow; state on main: state/*.json) ----
+  # Runs in a fresh worktree of the latest main, so it always uses the newest code and state; the instrument list cache is shared.
+  rm -rf /tmp/opt; git worktree prune
+  if ! (git fetch -q origin main && git worktree add -q --detach /tmp/opt FETCH_HEAD); then echo "::error::option engine checkout failed"; return; fi
+  mkdir -p .cache && ln -sfn "$PWD/.cache" /tmp/opt/.cache
+  (cd /tmp/opt && python runner.py auto); local rc=$?
+  (cd /tmp/opt && git add state/*.json 2>/dev/null
+   if ! git diff --cached --quiet; then
+     git commit -qm "state $(date -u +%F_%H%M)"
+     for a in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
+   fi)
+  echo "option engine exit $rc"
+}
+
 iteration() {
+  options
   # ---- buy/sell alerts ----
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n

@@ -1,4 +1,4 @@
-name: Market loop (alerts + crude paper, every 15 min)
+name: Market loop (option selling + alerts + crude paper, every 15 min)
 
 # GitHub's cron skips most 15-minute scheduled runs, so ONE run per day loops inside the job instead:
 # three back-to-back jobs (each < 6 h) scan every 15 min from start until 00:20 IST.
@@ -32,6 +32,8 @@ env:
   ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
   TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
   TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
+  CALLMEBOT_PHONE:   ${{ secrets.CALLMEBOT_PHONE }}
+  CALLMEBOT_APIKEY:  ${{ secrets.CALLMEBOT_APIKEY }}
   GITHUB_TOKEN:      ${{ github.token }}
 
 jobs:

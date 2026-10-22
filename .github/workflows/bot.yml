@@ -1,11 +1,8 @@
 name: Option Selling Bot
 
 on:
-  schedule:
-    # every 15 min, 08:30-16:15 IST, Mon-Fri (GitHub uses UTC; IST = UTC + 5:30)
-    - cron: "*/15 3-10 * * 1-5"
-    # every 15 min, 15:30-00:15 IST - MCX evening session (MCX calls, exits, alerts, RSI)
-    - cron: "*/15 10-18 * * 1-5"
+  # scheduled runs now happen inside .github/workflows/market-loop.yml (GitHub's cron skipped most 15-minute runs);
+  # this workflow is kept for manual runs (test / chatid / report / mcx / view)
   workflow_dispatch:
     inputs:
       mode:
