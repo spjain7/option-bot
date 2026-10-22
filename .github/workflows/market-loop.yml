@@ -47,7 +47,7 @@ jobs:
       - run: bash scripts/market_loop.sh 14:50
   afternoon:
     needs: morning
-    if: always()
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     steps:
@@ -58,7 +58,7 @@ jobs:
       - run: bash scripts/market_loop.sh 20:50
   evening:
     needs: afternoon
-    if: always()
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     steps:
