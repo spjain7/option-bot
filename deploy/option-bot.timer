@@ -1,0 +1,9 @@
+[Unit]
+Description=Every 15 minutes, 2 minutes after each candle (Mon-Fri 08:32-23:59 + Sat 00:02-00:17 for the MCX late session)
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08..23:02,17,32,47:00
+OnCalendar=Tue..Sat *-*-* 00:02,17:00
+Persistent=false
+AccuracySec=20s
+[Install]
+WantedBy=timers.target
