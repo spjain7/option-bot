@@ -1,11 +1,11 @@
 {
- "time": "2026-10-22 23:18:11.634194",
+ "time": "2026-10-22 23:22:13.988273",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "workflow_dispatch",
-  "number": "10",
+  "number": "11",
   "delay_min": null,
   "previous_run": {
    "number": 12,
@@ -27,25 +27,25 @@
   "bars_1h": 553,
   "last_closed_3h": "2026-10-22 18:00:00",
   "bars_3h": 183,
-  "age_15m_min": 3.2,
+  "age_15m_min": 7.2,
   "quote_age_min": -0.1,
-  "ltp": 9481.0,
-  "day_volume": 40708,
+  "ltp": 9508.0,
+  "day_volume": 41247,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.2
+   "quote_vs_candle_atr": 0.88
   },
   "volume": "available",
-  "oi_current": 1330500,
+  "oi_current": 1339900,
   "oi_change": {
    "status": "OK",
-   "label": "Short covering",
-   "d_oi_pct": -0.255,
-   "d_price": 35.0,
-   "gap_min": 14.9,
-   "oi": 1330500,
+   "label": "Long buildup",
+   "d_oi_pct": 0.45,
+   "d_price": 62.0,
+   "gap_min": 18.9,
+   "oi": 1339900,
    "oi_prev": 1333900
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
@@ -66,7 +66,7 @@
     "rsi": 62.20129317082283
    },
    "bar_time": "2026-10-22 23:00:00",
-   "new_candle": true
+   "new_candle": false
   },
   "positional": {
    "decision": "NONE",
