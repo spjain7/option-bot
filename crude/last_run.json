@@ -1,5 +1,5 @@
 {
- "time": "2026-10-22 14:04:43.760777",
+ "time": "2026-10-22 14:19:11.890894",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -15,35 +15,38 @@
   }
  },
  "api": {
-  "15m": "FAILED: no candles returned (API error, rate limit or no trading)",
+  "15m": "ok (781 candles, last start 22-Oct 14:15)",
   "1h": "ok (1049 candles, last start 22-Oct 14:00)",
   "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": null,
-  "bars_15m": 0,
+  "last_closed_15m": "2026-10-22 14:00:00",
+  "bars_15m": 780,
   "last_closed_1h": "2026-10-22 13:00:00",
   "bars_1h": 544,
   "last_closed_3h": "2026-10-22 09:00:00",
   "bars_3h": 180,
+  "age_15m_min": 4.2,
   "quote_age_min": -0.3,
-  "ltp": 9518.0,
-  "day_volume": 11262,
+  "ltp": 9499.0,
+  "day_volume": 11839,
   "quality": {
    "blocks": [],
-   "notes": []
+   "notes": [],
+   "missing_15m_today": 0,
+   "quote_vs_candle_atr": 0.14
   },
-  "volume": "UNAVAILABLE/partial",
-  "oi_current": 1430800,
+  "volume": "available",
+  "oi_current": 1450300,
   "oi_change": {
    "status": "OK",
-   "label": "Long buildup",
-   "d_oi_pct": 2.53,
-   "d_price": 22.0,
-   "gap_min": 15.2,
-   "oi": 1430800,
-   "oi_prev": 1395500
+   "label": "Short buildup",
+   "d_oi_pct": 1.363,
+   "d_price": -19.0,
+   "gap_min": 14.4,
+   "oi": 1450300,
+   "oi_prev": 1430800
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -54,8 +57,16 @@
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "no 15-min / 1-hour data"
-   ]
+    "1-hour trend RANGE: close 9499 EMA20 9344 EMA50 9228 EMA200 8842 ADX 18.6"
+   ],
+   "metrics": {
+    "trend_1h": "RANGE",
+    "trend_1h_detail": "close 9499 EMA20 9344 EMA50 9228 EMA200 8842 ADX 18.6",
+    "adx_1h": 18.6351393545822,
+    "rsi": 70.26153110533215
+   },
+   "bar_time": "2026-10-22 14:00:00",
+   "new_candle": true
   },
   "positional": {
    "decision": "NONE",
@@ -78,9 +89,7 @@
   }
  },
  "actions": [],
- "errors": [
-  "STALE CANDLES: no 15-min candles returned while the live quote is current"
- ],
+ "errors": [],
  "session": "OPEN",
  "contract": {
   "signal": {
@@ -102,7 +111,6 @@
   "rolled": false,
   "issues": []
  },
- "stale": "no 15-min candles returned",
  "last_error": {
   "time": "2026-10-22 14:04:43.760777",
   "error": "STALE CANDLES: no 15-min candles returned while the live quote is current"
@@ -118,5 +126,5 @@
    "ignored": 0
   }
  },
- "exit_code": 2
+ "exit_code": 0
 }
