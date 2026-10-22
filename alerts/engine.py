@@ -302,9 +302,16 @@ def scan(api, master, now, state, only=None):
             sig = S.evaluate(dfc, tf, cl.get("1h"))
             info[tf] = f"{sig['kind'] or 'none'} · RSI {sig.get('rsi')} · {sig.get('why', ', '.join(sig.get('patterns', [])))}"
             sid = f"{k}|{last}|{sig['kind']}"
+            if sig.get("suppressed"):
+                state["day"]["suppressed"] = state["day"].get("suppressed", 0) + 1
+                print(f"[suppressed] {name} {tf} {sig['why']}")
             if not sig["kind"] or sid in state["seen"]:
                 continue
             state["seen"] = (state["seen"] + [sid])[-2000:]
+            if sig["kind"] in ("BUY", "SELL") and oi and oi.get("label") in {"BUY": ("Short buildup", "Long unwinding"), "SELL": ("Long buildup", "Short covering")}[sig["kind"]]:
+                info[tf] += f" | suppressed: OI {oi['label']} contradicts {sig['kind']}"
+                state["day"]["suppressed"] = state["day"].get("suppressed", 0) + 1
+                continue
             if sig["kind"] in ("BUY", "SELL"):
                 # adjusted history never changes the signal candle itself (offset 0 after the last switch)
                 msgs.append(call_msg(name, ex, c, sig, oi, q))
@@ -374,6 +381,6 @@ def startup_msg(now, rep):
 def eod_msg(day, state):
     o = day.get("outcomes", [])
     return (f"📋 ALERTS – END OF DAY {pd.Timestamp(day['date']):%d-%b-%Y}\n"
-            f"BUY/SELL alerts: {day['alerts']} · watch messages: {day['watches']}\n"
+            f"BUY/SELL alerts: {day['alerts']} · watch messages: {day['watches']} · suppressed by quality filter: {day.get('suppressed', 0)}\n"
             f"Closed today: " + (", ".join(f"{x['name']} {x['side']} {x['tf']}: {x['result'].split(' –')[0]}" for x in o) or "none") + "\n"
             f"Still open: " + (", ".join(f"{a['name']} {a['side']} {a['tf']}" for a in state["active"]) or "none") + f"\n{WARN}")

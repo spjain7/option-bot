@@ -105,6 +105,34 @@ def context(df):
                 adx=None if pd.isna(adx) else float(adx))
 
 
+# ── quality layer: a reversal call must not fight a strong trend into empty space ──
+Q = dict(strong_adx=30.0, vol_min=1.2, vol_min_weak=1.5, level_atr=1.0)
+WEAK = "reversal close"            # the momentum-close pattern needs more proof than a classic pattern
+
+
+def quality(sig, side):
+    """Reasons to SUPPRESS an otherwise valid reversal call (empty list = send it)."""
+    s = 1 if side == "BUY" else -1
+    out = []
+    against = (s > 0 and sig["trend"] == "DOWN") or (s < 0 and sig["trend"] == "UP")
+    lv = sig.get("levels") or dict(support=[], resistance=[])
+    near = lv["support"] if s > 0 else lv["resistance"]
+    at_level = bool(near) and abs(sig["close"] - near[0][0]) <= Q["level_atr"] * sig["atr"]
+    if against and (sig.get("adx") or 0) >= Q["strong_adx"] and not at_level:
+        out.append(f"strong {sig['trend'].lower()}trend (ADX {sig['adx']:.0f}) and no {'support' if s > 0 else 'resistance'} "
+                   f"within 1 ATR – catching a falling knife")
+    if not near:
+        out.append(f"price is {'below every nearby support' if s > 0 else 'above every nearby resistance'} (breakdown/breakout day)")
+    weak = all(WEAK in p for p in sig.get("patterns", []))
+    vmin = Q["vol_min_weak"] if weak else Q["vol_min"]
+    if sig.get("vol_x") is None:
+        out.append("volume confirmation unavailable")
+    elif sig["vol_x"] < vmin:
+        out.append(f"volume {sig['vol_x']}× usual < {vmin}× – no real buying/selling interest behind the candle"
+                   .replace("buying/selling", "participation"))
+    return out
+
+
 def evaluate(df, label, h1=None):
     """df: closed candles, oldest first (≥ 60). Returns dict(kind=BUY|SELL|WATCH_BUY|WATCH_SELL|None, ...)."""
     if df is None or len(df) < 60:
@@ -132,8 +160,12 @@ def evaluate(df, label, h1=None):
             dist = max(s * (x.close - stop), SL_MIN_ATR * atr)
             if dist > SL_MAX_ATR * atr:
                 return dict(base, kind=None, why=f"{side} pattern but stop {dist / atr:.1f} ATR away – too wide")
-            return dict(base, kind=side, patterns=pats, entry=float(x.close), sl=round(float(x.close - s * dist), 2),
-                        t1=round(float(x.close + s * dist), 2), t2=round(float(x.close + 2 * s * dist), 2), risk=round(float(dist), 2))
+            sig = dict(base, kind=side, patterns=pats, entry=float(x.close), sl=round(float(x.close - s * dist), 2),
+                       t1=round(float(x.close + s * dist), 2), t2=round(float(x.close + 2 * s * dist), 2), risk=round(float(dist), 2))
+            q = quality(sig, side)
+            if q:
+                return dict(sig, kind=None, suppressed=side, why=f"{side} suppressed: " + "; ".join(q))
+            return sig
     if r.iloc[-1] > RSI_SELL and r.iloc[-2] <= RSI_SELL:
         return dict(base, kind="WATCH_SELL", why="RSI crossed above 75 – waiting for a bearish reversal candle")
     if r.iloc[-1] < RSI_BUY and r.iloc[-2] >= RSI_BUY:
