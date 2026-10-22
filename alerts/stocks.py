@@ -11,6 +11,8 @@ import pandas as pd
 from alerts import breakout as BO, signals as S
 from crude import data as CD
 
+ENABLED = False   # off: STOCK-CHECK-001 (research/search/results_stock) – the breakout rule is break-even on stock futures
+                  # (daily +0.03R, 3h +0.01R per trade, negative at 2× costs, 4 years, 163-175 stocks). Set True to re-enable.
 MAX_LOT = 3000
 TAG = "📌 Stock futures: same rule, separate backtest pending"
 
@@ -57,6 +59,9 @@ def first_session_after_expiry(day):
 
 
 def scan(api, master, now, state, msgs, rep, engine):
+    if not ENABLED:
+        rep["stocks"] = "disabled (no edge in backtest)"
+        return
     st = state.setdefault("stk", dict(active=[], last_block=None))
     uni = universe(master, now)
     rep["stocks"] = dict(universe=len(uni))

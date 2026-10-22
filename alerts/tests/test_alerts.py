@@ -240,6 +240,7 @@ def test_stocks():
     st = E.new_state(); st["day"] = dict(date="2026-10-22", alerts=0, watches=0, startup_sent=True, eod_sent=False, outcomes=[])
     msgs, rep = [], dict(errors=[])
     import sys
+    STK.ENABLED = True
     STK.scan(api, m, pd.Timestamp("2026-10-22 12:17"), st, msgs, rep, sys.modules["alerts.engine"])
     check("stock futures BUY breakout call + WHY message with lot size", any("BUY | TCS FUT" in x and "Lot size: 175" in x for x in msgs)
           and any("WHY THIS BUY – TCS" in x for x in msgs))
