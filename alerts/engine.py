@@ -5,12 +5,15 @@ MCX futures + NIFTY / BANKNIFTY futures. ALERTS ONLY: no orders, no auto-trading
 """
 import pandas as pd
 from crude import data as CD
-from alerts import signals as S
+from alerts import signals as S, breakout as BO
+
+RSI_REVERSAL_CALLS = False   # off since 22-Oct-2026: the RSI-reversal rule lost money in every test (alerts/STATS.md,
+                             # research/search). Volume-breakout alerts replace it. Set True to bring the old calls back.
 
 MCX = ["CRUDEOIL", "NATURALGAS", "GOLD", "SILVER", "COPPER", "ZINC", "ALUMINIUM"]
 NFO = ["NIFTY", "BANKNIFTY"]
 ROLL_DAYS = {"MCX": 4, "NFO": 2}
-TFS = (("15m", "FIFTEEN_MINUTE", 15, 25), ("1h", "ONE_HOUR", 60, 100), ("3h", None, 180, None))
+TFS = (("15m", "FIFTEEN_MINUTE", 15, 25), ("1h", "ONE_HOUR", 60, 400), ("3h", None, 180, None))
 WARN = "Alert only – no auto trade. Rule not proven profitable; not investment advice."
 
 
@@ -265,6 +268,7 @@ def scan(api, master, now, state, only=None):
             if df is None or df.empty:
                 info[tf] = "NO DATA"; rep["errors"].append(f"{name} {tf}: no candles"); continue
             frames[tf] = df.sort_values("time").drop_duplicates("time").reset_index(drop=True)
+        full_1h = None                                     # 1-hour history for breakouts (adjusted, not clipped)
         if c["is_front"] and c["next_token"] and "1h" in frames:
             key = f"{c['symbol']}|{d}"
             if key not in state["switches"]:
@@ -278,8 +282,11 @@ def scan(api, master, now, state, only=None):
             if sw:
                 for tf in frames:
                     frames[tf] = CD.continuity(frames[tf], sw)
+                full_1h = frames.get("1h")
+                for tf in frames:
                     frames[tf] = frames[tf][frames[tf]["time"] >= sw[0][0] - pd.Timedelta(days=60)]
                 info["roll"] = f"switch {sw[0][0]:%d-%b} adjusted by {sw[0][1]:+.1f}"
+        full_1h = closed(full_1h if full_1h is not None else frames.get("1h"), ex, 60, now)
         cl = {tf: closed(frames.get(tf), ex, m, now) for tf, _, m, _ in TFS[:2]}
         if cl.get("1h") is not None:
             cl["3h"] = positional_candles(cl["1h"], ex, now)
@@ -287,7 +294,10 @@ def scan(api, master, now, state, only=None):
         q = quotes.get(c["token"])
         oi = oi_reading(state, c["symbol"], q, now)
         info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
+        _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d))
         for tf, _, mins, _ in TFS:
+            if not RSI_REVERSAL_CALLS:
+                break
             dfc = cl.get(tf)
             if dfc is None or len(dfc) < 60:
                 info[tf] = f"insufficient candles ({0 if dfc is None else len(dfc)})"; continue
@@ -321,13 +331,62 @@ def scan(api, master, now, state, only=None):
             else:
                 msgs.append(watch_msg(name, ex, c, sig, oi, q))
                 state["day"]["watches"] += 1
-    if not state["day"]["startup_sent"]:
+    if not state["day"]["startup_sent"] and now.hour >= 8 and any(is_open(e, now) for e in ("MCX", "NFO")):
         msgs.insert(0, startup_msg(now, rep))
         state["day"]["startup_sent"] = True
     if all(not is_open(ex, now) for ex in ("MCX", "NFO")) and now > CD.session_close(now) and not state["day"]["eod_sent"]:
         msgs.append(eod_msg(state["day"], state))
         state["day"]["eod_sent"] = True
     return state, msgs, rep
+
+
+def _switch_day(state, c, d):
+    sw = state["switches"].get(f"{c['symbol']}|{d}") or []
+    return pd.Timestamp(sw[0][0]).normalize() if sw else None
+
+
+def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=None):
+    """Volume-breakout alerts on 3-hour and daily candles + trailing-stop follow-ups."""
+    if h1full is None or h1full.empty:
+        info["breakout"] = "no 1-hour history"; return
+    frames = {"3h": positional_candles(h1full, ex, now)}
+    dd = BO.daily_candles(h1full, None)
+    if dd is not None and len(dd) and is_open(ex, now):                # today's daily candle is still forming
+        dd = dd[dd["time"].dt.normalize() < now.normalize()]
+    frames["1d"] = dd
+    state.setdefault("bo_active", [])
+    for tf, fr in frames.items():
+        BO.manage(state, msgs, name, tf, fr, c15, now)
+        if fr is None or len(fr) < 30:
+            info[f"bo_{tf}"] = "insufficient candles"; continue
+        last = str(fr["time"].iloc[-1])
+        k = f"BO|{name}|{tf}"
+        if state["last_eval"].get(k) == last:
+            continue
+        state["last_eval"][k] = last
+        sig = BO.evaluate(fr)
+        info[f"bo_{tf}"] = f"{sig['side'] or 'none'} · {sig.get('why', '')} · vol {sig.get('vol_x') or 0:.2f}×"
+        if not sig["side"]:
+            continue
+        if sw_day is not None and pd.Timestamp(sig["candle"]).normalize() == sw_day:
+            info[f"bo_{tf}"] += " · skipped: contract-switch day (volume distorted)"; continue
+        if any(p["name"] == name and p["tf"] == tf for p in state["bo_active"]):
+            info[f"bo_{tf}"] += " · already in an open breakout alert"; continue
+        sid = f"{k}|{last}|{sig['side']}"
+        if sid in state["seen"]:
+            continue
+        state["seen"] = (state["seen"] + [sid])[-2000:]
+        lv = S.levels(fr, h1full, sig["close"], sig["atr"])
+        live = (q or {}).get("ltp")
+        s_ = 1 if sig["side"] == "BUY" else -1
+        if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
+            info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
+        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, _oi_line(oi), (f"today {q['tradeVolume']:,.0f} lots" if q and q.get("tradeVolume") is not None else ""), live))
+        ref = live or sig["close"]
+        state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * BO.CFG["stop_atr"] * sig["atr"], 2),
+                                       risk=BO.CFG["stop_atr"] * sig["atr"], best=ref, trailed=False, n=0, last_candle=last,
+                                       checked=str(now), contract=c["symbol"]))
+        state["day"]["alerts"] += 1
 
 
 def _just_closed(ex, now):
@@ -372,8 +431,8 @@ def _follow_up(state, msgs, name, ex, c15, now):
 def startup_msg(now, rep):
     ok = [n for n, i in rep["instruments"].items() if i.get("contract")]
     return (f"📡 BUY/SELL ALERTS ACTIVE – {now:%d-%b-%Y %H:%M} IST\n"
-            f"Rule: RSI(14) > 75 + bearish reversal candle → SELL alert · RSI < 25 + bullish reversal candle → BUY alert "
-            f"(15-min, 1-hour, positional 3-hour). RSI extreme without a reversal candle → WATCH message.\n"
+            "Strategy: VOLUME BREAKOUT – close beyond the 20-candle high/low with volume > 1.5× average, in the 200-EMA "
+            "trend direction. Swing (3-hour candles) + positional (daily candles). SL 2 ATR, then 3-ATR trailing stop updates.\n"
             f"Instruments with data now: {', '.join(ok) or 'none (markets closed)'}\n"
             + (f"Data problems: {'; '.join(rep['errors'][:6])}\n" if rep["errors"] else "") + WARN)
 
