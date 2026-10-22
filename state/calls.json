@@ -111,6 +111,8 @@
   "intra|GOLD|SELL": "blocked",
   "intra|SILVER|SELL": "blocked"
  },
- "summary": {},
+ "summary": {
+  "2026-10-22": true
+ },
  "next_id": 1
 }
