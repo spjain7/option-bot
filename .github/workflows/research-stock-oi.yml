@@ -3,8 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       mode: { description: "probe / fetch", default: "probe" }
-      days: { description: "days per request (fetch)", default: "30" }
-      pages: { description: "pages per stock (fetch)", default: "8" }
+      days: { description: "days per request (fetch)", default: "1000" }
+      pages: { description: "pages per stock (fetch)", default: "3" }
+      interval: { description: "ONE_DAY / ONE_HOUR", default: "ONE_DAY" }
 concurrency: { group: research-stocks, cancel-in-progress: false }
 permissions: { contents: write }
 jobs:
@@ -21,6 +22,7 @@ jobs:
           MODE: ${{ inputs.mode }}
           DAYS: ${{ inputs.days }}
           PAGES: ${{ inputs.pages }}
+          IV: ${{ inputs.interval }}
           ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
           ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
           ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
