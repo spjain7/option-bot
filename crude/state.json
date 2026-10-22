@@ -125,6 +125,13 @@
    "oi": 1359500,
    "ltp": 9478.0,
    "volume": 7862
+  },
+  {
+   "time": "2026-10-22 13:20:51",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1373700,
+   "ltp": 9504.0,
+   "volume": 9083
   }
  ],
  "switches": {
@@ -158,7 +165,8 @@
   "startup_sent": true,
   "eod_sent": false,
   "alerted": [
-   "err:STALE CANDLES"
+   "err:STALE CANDLES",
+   "err:NO 1-HOUR DATA during the session"
   ],
   "trades": []
  },
@@ -1068,11 +1076,76 @@
     "NO 1-HOUR DATA during the session",
     "STALE CANDLES: no 15-min candles returned while the live quote is current"
    ]
+  },
+  {
+   "time": "2026-10-22 13:20:29.869950",
+   "session": "OPEN",
+   "api": {
+    "15m": "ok (781 candles, last start 22-Oct 13:15)",
+    "1h": "FAILED: no candles returned (API error, rate limit or no trading)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "signal contract is not the stitched front token \u2013 its own data, no adjustment",
+    "last_closed_15m": "2026-10-22 13:00:00",
+    "bars_15m": 780,
+    "last_closed_1h": null,
+    "bars_1h": 0,
+    "last_closed_3h": null,
+    "bars_3h": 0,
+    "age_15m_min": 5.5,
+    "quote_age_min": -0.4,
+    "ltp": 9504.0,
+    "day_volume": 9083,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "missing_15m_today": 0,
+     "quote_vs_candle_atr": 0.38
+    },
+    "volume": "available",
+    "oi_current": 1373700,
+    "oi_change": {
+     "status": "OK",
+     "label": "Long buildup",
+     "d_oi_pct": 1.045,
+     "d_price": 26.0,
+     "gap_min": 14.8,
+     "oi": 1373700,
+     "oi_prev": 1359500
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "no 15-min / 1-hour data"
+     ],
+     "bar": null
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "no completed 3-hour candles"
+     ],
+     "bar": null
+    }
+   },
+   "actions": [],
+   "errors": [
+    "NO 1-HOUR DATA during the session"
+   ]
   }
  ],
  "last_error": {
-  "time": "2026-10-22 13:05:22.466138",
-  "error": "STALE CANDLES: no 15-min candles returned while the live quote is current"
+  "time": "2026-10-22 13:20:29.869950",
+  "error": "NO 1-HOUR DATA during the session"
  },
  "peak_equity": 500000.0
 }
