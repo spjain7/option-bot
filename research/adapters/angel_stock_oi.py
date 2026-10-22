@@ -35,7 +35,7 @@ def main():
     for name, c in uni.items():
         parts, to = [], now
         for _ in range(int(os.getenv("PAGES", "8"))):
-            d, msg = oi(api, c["token"], "ONE_HOUR", to - pd.Timedelta(days=int(os.getenv("DAYS", "30"))), to)
+            d, msg = oi(api, c["token"], os.getenv("IV", "ONE_DAY"), to - pd.Timedelta(days=int(os.getenv("DAYS", "1000"))), to)
             if d is None:
                 break
             d["time"] = pd.to_datetime(d["time"])
@@ -45,7 +45,7 @@ def main():
             to = d["time"].min() - pd.Timedelta(minutes=1)
         if parts:
             df = pd.concat(parts).drop_duplicates("time").sort_values("time")
-            df.to_csv(OUT / f"{name}_OI_ONE_HOUR.csv", index=False)
+            df.to_csv(OUT / f"{name}_OI_{os.getenv('IV', 'ONE_DAY')}.csv", index=False)
             rows.append(dict(name=name, rows=len(df), first=df["time"].min(), last=df["time"].max()))
         print(name, sum(len(p) for p in parts), flush=True)
     pd.DataFrame(rows).to_csv(OUT / "manifest_oi.csv", index=False)
