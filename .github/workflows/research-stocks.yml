@@ -1,0 +1,31 @@
+name: Research data – stock futures (manual, no alerts)
+on:
+  workflow_dispatch:
+concurrency:
+  group: research-stocks
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Fetch stock-futures history (read-only)
+        run: python -m research.adapters.angel_stocks
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+      - name: Push to branch research-stocks
+        run: |
+          mkdir -p /tmp/o && cp -r research/data/angel/NFO_STK /tmp/o/
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          git checkout --orphan research-stocks && git rm -rqf --ignore-unmatch . && rm -rf research
+          mkdir -p research/data/angel && cp -r /tmp/o/NFO_STK research/data/angel/
+          git add research && git commit -qm "stock futures 1h $(date -u +%F)" && git push -qf origin research-stocks
