@@ -349,6 +349,13 @@
    "oi": 1358700,
    "ltp": 9400.0,
    "volume": 31694
+  },
+  {
+   "time": "2026-10-22 20:45:09",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1359700,
+   "ltp": 9366.0,
+   "volume": 32513
   }
  ],
  "switches": {
@@ -3282,6 +3289,69 @@
      "gap_min": 15.0,
      "oi": 1358700,
      "oi_prev": 1365000
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "1-hour trend MIXED: close 9377 EMA20 9388 EMA50 9274 EMA200 8877 ADX 17.2"
+     ],
+     "bar": "2026-10-22 20:15:00"
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "swing structure not HH/HL: swings H 9544\u21929533, L 9063\u21929136"
+     ],
+     "bar": "2026-10-22 15:00:00"
+    }
+   },
+   "actions": [],
+   "errors": []
+  },
+  {
+   "time": "2026-10-22 20:45:04.900401",
+   "session": "OPEN",
+   "api": {
+    "15m": "ok (782 candles, last start 22-Oct 20:45)",
+    "1h": "ok (1049 candles, last start 22-Oct 20:00)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": "2026-10-22 20:15:00",
+    "bars_15m": 780,
+    "last_closed_1h": "2026-10-22 19:00:00",
+    "bars_1h": 550,
+    "last_closed_3h": "2026-10-22 15:00:00",
+    "bars_3h": 182,
+    "age_15m_min": 15.1,
+    "quote_age_min": -0.1,
+    "ltp": 9366.0,
+    "day_volume": 32513,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "missing_15m_today": 0,
+     "quote_vs_candle_atr": 0.0
+    },
+    "volume": "available",
+    "oi_current": 1359700,
+    "oi_change": {
+     "status": "OK",
+     "label": "Flat / no clear OI signal",
+     "d_oi_pct": 0.074,
+     "d_price": -34.0,
+     "gap_min": 11.9,
+     "oi": 1359700,
+     "oi_prev": 1358700
     },
     "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
     "daily_pnl": 0.0,
