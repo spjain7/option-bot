@@ -2,20 +2,35 @@
 
 Entry at the next candle's open, SL checked first, half booked at T1 (SL to cost), rest at T2 or after 20 candles, costs ≈ 0.1R. Stitched front-month series (contract switches not removed – small distortion). Exploratory, not proof.
 
-| Instrument | TF | Alerts | /year | T1 reached | Win % | Avg R | PF | Bootstrap p5 | BUY avg R | SELL avg R |
+| Instrument | TF | Alerts (after quality filter) | /year | T1 reached | Win % | Avg R | PF | Bootstrap p5 | BUY avg R | SELL avg R |
 |---|---|---|---|---|---|---|---|---|---|---|
-| CRUDEOIL | 15m | 962 | 160.0 | 49.0% | 50.9% | -0.077 | 0.85 | -0.133 | -0.097 | -0.055 |
-| CRUDEOIL | 1h | 185 | 44.7 | 47.0% | 49.2% | -0.085 | 0.84 | -0.215 | -0.072 | -0.096 |
-| CRUDEOIL | 3h | 38 | 9.7 | 50.0% | 50.0% | 0.035 | 1.07 | -0.273 | 0.375 | -0.186 |
-| GOLD | 1h | 173 | 40.9 | 43.4% | 45.1% | -0.121 | 0.79 | -0.257 | 0.206 | -0.262 |
-| GOLD | 3h | 84 | 22.0 | 47.6% | 48.8% | -0.039 | 0.93 | -0.235 | 0.463 | -0.139 |
-| SILVER | 1h | 208 | 49.1 | 47.6% | 49.5% | -0.097 | 0.82 | -0.217 | -0.161 | -0.049 |
-| SILVER | 3h | 61 | 14.7 | 45.9% | 47.5% | -0.159 | 0.72 | -0.378 | -0.105 | -0.188 |
-| NATURALGAS | 1h | 223 | 52.8 | 50.2% | 50.7% | -0.079 | 0.85 | -0.197 | -0.094 | -0.067 |
-| NATURALGAS | 3h | 64 | 15.6 | 50.0% | 51.6% | -0.039 | 0.92 | -0.251 | -0.007 | -0.061 |
-| COPPER | 1h | 152 | 36.4 | 45.4% | 48.7% | -0.168 | 0.69 | -0.296 | -0.083 | -0.249 |
-| COPPER | 3h | 51 | 12.5 | 39.2% | 39.2% | -0.261 | 0.59 | -0.492 | -0.265 | -0.259 |
-| NIFTY | 1h | 128 | 30.7 | 46.1% | 46.9% | -0.168 | 0.71 | -0.322 | 0.059 | -0.319 |
-| NIFTY | 3h | 17 | 5.0 | 58.8% | 58.8% | 0.226 | 1.5 | -0.247 | -0.157 | 0.567 |
-| BANKNIFTY | 1h | 116 | 27.9 | 53.4% | 54.3% | -0.013 | 0.97 | -0.173 | 0.232 | -0.219 |
-| BANKNIFTY | 3h | 22 | 5.4 | 45.5% | 45.5% | -0.261 | 0.56 | -0.6 | -0.108 | -0.306 |
+| CRUDEOIL | 15m | ALL candidates (no quality filter) | 1318 | | | | -0.064 | 0.87 | -0.11 | | |
+| CRUDEOIL | 15m | **filtered** 214 | 35.8 | 44.9% | 48.6% | -0.075 | 0.85 | -0.188 | -0.099 | -0.035 |
+| CRUDEOIL | 1h | ALL candidates (no quality filter) | 243 | | | | -0.046 | 0.91 | -0.152 | | |
+| CRUDEOIL | 1h | **filtered** 50 | 12.4 | 42.0% | 46.0% | -0.176 | 0.68 | -0.407 | -0.552 | 0.343 |
+| CRUDEOIL | 3h | ALL candidates (no quality filter) | 57 | | | | 0.041 | 1.08 | -0.198 | | |
+| CRUDEOIL | 3h | **filtered** 19 | 5.2 | 68.4% | 68.4% | 0.396 | 2.27 | 0.012 | 0.678 | 0.142 |
+| GOLD | 1h | ALL candidates (no quality filter) | 252 | | | | -0.114 | 0.8 | -0.224 | | |
+| GOLD | 1h | **filtered** 51 | 13.4 | 35.3% | 37.3% | -0.271 | 0.57 | -0.506 | -0.024 | -0.34 |
+| GOLD | 3h | ALL candidates (no quality filter) | 114 | | | | -0.053 | 0.9 | -0.22 | | |
+| GOLD | 3h | **filtered** 32 | 8.8 | 53.1% | 56.2% | 0.044 | 1.1 | -0.251 | 0.665 | 0.003 |
+| SILVER | 1h | ALL candidates (no quality filter) | 284 | | | | -0.123 | 0.78 | -0.231 | | |
+| SILVER | 1h | **filtered** 50 | 12.7 | 50.0% | 54.0% | 0.083 | 1.18 | -0.166 | 0.186 | -0.013 |
+| SILVER | 3h | ALL candidates (no quality filter) | 98 | | | | -0.134 | 0.75 | -0.293 | | |
+| SILVER | 3h | **filtered** 34 | 10.0 | 38.2% | 41.2% | -0.198 | 0.66 | -0.487 | -0.221 | -0.188 |
+| NATURALGAS | 1h | ALL candidates (no quality filter) | 308 | | | | -0.088 | 0.84 | -0.186 | | |
+| NATURALGAS | 1h | **filtered** 63 | 16.4 | 42.9% | 44.4% | -0.206 | 0.65 | -0.425 | -0.2 | -0.21 |
+| NATURALGAS | 3h | ALL candidates (no quality filter) | 84 | | | | -0.058 | 0.88 | -0.244 | | |
+| NATURALGAS | 3h | **filtered** 22 | 5.9 | 31.8% | 36.4% | -0.344 | 0.42 | -0.642 | -0.2 | -0.387 |
+| COPPER | 1h | ALL candidates (no quality filter) | 230 | | | | -0.15 | 0.72 | -0.251 | | |
+| COPPER | 1h | **filtered** 46 | 11.0 | 45.7% | 50.0% | -0.068 | 0.86 | -0.316 | -0.07 | -0.066 |
+| COPPER | 3h | ALL candidates (no quality filter) | 72 | | | | -0.207 | 0.65 | -0.409 | | |
+| COPPER | 3h | **filtered** 23 | 5.6 | 47.8% | 47.8% | -0.086 | 0.84 | -0.451 | -0.5 | 0.001 |
+| NIFTY | 1h | ALL candidates (no quality filter) | 183 | | | | -0.099 | 0.82 | -0.225 | | |
+| NIFTY | 1h | **filtered** 52 | 12.6 | 36.5% | 40.4% | -0.274 | 0.56 | -0.503 | -0.147 | -0.411 |
+| NIFTY | 3h | ALL candidates (no quality filter) | 29 | | | | 0.084 | 1.17 | -0.269 | | |
+| NIFTY | 3h | **filtered** 8 | 2.1 | 37.5% | 37.5% | -0.413 | 0.4 | -0.913 | -0.475 | -0.35 |
+| BANKNIFTY | 1h | ALL candidates (no quality filter) | 167 | | | | -0.095 | 0.82 | -0.222 | | |
+| BANKNIFTY | 1h | **filtered** 33 | 8.7 | 48.5% | 57.6% | 0.132 | 1.31 | -0.164 | 0.224 | 0.034 |
+| BANKNIFTY | 3h | ALL candidates (no quality filter) | 32 | | | | -0.257 | 0.58 | -0.541 | | |
+| BANKNIFTY | 3h | **filtered** 11 | 2.8 | 45.5% | 45.5% | -0.329 | 0.45 | -0.78 | 0.063 | -0.8 |

@@ -36,7 +36,7 @@ def three_hour_generic(h):
     return out[out["n"] >= 2].reset_index(drop=True)
 
 
-def score(df, max_hold=20):
+def score(df, max_hold=20, h1=None):
     df = df.reset_index(drop=True)
     r = I.rsi(df["close"], 14).values
     atr = I.atr(df, 14).values
@@ -59,6 +59,10 @@ def score(df, max_hold=20):
             dist = max(s * (df.at[i, "close"] - (ext - s * S.SL_BUF_ATR * a)), S.SL_MIN_ATR * a)
             if dist > S.SL_MAX_ATR * a:
                 continue
+            win = df.iloc[max(0, i - 300):i + 1]
+            hw = None if h1 is None else h1[h1["time"] <= df.at[i, "time"]].tail(200)
+            ev = S.evaluate(win, "x", hw if hw is not None else win)
+            passed = ev["kind"] == side
             entry = df.at[i + 1, "open"]                       # realistic: next candle's open
             sl, t1, t2 = entry - s * dist, entry + s * dist, entry + 2 * s * dist
             res, t1hit = None, False
@@ -76,7 +80,7 @@ def score(df, max_hold=20):
             if res is None:
                 last = df.at[min(i + max_hold, len(df) - 1), "close"]
                 res = (0.5 + 0.5 * s * (last - entry) / dist) if t1hit else s * (last - entry) / dist
-            rows.append(dict(time=df.at[i, "time"], side=side, pattern=pats[0].split(" (")[0], r=res - COST_R, t1=t1hit))
+            rows.append(dict(time=df.at[i, "time"], side=side, pattern=pats[0].split(" (")[0], r=res - COST_R, t1=t1hit, passed=passed))
     return pd.DataFrame(rows)
 
 
@@ -96,7 +100,7 @@ def main():
     out = ["# RSI-reversal alert rule – historical check (real Angel candles)", "",
            "Entry at the next candle's open, SL checked first, half booked at T1 (SL to cost), rest at T2 or after 20 candles, "
            "costs ≈ 0.1R. Stitched front-month series (contract switches not removed – small distortion). Exploratory, not proof.", "",
-           "| Instrument | TF | Alerts | /year | T1 reached | Win % | Avg R | PF | Bootstrap p5 | BUY avg R | SELL avg R |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+           "| Instrument | TF | Alerts (after quality filter) | /year | T1 reached | Win % | Avg R | PF | Bootstrap p5 | BUY avg R | SELL avg R |", "|---|---|---|---|---|---|---|---|---|---|---|"]
     for exch, name in (("MCX", "CRUDEOIL"), ("MCX", "GOLD"), ("MCX", "SILVER"), ("MCX", "NATURALGAS"), ("MCX", "COPPER"),
                        ("NFO", "NIFTY"), ("NFO", "BANKNIFTY")):
         for tf, iv in (("15m", "FIFTEEN_MINUTE"), ("1h", "ONE_HOUR"), ("3h", "ONE_HOUR")):
@@ -104,12 +108,18 @@ def main():
             if f is None or not f.exists():
                 continue
             d = pd.read_csv(f, parse_dates=["time"])[["time", "open", "high", "low", "close", "volume"]].iloc[:-1]
+            src = d
+            h1 = d if iv == "ONE_HOUR" else d.groupby(d["time"].dt.floor("h")).agg(time=("time", "first"), open=("open", "first"),
+                    high=("high", "max"), low=("low", "min"), close=("close", "last"), volume=("volume", "sum")).reset_index(drop=True)
             if tf == "3h":
                 d = three_hour_generic(d)
-            t = score(d)
+            t_all = score(d, h1=h1)
+            t = t_all[t_all["passed"]] if len(t_all) else t_all
+            ma = summarise(t_all)
+            out.append(f"| {name} | {tf} | ALL candidates (no quality filter) | {ma.get('alerts', 0)} | | | | {ma.get('avg_r', '–')} | {ma.get('pf', '–')} | {ma.get('p5', '–')} | | |")
             m = summarise(t)
             sb = {k: round(g["r"].mean(), 3) for k, g in t.groupby("side")} if len(t) else {}
-            out.append(f"| {name} | {tf} | {m.get('alerts', 0)} | {m.get('per_year', '–')} | {m.get('t1_reached_pct', '–')}% | {m.get('win_pct', '–')}% | "
+            out.append(f"| {name} | {tf} | **filtered** {m.get('alerts', 0)} | {m.get('per_year', '–')} | {m.get('t1_reached_pct', '–')}% | {m.get('win_pct', '–')}% | "
                        f"{m.get('avg_r', '–')} | {m.get('pf', '–')} | {m.get('p5', '–')} | {sb.get('BUY', '–')} | {sb.get('SELL', '–')} |")
             print(out[-1], flush=True)
     (ROOT / "alerts" / "STATS.md").write_text("\n".join(out) + "\n")
