@@ -1,0 +1,8 @@
+[Unit]
+Description=Option bot + buy/sell alerts + crude paper (one 15-minute cycle)
+After=network-online.target
+[Service]
+Type=oneshot
+Environment=APP=/opt/option-bot STATE_ROOT=/var/lib/option-bot
+ExecStart=/bin/bash /opt/option-bot/deploy/cycle.sh
+TimeoutStartSec=14min
