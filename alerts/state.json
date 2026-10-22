@@ -24,7 +24,7 @@
    "sl": 301.69,
    "t1": 309.51,
    "t2": 313.41,
-   "time": "2026-10-22 14:15:00",
+   "time": "2026-10-22 14:30:00",
    "t1_hit": false,
    "contract": "NATURALGAS24NOV26FUT",
    "expiry": "2026-11-24"
@@ -209,7 +209,7 @@
    "trailed": false,
    "n": 0,
    "last_candle": "2026-10-22 09:00:00",
-   "checked": "2026-10-22 14:15:00",
+   "checked": "2026-10-22 14:30:00",
    "contract": "SILVER04DEC26FUT"
   },
   {
@@ -223,7 +223,7 @@
    "trailed": false,
    "n": 0,
    "last_candle": "2026-10-22 09:00:00",
-   "checked": "2026-10-22 14:15:00",
+   "checked": "2026-10-22 14:30:00",
    "contract": "COPPER30OCT26FUT"
   }
  ]
