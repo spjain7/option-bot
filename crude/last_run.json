@@ -1,44 +1,44 @@
 {
- "time": "2026-10-22 01:53:12.299296",
+ "time": "2026-10-22 10:52:22.972672",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
-  "event": "schedule",
-  "number": "12",
-  "delay_min": 6.2,
+  "event": "workflow_dispatch",
+  "number": "1",
+  "delay_min": null,
   "previous_run": {
-   "number": 11,
-   "event": "workflow_dispatch",
+   "number": 12,
+   "event": "schedule",
    "conclusion": "success",
-   "started": "2026-10-21T17:30:06Z"
+   "started": "2026-10-21T20:22:46Z"
   }
  },
  "api": {
-  "15m": "ok (781 candles, last start 21-Oct 23:15)",
-  "1h": "ok (1049 candles, last start 21-Oct 23:00)",
-  "quote": "ok",
-  "1h-next(roll check)": "ok (525 candles, last start 21-Oct 23:00)"
+  "15m": "ok (781 candles, last start 22-Oct 10:45)",
+  "1h": "ok (1049 candles, last start 22-Oct 10:00)",
+  "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-21 23:15:00",
-  "bars_15m": 781,
-  "last_closed_1h": "2026-10-21 23:00:00",
-  "bars_1h": 539,
+  "last_closed_15m": "2026-10-22 10:30:00",
+  "bars_15m": 780,
+  "last_closed_1h": "2026-10-22 09:00:00",
+  "bars_1h": 540,
   "last_closed_3h": "2026-10-21 21:00:00",
   "bars_3h": 179,
-  "age_15m_min": 143.2,
-  "quote_age_min": 113.4,
-  "ltp": 9200.0,
-  "day_volume": 49598,
+  "age_15m_min": 7.4,
+  "quote_age_min": -0.4,
+  "ltp": 9396.0,
+  "day_volume": 4019,
   "quality": {
    "blocks": [],
    "notes": [],
-   "quote_vs_candle_atr": 0.0
+   "missing_15m_today": 0,
+   "quote_vs_candle_atr": 0.18
   },
   "volume": "available",
-  "oi_current": 1348400,
+  "oi_current": 1338200,
   "oi_change": {
    "status": "UNAVAILABLE",
    "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
@@ -52,15 +52,15 @@
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "1-hour trend MIXED: close 9200 EMA20 9282 EMA50 9182 EMA200 8812 ADX 17.9"
+    "1-hour trend RANGE: close 9346 EMA20 9288 EMA50 9188 EMA200 8817 ADX 17.3"
    ],
    "metrics": {
-    "trend_1h": "MIXED",
-    "trend_1h_detail": "close 9200 EMA20 9282 EMA50 9182 EMA200 8812 ADX 17.9",
-    "adx_1h": 17.934603239636495,
-    "rsi": 41.120633425863716
+    "trend_1h": "RANGE",
+    "trend_1h_detail": "close 9346 EMA20 9288 EMA50 9188 EMA200 8817 ADX 17.3",
+    "adx_1h": 17.293756680801085,
+    "rsi": 65.67864803222567
    },
-   "bar_time": "2026-10-21 23:15:00",
+   "bar_time": "2026-10-22 10:30:00",
    "new_candle": true
   },
   "positional": {
@@ -80,12 +80,12 @@
     "structure": "swings H 9544\u21929533, L 8555\u21929063"
    },
    "bar_time": "2026-10-21 21:00:00",
-   "new_candle": true
+   "new_candle": false
   }
  },
  "actions": [],
  "errors": [],
- "session": "PRE-OPEN",
+ "session": "OPEN",
  "contract": {
   "signal": {
    "symbol": "CRUDEOIL19NOV26FUT",
