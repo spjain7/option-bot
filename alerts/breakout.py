@@ -57,30 +57,60 @@ def _lv(xs):
     return " · ".join(f"{_f(v)} ({n})" for v, n in xs) or "none nearby"
 
 
-def call_msg(name, ex, c, tf, sig, levels, oi_line, vol_line, live=None):
+def call_msg(name, ex, c, tf, sig, levels, live=None):
+    """Message 1 – the call card (what to do)."""
     s = 1 if sig["side"] == "BUY" else -1
     a = sig["atr"]
     ref = live or sig["close"]
-    sl = ref - s * CFG["stop_atr"] * a
     R = CFG["stop_atr"] * a
-    L = [f"{'🟢 BUY' if s > 0 else '🔴 SELL'} BREAKOUT – {name} FUT | {TFLABEL[tf]}", "━━━━━━━━━━━━━━━━━━",
-         f"Contract : {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · expiry {pd.Timestamp(c['expiry']):%d-%b-%Y}",
-         f"Entry    : ~{_f(ref)} (next candle open; avoid chasing beyond {_f(ref + s * 0.5 * a)})",
-         f"Stop loss: {_f(sl)} (2 ATR) → then TRAIL 3 ATR below the best close (we will send updates)",
-         f"Levels   : 1R {_f(ref + s * R)} · 2R {_f(ref + 2 * s * R)} · 3R {_f(ref + 3 * s * R)} (reference – profits come from trailing)",
-         "━━━━━━━━━━━━━━━━━━",
-         f"Resistance : {_lv(levels['resistance'])}", f"Support    : {_lv(levels['support'])}", "━━━━━━━━━━━━━━━━━━",
-         f"Breakout : close {_f(sig['close'])} {'above the 20-candle high' if s > 0 else 'below the 20-candle low'} {_f(sig['hh'] if s > 0 else sig['ll'])}",
-         f"Volume   : {sig['vol_x']:.2f}× the 20-candle average (needs > 1.5×)" + (f" · {vol_line}" if vol_line else ""),
-         oi_line,
-         f"Trend    : {'above' if s > 0 else 'below'} EMA200 {_f(sig['ema200'])} · ADX {sig['adx']:.0f} · RSI {sig['rsi']:.0f}",
-         "━━━━━━━━━━━━━━━━━━",
-         f"Why this call: price broke {'out above' if s > 0 else 'down below'} its 20-candle range with {sig['vol_x']:.1f}× normal volume "
-         f"(real participation, not a thin move) and in the direction of the 200-EMA trend. This rule was the most robust in "
-         f"4 years of tests (≈40% winners; profit comes from a few long trends, so keep losses at the stop and let winners trail).",
-         f"Signal candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} (closed).",
-         "Alert only – no auto trade. Backtested, not guaranteed; not investment advice."]
-    return "\n".join(L)
+    sl = ref - s * R
+    head = "🟢🚀 BUY" if s > 0 else "🔴📉 SELL"
+    return "\n".join([
+        f"{head} | {name} FUT | {TFLABEL[tf]}",
+        f"📄 {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · exp {pd.Timestamp(c['expiry']):%d-%b-%Y}",
+        "━━━━━━━━━━━━━━━━━━",
+        f"🎯 Entry      : {_f(ref)}",
+        f"🚫 Don't chase: beyond {_f(ref + s * 0.5 * a)}",
+        f"🛑 Stop loss  : {_f(sl)}",
+        f"✅ Target 1   : {_f(ref + s * R)} (1R) – book 30%",
+        f"✅ Target 2   : {_f(ref + 2 * s * R)} (2R) – book 30%",
+        f"🏁 Target 3   : {_f(ref + 3 * s * R)} (3R) – rest on trailing stop",
+        f"🔁 Trailing SL: 3 ATR from best close (updates follow)",
+        "━━━━━━━━━━━━━━━━━━",
+        f"🧱 Resistance : {_lv(levels['resistance'])}",
+        f"🛟 Support    : {_lv(levels['support'])}",
+        f"⏱ Signal candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} · Alert only – no auto trade"])
+
+
+def reason_msg(name, tf, sig, levels, oi=None, q=None):
+    """Message 2 – why the call was issued."""
+    s = 1 if sig["side"] == "BUY" else -1
+    lvl = sig["hh"] if s > 0 else sig["ll"]
+    pts = []
+    pts.append(f"{'📈' if s > 0 else '📉'} Breakout: closed at {_f(sig['close'])}, {'above' if s > 0 else 'below'} the 20-candle "
+               f"{'high' if s > 0 else 'low'} {_f(lvl)} – price escaped its recent range.")
+    pts.append(f"🔊 Volume: {sig['vol_x']:.1f}× normal – big players took part, so it is less likely to be a fake breakout.")
+    pts.append(f"🧭 Trend: price is {'above' if s > 0 else 'below'} the 200 EMA ({_f(sig['ema200'])}) – trading with the main trend, not against it.")
+    adx = sig.get("adx") or 0
+    pts.append(f"💪 Trend strength (ADX {adx:.0f}): " + ("strong" if adx >= 25 else "building" if adx >= 18 else "weak – smaller size"))
+    r = sig.get("rsi") or 50
+    if (s > 0 and r > 75) or (s < 0 and r < 25):
+        pts.append(f"⚠️ RSI {r:.0f}: already stretched – entry only near the call price, never chase.")
+    else:
+        pts.append(f"📊 RSI {r:.0f}: momentum supports the move.")
+    if oi and oi.get("label"):
+        good = {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}[sig["side"]]
+        pts.append(f"🏦 OI: {oi['label']} ({oi['chg_pct']:+.2f}% in {oi['gap_min']:.0f} min) – "
+                   + ("supports the call ✅" if oi["label"] in good else "does NOT confirm – be careful ⚠️"))
+    elif oi:
+        pts.append(f"🏦 OI {oi['oi']:,.0f}: change not measurable yet (needs a second reading).")
+    nxt = (levels["resistance"] if s > 0 else levels["support"])[:1]
+    if nxt:
+        pts.append(f"🧱 Next {'resistance' if s > 0 else 'support'}: {_f(nxt[0][0])} ({nxt[0][1]}) – watch for a pause there.")
+    pts.append("📚 Backtest 2022-26 (after costs): ≈40% of breakouts win, but winners are 2-3× bigger than losers – "
+               "follow the stop strictly and let the trailing stop ride the trend.")
+    return "\n".join([f"💡 WHY THIS {sig['side']} – {name} ({tf})", "━━━━━━━━━━━━━━━━━━", *pts,
+                       "Backtested, not guaranteed · not investment advice."])
 
 
 def manage(state, msgs, name, tf, frame, c15, now):

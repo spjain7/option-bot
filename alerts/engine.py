@@ -268,7 +268,7 @@ def scan(api, master, now, state, only=None):
             if df is None or df.empty:
                 info[tf] = "NO DATA"; rep["errors"].append(f"{name} {tf}: no candles"); continue
             frames[tf] = df.sort_values("time").drop_duplicates("time").reset_index(drop=True)
-        full_1h = None                                     # 1-hour history for breakouts (adjusted, not clipped)
+        full_1h = frames["1h"].copy() if "1h" in frames else None   # RAW 400-day history for breakouts (as in the backtest)
         if c["is_front"] and c["next_token"] and "1h" in frames:
             key = f"{c['symbol']}|{d}"
             if key not in state["switches"]:
@@ -282,7 +282,6 @@ def scan(api, master, now, state, only=None):
             if sw:
                 for tf in frames:
                     frames[tf] = CD.continuity(frames[tf], sw)
-                full_1h = frames.get("1h")
                 for tf in frames:
                     frames[tf] = frames[tf][frames[tf]["time"] >= sw[0][0] - pd.Timedelta(days=60)]
                 info["roll"] = f"switch {sw[0][0]:%d-%b} adjusted by {sw[0][1]:+.1f}"
@@ -381,7 +380,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         s_ = 1 if sig["side"] == "BUY" else -1
         if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
             info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
-        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, _oi_line(oi), (f"today {q['tradeVolume']:,.0f} lots" if q and q.get("tradeVolume") is not None else ""), live))
+        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
+        msgs.append(BO.reason_msg(name, tf, sig, lv, oi, q))
         ref = live or sig["close"]
         state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * BO.CFG["stop_atr"] * sig["atr"], 2),
                                        risk=BO.CFG["stop_atr"] * sig["atr"], best=ref, trailed=False, n=0, last_candle=last,

@@ -203,10 +203,13 @@ def test_breakout():
     BO.manage(st, msgs, "GOLD", "3h", fr, c15, pd.Timestamp("2026-03-01 15:35"))
     check("trailing stop hit -> EXIT message with result in R, alert closed", not st["bo_active"] and any("EXIT" in m and "R" in m for m in msgs))
     sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
-    m = BO.call_msg("GOLD", "MCX", dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04"), "3h", sig,
-                    dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")]), "OI     : 16,500", "today 1,600 lots")
-    check("breakout message: entry, SL, trailing plan, levels, S/R, volume, OI, trend and reasoning",
-          all(k in m for k in ("Entry", "Stop loss", "TRAIL", "1R", "Resistance", "Support", "Volume", "OI", "EMA200", "Why this call")))
+    lv = dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")])
+    m = BO.call_msg("GOLD", "MCX", dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04"), "3h", sig, lv)
+    check("call card: entry, no-chase, SL, T1/T2/T3, trailing, support/resistance",
+          all(k in m for k in ("Entry", "chase", "Stop loss", "Target 1", "Target 2", "Target 3", "Trailing", "Resistance", "Support")))
+    w = BO.reason_msg("GOLD", "3h", sig, lv, dict(oi=16500, chg_pct=0.8, gap_min=15, label="Long buildup"), None)
+    check("separate WHY message: breakout, volume, trend, ADX, RSI, OI, next level, backtest note",
+          all(k in w for k in ("WHY THIS BUY", "Breakout", "Volume", "200 EMA", "ADX", "RSI", "OI", "Long buildup", "Backtest")))
 
 
 def test_no_orders():
