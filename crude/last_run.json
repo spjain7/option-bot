@@ -1,11 +1,11 @@
 {
- "time": "2026-10-22 10:52:22.972672",
+ "time": "2026-10-22 10:58:13.085963",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "workflow_dispatch",
-  "number": "1",
+  "number": "2",
   "delay_min": null,
   "previous_run": {
    "number": 12,
@@ -27,18 +27,18 @@
   "bars_1h": 540,
   "last_closed_3h": "2026-10-21 21:00:00",
   "bars_3h": 179,
-  "age_15m_min": 7.4,
+  "age_15m_min": 13.2,
   "quote_age_min": -0.4,
-  "ltp": 9396.0,
-  "day_volume": 4019,
+  "ltp": 9390.0,
+  "day_volume": 4159,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.18
+   "quote_vs_candle_atr": 0.31
   },
   "volume": "available",
-  "oi_current": 1338200,
+  "oi_current": 1339300,
   "oi_change": {
    "status": "UNAVAILABLE",
    "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
@@ -61,7 +61,7 @@
     "rsi": 65.67864803222567
    },
    "bar_time": "2026-10-22 10:30:00",
-   "new_candle": true
+   "new_candle": false
   },
   "positional": {
    "decision": "NONE",
