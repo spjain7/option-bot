@@ -32,6 +32,18 @@ FAST_MOVE_PCT         = {"index": 0.4, "stock": 1.2, "mcx": 0.8}   # % move with
 BREAKOUT_VOL_X        = 2.0      # new day high/low counts only with volume >= 2x normal pace + rising OI
 BIGMOVE_COOLDOWN_MIN  = 60
 
+# ═════════════ 👀 PRE-MOVE WATCH (cannot predict – flags quiet price + rising OI/volume BEFORE a possible move) ═════════════
+PREMOVE_ENABLED       = True
+PREMOVE_WINDOW_MIN    = 60       # look at the last hour of 15-min snapshots
+PREMOVE_MAX_RANGE     = {"index": 0.15, "stock": 0.4, "mcx": 0.3}   # price range in that hour must be this tight (%)
+PREMOVE_MIN_OI        = {"index": 1.0, "stock": 2.0, "mcx": 1.5}    # ...while OI rose at least this much (%)
+PREMOVE_VOL_X         = 1.3      # ...and volume ran at >= 1.3x the day's normal pace
+PREMOVE_TRACK_MIN     = 120      # each alert is checked for a big move in the next 2 hours
+PREMOVE_MOVE_X        = 1.0      # "big move" = FAST_MOVE_PCT x this, from the alert price
+PREMOVE_COOLDOWN_MIN  = 120
+PREMOVE_MAX_PER_MSG   = 5
+PREMOVE_MIN_SAMPLE    = 20       # show the measured hit rate in alerts only after this many tracked alerts
+
 # ═════════════ WHEN IS A CALL "CONFIDENT"? ═════════════
 CALL_MODE             = "ACTIVE" # "ACTIVE" = scan every run (~15 min), faster confirmation, buildups become calls
                                  # "STRICT" = hourly scans, 2-hour confirmation, fewer but slower calls

@@ -82,3 +82,10 @@ Module `mcx_trade.py`, switch `MCXT_ENABLED`, state `state/mcx_trades.json`. Ale
 - Lots sized to risk 1% of capital. Daily summary after 23:00.
 - Manual scan now: Actions → Run workflow → mode `mcxtrade`. Telegram check: mode `chatid`.
 - Test offline: `python tests/sim_mcx_trade.py`
+
+## 👀 Pre-move watch (early warning, information only)
+Before a move, price often stays unusually quiet while open interest and volume keep rising (positions being built).
+Every 15 min the bot checks the last hour of futures snapshots: price range ≤ 0.15% (index) / 0.4% (stock) / 0.3% (MCX),
+OI up ≥ 1% / 2% / 1.5%, volume ≥ 1.3× the day's pace. Near the day high/low the alert says which break to watch.
+It is **not a call** and cannot predict direction. Each alert is tracked for 2 hours against a random script of the
+same kind (control); the daily report shows both hit rates. Settings: `PREMOVE_*` in `config.py`; tests: `tests/test_premove.py`.

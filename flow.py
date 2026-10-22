@@ -16,6 +16,7 @@ import config as C
 import market as M
 import strategy as S
 import notify
+import premove
 from angel import now_ist
 
 LABEL = {  # (price up?, oi up?) -> text
@@ -110,6 +111,11 @@ def run(bot, nse_on, mcx_on):
 
     if big:
         send_big(bot, big, now)
+    if getattr(C, "PREMOVE_ENABLED", False):
+        try:
+            premove.run(bot, live, now, lambda ex: _t(OPEN[ex][0]))
+        except Exception as e_:
+            print("pre-move error", e_)
     bot.flow_events = [e for e in events if e.get("bias")]      # used by the fast-track in runner
     if not events:
         return

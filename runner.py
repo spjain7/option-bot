@@ -685,6 +685,9 @@ class Bot:
                      f"OI today: {stt.get('day') or '-'}\n ATM IV {ch['atm_iv']} | IV Rank "
                      f"{self.st.iv_rank(name, ch['atm_iv']) or 'building'} | {bu['label'] if bu else ''}\n"
                      f" 📖 {simple_why(td, bu, ch).capitalize()}.")
+        pml = flow.premove.summary_line(self.st.s) if getattr(C, "PREMOVE_ENABLED", False) else None
+        if pml:
+            L.append("\n" + pml)
         op = self.st.s["positions"]
         L.append(f"\n*Open calls: {len(op)}*")
         for p in op:
