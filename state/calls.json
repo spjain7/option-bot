@@ -39,7 +39,9 @@
   "pos|CRUDEOIL|2026-10-21": "2026-10-21",
   "pos|COPPER|2026-10-21": "2026-10-21",
   "pos|ZINC|2026-10-21": "2026-10-21",
-  "pos|ALUMINIUM|2026-10-21": "2026-10-21"
+  "pos|ALUMINIUM|2026-10-21": "2026-10-21",
+  "intra|NATURALGAS|2026-10-22 13:00": "2026-10-22",
+  "pos|NATURALGAS|2026-10-21": "2026-10-21"
  },
  "last_state": {
   "pos|GOLD": null,
