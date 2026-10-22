@@ -354,6 +354,8 @@ class Bot:
             self.why(name, "no option chain"); return None
         ch["dte"] = M.dte(expiry)
         daily = cd if not is_hourly else self.candles(tok, "ONE_DAY", 60, seg)
+        if daily is None or len(daily) == 0:            # API rate-limit / no data: skip, don't crash the scan
+            self.why(name, "daily candles missing"); return None
         rv = M.hv20(daily)
         ch["iv_label"], ch["iv_rv"] = M.iv_label(ch["atm_iv"], rv)
         ch["rv"] = rv or 0.0
