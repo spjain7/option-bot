@@ -279,6 +279,10 @@ def scan(api, master, now, state, only=None):
                 state["switches"] = {k: v for k, v in state["switches"].items() if k.endswith(d)}
                 state["switches"][key] = [(str(t), s, q) for t, s, q in find_switch(frames["1h"], nx)]
             sw = [(pd.Timestamp(t), s, q) for t, s, q in state["switches"][key]]
+            if sw and full_1h is not None:                 # breakouts: remove the roll jump, keep all history
+                for t_, step, q_ in sw:
+                    if q_ == "measured":
+                        full_1h.loc[full_1h["time"] < t_, ["open", "high", "low", "close"]] -= step
             if sw:
                 for tf in frames:
                     frames[tf] = CD.continuity(frames[tf], sw)
