@@ -1,11 +1,11 @@
 {
- "time": "2026-10-22 12:19:38.116609",
+ "time": "2026-10-22 12:36:07.423857",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "workflow_dispatch",
-  "number": "3",
+  "number": "4",
   "delay_min": null,
   "previous_run": {
    "number": 12,
@@ -15,38 +15,38 @@
   }
  },
  "api": {
-  "15m": "ok (781 candles, last start 22-Oct 12:15)",
+  "15m": "ok (781 candles, last start 22-Oct 12:30)",
   "1h": "ok (1049 candles, last start 22-Oct 12:00)",
   "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-22 12:00:00",
+  "last_closed_15m": "2026-10-22 12:15:00",
   "bars_15m": 780,
   "last_closed_1h": "2026-10-22 11:00:00",
   "bars_1h": 542,
   "last_closed_3h": "2026-10-22 09:00:00",
   "bars_3h": 180,
-  "age_15m_min": 4.6,
-  "quote_age_min": -0.1,
-  "ltp": 9442.0,
-  "day_volume": 6123,
+  "age_15m_min": 6.1,
+  "quote_age_min": -0.2,
+  "ltp": 9466.0,
+  "day_volume": 6779,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.38
+   "quote_vs_candle_atr": 0.61
   },
   "volume": "available",
-  "oi_current": 1357100,
+  "oi_current": 1355000,
   "oi_change": {
    "status": "OK",
    "label": "Flat / no clear OI signal",
-   "d_oi_pct": 0.185,
-   "d_price": -18.0,
-   "gap_min": 15.5,
-   "oi": 1357100,
-   "oi_prev": 1354600
+   "d_oi_pct": -0.155,
+   "d_price": 24.0,
+   "gap_min": 16.6,
+   "oi": 1355000,
+   "oi_prev": 1357100
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -63,9 +63,9 @@
     "trend_1h": "RANGE",
     "trend_1h_detail": "close 9452 EMA20 9313 EMA50 9206 EMA200 8829 ADX 17.4",
     "adx_1h": 17.440777252945708,
-    "rsi": 70.13276067515528
+    "rsi": 66.99855289983611
    },
-   "bar_time": "2026-10-22 12:00:00",
+   "bar_time": "2026-10-22 12:15:00",
    "new_candle": true
   },
   "positional": {
