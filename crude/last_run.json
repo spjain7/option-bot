@@ -1,17 +1,17 @@
 {
- "time": "2026-10-22 23:48:08.090919",
+ "time": "2026-10-22 23:57:13.093879",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "workflow_dispatch",
-  "number": "11",
+  "number": "12",
   "delay_min": null,
   "previous_run": {
-   "number": 12,
-   "event": "schedule",
+   "number": 11,
+   "event": "workflow_dispatch",
    "conclusion": "success",
-   "started": "2026-10-21T20:22:46Z"
+   "started": "2026-10-21T17:30:06Z"
   }
  },
  "api": {
@@ -27,8 +27,8 @@
   "bars_1h": 554,
   "last_closed_3h": "2026-10-22 21:00:00",
   "bars_3h": 184,
-  "age_15m_min": 18.1,
-  "quote_age_min": 18.1,
+  "age_15m_min": 27.2,
+  "quote_age_min": 27.2,
   "ltp": 9493.0,
   "day_volume": 42007,
   "quality": {
