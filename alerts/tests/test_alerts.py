@@ -172,6 +172,43 @@ def test_levels_and_oi():
     check("missing OI in the quote -> None, not 0", E.oi_reading(st, "Y", dict(ltp=5.0), now) is None)
 
 
+def _trend(n=260, up=True):
+    t = pd.date_range("2026-01-01", periods=n, freq="3h")
+    c = np.linspace(100, 200, n) if up else np.linspace(200, 100, n)
+    c = c + np.sin(np.arange(n)) * 2
+    return pd.DataFrame(dict(time=t, open=c - 0.5, high=c + 1.5, low=c - 1.5, close=c, volume=1000.0))
+
+
+def test_breakout():
+    from alerts import breakout as BO
+    d = _trend()
+    d.loc[d.index[-1], ["close", "high", "volume"]] = [d["high"].iloc[-21:-1].max() + 3, d["high"].iloc[-21:-1].max() + 4, 2500.0]
+    check("volume breakout: close above 20-candle high, volume 2.5× and above EMA200 -> BUY", BO.evaluate(d)["side"] == "BUY")
+    d2 = d.copy(); d2.loc[d2.index[-1], "volume"] = 1200.0
+    check("same breakout on 1.2× volume -> no call (volume filter)", BO.evaluate(d2)["side"] is None and "volume" in BO.evaluate(d2)["why"])
+    dn = _trend(up=False)
+    dn.loc[dn.index[-1], ["close", "high", "volume"]] = [dn["high"].iloc[-21:-1].max() + 3, dn["high"].iloc[-21:-1].max() + 4, 2500.0]
+    check("upside breakout below EMA200 (down-trend) -> no BUY", BO.evaluate(dn)["side"] != "BUY")
+    st = dict(bo_active=[dict(name="GOLD", tf="3h", side="BUY", entry=100.0, stop=96.0, risk=4.0, best=100.0, trailed=False, n=0,
+                              last_candle="2026-03-01 09:00:00", checked="2026-03-01 09:00:00", contract="X")],
+              day=dict(outcomes=[]))
+    fr = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 09:00", "2026-03-01 12:00"]), open=[100, 105], high=[101, 112], low=[99, 104],
+                           close=[100, 111], volume=[1.0, 1.0]))
+    pre = pd.DataFrame(dict(time=pd.date_range("2026-02-20", periods=30, freq="3h"), open=100.0, high=101.0, low=99.0, close=100.0, volume=1.0))
+    fr = pd.concat([pre, fr], ignore_index=True)
+    msgs = []
+    BO.manage(st, msgs, "GOLD", "3h", fr, None, pd.Timestamp("2026-03-01 15:05"))
+    check("trailing stop raised after a new higher close and an update is sent", st["bo_active"][0]["stop"] > 96 and any("TRAIL UPDATE" in m for m in msgs))
+    c15 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 15:15"]), open=[110], high=[110], low=[st["bo_active"][0]["stop"] - 1], close=[105], volume=[1.0]))
+    BO.manage(st, msgs, "GOLD", "3h", fr, c15, pd.Timestamp("2026-03-01 15:35"))
+    check("trailing stop hit -> EXIT message with result in R, alert closed", not st["bo_active"] and any("EXIT" in m and "R" in m for m in msgs))
+    sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
+    m = BO.call_msg("GOLD", "MCX", dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04"), "3h", sig,
+                    dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")]), "OI     : 16,500", "today 1,600 lots")
+    check("breakout message: entry, SL, trailing plan, levels, S/R, volume, OI, trend and reasoning",
+          all(k in m for k in ("Entry", "Stop loss", "TRAIL", "1R", "Resistance", "Support", "Volume", "OI", "EMA200", "Why this call")))
+
+
 def test_no_orders():
     src = "\n".join(f.read_text() for f in (ROOT / "alerts").rglob("*.py") if "tests" not in f.parts)
     check("alerts package has no order API (alert-only, no auto trading)", not re.search(r"placeOrder|modifyOrder|cancelOrder|place_order", src))
@@ -181,6 +218,6 @@ def test_no_orders():
 
 
 if __name__ == "__main__":
-    for t in (test_patterns, test_bounce, test_quality_gold_case, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_no_orders):
+    for t in (test_patterns, test_bounce, test_quality_gold_case, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_breakout, test_no_orders):
         t()
     print(f"\nALL {len(OK)} ALERT CHECKS PASSED")
