@@ -1,5 +1,5 @@
 {
- "time": "2026-10-22 13:49:28.586992",
+ "time": "2026-10-22 14:04:43.760777",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -16,34 +16,34 @@
  },
  "api": {
   "15m": "FAILED: no candles returned (API error, rate limit or no trading)",
-  "1h": "ok (1049 candles, last start 22-Oct 13:00)",
+  "1h": "ok (1049 candles, last start 22-Oct 14:00)",
   "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
   "last_closed_15m": null,
   "bars_15m": 0,
-  "last_closed_1h": "2026-10-22 12:00:00",
-  "bars_1h": 543,
+  "last_closed_1h": "2026-10-22 13:00:00",
+  "bars_1h": 544,
   "last_closed_3h": "2026-10-22 09:00:00",
   "bars_3h": 180,
-  "quote_age_min": -0.4,
-  "ltp": 9496.0,
-  "day_volume": 10410,
+  "quote_age_min": -0.3,
+  "ltp": 9518.0,
+  "day_volume": 11262,
   "quality": {
    "blocks": [],
    "notes": []
   },
   "volume": "UNAVAILABLE/partial",
-  "oi_current": 1395500,
+  "oi_current": 1430800,
   "oi_change": {
    "status": "OK",
-   "label": "Short buildup",
-   "d_oi_pct": 1.035,
-   "d_price": -6.0,
-   "gap_min": 15.8,
-   "oi": 1395500,
-   "oi_prev": 1381200
+   "label": "Long buildup",
+   "d_oi_pct": 2.53,
+   "d_price": 22.0,
+   "gap_min": 15.2,
+   "oi": 1430800,
+   "oi_prev": 1395500
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -104,7 +104,7 @@
  },
  "stale": "no 15-min candles returned",
  "last_error": {
-  "time": "2026-10-22 13:49:28.586992",
+  "time": "2026-10-22 14:04:43.760777",
   "error": "STALE CANDLES: no 15-min candles returned while the live quote is current"
  },
  "state_summary": {
