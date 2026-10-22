@@ -1,0 +1,482 @@
+[
+ {
+  "strat": "bollinger_mr_trend",
+  "tf": "15m",
+  "design": {
+   "trades": 753,
+   "exp_r": -0.148,
+   "win": 52.1,
+   "pf": 0.72,
+   "p1": -0.235,
+   "p5": -0.209
+  },
+  "design_2x_exp": -0.309,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "bollinger_mr_trend",
+  "tf": "1d",
+  "design": {
+   "trades": 25,
+   "exp_r": -0.058,
+   "win": 44.0,
+   "pf": 0.85,
+   "p1": -0.423,
+   "p5": -0.32
+  },
+  "design_2x_exp": -0.095,
+  "design_inst_positive": "1/2",
+  "shortlisted": false
+ },
+ {
+  "strat": "bollinger_mr_trend",
+  "tf": "1h",
+  "design": {
+   "trades": 658,
+   "exp_r": -0.165,
+   "win": 49.1,
+   "pf": 0.69,
+   "p1": -0.257,
+   "p5": -0.229
+  },
+  "design_2x_exp": -0.311,
+  "design_inst_positive": "1/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "bollinger_mr_trend",
+  "tf": "3h",
+  "design": {
+   "trades": 179,
+   "exp_r": -0.094,
+   "win": 52.5,
+   "pf": 0.79,
+   "p1": -0.241,
+   "p5": -0.203
+  },
+  "design_2x_exp": -0.175,
+  "design_inst_positive": "4/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "donchian_20_10",
+  "tf": "15m",
+  "design": {
+   "trades": 1786,
+   "exp_r": -0.113,
+   "win": 31.1,
+   "pf": 0.83,
+   "p1": -0.203,
+   "p5": -0.177
+  },
+  "design_2x_exp": -0.266,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "donchian_20_10",
+  "tf": "1d",
+  "design": {
+   "trades": 111,
+   "exp_r": 0.039,
+   "win": 42.3,
+   "pf": 1.08,
+   "p1": -0.228,
+   "p5": -0.155
+  },
+  "design_2x_exp": -0.001,
+  "design_inst_positive": "5/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "donchian_20_10",
+  "tf": "1h",
+  "design": {
+   "trades": 1795,
+   "exp_r": -0.028,
+   "win": 34.3,
+   "pf": 0.95,
+   "p1": -0.121,
+   "p5": -0.094
+  },
+  "design_2x_exp": -0.172,
+  "design_inst_positive": "4/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "donchian_20_10",
+  "tf": "3h",
+  "design": {
+   "trades": 601,
+   "exp_r": 0.06,
+   "win": 36.1,
+   "pf": 1.11,
+   "p1": -0.08,
+   "p5": -0.041
+  },
+  "design_2x_exp": -0.017,
+  "design_inst_positive": "4/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "ema_20_50_adx",
+  "tf": "15m",
+  "design": {
+   "trades": 440,
+   "exp_r": -0.005,
+   "win": 35.5,
+   "pf": 0.99,
+   "p1": -0.2,
+   "p5": -0.142
+  },
+  "design_2x_exp": -0.146,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "ema_20_50_adx",
+  "tf": "1d",
+  "design": {
+   "trades": 16,
+   "exp_r": -0.179,
+   "win": 31.2,
+   "pf": 0.64,
+   "p1": -0.65,
+   "p5": -0.544
+  },
+  "design_2x_exp": -0.208,
+  "design_inst_positive": "0/0",
+  "shortlisted": false
+ },
+ {
+  "strat": "ema_20_50_adx",
+  "tf": "1h",
+  "design": {
+   "trades": 492,
+   "exp_r": -0.023,
+   "win": 34.1,
+   "pf": 0.97,
+   "p1": -0.218,
+   "p5": -0.163
+  },
+  "design_2x_exp": -0.174,
+  "design_inst_positive": "5/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "ema_20_50_adx",
+  "tf": "3h",
+  "design": {
+   "trades": 127,
+   "exp_r": 0.158,
+   "win": 42.5,
+   "pf": 1.3,
+   "p1": -0.161,
+   "p5": -0.08
+  },
+  "design_2x_exp": 0.086,
+  "design_inst_positive": "7/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "inside_bar_trend",
+  "tf": "15m",
+  "design": {
+   "trades": 1016,
+   "exp_r": -0.145,
+   "win": 37.1,
+   "pf": 0.81,
+   "p1": -0.248,
+   "p5": -0.217
+  },
+  "design_2x_exp": -0.335,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "inside_bar_trend",
+  "tf": "1d",
+  "design": {
+   "trades": 61,
+   "exp_r": 0.006,
+   "win": 45.9,
+   "pf": 1.01,
+   "p1": -0.322,
+   "p5": -0.23
+  },
+  "design_2x_exp": -0.044,
+  "design_inst_positive": "3/7",
+  "shortlisted": false
+ },
+ {
+  "strat": "inside_bar_trend",
+  "tf": "1h",
+  "design": {
+   "trades": 1384,
+   "exp_r": -0.078,
+   "win": 38.4,
+   "pf": 0.9,
+   "p1": -0.168,
+   "p5": -0.142
+  },
+  "design_2x_exp": -0.256,
+  "design_inst_positive": "2/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "inside_bar_trend",
+  "tf": "3h",
+  "design": {
+   "trades": 460,
+   "exp_r": 0.027,
+   "win": 39.6,
+   "pf": 1.04,
+   "p1": -0.125,
+   "p5": -0.082
+  },
+  "design_2x_exp": -0.08,
+  "design_inst_positive": "4/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "macd_zero_trend",
+  "tf": "15m",
+  "design": {
+   "trades": 1593,
+   "exp_r": -0.088,
+   "win": 29.5,
+   "pf": 0.84,
+   "p1": -0.183,
+   "p5": -0.161
+  },
+  "design_2x_exp": -0.242,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "macd_zero_trend",
+  "tf": "1d",
+  "design": {
+   "trades": 87,
+   "exp_r": -0.014,
+   "win": 35.6,
+   "pf": 0.96,
+   "p1": -0.244,
+   "p5": -0.187
+  },
+  "design_2x_exp": -0.052,
+  "design_inst_positive": "3/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "macd_zero_trend",
+  "tf": "1h",
+  "design": {
+   "trades": 1794,
+   "exp_r": -0.023,
+   "win": 32.9,
+   "pf": 0.95,
+   "p1": -0.095,
+   "p5": -0.075
+  },
+  "design_2x_exp": -0.172,
+  "design_inst_positive": "4/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "macd_zero_trend",
+  "tf": "3h",
+  "design": {
+   "trades": 545,
+   "exp_r": -0.006,
+   "win": 35.0,
+   "pf": 0.99,
+   "p1": -0.128,
+   "p5": -0.097
+  },
+  "design_2x_exp": -0.086,
+  "design_inst_positive": "4/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "orb_30m",
+  "tf": "15m",
+  "design": {
+   "trades": 825,
+   "exp_r": -0.32,
+   "win": 33.8,
+   "pf": 0.62,
+   "p1": -0.431,
+   "p5": -0.401
+  },
+  "design_2x_exp": -0.624,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "rsi2_connors",
+  "tf": "15m",
+  "design": {
+   "trades": 2024,
+   "exp_r": -0.125,
+   "win": 52.6,
+   "pf": 0.54,
+   "p1": -0.154,
+   "p5": -0.146
+  },
+  "design_2x_exp": -0.253,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "rsi2_connors",
+  "tf": "1d",
+  "design": {
+   "trades": 100,
+   "exp_r": -0.082,
+   "win": 50.0,
+   "pf": 0.64,
+   "p1": -0.194,
+   "p5": -0.163
+  },
+  "design_2x_exp": -0.113,
+  "design_inst_positive": "2/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "rsi2_connors",
+  "tf": "1h",
+  "design": {
+   "trades": 2271,
+   "exp_r": -0.118,
+   "win": 54.2,
+   "pf": 0.59,
+   "p1": -0.147,
+   "p5": -0.139
+  },
+  "design_2x_exp": -0.234,
+  "design_inst_positive": "0/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "rsi2_connors",
+  "tf": "3h",
+  "design": {
+   "trades": 668,
+   "exp_r": -0.077,
+   "win": 58.5,
+   "pf": 0.68,
+   "p1": -0.129,
+   "p5": -0.112
+  },
+  "design_2x_exp": -0.141,
+  "design_inst_positive": "3/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "rsi_reversal_live",
+  "tf": "15m",
+  "design": {
+   "trades": 87,
+   "exp_r": -0.134,
+   "win": 48.3,
+   "pf": 0.74,
+   "p1": -0.376,
+   "p5": -0.308
+  },
+  "design_2x_exp": -0.234,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "rsi_reversal_live",
+  "tf": "1h",
+  "design": {
+   "trades": 173,
+   "exp_r": -0.113,
+   "win": 48.0,
+   "pf": 0.79,
+   "p1": -0.285,
+   "p5": -0.235
+  },
+  "design_2x_exp": -0.213,
+  "design_inst_positive": "3/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "rsi_reversal_live",
+  "tf": "3h",
+  "design": {
+   "trades": 73,
+   "exp_r": -0.18,
+   "win": 45.2,
+   "pf": 0.69,
+   "p1": -0.47,
+   "p5": -0.378
+  },
+  "design_2x_exp": -0.28,
+  "design_inst_positive": "3/7",
+  "shortlisted": false
+ },
+ {
+  "strat": "trend_pullback_rsi",
+  "tf": "15m",
+  "design": {
+   "trades": 185,
+   "exp_r": -0.198,
+   "win": 16.2,
+   "pf": 0.62,
+   "p1": -0.372,
+   "p5": -0.321
+  },
+  "design_2x_exp": -0.355,
+  "design_inst_positive": "0/1",
+  "shortlisted": false
+ },
+ {
+  "strat": "trend_pullback_rsi",
+  "tf": "1d",
+  "design": {
+   "trades": 4,
+   "exp_r": -0.444,
+   "win": 0.0,
+   "pf": 0.0,
+   "p1": -0.816,
+   "p5": -0.703
+  },
+  "design_2x_exp": -0.481,
+  "design_inst_positive": "0/0",
+  "shortlisted": false
+ },
+ {
+  "strat": "trend_pullback_rsi",
+  "tf": "1h",
+  "design": {
+   "trades": 169,
+   "exp_r": -0.008,
+   "win": 25.4,
+   "pf": 0.98,
+   "p1": -0.19,
+   "p5": -0.137
+  },
+  "design_2x_exp": -0.141,
+  "design_inst_positive": "4/9",
+  "shortlisted": false
+ },
+ {
+  "strat": "trend_pullback_rsi",
+  "tf": "3h",
+  "design": {
+   "trades": 50,
+   "exp_r": 0.072,
+   "win": 32.0,
+   "pf": 1.24,
+   "p1": -0.216,
+   "p5": -0.134
+  },
+  "design_2x_exp": -0.011,
+  "design_inst_positive": "3/5",
+  "shortlisted": false
+ }
+]
