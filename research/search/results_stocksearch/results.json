@@ -1,0 +1,257 @@
+{
+ "bb_long": {
+  "design": {
+   "trades": 286,
+   "exp_r": 0.112,
+   "win": 58.4,
+   "pf": 1.41,
+   "p5": 0.039
+  },
+  "design_2x": 0.093,
+  "shortlisted": true,
+  "design_by_side": {
+   "long": {
+    "trades": 286,
+    "exp_r": 0.112,
+    "win": 58.4,
+    "pf": 1.41,
+    "p5": 0.036
+   }
+  },
+  "holdout": {
+   "trades": 553,
+   "exp_r": -0.132,
+   "win": 44.3,
+   "pf": 0.68,
+   "p5": -0.188
+  },
+  "holdout_2x": -0.151,
+  "holdout_by_year": {
+   "2024": -0.138,
+   "2025": -0.056,
+   "2026": -0.19
+  },
+  "PASS": false
+ },
+ "gap_go": {
+  "design": {
+   "trades": 499,
+   "exp_r": 0.08,
+   "win": 50.5,
+   "pf": 1.18,
+   "p5": 0.003
+  },
+  "design_2x": 0.055,
+  "shortlisted": false,
+  "design_by_side": {
+   "short": {
+    "trades": 179,
+    "exp_r": -0.068,
+    "win": 45.8,
+    "pf": 0.85,
+    "p5": -0.184
+   },
+   "long": {
+    "trades": 320,
+    "exp_r": 0.162,
+    "win": 53.1,
+    "pf": 1.38,
+    "p5": 0.056
+   }
+  }
+ },
+ "high250_vol": {
+  "design": {
+   "trades": 417,
+   "exp_r": 0.053,
+   "win": 45.3,
+   "pf": 1.12,
+   "p5": -0.049
+  },
+  "design_2x": 0.034,
+  "shortlisted": false,
+  "design_by_side": {
+   "long": {
+    "trades": 417,
+    "exp_r": 0.053,
+    "win": 45.3,
+    "pf": 1.12,
+    "p5": -0.044
+   }
+  }
+ },
+ "nr7_trend": {
+  "design": {
+   "trades": 1253,
+   "exp_r": 0.036,
+   "win": 46.5,
+   "pf": 1.08,
+   "p5": -0.019
+  },
+  "design_2x": 0.008,
+  "shortlisted": false,
+  "design_by_side": {
+   "short": {
+    "trades": 360,
+    "exp_r": -0.086,
+    "win": 45.0,
+    "pf": 0.8,
+    "p5": -0.166
+   },
+   "long": {
+    "trades": 893,
+    "exp_r": 0.085,
+    "win": 47.1,
+    "pf": 1.19,
+    "p5": 0.015
+   }
+  }
+ },
+ "pullback_trend": {
+  "design": {
+   "trades": 81,
+   "exp_r": 0.034,
+   "win": 35.8,
+   "pf": 1.12,
+   "p5": -0.118
+  },
+  "design_2x": 0.015,
+  "shortlisted": false,
+  "design_by_side": {
+   "short": {
+    "trades": 17,
+    "exp_r": -0.426,
+    "win": 11.8,
+    "pf": 0.06,
+    "p5": -0.573
+   },
+   "long": {
+    "trades": 64,
+    "exp_r": 0.156,
+    "win": 42.2,
+    "pf": 1.64,
+    "p5": -0.029
+   }
+  }
+ },
+ "rsi2_both": {
+  "design": {
+   "trades": 1145,
+   "exp_r": 0.022,
+   "win": 63.7,
+   "pf": 1.12,
+   "p5": -0.006
+  },
+  "design_2x": 0.005,
+  "shortlisted": false,
+  "design_by_side": {
+   "short": {
+    "trades": 199,
+    "exp_r": 0.005,
+    "win": 63.8,
+    "pf": 1.02,
+    "p5": -0.058
+   },
+   "long": {
+    "trades": 946,
+    "exp_r": 0.026,
+    "win": 63.6,
+    "pf": 1.14,
+    "p5": -0.006
+   }
+  }
+ },
+ "rsi2_long": {
+  "design": {
+   "trades": 946,
+   "exp_r": 0.026,
+   "win": 63.6,
+   "pf": 1.14,
+   "p5": -0.004
+  },
+  "design_2x": 0.009,
+  "shortlisted": false,
+  "design_by_side": {
+   "long": {
+    "trades": 946,
+    "exp_r": 0.026,
+    "win": 63.6,
+    "pf": 1.14,
+    "p5": -0.005
+   }
+  }
+ },
+ "vb_market": {
+  "design": {
+   "trades": 762,
+   "exp_r": 0.037,
+   "win": 44.2,
+   "pf": 1.08,
+   "p5": -0.036
+  },
+  "design_2x": 0.016,
+  "shortlisted": false,
+  "design_by_side": {
+   "short": {
+    "trades": 44,
+    "exp_r": -0.069,
+    "win": 54.5,
+    "pf": 0.8,
+    "p5": -0.246
+   },
+   "long": {
+    "trades": 718,
+    "exp_r": 0.044,
+    "win": 43.6,
+    "pf": 1.09,
+    "p5": -0.034
+   }
+  }
+ },
+ "vb_rs": {
+  "design": {
+   "trades": 648,
+   "exp_r": 0.043,
+   "win": 44.1,
+   "pf": 1.09,
+   "p5": -0.036
+  },
+  "design_2x": 0.022,
+  "shortlisted": false,
+  "design_by_side": {
+   "short": {
+    "trades": 35,
+    "exp_r": -0.065,
+    "win": 54.3,
+    "pf": 0.82,
+    "p5": -0.273
+   },
+   "long": {
+    "trades": 613,
+    "exp_r": 0.049,
+    "win": 43.6,
+    "pf": 1.11,
+    "p5": -0.039
+   }
+  }
+ },
+ "momentum_top10": {
+  "design": {
+   "days": 281,
+   "strat_ann": 119.3,
+   "bench_ann": 55.3,
+   "strat_sharpe": 3.15,
+   "bench_sharpe": 2.99,
+   "max_dd": -14.1
+  },
+  "holdout": {
+   "days": 574,
+   "strat_ann": -5.7,
+   "bench_ann": -2.6,
+   "strat_sharpe": -0.15,
+   "bench_sharpe": -0.07,
+   "max_dd": -22.5
+  },
+  "PASS": false
+ }
+}
