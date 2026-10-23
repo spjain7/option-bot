@@ -1,5 +1,5 @@
 {
- "time": "2026-10-24 04:32:08.200206",
+ "time": "2026-10-24 04:47:08.184629",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -27,8 +27,8 @@
   "bars_1h": 569,
   "last_closed_3h": "2026-10-23 21:00:00",
   "bars_3h": 189,
-  "age_15m_min": 302.1,
-  "quote_age_min": 272.3,
+  "age_15m_min": 317.1,
+  "quote_age_min": 287.3,
   "ltp": 9784.0,
   "day_volume": 42801,
   "quality": {
