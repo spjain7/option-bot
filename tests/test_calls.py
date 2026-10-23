@@ -76,15 +76,15 @@ def test_intraday_call_and_followups():
     h = hourly()
     api = Fake(h={"11": h}, ltp={"11": float(h.close.iloc[-1])})
     e = run(api, "2026-10-21 14:05")
-    calls = [m for m in SENT if "CALL – INTRADAY BUY CRUDEOIL" in m]
+    calls = [m for m in SENT if "BUY CRUDEOIL FUT • Intraday" in m]
     check("intraday BUY call sent with entry, SL, T1, T2, qty and warning",
-          calls and all(x in calls[0] for x in ("Entry:", "SL:", "T1:", "T2:", "Qty:", "Square off", "Unvalidated")))
+          calls and all(x in calls[0] for x in ("Entry:", "Stop-loss:", "Target 1:", "Target 2:", "Risk per lot", "Square off", "Unproven")))
     check("call names the traded contract and its expiry (>5 trading days left)", "CRUDEOIL19NOV26FUT" in calls[0] and "19-Nov-2026" in calls[0])
     run(api, "2026-10-21 14:20")
-    check("same candle never alerted twice", not any("CALL –" in m for m in SENT))
+    check("same candle never alerted twice", not any("• Intraday #" in m for m in SENT))
     c = e.s["open"][0]
     api.ltp["11"] = c["t1"] + 1; run(api, "2026-10-21 14:35")
-    check("T1 follow-up moves SL to cost", any("T1 hit" in m and "cost" in m for m in SENT))
+    check("T1 follow-up moves SL to cost", any("TARGET 1 HIT" in m and "cost" in m for m in SENT))
     api.ltp["11"] = c["entry"] - 1; run(api, "2026-10-21 14:50")
     check("exit at cost after T1", any("Exit at cost" in m for m in SENT))
 
@@ -96,10 +96,10 @@ def test_sell_allowed_and_rsi_rule():
     run(api, "2026-10-21 14:05")
     sig, why = R.intraday(h)
     if sig and sig.get("blocked"):
-        check("RSI < 30 turns a SELL into NO TRADE (not reversed)", any("NO TRADE – intraday SELL" in m for m in SENT)
-              and not any("INTRADAY BUY" in m for m in SENT))
+        check("RSI < 30 turns a SELL into NO TRADE (not reversed)", any("NO TRADE • SELL" in m for m in SENT)
+              and not any("BUY CRUDEOIL FUT" in m for m in SENT))
     else:
-        check("intraday SELL call allowed (both directions)", any("CALL – INTRADAY SELL CRUDEOIL" in m for m in SENT))
+        check("intraday SELL call allowed (both directions)", any("SELL CRUDEOIL FUT • Intraday" in m for m in SENT))
     hot = hourly(drift=0.004, seed=5, noise=0.001)
     s2, _ = R.intraday(hot)
     check("RSI > 70 never produces a BUY call and is not reversed",
@@ -120,9 +120,9 @@ def test_positional_flow():
     d = daily()
     api = Fake(d={"11": d}, ltp={})
     e = run(api, "2026-10-21 09:01")                                   # yesterday's candle closed
-    calls = [m for m in SENT if "CALL – POSITIONAL BUY CRUDEOIL" in m]
+    calls = [m for m in SENT if "BUY CRUDEOIL FUT • Positional" in m]
     check("positional BUY call for the next open with chase limit, SL rule and channel exit",
-          calls and all(x in calls[0] for x in ("next session open", "≤", "2×ATR", "20-day", "Unvalidated")))
+          calls and all(x in calls[0] for x in ("next session open", "≤", "2×ATR", "20-day", "Unproven")))
     p = e.s["pending"][0]
     api.ltp["11"] = p["signal_close"] + 0.1 * p["atr"]
     e = run(api, "2026-10-21 09:20")
@@ -134,7 +134,7 @@ def test_positional_flow():
     reset(); e = run(Fake(d={"11": d}), "2026-10-21 09:01"); p = e.s["pending"][0]
     api2 = Fake(d={"11": d}, ltp={"11": p["signal_close"] + 2 * p["atr"]})
     run(api2, "2026-10-21 09:20")
-    check("positional call cancelled when price ran too far (chase)", any("cancelled" in m and "chase" in m for m in SENT))
+    check("positional call cancelled when price ran too far (chase)", any("CANCELLED" in m and "chase" in m for m in SENT))
 
 
 def test_nifty_both_markets():
@@ -143,7 +143,7 @@ def test_nifty_both_markets():
     h["time"] = h["time"] + pd.Timedelta(minutes=15)
     api = Fake(h={"22": h, "21": h}, ltp={"22": float(h.close.iloc[-1]), "21": float(h.close.iloc[-1])})
     run(api, "2026-10-21 14:20")
-    m = [x for x in SENT if "NIFTY" in x and ("CALL" in x or "NO TRADE" in x)]
+    m = [x for x in SENT if "NIFTY" in x and ("• Intraday" in x or "NO TRADE" in x)]
     check("NIFTY futures intraday handled (NSE F&O, lot 65, contract with >2 trading days)",
           m and "NSE F&O" in m[0] and "NIFTY27OCT26FUT" in m[0])
     E.MCX[:] = ["GOLD", "SILVER", "CRUDEOIL", "NATURALGAS", "COPPER", "ZINC", "ALUMINIUM"]; E.NSE[:] = ["NIFTY", "BANKNIFTY"]

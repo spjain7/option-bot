@@ -52,6 +52,25 @@ def rs(x):
     return f"₹{x:,.0f}" if x >= 0 else f"-₹{abs(x):,.0f}"
 
 
+def nice_sym(symbol):
+    """NIFTY27OCT2622600PE -> NIFTY 22600 PE (27 Oct); futures -> NIFTY Nov fut."""
+    m = re.match(r"^([A-Z&\-]+?)(\d{2})([A-Z]{3})(\d{2})(\d+(?:\.\d+)?)?(CE|PE|FUT)$", symbol or "")
+    if not m:
+        return symbol
+    name, dd, mon, _yy, k, typ = m.groups()
+    if typ == "FUT":
+        return f"{name} {mon.capitalize()} fut"
+    return f"{name} {k} {typ} ({int(dd)} {mon.capitalize()})"
+
+
+def hm12(s):
+    t = pd.Timestamp(f"2000-01-01 {s}")
+    return f"{t:%-I:%M} {'am' if t.hour < 12 else 'pm'}"
+
+
+FOOT = "🧪 Unproven rules (past tests negative after costs) • alerts only, not advice"
+
+
 class CallEngine:
     def __init__(self, api, master, now=None, send=None):
         self.api, self.master = api, master
@@ -110,6 +129,21 @@ class CallEngine:
             out += f" | mini {mini}: {ml} lot(s) ({rs(R_pts * mm)}/lot)"
         return out, lots, m, budget
 
+    def size_lines(self, name, contract, R_pts, risk_pct):
+        m = self.mult(name, contract); per_lot = R_pts * m
+        lots = int(C.CAPITAL_RS * risk_pct // per_lot) if per_lot > 0 else 0
+        L = [f"📦 Risk per lot: {rs(per_lot)} ({per_lot / C.CAPITAL_RS * 100:.1f}% of capital)"]
+        if lots:
+            L.append(f"✅ Size: {lots} lot(s) within your {risk_pct * 100:g}% risk limit")
+        else:
+            L.append(f"⚠️ 1 lot is above your {risk_pct * 100:g}% risk limit → use the option"
+                     + (" or the mini lot" if MINI.get(name) else "") + " instead")
+        mini = MINI.get(name)
+        if mini and C.MCX_RS_PER_POINT.get(mini):
+            mm = C.MCX_RS_PER_POINT[mini]; ml = int(C.CAPITAL_RS * risk_pct // (R_pts * mm))
+            L.append(f"• Mini {mini}: risk {rs(R_pts * mm)}/lot → {ml} lot(s)")
+        return L
+
     def closed_candles(self, df, ex, tf):
         S = SESSION[ex]
         if df is None or df.empty:
@@ -132,11 +166,13 @@ class CallEngine:
         if not oi:
             return []
         if "symbol" not in oi:
-            return [f"📈 Option: {oi.get('note')}"]
-        L = [f"📈 *Option buy idea:* {oi['symbol']} (exp {oi['expiry']}) @ {px(oi['entry'])}  Δ{oi['delta']}"
-             + (f", IV {oi['iv']}%" if oi.get("iv") else ""),
-             f"   SL ~{px(oi['sl'])}" + (f" | T1 ~{px(oi['t1'])}" if oi.get("t1") else "") + (f" | T2 ~{px(oi['t2'])}" if oi.get("t2") else "")
-             + f" | cost {rs(oi['cost_lot'])}/lot, risk {rs(oi['risk_lot'])}/lot" + (f", {oi['lots']} lot(s)" if "lots" in oi else "")]
+            return ["", f"📈 Option: {oi.get('note')}"]
+        tg = " / ".join(px(oi[k]) for k in ("t1", "t2") if oi.get(k))
+        L = ["", f"📈 Option instead: BUY {nice_sym(oi['symbol'])}",
+             f"💰 {px(oi['entry'])} • 🛑 {px(oi['sl'])}" + (f" • 🎯 {tg}" if tg else ""),
+             f"Cost {rs(oi['cost_lot'])}/lot • max risk {rs(oi['risk_lot'])}/lot"
+             + (f" • {oi['lots']} lot(s)" if oi.get("lots") else "")
+             + f" (Δ {oi['delta']}" + (f", IV {oi['iv']}%" if oi.get("iv") else "") + ")"]
         return L
 
     # ─────────────── INTRADAY ───────────────
@@ -200,23 +236,31 @@ class CallEngine:
 
     def fmt_intra(self, name, ex, c, sig, call, lots_txt, blocks, warn, oi=None):
         buy = sig["side"] == "BUY"
-        head = (f"{'🟢' if buy else '🔴'} *CALL – INTRADAY {sig['side']} {name}*  #{call['id']}" if call
-                else f"⛔ *NO TRADE – intraday {sig['side']} {name}*")
-        L = [head, f"{'MCX' if ex == 'MCX' else 'NSE F&O'} | {c['symbol']} (exp {c['expiry_dt']:%d-%b-%Y}) | 1H | {VERSION}",
-             f"Signal candle {sig['candle'][:16]} (closed) | data {self.now:%d-%b %H:%M} IST"]
+        fut = nice_sym(c["symbol"])
         if call:
-            L += [f"Entry: *{px(call['entry'])}* (live) | SL: *{px(call['sl'])}* | T1: {px(call['t1'])} | T2: {px(call['t2'])}",
-                  f"Risk {px(call['R'])} pts = {rs(call['R'] * call['mult'])}/lot | Qty: {lots_txt} (≤{SET['risk_intraday'] * 100:g}% of {rs(C.CAPITAL_RS)})",
-                  f"After T1: book half, SL to cost. Square off by {SESSION[ex]['squareoff']}."]
-        why = (f"{'up' if buy else 'down'}trend (EMA20/50/200), ADX {sig['adx']:.0f}, broke 5-hr {'high ' + px(sig['level_hi']) if buy else 'low ' + px(sig['level_lo'])}, "
-               f"RSI {sig['rsi']:.0f}" + (f", volume {sig['vol_x']:.1f}x" if sig.get("vol_x") else ""))
-        L.append("Why: " + why)
+            L = [f"{'🟢' if buy else '🔴'} *{sig['side']} {name} FUT • Intraday #{call['id']}*",
+                 f"📅 {fut} • 1-hour signal ({sig['candle'][11:16]} candle)", "",
+                 f"💰 Entry: {px(call['entry'])}",
+                 f"🛑 Stop-loss: {px(call['sl'])} ({call['R']:,.0f} pts)" if call["R"] >= 100 else f"🛑 Stop-loss: {px(call['sl'])} ({call['R']:,.2f} pts)",
+                 f"🎯 Target 1: {px(call['t1'])} → book half, move SL to cost",
+                 f"🎯 Target 2: {px(call['t2'])}",
+                 f"⏰ Square off by {hm12(SESSION[ex]['squareoff'])}", ""]
+            L += self.size_lines(name, c, call["R"], SET["risk_intraday"])
+        else:
+            L = [f"⛔ *NO TRADE • {sig['side']} {name} (intraday)*", f"📅 {fut} • 1-hour signal ({sig['candle'][11:16]} candle)"]
+        L += ["", "📊 Why",
+              f"• {'Up' if buy else 'Down'}trend (EMA 20/50/200)",
+              f"• ADX {sig['adx']:.0f} • RSI {sig['rsi']:.0f}",
+              f"• Broke 5-hour {'high ' + px(sig['level_hi']) if buy else 'low ' + px(sig['level_lo'])}"]
+        if sig.get("vol_x"):
+            L.append(f"• Volume {sig['vol_x']:.1f}× normal")
         if blocks:
-            L.append("Rejected: " + "; ".join(blocks))
+            L += ["", "❌ Not taken: " + "; ".join(blocks)]
         L += self.option_block(oi)
         if warn:
-            L.append("⚠️ " + " | ".join(warn))
-        L.append(WARN)
+            L += ["", "⚠️ " + " | ".join(warn)]
+        L += ["", FOOT, f"Contract {c['symbol']} (exp {c['expiry_dt']:%d-%b-%Y}) • {'MCX' if ex == 'MCX' else 'NSE F&O'} • "
+                        f"data {self.now:%-I:%M %p} • {VERSION}"]
         return "\n".join(L)
 
     def intraday_monitor(self):
@@ -241,8 +285,9 @@ class CallEngine:
             S = SESSION[p["exch"]]
             if not p["t1_hit"] and s * (f - p["t1"]) >= 0:
                 p.update(t1_hit=True, t1_px=f, sl=p["entry"], opt_t1_px=o or None)
-                self.msg(f"✅ *T1 hit – {p['name']} {p['side']}* #{p['id']}\nFuture {px(f)} ({rs(s * (f - p['entry']) * p['mult'])}/lot)"
-                         + (f" | Option {px(o)}" if o else "") + f"\nBook half. SL moved to cost {px(p['entry'])}.", f"t1|{p['id']}")
+                self.msg(f"✅ *TARGET 1 HIT • {p['side']} {p['name']} #{p['id']}*\n"
+                         f"Future {px(p['entry'])} → {px(f)} ({rs(s * (f - p['entry']) * p['mult'])}/lot)"
+                         + (f"\nOption now {px(o)}" if o else "") + f"\n👉 Book half • move SL to cost {px(p['entry'])}", f"t1|{p['id']}")
                 continue
             why = None
             if s * (f - p["t2"]) >= 0:
@@ -260,13 +305,13 @@ class CallEngine:
         pts = (1 - half) * s * (p.get("t1_px", f) - p["entry"]) + half * s * (f - p["entry"])
         pnl = pts * p["mult"] - 2 * SET["cost_order_rs"]
         p.update(exit=f, exit_reason=why, closed=f"{self.now:%Y-%m-%d %H:%M}", pnl_rs_per_lot=round(pnl))
-        L = [f"{why} – *{p['name']} {p['side']}* #{p['id']} ({p['mode']})",
-             f"Future exit {px(f)} (entry {px(p['entry'])}) → *{rs(pnl)}/lot*"]
+        L = [f"{why} • *{p['side']} {p['name']} #{p['id']}* ({p['mode']})",
+             f"Future {px(p['entry'])} → {px(f)} • *{rs(pnl)}/lot*"]
         if p.get("opt") and o:
             ot1 = p.get("opt_t1_px") or o
             opnl = ((1 - half) * (ot1 - p["opt"]["entry"]) + half * (o - p["opt"]["entry"])) * p["opt"]["rs_per_point"] - 2 * SET["cost_order_rs"]
             p["opt_pnl_rs_per_lot"] = round(opnl)
-            L.append(f"Option {p['opt']['symbol']} {px(o)} (entry {px(p['opt']['entry'])}) → {rs(opnl)}/lot")
+            L.append(f"Option {nice_sym(p['opt']['symbol'])}: {px(p['opt']['entry'])} → {px(o)} • {rs(opnl)}/lot")
         self.s["open"].remove(p); self.s["closed"].append(p)
         self.msg("\n".join(L), f"close|{p['id']}")
 
@@ -342,28 +387,30 @@ class CallEngine:
         return "\n".join(L)
 
     def fmt_pos(self, name, ex, c, info, pend, blocks, warn, oi=None):
-        buy = info["side"] == "BUY"; s = 1 if buy else -1
-        head = (f"{'🟢' if buy else '🔴'} *CALL – POSITIONAL {info['side']} {name}*  #{pend['id']}" if pend
-                else f"⛔ *NO TRADE – positional {info['side']} {name}*")
-        L = [head, f"{'MCX' if ex == 'MCX' else 'NSE F&O'} | {c['symbol']} (exp {c['expiry_dt']:%d-%b-%Y}) | 1D | {VERSION}",
-             f"Signal candle {info['candle']} (closed) | data {self.now:%d-%b %H:%M} IST"]
+        buy = info["side"] == "BUY"; sg = 1 if buy else -1
+        fut = nice_sym(c["symbol"])
         if pend:
             R_pts = R.POS["stop_atr"] * info["atr"]
-            L += [f"Entry: {info['side']} at the next session open, valid only if price is ≤ {R.POS['chase_atr']} ATR beyond "
-                  f"{px(info['close'])} (≤ {px(info['close'] + s * R.POS['chase_atr'] * info['atr'])}) and still beyond {px(info['level'])}",
-                  f"Indicative SL: {px(info['close'] - s * R_pts)} (2×ATR {px(info['atr'])}; reset from the actual entry)",
-                  f"Exit: daily close {'below' if buy else 'above'} the 20-day {'low' if buy else 'high'} "
-                  f"(now {px(info['exit_long'] if buy else info['exit_short'])}) → exit next open. No fixed target.",
-                  f"Risk {px(R_pts)} pts = {rs(R_pts * self.mult(name, c))}/lot | Qty: {pend['lots_text']} "
-                  f"(≤{SET['risk_positional'] * 100:g}% of {rs(C.CAPITAL_RS)})"]
-        L.append(f"Why: close {px(info['close'])} {'>' if buy else '<'} 55-day {'high' if buy else 'low'} {px(info['level'])}, "
-                 f"{'above' if buy else 'below'} 200-day avg {px(info['sma'])}, RSI {info['rsi']:.0f}")
+            lim = info["close"] + sg * R.POS["chase_atr"] * info["atr"]
+            L = [f"{'🟢' if buy else '🔴'} *{info['side']} {name} FUT • Positional #{pend['id']}*",
+                 f"📅 {fut} • daily signal ({info['candle']})", "",
+                 f"💰 Entry: next session open, only if price is {'≤' if buy else '≥'} {px(lim)} and still {'above' if buy else 'below'} {px(info['level'])}",
+                 f"🛑 Stop-loss: about {px(info['close'] - sg * R_pts)} (2×ATR, reset from the actual entry)",
+                 f"🎯 Exit: daily close {'below' if buy else 'above'} the 20-day {'low' if buy else 'high'} (now {px(info['exit_long'] if buy else info['exit_short'])}) • no fixed target", ""]
+            L += self.size_lines(name, c, R_pts, SET["risk_positional"])
+        else:
+            L = [f"⛔ *NO TRADE • {info['side']} {name} (positional)*", f"📅 {fut} • daily signal ({info['candle']})"]
+        L += ["", "📊 Why",
+              f"• Closed {'above' if buy else 'below'} the 55-day {'high' if buy else 'low'} {px(info['level'])}",
+              f"• {'Above' if buy else 'Below'} the 200-day average {px(info['sma'])}",
+              f"• RSI {info['rsi']:.0f}"]
         if blocks:
-            L.append("Rejected: " + "; ".join(blocks))
+            L += ["", "❌ Not taken: " + "; ".join(blocks)]
         L += self.option_block(oi)
         if warn:
-            L.append("⚠️ " + " | ".join(warn))
-        L.append(WARN)
+            L += ["", "⚠️ " + " | ".join(warn)]
+        L += ["", FOOT, f"Contract {c['symbol']} (exp {c['expiry_dt']:%d-%b-%Y}) • {'MCX' if ex == 'MCX' else 'NSE F&O'} • "
+                        f"data {self.now:%-I:%M %p} • {VERSION}"]
         return "\n".join(L)
 
     def positional_activate(self):
@@ -386,7 +433,7 @@ class CallEngine:
             elif s * (f - p["level"]) <= 0:
                 why = f"price {px(f)} back {'below' if s > 0 else 'above'} the breakout level {px(p['level'])}"
             if why:
-                self.msg(f"⛔ *NO TRADE – positional {p['side']} {p['name']}* #{p['id']} cancelled\n{why}", f"cancel|{p['id']}")
+                self.msg(f"⛔ *CANCELLED • {p['side']} {p['name']} #{p['id']}* (positional)\nReason: {why}", f"cancel|{p['id']}")
                 continue
             sl = f - s * R.POS["stop_atr"] * p["atr"]
             o = float((q.get(p["opt"]["token"]) or {}).get("ltp") or 0) if p.get("opt") else 0
@@ -395,17 +442,17 @@ class CallEngine:
             if p.get("opt") and o:
                 p["opt"]["entry"] = o
             self.s["open"].append(p)
-            self.msg(f"✅ *ENTRY ACTIVE – positional {p['side']} {p['name']}* #{p['id']}\n{p['symbol']} entry {px(f)} | "
-                     f"SL {px(sl)} (2×ATR from entry) | risk {rs(p['R'] * p['mult'])}/lot"
-                     + (f"\nOption {p['opt']['symbol']} now {px(o)}" if p.get("opt") and o else "")
-                     + "\nExit only on the 20-day channel or the SL. " + WARN, f"active|{p['id']}")
+            self.msg(f"✅ *ENTRY ACTIVE • {p['side']} {p['name']} #{p['id']}* (positional)\n"
+                     f"💰 Entry {px(f)} • 🛑 SL {px(sl)} • risk {rs(p['R'] * p['mult'])}/lot"
+                     + (f"\n📈 Option {nice_sym(p['opt']['symbol'])} now {px(o)}" if p.get("opt") and o else "")
+                     + "\nExit only on the 20-day channel or the SL.\n" + FOOT, f"active|{p['id']}")
 
     def positional_manage(self, name, d):
         """On a new daily candle: channel exit (next open) and roll reminder."""
         for p in [p for p in self.s["open"] if p["mode"] == "positional" and p["name"] == name]:
             if not p.get("exit_pending") and R.positional_exit(d, p["side"]):
                 p["exit_pending"] = True
-                self.msg(f"🔔 *EXIT at next open – {p['name']} {p['side']}* #{p['id']}\nDaily close {px(float(d['close'].iloc[-1]))} "
+                self.msg(f"🔔 *EXIT AT NEXT OPEN • {p['side']} {p['name']} #{p['id']}*\nDaily close {px(float(d['close'].iloc[-1]))} "
                          f"crossed the 20-day channel.", f"exitsig|{p['id']}")
             left = np.busday_count(self.now.date(), pd.Timestamp(p["expiry"]).date())
             if left <= SET["roll_days"][p["exch"]] and not p.get("roll_noted"):
@@ -443,14 +490,14 @@ class CallEngine:
         op = self.s["open"]
         if not day and not op:
             return
-        L = [f"📊 *Calls – {self.now:%d %b}*"]
+        L = [f"📊 *CALLS SCORECARD • {self.now:%d %b}*", ""]
         for c in day:
-            L.append(f"{'✅' if c['pnl_rs_per_lot'] > 0 else '❌'} {c['name']} {c['side']} ({c['mode']}) {px(c['entry'])}→{px(c['exit'])} "
+            L.append(f"{'✅' if c['pnl_rs_per_lot'] > 0 else '❌'} {c['side']} {c['name']} ({c['mode']}): {px(c['entry'])} → {px(c['exit'])} • "
                      f"{rs(c['pnl_rs_per_lot'])}/lot")
         if day:
-            L.append(f"Day: *{rs(sum(c['pnl_rs_per_lot'] for c in day))}/lot* on {len(day)} closed call(s)")
+            L += ["", f"Today: *{rs(sum(c['pnl_rs_per_lot'] for c in day))}/lot* on {len(day)} closed call(s)"]
         if op:
-            L.append("Open: " + ", ".join(f"{p['name']} {p['side']} ({p['mode']})" for p in op))
+            L.append("Open: " + ", ".join(f"{p['side']} {p['name']} ({p['mode']})" for p in op))
         self.msg("\n".join(L), f"summary|{today}")
 
 
