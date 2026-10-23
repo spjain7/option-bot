@@ -306,7 +306,8 @@
   "intra|COPPER|2026-10-23 20:00": "2026-10-23",
   "intra|ZINC|2026-10-23 20:00": "2026-10-23",
   "intra|ALUMINIUM|2026-10-23 20:00": "2026-10-23",
-  "close|3": "2026-10-23"
+  "close|3": "2026-10-23",
+  "summary|2026-10-23": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -324,7 +325,8 @@
   "intra|BANKNIFTY|SELL": "blocked"
  },
  "summary": {
-  "2026-10-22": true
+  "2026-10-22": true,
+  "2026-10-23": true
  },
  "next_id": 4
 }
