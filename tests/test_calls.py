@@ -180,3 +180,17 @@ if __name__ == "__main__":
               test_nifty_both_markets, test_option_idea, test_no_orders_and_flags):
         t()
     print(f"\nALL {len(OK)} TRADING-CALL CHECKS PASSED")
+
+
+def test_rel_volume_same_hour():
+    rows = []
+    for d in range(15):
+        for h in range(15):
+            rows.append([pd.Timestamp("2026-10-01") + pd.Timedelta(days=d, hours=9 + h), 100, 101, 99, 100, 400 if h >= 9 else 100])
+    df = pd.DataFrame(rows, columns="time open high low close volume".split())
+    morning = df[df["time"] <= pd.Timestamp("2026-10-15 10:00")].reset_index(drop=True)
+    check("relative volume compares the same hour (normal morning candle = 1.0x, not 0.4x)", abs(R.rel_volume(morning) - 1.0) < 1e-9)
+
+
+test_rel_volume_same_hour()
+print("same-hour volume check passed")

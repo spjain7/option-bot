@@ -2,7 +2,7 @@
 
 INTRADAY (1-hour candles, closed bars only) – same rules as the earlier MCX hourly engine plus the user's RSI rule:
   BUY : close > EMA20 > EMA50, close > EMA200, ADX >= 20, close breaks the previous 5-hour high,
-        RSI between 55 and 70 (RSI > 70 blocks a fresh BUY), volume >= 1.2x the 20-hour average (when volume exists)
+        RSI between 55 and 70 (RSI > 70 blocks a fresh BUY), volume >= 1.2x the same hour's average over 10 sessions (when volume exists)
   SELL: mirror (RSI between 30 and 45; RSI < 30 blocks a fresh SELL)
   Plan: entry = live price; SL beyond the 5-hour swing, kept between 1 and 2 ATR; T1 = 1R (book half, SL to cost),
         T2 = 2R; square off at the session cut-off.
@@ -42,6 +42,16 @@ def _adx(d, n=14):
     return (100 * (pdi - ndi).abs() / (pdi + ndi).replace(0, np.nan)).ewm(alpha=1 / n, adjust=False).mean()
 
 
+def rel_volume(df):
+    """Last candle's volume vs the SAME hour on the previous 10 sessions (MCX evenings trade far more than mornings, so a
+    plain 20-hour average made every morning candle look like "0.4x volume"); 20-hour average if fewer than 5 days."""
+    vol = df["volume"].astype(float)
+    hr = pd.to_datetime(df["time"]).dt.strftime("%H:%M").values
+    same = vol[hr == hr[-1]].iloc[:-1].tail(10)
+    avg = float(same.mean()) if len(same) >= 5 else float(vol.iloc[-21:-1].mean())
+    return float(vol.iloc[-1]) / avg if avg > 0 else None
+
+
 # ─────────────── intraday ───────────────
 def intraday(df, p=INTRA):
     """df: closed 1-hour candles (oldest first). Returns (signal dict or None, reason)."""
@@ -53,8 +63,7 @@ def intraday(df, p=INTRA):
     adx = float(_adx(df).iloc[-1]); rsi = float(_rsi(c).iloc[-1]); last = float(c.iloc[-1])
     prev = df.iloc[-1 - p["brk"]:-1]
     hh, ll = float(prev.high.max()), float(prev.low.min())
-    vol = df["volume"].astype(float); avg = float(vol.iloc[-21:-1].mean())
-    vx = float(vol.iloc[-1]) / avg if avg > 0 else None
+    vx = rel_volume(df)
     info = dict(close=last, ema20=float(e1), ema50=float(e2), ema200=float(e3), adx=round(adx, 1), rsi=round(rsi, 1),
                 atr=atr, level_hi=hh, level_lo=ll, vol_x=None if vx is None else round(vx, 2),
                 swing_low=float(df.low.iloc[-p["brk"]:].min()), swing_high=float(df.high.iloc[-p["brk"]:].max()),
