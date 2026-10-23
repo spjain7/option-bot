@@ -127,6 +127,11 @@ def scan(api, master, now, state, msgs, rep, engine):
         return
     st = state.setdefault("stk", dict(active=[], last_block=None))
     st.setdefault("active", [])
+    if st.get("rescan_v") != 2:                                    # one-time: re-check today's close for stocks that
+        st["rescan_v"] = 2                                          # were blocked by stale alerts of the old rule
+        st["last_block"] = None
+        for k in [k for k in state["last_eval"] if k.startswith("STKOI|")]:
+            del state["last_eval"][k]
     old = [p for p in st["active"] if "expiry" not in p]          # alerts from the withdrawn 22-Oct rule
     if old:
         st["active"] = [p for p in st["active"] if "expiry" in p]
