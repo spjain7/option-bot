@@ -1,5 +1,6 @@
 {
- "open": [
+ "open": [],
+ "closed": [
   {
    "id": 1,
    "mode": "positional",
@@ -19,10 +20,14 @@
    "opened": "2026-10-23 09:34:10.463882",
    "exit_at": "2026-10-27 15:15:00",
    "why": "yesterday closed below the 20-day low with 2.3x volume and OI +2.2%",
-   "exit_by": "27 Oct 15:15"
+   "exit_by": "27 Oct 15:15",
+   "exit": 9.45,
+   "ret": 0.7735050610229275,
+   "rs_lot": 5482,
+   "why_exit": "target hit",
+   "closed": "2026-10-23 12:05:54.672152"
   }
  ],
- "closed": [],
  "done": {
   "positional-scan|2026-10-23": "2026-10-23 09:34:10.463882",
   "positional|COALINDIA|2026-10-23": "2026-10-23 09:34:10.463882"
