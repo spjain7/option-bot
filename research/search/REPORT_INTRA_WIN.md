@@ -22,3 +22,8 @@ Single clues (candlestick patterns, inside/NR days, etc.) shift the win rate by 
 - R3 overnight: first run "passed" but had look-ahead (used the full-day close while entering at 15:15). Fixed run:
   design +0.20%/trade, hold-out +0.07% but -0.02% at 2× costs → FAIL. Win ≈ 48-49%.
 - R4/R5/R6 RSI(2) dip: design 62-66% win, +0.2…+0.4%/trade → hold-out 59-60% win but LOSING (-0.03…-0.21%).
+
+# EMA-X-001 (EMA 5/13, 9/21, 20/50 crossover + vol/OI/trend/ADX/RSI/body/confirm filters) – 0 shortlisted, 0 passed
+STOCKS 668 tests: best = 5/13 swing exit + OI + daily trend + strong candle: +0.20R but only 106 trades, 29% win,
+  bootstrap p5 < 0 (could be luck) → not shortlisted. Same-day exits all lose.
+INDEX 52 tests: all losing (best -0.08R). MCX 320 tests: all losing (best -0.03R, 52% win).
