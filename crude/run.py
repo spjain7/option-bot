@@ -25,13 +25,23 @@ def telegram(text):
     tok, chat = os.getenv("TELEGRAM_TOKEN", ""), os.getenv("TELEGRAM_CHAT_ID", "")
     if not tok or not chat:
         return False, "TELEGRAM_TOKEN / TELEGRAM_CHAT_ID not set"
-    try:
-        r = requests.post(f"https://api.telegram.org/bot{tok}/sendMessage", timeout=20,
-                          data={"chat_id": chat, "text": text[:4000], "disable_web_page_preview": "true"})
-        j = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
-        return (bool(j.get("ok")), "ok" if j.get("ok") else f"HTTP {r.status_code}: {j.get('description', '')[:120]}")
-    except Exception as e:
-        return False, f"{type(e).__name__}"
+    import time
+    for attempt in range(4):                       # Telegram rate limit (HTTP 429): wait as told and retry
+        try:
+            r = requests.post(f"https://api.telegram.org/bot{tok}/sendMessage", timeout=20,
+                              data={"chat_id": chat, "text": text[:4000], "disable_web_page_preview": "true"})
+            j = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
+        except Exception as e:
+            if attempt == 3:
+                return False, f"{type(e).__name__}"
+            time.sleep(3); continue
+        if j.get("ok"):
+            return True, "ok"
+        wait = (j.get("parameters") or {}).get("retry_after")
+        if r.status_code == 429 and wait and attempt < 3:
+            time.sleep(min(float(wait) + 1, 90)); continue
+        return False, f"HTTP {r.status_code}: {j.get('description', '')[:120]}"
+    return False, "rate limited"
 
 
 def run_context(now):

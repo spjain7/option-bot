@@ -258,6 +258,25 @@ def test_stocks():
     check("same breakout WITHOUT an OI rise -> no call (OI confirmation required)", not any("BUY |" in x for x in m3))
 
 
+def test_telegram_delivery():
+    import json, tempfile, os
+    from alerts import run as RUN
+    packed = RUN._pack(["a" * 1000] * 10)
+    check("burst of messages is packed into ≤ 3,800-character posts (Telegram rate limit)", len(packed) == 4 and all(len(x) <= 3800 for x in packed))
+    d = Path(tempfile.mkdtemp())
+    with mock.patch.object(RUN, "OUTBOX", d / "outbox.json"), mock.patch.object(RUN, "PENDING", d / "pending.json"), \
+         mock.patch.object(RUN, "GAP_SEC", 0), mock.patch.dict(os.environ, {"ALERTS_TELEGRAM": "1", "SAVE_OK": "success"}):
+        (d / "outbox.json").write_text(json.dumps(dict(messages=["m1", "m2"])))
+        with mock.patch("crude.run.telegram", side_effect=[(True, "ok"), (False, "HTTP 429")]):
+            RUN.flush()
+        check("undelivered message is kept for the next run, not lost", json.loads((d / "pending.json").read_text()) == ["m2"])
+        sent = []
+        (d / "outbox.json").write_text(json.dumps(dict(messages=["m3"])))
+        with mock.patch("crude.run.telegram", side_effect=lambda t: (sent.append(t) or (True, "ok"))):
+            RUN.flush()
+        check("next run delivers the kept message first", sent == ["m2", "m3"] and not (d / "pending.json").exists())
+
+
 def test_no_orders():
     src = "\n".join(f.read_text() for f in (ROOT / "alerts").rglob("*.py") if "tests" not in f.parts)
     check("alerts package has no order API (alert-only, no auto trading)", not re.search(r"placeOrder|modifyOrder|cancelOrder|place_order", src))
@@ -267,6 +286,6 @@ def test_no_orders():
 
 
 if __name__ == "__main__":
-    for t in (test_patterns, test_bounce, test_quality_gold_case, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_breakout, test_stocks, test_no_orders):
+    for t in (test_patterns, test_bounce, test_quality_gold_case, test_rsi_direction, test_sessions_and_candles, test_engine_replay, test_follow_up, test_levels_and_oi, test_breakout, test_stocks, test_telegram_delivery, test_no_orders):
         t()
     print(f"\nALL {len(OK)} ALERT CHECKS PASSED")

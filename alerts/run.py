@@ -43,19 +43,47 @@ def scan():
     return 0
 
 
+PENDING = SD / "pending.json"
+GAP_SEC = 3.2           # Telegram allows ~20 messages/minute into one group/channel
+MAX_SINGLE = 24         # more than this in one run -> pack messages into combined posts (fewer API calls)
+
+
+def _pack(msgs, limit=3800):
+    out, cur = [], ""
+    for m in msgs:
+        if cur and len(cur) + len(m) + 2 > limit:
+            out.append(cur); cur = ""
+        cur = (cur + "\n\n" + m) if cur else m
+    if cur:
+        out.append(cur)
+    return out
+
+
 def flush():
+    import time
     from crude.run import telegram
     if not OUTBOX.exists():
         print("::error::no outbox"); return 1
     msgs = json.loads(OUTBOX.read_text())["messages"]
+    if PENDING.exists():                                   # messages that could not be delivered last time
+        msgs = json.loads(PENDING.read_text()) + msgs
+        PENDING.unlink()
     if os.getenv("SAVE_OK", "success") != "success":
         msgs = ["⚠️ ALERTS – state could not be saved this run; alerts below may repeat next run.\n"] + msgs
-    bad = 0
-    for m in msgs:
+    if len(msgs) > MAX_SINGLE:
+        msgs = _pack(msgs)
+    failed = []
+    for k, m in enumerate(msgs):
         ok, d = telegram(m) if os.getenv("ALERTS_TELEGRAM", "1") == "1" else (True, "telegram off")
         print(("sent" if ok else "TELEGRAM FAILED") + f": {d} | {m.splitlines()[0][:80]}")
-        bad += not ok
-    return 1 if bad else 0
+        if not ok:
+            failed.append(m)
+        if k + 1 < len(msgs) and os.getenv("ALERTS_TELEGRAM", "1") == "1":
+            time.sleep(GAP_SEC)
+    if failed:                                             # keep them for the next run instead of losing them
+        PENDING.write_text(json.dumps(failed))
+        print(f"::warning::{len(failed)} message(s) kept for the next run")
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":
