@@ -50,8 +50,22 @@ options() {
   echo "option engine exit $rc"
 }
 
+obuy() {
+  # ---- option-BUY alerts (test phase; NSE hours only) ----
+  if n=$(restore obuy-state obuy); then
+    export OBUY_NEW_STATE=$n
+    python -m obuy.run scan; local rc=$?
+    if [ -f state/obuy/state.json ] && save obuy-state obuy state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
+    SAVE_OK=$SAVE_OK python -m obuy.run flush
+    echo "option-buy scan exit $rc, save $SAVE_OK"
+  else
+    echo "::error::option-buy state restore failed"
+  fi
+}
+
 iteration() {
   options
+  obuy
   # ---- buy/sell alerts ----
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n

@@ -25,6 +25,8 @@ env:
   ALERTS_STATE_DIR: state/alerts
   ALERTS_TELEGRAM: "1"
   CRUDE_STATE_DIR: state/crude
+  OBUY_STATE_DIR: state/obuy
+  OBUY_TELEGRAM: "1"
   CRUDE_TELEGRAM: "1"
   ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
   ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}

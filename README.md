@@ -89,3 +89,13 @@ Every 15 min the bot checks the last hour of futures snapshots: price range ≤ 
 OI up ≥ 1% / 2% / 1.5%, volume ≥ 1.3× the day's pace. Near the day high/low the alert says which break to watch.
 It is **not a call** and cannot predict direction. Each alert is tracked for 2 hours against a random script of the
 same kind (control); the daily report shows both hit rates. Settings: `PREMOVE_*` in `config.py`; tests: `tests/test_premove.py`.
+
+## 🟢 Option-BUY alerts (TEST PHASE, Engine E)
+Separate from the selling bot (`obuy/`, state on branch `obuy-state`). Only the two setups that did best on real option
+prices last month (`research/search/obuy_month.py`):
+- **Intraday (stocks):** VWAP cross + RSI ≥ 60 / ≤ 40 + OI and price rising/falling over the last hour, 9:30–14:30. SL −30%, target +60%, exit 15:15.
+- **Positional (stocks + indices):** yesterday's close beyond the 20-day high/low with 1.5× volume and OI up. SL −35%, target +80%, exit on the 3rd session.
+
+ATM option, nearest monthly expiry with ≥ 3 days left; skipped if not traded today or spread > 3%. Every alert is tracked
+with real option prices (SL / target / time exit) and a scorecard is sent after 15:30. The edge is small and unproven live:
+use 1 lot or paper-track. Tests: `python -m obuy.tests.test_obuy`.
