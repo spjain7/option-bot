@@ -1,11 +1,11 @@
 {
- "time": "2026-10-23 18:50:01.175458",
+ "time": "2026-10-23 19:00:26.035113",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "workflow_dispatch",
-  "number": "17",
+  "number": "19",
   "delay_min": null,
   "previous_run": {
    "number": 12,
@@ -15,8 +15,8 @@
   }
  },
  "api": {
-  "15m": "ok (821 candles, last start 23-Oct 18:45)",
-  "1h": "ok (1049 candles, last start 23-Oct 18:00)",
+  "15m": "ok (822 candles, last start 23-Oct 19:00)",
+  "1h": "ok (1050 candles, last start 23-Oct 19:00)",
   "quote": "ok"
  },
  "data": {
@@ -27,26 +27,26 @@
   "bars_1h": 563,
   "last_closed_3h": "2026-10-23 15:00:00",
   "bars_3h": 187,
-  "age_15m_min": 5.0,
+  "age_15m_min": 15.4,
   "quote_age_min": -0.1,
-  "ltp": 9666.0,
-  "day_volume": 22952,
+  "ltp": 9661.0,
+  "day_volume": 23458,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.51
+   "quote_vs_candle_atr": 0.38
   },
   "volume": "available",
-  "oi_current": 1553800,
+  "oi_current": 1557200,
   "oi_change": {
    "status": "OK",
-   "label": "Long buildup",
-   "d_oi_pct": 0.994,
-   "d_price": 63.0,
-   "gap_min": 16.6,
-   "oi": 1553800,
-   "oi_prev": 1538500
+   "label": "Short buildup",
+   "d_oi_pct": 0.219,
+   "d_price": -5.0,
+   "gap_min": 10.4,
+   "oi": 1557200,
+   "oi_prev": 1553800
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -66,7 +66,7 @@
     "rsi": 61.03276712824054
    },
    "bar_time": "2026-10-23 18:30:00",
-   "new_candle": true
+   "new_candle": false
   },
   "positional": {
    "decision": "NONE",
