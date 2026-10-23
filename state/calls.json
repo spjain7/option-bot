@@ -23,7 +23,9 @@
    "opened": "2026-10-23 09:06",
    "exit_pending": false,
    "t1_hit": false
-  },
+  }
+ ],
+ "closed": [
   {
    "id": 2,
    "mode": "intraday",
@@ -58,10 +60,14 @@
     "risk_lot": 5108,
     "rs_per_point": 65,
     "lots": 0
-   }
+   },
+   "exit": 22638.5,
+   "exit_reason": "\u23f0 Square-off time",
+   "closed": "2026-10-23 15:18",
+   "pnl_rs_per_lot": -1932,
+   "opt_pnl_rs_per_lot": -2355
   }
  ],
- "closed": [],
  "pending": [],
  "done": {
   "intra|GOLD|2026-10-21 19:00": "2026-10-21",
@@ -213,7 +219,9 @@
   "intra|CRUDEOIL|2026-10-23 14:00": "2026-10-23",
   "intra|NATURALGAS|2026-10-23 14:00": "2026-10-23",
   "intra|COPPER|2026-10-23 14:00": "2026-10-23",
-  "intra|ZINC|2026-10-23 14:00": "2026-10-23"
+  "intra|ZINC|2026-10-23 14:00": "2026-10-23",
+  "close|2": "2026-10-23",
+  "intra|ALUMINIUM|2026-10-23 14:00": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
