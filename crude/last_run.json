@@ -1,5 +1,5 @@
 {
- "time": "2026-10-23 10:37:58.809953",
+ "time": "2026-10-23 11:06:10.983817",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -15,38 +15,38 @@
   }
  },
  "api": {
-  "15m": "ok (788 candles, last start 23-Oct 10:30)",
-  "1h": "ok (1049 candles, last start 23-Oct 10:00)",
+  "15m": "ok (790 candles, last start 23-Oct 11:00)",
+  "1h": "ok (1049 candles, last start 23-Oct 11:00)",
   "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-23 10:15:00",
-  "bars_15m": 787,
-  "last_closed_1h": "2026-10-23 09:00:00",
-  "bars_1h": 555,
+  "last_closed_15m": "2026-10-23 10:45:00",
+  "bars_15m": 789,
+  "last_closed_1h": "2026-10-23 10:00:00",
+  "bars_1h": 556,
   "last_closed_3h": "2026-10-22 21:00:00",
   "bars_3h": 184,
-  "age_15m_min": 8.0,
-  "quote_age_min": -0.2,
-  "ltp": 9542.0,
-  "day_volume": 2959,
+  "age_15m_min": 6.2,
+  "quote_age_min": -0.3,
+  "ltp": 9571.0,
+  "day_volume": 3894,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.37
+   "quote_vs_candle_atr": 0.15
   },
   "volume": "available",
-  "oi_current": 1363700,
+  "oi_current": 1370300,
   "oi_change": {
    "status": "OK",
    "label": "Long buildup",
-   "d_oi_pct": 1.473,
-   "d_price": 9.0,
-   "gap_min": 35.4,
-   "oi": 1363700,
-   "oi_prev": 1343900
+   "d_oi_pct": 0.484,
+   "d_price": 29.0,
+   "gap_min": 28.2,
+   "oi": 1370300,
+   "oi_prev": 1363700
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -57,15 +57,15 @@
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "1-hour trend RANGE: close 9524 EMA20 9411 EMA50 9304 EMA200 8904 ADX 14.7"
+    "1-hour trend RANGE: close 9576 EMA20 9426 EMA50 9315 EMA200 8911 ADX 15.3"
    ],
    "metrics": {
     "trend_1h": "RANGE",
-    "trend_1h_detail": "close 9524 EMA20 9411 EMA50 9304 EMA200 8904 ADX 14.7",
-    "adx_1h": 14.703095420308054,
-    "rsi": 71.30672960739957
+    "trend_1h_detail": "close 9576 EMA20 9426 EMA50 9315 EMA200 8911 ADX 15.3",
+    "adx_1h": 15.265077088839316,
+    "rsi": 72.06412833540881
    },
-   "bar_time": "2026-10-23 10:15:00",
+   "bar_time": "2026-10-23 10:45:00",
    "new_candle": true
   },
   "positional": {
