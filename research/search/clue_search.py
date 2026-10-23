@@ -204,7 +204,7 @@ def main():
     mcx = [(n, SS.load("MCX", n, "ONE_HOUR"), None, None) for n in ("CRUDEOIL", "NATURALGAS", "GOLD", "SILVER", "COPPER", "ZINC", "ALUMINIUM")]
     res = {}
     for label, items in (("INDEX", idx), ("MCX", mcx), ("STOCKS", stocks)):
-        T = build([x for x in items if x[1] is not None], label)
+        T = build([x for x in items if x[1] is not None], label).replace([np.inf, -np.inf], np.nan)
         T.to_pickle(OUT / f"table_{label}.pkl")
         for ex in EXITS:
             ct = clue_table(T, ex)

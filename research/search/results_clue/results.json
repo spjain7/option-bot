@@ -1,0 +1,350 @@
+{
+ "INDEX|A|LONG": {
+  "design": {
+   "trades": 175,
+   "exp_r": 0.827,
+   "win": 98.3,
+   "pf": 50.09,
+   "p5": 0.765,
+   "exp_2x": 0.629
+  },
+  "valid": {
+   "trades": 32,
+   "exp_r": 0.032,
+   "win": 56.2,
+   "pf": 1.09,
+   "p5": -0.223,
+   "exp_2x": -0.129
+  },
+  "holdout": {
+   "trades": 159,
+   "exp_r": -0.169,
+   "win": 39.6,
+   "pf": 0.62,
+   "p5": -0.275,
+   "exp_2x": -0.343
+  },
+  "PASS": false,
+  "top_q": 0.9,
+  "rules": "|--- hour <= 4.50\n|   |--- e200 <= 0.00\n|   |   |--- vs_pdl <= 2.35\n|   |   |   |--- weights: [533.00, 503.00] class: 0\n|   |   |--- vs_pdl >  2.35\n|   |   |   |--- weights: [333.00, 239.00] class: 0\n|   |--- e200 >  0.00\n|   |   |--- gap <= 0.45\n|   |   |   |--- weights: [470.00, 259.00] class: 0\n|   |   |--- gap >  0.45\n|   |   |   |--- weights: [280.00, 231.00] class: 0\n|--- hour >  4.50\n|   |--- weights: [583.00, 127.00] class: 0\n"
+ },
+ "INDEX|A|SHORT": {
+  "design": {
+   "trades": 166,
+   "exp_r": 0.8,
+   "win": 98.2,
+   "pf": 52.32,
+   "p5": 0.735,
+   "exp_2x": 0.594
+  },
+  "valid": {
+   "trades": 30,
+   "exp_r": -0.521,
+   "win": 16.7,
+   "pf": 0.2,
+   "p5": -0.742,
+   "exp_2x": -0.692
+  },
+  "holdout": {
+   "trades": 78,
+   "exp_r": -0.087,
+   "win": 47.4,
+   "pf": 0.79,
+   "p5": -0.255,
+   "exp_2x": -0.29
+  },
+  "PASS": false,
+  "top_q": 0.9,
+  "rules": "|--- hour <= 4.50\n|   |--- from_open <= 0.45\n|   |   |--- ema_fast <= 0.93\n|   |   |   |--- weights: [672.00, 466.00] class: 0\n|   |   |--- ema_fast >  0.93\n|   |   |   |--- weights: [481.00, 234.00] class: 0\n|   |--- from_open >  0.45\n|   |   |--- weights: [701.00, 294.00] class: 0\n|--- hour >  4.50\n|   |--- weights: [594.00, 116.00] class: 0\n"
+ },
+ "INDEX|B|LONG": {
+  "design": {
+   "trades": 199,
+   "exp_r": 0.304,
+   "win": 98.0,
+   "pf": 17.42,
+   "p5": 0.278,
+   "exp_2x": 0.166
+  },
+  "valid": {
+   "trades": 24,
+   "exp_r": -0.041,
+   "win": 62.5,
+   "pf": 0.81,
+   "p5": -0.203,
+   "exp_2x": -0.168
+  },
+  "holdout": {
+   "trades": 193,
+   "exp_r": -0.164,
+   "win": 48.2,
+   "pf": 0.48,
+   "p5": -0.231,
+   "exp_2x": -0.298
+  },
+  "PASS": false,
+  "top_q": 0.9,
+  "rules": "|--- hour <= 4.50\n|   |--- atrp_rel <= 0.79\n|   |   |--- weights: [215.00, 318.00] class: 1\n|   |--- atrp_rel >  0.79\n|   |   |--- candle_r <= 0.76\n|   |   |   |--- weights: [549.00, 444.00] class: 0\n|   |   |--- candle_r >  0.76\n|   |   |   |--- weights: [609.00, 713.00] class: 1\n|--- hour >  4.50\n|   |--- weights: [583.00, 127.00] class: 0\n"
+ },
+ "INDEX|B|SHORT": {
+  "design": {
+   "trades": 200,
+   "exp_r": 0.307,
+   "win": 98.0,
+   "pf": 22.67,
+   "p5": 0.284,
+   "exp_2x": 0.167
+  },
+  "valid": {
+   "trades": 31,
+   "exp_r": -0.4,
+   "win": 29.0,
+   "pf": 0.2,
+   "p5": -0.571,
+   "exp_2x": -0.517
+  },
+  "holdout": {
+   "trades": 147,
+   "exp_r": -0.054,
+   "win": 59.2,
+   "pf": 0.78,
+   "p5": -0.126,
+   "exp_2x": -0.196
+  },
+  "PASS": false,
+  "top_q": 0.9,
+  "rules": "|--- hour <= 4.50\n|   |--- hour <= 3.50\n|   |   |--- from_open <= 0.44\n|   |   |   |--- weights: [672.00, 741.00] class: 1\n|   |   |--- from_open >  0.44\n|   |   |   |--- weights: [418.00, 305.00] class: 0\n|   |--- hour >  3.50\n|   |   |--- weights: [435.00, 277.00] class: 0\n|--- hour >  4.50\n|   |--- weights: [593.00, 117.00] class: 0\n"
+ },
+ "MCX|A|LONG": {
+  "design": {
+   "trades": 221,
+   "exp_r": 1.026,
+   "win": 95.5,
+   "pf": 20.43,
+   "p5": 0.96,
+   "exp_2x": 0.786
+  },
+  "valid": {
+   "trades": 30,
+   "exp_r": -0.186,
+   "win": 46.7,
+   "pf": 0.71,
+   "p5": -0.516,
+   "exp_2x": -0.484
+  },
+  "holdout": {
+   "trades": 95,
+   "exp_r": -0.393,
+   "win": 34.7,
+   "pf": 0.48,
+   "p5": -0.577,
+   "exp_2x": -0.627
+  },
+  "PASS": false,
+  "top_q": 0.98,
+  "rules": "|--- hour <= 12.50\n|   |--- atrp <= 0.00\n|   |   |--- hour <= 10.50\n|   |   |   |--- weights: [8156.00, 4570.00] class: 0\n|   |   |--- hour >  10.50\n|   |   |   |--- weights: [1614.00, 608.00] class: 0\n|   |--- atrp >  0.00\n|   |   |--- adx_d <= 13.68\n|   |   |   |--- weights: [1672.00, 1269.00] class: 0\n|   |   |--- adx_d >  13.68\n|   |   |   |--- weights: [6823.00, 4114.00] class: 0\n|--- hour >  12.50\n|   |--- candle_r <= 0.85\n|   |   |--- e200 <= -50.00\n|   |   |   |--- weights: [503.00, 182.00] class: 0\n|   |   |--- e200 >  -50.00\n|   |   |   |--- weights: [560.00, 88.00] class: 0\n|   |--- candle_r >  0.85\n|   |   |--- weights: [589.00, 348.00] class: 0\n"
+ },
+ "MCX|A|SHORT": {
+  "design": {
+   "trades": 236,
+   "exp_r": 1.118,
+   "win": 99.2,
+   "pf": 185.37,
+   "p5": 1.075,
+   "exp_2x": 0.855
+  },
+  "valid": {
+   "trades": 93,
+   "exp_r": -0.262,
+   "win": 38.7,
+   "pf": 0.62,
+   "p5": -0.457,
+   "exp_2x": -0.505
+  },
+  "holdout": {
+   "trades": 350,
+   "exp_r": -0.101,
+   "win": 44.0,
+   "pf": 0.83,
+   "p5": -0.198,
+   "exp_2x": -0.269
+  },
+  "PASS": false,
+  "top_q": 0.98,
+  "rules": "|--- hour <= 11.50\n|   |--- atrp <= 0.00\n|   |   |--- d_nr7 <= 0.50\n|   |   |   |--- weights: [4082.00, 2514.00] class: 0\n|   |   |--- d_nr7 >  0.50\n|   |   |   |--- weights: [995.00, 415.00] class: 0\n|   |--- atrp >  0.00\n|   |   |--- gap <= -1.53\n|   |   |   |--- weights: [594.00, 585.00] class: 0\n|   |   |--- gap >  -1.53\n|   |   |   |--- weights: [10322.00, 7019.00] class: 0\n|--- hour >  11.50\n|   |--- atrp <= 0.01\n|   |   |--- hour <= 12.50\n|   |   |   |--- weights: [1167.00, 412.00] class: 0\n|   |   |--- hour >  12.50\n|   |   |   |--- weights: [1296.00, 254.00] class: 0\n|   |--- atrp >  0.01\n|   |   |--- hour <= 12.50\n|   |   |   |--- weights: [426.00, 295.00] class: 0\n|   |   |--- hour >  12.50\n|   |   |   |--- weights: [489.00, 231.00] class: 0\n"
+ },
+ "MCX|B|LONG": {
+  "design": {
+   "trades": 926,
+   "exp_r": 0.281,
+   "win": 95.2,
+   "pf": 6.31,
+   "p5": 0.263,
+   "exp_2x": 0.134
+  },
+  "valid": {
+   "trades": 232,
+   "exp_r": -0.169,
+   "win": 65.5,
+   "pf": 0.55,
+   "p5": -0.247,
+   "exp_2x": -0.351
+  },
+  "holdout": {
+   "trades": 931,
+   "exp_r": -0.152,
+   "win": 63.3,
+   "pf": 0.6,
+   "p5": -0.192,
+   "exp_2x": -0.285
+  },
+  "PASS": false,
+  "top_q": 0.9,
+  "rules": "|--- hour <= 10.50\n|   |--- atrp <= 0.00\n|   |   |--- adx_d <= 28.25\n|   |   |   |--- weights: [2563.00, 1926.00] class: 0\n|   |   |--- adx_d >  28.25\n|   |   |   |--- weights: [624.00, 921.00] class: 1\n|   |--- atrp >  0.00\n|   |   |--- atrp <= 0.00\n|   |   |   |--- weights: [3196.00, 4061.00] class: 1\n|   |   |--- atrp >  0.00\n|   |   |   |--- weights: [4081.00, 6844.00] class: 1\n|--- hour >  10.50\n|   |--- candle_r <= 0.85\n|   |   |--- atrp <= 0.00\n|   |   |   |--- weights: [1271.00, 320.00] class: 0\n|   |   |--- atrp >  0.00\n|   |   |   |--- weights: [843.00, 444.00] class: 0\n|   |--- candle_r >  0.85\n|   |   |--- atrp <= 0.00\n|   |   |   |--- weights: [1033.00, 575.00] class: 0\n|   |   |--- atrp >  0.00\n|   |   |   |--- weights: [1316.00, 1078.00] class: 0\n"
+ },
+ "MCX|B|SHORT": {
+  "design": {
+   "trades": 541,
+   "exp_r": 0.325,
+   "win": 98.5,
+   "pf": 20.34,
+   "p5": 0.31,
+   "exp_2x": 0.174
+  },
+  "valid": {
+   "trades": 153,
+   "exp_r": -0.152,
+   "win": 62.1,
+   "pf": 0.58,
+   "p5": -0.239,
+   "exp_2x": -0.313
+  },
+  "holdout": {
+   "trades": 654,
+   "exp_r": -0.149,
+   "win": 61.8,
+   "pf": 0.61,
+   "p5": -0.193,
+   "exp_2x": -0.27
+  },
+  "PASS": false,
+  "top_q": 0.95,
+  "rules": "|--- hour <= 10.50\n|   |--- atrp <= 0.00\n|   |   |--- adx_d <= 26.44\n|   |   |   |--- weights: [2442.00, 1685.00] class: 0\n|   |   |--- adx_d >  26.44\n|   |   |   |--- weights: [714.00, 989.00] class: 1\n|   |--- atrp >  0.00\n|   |   |--- hour <= 8.50\n|   |   |   |--- weights: [5214.00, 9625.00] class: 1\n|   |   |--- hour >  8.50\n|   |   |   |--- weights: [1513.00, 2034.00] class: 1\n|--- hour >  10.50\n|   |--- candle_r <= 0.80\n|   |   |--- hour <= 12.50\n|   |   |   |--- weights: [955.00, 380.00] class: 0\n|   |   |--- hour >  12.50\n|   |   |   |--- weights: [1027.00, 203.00] class: 0\n|   |--- candle_r >  0.80\n|   |   |--- hour <= 12.50\n|   |   |   |--- weights: [1825.00, 1450.00] class: 0\n|   |   |--- hour >  12.50\n|   |   |   |--- weights: [745.00, 295.00] class: 0\n"
+ },
+ "STOCKS|A|LONG": {
+  "design": {
+   "trades": 2139,
+   "exp_r": 0.533,
+   "win": 85.0,
+   "pf": 6.31,
+   "p5": 0.509,
+   "exp_2x": 0.423
+  },
+  "valid": {
+   "trades": 2247,
+   "exp_r": -0.031,
+   "win": 48.3,
+   "pf": 0.91,
+   "p5": -0.06,
+   "exp_2x": -0.133
+  },
+  "holdout": {
+   "trades": 15589,
+   "exp_r": -0.108,
+   "win": 43.1,
+   "pf": 0.74,
+   "p5": -0.12,
+   "exp_2x": -0.21
+  },
+  "PASS": false,
+  "top_q": 0.98,
+  "rules": "|--- hour <= 4.50\n|   |--- wday <= 3.50\n|   |   |--- atrp <= 0.01\n|   |   |   |--- weights: [38853.00, 28256.00] class: 0\n|   |   |--- atrp >  0.01\n|   |   |   |--- weights: [33498.00, 28785.00] class: 0\n|   |--- wday >  3.50\n|   |   |--- trend <= -50.00\n|   |   |   |--- weights: [3396.00, 1204.00] class: 0\n|   |   |--- trend >  -50.00\n|   |   |   |--- weights: [17313.00, 12039.00] class: 0\n|--- hour >  4.50\n|   |--- atrp <= 0.01\n|   |   |--- e200 <= -50.00\n|   |   |   |--- weights: [5799.00, 1552.00] class: 0\n|   |   |--- e200 >  -50.00\n|   |   |   |--- weights: [6478.00, 2351.00] class: 0\n|   |--- atrp >  0.01\n|   |   |--- atrp_rel <= 1.02\n|   |   |   |--- weights: [8142.00, 3312.00] class: 0\n|   |   |--- atrp_rel >  1.02\n|   |   |   |--- weights: [8530.00, 4557.00] class: 0\n"
+ },
+ "STOCKS|A|SHORT": {
+  "design": {
+   "trades": 9781,
+   "exp_r": 0.277,
+   "win": 65.8,
+   "pf": 2.03,
+   "p5": 0.262,
+   "exp_2x": 0.151
+  },
+  "valid": {
+   "trades": 1769,
+   "exp_r": -0.08,
+   "win": 45.7,
+   "pf": 0.81,
+   "p5": -0.115,
+   "exp_2x": -0.181
+  },
+  "holdout": {
+   "trades": 12787,
+   "exp_r": -0.058,
+   "win": 46.0,
+   "pf": 0.86,
+   "p5": -0.071,
+   "exp_2x": -0.164
+  },
+  "PASS": false,
+  "top_q": 0.9,
+  "rules": "|--- hour <= 4.50\n|   |--- wday <= 3.50\n|   |   |--- hour <= 2.50\n|   |   |   |--- weights: [38424.00, 26272.00] class: 0\n|   |   |--- hour >  2.50\n|   |   |   |--- weights: [41062.00, 23634.00] class: 0\n|   |--- wday >  3.50\n|   |   |--- trend <= -50.00\n|   |   |   |--- weights: [1840.00, 2760.00] class: 1\n|   |   |--- trend >  -50.00\n|   |   |   |--- weights: [17068.00, 12284.00] class: 0\n|--- hour >  4.50\n|   |--- atrp <= 0.01\n|   |   |--- e200 <= -50.00\n|   |   |   |--- weights: [7984.00, 3291.00] class: 0\n|   |   |--- e200 >  -50.00\n|   |   |   |--- weights: [9103.00, 2804.00] class: 0\n|   |--- atrp >  0.01\n|   |   |--- candle_r <= 0.75\n|   |   |   |--- weights: [4934.00, 1943.00] class: 0\n|   |   |--- candle_r >  0.75\n|   |   |   |--- weights: [6977.00, 3685.00] class: 0\n"
+ },
+ "STOCKS|B|LONG": {
+  "design": {
+   "trades": 5716,
+   "exp_r": 0.185,
+   "win": 80.1,
+   "pf": 2.77,
+   "p5": 0.176,
+   "exp_2x": 0.104
+  },
+  "valid": {
+   "trades": 4438,
+   "exp_r": -0.05,
+   "win": 55.7,
+   "pf": 0.81,
+   "p5": -0.064,
+   "exp_2x": -0.122
+  },
+  "holdout": {
+   "trades": 28469,
+   "exp_r": -0.099,
+   "win": 51.7,
+   "pf": 0.66,
+   "p5": -0.105,
+   "exp_2x": -0.171
+  },
+  "PASS": false,
+  "top_q": 0.95,
+  "rules": "|--- hour <= 4.50\n|   |--- hour <= 3.50\n|   |   |--- wday <= 3.50\n|   |   |   |--- weights: [46592.00, 50452.00] class: 1\n|   |   |--- wday >  3.50\n|   |   |   |--- weights: [13298.00, 12166.00] class: 0\n|   |--- hour >  3.50\n|   |   |--- body <= -0.24\n|   |   |   |--- weights: [6009.00, 6033.00] class: 1\n|   |   |--- body >  -0.24\n|   |   |   |--- weights: [16174.00, 12620.00] class: 0\n|--- hour >  4.50\n|   |--- atrp <= 0.01\n|   |   |--- e200 <= -50.00\n|   |   |   |--- weights: [5774.00, 1577.00] class: 0\n|   |   |--- e200 >  -50.00\n|   |   |   |--- weights: [6437.00, 2392.00] class: 0\n|   |--- atrp >  0.01\n|   |   |--- atrp_rel <= 1.02\n|   |   |   |--- weights: [8117.00, 3337.00] class: 0\n|   |   |--- atrp_rel >  1.02\n|   |   |   |--- weights: [8511.00, 4576.00] class: 0\n"
+ },
+ "STOCKS|B|SHORT": {
+  "design": {
+   "trades": 6449,
+   "exp_r": 0.15,
+   "win": 77.3,
+   "pf": 2.04,
+   "p5": 0.14,
+   "exp_2x": 0.063
+  },
+  "valid": {
+   "trades": 830,
+   "exp_r": -0.078,
+   "win": 56.0,
+   "pf": 0.74,
+   "p5": -0.112,
+   "exp_2x": -0.146
+  },
+  "holdout": {
+   "trades": 6482,
+   "exp_r": -0.047,
+   "win": 57.4,
+   "pf": 0.82,
+   "p5": -0.059,
+   "exp_2x": -0.121
+  },
+  "PASS": false,
+  "top_q": 0.95,
+  "rules": "|--- hour <= 3.50\n|   |--- hour <= 2.50\n|   |   |--- wday <= 1.50\n|   |   |   |--- weights: [16023.00, 15177.00] class: 0\n|   |   |--- wday >  1.50\n|   |   |   |--- weights: [22936.00, 27536.00] class: 1\n|   |--- hour >  2.50\n|   |   |--- volx <= 0.84\n|   |   |   |--- weights: [12738.00, 9002.00] class: 0\n|   |   |--- volx >  0.84\n|   |   |   |--- weights: [9887.00, 9209.00] class: 0\n|--- hour >  3.50\n|   |--- hour <= 4.50\n|   |   |--- volx <= 0.78\n|   |   |   |--- weights: [12813.00, 7211.00] class: 0\n|   |   |--- volx >  0.78\n|   |   |   |--- weights: [11884.00, 8928.00] class: 0\n|   |--- hour >  4.50\n|   |   |--- atrp <= 0.01\n|   |   |   |--- weights: [17016.00, 6166.00] class: 0\n|   |   |--- atrp >  0.01\n|   |   |   |--- weights: [11883.00, 5656.00] class: 0\n"
+ }
+}
