@@ -197,7 +197,9 @@
   "intra|CRUDEOIL|2026-10-23 12:00": "2026-10-23",
   "intra|NATURALGAS|2026-10-23 12:00": "2026-10-23",
   "intra|COPPER|2026-10-23 12:00": "2026-10-23",
-  "intra|ALUMINIUM|2026-10-23 12:00": "2026-10-23"
+  "intra|ALUMINIUM|2026-10-23 12:00": "2026-10-23",
+  "intra|BANKNIFTY|2026-10-23 12:15": "2026-10-23",
+  "intra|BANKNIFTY|2026-10-23 12:15|nt": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -211,7 +213,8 @@
   "pos|BANKNIFTY": null,
   "intra|NATURALGAS|SELL": "blocked",
   "intra|GOLD|SELL": "blocked",
-  "intra|SILVER|SELL": "blocked"
+  "intra|SILVER|SELL": "blocked",
+  "intra|BANKNIFTY|SELL": "blocked"
  },
  "summary": {
   "2026-10-22": true
