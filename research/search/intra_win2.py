@@ -100,7 +100,7 @@ def main():
     res = {}
     for label, items in (("INDEX", idx), ("MCX", mcx), ("STOCKS", stocks)):
         T = run([x for x in items if x[1] is not None], label)
-        T.to_parquet(OUT / f"trades_{label}.parquet") if False else None
+        T.to_csv(OUT / f"trades_{label}.csv.gz", index=False)
         res.update(search(T, label))
         (OUT / "results.json").write_text(json.dumps(res, indent=1, default=str))
         print(label, "shortlisted:", sum(k.startswith(label) for k in res), "PASS:", sum(v["PASS"] for k, v in res.items() if k.startswith(label)), flush=True)
