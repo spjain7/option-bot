@@ -1,12 +1,12 @@
 {
- "time": "2026-10-24 03:32:08.615830",
+ "time": "2026-10-24 03:47:09.883766",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "schedule",
   "number": "20",
-  "delay_min": 0.1,
+  "delay_min": 0.2,
   "previous_run": {
    "number": 12,
    "event": "schedule",
@@ -27,8 +27,8 @@
   "bars_1h": 569,
   "last_closed_3h": "2026-10-23 21:00:00",
   "bars_3h": 189,
-  "age_15m_min": 242.1,
-  "quote_age_min": 212.3,
+  "age_15m_min": 257.2,
+  "quote_age_min": 227.3,
   "ltp": 9784.0,
   "day_volume": 42801,
   "quality": {
