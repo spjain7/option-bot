@@ -23,6 +23,42 @@
    "opened": "2026-10-23 09:06",
    "exit_pending": false,
    "t1_hit": false
+  },
+  {
+   "id": 2,
+   "mode": "intraday",
+   "name": "NIFTY",
+   "exch": "NFO",
+   "side": "SELL",
+   "symbol": "NIFTY23NOV26FUT",
+   "token": "61471",
+   "expiry": "23-Nov-2026",
+   "mult": 65,
+   "entry": 22610.0,
+   "sl": 22847.86,
+   "t1": 22372.14,
+   "t2": 22134.28,
+   "R": 237.86,
+   "t1_hit": false,
+   "opened": "2026-10-23 10:18",
+   "candle": "2026-10-23 09:15:00",
+   "opt": {
+    "symbol": "NIFTY27OCT2622600PE",
+    "token": "51337",
+    "strike": 22600.0,
+    "typ": "PE",
+    "expiry": "27-Oct-2026",
+    "entry": 196.45,
+    "delta": 0.56,
+    "iv": 16.7,
+    "sl": 117.87,
+    "t1": 357.39,
+    "t2": 573.53,
+    "cost_lot": 12769,
+    "risk_lot": 5108,
+    "rs_per_point": 65,
+    "lots": 0
+   }
   }
  ],
  "closed": [],
@@ -130,7 +166,16 @@
   "pos|COPPER|2026-10-22": "2026-10-22",
   "pos|ZINC|2026-10-22": "2026-10-22",
   "pos|ALUMINIUM|2026-10-22": "2026-10-22",
-  "active|1": "2026-10-23"
+  "active|1": "2026-10-23",
+  "intra|GOLD|2026-10-23 09:00": "2026-10-23",
+  "intra|SILVER|2026-10-23 09:00": "2026-10-23",
+  "intra|CRUDEOIL|2026-10-23 09:00": "2026-10-23",
+  "intra|NATURALGAS|2026-10-23 09:00": "2026-10-23",
+  "intra|COPPER|2026-10-23 09:00": "2026-10-23",
+  "intra|ZINC|2026-10-23 09:00": "2026-10-23",
+  "intra|NIFTY|2026-10-23 09:15": "2026-10-23",
+  "intra|NIFTY|2026-10-23 09:15|call": "2026-10-23",
+  "intra|BANKNIFTY|2026-10-23 09:15": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -149,5 +194,5 @@
  "summary": {
   "2026-10-22": true
  },
- "next_id": 2
+ "next_id": 3
 }
