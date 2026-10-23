@@ -27,3 +27,12 @@ Single clues (candlestick patterns, inside/NR days, etc.) shift the win rate by 
 STOCKS 668 tests: best = 5/13 swing exit + OI + daily trend + strong candle: +0.20R but only 106 trades, 29% win,
   bootstrap p5 < 0 (could be luck) → not shortlisted. Same-day exits all lose.
 INDEX 52 tests: all losing (best -0.08R). MCX 320 tests: all losing (best -0.03R, 52% win).
+
+# BIG-MOVE-001 (first hour) – 130 passed, but FRAGILE
+Best: first hour ≥ 3% on ≥ 2× volume + gap same way (+ beyond yesterday's high/low) + RSI not extreme, 10:15 entry,
+exit at close: design +0.75%/trade → hold-out +0.22%, 56% win, 2× costs +0.13%, ~11 trades/month.
+But: profit mostly SELL side; 2024-H2 and 2025-H1 lost; 2026 strong.
+# BIG-MOVE-002 (any hour until 14:15) – 1 passed (incl. stability rule)
+Move from open ≥ 3% + that candle's volume ≥ 2× + gap same way + beyond yesterday's high/low + RSI not extreme,
+exit at close: design +0.30% → hold-out +0.12%/trade, 53% win, 2× costs +0.02%, 3/5 half-years positive,
+buys +0.08% / sells +0.18%, ~23 trades/month. Thin edge – same pattern found in both tests.
