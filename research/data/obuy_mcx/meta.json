@@ -1,0 +1,26 @@
+[
+ {
+  "name": "SILVER",
+  "symbol": "SILVER04DEC26FUT",
+  "lot": 30,
+  "kind": "mcx"
+ },
+ {
+  "name": "CRUDEOIL",
+  "symbol": "CRUDEOIL19NOV26FUT",
+  "lot": 100,
+  "kind": "mcx"
+ },
+ {
+  "name": "NATURALGAS",
+  "symbol": "NATURALGAS27OCT26FUT",
+  "lot": 1250,
+  "kind": "mcx"
+ },
+ {
+  "name": "COPPER",
+  "symbol": "COPPER30OCT26FUT",
+  "lot": 2500,
+  "kind": "mcx"
+ }
+]
