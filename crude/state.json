@@ -993,6 +993,13 @@
    "oi": 1478600,
    "ltp": 9784.0,
    "volume": 42801
+  },
+  {
+   "time": "2026-10-23 23:59:50",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1478600,
+   "ltp": 9784.0,
+   "volume": 42801
   }
  ],
  "switches": {
@@ -1029,69 +1036,6 @@
   "trades": []
  },
  "runs": [
-  {
-   "time": "2026-10-23 12:44:25.906237",
-   "session": "OPEN",
-   "api": {
-    "15m": "ok (796 candles, last start 23-Oct 12:30)",
-    "1h": "ok (1049 candles, last start 23-Oct 12:00)",
-    "quote": "ok"
-   },
-   "data": {
-    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-    "last_closed_15m": "2026-10-23 12:15:00",
-    "bars_15m": 795,
-    "last_closed_1h": "2026-10-23 11:00:00",
-    "bars_1h": 557,
-    "last_closed_3h": "2026-10-23 09:00:00",
-    "bars_3h": 185,
-    "age_15m_min": 14.4,
-    "quote_age_min": -0.2,
-    "ltp": 9588.0,
-    "day_volume": 7355,
-    "quality": {
-     "blocks": [],
-     "notes": [],
-     "missing_15m_today": 0,
-     "quote_vs_candle_atr": 0.21
-    },
-    "volume": "available",
-    "oi_current": 1417100,
-    "oi_change": {
-     "status": "OK",
-     "label": "Long unwinding",
-     "d_oi_pct": -0.253,
-     "d_price": -1.0,
-     "gap_min": 16.6,
-     "oi": 1417100,
-     "oi_prev": 1420700
-    },
-    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
-    "daily_pnl": 0.0,
-    "drawdown_pct": 0.0,
-    "open_risk_rs": 0
-   },
-   "decisions": {
-    "intraday": {
-     "decision": "NONE",
-     "side": null,
-     "blocks": [
-      "1-hour trend RANGE: close 9601 EMA20 9443 EMA50 9326 EMA200 8918 ADX 16.1"
-     ],
-     "bar": "2026-10-23 12:15:00"
-    },
-    "positional": {
-     "decision": "NONE",
-     "side": "BUY",
-     "blocks": [
-      "swing structure not HH/HL: swings H 9533\u21929523, L 9136\u21929307"
-     ],
-     "bar": "2026-10-23 09:00:00"
-    }
-   },
-   "actions": [],
-   "errors": []
-  },
   {
    "time": "2026-10-23 12:58:59.998691",
    "session": "OPEN",
@@ -4762,6 +4706,68 @@
     "bars_3h": 189,
     "age_15m_min": 167.1,
     "quote_age_min": 137.3,
+    "ltp": 9784.0,
+    "day_volume": 42801,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "quote_vs_candle_atr": 0.0
+    },
+    "volume": "available",
+    "oi_current": 1478600,
+    "oi_change": {
+     "status": "OK",
+     "label": "Flat / no clear OI signal",
+     "d_oi_pct": 0.0,
+     "d_price": 0.0,
+     "gap_min": 29.8,
+     "oi": 1478600,
+     "oi_prev": 1478600
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "no setup: no confirmed breakout and no pullback-and-resume candle"
+     ],
+     "bar": "2026-10-23 23:15:00"
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "swing structure not HH/HL: swings H 9533\u21929523, L 9136\u21929307"
+     ],
+     "bar": "2026-10-23 21:00:00"
+    }
+   },
+   "actions": [],
+   "errors": []
+  },
+  {
+   "time": "2026-10-24 02:32:08.546391",
+   "session": "CLOSED (weekend)",
+   "api": {
+    "15m": "ok (839 candles, last start 23-Oct 23:15)",
+    "1h": "ok (1049 candles, last start 23-Oct 23:00)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": "2026-10-23 23:15:00",
+    "bars_15m": 839,
+    "last_closed_1h": "2026-10-23 23:00:00",
+    "bars_1h": 569,
+    "last_closed_3h": "2026-10-23 21:00:00",
+    "bars_3h": 189,
+    "age_15m_min": 182.1,
+    "quote_age_min": 152.3,
     "ltp": 9784.0,
     "day_volume": 42801,
     "quality": {
