@@ -157,6 +157,7 @@ def model(T, ex, label):
     for side in ("L", "S"):
         y = (T[f"r_{ex}{side}"] > 0).astype(int)
         D, V, Hm = T["time"] < D_END, (T["time"] >= D_END) & (T["time"] < V_END), T["time"] >= V_END
+        feats = [c for c in feats if T.loc[D, c].nunique(dropna=True) > 1]
         clf = HistGradientBoostingClassifier(max_iter=300, learning_rate=0.05, max_leaf_nodes=31, min_samples_leaf=200,
                                              l2_regularization=1.0, random_state=7)
         clf.fit(T.loc[D, feats], y[D])
@@ -204,6 +205,7 @@ def main():
     res = {}
     for label, items in (("INDEX", idx), ("MCX", mcx), ("STOCKS", stocks)):
         T = build([x for x in items if x[1] is not None], label)
+        T.to_pickle(OUT / f"table_{label}.pkl")
         for ex in EXITS:
             ct = clue_table(T, ex)
             ct.to_csv(OUT / f"clues_{label}_{ex}.csv", index=False)

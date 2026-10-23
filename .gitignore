@@ -13,3 +13,4 @@ state/obuy/
 research/search/results_intra_win/trades_*.csv.gz
 research/search/results_intra_win2/trades_*
 research/search/results_clue/*.parquet
+research/search/results_clue/*.pkl
