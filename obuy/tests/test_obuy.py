@@ -51,7 +51,7 @@ class Api:
     def __init__(self, prices): self.p = prices
     def quotes(self, ex): return {t: {"ltp": self.p.get(t, 0), "tradeVolume": 10} for t in ex["NFO"]}
 now = pd.Timestamp("2026-10-23 11:02")
-base = {"lot": 100, "kind": "stock", "entry": 100.0, "sl": 70.0, "tg": 160.0, "exit_at": "2026-10-23 15:15", "symbol": "X", "id": 1}
+base = {"dir": 1, "name": "X", "K": 100, "lot": 100, "kind": "stock", "entry": 100.0, "sl": 70.0, "tg": 160.0, "exit_at": "2026-10-23 15:15", "symbol": "X", "id": 1}
 st = {"open": [{**base, "token": "a"}, {**base, "token": "b", "id": 2}, {**base, "token": "c", "id": 3}], "closed": []}
 msgs = []
 E.manage(Api({"a": 65, "b": 170, "c": 120}), st, now, msgs)
@@ -82,10 +82,10 @@ if sig_rows:
     t_sig = feats.iloc[sig_rows[-1]]["time"] + pd.Timedelta(minutes=17)
     st = E.new_state()
     st, m1, rep = E.scan(FakeApi(), master, t_sig, st)
-    check(any("OPTION BUY ALERT" in x for x in m1) and st["open"] and st["open"][0]["expiry"] >= f"{t_sig + pd.Timedelta(days=3):%Y-%m-%d}", "scan: alert sent with an expiry >= 3 days away")
-    check("TEST PHASE" in m1[0] and "no orders" in m1[0], "scan: alert labelled test phase, alerts only")
+    check(any("BUY CALL" in x or "BUY PUT" in x for x in m1) and st["open"] and st["open"][0]["expiry"] >= f"{t_sig + pd.Timedelta(days=3):%Y-%m-%d}", "scan: alert sent with an expiry >= 3 days away")
+    check("Test alert" in m1[0] and "no orders" in m1[0] and "🛑 Stop-loss" in m1[0], "scan: clean alert, labelled test, alerts only")
     st, m2, _ = E.scan(FakeApi(), master, t_sig + pd.Timedelta(minutes=1), st)
-    check(not any("OPTION BUY ALERT" in x for x in m2), "scan: same stock not alerted twice in a day")
+    check(not any("BUY CALL" in x or "BUY PUT" in x for x in m2), "scan: same stock not alerted twice in a day")
     st, m3, _ = E.scan(FakeApi(), master, t_sig.normalize() + pd.Timedelta(hours=15, minutes=32), st)
     check(any("SCORECARD" in x for x in m3) and not st["open"], "scan: time exit + daily scorecard after 15:30")
 else:

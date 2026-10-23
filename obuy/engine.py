@@ -144,24 +144,41 @@ def liquid(ltp, bid, ask, traded):
 
 
 # ─────────────── messages ───────────────
+def rs_(x):
+    return f"₹{x:,.2f}" if x < 100 else f"₹{x:,.1f}"
+
+
 def entry_msg(a):
     up = a["dir"] > 0
-    head = f"🟢 OPTION BUY ALERT #{a['id']} (TEST PHASE) – {a['mode'].upper()}"
-    return "\n".join([head, "",
-                      f"BUY {a['symbol']} ({a['name']} {a['K']:g} {'CE' if up else 'PE'}, expiry {pd.Timestamp(a['expiry']):%d %b})",
-                      f"Entry: ₹{a['entry']:.2f} (ask now)  |  Lot {a['lot']} = ₹{a['entry'] * a['lot']:,.0f}",
-                      f"Stop-loss: ₹{a['sl']:.2f} (-{a['sl_pct']:.0f}%)  |  Target: ₹{a['tg']:.2f} (+{a['tg_pct']:.0f}%)",
-                      f"Exit by: {a['exit_by']}",
-                      f"Why: {a['why']}",
-                      f"Backtest: {BACKTEST[a['mode']]}",
-                      "", "⚠️ Test phase: the edge is small and not yet proven live. Use 1 lot or paper-track only. "
-                      "Alerts only – no orders are placed."])
+    side = "CALL" if up else "PUT"
+    mode = "Intraday (exit today 3:15 pm)" if a["mode"] == "intraday" else "Positional (up to 3 days)"
+    why = a["why"] if isinstance(a["why"], list) else [a["why"]]
+    return "\n".join([
+        f"{'🟢' if up else '🔴'} BUY {side} • {a['name']} {a['K']:g} {'CE' if up else 'PE'}",
+        f"📅 Expiry {pd.Timestamp(a['expiry']):%d %b} • {mode}",
+        "",
+        f"💰 Entry: {rs_(a['entry'])}",
+        f"🛑 Stop-loss: {rs_(a['sl'])} (−{a['sl_pct']:.0f}%)",
+        f"🎯 Target: {rs_(a['tg'])} (+{a['tg_pct']:.0f}%)",
+        f"⏰ Exit by: {pd.Timestamp(a['exit_at']):%d %b}, 3:15 pm",
+        f"📦 1 lot = {a['lot']:,} qty ≈ ₹{a['entry'] * a['lot']:,.0f}",
+        "",
+        "📊 Why",
+        *[f"• {w}" for w in why],
+        "",
+        f"🧪 Test alert #{a['id']} • alerts only, no orders • use 1 lot or paper-track",
+        f"Symbol: {a['symbol']}",
+    ])
 
 
 def exit_msg(a):
-    icon = "✅" if a["ret"] > 0 else "❌"
-    return (f"{icon} OPTION BUY #{a['id']} closed – {a['why_exit']}\n{a['symbol']}: ₹{a['entry']:.2f} → ₹{a['exit']:.2f} "
-            f"({a['ret'] * 100:+.1f}%, ₹{a['rs_lot']:+,.0f} per lot after costs)")
+    up = a["dir"] > 0
+    head = {"target hit": "✅ TARGET HIT", "stop-loss hit": "❌ STOP-LOSS HIT", "time exit": "⏰ TIME EXIT"}[a["why_exit"]]
+    if a["why_exit"] == "time exit":
+        head = ("✅ " if a["ret"] > 0 else "❌ ") + "TIME EXIT"
+    return "\n".join([f"{head} • {a['name']} {a['K']:g} {'CE' if up else 'PE'} (#{a['id']})",
+                      f"{rs_(a['entry'])} → {rs_(a['exit'])}",
+                      f"Result: {a['ret'] * 100:+.1f}% • {'+' if a['rs_lot'] >= 0 else '−'}₹{abs(a['rs_lot']):,.0f} per lot (after costs)"])
 
 
 def scorecard(state, now):
@@ -171,15 +188,14 @@ def scorecard(state, now):
         if not xs:
             return "no closed alerts"
         w = sum(a["ret"] > 0 for a in xs)
-        return (f"{len(xs)} closed, {w} wins ({w / len(xs) * 100:.0f}%), avg {np.mean([a['ret'] for a in xs]) * 100:+.1f}% per trade, "
-                f"₹{sum(a['rs_lot'] for a in xs):+,.0f} per lot")
-    L = [f"📊 OPTION BUY SCORECARD – {now:%d %b}", f"Today: {line(today)}", f"Since start: {line(allc)}"]
+        return (f"{len(xs)} trades • {w} wins ({w / len(xs) * 100:.0f}%) • avg {np.mean([a['ret'] for a in xs]) * 100:+.1f}% • "
+                f"{'+' if sum(a['rs_lot'] for a in xs) >= 0 else '−'}₹{abs(sum(a['rs_lot'] for a in xs)):,.0f}/lot")
+    L = [f"📊 OPTION BUY SCORECARD • {now:%d %b}", "", f"Today: {line(today)}", f"Since start: {line(allc)}"]
     for m in ("intraday", "positional"):
         xs = [a for a in allc if a["mode"] == m]
         if xs:
-            L.append(f"  {m}: {line(xs)}")
-    L.append(f"Open: {len(state['open'])}")
-    L.append("Decision after 30+ closed alerts per setup: keep only a setup with a positive average.")
+            L.append(f"• {m.capitalize()}: {line(xs)}")
+    L += [f"Open now: {len(state['open'])}", "", "🧪 After 30+ trades per setup, keep only a setup that is positive."]
     return "\n".join(L)
 
 
@@ -272,8 +288,9 @@ def scan(api, master, now, state):
                         fq = api.quotes({"NFO": [u["token"]]}).get(u["token"]) or {}
                         px = float(fq.get("ltp") or r["close"])
                         open_alert(api, master, state, now, u, "positional", s, px,
-                                   f"yesterday closed {'above the 20-day high' if s > 0 else 'below the 20-day low'} with "
-                                   f"{r['volume'] / r['vol20']:.1f}x volume and OI {r['oichg'] * 100:+.1f}%", msgs, rep)
+                                   [f"Closed {'above the 20-day high' if s > 0 else 'below the 20-day low'} yesterday",
+                                    f"Volume {r['volume'] / r['vol20']:.1f}× normal",
+                                    f"OI {r['oichg'] * 100:+.1f}% ({'long' if s > 0 else 'short'} build-up)"], msgs, rep)
                 except Exception as e:
                     rep.append(f"{u['name']} positional error {type(e).__name__}")
         for u in items:
@@ -286,8 +303,9 @@ def scan(api, master, now, state):
                 if s:
                     r = df.iloc[i]
                     open_alert(api, master, state, now, u, "intraday", s, float(r["close"]),
-                               f"futures crossed {'above' if s > 0 else 'below'} VWAP {r['vwap']:,.1f}, RSI {r['rsi']:.0f}, "
-                               f"OI {r['oi_1h'] * 100:+.1f}% and price {r['px_1h'] * 100:+.2f}% in 1 h", msgs, rep)
+                               [f"Futures crossed {'above' if s > 0 else 'below'} VWAP ({r['vwap']:,.1f})",
+                                f"RSI {r['rsi']:.0f} ({'strong' if s > 0 else 'weak'} momentum)",
+                                f"Last 1 hour: price {r['px_1h'] * 100:+.2f}%, OI {r['oi_1h'] * 100:+.1f}%"], msgs, rep)
             except Exception as e:
                 rep.append(f"{u['name']} intraday error {type(e).__name__}")
     if t >= "15:30" and not state["done"].get(f"scorecard|{now:%Y-%m-%d}"):
