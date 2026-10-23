@@ -1,0 +1,310 @@
+[
+ {
+  "name": "BANKNIFTY",
+  "token": "48699",
+  "expiry": "2026-10-27",
+  "lot": 30,
+  "kind": "index"
+ },
+ {
+  "name": "NIFTY",
+  "token": "48704",
+  "expiry": "2026-10-27",
+  "lot": 65,
+  "kind": "index"
+ },
+ {
+  "name": "MIDCPNIFTY",
+  "token": "48703",
+  "expiry": "2026-10-27",
+  "lot": 120,
+  "kind": "index"
+ },
+ {
+  "name": "FINNIFTY",
+  "token": "48702",
+  "expiry": "2026-10-27",
+  "lot": 60,
+  "kind": "index"
+ },
+ {
+  "name": "KOTAKBANK",
+  "token": "48906",
+  "expiry": "2026-10-27",
+  "lot": 2000,
+  "kind": "stock"
+ },
+ {
+  "name": "INDUSINDBK",
+  "token": "48883",
+  "expiry": "2026-10-27",
+  "lot": 700,
+  "kind": "stock"
+ },
+ {
+  "name": "FEDERALBNK",
+  "token": "48839",
+  "expiry": "2026-10-27",
+  "lot": 2500,
+  "kind": "stock"
+ },
+ {
+  "name": "APLAPOLLO",
+  "token": "48727",
+  "expiry": "2026-10-27",
+  "lot": 350,
+  "kind": "stock"
+ },
+ {
+  "name": "NMDC",
+  "token": "48951",
+  "expiry": "2026-10-27",
+  "lot": 6750,
+  "kind": "stock"
+ },
+ {
+  "name": "SBIN",
+  "token": "48994",
+  "expiry": "2026-10-27",
+  "lot": 750,
+  "kind": "stock"
+ },
+ {
+  "name": "TATASTEEL",
+  "token": "49012",
+  "expiry": "2026-10-27",
+  "lot": 2750,
+  "kind": "stock"
+ },
+ {
+  "name": "TCS",
+  "token": "49013",
+  "expiry": "2026-10-27",
+  "lot": 225,
+  "kind": "stock"
+ },
+ {
+  "name": "PNB",
+  "token": "48974",
+  "expiry": "2026-10-27",
+  "lot": 8000,
+  "kind": "stock"
+ },
+ {
+  "name": "BSE",
+  "token": "48776",
+  "expiry": "2026-10-27",
+  "lot": 200,
+  "kind": "stock"
+ },
+ {
+  "name": "ITC",
+  "token": "48896",
+  "expiry": "2026-10-27",
+  "lot": 1725,
+  "kind": "stock"
+ },
+ {
+  "name": "JIOFIN",
+  "token": "48898",
+  "expiry": "2026-10-27",
+  "lot": 2350,
+  "kind": "stock"
+ },
+ {
+  "name": "AMBUJACEM",
+  "token": "48725",
+  "expiry": "2026-10-27",
+  "lot": 1200,
+  "kind": "stock"
+ },
+ {
+  "name": "AXISBANK",
+  "token": "48736",
+  "expiry": "2026-10-27",
+  "lot": 625,
+  "kind": "stock"
+ },
+ {
+  "name": "HINDALCO",
+  "token": "48867",
+  "expiry": "2026-10-27",
+  "lot": 700,
+  "kind": "stock"
+ },
+ {
+  "name": "HINDUNILVR",
+  "token": "48869",
+  "expiry": "2026-10-27",
+  "lot": 300,
+  "kind": "stock"
+ },
+ {
+  "name": "BHARTIARTL",
+  "token": "48758",
+  "expiry": "2026-10-27",
+  "lot": 475,
+  "kind": "stock"
+ },
+ {
+  "name": "MARUTI",
+  "token": "48928",
+  "expiry": "2026-10-27",
+  "lot": 50,
+  "kind": "stock"
+ },
+ {
+  "name": "BANKBARODA",
+  "token": "48742",
+  "expiry": "2026-10-27",
+  "lot": 2925,
+  "kind": "stock"
+ },
+ {
+  "name": "PFC",
+  "token": "48969",
+  "expiry": "2026-10-27",
+  "lot": 1300,
+  "kind": "stock"
+ },
+ {
+  "name": "SAIL",
+  "token": "48989",
+  "expiry": "2026-10-27",
+  "lot": 4700,
+  "kind": "stock"
+ },
+ {
+  "name": "NTPC",
+  "token": "48954",
+  "expiry": "2026-10-27",
+  "lot": 1500,
+  "kind": "stock"
+ },
+ {
+  "name": "M&M",
+  "token": "48924",
+  "expiry": "2026-10-27",
+  "lot": 200,
+  "kind": "stock"
+ },
+ {
+  "name": "INFY",
+  "token": "48886",
+  "expiry": "2026-10-27",
+  "lot": 400,
+  "kind": "stock"
+ },
+ {
+  "name": "ADANIPOWER",
+  "token": "48720",
+  "expiry": "2026-10-27",
+  "lot": 3550,
+  "kind": "stock"
+ },
+ {
+  "name": "TVSMOTOR",
+  "token": "49022",
+  "expiry": "2026-10-27",
+  "lot": 175,
+  "kind": "stock"
+ },
+ {
+  "name": "ADANIENT",
+  "token": "48711",
+  "expiry": "2026-10-27",
+  "lot": 309,
+  "kind": "stock"
+ },
+ {
+  "name": "CANBK",
+  "token": "48778",
+  "expiry": "2026-10-27",
+  "lot": 6750,
+  "kind": "stock"
+ },
+ {
+  "name": "HDFCBANK",
+  "token": "48864",
+  "expiry": "2026-10-27",
+  "lot": 650,
+  "kind": "stock"
+ },
+ {
+  "name": "LAURUSLABS",
+  "token": "48914",
+  "expiry": "2026-10-27",
+  "lot": 850,
+  "kind": "stock"
+ },
+ {
+  "name": "JSWSTEEL",
+  "token": "48900",
+  "expiry": "2026-10-27",
+  "lot": 675,
+  "kind": "stock"
+ },
+ {
+  "name": "IDEA",
+  "token": "48877",
+  "expiry": "2026-10-27",
+  "lot": 71475,
+  "kind": "stock"
+ },
+ {
+  "name": "ICICIBANK",
+  "token": "48874",
+  "expiry": "2026-10-27",
+  "lot": 700,
+  "kind": "stock"
+ },
+ {
+  "name": "COALINDIA",
+  "token": "48797",
+  "expiry": "2026-10-27",
+  "lot": 1350,
+  "kind": "stock"
+ },
+ {
+  "name": "BAJFINANCE",
+  "token": "48740",
+  "expiry": "2026-10-27",
+  "lot": 750,
+  "kind": "stock"
+ },
+ {
+  "name": "WIPRO",
+  "token": "49033",
+  "expiry": "2026-10-27",
+  "lot": 3000,
+  "kind": "stock"
+ },
+ {
+  "name": "DIVISLAB",
+  "token": "48831",
+  "expiry": "2026-10-27",
+  "lot": 100,
+  "kind": "stock"
+ },
+ {
+  "name": "ETERNAL",
+  "token": "48838",
+  "expiry": "2026-10-27",
+  "lot": 2425,
+  "kind": "stock"
+ },
+ {
+  "name": "LT",
+  "token": "48920",
+  "expiry": "2026-10-27",
+  "lot": 175,
+  "kind": "stock"
+ },
+ {
+  "name": "RELIANCE",
+  "token": "48987",
+  "expiry": "2026-10-27",
+  "lot": 500,
+  "kind": "stock"
+ }
+]
