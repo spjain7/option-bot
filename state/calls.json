@@ -23,6 +23,42 @@
    "opened": "2026-10-23 09:06",
    "exit_pending": false,
    "t1_hit": false
+  },
+  {
+   "id": 3,
+   "mode": "intraday",
+   "name": "NATURALGAS",
+   "exch": "MCX",
+   "side": "SELL",
+   "symbol": "NATURALGAS24NOV26FUT",
+   "token": "574319",
+   "expiry": "24-Nov-2026",
+   "mult": 1250,
+   "entry": 292.5,
+   "sl": 298.65,
+   "t1": 286.35,
+   "t2": 280.2,
+   "R": 6.15,
+   "t1_hit": false,
+   "opened": "2026-10-23 19:02",
+   "candle": "2026-10-23 18:00:00",
+   "opt": {
+    "symbol": "NATURALGAS20NOV26300PE",
+    "token": "583918",
+    "strike": 300.0,
+    "typ": "PE",
+    "expiry": "20-Nov-2026",
+    "entry": 26.0,
+    "delta": 0.52,
+    "iv": 67.2,
+    "sl": 22.68,
+    "t1": 29.32,
+    "t2": 32.93,
+    "cost_lot": 32500,
+    "risk_lot": 4156,
+    "rs_per_point": 1250,
+    "lots": 1
+   }
   }
  ],
  "closed": [
@@ -244,7 +280,15 @@
   "intra|NATURALGAS|2026-10-23 17:00": "2026-10-23",
   "intra|COPPER|2026-10-23 17:00": "2026-10-23",
   "intra|ZINC|2026-10-23 17:00": "2026-10-23",
-  "intra|ALUMINIUM|2026-10-23 17:00": "2026-10-23"
+  "intra|ALUMINIUM|2026-10-23 17:00": "2026-10-23",
+  "intra|GOLD|2026-10-23 18:00": "2026-10-23",
+  "intra|SILVER|2026-10-23 18:00": "2026-10-23",
+  "intra|CRUDEOIL|2026-10-23 18:00": "2026-10-23",
+  "intra|NATURALGAS|2026-10-23 18:00": "2026-10-23",
+  "intra|NATURALGAS|2026-10-23 18:00|call": "2026-10-23",
+  "intra|COPPER|2026-10-23 18:00": "2026-10-23",
+  "intra|ZINC|2026-10-23 18:00": "2026-10-23",
+  "intra|ALUMINIUM|2026-10-23 18:00": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -264,5 +308,5 @@
  "summary": {
   "2026-10-22": true
  },
- "next_id": 3
+ "next_id": 4
 }
