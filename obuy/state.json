@@ -1,31 +1,5 @@
 {
- "open": [
-  {
-   "id": 2,
-   "mode": "intraday",
-   "name": "BANKBARODA",
-   "kind": "stock",
-   "dir": -1,
-   "token": "57354",
-   "symbol": "BANKBARODA27OCT26230PE",
-   "K": 230.0,
-   "expiry": "2026-10-27",
-   "lot": 2925,
-   "entry": 1.8,
-   "sl": 1.26,
-   "tg": 2.88,
-   "sl_pct": 30.0,
-   "tg_pct": 60.0,
-   "opened": "2026-10-23 14:05:12.908612",
-   "exit_at": "2026-10-23 15:15:00",
-   "why": [
-    "Futures crossed below VWAP (231.6)",
-    "RSI 39 (weak momentum)",
-    "Last 1 hour: price -0.15%, OI +1.5%"
-   ],
-   "exit_by": "23 Oct 15:15"
-  }
- ],
+ "open": [],
  "closed": [
   {
    "id": 1,
@@ -52,6 +26,36 @@
    "rs_lot": 5482,
    "why_exit": "target hit",
    "closed": "2026-10-23 12:05:54.672152"
+  },
+  {
+   "id": 2,
+   "mode": "intraday",
+   "name": "BANKBARODA",
+   "kind": "stock",
+   "dir": -1,
+   "token": "57354",
+   "symbol": "BANKBARODA27OCT26230PE",
+   "K": 230.0,
+   "expiry": "2026-10-27",
+   "lot": 2925,
+   "entry": 1.8,
+   "sl": 1.26,
+   "tg": 2.88,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-10-23 14:05:12.908612",
+   "exit_at": "2026-10-23 15:15:00",
+   "why": [
+    "Futures crossed below VWAP (231.6)",
+    "RSI 39 (weak momentum)",
+    "Last 1 hour: price -0.15%, OI +1.5%"
+   ],
+   "exit_by": "23 Oct 15:15",
+   "exit": 2.04,
+   "ret": 0.11260745906932575,
+   "rs_lot": 593,
+   "why_exit": "time exit",
+   "closed": "2026-10-23 15:20:07.633457"
   }
  ],
  "done": {
