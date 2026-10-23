@@ -36,3 +36,7 @@ But: profit mostly SELL side; 2024-H2 and 2025-H1 lost; 2026 strong.
 Move from open ≥ 3% + that candle's volume ≥ 2× + gap same way + beyond yesterday's high/low + RSI not extreme,
 exit at close: design +0.30% → hold-out +0.12%/trade, 53% win, 2× costs +0.02%, 3/5 half-years positive,
 buys +0.08% / sells +0.18%, ~23 trades/month. Thin edge – same pattern found in both tests.
+
+# EARLY-MOVE-001 (signal BEFORE the move: volume spike while flat, coil near 20-day high/low, early level break) – 0 shortlisted
+Base: 15,136 signals, 41-45% win, -0.07…-0.12%/trade, -₹470…-₹916 per lot after costs; only 6-10% reached +2% later.
+No filter combination reached the shortlist.
