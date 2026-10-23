@@ -1,0 +1,10 @@
+tf,entry,exit,dte,case,n,avg_2x_costs
+1d,volume_breakout,X1,7,IV x1.0,202,0.4035
+1d,volume_breakout,X1,7,IV x1.3,202,0.1065
+1d,volume_breakout,X1,7,IV crush 10%,202,0.2244
+1d,volume_breakout,X2,7,IV x1.0,225,0.3139
+1d,volume_breakout,X2,7,IV x1.3,219,0.0929
+1d,volume_breakout,X2,7,IV crush 10%,221,0.1294
+1d,volume_breakout,X3,7,IV x1.0,212,0.3523
+1d,volume_breakout,X3,7,IV x1.3,214,0.1231
+1d,volume_breakout,X3,7,IV crush 10%,214,0.1739
