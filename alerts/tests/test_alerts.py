@@ -204,12 +204,13 @@ def test_breakout():
     check("trailing stop hit -> EXIT message with result in R, alert closed", not st["bo_active"] and any("EXIT" in m and "R" in m for m in msgs))
     sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
     lv = dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")])
-    m = BO.call_msg("GOLD", "MCX", dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04"), "3h", sig, lv)
-    check("call card: entry, no-chase, SL, T1/T2/T3, trailing, support/resistance",
-          all(k in m for k in ("Entry", "chase", "Stop loss", "Target 1", "Target 2", "Target 3", "Trailing", "Resistance", "Support")))
-    w = BO.reason_msg("GOLD", "3h", sig, lv, dict(oi=16500, chg_pct=0.8, gap_min=15, label="Long buildup"), None)
-    check("separate WHY message: breakout, volume, trend, ADX, RSI, OI, next level, backtest note",
-          all(k in w for k in ("WHY THIS BUY", "Breakout", "Volume", "200 EMA", "ADX", "RSI", "OI", "Long buildup", "Backtest")))
+    cg = dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04")
+    m = BO.call_msg("GOLD", "MCX", cg, "3h", sig, lv)
+    check("simple call card: buy at, SL, T1/T2/T3 only (short)",
+          all(k in m for k in ("BUY  GOLD", "Buy at", "Stop loss", "Target 1", "Target 2", "Target 3")) and "Resistance" not in m and len(m.splitlines()) <= 10)
+    w = BO.reason_msg("GOLD", "3h", sig, lv, dict(oi=16500, chg_pct=0.8, gap_min=15, label="Long buildup"), None, BO.details("MCX", cg, "3h", sig, lv))
+    check("second message: trade plan (contract, no-chase, trailing, S/R) + why (breakout, volume, trend, ADX, RSI, OI, backtest)",
+          all(k in w for k in ("GOLD04DEC26FUT", "chase", "Trailing", "Resistance", "Support", "Breakout", "Volume", "200 EMA", "ADX", "RSI", "Long buildup", "Backtest")))
 
 
 def test_stocks():
@@ -247,7 +248,7 @@ def test_stocks():
     check("no stock scan at the 12:15 block (daily rule runs after the 15:30 close)", not msgs)
     STK.scan(api, m, pd.Timestamp("2026-10-15 15:32"), st, msgs, rep, sys.modules["alerts.engine"])
     check("OI-confirmed breakout -> BUY call (lot size) + WHY message with LONG BUILDUP",
-          any("BUY | TCS FUT" in x and "Lot size: 175" in x for x in msgs) and any("WHY THIS BUY – TCS" in x and "LONG BUILDUP" in x for x in msgs))
+          any("BUY  TCS" in x and "lot 175" in x for x in msgs) and any("BUY TCS FUT – details" in x and "LONG BUILDUP" in x for x in msgs))
     msgs2 = []
     STK.scan(api, m, pd.Timestamp("2026-10-15 15:47"), st, msgs2, rep, sys.modules["alerts.engine"])
     check("no duplicate stock call later the same day", not any("BUY |" in x for x in msgs2))

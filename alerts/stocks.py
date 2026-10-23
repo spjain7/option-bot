@@ -102,7 +102,7 @@ def evaluate(d):
     return dict(out, side=None, why="no OI-confirmed breakout")
 
 
-def reason_msg(name, sig, lv):
+def reason_msg(name, sig, lv, plan=None):
     s = 1 if sig["side"] == "BUY" else -1
     lvl = sig["hh"] if s > 0 else sig["ll"]
     pts = [f"{'📈' if s > 0 else '📉'} Breakout: closed {BO._f(sig['close'])}, "
@@ -117,7 +117,7 @@ def reason_msg(name, sig, lv):
     if nxt:
         pts.append(f"🧱 Next {'resistance' if s > 0 else 'support'}: {BO._f(nxt[0][0])} ({nxt[0][1]})")
     pts.append(NOTE)
-    return "\n".join([f"💡 WHY THIS {sig['side']} – {name} FUT (daily)", "━━━━━━━━━━━━━━━━━━", *pts,
+    return "\n".join([f"💡 {sig['side']} {name} FUT – details & reason", "━━━━━━━━━━━━━━━━━━", *(plan or []), *pts,
                       "Backtested, not guaranteed · not investment advice."])
 
 
@@ -203,9 +203,8 @@ def scan(api, master, now, state, msgs, rep, engine):
             continue
         lv = S.levels(d, h, sig["close"], sig["atr"])
         cc = dict(symbol=c["symbol"], expiry=c["expiry"])
-        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv).replace("POSITIONAL (daily candles)", "STOCK FUTURE · daily")
-                    + f"\n📦 Lot size: {c['lot']}")
-        msgs.append(reason_msg(name, sig, lv))
+        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], kind="Stock future · daily"))
+        msgs.append(reason_msg(name, sig, lv, BO.details("NFO", cc, "1d", sig, lv)))
         s_ = 1 if sig["side"] == "BUY" else -1
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=sig["close"],
                                  stop=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), risk=CFG["stop_atr"] * sig["atr"],

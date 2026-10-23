@@ -57,32 +57,48 @@ def _lv(xs):
     return " · ".join(f"{_f(v)} ({n})" for v, n in xs) or "none nearby"
 
 
-def call_msg(name, ex, c, tf, sig, levels, live=None):
-    """Message 1 – the call card (what to do)."""
+SHORT_TF = {"3h": "Swing · 3-hour", "1d": "Positional · daily"}
+
+
+def _levels(sig, live):
     s = 1 if sig["side"] == "BUY" else -1
-    a = sig["atr"]
     ref = live or sig["close"]
-    R = CFG["stop_atr"] * a
-    sl = ref - s * R
-    head = "🟢🚀 BUY" if s > 0 else "🔴📉 SELL"
+    R = CFG["stop_atr"] * sig["atr"]
+    return s, ref, R
+
+
+def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None):
+    """Message 1 – short, eye-catching call card. All other details go in message 2 (reason_msg)."""
+    s, ref, R = _levels(sig, live)
+    head = "🟢 BUY" if s > 0 else "🔴 SELL"
+    seg = "MCX" if ex == "MCX" else "NSE F&O"
     return "\n".join([
-        f"{head} | {name} FUT | {TFLABEL[tf]}",
-        f"📄 {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · exp {pd.Timestamp(c['expiry']):%d-%b-%Y}",
-        "━━━━━━━━━━━━━━━━━━",
-        f"🎯 Entry      : {_f(ref)}",
-        f"🚫 Don't chase: beyond {_f(ref + s * 0.5 * a)}",
-        f"🛑 Stop loss  : {_f(sl)}",
-        f"✅ Target 1   : {_f(ref + s * R)} (1R) – book 30%",
-        f"✅ Target 2   : {_f(ref + 2 * s * R)} (2R) – book 30%",
-        f"🏁 Target 3   : {_f(ref + 3 * s * R)} (3R) – rest on trailing stop",
-        f"🔁 Trailing SL: 3 ATR from best close (updates follow)",
-        "━━━━━━━━━━━━━━━━━━",
-        f"🧱 Resistance : {_lv(levels['resistance'])}",
-        f"🛟 Support    : {_lv(levels['support'])}",
-        f"⏱ Signal candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} · Alert only – no auto trade"])
+        f"{head}  {name}",
+        "━━━━━━━━━━━━━━",
+        f"👉 {'Buy' if s > 0 else 'Sell'} at   : {_f(ref)}",
+        f"🛑 Stop loss : {_f(ref - s * R)}",
+        f"🎯 Target 1  : {_f(ref + s * R)}",
+        f"🎯 Target 2  : {_f(ref + 2 * s * R)}",
+        f"🎯 Target 3  : {_f(ref + 3 * s * R)}",
+        "━━━━━━━━━━━━━━",
+        f"{seg} · {pd.Timestamp(c['expiry']):%b} fut · {kind or SHORT_TF[tf]}" + (f" · lot {lot}" if lot else "")])
 
 
-def reason_msg(name, tf, sig, levels, oi=None, q=None):
+def details(ex, c, tf, sig, levels, live=None):
+    """Trade-management details shown in message 2."""
+    s, ref, R = _levels(sig, live)
+    return ["📋 TRADE PLAN",
+            f"📄 Contract: {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · exp {pd.Timestamp(c['expiry']):%d-%b-%Y}",
+            f"🚫 Don't chase beyond {_f(ref + s * 0.5 * sig['atr'])}",
+            "✅ Book 30% at T1, 30% at T2, rest on trailing stop",
+            "🔁 Trailing SL: 3 ATR from best close (updates follow)",
+            f"🧱 Resistance: {_lv(levels['resistance'])}",
+            f"🛟 Support   : {_lv(levels['support'])}",
+            f"⏱ Signal candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} ({TFLABEL[tf]}) · alert only – no auto trade",
+            "━━━━━━━━━━━━━━━━━━", "📌 WHY"]
+
+
+def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
     """Message 2 – why the call was issued."""
     s = 1 if sig["side"] == "BUY" else -1
     lvl = sig["hh"] if s > 0 else sig["ll"]
@@ -109,7 +125,7 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None):
         pts.append(f"🧱 Next {'resistance' if s > 0 else 'support'}: {_f(nxt[0][0])} ({nxt[0][1]}) – watch for a pause there.")
     pts.append("📚 Backtest 2022-26 (after costs): ≈40% of breakouts win, but winners are 2-3× bigger than losers – "
                "follow the stop strictly and let the trailing stop ride the trend.")
-    return "\n".join([f"💡 WHY THIS {sig['side']} – {name} ({tf})", "━━━━━━━━━━━━━━━━━━", *pts,
+    return "\n".join([f"💡 {sig['side']} {name} – details & reason", "━━━━━━━━━━━━━━━━━━", *(plan or []), *pts,
                        "Backtested, not guaranteed · not investment advice."])
 
 
