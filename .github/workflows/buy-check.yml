@@ -1,0 +1,35 @@
+name: Research - option buying check (manual, no alerts)
+
+# Would BUYING options on the selling bot's own calls have worked? Research only: sends no Telegram, never touches main.
+# Result is saved to the branch "research-buy" (research/output_buy/report.md).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Buying check
+        run: |
+          mkdir -p /tmp/out && python -m research.buy_check > /tmp/out/report.md
+          cat /tmp/out/report.md
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+      - name: Save to research-buy branch
+        run: |
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          git fetch -q origin research-buy && git switch -q -C research-buy FETCH_HEAD || git switch -q --orphan research-buy
+          git rm -rqf --cached . > /dev/null 2>&1 || true
+          mkdir -p research/output_buy && cp /tmp/out/report.md research/output_buy/report.md
+          git add -f research/output_buy/report.md && git commit -qm "buying check $(date -u +%F_%H%M)" && git push -q origin HEAD:research-buy
