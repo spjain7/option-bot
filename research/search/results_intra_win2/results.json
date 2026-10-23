@@ -1,1 +1,230 @@
-{}
+{
+ "STOCKS|vwap_stretch|with+early|S3.0_T0.5": {
+  "design": {
+   "trades": 104,
+   "exp_r": 0.062,
+   "win": 88.5,
+   "pf": 1.94,
+   "p5": 0.019
+  },
+  "design_2x": 0.039,
+  "holdout": {
+   "trades": 59,
+   "exp_r": -0.037,
+   "win": 67.8,
+   "pf": 0.71,
+   "p5": -0.108
+  },
+  "holdout_2x": -0.066,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|with+early|S3.0_T0.75": {
+  "design": {
+   "trades": 104,
+   "exp_r": 0.114,
+   "win": 84.6,
+   "pf": 2.43,
+   "p5": 0.065
+  },
+  "design_2x": 0.091,
+  "holdout": {
+   "trades": 59,
+   "exp_r": -0.049,
+   "win": 59.3,
+   "pf": 0.69,
+   "p5": -0.13
+  },
+  "holdout_2x": -0.078,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|ema200+early|S3.0_T0.5": {
+  "design": {
+   "trades": 101,
+   "exp_r": 0.083,
+   "win": 91.1,
+   "pf": 2.65,
+   "p5": 0.043
+  },
+  "design_2x": 0.061,
+  "holdout": {
+   "trades": 54,
+   "exp_r": -0.052,
+   "win": 66.7,
+   "pf": 0.63,
+   "p5": -0.129
+  },
+  "holdout_2x": -0.082,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|ema200+early|S3.0_T0.75": {
+  "design": {
+   "trades": 101,
+   "exp_r": 0.111,
+   "win": 85.1,
+   "pf": 2.31,
+   "p5": 0.056
+  },
+  "design_2x": 0.089,
+  "holdout": {
+   "trades": 54,
+   "exp_r": -0.055,
+   "win": 57.4,
+   "pf": 0.66,
+   "p5": -0.132
+  },
+  "holdout_2x": -0.085,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|ema200+early|S3.0_T1.0": {
+  "design": {
+   "trades": 101,
+   "exp_r": 0.155,
+   "win": 80.2,
+   "pf": 2.68,
+   "p5": 0.098
+  },
+  "design_2x": 0.133,
+  "holdout": {
+   "trades": 54,
+   "exp_r": -0.057,
+   "win": 53.7,
+   "pf": 0.67,
+   "p5": -0.141
+  },
+  "holdout_2x": -0.087,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|with+room+early|S3.0_T0.5": {
+  "design": {
+   "trades": 104,
+   "exp_r": 0.062,
+   "win": 88.5,
+   "pf": 1.94,
+   "p5": 0.019
+  },
+  "design_2x": 0.039,
+  "holdout": {
+   "trades": 59,
+   "exp_r": -0.037,
+   "win": 67.8,
+   "pf": 0.71,
+   "p5": -0.107
+  },
+  "holdout_2x": -0.066,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|with+room+early|S3.0_T0.75": {
+  "design": {
+   "trades": 104,
+   "exp_r": 0.114,
+   "win": 84.6,
+   "pf": 2.43,
+   "p5": 0.065
+  },
+  "design_2x": 0.091,
+  "holdout": {
+   "trades": 59,
+   "exp_r": -0.049,
+   "win": 59.3,
+   "pf": 0.69,
+   "p5": -0.127
+  },
+  "holdout_2x": -0.078,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|with+vol+early|S3.0_T0.5": {
+  "design": {
+   "trades": 100,
+   "exp_r": 0.059,
+   "win": 88.0,
+   "pf": 1.86,
+   "p5": 0.013
+  },
+  "design_2x": 0.037,
+  "holdout": {
+   "trades": 53,
+   "exp_r": -0.047,
+   "win": 66.0,
+   "pf": 0.66,
+   "p5": -0.124
+  },
+  "holdout_2x": -0.075,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|with+vol+early|S3.0_T0.75": {
+  "design": {
+   "trades": 100,
+   "exp_r": 0.11,
+   "win": 84.0,
+   "pf": 2.33,
+   "p5": 0.056
+  },
+  "design_2x": 0.087,
+  "holdout": {
+   "trades": 53,
+   "exp_r": -0.064,
+   "win": 56.6,
+   "pf": 0.62,
+   "p5": -0.15
+  },
+  "holdout_2x": -0.093,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|ema200+room+early|S3.0_T0.5": {
+  "design": {
+   "trades": 101,
+   "exp_r": 0.083,
+   "win": 91.1,
+   "pf": 2.65,
+   "p5": 0.044
+  },
+  "design_2x": 0.061,
+  "holdout": {
+   "trades": 54,
+   "exp_r": -0.052,
+   "win": 66.7,
+   "pf": 0.63,
+   "p5": -0.128
+  },
+  "holdout_2x": -0.082,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|ema200+room+early|S3.0_T0.75": {
+  "design": {
+   "trades": 101,
+   "exp_r": 0.111,
+   "win": 85.1,
+   "pf": 2.31,
+   "p5": 0.058
+  },
+  "design_2x": 0.089,
+  "holdout": {
+   "trades": 54,
+   "exp_r": -0.055,
+   "win": 57.4,
+   "pf": 0.66,
+   "p5": -0.137
+  },
+  "holdout_2x": -0.085,
+  "PASS": false
+ },
+ "STOCKS|vwap_stretch|ema200+room+early|S3.0_T1.0": {
+  "design": {
+   "trades": 101,
+   "exp_r": 0.155,
+   "win": 80.2,
+   "pf": 2.68,
+   "p5": 0.099
+  },
+  "design_2x": 0.133,
+  "holdout": {
+   "trades": 54,
+   "exp_r": -0.057,
+   "win": 53.7,
+   "pf": 0.67,
+   "p5": -0.144
+  },
+  "holdout_2x": -0.087,
+  "PASS": false
+ }
+}
