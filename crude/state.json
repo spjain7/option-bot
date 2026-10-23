@@ -9,7 +9,7 @@
   "intraday": {
    "open": [],
    "closed": [],
-   "last_eval_bar": "2026-10-23 12:15:00",
+   "last_eval_bar": "2026-10-23 12:30:00",
    "last_exit_bar": null
   },
   "positional": {
@@ -580,6 +580,13 @@
    "oi": 1417100,
    "ltp": 9588.0,
    "volume": 7355
+  },
+  {
+   "time": "2026-10-23 12:59:04",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1419400,
+   "ltp": 9587.0,
+   "volume": 7636
   }
  ],
  "switches": {
@@ -619,69 +626,6 @@
   "trades": []
  },
  "runs": [
-  {
-   "time": "2026-10-22 14:35:28.492956",
-   "session": "OPEN",
-   "api": {
-    "15m": "ok (781 candles, last start 22-Oct 14:30)",
-    "1h": "ok (1049 candles, last start 22-Oct 14:00)",
-    "quote": "ok"
-   },
-   "data": {
-    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-    "last_closed_15m": "2026-10-22 14:15:00",
-    "bars_15m": 780,
-    "last_closed_1h": "2026-10-22 13:00:00",
-    "bars_1h": 544,
-    "last_closed_3h": "2026-10-22 09:00:00",
-    "bars_3h": 180,
-    "age_15m_min": 5.5,
-    "quote_age_min": -0.3,
-    "ltp": 9489.0,
-    "day_volume": 12486,
-    "quality": {
-     "blocks": [],
-     "notes": [],
-     "missing_15m_today": 0,
-     "quote_vs_candle_atr": 0.69
-    },
-    "volume": "available",
-    "oi_current": 1480900,
-    "oi_change": {
-     "status": "OK",
-     "label": "Short buildup",
-     "d_oi_pct": 2.11,
-     "d_price": -10.0,
-     "gap_min": 16.3,
-     "oi": 1480900,
-     "oi_prev": 1450300
-    },
-    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
-    "daily_pnl": 0.0,
-    "drawdown_pct": 0.0,
-    "open_risk_rs": 0
-   },
-   "decisions": {
-    "intraday": {
-     "decision": "NONE",
-     "side": null,
-     "blocks": [
-      "1-hour trend RANGE: close 9499 EMA20 9344 EMA50 9228 EMA200 8842 ADX 18.6"
-     ],
-     "bar": "2026-10-22 14:15:00"
-    },
-    "positional": {
-     "decision": "NONE",
-     "side": "BUY",
-     "blocks": [
-      "swing structure not HH/HL: swings H 9544\u21929533, L 8555\u21929063"
-     ],
-     "bar": "2026-10-22 09:00:00"
-    }
-   },
-   "actions": [],
-   "errors": []
-  },
   {
    "time": "2026-10-22 14:44:02.333006",
    "session": "OPEN",
@@ -4380,6 +4324,69 @@
       "1-hour trend RANGE: close 9601 EMA20 9443 EMA50 9326 EMA200 8918 ADX 16.1"
      ],
      "bar": "2026-10-23 12:15:00"
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "swing structure not HH/HL: swings H 9533\u21929523, L 9136\u21929307"
+     ],
+     "bar": "2026-10-23 09:00:00"
+    }
+   },
+   "actions": [],
+   "errors": []
+  },
+  {
+   "time": "2026-10-23 12:58:59.998691",
+   "session": "OPEN",
+   "api": {
+    "15m": "ok (797 candles, last start 23-Oct 12:45)",
+    "1h": "ok (1049 candles, last start 23-Oct 12:00)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": "2026-10-23 12:30:00",
+    "bars_15m": 796,
+    "last_closed_1h": "2026-10-23 11:00:00",
+    "bars_1h": 557,
+    "last_closed_3h": "2026-10-23 09:00:00",
+    "bars_3h": 185,
+    "age_15m_min": 14.0,
+    "quote_age_min": -0.1,
+    "ltp": 9587.0,
+    "day_volume": 7636,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "missing_15m_today": 0,
+     "quote_vs_candle_atr": 0.15
+    },
+    "volume": "available",
+    "oi_current": 1419400,
+    "oi_change": {
+     "status": "OK",
+     "label": "Flat / no clear OI signal",
+     "d_oi_pct": 0.162,
+     "d_price": -1.0,
+     "gap_min": 14.4,
+     "oi": 1419400,
+     "oi_prev": 1417100
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "1-hour trend RANGE: close 9601 EMA20 9443 EMA50 9326 EMA200 8918 ADX 16.1"
+     ],
+     "bar": "2026-10-23 12:30:00"
     },
     "positional": {
      "decision": "NONE",
