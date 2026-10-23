@@ -54,9 +54,10 @@ obuy() {
   # ---- option-BUY alerts (test phase; NSE hours only) ----
   if n=$(restore obuy-state obuy); then
     export OBUY_NEW_STATE=$n
-    python -m obuy.run scan; local rc=$?
+    # run the latest code (fresh worktree made by options()), state stays in this job's state/obuy
+    if [ -d /tmp/opt ]; then (cd /tmp/opt && OBUY_STATE_DIR="$OLDPWD/state/obuy" python -m obuy.run scan); else python -m obuy.run scan; fi; local rc=$?
     if [ -f state/obuy/state.json ] && save obuy-state obuy state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
-    SAVE_OK=$SAVE_OK python -m obuy.run flush
+    SAVE_OK=$SAVE_OK OBUY_STATE_DIR="$PWD/state/obuy" python -m obuy.run flush
     echo "option-buy scan exit $rc, save $SAVE_OK"
   else
     echo "::error::option-buy state restore failed"

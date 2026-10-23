@@ -113,9 +113,11 @@ def daily_frame(api, tok, now):
     return d
 
 
-def pick_option(master, name, px, typ, now):
+def pick_option(master, name, px, typ, now, min_expiry=None):
+    """ATM option of the nearest expiry on/after min_expiry (default: 3 days ahead)."""
+    lo = min_expiry if min_expiry is not None else now.normalize() + pd.Timedelta(days=3)
     o = master[(master["name"] == name) & (master["exch_seg"] == "NFO") & master["instrumenttype"].isin(["OPTIDX", "OPTSTK"])
-               & master["symbol"].str.endswith(typ) & (master["expiry_dt"] >= now.normalize() + pd.Timedelta(days=3))]
+               & master["symbol"].str.endswith(typ) & (master["expiry_dt"] >= lo)]
     if o.empty:
         return None
     o = o[o["expiry_dt"] == o["expiry_dt"].min()].copy()
@@ -230,7 +232,9 @@ def open_alert(api, master, state, now, u, mode, d, fut_px, why, msgs, rep):
     if state["done"].get(key) or taken >= MAX_PER_DAY[mode]:
         return
     typ = "CE" if d > 0 else "PE"
-    o = pick_option(master, u["name"], fut_px, typ, now)
+    # positional: the option must expire at least 2 days AFTER the planned exit (no holding into expiry-day decay)
+    lo = exit_time(now, mode).normalize() + pd.Timedelta(days=2) if mode == "positional" else None
+    o = pick_option(master, u["name"], fut_px, typ, now, lo)
     if not o:
         rep.append(f"{u['name']}: no option found"); return
     q = api.quotes({"NFO": [o["token"]]}).get(o["token"]) or {}
