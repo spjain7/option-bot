@@ -32,6 +32,16 @@ FAST_MOVE_PCT         = {"index": 0.4, "stock": 1.2, "mcx": 0.8}   # % move with
 BREAKOUT_VOL_X        = 2.0      # new day high/low counts only with volume >= 2x normal pace + rising OI
 BIGMOVE_COOLDOWN_MIN  = 60
 
+# ═════════════ 🛡️ DON'T SELL INTO A BOUNCE (selling bot safety rule, guards/bounce.py) ═════════════
+BOUNCE_FILTER         = True     # no new CE sell above VWAP / after a bounce off the low (mirror for PE sells)
+BOUNCE_ATR_X          = 0.5      # "bounce" = price already >= 0.5 x hourly ATR off the day's low and rising
+
+# ═════════════ 🔄 SHORT-COVERING / LONG-UNWINDING ALERT (information only) ═════════════
+COVERING_ENABLED      = True
+COVERING_MIN_MOVE     = {"index": 0.5, "stock": 1.5, "mcx": 1.0}   # % off the day's low (or high)
+COVERING_MIN_OI_DROP  = {"index": 0.5, "stock": 1.0, "mcx": 0.75}  # % OI fall over ~1 hour
+COVERING_COOLDOWN_MIN = 120
+
 # ═════════════ 👀 PRE-MOVE WATCH (cannot predict – flags quiet price + rising OI/volume BEFORE a possible move) ═════════════
 PREMOVE_ENABLED       = True
 PREMOVE_WINDOW_MIN    = 60       # look at the last hour of 15-min snapshots

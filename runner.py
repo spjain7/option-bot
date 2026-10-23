@@ -27,6 +27,7 @@ import strategy as S
 import notify
 import rsi_alert                      # Engine B - separate module, shares only data + Telegram
 import flow                           # OI / volume activity alerts (part of Engine A, no RSI)
+from guards import bounce               # never sell INTO a fresh bounce / drop
 import mcx_trade                      # Engine C - MCX buy/sell alerts (futures + option buying)
 from calls import engine as calls_engine   # Engine D - Telegram trading calls (intraday + positional)
 from angel import Angel, load_master, now_ist
@@ -390,6 +391,17 @@ class Bot:
         if mode == "intraday" and n < C.CONFIRM_CHECKS:
             self.why(name, f"{bias.lower()} – waiting confirmation on next scan" if bias != "NEUTRAL"
                      else "sideways – no side to sell"); return
+        if getattr(C, "BOUNCE_FILTER", False) and bias in ("BULLISH", "BEARISH"):
+            try:
+                seg = "MCX" if exch == "MCX" else M.spot_seg(name)
+                d15 = self.api.candles(seg, v["tok"], "FIFTEEN_MINUTE", now.normalize(), now)
+                if d15 is not None and not d15.empty:
+                    d15 = d15[d15["time"].dt.normalize() == now.normalize()]
+                stop = bounce.check(d15, spot, bias, C.BOUNCE_ATR_X)
+            except Exception as e_:
+                stop = None; print(name, "bounce check error", e_)
+            if stop:
+                self.why(name, stop); return
         ivl, ivx = ch["iv_label"], ch["iv_rv"]
         if ivl == "CHEAP":
             self.why(name, "premium cheap (IV below normal)"); return

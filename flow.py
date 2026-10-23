@@ -17,6 +17,7 @@ import market as M
 import strategy as S
 import notify
 import premove
+from guards import covering
 from angel import now_ist
 
 LABEL = {  # (price up?, oi up?) -> text
@@ -111,6 +112,11 @@ def run(bot, nse_on, mcx_on):
 
     if big:
         send_big(bot, big, now)
+    if getattr(C, "COVERING_ENABLED", False):
+        try:
+            covering.run(bot, live, now)
+        except Exception as e_:
+            print("covering error", e_)
     if getattr(C, "PREMOVE_ENABLED", False):
         try:
             premove.run(bot, live, now, lambda ex: _t(OPEN[ex][0]))

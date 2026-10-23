@@ -6,6 +6,7 @@ import numpy as np, pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import greeks as G, config as C, market, positions, runner, notify, strategy, rsi_alert, flow
+C.BOUNCE_FILTER = False   # synthetic candles here; the bounce guard is tested in tests/test_guards.py
 
 SENT = []
 notify.send = lambda text, *a, **k: (SENT.append(text), print("\n" + "─" * 60 + "\n" + text))
