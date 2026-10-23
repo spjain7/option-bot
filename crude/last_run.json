@@ -1,5 +1,5 @@
 {
- "time": "2026-10-23 20:48:19.363469",
+ "time": "2026-10-23 20:50:08.948792",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -27,15 +27,15 @@
   "bars_1h": 565,
   "last_closed_3h": "2026-10-23 15:00:00",
   "bars_3h": 187,
-  "age_15m_min": 3.3,
+  "age_15m_min": 5.1,
   "quote_age_min": -0.1,
-  "ltp": 9711.0,
-  "day_volume": 31690,
+  "ltp": 9712.0,
+  "day_volume": 31714,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.48
+   "quote_vs_candle_atr": 0.46
   },
   "volume": "available",
   "oi_current": 1499300,
@@ -43,8 +43,8 @@
    "status": "OK",
    "label": "Flat / no clear OI signal",
    "d_oi_pct": -0.14,
-   "d_price": 17.0,
-   "gap_min": 14.9,
+   "d_price": 18.0,
+   "gap_min": 16.7,
    "oi": 1499300,
    "oi_prev": 1501400
   },
@@ -66,7 +66,7 @@
     "rsi": 66.16627427481825
    },
    "bar_time": "2026-10-23 20:30:00",
-   "new_candle": true
+   "new_candle": false
   },
   "positional": {
    "decision": "NONE",
