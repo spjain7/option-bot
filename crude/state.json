@@ -9,7 +9,7 @@
   "intraday": {
    "open": [],
    "closed": [],
-   "last_eval_bar": "2026-10-23 13:00:00",
+   "last_eval_bar": "2026-10-23 13:30:00",
    "last_exit_bar": null
   },
   "positional": {
@@ -608,6 +608,13 @@
    "oi": 1428400,
    "ltp": 9573.0,
    "volume": 8803
+  },
+  {
+   "time": "2026-10-23 13:59:57",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1428500,
+   "ltp": 9585.0,
+   "volume": 9134
   }
  ],
  "switches": {
@@ -647,69 +654,6 @@
   "trades": []
  },
  "runs": [
-  {
-   "time": "2026-10-22 15:08:09.703852",
-   "session": "OPEN",
-   "api": {
-    "15m": "ok (781 candles, last start 22-Oct 15:00)",
-    "1h": "ok (1049 candles, last start 22-Oct 15:00)",
-    "quote": "ok"
-   },
-   "data": {
-    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-    "last_closed_15m": "2026-10-22 14:45:00",
-    "bars_15m": 780,
-    "last_closed_1h": "2026-10-22 14:00:00",
-    "bars_1h": 545,
-    "last_closed_3h": "2026-10-22 12:00:00",
-    "bars_3h": 181,
-    "age_15m_min": 8.2,
-    "quote_age_min": -0.2,
-    "ltp": 9471.0,
-    "day_volume": 14652,
-    "quality": {
-     "blocks": [],
-     "notes": [],
-     "missing_15m_today": 0,
-     "quote_vs_candle_atr": 0.07
-    },
-    "volume": "available",
-    "oi_current": 1500100,
-    "oi_change": {
-     "status": "OK",
-     "label": "Long buildup",
-     "d_oi_pct": 1.214,
-     "d_price": 10.0,
-     "gap_min": 13.9,
-     "oi": 1500100,
-     "oi_prev": 1482100
-    },
-    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
-    "daily_pnl": 0.0,
-    "drawdown_pct": 0.0,
-    "open_risk_rs": 0
-   },
-   "decisions": {
-    "intraday": {
-     "decision": "NONE",
-     "side": null,
-     "blocks": [
-      "1-hour trend RANGE: close 9474 EMA20 9356 EMA50 9237 EMA200 8848 ADX 18.7"
-     ],
-     "bar": "2026-10-22 14:45:00"
-    },
-    "positional": {
-     "decision": "NONE",
-     "side": "BUY",
-     "blocks": [
-      "swing structure not HH/HL: swings H 9544\u21929533, L 9063\u21929136"
-     ],
-     "bar": "2026-10-22 12:00:00"
-    }
-   },
-   "actions": [],
-   "errors": []
-  },
   {
    "time": "2026-10-22 15:22:59.263720",
    "session": "OPEN",
@@ -4420,6 +4364,69 @@
     "NO 1-HOUR DATA during the session",
     "STALE CANDLES: no 15-min candles returned while the live quote is current"
    ]
+  },
+  {
+   "time": "2026-10-23 13:59:39.918347",
+   "session": "OPEN",
+   "api": {
+    "15m": "ok (801 candles, last start 23-Oct 13:45)",
+    "1h": "ok (1049 candles, last start 23-Oct 13:00)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": "2026-10-23 13:30:00",
+    "bars_15m": 800,
+    "last_closed_1h": "2026-10-23 12:00:00",
+    "bars_1h": 558,
+    "last_closed_3h": "2026-10-23 09:00:00",
+    "bars_3h": 185,
+    "age_15m_min": 14.7,
+    "quote_age_min": -0.3,
+    "ltp": 9585.0,
+    "day_volume": 9134,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "missing_15m_today": 0,
+     "quote_vs_candle_atr": 0.06
+    },
+    "volume": "available",
+    "oi_current": 1428500,
+    "oi_change": {
+     "status": "OK",
+     "label": "Flat / no clear OI signal",
+     "d_oi_pct": 0.007,
+     "d_price": 12.0,
+     "gap_min": 17.0,
+     "oi": 1428500,
+     "oi_prev": 1428400
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "1-hour trend RANGE: close 9591 EMA20 9457 EMA50 9336 EMA200 8925 ADX 16.9"
+     ],
+     "bar": "2026-10-23 13:30:00"
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "swing structure not HH/HL: swings H 9533\u21929523, L 9136\u21929307"
+     ],
+     "bar": "2026-10-23 09:00:00"
+    }
+   },
+   "actions": [],
+   "errors": []
   }
  ],
  "last_error": {
