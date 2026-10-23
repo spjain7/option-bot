@@ -87,7 +87,12 @@ def simulate(c, path):
     if b is None:
         b = a
     move = (end_s / s0 - 1) * 100 * (1 if typ == "CE" else -1)
-    return {"id": c["id"], "name": c["name"], "kind": k, "mode": c["mode"], "typ": typ, "premium": p0, "A": a, "B": b,
+    # model check on the option the bot really sold: model exit price vs the real recorded exit price
+    leg = c["legs"][0]
+    m_exit = G.price(end_s, leg["K"], years(end_t, c["expiry"], c["exch"]), iv, C.RISK_FREE, leg["typ"])
+    m_entry = G.price(s0, leg["K"], years(t0, c["expiry"], c["exch"]), iv, C.RISK_FREE, leg["typ"])
+    return {"ret": b / (p0 * lot) * 100, "t0": t0, "m_chg": m_exit - m_entry, "real_chg": c["exit_value"] - leg["entry"], "lot_prem": p0 * lot,
+            "id": c["id"], "name": c["name"], "kind": k, "mode": c["mode"], "typ": typ, "premium": p0, "A": a, "B": b,
             "dir_ok": move > 0, "move_pct": move, "sell_pnl": c["pnl_rs_per_lot"], "sell_exit": c["exit_reason"]}
 
 
@@ -130,6 +135,21 @@ def main():
     L += ["", "## By how the sell call ended (version B)", ""]
     for v in sorted({r["sell_exit"] for r in rows}):
         L.append(f"- Sell exit {v}: {stats([r['B'] for r in rows if r['sell_exit'] == v])}")
+    rows.sort(key=lambda r: r["t0"])
+    half = len(rows) // 2
+    top = sorted(rows, key=lambda r: r["B"], reverse=True)
+    agree = sum((r["m_chg"] > 0) == (r["real_chg"] > 0) for r in rows)
+    err = sorted(abs(r["m_chg"] - r["real_chg"]) / max(abs(r["real_chg"]), 1e-9) for r in rows)
+    L += ["", "## Robustness (version B)", "",
+          f"- First half of the calls: {stats([r['B'] for r in rows[:half]])}",
+          f"- Second half of the calls: {stats([r['B'] for r in rows[half:]])}",
+          f"- Without MCX: {stats([r['B'] for r in rows if r['kind'] != 'mcx'])}",
+          f"- Without the 10 best trades: {stats([r['B'] for r in top[10:]])} (the 10 best made ₹{sum(r['B'] for r in top[:10]):,.0f})",
+          f"- Average return on the premium paid: {sum(r['ret'] for r in rows) / len(rows):+.1f}% per trade; median premium per lot ₹{sorted(r['lot_prem'] for r in rows)[len(rows)//2]:,.0f}",
+          f"- Model check on the options the bot really sold: model and real price moved the same way in {agree} of {len(rows)} trades; "
+          f"median size error {err[len(err)//2] * 100:.0f}%", ""]
+    for name in sorted({r["name"] for r in rows if r["kind"] == "mcx"}):
+        L.append(f"- {name}: {stats([r['B'] for r in rows if r['name'] == name])}")
     L += ["", "Notes: a model estimate on one month of calls, not a guarantee. Selling wins when the market stays still or moves "
           "slowly; buying needs a fast move in the right direction before time decay eats the premium.", ""]
     print("\n".join(L))
