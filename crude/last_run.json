@@ -1,5 +1,5 @@
 {
- "time": "2026-10-23 19:00:26.035113",
+ "time": "2026-10-23 19:03:23.916018",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -16,36 +16,36 @@
  },
  "api": {
   "15m": "ok (822 candles, last start 23-Oct 19:00)",
-  "1h": "ok (1050 candles, last start 23-Oct 19:00)",
+  "1h": "ok (1049 candles, last start 23-Oct 19:00)",
   "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-23 18:30:00",
-  "bars_15m": 820,
-  "last_closed_1h": "2026-10-23 17:00:00",
-  "bars_1h": 563,
+  "last_closed_15m": "2026-10-23 18:45:00",
+  "bars_15m": 821,
+  "last_closed_1h": "2026-10-23 18:00:00",
+  "bars_1h": 564,
   "last_closed_3h": "2026-10-23 15:00:00",
   "bars_3h": 187,
-  "age_15m_min": 15.4,
+  "age_15m_min": 3.4,
   "quote_age_min": -0.1,
-  "ltp": 9661.0,
-  "day_volume": 23458,
+  "ltp": 9679.0,
+  "day_volume": 23658,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.38
+   "quote_vs_candle_atr": 0.54
   },
   "volume": "available",
-  "oi_current": 1557200,
+  "oi_current": 1560300,
   "oi_change": {
    "status": "OK",
-   "label": "Short buildup",
-   "d_oi_pct": 0.219,
-   "d_price": -5.0,
-   "gap_min": 10.4,
-   "oi": 1557200,
+   "label": "Long buildup",
+   "d_oi_pct": 0.418,
+   "d_price": 13.0,
+   "gap_min": 13.3,
+   "oi": 1560300,
    "oi_prev": 1553800
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
@@ -57,16 +57,16 @@
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "1-hour trend RANGE: close 9636 EMA20 9517 EMA50 9385 EMA200 8958 ADX 16.1"
+    "1-hour trend RANGE: close 9658 EMA20 9530 EMA50 9396 EMA200 8965 ADX 15.5"
    ],
    "metrics": {
     "trend_1h": "RANGE",
-    "trend_1h_detail": "close 9636 EMA20 9517 EMA50 9385 EMA200 8958 ADX 16.1",
-    "adx_1h": 16.055144283347794,
-    "rsi": 61.03276712824054
+    "trend_1h_detail": "close 9658 EMA20 9530 EMA50 9396 EMA200 8965 ADX 15.5",
+    "adx_1h": 15.518893664702697,
+    "rsi": 62.91152993082511
    },
-   "bar_time": "2026-10-23 18:30:00",
-   "new_candle": false
+   "bar_time": "2026-10-23 18:45:00",
+   "new_candle": true
   },
   "positional": {
    "decision": "NONE",
