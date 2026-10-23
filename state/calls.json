@@ -199,7 +199,8 @@
   "intra|COPPER|2026-10-23 12:00": "2026-10-23",
   "intra|ALUMINIUM|2026-10-23 12:00": "2026-10-23",
   "intra|BANKNIFTY|2026-10-23 12:15": "2026-10-23",
-  "intra|BANKNIFTY|2026-10-23 12:15|nt": "2026-10-23"
+  "intra|BANKNIFTY|2026-10-23 12:15|nt": "2026-10-23",
+  "intra|ZINC|2026-10-23 12:00": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
