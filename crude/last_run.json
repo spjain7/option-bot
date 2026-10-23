@@ -1,5 +1,5 @@
 {
- "time": "2026-10-24 00:02:14.721386",
+ "time": "2026-10-24 00:17:07.414917",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -15,29 +15,26 @@
   }
  },
  "api": {
-  "15m": "ok (781 candles, last start 22-Oct 23:15)",
-  "1h": "ok (1034 candles, last start 22-Oct 23:00)",
-  "quote": "ok",
-  "1h-next(roll check)": "ok (540 candles, last start 22-Oct 23:00)"
+  "15m": "ok (839 candles, last start 23-Oct 23:15)",
+  "1h": "ok (1049 candles, last start 23-Oct 23:00)",
+  "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-22 23:15:00",
-  "bars_15m": 781,
-  "last_closed_1h": "2026-10-22 23:00:00",
-  "bars_1h": 554,
-  "last_closed_3h": "2026-10-22 21:00:00",
-  "bars_3h": 184,
-  "age_15m_min": 1472.2,
-  "quote_age_min": 2.4,
+  "last_closed_15m": "2026-10-23 23:15:00",
+  "bars_15m": 839,
+  "last_closed_1h": "2026-10-23 23:00:00",
+  "bars_1h": 569,
+  "last_closed_3h": "2026-10-23 21:00:00",
+  "bars_3h": 189,
+  "age_15m_min": 47.1,
+  "quote_age_min": 17.3,
   "ltp": 9784.0,
   "day_volume": 42801,
   "quality": {
-   "blocks": [
-    "live price 9784.0 is 7.2 ATR from the last candle close \u2013 data suspect"
-   ],
+   "blocks": [],
    "notes": [],
-   "quote_vs_candle_atr": 7.17
+   "quote_vs_candle_atr": 0.0
   },
   "volume": "available",
   "oi_current": 1478600,
@@ -58,35 +55,39 @@
  "decisions": {
   "intraday": {
    "decision": "NONE",
+   "side": "BUY",
    "blocks": [
-    "1-hour trend RANGE: close 9493 EMA20 9399 EMA50 9295 EMA200 8898 ADX 14.6"
+    "no setup: no confirmed breakout and no pullback-and-resume candle"
    ],
    "metrics": {
-    "trend_1h": "RANGE",
-    "trend_1h_detail": "close 9493 EMA20 9399 EMA50 9295 EMA200 8898 ADX 14.6",
-    "adx_1h": 14.618498287220962,
-    "rsi": 65.1988387203962
+    "trend_1h": "UP",
+    "trend_1h_detail": "close 9784 EMA20 9624 EMA50 9463 EMA200 9004 ADX 20.3",
+    "adx_1h": 20.268813693999384,
+    "rsi": 60.812324248133464,
+    "vol_x": 1.0730253353204173,
+    "atr": 44.04692843114066,
+    "atr_x": 1.0270749712454943
    },
-   "bar_time": "2026-10-22 23:15:00",
+   "bar_time": "2026-10-23 23:15:00",
    "new_candle": true
   },
   "positional": {
    "decision": "NONE",
    "side": "BUY",
    "blocks": [
-    "swing structure not HH/HL: swings H 9533\u21929523, L 9063\u21929136"
+    "swing structure not HH/HL: swings H 9533\u21929523, L 9136\u21929307"
    ],
    "metrics": {
     "trend_3h": "UP",
-    "trend_3h_detail": "close 9493 EMA20 9250 EMA50 8984 EMA200 n/a (history 184 bars) ADX 37.9",
-    "adx_3h": 37.93491361159461,
-    "rsi": 62.38014301663909,
-    "vol_x": 0.6587427320156267,
-    "atr": 171.44694968503504,
-    "atr_x": 0.9993258715387715,
-    "structure": "swings H 9533\u21929523, L 9063\u21929136"
+    "trend_3h_detail": "close 9784 EMA20 9418 EMA50 9108 EMA200 n/a (history 189 bars) ADX 40.2",
+    "adx_3h": 40.249897475412325,
+    "rsi": 70.09268154644414,
+    "vol_x": 1.1374340720161482,
+    "atr": 158.1103674983001,
+    "atr_x": 0.937207623012999,
+    "structure": "swings H 9533\u21929523, L 9136\u21929307"
    },
-   "bar_time": "2026-10-22 21:00:00",
+   "bar_time": "2026-10-23 21:00:00",
    "new_candle": true
   }
  },
