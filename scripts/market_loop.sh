@@ -27,7 +27,9 @@ save() {     # $1 branch  $2 subdir  files...
       git worktree add -q --detach /tmp/sv && (cd /tmp/sv && git checkout -q --orphan "$br" && git rm -rqf --ignore-unmatch .)
     fi
     mkdir -p "/tmp/sv/$sub"
-    for f in "$@"; do [ -f "state/$sub/$f" ] && cp "state/$sub/$f" "/tmp/sv/$sub/"; done
+    for f in "$@"; do
+      if [ -f "state/$sub/$f" ]; then cp "state/$sub/$f" "/tmp/sv/$sub/"; else rm -f "/tmp/sv/$sub/$f"; fi
+    done
     (cd /tmp/sv && git add "$sub" && (git diff --cached --quiet || git commit -qm "$sub state $(date -u +%F_%H%M)") \
        && git push -q origin "HEAD:refs/heads/$br") && return 0
     sleep 5
@@ -73,6 +75,7 @@ iteration() {
     python -m alerts.run scan; rc=$?
     if [ -f state/alerts/state.json ] && save alerts-state alerts state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
     [ -f state/alerts/outbox.json ] && SAVE_OK=$SAVE_OK python -m alerts.run flush
+    save alerts-state alerts state.json pending.json || echo "::warning::could not save the undelivered-message queue"
     echo "alerts scan exit $rc, save $SAVE_OK"
   else
     echo "::error::alerts state restore failed"

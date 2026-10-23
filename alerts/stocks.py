@@ -127,6 +127,11 @@ def scan(api, master, now, state, msgs, rep, engine):
         return
     st = state.setdefault("stk", dict(active=[], last_block=None))
     st.setdefault("active", [])
+    old = [p for p in st["active"] if "expiry" not in p]          # alerts from the withdrawn 22-Oct rule
+    if old:
+        st["active"] = [p for p in st["active"] if "expiry" in p]
+        msgs.append(f"ℹ️ {len(old)} stock alerts from the earlier rule (22-Oct evening, partly not delivered) are no longer "
+                    "tracked – ignore any of them you may have. New stock calls use the tested OI-breakout rule.")
     uni = universe(master, now)
     rep["stocks"] = dict(universe=len(uni))
     if st["active"] and (engine.is_open("NFO", now) or engine._just_closed("NFO", now)):
