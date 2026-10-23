@@ -503,6 +503,13 @@
    "oi": 1341500,
    "ltp": 9515.0,
    "volume": 405
+  },
+  {
+   "time": "2026-10-23 09:20:51",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1338400,
+   "ltp": 9511.0,
+   "volume": 922
   }
  ],
  "switches": {
@@ -535,73 +542,12 @@
   "ignored": 0,
   "startup_sent": true,
   "eod_sent": false,
-  "alerted": [],
+  "alerted": [
+   "err:NO 1-HOUR DATA during the session"
+  ],
   "trades": []
  },
  "runs": [
-  {
-   "time": "2026-10-22 11:50:53.216445",
-   "session": "OPEN",
-   "api": {
-    "15m": "ok (781 candles, last start 22-Oct 11:45)",
-    "1h": "ok (1049 candles, last start 22-Oct 11:00)",
-    "quote": "ok"
-   },
-   "data": {
-    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-    "last_closed_15m": "2026-10-22 11:30:00",
-    "bars_15m": 780,
-    "last_closed_1h": "2026-10-22 10:00:00",
-    "bars_1h": 541,
-    "last_closed_3h": "2026-10-21 21:00:00",
-    "bars_3h": 179,
-    "age_15m_min": 5.9,
-    "quote_age_min": -0.3,
-    "ltp": 9447.0,
-    "day_volume": 5469,
-    "quality": {
-     "blocks": [],
-     "notes": [],
-     "missing_15m_today": 0,
-     "quote_vs_candle_atr": 0.4
-    },
-    "volume": "available",
-    "oi_current": 1344900,
-    "oi_change": {
-     "status": "OK",
-     "label": "Flat / no clear OI signal",
-     "d_oi_pct": 0.112,
-     "d_price": 6.0,
-     "gap_min": 15.1,
-     "oi": 1344900,
-     "oi_prev": 1343400
-    },
-    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
-    "daily_pnl": 0.0,
-    "drawdown_pct": 0.0,
-    "open_risk_rs": 0
-   },
-   "decisions": {
-    "intraday": {
-     "decision": "NONE",
-     "side": null,
-     "blocks": [
-      "1-hour trend RANGE: close 9393 EMA20 9298 EMA50 9196 EMA200 8823 ADX 17.2"
-     ],
-     "bar": "2026-10-22 11:30:00"
-    },
-    "positional": {
-     "decision": "NONE",
-     "side": "BUY",
-     "blocks": [
-      "swing structure not HH/HL: swings H 9544\u21929533, L 8555\u21929063"
-     ],
-     "bar": "2026-10-21 21:00:00"
-    }
-   },
-   "actions": [],
-   "errors": []
-  },
   {
    "time": "2026-10-22 12:04:02.175311",
    "session": "OPEN",
@@ -4312,11 +4258,75 @@
    },
    "actions": [],
    "errors": []
+  },
+  {
+   "time": "2026-10-23 09:20:21.499489",
+   "session": "OPEN",
+   "api": {
+    "15m": "ok (783 candles, last start 23-Oct 09:15)",
+    "1h": "FAILED: no candles returned (API error, rate limit or no trading)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "signal contract is not the stitched front token \u2013 its own data, no adjustment",
+    "last_closed_15m": "2026-10-23 09:00:00",
+    "bars_15m": 782,
+    "last_closed_1h": null,
+    "bars_1h": 0,
+    "last_closed_3h": null,
+    "bars_3h": 0,
+    "age_15m_min": 5.4,
+    "quote_age_min": -0.5,
+    "ltp": 9511.0,
+    "day_volume": 922,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "quote_vs_candle_atr": 0.22
+    },
+    "volume": "available",
+    "oi_current": 1338400,
+    "oi_change": {
+     "status": "OK",
+     "label": "Long unwinding",
+     "d_oi_pct": -0.231,
+     "d_price": -4.0,
+     "gap_min": 13.1,
+     "oi": 1338400,
+     "oi_prev": 1341500
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "no 15-min / 1-hour data"
+     ],
+     "bar": null
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "no completed 3-hour candles"
+     ],
+     "bar": null
+    }
+   },
+   "actions": [],
+   "errors": [
+    "NO 1-HOUR DATA during the session"
+   ]
   }
  ],
  "last_error": {
-  "time": "2026-10-22 16:06:47.221560",
-  "error": "STALE CANDLES: no 15-min candles returned while the live quote is current"
+  "time": "2026-10-23 09:20:21.499489",
+  "error": "NO 1-HOUR DATA during the session"
  },
  "peak_equity": 500000.0
 }
