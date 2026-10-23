@@ -18,3 +18,4 @@ research/search/results_stock1h/*.pkl
 research/search/results_ema/*.pkl
 research/search/results_bigmove/*.pkl
 research/search/results_bigmove2/*.pkl
+research/search/results_early/*.pkl
