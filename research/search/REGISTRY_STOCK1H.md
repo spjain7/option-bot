@@ -13,3 +13,7 @@ New families use effects documented in market research (cross-sectional strength
 N ∈ {3, 5} for R1/R2. No trade may span an NFO expiry (rollover window skipped). Full costs on the real price.
 SHORTLIST (design < 2024-07-01): ≥ 100 trades, mean net > +0.05% per trade, > 0 at 2× costs, bootstrap p5 > 0.
 PASS (hold-out ≥ 2024-07-01): ≥ 100 trades, mean net > 0 at 2× costs. Win rate reported (goal 80%), never the only test.
+
+CORRECTION (23-Oct, after first run, before any deployment): R3 used the FULL day's close/range/volume while entering
+at 15:15 – look-ahead bias. Fixed: the R3 signal uses only candles closed by 15:15; entry = 15:15 open. First-run R3 numbers
+are invalid. Same pass rules.

@@ -1,0 +1,782 @@
+{
+ "R1a_N3": {
+  "design": {
+   "trades": 1044,
+   "exp_r": 0.045,
+   "win": 46.4,
+   "pf": 1.07,
+   "p5": -0.057
+  },
+  "design_2x_pct": -0.051,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1257,
+   "exp_r": 0.007,
+   "win": 49.2,
+   "pf": 1.01,
+   "p5": -0.075
+  },
+  "holdout_2x_pct": -0.087,
+  "PASS": false
+ },
+ "R1a_N5": {
+  "design": {
+   "trades": 1740,
+   "exp_r": 0.016,
+   "win": 46.5,
+   "pf": 1.03,
+   "p5": -0.055
+  },
+  "design_2x_pct": -0.08,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 2095,
+   "exp_r": 0.003,
+   "win": 48.8,
+   "pf": 1.0,
+   "p5": -0.058
+  },
+  "holdout_2x_pct": -0.091,
+  "PASS": false
+ },
+ "R1b_N3": {
+  "design": {
+   "trades": 1044,
+   "exp_r": 0.074,
+   "win": 49.2,
+   "pf": 1.07,
+   "p5": -0.078
+  },
+  "design_2x_pct": -0.023,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1257,
+   "exp_r": 0.152,
+   "win": 52.3,
+   "pf": 1.15,
+   "p5": 0.02
+  },
+  "holdout_2x_pct": 0.059,
+  "PASS": false
+ },
+ "R1b_N5": {
+  "design": {
+   "trades": 1740,
+   "exp_r": 0.064,
+   "win": 50.4,
+   "pf": 1.07,
+   "p5": -0.054
+  },
+  "design_2x_pct": -0.032,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 2095,
+   "exp_r": 0.065,
+   "win": 50.3,
+   "pf": 1.06,
+   "p5": -0.04
+  },
+  "holdout_2x_pct": -0.029,
+  "PASS": false
+ },
+ "R2_N3": {
+  "design": {
+   "trades": 2094,
+   "exp_r": -0.075,
+   "win": 40.3,
+   "pf": 0.76,
+   "p5": -0.105
+  },
+  "design_2x_pct": -0.172,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 2514,
+   "exp_r": -0.072,
+   "win": 43.4,
+   "pf": 0.77,
+   "p5": -0.098
+  },
+  "holdout_2x_pct": -0.165,
+  "PASS": false
+ },
+ "R2_N5": {
+  "design": {
+   "trades": 3490,
+   "exp_r": -0.08,
+   "win": 40.3,
+   "pf": 0.74,
+   "p5": -0.102
+  },
+  "design_2x_pct": -0.176,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 4190,
+   "exp_r": -0.072,
+   "win": 43.1,
+   "pf": 0.76,
+   "p5": -0.091
+  },
+  "holdout_2x_pct": -0.165,
+  "PASS": false
+ },
+ "R3a": {
+  "design": {
+   "trades": 1389,
+   "exp_r": 0.227,
+   "win": 50.3,
+   "pf": 1.44,
+   "p5": 0.131
+  },
+  "design_2x_pct": 0.132,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1772,
+   "exp_r": 0.143,
+   "win": 50.9,
+   "pf": 1.23,
+   "p5": 0.02
+  },
+  "holdout_2x_pct": 0.05,
+  "PASS": true
+ },
+ "R3b": {
+  "design": {
+   "trades": 1389,
+   "exp_r": 0.093,
+   "win": 46.7,
+   "pf": 1.12,
+   "p5": -0.022
+  },
+  "design_2x_pct": -0.003,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1772,
+   "exp_r": 0.079,
+   "win": 47.7,
+   "pf": 1.09,
+   "p5": -0.054
+  },
+  "holdout_2x_pct": -0.014,
+  "PASS": false
+ },
+ "R4a": {
+  "design": {
+   "trades": 956,
+   "exp_r": 0.27,
+   "win": 62.4,
+   "pf": 1.28,
+   "p5": 0.099
+  },
+  "design_2x_pct": 0.175,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 3125,
+   "exp_r": -0.183,
+   "win": 59.4,
+   "pf": 0.86,
+   "p5": -0.301
+  },
+  "holdout_2x_pct": -0.276,
+  "PASS": false
+ },
+ "R4b": {
+  "design": {
+   "trades": 956,
+   "exp_r": 0.212,
+   "win": 62.4,
+   "pf": 1.21,
+   "p5": 0.044
+  },
+  "design_2x_pct": 0.117,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 3125,
+   "exp_r": -0.141,
+   "win": 59.3,
+   "pf": 0.89,
+   "p5": -0.236
+  },
+  "holdout_2x_pct": -0.234,
+  "PASS": false
+ },
+ "R5a": {
+  "design": {
+   "trades": 757,
+   "exp_r": 0.25,
+   "win": 63.0,
+   "pf": 1.27,
+   "p5": 0.065
+  },
+  "design_2x_pct": 0.155,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 2338,
+   "exp_r": -0.159,
+   "win": 59.7,
+   "pf": 0.88,
+   "p5": -0.3
+  },
+  "holdout_2x_pct": -0.252,
+  "PASS": false
+ },
+ "R5b": {
+  "design": {
+   "trades": 757,
+   "exp_r": 0.187,
+   "win": 63.0,
+   "pf": 1.19,
+   "p5": 0.008
+  },
+  "design_2x_pct": 0.092,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 2338,
+   "exp_r": -0.108,
+   "win": 59.7,
+   "pf": 0.91,
+   "p5": -0.216
+  },
+  "holdout_2x_pct": -0.201,
+  "PASS": false
+ },
+ "R6": {
+  "design": {
+   "trades": 587,
+   "exp_r": 0.176,
+   "win": 61.8,
+   "pf": 1.2,
+   "p5": -0.013
+  },
+  "design_2x_pct": 0.081,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1881,
+   "exp_r": -0.137,
+   "win": 59.8,
+   "pf": 0.88,
+   "p5": -0.275
+  },
+  "holdout_2x_pct": -0.23,
+  "PASS": false
+ },
+ "R1a_N3|-1": {
+  "design": {
+   "trades": 528,
+   "exp_r": 0.047,
+   "win": 45.1,
+   "pf": 1.08,
+   "p5": -0.099
+  },
+  "design_2x_pct": -0.05,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 639,
+   "exp_r": 0.021,
+   "win": 50.4,
+   "pf": 1.03,
+   "p5": -0.102
+  },
+  "holdout_2x_pct": -0.073,
+  "PASS": false
+ },
+ "R1a_N3|1": {
+  "design": {
+   "trades": 516,
+   "exp_r": 0.043,
+   "win": 47.7,
+   "pf": 1.07,
+   "p5": -0.098
+  },
+  "design_2x_pct": -0.053,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 618,
+   "exp_r": -0.008,
+   "win": 47.9,
+   "pf": 0.99,
+   "p5": -0.118
+  },
+  "holdout_2x_pct": -0.101,
+  "PASS": false
+ },
+ "R1a_N5|-1": {
+  "design": {
+   "trades": 880,
+   "exp_r": 0.018,
+   "win": 45.7,
+   "pf": 1.03,
+   "p5": -0.09
+  },
+  "design_2x_pct": -0.078,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1065,
+   "exp_r": -0.015,
+   "win": 48.4,
+   "pf": 0.98,
+   "p5": -0.102
+  },
+  "holdout_2x_pct": -0.108,
+  "PASS": false
+ },
+ "R1a_N5|1": {
+  "design": {
+   "trades": 860,
+   "exp_r": 0.014,
+   "win": 47.3,
+   "pf": 1.02,
+   "p5": -0.084
+  },
+  "design_2x_pct": -0.082,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1030,
+   "exp_r": 0.02,
+   "win": 49.3,
+   "pf": 1.03,
+   "p5": -0.064
+  },
+  "holdout_2x_pct": -0.073,
+  "PASS": false
+ },
+ "R1b_N3|-1": {
+  "design": {
+   "trades": 528,
+   "exp_r": 0.005,
+   "win": 48.9,
+   "pf": 1.0,
+   "p5": -0.198
+  },
+  "design_2x_pct": -0.092,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 639,
+   "exp_r": 0.168,
+   "win": 53.1,
+   "pf": 1.16,
+   "p5": -0.025
+  },
+  "holdout_2x_pct": 0.074,
+  "PASS": false
+ },
+ "R1b_N3|1": {
+  "design": {
+   "trades": 516,
+   "exp_r": 0.145,
+   "win": 49.6,
+   "pf": 1.14,
+   "p5": -0.069
+  },
+  "design_2x_pct": 0.048,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 618,
+   "exp_r": 0.136,
+   "win": 51.5,
+   "pf": 1.14,
+   "p5": -0.047
+  },
+  "holdout_2x_pct": 0.042,
+  "PASS": false
+ },
+ "R1b_N5|-1": {
+  "design": {
+   "trades": 880,
+   "exp_r": -0.023,
+   "win": 49.9,
+   "pf": 0.98,
+   "p5": -0.181
+  },
+  "design_2x_pct": -0.119,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1065,
+   "exp_r": 0.048,
+   "win": 50.9,
+   "pf": 1.04,
+   "p5": -0.106
+  },
+  "holdout_2x_pct": -0.046,
+  "PASS": false
+ },
+ "R1b_N5|1": {
+  "design": {
+   "trades": 860,
+   "exp_r": 0.154,
+   "win": 50.9,
+   "pf": 1.16,
+   "p5": -0.009
+  },
+  "design_2x_pct": 0.057,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1030,
+   "exp_r": 0.082,
+   "win": 49.6,
+   "pf": 1.08,
+   "p5": -0.056
+  },
+  "holdout_2x_pct": -0.011,
+  "PASS": false
+ },
+ "R2_N3|-1": {
+  "design": {
+   "trades": 1047,
+   "exp_r": -0.143,
+   "win": 35.2,
+   "pf": 0.58,
+   "p5": -0.188
+  },
+  "design_2x_pct": -0.24,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1257,
+   "exp_r": -0.07,
+   "win": 43.2,
+   "pf": 0.78,
+   "p5": -0.111
+  },
+  "holdout_2x_pct": -0.163,
+  "PASS": false
+ },
+ "R2_N3|1": {
+  "design": {
+   "trades": 1047,
+   "exp_r": -0.008,
+   "win": 45.4,
+   "pf": 0.97,
+   "p5": -0.05
+  },
+  "design_2x_pct": -0.104,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1257,
+   "exp_r": -0.074,
+   "win": 43.6,
+   "pf": 0.75,
+   "p5": -0.107
+  },
+  "holdout_2x_pct": -0.167,
+  "PASS": false
+ },
+ "R2_N5|-1": {
+  "design": {
+   "trades": 1745,
+   "exp_r": -0.136,
+   "win": 36.5,
+   "pf": 0.59,
+   "p5": -0.169
+  },
+  "design_2x_pct": -0.233,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 2095,
+   "exp_r": -0.079,
+   "win": 42.8,
+   "pf": 0.75,
+   "p5": -0.109
+  },
+  "holdout_2x_pct": -0.172,
+  "PASS": false
+ },
+ "R2_N5|1": {
+  "design": {
+   "trades": 1745,
+   "exp_r": -0.024,
+   "win": 44.1,
+   "pf": 0.91,
+   "p5": -0.054
+  },
+  "design_2x_pct": -0.12,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 2095,
+   "exp_r": -0.066,
+   "win": 43.3,
+   "pf": 0.77,
+   "p5": -0.09
+  },
+  "holdout_2x_pct": -0.159,
+  "PASS": false
+ },
+ "R3a|-1": {
+  "design": {
+   "trades": 323,
+   "exp_r": 0.212,
+   "win": 46.4,
+   "pf": 1.41,
+   "p5": 0.022
+  },
+  "design_2x_pct": 0.116,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 716,
+   "exp_r": 0.423,
+   "win": 56.1,
+   "pf": 1.8,
+   "p5": 0.26
+  },
+  "holdout_2x_pct": 0.329,
+  "PASS": true
+ },
+ "R3a|1": {
+  "design": {
+   "trades": 1066,
+   "exp_r": 0.232,
+   "win": 51.5,
+   "pf": 1.45,
+   "p5": 0.129
+  },
+  "design_2x_pct": 0.136,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1056,
+   "exp_r": -0.046,
+   "win": 47.3,
+   "pf": 0.93,
+   "p5": -0.219
+  },
+  "holdout_2x_pct": -0.139,
+  "PASS": false
+ },
+ "R3b|-1": {
+  "design": {
+   "trades": 323,
+   "exp_r": -0.096,
+   "win": 44.6,
+   "pf": 0.89,
+   "p5": -0.336
+  },
+  "design_2x_pct": -0.192,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 716,
+   "exp_r": 0.383,
+   "win": 52.5,
+   "pf": 1.51,
+   "p5": 0.217
+  },
+  "holdout_2x_pct": 0.29,
+  "PASS": false
+ },
+ "R3b|1": {
+  "design": {
+   "trades": 1066,
+   "exp_r": 0.15,
+   "win": 47.3,
+   "pf": 1.2,
+   "p5": 0.016
+  },
+  "design_2x_pct": 0.054,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1056,
+   "exp_r": -0.127,
+   "win": 44.4,
+   "pf": 0.86,
+   "p5": -0.319
+  },
+  "holdout_2x_pct": -0.22,
+  "PASS": false
+ },
+ "R4a|-1": {
+  "design": {
+   "trades": 210,
+   "exp_r": -0.257,
+   "win": 54.3,
+   "pf": 0.76,
+   "p5": -0.588
+  },
+  "design_2x_pct": -0.353,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1278,
+   "exp_r": -0.212,
+   "win": 60.3,
+   "pf": 0.85,
+   "p5": -0.375
+  },
+  "holdout_2x_pct": -0.306,
+  "PASS": false
+ },
+ "R4a|1": {
+  "design": {
+   "trades": 746,
+   "exp_r": 0.418,
+   "win": 64.7,
+   "pf": 1.44,
+   "p5": 0.219
+  },
+  "design_2x_pct": 0.323,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1847,
+   "exp_r": -0.163,
+   "win": 58.7,
+   "pf": 0.88,
+   "p5": -0.333
+  },
+  "holdout_2x_pct": -0.255,
+  "PASS": false
+ },
+ "R4b|-1": {
+  "design": {
+   "trades": 210,
+   "exp_r": -0.285,
+   "win": 54.3,
+   "pf": 0.74,
+   "p5": -0.597
+  },
+  "design_2x_pct": -0.381,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1278,
+   "exp_r": -0.221,
+   "win": 60.3,
+   "pf": 0.84,
+   "p5": -0.379
+  },
+  "holdout_2x_pct": -0.314,
+  "PASS": false
+ },
+ "R4b|1": {
+  "design": {
+   "trades": 746,
+   "exp_r": 0.352,
+   "win": 64.7,
+   "pf": 1.35,
+   "p5": 0.159
+  },
+  "design_2x_pct": 0.257,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1847,
+   "exp_r": -0.086,
+   "win": 58.6,
+   "pf": 0.93,
+   "p5": -0.206
+  },
+  "holdout_2x_pct": -0.178,
+  "PASS": false
+ },
+ "R5a|-1": {
+  "design": {
+   "trades": 183,
+   "exp_r": -0.28,
+   "win": 54.6,
+   "pf": 0.74,
+   "p5": -0.629
+  },
+  "design_2x_pct": -0.376,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1039,
+   "exp_r": -0.212,
+   "win": 60.1,
+   "pf": 0.85,
+   "p5": -0.392
+  },
+  "holdout_2x_pct": -0.306,
+  "PASS": false
+ },
+ "R5a|1": {
+  "design": {
+   "trades": 574,
+   "exp_r": 0.419,
+   "win": 65.7,
+   "pf": 1.48,
+   "p5": 0.216
+  },
+  "design_2x_pct": 0.324,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1299,
+   "exp_r": -0.116,
+   "win": 59.4,
+   "pf": 0.91,
+   "p5": -0.335
+  },
+  "holdout_2x_pct": -0.209,
+  "PASS": false
+ },
+ "R5b|-1": {
+  "design": {
+   "trades": 183,
+   "exp_r": -0.301,
+   "win": 54.6,
+   "pf": 0.72,
+   "p5": -0.63
+  },
+  "design_2x_pct": -0.396,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 1039,
+   "exp_r": -0.21,
+   "win": 60.1,
+   "pf": 0.85,
+   "p5": -0.387
+  },
+  "holdout_2x_pct": -0.304,
+  "PASS": false
+ },
+ "R5b|1": {
+  "design": {
+   "trades": 574,
+   "exp_r": 0.343,
+   "win": 65.7,
+   "pf": 1.36,
+   "p5": 0.13
+  },
+  "design_2x_pct": 0.248,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1299,
+   "exp_r": -0.027,
+   "win": 59.4,
+   "pf": 0.98,
+   "p5": -0.17
+  },
+  "holdout_2x_pct": -0.12,
+  "PASS": false
+ },
+ "R6|-1": {
+  "design": {
+   "trades": 132,
+   "exp_r": -0.402,
+   "win": 51.5,
+   "pf": 0.63,
+   "p5": -0.821
+  },
+  "design_2x_pct": -0.499,
+  "shortlisted": false,
+  "holdout": {
+   "trades": 775,
+   "exp_r": -0.253,
+   "win": 59.0,
+   "pf": 0.79,
+   "p5": -0.438
+  },
+  "holdout_2x_pct": -0.347,
+  "PASS": false
+ },
+ "R6|1": {
+  "design": {
+   "trades": 455,
+   "exp_r": 0.344,
+   "win": 64.8,
+   "pf": 1.42,
+   "p5": 0.125
+  },
+  "design_2x_pct": 0.25,
+  "shortlisted": true,
+  "holdout": {
+   "trades": 1106,
+   "exp_r": -0.055,
+   "win": 60.3,
+   "pf": 0.95,
+   "p5": -0.252
+  },
+  "holdout_2x_pct": -0.148,
+  "PASS": false
+ }
+}

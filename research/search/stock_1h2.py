@@ -81,10 +81,14 @@ def run():
             dr = d.iloc[i]
             nxt = H.get(days[i + 1]) if i + 1 < len(days) else None
             if nxt is not None and len(nxt) >= 2 and not in_rollover_window(days[i + 1]) and dr.vavg > 0:
-                rngp = (dr.close - dr.low) / max(dr.high - dr.low, 1e-9)
+                # signal uses ONLY candles closed by 15:15 (all but the last 15-min candle); entry = 15:15 open
+                p_ = g.iloc[:-1]
+                hi_, lo_, cl_, v_ = p_["high"].max(), p_["low"].min(), p_["close"].iat[-1], p_["volume"].sum()
+                e50y = d["e50"].iat[i - 1]
+                rngp = (cl_ - lo_) / max(hi_ - lo_, 1e-9)
                 e = g["open"].iat[-1]
-                for s, ok in ((1, rngp >= 0.8 and dr.v > 1.5 * dr.vavg and dr.close > dr.e50),
-                              (-1, rngp <= 0.2 and dr.v > 1.5 * dr.vavg and dr.close < dr.e50)):
+                for s, ok in ((1, rngp >= 0.8 and v_ > 1.5 * dr.vavg and cl_ > e50y),
+                              (-1, rngp <= 0.2 and v_ > 1.5 * dr.vavg and cl_ < e50y)):
                     if ok:
                         for var, x in (("R3a", nxt["close"].iat[0]), ("R3b", nxt["close"].iat[-1])):
                             n1, n2 = net(e, x, s, lot)
