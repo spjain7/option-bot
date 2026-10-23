@@ -1,0 +1,41 @@
+name: Research - MCX option buying, last month (manual, no alerts)
+
+# OBUY-MCX-001: option-BUY setups on MCX
+# futures, tested on REAL option prices of the last month. Research only: no Telegram, main is never touched.
+# Data and results are saved to the branch "research-obuy-mcx". Angel calls are spaced 1 s apart (gentle on the quota).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Restore earlier data (resume)
+        run: git fetch -q origin research-obuy-mcx && git archive FETCH_HEAD research/data/obuy_mcx | tar -x || true
+      - name: Fetch (futures, OI, option candles)
+        run: python -m research.search.obuy_mcx fetch
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+      - name: Analyse
+        run: python -m research.search.obuy_mcx analyse | tee /tmp/summary.txt
+      - name: Save to research-obuy-mcx branch
+        if: always()
+        run: |
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp -r research/data/obuy_mcx /tmp/keep/ 2>/dev/null; cp -r research/search/results_obuy_mcx /tmp/keep/ 2>/dev/null || true
+          git fetch -q origin research-obuy-mcx && git switch -q -f -C research-obuy-mcx FETCH_HEAD || git switch -q -f --orphan research-obuy-mcx
+          git rm -rqf --cached . > /dev/null 2>&1 || true
+          mkdir -p research/data research/search && rm -rf research/data/obuy_mcx research/search/results_obuy_mcx
+          cp -r /tmp/keep/obuy_mcx research/data/ 2>/dev/null || true; cp -r /tmp/keep/results_obuy_mcx research/search/ 2>/dev/null || true
+          git add -f research/data/obuy_mcx research/search/results_obuy_mcx 2>/dev/null; git commit -qm "obuy month $(date -u +%F_%H%M)" && git push -q origin HEAD:research-obuy-mcx || echo "nothing to save"

@@ -22,7 +22,7 @@ INDICES = ["NIFTY", "BANKNIFTY", "FINNIFTY", "MIDCPNIFTY"]
 TOP_STOCKS = 40
 
 # costs per round trip as a share of premium: bid-ask (each side) + STT 0.1% on the sell + exchange/GST ~0.06%
-HALF_SPREAD = {"index": 0.003, "stock": 0.01}
+HALF_SPREAD = {"index": 0.003, "stock": 0.01, "mcx": 0.015}
 FEES = 0.0016
 BROKER_LOT = 40.0
 
@@ -174,7 +174,7 @@ EXITS = {  # name: (stop, target, trail_from, trail_to, max_days, intraday?)
 }
 
 
-def simulate(opt, t_entry, rule, lot, kind):
+def simulate(opt, t_entry, rule, lot, kind, cut_time="15:15"):
     """opt: option 15-min candles. Entry at the open of the bar starting at t_entry. Returns dict or None."""
     sl, tg, tf_, tt_, maxd, intra = EXITS[rule]
     o = opt[opt["time"] >= t_entry]
@@ -198,7 +198,7 @@ def simulate(opt, t_entry, rule, lot, kind):
         peak = max(peak, r.high / e - 1)
         if tf_ is not None and peak >= tf_ and r.close <= e * (1 + tt_):
             px, why = r.close, "trail"; break
-        cut = "15:15" if (intra or d == last_day) else None
+        cut = cut_time if (intra or d == last_day) else None
         if cut and r.time.strftime("%H:%M") >= cut:
             px = r.close; break
         px = r.close
