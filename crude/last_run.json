@@ -1,12 +1,12 @@
 {
- "time": "2026-10-24 00:17:07.414917",
+ "time": "2026-10-24 00:18:08.425828",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
-  "event": "workflow_dispatch",
-  "number": "19",
-  "delay_min": null,
+  "event": "schedule",
+  "number": "20",
+  "delay_min": 1.1,
   "previous_run": {
    "number": 12,
    "event": "schedule",
@@ -27,8 +27,8 @@
   "bars_1h": 569,
   "last_closed_3h": "2026-10-23 21:00:00",
   "bars_3h": 189,
-  "age_15m_min": 47.1,
-  "quote_age_min": 17.3,
+  "age_15m_min": 48.1,
+  "quote_age_min": 18.3,
   "ltp": 9784.0,
   "day_volume": 42801,
   "quality": {
@@ -69,7 +69,7 @@
     "atr_x": 1.0270749712454943
    },
    "bar_time": "2026-10-23 23:15:00",
-   "new_candle": true
+   "new_candle": false
   },
   "positional": {
    "decision": "NONE",
@@ -88,7 +88,7 @@
     "structure": "swings H 9533\u21929523, L 9136\u21929307"
    },
    "bar_time": "2026-10-23 21:00:00",
-   "new_candle": true
+   "new_candle": false
   }
  },
  "actions": [],
