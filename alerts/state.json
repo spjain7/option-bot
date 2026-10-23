@@ -648,19 +648,12 @@
   ]
  },
  "day": {
-  "date": "2026-10-23",
-  "alerts": 1,
+  "date": "2026-10-24",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
-  "eod_sent": true,
-  "outcomes": [
-   {
-    "name": "ETERNAL",
-    "tf": "1d",
-    "side": "SELL",
-    "result": "stop -1.01R"
-   }
-  ]
+  "startup_sent": false,
+  "eod_sent": false,
+  "outcomes": []
  },
  "history": [],
  "oi": {
