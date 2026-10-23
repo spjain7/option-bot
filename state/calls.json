@@ -1,7 +1,5 @@
 {
- "open": [],
- "closed": [],
- "pending": [
+ "open": [
   {
    "id": 1,
    "mode": "positional",
@@ -18,9 +16,17 @@
    "candle": "2026-10-22",
    "created": "2026-10-22 23:56",
    "opt": null,
-   "lots_text": "0 (1 lot risks \u20b9434,250 = 86.9% of capital) | mini GOLDM: 0 lot(s) (\u20b943,425/lot)"
+   "lots_text": "0 (1 lot risks \u20b9434,250 = 86.9% of capital) | mini GOLDM: 0 lot(s) (\u20b943,425/lot)",
+   "entry": 142365.0,
+   "sl": 146707.5,
+   "R": 4342.5,
+   "opened": "2026-10-23 09:06",
+   "exit_pending": false,
+   "t1_hit": false
   }
  ],
+ "closed": [],
+ "pending": [],
  "done": {
   "intra|GOLD|2026-10-21 19:00": "2026-10-21",
   "intra|SILVER|2026-10-21 19:00": "2026-10-21",
@@ -123,7 +129,8 @@
   "pos|NATURALGAS|2026-10-22": "2026-10-22",
   "pos|COPPER|2026-10-22": "2026-10-22",
   "pos|ZINC|2026-10-22": "2026-10-22",
-  "pos|ALUMINIUM|2026-10-22": "2026-10-22"
+  "pos|ALUMINIUM|2026-10-22": "2026-10-22",
+  "active|1": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
