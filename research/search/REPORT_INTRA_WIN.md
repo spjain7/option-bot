@@ -16,3 +16,9 @@ Conclusion: on 1-hour data with real costs, no intraday stock/index/MCX rule giv
 Model picks (top 2–10% of candles) on the data it learned from: 65–98% wins. On unseen data (Jan-2024 → Oct-2026):
  INDEX 40–59% wins, -0.05…-0.17R · MCX 35–63% wins, -0.10…-0.39R · STOCKS 43–57% wins, -0.05…-0.11R. All lose.
 Single clues (candlestick patterns, inside/NR days, etc.) shift the win rate by only 1–7 points – not enough after costs.
+
+# STOCK-1H-002 (relative strength, late momentum, overnight, RSI(2) dip ± OI ± 1h hammer) – 0 passed
+- R1 relative strength / R2 late momentum: ≈ break-even or losing after costs.
+- R3 overnight: first run "passed" but had look-ahead (used the full-day close while entering at 15:15). Fixed run:
+  design +0.20%/trade, hold-out +0.07% but -0.02% at 2× costs → FAIL. Win ≈ 48-49%.
+- R4/R5/R6 RSI(2) dip: design 62-66% win, +0.2…+0.4%/trade → hold-out 59-60% win but LOSING (-0.03…-0.21%).
