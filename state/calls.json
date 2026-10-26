@@ -23,6 +23,42 @@
    "opened": "2026-10-23 09:06",
    "exit_pending": false,
    "t1_hit": false
+  },
+  {
+   "id": 5,
+   "mode": "intraday",
+   "name": "SILVER",
+   "exch": "MCX",
+   "side": "SELL",
+   "symbol": "SILVER04DEC26FUT",
+   "token": "495214",
+   "expiry": "04-Dec-2026",
+   "mult": 30,
+   "entry": 194637.0,
+   "sl": 197204.46,
+   "t1": 192069.54,
+   "t2": 189502.08,
+   "R": 2567.46,
+   "t1_hit": false,
+   "opened": "2026-10-26 20:02",
+   "candle": "2026-10-26 19:00:00",
+   "opt": {
+    "symbol": "SILVER27NOV26195000PE",
+    "token": "577632",
+    "strike": 195000.0,
+    "typ": "PE",
+    "expiry": "27-Nov-2026",
+    "entry": 8338.0,
+    "delta": 0.56,
+    "iv": 28.9,
+    "sl": 6826.35,
+    "t1": 9849.65,
+    "t2": 11520.14,
+    "cost_lot": 250140,
+    "risk_lot": 45350,
+    "rs_per_point": 30,
+    "lots": 0
+   }
   }
  ],
  "closed": [
@@ -407,7 +443,15 @@
   "intra|NATURALGAS|2026-10-26 18:00": "2026-10-26",
   "intra|COPPER|2026-10-26 18:00": "2026-10-26",
   "intra|ZINC|2026-10-26 18:00": "2026-10-26",
-  "intra|ALUMINIUM|2026-10-26 18:00": "2026-10-26"
+  "intra|ALUMINIUM|2026-10-26 18:00": "2026-10-26",
+  "intra|GOLD|2026-10-26 19:00": "2026-10-26",
+  "intra|SILVER|2026-10-26 19:00": "2026-10-26",
+  "intra|SILVER|2026-10-26 19:00|call": "2026-10-26",
+  "intra|CRUDEOIL|2026-10-26 19:00": "2026-10-26",
+  "intra|NATURALGAS|2026-10-26 19:00": "2026-10-26",
+  "intra|COPPER|2026-10-26 19:00": "2026-10-26",
+  "intra|ZINC|2026-10-26 19:00": "2026-10-26",
+  "intra|ALUMINIUM|2026-10-26 19:00": "2026-10-26"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -429,5 +473,5 @@
   "2026-10-22": true,
   "2026-10-23": true
  },
- "next_id": 5
+ "next_id": 6
 }
