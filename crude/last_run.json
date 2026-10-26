@@ -1,5 +1,5 @@
 {
- "time": "2026-10-26 23:18:06.527349",
+ "time": "2026-10-26 23:32:56.863747",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -21,32 +21,32 @@
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-26 23:00:00",
-  "bars_15m": 838,
-  "last_closed_1h": "2026-10-26 22:00:00",
-  "bars_1h": 583,
-  "last_closed_3h": "2026-10-26 18:00:00",
-  "bars_3h": 193,
-  "age_15m_min": 3.1,
-  "quote_age_min": -0.1,
-  "ltp": 9739.0,
-  "day_volume": 38880,
+  "last_closed_15m": "2026-10-26 23:15:00",
+  "bars_15m": 839,
+  "last_closed_1h": "2026-10-26 23:00:00",
+  "bars_1h": 584,
+  "last_closed_3h": "2026-10-26 21:00:00",
+  "bars_3h": 194,
+  "age_15m_min": 2.9,
+  "quote_age_min": 2.9,
+  "ltp": 9715.0,
+  "day_volume": 39987,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.2
+   "quote_vs_candle_atr": 0.0
   },
   "volume": "available",
-  "oi_current": 1503200,
+  "oi_current": 1464200,
   "oi_change": {
    "status": "OK",
-   "label": "Short covering",
-   "d_oi_pct": -0.949,
-   "d_price": 17.0,
-   "gap_min": 14.9,
-   "oi": 1503200,
-   "oi_prev": 1517600
+   "label": "Long unwinding",
+   "d_oi_pct": -2.594,
+   "d_price": -24.0,
+   "gap_min": 11.8,
+   "oi": 1464200,
+   "oi_prev": 1503200
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -57,15 +57,15 @@
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "1-hour trend RANGE: close 9728 EMA20 9670 EMA50 9555 EMA200 9091 ADX 11.7"
+    "1-hour trend RANGE: close 9715 EMA20 9674 EMA50 9561 EMA200 9097 ADX 11.5"
    ],
    "metrics": {
     "trend_1h": "RANGE",
-    "trend_1h_detail": "close 9728 EMA20 9670 EMA50 9555 EMA200 9091 ADX 11.7",
-    "adx_1h": 11.707504956602884,
-    "rsi": 55.572437408637846
+    "trend_1h_detail": "close 9715 EMA20 9674 EMA50 9561 EMA200 9097 ADX 11.5",
+    "adx_1h": 11.466048792905791,
+    "rsi": 50.40460565561501
    },
-   "bar_time": "2026-10-26 23:00:00",
+   "bar_time": "2026-10-26 23:15:00",
    "new_candle": true
   },
   "positional": {
@@ -76,21 +76,21 @@
    ],
    "metrics": {
     "trend_3h": "UP",
-    "trend_3h_detail": "close 9726 EMA20 9497 EMA50 9189 EMA200 n/a (history 193 bars) ADX 38.8",
-    "adx_3h": 38.81058486943816,
-    "rsi": 64.8079002407265,
-    "vol_x": 1.1401148966450874,
-    "atr": 155.5457675478694,
-    "atr_x": 0.9381242029340028,
+    "trend_3h_detail": "close 9715 EMA20 9517 EMA50 9209 EMA200 n/a (history 194 bars) ADX 39.1",
+    "adx_3h": 39.13565243933157,
+    "rsi": 64.14391018039801,
+    "vol_x": 1.2120794701986755,
+    "atr": 154.7924984373073,
+    "atr_x": 0.9384324588416548,
     "structure": "swings H 9523\u21929828, L 9307\u21929576"
    },
-   "bar_time": "2026-10-26 18:00:00",
-   "new_candle": false
+   "bar_time": "2026-10-26 21:00:00",
+   "new_candle": true
   }
  },
  "actions": [],
  "errors": [],
- "session": "OPEN",
+ "session": "CLOSED (after hours)",
  "contract": {
   "signal": {
    "symbol": "CRUDEOIL19NOV26FUT",
