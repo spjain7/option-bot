@@ -350,7 +350,8 @@
   "intra|NATURALGAS|2026-10-26 10:00": "2026-10-26",
   "intra|COPPER|2026-10-26 10:00": "2026-10-26",
   "intra|ALUMINIUM|2026-10-26 10:00": "2026-10-26",
-  "pos|ALUMINIUM|2026-10-23": "2026-10-23"
+  "pos|ALUMINIUM|2026-10-23": "2026-10-23",
+  "intra|BANKNIFTY|2026-10-26 10:15": "2026-10-26"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
