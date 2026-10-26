@@ -1,12 +1,12 @@
 {
- "time": "2026-10-24 06:02:08.782270",
+ "time": "2026-10-26 10:10:10.107934",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
-  "event": "schedule",
-  "number": "20",
-  "delay_min": 0.1,
+  "event": "workflow_dispatch",
+  "number": "21",
+  "delay_min": null,
   "previous_run": {
    "number": 12,
    "event": "schedule",
@@ -15,37 +15,34 @@
   }
  },
  "api": {
-  "15m": "ok (839 candles, last start 23-Oct 23:15)",
-  "1h": "ok (1049 candles, last start 23-Oct 23:00)",
-  "quote": "ok"
+  "15m": "ok (839 candles, last start 26-Oct 10:00)",
+  "1h": "ok (1021 candles, last start 26-Oct 10:00)",
+  "quote": "ok",
+  "1h-next(roll check)": "ok (557 candles, last start 26-Oct 10:00)"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-23 23:15:00",
-  "bars_15m": 839,
-  "last_closed_1h": "2026-10-23 23:00:00",
-  "bars_1h": 569,
+  "last_closed_15m": "2026-10-26 09:45:00",
+  "bars_15m": 838,
+  "last_closed_1h": "2026-10-26 09:00:00",
+  "bars_1h": 570,
   "last_closed_3h": "2026-10-23 21:00:00",
   "bars_3h": 189,
-  "age_15m_min": 392.1,
-  "quote_age_min": 362.3,
-  "ltp": 9784.0,
-  "day_volume": 42801,
+  "age_15m_min": 10.2,
+  "quote_age_min": -0.1,
+  "ltp": 9620.0,
+  "day_volume": 3424,
   "quality": {
    "blocks": [],
    "notes": [],
-   "quote_vs_candle_atr": 0.0
+   "missing_15m_today": 0,
+   "quote_vs_candle_atr": 0.04
   },
   "volume": "available",
-  "oi_current": 1478600,
+  "oi_current": 1409700,
   "oi_change": {
-   "status": "OK",
-   "label": "Flat / no clear OI signal",
-   "d_oi_pct": 0.0,
-   "d_price": 0.0,
-   "gap_min": 29.8,
-   "oi": 1478600,
-   "oi_prev": 1478600
+   "status": "UNAVAILABLE",
+   "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -55,21 +52,17 @@
  "decisions": {
   "intraday": {
    "decision": "NONE",
-   "side": "BUY",
    "blocks": [
-    "no setup: no confirmed breakout and no pullback-and-resume candle"
+    "1-hour trend MIXED: close 9618 EMA20 9624 EMA50 9469 EMA200 9010 ADX 19.2"
    ],
    "metrics": {
-    "trend_1h": "UP",
-    "trend_1h_detail": "close 9784 EMA20 9624 EMA50 9463 EMA200 9004 ADX 20.3",
-    "adx_1h": 20.268813693999384,
-    "rsi": 60.812324248133464,
-    "vol_x": 1.0730253353204173,
-    "atr": 44.04692843114066,
-    "atr_x": 1.0270749712454943
+    "trend_1h": "MIXED",
+    "trend_1h_detail": "close 9618 EMA20 9624 EMA50 9469 EMA200 9010 ADX 19.2",
+    "adx_1h": 19.184213554484863,
+    "rsi": 38.32812510153679
    },
-   "bar_time": "2026-10-23 23:15:00",
-   "new_candle": false
+   "bar_time": "2026-10-26 09:45:00",
+   "new_candle": true
   },
   "positional": {
    "decision": "NONE",
@@ -93,7 +86,7 @@
  },
  "actions": [],
  "errors": [],
- "session": "CLOSED (weekend)",
+ "session": "OPEN",
  "contract": {
   "signal": {
    "symbol": "CRUDEOIL19NOV26FUT",
