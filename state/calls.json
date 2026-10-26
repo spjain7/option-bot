@@ -23,6 +23,26 @@
    "opened": "2026-10-23 09:06",
    "exit_pending": false,
    "t1_hit": false
+  },
+  {
+   "id": 4,
+   "mode": "intraday",
+   "name": "ZINC",
+   "exch": "MCX",
+   "side": "BUY",
+   "symbol": "ZINC30NOV26FUT",
+   "token": "578638",
+   "expiry": "30-Nov-2026",
+   "mult": 5000,
+   "entry": 401.9,
+   "sl": 399.18,
+   "t1": 404.62,
+   "t2": 407.34,
+   "R": 2.72,
+   "t1_hit": false,
+   "opened": "2026-10-26 10:18",
+   "candle": "2026-10-26 09:00:00",
+   "opt": null
   }
  ],
  "closed": [
@@ -307,13 +327,28 @@
   "intra|ZINC|2026-10-23 20:00": "2026-10-23",
   "intra|ALUMINIUM|2026-10-23 20:00": "2026-10-23",
   "close|3": "2026-10-23",
-  "summary|2026-10-23": "2026-10-23"
+  "summary|2026-10-23": "2026-10-23",
+  "intra|GOLD|2026-10-26 09:00": "2026-10-26",
+  "intra|SILVER|2026-10-26 09:00": "2026-10-26",
+  "intra|CRUDEOIL|2026-10-26 09:00": "2026-10-26",
+  "intra|NATURALGAS|2026-10-26 09:00": "2026-10-26",
+  "intra|ZINC|2026-10-26 09:00": "2026-10-26",
+  "intra|ZINC|2026-10-26 09:00|call": "2026-10-26",
+  "intra|ALUMINIUM|2026-10-26 09:00": "2026-10-26",
+  "intra|NIFTY|2026-10-26 09:15": "2026-10-26",
+  "intra|BANKNIFTY|2026-10-26 09:15": "2026-10-26",
+  "pos|SILVER|2026-10-23": "2026-10-23",
+  "pos|CRUDEOIL|2026-10-23": "2026-10-23",
+  "pos|NATURALGAS|2026-10-23": "2026-10-23",
+  "pos|NATURALGAS|2026-10-23|watch": "2026-10-26",
+  "pos|COPPER|2026-10-23": "2026-10-23",
+  "pos|ZINC|2026-10-23": "2026-10-23"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
   "pos|SILVER": "BLOCKED|SELL",
   "pos|CRUDEOIL": null,
-  "pos|NATURALGAS": null,
+  "pos|NATURALGAS": "WATCH|SELL",
   "pos|COPPER": null,
   "pos|ZINC": null,
   "pos|ALUMINIUM": null,
@@ -328,5 +363,5 @@
   "2026-10-22": true,
   "2026-10-23": true
  },
- "next_id": 4
+ "next_id": 5
 }
