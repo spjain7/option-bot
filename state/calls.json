@@ -369,7 +369,15 @@
   "intra|NATURALGAS|2026-10-26 13:00": "2026-10-26",
   "intra|COPPER|2026-10-26 13:00": "2026-10-26",
   "intra|ALUMINIUM|2026-10-26 13:00": "2026-10-26",
-  "close|4": "2026-10-26"
+  "close|4": "2026-10-26",
+  "intra|GOLD|2026-10-26 14:00": "2026-10-26",
+  "intra|SILVER|2026-10-26 14:00": "2026-10-26",
+  "intra|CRUDEOIL|2026-10-26 14:00": "2026-10-26",
+  "intra|NATURALGAS|2026-10-26 14:00": "2026-10-26",
+  "intra|COPPER|2026-10-26 14:00": "2026-10-26",
+  "intra|ZINC|2026-10-26 14:00": "2026-10-26",
+  "intra|ZINC|2026-10-26 14:00|nt": "2026-10-26",
+  "intra|ALUMINIUM|2026-10-26 14:00": "2026-10-26"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -384,7 +392,8 @@
   "intra|NATURALGAS|SELL": "blocked",
   "intra|GOLD|SELL": "blocked",
   "intra|SILVER|SELL": "blocked",
-  "intra|BANKNIFTY|SELL": "blocked"
+  "intra|BANKNIFTY|SELL": "blocked",
+  "intra|ZINC|BUY": "blocked"
  },
  "summary": {
   "2026-10-22": true,
