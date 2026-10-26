@@ -1,5 +1,5 @@
 {
- "time": "2026-10-26 19:18:36.728434",
+ "time": "2026-10-26 19:33:24.867965",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -15,38 +15,38 @@
   }
  },
  "api": {
-  "15m": "ok (839 candles, last start 26-Oct 19:15)",
+  "15m": "ok (839 candles, last start 26-Oct 19:30)",
   "1h": "ok (1030 candles, last start 26-Oct 19:00)",
   "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-26 19:00:00",
+  "last_closed_15m": "2026-10-26 19:15:00",
   "bars_15m": 838,
   "last_closed_1h": "2026-10-26 18:00:00",
   "bars_1h": 579,
   "last_closed_3h": "2026-10-26 15:00:00",
   "bars_3h": 192,
-  "age_15m_min": 3.6,
+  "age_15m_min": 3.4,
   "quote_age_min": -0.1,
-  "ltp": 9683.0,
-  "day_volume": 20821,
+  "ltp": 9694.0,
+  "day_volume": 21508,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.26
+   "quote_vs_candle_atr": 0.33
   },
   "volume": "available",
-  "oi_current": 1481000,
+  "oi_current": 1478700,
   "oi_change": {
    "status": "OK",
-   "label": "Short covering",
-   "d_oi_pct": -0.323,
-   "d_price": 10.0,
-   "gap_min": 15.0,
-   "oi": 1481000,
-   "oi_prev": 1485800
+   "label": "Flat / no clear OI signal",
+   "d_oi_pct": -0.155,
+   "d_price": 11.0,
+   "gap_min": 14.8,
+   "oi": 1478700,
+   "oi_prev": 1481000
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -63,9 +63,9 @@
     "trend_1h": "RANGE",
     "trend_1h_detail": "close 9685 EMA20 9642 EMA50 9525 EMA200 9065 ADX 12.0",
     "adx_1h": 12.031116611706913,
-    "rsi": 52.717877670165585
+    "rsi": 58.64996723331522
    },
-   "bar_time": "2026-10-26 19:00:00",
+   "bar_time": "2026-10-26 19:15:00",
    "new_candle": true
   },
   "positional": {
