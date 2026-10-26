@@ -621,19 +621,12 @@
   ]
  },
  "day": {
-  "date": "2026-10-26",
+  "date": "2026-10-27",
   "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
-  "eod_sent": true,
-  "outcomes": [
-   {
-    "name": "COPPER",
-    "tf": "3h",
-    "side": "SELL",
-    "result": "stop-loss hit -1.00R"
-   }
-  ]
+  "startup_sent": false,
+  "eod_sent": false,
+  "outcomes": []
  },
  "history": [],
  "oi": {
