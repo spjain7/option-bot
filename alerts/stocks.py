@@ -203,8 +203,8 @@ def scan(api, master, now, state, msgs, rep, engine):
             continue
         lv = S.levels(d, h, sig["close"], sig["atr"])
         cc = dict(symbol=c["symbol"], expiry=c["expiry"])
-        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], kind="Stock future · daily"))
-        msgs.append(reason_msg(name, sig, lv, BO.details("NFO", cc, "1d", sig, lv)))
+        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], kind="Stock future · daily", k=CFG["stop_atr"]))
+        msgs.append(reason_msg(name, sig, lv, BO.details("NFO", cc, "1d", sig, lv, k=CFG["stop_atr"])))
         s_ = 1 if sig["side"] == "BUY" else -1
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=sig["close"],
                                  stop=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), risk=CFG["stop_atr"] * sig["atr"],

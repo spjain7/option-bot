@@ -399,8 +399,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
         msgs.append(BO.reason_msg(name, tf, sig, lv, oi, q, BO.details(ex, c, tf, sig, lv, live)))
         ref = live or sig["close"]
-        state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * BO.CFG["stop_atr"] * sig["atr"], 2),
-                                       risk=BO.CFG["stop_atr"] * sig["atr"], best=ref, trailed=False, n=0, last_candle=last,
+        state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * BO.stop_k(tf) * sig["atr"], 2),
+                                       risk=BO.stop_k(tf) * sig["atr"], best=ref, trailed=False, n=0, last_candle=last,
                                        checked=str(now), contract=c["symbol"]))
         state["day"]["alerts"] += 1
 
