@@ -61,6 +61,26 @@ def option_sells(today):
     return []
 
 
+OBUY_STATE = os.getenv("OBUY_STATE_FILE", "state/obuy/state.json")
+
+
+def option_buys(today):
+    """Intraday stock option-BUY calls (obuy engine) of today."""
+    try:
+        st = json.loads(Path(OBUY_STATE).read_text())
+    except Exception:
+        return []
+    out = []
+    for a, status in [(a, "OPEN") for a in st.get("open", [])] + [(a, "CLOSED") for a in st.get("closed", [])]:
+        if str(a.get("opened", ""))[:10] != today:
+            continue
+        out.append(dict(seg="NSE", cat="OPTION BUY", name=a.get("name"), symbol=a.get("symbol"),
+                        type="Intraday" if a.get("mode") == "intraday" else "Positional", side="BUY", entry=a.get("entry"),
+                        sl=a.get("sl"), target=a.get("tg"), lot=a.get("lot"), status=status, time=a.get("opened"),
+                        pnl=a.get("rs_lot") if status == "CLOSED" else None, note=a.get("why_exit", "") if status == "CLOSED" else ""))
+    return out
+
+
 def rows_for(state, seg, today, marks):
     out = []
     for r in state.get("ledger", []):
@@ -70,7 +90,7 @@ def rows_for(state, seg, today, marks):
         if r["cat"] == "OPTION BUY" and mk is not None and r.get("und_entry") is not None:
             mk = max(0.05, float(r["entry"]) + 0.5 * (1 if r["und_side"] == "BUY" else -1) * (mk - float(r["und_entry"])))
         out.append(dict(r, pnl=pnl_rs(r, mk)))
-    out += [x for x in option_sells(today) if x["seg"] == seg]
+    out += [x for x in option_sells(today) + option_buys(today) if x["seg"] == seg]
     return out
 
 

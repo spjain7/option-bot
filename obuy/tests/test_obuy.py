@@ -82,8 +82,9 @@ if sig_rows:
     t_sig = feats.iloc[sig_rows[-1]]["time"] + pd.Timedelta(minutes=17)
     st = E.new_state()
     st, m1, rep = E.scan(FakeApi(), master, t_sig, st)
-    check(any("BUY CALL" in x or "BUY PUT" in x for x in m1) and st["open"] and st["open"][0]["expiry"] >= f"{t_sig + pd.Timedelta(days=3):%Y-%m-%d}", "scan: alert sent with an expiry >= 3 days away")
-    check("Test alert" in m1[0] and "no orders" in m1[0] and "🛑 Stop-loss" in m1[0], "scan: clean alert, labelled test, alerts only")
+    check(any(("CE  ·" in x or "PE  ·" in x) and "BUY" in x for x in m1) and st["open"] and st["open"][0]["expiry"] >= f"{t_sig + pd.Timedelta(days=3):%Y-%m-%d}", "scan: alert sent with an expiry >= 3 days away")
+    check("Entry" in m1[0] and "SL" in m1[0] and "Target" in m1[0] and "WHY" in m1[1] and "investment advice" in m1[1],
+          "scan: clean call message + separate WHY message")
     st, m2, _ = E.scan(FakeApi(), master, t_sig + pd.Timedelta(minutes=1), st)
     check(not any("BUY CALL" in x or "BUY PUT" in x for x in m2), "scan: same stock not alerted twice in a day")
     st, m3, _ = E.scan(FakeApi(), master, t_sig.normalize() + pd.Timedelta(hours=15, minutes=32), st)

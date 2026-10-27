@@ -68,7 +68,7 @@ obuy() {
 
 iteration() {
   options
-  # obuy  – OFF 27-Oct-2026: one system – option-BUY calls now come with every futures call (alerts/), not from separate rules
+  obuy   # intraday STOCK option buys (VWAP + RSI + OI); positional option buys come with the futures calls (alerts/)
   # ---- buy/sell alerts ----
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n

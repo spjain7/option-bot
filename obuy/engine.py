@@ -21,6 +21,7 @@ TOP_STOCKS = 40
 RULES = {"intraday": {"sl": 0.30, "tg": 0.60, "days": 0}, "positional": {"sl": 0.35, "tg": 0.80, "days": 2}}
 MAX_PER_DAY = {"intraday": 8, "positional": 4}
 MAX_SPREAD = 0.03
+POSITIONAL_ENABLED = False   # 27-Oct: daily breakout option buys now come with every futures call (alerts/) – no duplicates
 BACKTEST = {"intraday": "last month +1.6% per trade, 45% wins (138 trades)",
             "positional": "last month +3% per trade, 42% wins (19 trades); 4-year model test positive"}
 
@@ -149,26 +150,24 @@ def rs_(x):
 
 
 def entry_msg(a):
+    """Two messages: the call, then WHY (same layout as every other call)."""
     up = a["dir"] > 0
-    side = "CALL" if up else "PUT"
-    mode = "Intraday (exit today 3:15 pm)" if a["mode"] == "intraday" else "Positional (up to 3 days)"
+    typ = "CE" if up else "PE"
     why = a["why"] if isinstance(a["why"], list) else [a["why"]]
-    return "\n".join([
-        f"{'🟢' if up else '🔴'} BUY {side} • {a['name']} {a['K']:g} {'CE' if up else 'PE'}",
-        f"📅 Expiry {pd.Timestamp(a['expiry']):%d %b} • {mode}",
-        "",
-        f"💰 Entry: {rs_(a['entry'])}",
-        f"🛑 Stop-loss: {rs_(a['sl'])} (−{a['sl_pct']:.0f}%)",
-        f"🎯 Target: {rs_(a['tg'])} (+{a['tg_pct']:.0f}%)",
-        f"⏰ Exit by: {pd.Timestamp(a['exit_at']):%d %b}, 3:15 pm",
-        f"📦 1 lot = {a['lot']:,} qty ≈ ₹{a['entry'] * a['lot']:,.0f}",
-        "",
-        "📊 Why",
-        *[f"• {w}" for w in why],
-        "",
-        f"🧪 Test alert #{a['id']} • alerts only, no orders • use 1 lot or paper-track",
-        f"Symbol: {a['symbol']}",
-    ])
+    call = "\n".join([
+        f"{'🟢' if up else '🔴'} BUY  {a['name']} {a['K']:g} {typ}  ·  {'Intraday' if a['mode'] == 'intraday' else 'Positional'}",
+        "━━━━━━━━━━━━━━",
+        f"Entry   : {rs_(a['entry'])}",
+        f"SL      : {rs_(a['sl'])}",
+        f"Target  : {rs_(a['tg'])}",
+        f"Lot     : {a['lot']:,}  ·  exp {pd.Timestamp(a['expiry']):%d-%b}  ·  NSE",
+        f"Exit by : {pd.Timestamp(a['exit_at']):%d %b} 15:15"])
+    w = "\n".join([f"📌 WHY – {a['name']} {a['K']:g} {typ} BUY", "━━━━━━━━━━━━━━",
+                    f"• Chart   : {'15-minute' if a['mode'] == 'intraday' else 'Daily'} futures candles",
+                    *[f"• {x}" for x in why],
+                    f"• Risk    : SL −{a['sl_pct']:.0f}% · target +{a['tg_pct']:.0f}% of premium",
+                    "Not investment advice."])
+    return [call, w]
 
 
 def exit_msg(a):
@@ -266,7 +265,7 @@ def open_alert(api, master, state, now, u, mode, d, fut_px, why, msgs, rep):
     a["exit_by"] = f"{pd.Timestamp(a['exit_at']):%d %b %H:%M}"
     state["next_id"] += 1
     state["open"].append(a); state["done"][key] = str(now)
-    msgs.append(entry_msg(a))
+    msgs.extend(entry_msg(a))
 
 
 def scan(api, master, now, state):
@@ -277,7 +276,7 @@ def scan(api, master, now, state):
     t = hm(now)
     if "09:30" <= t <= "14:47":
         items = universe(api, master, now, state)
-        if not state["done"].get(f"positional-scan|{now:%Y-%m-%d}"):
+        if POSITIONAL_ENABLED and not state["done"].get(f"positional-scan|{now:%Y-%m-%d}"):
             state["done"][f"positional-scan|{now:%Y-%m-%d}"] = str(now)
             for u in items:
                 try:
