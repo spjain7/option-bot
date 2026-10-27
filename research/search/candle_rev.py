@@ -30,16 +30,18 @@ def pats(df):
 
 def sim(df, sig, conf, stop_kind, tg, cost, swd, maxh=10):
     o, h, l, c = (df[x].values for x in ("open", "high", "low", "close"))
-    a = I.atr(df, 14).values
-    n, out, i = len(df), [], 30
-    while i < n - 2:
+    a = df["_atr"].values
+    n, out, busy = len(df), [], -1
+    for i in np.flatnonzero(sig):
+        if i < 30 or i <= busy or i >= n - 2:
+            continue
         s = int(sig[i])
-        if s == 0 or swd[i] or not a[i] > 0:
-            i += 1; continue
+        if swd[i] or not a[i] > 0:
+            continue
         k = i
         if conf:                                              # next candle must close beyond the pattern high / low
             if not ((c[i + 1] > h[i]) if s > 0 else (c[i + 1] < l[i])):
-                i += 1; continue
+                continue
             k = i + 1
         if k + 1 >= n:
             break
@@ -50,7 +52,7 @@ def sim(df, sig, conf, stop_kind, tg, cost, swd, maxh=10):
             st = e0 - s * 1.5 * a[i]
         risk = s * (e0 - st)
         if not (0 < risk <= 4 * a[i]):
-            i += 1; continue
+            continue
         tp = e0 + s * tg * risk
         px, j = None, k + 1
         while j < n:
@@ -61,7 +63,7 @@ def sim(df, sig, conf, stop_kind, tg, cost, swd, maxh=10):
             j += 1
         if px is None: px, j = c[-1], n - 1
         out.append((df["time"].iat[i], s * (px - e0), cost[i]))
-        i = j
+        busy = j
     return out
 
 
@@ -84,6 +86,7 @@ def main():
     for uni, name, h, sw, costf, mult, oi in instruments():
         for tf, df in (("1d", SS.daily_from(h)), ("1h", h)):
             df = df.reset_index(drop=True)
+            df["_atr"] = I.atr(df, 14).values
             day = df["time"].dt.normalize()
             swd = np.array([pd.Timestamp(x) in sw for x in day])
             cost = np.array([costf(p) for p in df["close"]])
