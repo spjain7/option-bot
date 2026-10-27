@@ -10,3 +10,5 @@ state/paper_mcx_daily*
 state/crude/
 state/alerts/
 state/obuy/
+
+.cache/
