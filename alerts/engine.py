@@ -3,10 +3,11 @@ MCX futures + NIFTY / BANKNIFTY futures. ALERTS ONLY: no orders, no auto-trading
 
   scan(api, master, now, state) -> (state, messages, report)
 """
+import os
 import pandas as pd
 from crude import data as CD
-from alerts import signals as S, breakout as BO, patterns as PT
-PATTERN_TFS = ("3h",)          # chart-pattern calls passed only on 3-hour candles (INST-PAT-001)
+from alerts import signals as S, breakout as BO, patterns as PT, report as RP
+PATTERN_TFS = ()               # OFF: chart-pattern calls failed once the exit-simulator bug was fixed (INST-PAT-001)
 
 RSI_REVERSAL_CALLS = False   # off since 22-Oct-2026: the RSI-reversal rule lost money in every test (alerts/STATS.md,
                              # research/search). Volume-breakout alerts replace it. Set True to bring the old calls back.
@@ -66,7 +67,7 @@ def contracts(master, name, ex, now):
     if k is None:
         return None
     use = rows[k]
-    return dict(symbol=use.symbol, token=str(use.token), expiry=str(use.expiry_dt.date()), is_front=(k == 0),
+    return dict(symbol=use.symbol, token=str(use.token), expiry=str(use.expiry_dt.date()), is_front=(k == 0), lot=int(use.lotsize),
                 next_token=str(rows[k + 1].token) if k + 1 < len(rows) else None)
 
 
@@ -300,7 +301,7 @@ def scan(api, master, now, state, only=None):
         q = quotes.get(c["token"])
         oi = oi_reading(state, c["symbol"], q, now)
         info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
-        _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d), master=master)
+        _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d), master=master, api=api)
         for tf, _, mins, _ in TFS:
             if not RSI_REVERSAL_CALLS:
                 break
@@ -346,10 +347,31 @@ def scan(api, master, now, state, only=None):
     if not state["day"]["startup_sent"] and now.hour >= 8 and any(is_open(e, now) for e in ("MCX", "NFO")):
         msgs.insert(0, startup_msg(now, rep))
         state["day"]["startup_sent"] = True
+    # end-of-day call reports (table image + text): Index + Stock after the NSE close, MCX after the MCX close
+    for seg, ex, flag in (("NSE", "NFO", "rep_nse"), ("MCX", "MCX", "rep_mcx")):
+        if state["day"].get(flag) or now.weekday() >= 5 or is_open(ex, now) or not _after_close(ex, now):
+            continue
+        state["day"][flag] = True
+        try:
+            toks = sorted({r["mark_key"] for r in state.get("ledger", []) if r["seg"] == seg and r["status"] == "OPEN" and r.get("mark_key")})
+            qq = api.quotes({ex: toks}) if toks else {}
+            marks = {t: float((qq.get(t) or {}).get("ltp") or 0) or None for t in toks}
+            msgs += RP.build(state, seg, now, marks, os.getenv("ALERTS_STATE_DIR", "state/alerts"))
+        except Exception as e:
+            rep["errors"].append(f"report {seg}: {type(e).__name__}: {str(e)[:80]}")
     if all(not is_open(ex, now) for ex in ("MCX", "NFO")) and now > CD.session_close(now) and not state["day"]["eod_sent"]:
-        msgs.append(eod_msg(state["day"], state))
-        state["day"]["eod_sent"] = True
+        state["day"]["eod_sent"] = True                  # replaced by the call reports above
     return state, msgs, rep
+
+
+def _after_close(ex, now):
+    """True from 5 minutes after this exchange's close until midnight (NSE 15:30; MCX = the day's MCX close)."""
+    if ex == "NFO":
+        return now >= now.normalize() + pd.Timedelta(hours=15, minutes=35)
+    try:
+        return now > CD.session_close(now) + pd.Timedelta(minutes=5)
+    except Exception:
+        return now >= now.normalize() + pd.Timedelta(hours=23, minutes=35)
 
 
 def _switch_day(state, c, d):
@@ -357,7 +379,7 @@ def _switch_day(state, c, d):
     return pd.Timestamp(sw[0][0]).normalize() if sw else None
 
 
-def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=None, master=None):
+def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=None, master=None, api=None):
     """Volume-breakout alerts on 3-hour and daily candles + trailing-stop follow-ups."""
     if h1full is None or h1full.empty:
         info["breakout"] = "no 1-hour history"; return
@@ -403,16 +425,33 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
             info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
         opt = BO.option_idea(master, name, ex, live or sig["close"], sig["side"], tf, now) if master is not None else None
-        if sig.get("pattern"):
-            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, kind=f"3-hour · {sig['pattern'].title()}", opt=opt))
-            msgs.append(PT.reason_msg(name, tf, sig, lv, oi, BO.details(ex, c, tf, sig, lv, live)))
-        else:
-            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, opt=opt))
-            msgs.append(BO.reason_msg(name, tf, sig, lv, oi, q, BO.details(ex, c, tf, sig, lv, live)))
+        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
+        reason = BO.reason_msg(name, tf, sig, lv, oi, q)
         ref = live or sig["close"]
-        state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * BO.stop_k(tf) * sig["atr"], 2),
-                                       risk=BO.stop_k(tf) * sig["atr"], best=ref, trailed=False, n=0, last_candle=last,
-                                       checked=str(now), contract=c["symbol"]))
+        key = f"{name}|{tf}|{last}"
+        R_ = BO.stop_k(tf) * sig["atr"]
+        tgt = ref + s_ * BO.TARGET_R[tf] * R_ if BO.TARGET_R.get(tf) else None
+        state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * R_, 2),
+                                       risk=R_, best=ref, trailed=False, n=0, last_candle=last,
+                                       checked=str(now), contract=c["symbol"], key=key, token=c["token"]))
+        seg = "MCX" if ex == "MCX" else "NSE"
+        RP.add(state, key=key, mark_key=c["token"], seg=seg, cat="FUTURES", name=name, symbol=c["symbol"], type=RP.CALL_TYPE[tf],
+               side=sig["side"], entry=round(ref, 2), sl=round(ref - s_ * R_, 2), target=round(tgt, 2) if tgt else None,
+               lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")), time=str(now))
+        if opt:
+            prem = None
+            try:
+                qq = api.quotes({ex: [opt["token"]]}) if api is not None else {}
+                prem = float((qq.get(opt["token"]) or {}).get("ltp") or 0) or None
+            except Exception:
+                prem = None
+            om, (osl, otg) = BO.option_msg(name, ex, tf, sig, opt, prem, live)
+            msgs.append(om)
+            if prem:
+                RP.add(state, key=key + "|OPT", mark_key=c["token"], seg=seg, cat="OPTION BUY", name=name, symbol=opt["symbol"],
+                       type=RP.CALL_TYPE[tf], side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=round(otg, 2) if otg else None,
+                       lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=ref, und_side=sig["side"])
+        msgs.append(reason)
         state["day"]["alerts"] += 1
 
 

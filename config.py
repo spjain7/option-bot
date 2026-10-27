@@ -2,6 +2,9 @@
 
 # ═════════════ MASTER SWITCHES (kill switch) ═════════════
 OPTION_ENGINE_ENABLED = True     # Engine A: option-selling calls + trade management
+RSI_SELL_ENABLED      = True     # option SELL: hourly RSI > 80 / < 25 + OI positioning (short covering / long unwinding) – runner.rsi_exhaustion
+RSI_SELL_HIGH         = 80
+RSI_SELL_LOW          = 25
 RSI_ENGINE_ENABLED    = False    # Engine B: OFF 27-Oct-2026 – RSI-extreme / candle-reversal calls lost money in backtests (alerts/EXPERIMENTS.md); duplicate futures calls; saves Angel API quota
 SELL_STYLE            = "NAKED"  # "NAKED"  = single CE or PE sell only (your choice)
                                  # "HEDGED" = spreads/iron condor (low margin, capped loss)

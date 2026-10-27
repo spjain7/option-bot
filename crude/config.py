@@ -4,7 +4,7 @@ Everything here is a starting assumption chosen BEFORE looking at backtest resul
 """
 VERSION = "crude-paper 1.0.0"
 MODE = "PAPER"                      # the only mode this package supports. There is no order code in crude/.
-ENABLED = True                      # master switch for this engine only (scan mode does nothing when False)
+ENABLED = False                     # OFF 27-Oct-2026: one alert system only (crude calls come from alerts/); paper engine kept for research
 
 SIGNAL_NAME = "CRUDEOIL"            # signals are computed on the liquid main contract
 TRADE_NAME = "CRUDEOILM"            # paper fills + sizing on the mini contract (₹10/pt): 0.25% risk can't size a 100-bbl lot

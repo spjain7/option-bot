@@ -23,3 +23,7 @@ and ≥ 6 of 9 instruments positive in the hold-out. Win rate reported; 80-90% i
  live breakout   ₹4,996 / ₹21,809 · win 82% / 78% · 9/9
 Daily: only "previous-week high/low break" passed (36% win, ₹6.9k) – not used. Daily patterns: too few trades / failed.
 Pivot-reversal (S1/R1 rejection) failed on both timeframes.
+
+## ⚠️ CORRECTION (27-Oct-2026, later): the exit simulator had a bug for SELL trades – the "+1R" check for shorts
+was always true, so half of every short was booked at +1R on the first candle. Re-run with the bug fixed:
+3h patterns now FAIL (flag ₹-2,287 / ₹9,459, H&S ₹-3,938 / ₹16,025 at 2× costs, 4-7/9 instruments) → pattern calls OFF.
