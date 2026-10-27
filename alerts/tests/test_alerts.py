@@ -256,6 +256,13 @@ def test_breakout():
           BO.evaluate_monthly(dm_)["side"] == "BUY" and BO.evaluate_monthly(dm_.iloc[:-1])["side"] is None)
     w_ = BO.reason_msg("GOLD", "1m", dict(BO.evaluate_monthly(dm_), side="BUY"), dict(support=[], resistance=[]), None, htf=BO.htf_levels(dm_.iloc[:-1]))
     check("WHY shows MONTHLY BREAKOUT and week / month support-resistance levels", "MONTHLY BREAKOUT" in w_ and "month H" in w_)
+    import alerts.stocks as STK2
+    c_ = list(np.linspace(100, 130, 60)); dE = pd.DataFrame(dict(time=pd.bdate_range("2026-04-13", periods=60), open=c_, high=[x + 1 for x in c_],
+                                                             low=[x - 1 for x in c_], close=c_, volume=100.0, oi=1e6))
+    dE.loc[dE.index[-2], ["open", "close", "high", "low"]] = [129.0, 131.0, 131.5, 128.8]
+    dE.loc[dE.index[-1], ["open", "close", "high", "low", "volume"]] = [131.5, 128.7, 131.8, 128.5, 300.0]
+    be_ = STK2.evaluate_bear_engulf(dE)
+    check("stock: bearish engulfing after a rise on 3× volume -> SELL, SL 1.5 ATR, target 1R", be_["side"] == "SELL" and be_["tr"] == 1.0 and be_["k"] == 1.5)
     from alerts import report as RP
     lg = {}
     RP.add(lg, key="k", mark_key="1", seg="NSE", cat="FUTURES", name="NIFTY", symbol="NIFTY25NOV26FUT", type="Positional (3-hour)",

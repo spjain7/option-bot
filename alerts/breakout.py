@@ -171,10 +171,10 @@ def option_idea(master, name, ex, px, side, tf, now):
         return None
 
 
-def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None, opt=None):
-    """Message 1 – the futures call: entry, SL, one target, lot. Nothing else."""
+def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None, opt=None, tr=None):
+    """Message 1 – the futures call: entry, SL, one target, lot. Nothing else. tr: target in R (0 = trailing, no target)."""
     s, ref, R = _levels(sig, live, k or stop_k(tf))
-    tg = TARGET_R.get(tf)
+    tg = TARGET_R.get(tf) if tr is None else (tr or None)
     lot = lot or c.get("lot")
     return "\n".join([
         f"{'🟢 BUY' if s > 0 else '🔴 SELL'}  {name} FUT  ·  Positional",
@@ -308,10 +308,11 @@ def manage(state, msgs, name, tf, frame, c15, now):
     state["bo_active"] = keep
 
 
-def option_msg(name, ex, tf, sig, opt, prem, live=None, k=None):
+def option_msg(name, ex, tf, sig, opt, prem, live=None, k=None, tr=None):
     """OPTION-BUY call for the same signal: ATM CE (buy) / PE (sell). Premium SL/target ≈ futures levels × delta 0.5."""
     s, ref, R = _levels(sig, live, k or stop_k(tf))
-    sl_f, tg_f = ref - s * R, (ref + s * TARGET_R[tf] * R if TARGET_R.get(tf) else None)
+    trr = TARGET_R.get(tf) if tr is None else (tr or None)
+    sl_f, tg_f = ref - s * R, (ref + s * trr * R if trr else None)
     est = lambda fut: max(0.05, prem + 0.5 * s * (fut - ref)) if prem else None
     L = [f"{'🟢' if opt['typ'] == 'CE' else '🔴'} BUY  {name} {opt['K']:g} {opt['typ']}  ·  Positional",
          "━━━━━━━━━━━━━━",

@@ -102,6 +102,47 @@ def evaluate(d):
     return dict(out, side=None, why="no OI-confirmed breakout")
 
 
+# CANDLE-001 (research/search/REGISTRY_CANDLE.md): BEARISH ENGULFING on a stock future after a rise, volume > 1.5× ->
+# SELL, SL 1.5 ATR, target 1R, max 10 sessions. Win 55% / 68%, ₹2,065 / ₹7,208 per lot at 2× costs, 66% of stocks +.
+# All bullish candles (hammer, bullish engulfing, morning star) failed and are not used.
+BEAR_ENGULF_ENABLED = True
+
+
+def evaluate_bear_engulf(d):
+    if d is None or len(d) < 30:
+        return dict(side=None)
+    o, h, l, c, v = d["open"], d["high"], d["low"], d["close"], d["volume"].astype(float)
+    x, p = d.iloc[-1], d.iloc[-2]
+    e20 = I.ema(c, 20).iloc[-1]; r5 = c.iloc[-1] / c.iloc[-6] - 1
+    va = v.rolling(20).mean().shift(1).iloc[-1]
+    vx = float(x.volume / va) if va and va > 0 else 0
+    eng = x.close < x.open and p.close > p.open and x.close <= p.open and x.open >= p.close
+    out = dict(candle=str(x.time), close=float(x.close), atr=float(I.atr(d, 14).iloc[-1]), vol_x=vx, ema200=float(I.ema(c, 200).iloc[-1]),
+               adx=float(I.adx(d).iloc[-1]), rsi=float(I.rsi(c, 14).iloc[-1]), pattern="BEARISH ENGULFING", level=float(p.open),
+               hh=float(h.iloc[-21:-1].max()), ll=float(l.iloc[-21:-1].min()), k=1.5, tr=1.0, max_days=10,
+               doi=float(d["oi"].pct_change().iloc[-1]) if "oi" in d and d["oi"].notna().iloc[-2:].all() else None)
+    # same as the research: at the engulfing candle, close above EMA20 and up over the last 5 candles (it ended a rise)
+    if eng and x.close > e20 and r5 > 0 and vx > 1.5 and not in_rollover_window(x.time):
+        return dict(out, side="SELL")
+    return dict(out, side=None)
+
+
+def reason_engulf(name, sig, lv):
+    L = [f"📌 WHY – {name} SELL", "━━━━━━━━━━━━━━",
+         f"• Chart   : Daily candle closed {BO._f(sig['close'])}",
+         f"• Setup   : BEARISH ENGULFING after a rise – today's red candle swallowed yesterday's green one (open {BO._f(sig['level'])})",
+         f"• Volume  : {sig['vol_x']:.1f}× average ✅"]
+    if sig.get("doi") is not None:
+        L.append(f"• OI      : {sig['doi'] * 100:+.1f}% today ({'short buildup' if sig['doi'] > 0 else 'long unwinding'})")
+    L.append(f"• RSI/ADX : {sig['rsi']:.0f} / {sig['adx']:.0f}")
+    nxt = lv["support"][:1]
+    if nxt:
+        L.append(f"• Next support: {BO._f(nxt[0][0])}")
+    L += ["• Exit    : SL or target (1R) · max 10 sessions",
+          "• Backtest: stock futures 2022-26, win 55% / 68%, profitable after costs – not guaranteed", "Not investment advice."]
+    return "\n".join(L)
+
+
 def reason_msg(name, sig, lv, plan=None):
     """Message 2 – WHY (same clean layout as the MCX / index calls)."""
     s = 1 if sig["side"] == "BUY" else -1
@@ -260,6 +301,11 @@ def scan(api, master, now, state, msgs, rep, engine):
         for p in st["active"]:
             s = 1 if p["side"] == "BUY" else -1
             ltp = (q.get(p["token"]) or {}).get("ltp")
+            if ltp and p.get("target") and s * (ltp - p["target"]) >= 0:
+                r = s * (ltp - p["entry"]) / p["risk"]
+                msgs.append(f"✅ EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: 🎯 TARGET HIT · result {r:+.2f}R")
+                BO.close_ledger(state, p.get("key"), float(p["target"]), "target", now)
+                continue
             if ltp and s * (ltp - p["stop"]) <= 0:
                 r = s * (ltp - p["entry"]) / p["risk"]
                 msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: "
@@ -301,7 +347,9 @@ def scan(api, master, now, state, msgs, rep, engine):
         for p in [p for p in st["active"] if p["name"] == name]:
             s_ = 1 if p["side"] == "BUY" else -1
             new = d[d["time"] > pd.Timestamp(p["last_candle"])]
-            if len(new):
+            if len(new) and p.get("target"):
+                p["n"] += len(new); p["last_candle"] = str(d["time"].iloc[-1])
+            elif len(new):
                 p["best"] = (max if s_ > 0 else min)([p["best"], *new["close"].tolist()])
                 p["n"] += len(new)
                 p["last_candle"] = str(d["time"].iloc[-1])
@@ -311,11 +359,11 @@ def scan(api, master, now, state, msgs, rep, engine):
                     p["stop"], p["trailed"] = round(ns, 2), True
                     msgs.append(f"🔁 TRAIL UPDATE – {name} FUT {p['side']} · new stop {BO._f(p['stop'])} · "
                                 f"open {s_ * (p['best'] - p['entry']) / p['risk']:+.1f}R")
-            if now.normalize() >= pd.Timestamp(p["expiry"]) or p["n"] >= CFG["max_days"]:
+            if now.normalize() >= pd.Timestamp(p["expiry"]) or p["n"] >= p.get("max_days", CFG["max_days"]):
                 px = float(d["close"].iloc[-1])
                 r = s_ * (px - p["entry"]) / p["risk"]
                 msgs.append(f"⏹ EXIT – {name} FUT {p['side']} at ~{BO._f(px)}: "
-                            f"{'expiry day – exit (or roll with the same stop)' if p['n'] < CFG['max_days'] else '40-session time exit'} · {r:+.2f}R")
+                            f"{'expiry day – exit (or roll with the same stop)' if p['n'] < p.get('max_days', CFG['max_days']) else 'time exit'} · {r:+.2f}R")
                 BO.close_ledger(state, p.get("key"), px, "expiry/time exit", now)
                 st["active"] = [x for x in st["active"] if x is not p]
         if len(d) < 30:
@@ -326,19 +374,25 @@ def scan(api, master, now, state, msgs, rep, engine):
             continue
         state["last_eval"][k] = last
         sig = evaluate(d)
+        if not sig["side"] and BEAR_ENGULF_ENABLED:
+            be = evaluate_bear_engulf(d)
+            if be["side"]:
+                sig = be
         if not sig["side"] or first_session_after_expiry(sig["candle"]) or any(p["name"] == name for p in st["active"]):
             continue
         lv = S.levels(d, h, sig["close"], sig["atr"])
         cc = dict(symbol=c["symbol"], expiry=c["expiry"])
-        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], k=CFG["stop_atr"],
+        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], k=sig.get("k", CFG["stop_atr"]), tr=sig.get("tr", 0),
                                 opt=BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)))
         s_ = 1 if sig["side"] == "BUY" else -1
         key = f"{name}|1dSTK|{last}"
+        k_ = sig.get("k", CFG["stop_atr"]); R_ = k_ * sig["atr"]
+        tgt = round(sig["close"] + s_ * sig["tr"] * R_, 2) if sig.get("tr") else None
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=sig["close"],
-                                 stop=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), risk=CFG["stop_atr"] * sig["atr"],
+                                 stop=round(sig["close"] - s_ * R_, 2), risk=R_, target=tgt, max_days=sig.get("max_days", CFG["max_days"]),
                                  best=sig["close"], trailed=False, n=0, last_candle=last, key=key))
         RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional",
-               side=sig["side"], entry=round(sig["close"], 2), sl=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), target=None,
+               side=sig["side"], entry=round(sig["close"], 2), sl=round(sig["close"] - s_ * R_, 2), target=tgt,
                lot=c["lot"], mult=c["lot"], time=str(now))
         opt = BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)
         if opt:
@@ -347,13 +401,13 @@ def scan(api, master, now, state, msgs, rep, engine):
                 prem = float((api.quotes({"NFO": [opt["token"]]}).get(opt["token"]) or {}).get("ltp") or 0) or None
             except Exception:
                 prem = None
-            om, (osl, otg) = BO.option_msg(name, "NFO", "1d", sig, opt, prem, k=CFG["stop_atr"])
+            om, (osl, otg) = BO.option_msg(name, "NFO", "1d", sig, opt, prem, k=sig.get("k", CFG["stop_atr"]), tr=sig.get("tr", 0))
             msgs.append(om)
             if prem:
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
                        type="Positional", side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=None, lot=opt["lot"],
                        mult=opt["lot"], time=str(now), und_entry=sig["close"], und_side=sig["side"])
-        msgs.append(reason_msg(name, sig, lv))
+        msgs.append(reason_engulf(name, sig, lv) if sig.get("pattern") else reason_msg(name, sig, lv))
         state["day"]["alerts"] += 1
         found += 1
         if hasattr(api, "api"):
