@@ -130,7 +130,7 @@ def main():
                 doi = o.reindex(dd.index).pct_change(5 if tf == "1w" else 1)
                 if tf == "1w":
                     wdoi = doi.groupby(doi.index.to_period("W")).last()
-                    arr = day.dt.to_period("W").map(wdoi).astype(float).values
+                    arr = pd.Series(day).dt.to_period("W").map(wdoi).astype(float).values
                 else:
                     arr = doi.reindex(day).values
                 oi_ok = (lambda x, arr=arr: (np.nan_to_num(arr) >= 0.02) & (x != 0))
