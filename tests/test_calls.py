@@ -170,7 +170,7 @@ def test_no_orders_and_flags():
     check("calls package uses no order API", not re.search(r"placeOrder|modifyOrder|cancelOrder|place_order", src))
     import config, runner
     run_src = (ROOT / "runner.py").read_text()
-    check("engine D has its own flag guarding its only call site", config.CALLS_ENABLED is True
+    check("engine D has its own flag guarding its only call site", isinstance(config.CALLS_ENABLED, bool)
           and len(re.findall(r"calls_engine\.run\(", run_src)) == 1 and "if C.CALLS_ENABLED and mode in" in run_src)
     check("hourly Engine C stays disabled", config.MCXT_ENABLED is False)
 

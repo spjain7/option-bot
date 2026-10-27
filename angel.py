@@ -33,6 +33,7 @@ class Angel:
     HIST_GAP, QUOTE_GAP = 0.75, 1.1
     COOL_STEPS = (8, 15, 30, 60, 90)   # seconds to pause after the 1st, 2nd, 3rd ... consecutive rate-limit error
     FAILFAST_AFTER = 5                 # from this many limit errors in a row: skip calls (return None) until the pause is over
+    STREAK_FORGET = 300                # a block that ended this many seconds ago no longer counts (fresh retries next scan)
     DISK_TTL = 240                     # seconds a candle series may be re-used by another engine process
 
     def __init__(self):
@@ -70,9 +71,12 @@ class Angel:
     def _breaker(self):
         try:
             b = json.loads((self._dir / "breaker.json").read_text())
-            return float(b.get("until", 0)), int(b.get("streak", 0))
+            until, streak = float(b.get("until", 0)), int(b.get("streak", 0))
         except Exception:
             return 0.0, 0
+        if until < time.time() - self.STREAK_FORGET:   # an old block (e.g. from the previous 15-min scan) is forgotten:
+            return 0.0, 0                              # the new scan gets its normal retries instead of failing fast at once
+        return until, streak
 
     def _trip(self):
         """A rate-limit reply came back: pause every engine for a while (longer each time in a row)."""

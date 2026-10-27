@@ -2,7 +2,7 @@
 
 # ═════════════ MASTER SWITCHES (kill switch) ═════════════
 OPTION_ENGINE_ENABLED = True     # Engine A: option-selling calls + trade management
-RSI_ENGINE_ENABLED    = True     # Engine B: independent 1-hour RSI extreme alerts
+RSI_ENGINE_ENABLED    = False    # Engine B: OFF 27-Oct-2026 – RSI-extreme / candle-reversal calls lost money in backtests (alerts/EXPERIMENTS.md); duplicate futures calls; saves Angel API quota
 SELL_STYLE            = "NAKED"  # "NAKED"  = single CE or PE sell only (your choice)
                                  # "HEDGED" = spreads/iron condor (low margin, capped loss)
 ALLOW_STRANGLE        = False    # NAKED + sideways market: False = no call; True = sell CE + PE together
@@ -160,7 +160,7 @@ MCX_RS_PER_POINT     = {"CRUDEOIL": 100, "CRUDEOILM": 10, "NATURALGAS": 1250, "N
                         "COPPER": 2500, "ZINC": 5000, "ALUMINIUM": 5000}
 
 # ═════════════ ENGINE D: TELEGRAM TRADING CALLS (intraday + positional, MCX + NIFTY/BANKNIFTY) – calls/ ═════════════
-CALLS_ENABLED        = True      # alerts only, no orders. Rules in calls/rules.py, settings in calls/engine.py
+CALLS_ENABLED        = False     # OFF 27-Oct-2026: unvalidated rules (see calls/engine.py), duplicated the validated breakout alerts (alerts/), e.g. 27-Oct SILVER SELL stop-loss; saves API quota. Alerts only, no orders. Rules in calls/rules.py, settings in calls/engine.py
 
 # ═════════════ ENGINE C: MCX BUY / SELL (futures + option buying) – alerts only ═════════════
 MCXT_ENABLED         = False     # disabled 21-Oct-2026: backtests negative after costs (research/). Only call site: runner.py
