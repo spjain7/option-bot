@@ -23,6 +23,42 @@
    "opened": "2026-10-23 09:06",
    "exit_pending": false,
    "t1_hit": false
+  },
+  {
+   "id": 7,
+   "mode": "intraday",
+   "name": "SILVER",
+   "exch": "MCX",
+   "side": "SELL",
+   "symbol": "SILVER04DEC26FUT",
+   "token": "495214",
+   "expiry": "04-Dec-2026",
+   "mult": 30,
+   "entry": 191577.0,
+   "sl": 194506.87,
+   "t1": 188647.13,
+   "t2": 185717.27,
+   "R": 2929.87,
+   "t1_hit": false,
+   "opened": "2026-10-27 12:18",
+   "candle": "2026-10-27 11:00:00",
+   "opt": {
+    "symbol": "SILVER27NOV26195000PE",
+    "token": "577632",
+    "strike": 195000.0,
+    "typ": "PE",
+    "expiry": "27-Nov-2026",
+    "entry": 9913.0,
+    "delta": 0.49,
+    "iv": 40.9,
+    "sl": 8390.26,
+    "t1": 11435.74,
+    "t2": 13106.36,
+    "cost_lot": 297390,
+    "risk_lot": 45682,
+    "rs_per_point": 30,
+    "lots": 0
+   }
   }
  ],
  "closed": [
@@ -176,42 +212,7 @@
    "opt_pnl_rs_per_lot": -25955
   }
  ],
- "pending": [
-  {
-   "id": 6,
-   "mode": "positional",
-   "name": "NATURALGAS",
-   "exch": "MCX",
-   "side": "SELL",
-   "symbol": "NATURALGAS24NOV26FUT",
-   "token": "574319",
-   "expiry": "2026-11-24",
-   "mult": 1250,
-   "signal_close": 248.4,
-   "level": 250.8,
-   "atr": 12.810000000000002,
-   "candle": "2026-10-26",
-   "created": "2026-10-27 11:42",
-   "opt": {
-    "symbol": "NATURALGAS20NOV26255PE",
-    "token": "583927",
-    "strike": 255.0,
-    "typ": "PE",
-    "expiry": "20-Nov-2026",
-    "entry": 5.8,
-    "delta": 0.19,
-    "iv": 66.5,
-    "sl": 3.48,
-    "t1": null,
-    "t2": null,
-    "cost_lot": 7250,
-    "risk_lot": 2900,
-    "rs_per_point": 1250,
-    "lots": 0
-   },
-   "lots_text": "0 (1 lot risks \u20b932,025 = 6.4% of capital) | mini NATGASMINI: 0 lot(s) (\u20b96,405/lot)"
-  }
- ],
+ "pending": [],
  "done": {
   "intra|GOLD|2026-10-21 19:00": "2026-10-21",
   "intra|SILVER|2026-10-21 19:00": "2026-10-21",
@@ -513,7 +514,16 @@
   "pos|NATURALGAS|2026-10-26|call": "2026-10-27",
   "pos|COPPER|2026-10-26": "2026-10-26",
   "pos|ZINC|2026-10-26": "2026-10-26",
-  "pos|ALUMINIUM|2026-10-26": "2026-10-26"
+  "pos|ALUMINIUM|2026-10-26": "2026-10-26",
+  "cancel|6": "2026-10-27",
+  "intra|SILVER|2026-10-27 11:00": "2026-10-27",
+  "intra|SILVER|2026-10-27 11:00|call": "2026-10-27",
+  "intra|CRUDEOIL|2026-10-27 11:00": "2026-10-27",
+  "intra|NATURALGAS|2026-10-27 11:00": "2026-10-27",
+  "intra|ZINC|2026-10-27 11:00": "2026-10-27",
+  "intra|ALUMINIUM|2026-10-27 11:00": "2026-10-27",
+  "intra|NIFTY|2026-10-27 11:15": "2026-10-27",
+  "intra|BANKNIFTY|2026-10-27 11:15": "2026-10-27"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -536,5 +546,5 @@
   "2026-10-23": true,
   "2026-10-26": true
  },
- "next_id": 7
+ "next_id": 8
 }
