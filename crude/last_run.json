@@ -1,5 +1,5 @@
 {
- "time": "2026-10-27 21:33:14.032404",
+ "time": "2026-10-27 21:48:07.647229",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -15,34 +15,38 @@
   }
  },
  "api": {
-  "15m": "ok (839 candles, last start 27-Oct 21:30)",
+  "15m": "ok (839 candles, last start 27-Oct 21:45)",
   "1h": "ok (1047 candles, last start 27-Oct 21:00)",
-  "quote": "ok",
-  "1h-next(roll check)": "ok (583 candles, last start 27-Oct 21:00)"
+  "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-27 21:15:00",
+  "last_closed_15m": "2026-10-27 21:30:00",
   "bars_15m": 838,
   "last_closed_1h": "2026-10-27 20:00:00",
   "bars_1h": 596,
   "last_closed_3h": "2026-10-27 18:00:00",
   "bars_3h": 198,
-  "age_15m_min": 3.2,
+  "age_15m_min": 3.1,
   "quote_age_min": -0.1,
-  "ltp": 9527.0,
-  "day_volume": 38082,
+  "ltp": 9530.0,
+  "day_volume": 38504,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.39
+   "quote_vs_candle_atr": 0.33
   },
   "volume": "available",
-  "oi_current": 1475700,
+  "oi_current": 1474500,
   "oi_change": {
-   "status": "UNAVAILABLE",
-   "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
+   "status": "OK",
+   "label": "Flat / no clear OI signal",
+   "d_oi_pct": -0.081,
+   "d_price": 3.0,
+   "gap_min": 14.9,
+   "oi": 1474500,
+   "oi_prev": 1475700
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -59,9 +63,9 @@
     "trend_1h": "MIXED",
     "trend_1h_detail": "close 9523 EMA20 9644 EMA50 9591 EMA200 9159 ADX 9.7",
     "adx_1h": 9.70014055314398,
-    "rsi": 35.29469108335127
+    "rsi": 42.28405764722391
    },
-   "bar_time": "2026-10-27 21:15:00",
+   "bar_time": "2026-10-27 21:30:00",
    "new_candle": true
   },
   "positional": {
@@ -76,7 +80,7 @@
     "rsi": 52.10384388178416
    },
    "bar_time": "2026-10-27 18:00:00",
-   "new_candle": true
+   "new_candle": false
   }
  },
  "actions": [],
