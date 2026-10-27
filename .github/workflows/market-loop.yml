@@ -1,16 +1,28 @@
 name: Market loop (option selling + alerts + crude paper, every 15 min)
 
-# GitHub's cron skips most 15-minute scheduled runs, so ONE run per day loops inside the job instead:
-# three back-to-back jobs (each < 6 h) scan every 15 min from start until 00:20 IST.
-# Backup start times restart the loop if a run fails; a run that starts after the day's loop just waits in the
-# queue (same concurrency group) and exits immediately once the session is over. ALERTS / PAPER only – no orders.
+# GitHub's cron skips many scheduled runs, so ONE run per trading day loops inside the jobs instead (a scan every 15 min,
+# 2 min after each candle closes). Three back-to-back jobs (each < 6 h) cover 08:55 IST -> 00:20 IST (NSE 09:15-15:30, MCX 09:00-23:30/23:55):
+#   morning -> 14:50, afternoon -> 19:50, evening -> 00:20.
+# Many backup start times (every ~30-90 min, Mon-Fri): if one is skipped by GitHub the next one starts the loop. A start that comes
+# while the loop is already running just waits in the queue (same concurrency group) and exits at once when it gets its turn;
+# a start outside 08:40-00:20 IST, or on a weekend, exits immediately (scripts/market_loop.sh), so no run ever idles through the night.
+# ALERTS / PAPER only - no orders.
 
 on:
-  schedule:
-    - cron: "25 3 * * 1-5"     # 08:55 IST start
-    - cron: "40 4 * * 1-5"     # backups (queue if the loop is already running)
-    - cron: "10 8 * * 1-5"
-    - cron: "10 12 * * 1-5"
+  schedule:                    # UTC (IST = UTC + 5:30)
+    - cron: "15 3 * * 1-5"     # 08:45 IST  - first start
+    - cron: "25 3 * * 1-5"     # 08:55 IST
+    - cron: "45 3 * * 1-5"     # 09:15 IST  - backups from here on
+    - cron: "15 4 * * 1-5"     # 09:45
+    - cron: "0 5 * * 1-5"      # 10:30
+    - cron: "0 6 * * 1-5"      # 11:30
+    - cron: "0 7 * * 1-5"      # 12:30
+    - cron: "0 8 * * 1-5"      # 13:30
+    - cron: "0 9 * * 1-5"      # 14:30
+    - cron: "30 10 * * 1-5"    # 16:00
+    - cron: "10 12 * * 1-5"    # 17:40
+    - cron: "10 14 * * 1-5"    # 19:40
+    - cron: "0 16 * * 1-5"     # 21:30
   workflow_dispatch:
 
 concurrency:
@@ -41,7 +53,7 @@ env:
 jobs:
   morning:
     runs-on: ubuntu-24.04
-    timeout-minutes: 350
+    timeout-minutes: 358
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -53,18 +65,18 @@ jobs:
     needs: morning
     if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 350
+    timeout-minutes: 358
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
-      - run: bash scripts/market_loop.sh 20:50
+      - run: bash scripts/market_loop.sh 19:50
   evening:
     needs: afternoon
     if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 350
+    timeout-minutes: 358
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

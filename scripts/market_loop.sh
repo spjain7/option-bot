@@ -92,10 +92,23 @@ iteration() {
   fi
 }
 
-h=$(TZ=Asia/Kolkata date +%-H)
-if [ "$h" -ge 1 ] && [ "$h" -lt 8 ]; then echo "outside the market day (IST $h h) – nothing to do"; exit 0; fi
-end_s=$(TZ=Asia/Kolkata date -d "today $END" +%s)
-if [ "${END%%:*}" -lt 6 ] && [ "$h" -ge 6 ]; then end_s=$((end_s + 86400)); fi    # 00:20 = after midnight
+# ---- trading-day window (IST). The loop only runs from 08:40 until 00:20 (NSE 09:15-15:30, MCX 09:00-23:30/23:55) on Mon-Fri
+# sessions. A run started outside the window (a late backup / queued run) exits at once, so it never sits idle through the night
+# and never blocks the next morning's start. ${MARKET_LOOP_NOW} (epoch seconds) is only used by the offline test.
+NOW_S="${MARKET_LOOP_NOW:-$(date +%s)}"
+ist() { TZ=Asia/Kolkata date -d "@$NOW_S" "$@"; }
+h=$(ist +%-H); mi=$(ist +%-M); m=$((h * 60 + mi))
+dow=$(TZ=Asia/Kolkata date -d "@$((NOW_S - 18000))" +%u)         # trading day this minute belongs to (00:00-00:20 = still the previous day's MCX session)
+if [ "$dow" -ge 6 ]; then echo "weekend – no market session (IST $(ist '+%a %H:%M')) – nothing to do"; exit 0; fi
+if [ "$m" -ge 20 ] && [ "$m" -lt 520 ]; then echo "outside the market day (IST $(ist +%H:%M); loop window 08:40-00:20) – nothing to do"; exit 0; fi
+if [ "$m" -lt 20 ]; then                                          # after midnight: only the last job (END 00:20) may still run
+  [ "$END" = "00:20" ] || { echo "after midnight – earlier job window is over – nothing to do"; exit 0; }
+  end_s=$(TZ=Asia/Kolkata date -d "$(ist +%F) $END" +%s)
+else
+  end_s=$(TZ=Asia/Kolkata date -d "$(ist +%F) $END" +%s)
+  [ "${END%%:*}" -lt 6 ] && end_s=$((end_s + 86400))              # 00:20 = after midnight
+fi
+if [ "${MARKET_LOOP_DRY:-0}" = "1" ]; then echo "would run until $(TZ=Asia/Kolkata date -d "@$end_s" '+%d-%b %H:%M') IST"; exit 0; fi
 while true; do
   now_s=$(TZ=Asia/Kolkata date +%s)
   [ "$now_s" -ge "$end_s" ] && { echo "reached $END IST – job done"; break; }
