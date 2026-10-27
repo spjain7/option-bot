@@ -517,6 +517,13 @@
    "oi": 1441900,
    "ltp": 9717.0,
    "volume": 6277
+  },
+  {
+   "time": "2026-10-27 13:21:54",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1446500,
+   "ltp": 9731.0,
+   "volume": 6542
   }
  ],
  "switches": {
@@ -549,73 +556,12 @@
   "ignored": 0,
   "startup_sent": true,
   "eod_sent": false,
-  "alerted": [],
+  "alerted": [
+   "err:STALE CANDLES"
+  ],
   "trades": []
  },
  "runs": [
-  {
-   "time": "2026-10-26 16:36:08.129752",
-   "session": "OPEN",
-   "api": {
-    "15m": "ok (839 candles, last start 26-Oct 16:30)",
-    "1h": "ok (1027 candles, last start 26-Oct 16:00)",
-    "quote": "ok"
-   },
-   "data": {
-    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-    "last_closed_15m": "2026-10-26 16:15:00",
-    "bars_15m": 838,
-    "last_closed_1h": "2026-10-26 15:00:00",
-    "bars_1h": 576,
-    "last_closed_3h": "2026-10-26 12:00:00",
-    "bars_3h": 191,
-    "age_15m_min": 6.1,
-    "quote_age_min": -0.1,
-    "ltp": 9633.0,
-    "day_volume": 12614,
-    "quality": {
-     "blocks": [],
-     "notes": [],
-     "missing_15m_today": 0,
-     "quote_vs_candle_atr": 0.27
-    },
-    "volume": "available",
-    "oi_current": 1480700,
-    "oi_change": {
-     "status": "OK",
-     "label": "Short buildup",
-     "d_oi_pct": 0.598,
-     "d_price": -13.0,
-     "gap_min": 16.0,
-     "oi": 1480700,
-     "oi_prev": 1471900
-    },
-    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
-    "daily_pnl": 0.0,
-    "drawdown_pct": 0.0,
-    "open_risk_rs": 0
-   },
-   "decisions": {
-    "intraday": {
-     "decision": "NONE",
-     "side": null,
-     "blocks": [
-      "1-hour trend RANGE: close 9649 EMA20 9636 EMA50 9508 EMA200 9047 ADX 13.7"
-     ],
-     "bar": "2026-10-26 16:15:00"
-    },
-    "positional": {
-     "decision": "NONE",
-     "side": "BUY",
-     "blocks": [
-      "no setup: no confirmed breakout and no pullback-and-resume candle"
-     ],
-     "bar": "2026-10-26 12:00:00"
-    }
-   },
-   "actions": [],
-   "errors": []
-  },
   {
    "time": "2026-10-26 16:49:37.907714",
    "session": "OPEN",
@@ -4272,10 +4218,72 @@
    },
    "actions": [],
    "errors": []
+  },
+  {
+   "time": "2026-10-27 13:21:24.664734",
+   "session": "OPEN",
+   "api": {
+    "15m": "FAILED: no candles returned (API error, rate limit or no trading)",
+    "1h": "ok (1039 candles, last start 27-Oct 13:00)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": null,
+    "bars_15m": 0,
+    "last_closed_1h": "2026-10-27 12:00:00",
+    "bars_1h": 588,
+    "last_closed_3h": "2026-10-27 09:00:00",
+    "bars_3h": 195,
+    "quote_age_min": -0.5,
+    "ltp": 9731.0,
+    "day_volume": 6542,
+    "quality": {
+     "blocks": [],
+     "notes": []
+    },
+    "volume": "UNAVAILABLE/partial",
+    "oi_current": 1446500,
+    "oi_change": {
+     "status": "OK",
+     "label": "Long buildup",
+     "d_oi_pct": 0.319,
+     "d_price": 14.0,
+     "gap_min": 15.3,
+     "oi": 1446500,
+     "oi_prev": 1441900
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "no 15-min / 1-hour data"
+     ],
+     "bar": null
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": "BUY",
+     "blocks": [
+      "swing structure not HH/HL: swings H 9523\u21929828, L 9576\u21929562"
+     ],
+     "bar": "2026-10-27 09:00:00"
+    }
+   },
+   "actions": [],
+   "errors": [
+    "STALE CANDLES: no 15-min candles returned while the live quote is current"
+   ]
   }
  ],
  "last_error": {
-  "time": "2026-10-26 12:27:49.263505",
+  "time": "2026-10-27 13:21:24.664734",
   "error": "STALE CANDLES: no 15-min candles returned while the live quote is current"
  },
  "peak_equity": 500000.0
