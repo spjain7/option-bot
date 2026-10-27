@@ -15,6 +15,8 @@ CFG = dict(N=20, vol_x=1.5, stop_atr=2.0, trail_atr=3.0, max_candles=40, ema=200
 # 3h: book 50% at T1 (1R) and move the stop to entry – same profit as before (97-160%), win rate 41% -> 79-83%.
 STOP_ATR = {"3h": 2.0, "1d": 1.5}
 HALF_AT_T1 = {"3h": True, "1d": False}
+# TREND-EXIT-001: daily calls exit when a daily candle closes back across EMA20 (trend change) – better in design and hold-out
+TREND_EXIT_EMA = {"1d": 20}
 
 
 def stop_k(tf):
@@ -99,7 +101,7 @@ def details(ex, c, tf, sig, levels, live=None, k=None):
             f"📄 Contract: {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · exp {pd.Timestamp(c['expiry']):%d-%b-%Y}",
             f"🚫 Don't chase beyond {_f(ref + s * 0.5 * sig['atr'])}",
             ("✅ At T1: book 50% and move the stop-loss to entry (no loss possible on the rest)" if HALF_AT_T1.get(tf)
-             else "✅ Hold for the trend – exit only on the trailing stop (backtest: booking early cut daily profits)"),
+             else "✅ Hold for the trend – exit on the trailing stop OR when a daily candle closes back across EMA20 (trend change alert)"),
             "🔁 Trailing SL: 3 ATR from best close (updates follow)",
             f"🧱 Resistance: {_lv(levels['resistance'])}",
             f"🛟 Support   : {_lv(levels['support'])}",
@@ -172,7 +174,12 @@ def manage(state, msgs, name, tf, frame, c15, now):
                 p["stop"], p["trailed"] = round(ns, 2), True
                 msgs.append(f"🔁 TRAIL UPDATE – {name} {p['side']} ({tf}) · new stop {_f(p['stop'])} · best close {_f(p['best'])} · "
                             f"open P&L {s * (p['best'] - p['entry']) / p['risk']:+.1f}R")
-            if p["n"] >= CFG["max_candles"]:
+            te = TREND_EXIT_EMA.get(tf)
+            if te and len(frame) > te:
+                e = float(I.ema(frame["close"], te).iloc[-1]); cl = float(frame["close"].iloc[-1])
+                if (cl < e) if s > 0 else (cl > e):
+                    done = (cl, f"TREND CHANGE – daily close {'below' if s > 0 else 'above'} EMA{te} ({_f(e)})")
+            if done is None and p["n"] >= CFG["max_candles"]:
                 done = (frame["close"].iloc[-1], f"time exit after {CFG['max_candles']} candles")
         if done:
             r = s * (done[0] - p["entry"]) / p["risk"]

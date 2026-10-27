@@ -213,6 +213,14 @@ def test_breakout():
     BO.manage(st2, m2, "SILVER", "3h", None, b2, pd.Timestamp("2026-03-01 09:47"))
     check("after T1 the rest exits at entry -> result +0.50R (half booked), never a loss",
           not st2["bo_active"] and any("EXIT" in x and "+0.50R" in x for x in m2))
+    fr = _trend(); last = fr["close"].iloc[-1]
+    st3 = dict(bo_active=[dict(name="GOLD", tf="1d", side="BUY", entry=last, stop=last - 50, risk=50.0, best=last, trailed=False, n=0,
+                               last_candle=str(fr["time"].iloc[-2]), checked=str(fr["time"].iloc[-1]), contract="X")], day=dict(outcomes=[]))
+    fr.loc[fr.index[-1], ["close", "low"]] = [last - 30, last - 31]
+    m3 = []
+    BO.manage(st3, m3, "GOLD", "1d", fr, None, pd.Timestamp("2026-03-02 15:35"))
+    check("daily call: close back below EMA20 -> TREND CHANGE exit alert (no waiting for the stop)",
+          not st3["bo_active"] and any("TREND CHANGE" in x for x in m3))
     check("stop distance: daily 1.5 ATR, 3h 2 ATR (EXIT-001)", BO.stop_k("1d") == 1.5 and BO.stop_k("3h") == 2.0)
     sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
     lv = dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")])
