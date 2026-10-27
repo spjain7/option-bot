@@ -11,6 +11,14 @@ import pandas as pd
 from crude import indicators as I
 
 CFG = dict(N=20, vol_x=1.5, stop_atr=2.0, trail_atr=3.0, max_candles=40, ema=200)
+# EXIT-001 (27-Oct-2026, research/search/REGISTRY_EXIT.md): daily stop 1.5 ATR (better than 2 ATR in design AND hold-out);
+# 3h: book 50% at T1 (1R) and move the stop to entry – same profit as before (97-160%), win rate 41% -> 79-83%.
+STOP_ATR = {"3h": 2.0, "1d": 1.5}
+HALF_AT_T1 = {"3h": True, "1d": False}
+
+
+def stop_k(tf):
+    return STOP_ATR.get(tf, CFG["stop_atr"])
 TFLABEL = {"3h": "SWING (3-hour candles)", "1d": "POSITIONAL (daily candles)"}
 
 
@@ -60,16 +68,16 @@ def _lv(xs):
 SHORT_TF = {"3h": "Swing · 3-hour", "1d": "Positional · daily"}
 
 
-def _levels(sig, live):
+def _levels(sig, live, k=2.0):
     s = 1 if sig["side"] == "BUY" else -1
     ref = live or sig["close"]
-    R = CFG["stop_atr"] * sig["atr"]
+    R = k * sig["atr"]
     return s, ref, R
 
 
-def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None):
+def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None):
     """Message 1 – short, eye-catching call card. All other details go in message 2 (reason_msg)."""
-    s, ref, R = _levels(sig, live)
+    s, ref, R = _levels(sig, live, k or stop_k(tf))
     head = "🟢 BUY" if s > 0 else "🔴 SELL"
     seg = "MCX" if ex == "MCX" else "NSE F&O"
     return "\n".join([
@@ -77,20 +85,21 @@ def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None):
         "━━━━━━━━━━━━━━",
         f"👉 {'Buy' if s > 0 else 'Sell'} at   : {_f(ref)}",
         f"🛑 Stop loss : {_f(ref - s * R)}",
-        f"🎯 Target 1  : {_f(ref + s * R)}",
+        f"🎯 Target 1  : {_f(ref + s * R)}" + ("  (book 50%, SL → entry)" if HALF_AT_T1.get(tf) else ""),
         f"🎯 Target 2  : {_f(ref + 2 * s * R)}",
         f"🎯 Target 3  : {_f(ref + 3 * s * R)}",
         "━━━━━━━━━━━━━━",
         f"{seg} · {pd.Timestamp(c['expiry']):%b} fut · {kind or SHORT_TF[tf]}" + (f" · lot {lot}" if lot else "")])
 
 
-def details(ex, c, tf, sig, levels, live=None):
+def details(ex, c, tf, sig, levels, live=None, k=None):
     """Trade-management details shown in message 2."""
-    s, ref, R = _levels(sig, live)
+    s, ref, R = _levels(sig, live, k or stop_k(tf))
     return ["📋 TRADE PLAN",
             f"📄 Contract: {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · exp {pd.Timestamp(c['expiry']):%d-%b-%Y}",
             f"🚫 Don't chase beyond {_f(ref + s * 0.5 * sig['atr'])}",
-            "✅ Book 30% at T1, 30% at T2, rest on trailing stop",
+            ("✅ At T1: book 50% and move the stop-loss to entry (no loss possible on the rest)" if HALF_AT_T1.get(tf)
+             else "✅ Hold for the trend – exit only on the trailing stop (backtest: booking early cut daily profits)"),
             "🔁 Trailing SL: 3 ATR from best close (updates follow)",
             f"🧱 Resistance: {_lv(levels['resistance'])}",
             f"🛟 Support   : {_lv(levels['support'])}",
@@ -138,9 +147,17 @@ def manage(state, msgs, name, tf, frame, c15, now):
         s = 1 if p["side"] == "BUY" else -1
         done = None
         bars = c15[c15["time"] > pd.Timestamp(p["checked"])] if c15 is not None and len(c15) else pd.DataFrame()
+        t1 = p["entry"] + s * p["risk"]
         for b in bars.itertuples():
             if (b.low <= p["stop"]) if s > 0 else (b.high >= p["stop"]):
-                done = (p["stop"], "trailing stop hit" if p["trailed"] else "stop-loss hit"); break
+                done = (p["stop"], "stop at entry (after T1)" if p.get("t1") and p["stop"] == p["entry"]
+                        else "trailing stop hit" if p["trailed"] else "stop-loss hit"); break
+            if HALF_AT_T1.get(tf) and not p.get("t1") and ((b.high >= t1) if s > 0 else (b.low <= t1)):
+                p["t1"] = True
+                if s * (p["entry"] - p["stop"]) > 0:
+                    p["stop"] = p["entry"]
+                msgs.append(f"🎯 T1 HIT – {name} {p['side']} ({tf}) at {_f(t1)} · BOOK 50% now · move stop-loss to entry "
+                            f"{_f(p['entry'])} for the rest (trailing continues)")
         if len(bars):
             p["checked"] = str(bars["time"].iloc[-1])
         if done is None and frame is not None and len(frame) and str(frame["time"].iloc[-1]) != p["last_candle"]:
@@ -159,6 +176,8 @@ def manage(state, msgs, name, tf, frame, c15, now):
                 done = (frame["close"].iloc[-1], f"time exit after {CFG['max_candles']} candles")
         if done:
             r = s * (done[0] - p["entry"]) / p["risk"]
+            if p.get("t1"):
+                r = 0.5 * 1.0 + 0.5 * r                    # half booked at T1 (+1R) + rest
             msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {name} {p['side']} BREAKOUT ({tf}) at ~{_f(done[0])}: {done[1]} · "
                         f"result {r:+.2f}R (entry {_f(p['entry'])})")
             state["day"].setdefault("outcomes", []).append(dict(name=name, tf=tf, side=p["side"], result=f"{done[1]} {r:+.2f}R"))

@@ -202,6 +202,18 @@ def test_breakout():
     c15 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 15:15"]), open=[110], high=[110], low=[st["bo_active"][0]["stop"] - 1], close=[105], volume=[1.0]))
     BO.manage(st, msgs, "GOLD", "3h", fr, c15, pd.Timestamp("2026-03-01 15:35"))
     check("trailing stop hit -> EXIT message with result in R, alert closed", not st["bo_active"] and any("EXIT" in m and "R" in m for m in msgs))
+    st2 = dict(bo_active=[dict(name="SILVER", tf="3h", side="BUY", entry=100.0, stop=96.0, risk=4.0, best=100.0, trailed=False, n=0,
+                               last_candle="2026-03-01 09:00:00", checked="2026-03-01 09:00:00", contract="X")], day=dict(outcomes=[]))
+    m2 = []
+    b1 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 09:15"]), open=[101], high=[104.5], low=[99.5], close=[104], volume=[1.0]))
+    BO.manage(st2, m2, "SILVER", "3h", None, b1, pd.Timestamp("2026-03-01 09:32"))
+    check("3h call: T1 (1R) hit -> 'book 50%' message and stop moved to entry",
+          any("T1 HIT" in x and "50%" in x for x in m2) and st2["bo_active"][0]["stop"] == 100.0)
+    b2 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 09:30"]), open=[103], high=[103], low=[99.8], close=[100.5], volume=[1.0]))
+    BO.manage(st2, m2, "SILVER", "3h", None, b2, pd.Timestamp("2026-03-01 09:47"))
+    check("after T1 the rest exits at entry -> result +0.50R (half booked), never a loss",
+          not st2["bo_active"] and any("EXIT" in x and "+0.50R" in x for x in m2))
+    check("stop distance: daily 1.5 ATR, 3h 2 ATR (EXIT-001)", BO.stop_k("1d") == 1.5 and BO.stop_k("3h") == 2.0)
     sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
     lv = dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")])
     cg = dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04")
