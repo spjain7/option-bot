@@ -18,7 +18,8 @@ WALL_EM_RANGE         = 1.5      # look for OI support/resistance within 1.5 exp
 WALL_MIN_SHARE        = 0.6      # a strike counts as a wall if its OI >= 60% of the biggest nearby OI
 
 # ═════════════ ⚡ OI / VOLUME ACTIVITY ALERTS (futures) ═════════════
-FLOW_ENABLED          = True
+FLOW_ENABLED          = True      # keeps collecting OI/volume snapshots (used by the option-selling engine)
+FLOW_ALERTS_SEND      = False     # 27-Oct: no info-only "OI / volume activity" messages – buy/sell calls only
 FLOW_VOL_SPIKE_X      = 2.0      # last-hour volume >= 2x the day's normal hourly pace
 FLOW_MIN_OI_CHG       = {"index": 1.0, "stock": 2.0, "mcx": 1.5}   # % OI change in ~1 hour
 FLOW_MIN_PX_CHG       = {"index": 0.25, "stock": 0.5, "mcx": 0.4}  # % price change in ~1 hour
@@ -27,7 +28,7 @@ FLOW_MAX_PER_MSG      = 8
 FLOW_STRIKE_IDEAS     = 3        # add a "best strike to sell" idea for the top N buildups
 
 # ═════════════ 🚨 BIG-MOVE EARLY ALERTS (cannot predict – catches a big move as it starts) ═════════════
-BIGMOVE_ENABLED       = True
+BIGMOVE_ENABLED       = False    # 27-Oct: info-only alert removed (buy/sell calls only)
 FAST_MOVE_PCT         = {"index": 0.4, "stock": 1.2, "mcx": 0.8}   # % move within ~15 min
 BREAKOUT_VOL_X        = 2.0      # new day high/low counts only with volume >= 2x normal pace + rising OI
 BIGMOVE_COOLDOWN_MIN  = 60
@@ -37,13 +38,13 @@ BOUNCE_FILTER         = True     # no new CE sell above VWAP / after a bounce of
 BOUNCE_ATR_X          = 0.5      # "bounce" = price already >= 0.5 x hourly ATR off the day's low and rising
 
 # ═════════════ 🔄 SHORT-COVERING / LONG-UNWINDING ALERT (information only) ═════════════
-COVERING_ENABLED      = True
+COVERING_ENABLED      = False    # 27-Oct: short-covering / long-unwinding info alert removed (user request)
 COVERING_MIN_MOVE     = {"index": 0.5, "stock": 1.5, "mcx": 1.0}   # % off the day's low (or high)
 COVERING_MIN_OI_DROP  = {"index": 0.5, "stock": 1.0, "mcx": 0.75}  # % OI fall over ~1 hour
 COVERING_COOLDOWN_MIN = 120
 
 # ═════════════ 👀 PRE-MOVE WATCH (cannot predict – flags quiet price + rising OI/volume BEFORE a possible move) ═════════════
-PREMOVE_ENABLED       = True
+PREMOVE_ENABLED       = False    # 27-Oct: info-only watch alert removed (buy/sell calls only)
 PREMOVE_WINDOW_MIN    = 60       # look at the last hour of 15-min snapshots
 PREMOVE_MAX_RANGE     = {"index": 0.15, "stock": 0.4, "mcx": 0.3}   # price range in that hour must be this tight (%)
 PREMOVE_MIN_OI        = {"index": 1.0, "stock": 2.0, "mcx": 1.5}    # ...while OI rose at least this much (%)

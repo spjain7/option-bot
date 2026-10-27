@@ -221,6 +221,18 @@ def test_breakout():
     BO.manage(st3, m3, "GOLD", "1d", fr, None, pd.Timestamp("2026-03-02 15:35"))
     check("daily call: close back below EMA20 -> TREND CHANGE exit alert (no waiting for the stop)",
           not st3["bo_active"] and any("TREND CHANGE" in x for x in m3))
+    from alerts import patterns as PT
+    rng = np.random.default_rng(1)
+    cc = list(100 + np.cumsum(rng.normal(0, 0.3, 100)))
+    for _ in range(5): cc.append(cc[-1] + 2.0)
+    top = cc[-1]
+    for k in range(5): cc.append(top - 0.4 + 0.15 * (k % 2))
+    cc.append(top + 1.2)
+    cc = np.array(cc); oo = np.r_[cc[0], cc[:-1]]
+    fl = pd.DataFrame(dict(time=pd.date_range("2026-01-01", periods=len(cc), freq="3h"), open=oo, high=np.maximum(oo, cc) + 0.2,
+                           low=np.minimum(oo, cc) - 0.2, close=cc, volume=1000.0))
+    check("chart pattern: impulse + tight pause + close above it -> BULL FLAG BUY (not before the break)",
+          PT.detect(fl)[:2] == (1, "BULL FLAG") and PT.detect(fl.iloc[:-1])[0] == 0)
     check("stop distance: daily 1.5 ATR, 3h 2 ATR (EXIT-001)", BO.stop_k("1d") == 1.5 and BO.stop_k("3h") == 2.0)
     sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
     lv = dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")])

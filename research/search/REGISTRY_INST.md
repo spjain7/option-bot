@@ -14,3 +14,12 @@ Exits = live exits (3h: stop 2 ATR, 50% at 1R + stop to entry, trail 3; daily: s
 Full costs, roll days skipped. Measured in ₹ per lot.
 PASS: ≥ 40 trades in each period, avg ₹/lot > 0 at 2× costs in design (< 2024-07) AND hold-out,
 and ≥ 6 of 9 instruments positive in the hold-out. Win rate reported; 80-90% is the user's goal, not a pass condition.
+
+## RESULT (27-Oct-2026; exit sim checks the stop before T1 inside a candle = conservative)
+3h, avg ₹/lot at 2× costs design / hold-out, win % design / hold-out, instruments positive in hold-out:
+ flag            ₹6,293 / ₹33,078 · win 80% / 79% · 9/9  PASS → LIVE
+ head&shoulders  ₹4,509 / ₹25,375 · win 79% / 85% · 8/9  PASS → LIVE
+ squeeze ₹4,564 / ₹14,770 · 73% / 73% PASS · double top/bottom ₹5,595 / ₹7,226 · 81% / 74% PASS (weaker – not used yet)
+ live breakout   ₹4,996 / ₹21,809 · win 82% / 78% · 9/9
+Daily: only "previous-week high/low break" passed (36% win, ₹6.9k) – not used. Daily patterns: too few trades / failed.
+Pivot-reversal (S1/R1 rejection) failed on both timeframes.
