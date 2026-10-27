@@ -233,6 +233,10 @@ def test_breakout():
                            low=np.minimum(oo, cc) - 0.2, close=cc, volume=1000.0))
     check("chart pattern: impulse + tight pause + close above it -> BULL FLAG BUY (not before the break)",
           PT.detect(fl)[:2] == (1, "BULL FLAG") and PT.detect(fl.iloc[:-1])[0] == 0)
+    om = pd.DataFrame([dict(name="NIFTY", exch_seg="NFO", instrumenttype="OPTIDX", symbol=f"NIFTY25NOV26{k}{t}", strike=k * 100,
+                            lotsize=75, expiry_dt=pd.Timestamp("2026-11-25")) for k in (22500, 22600) for t in ("CE", "PE")])
+    oi_ = BO.option_idea(om, "NIFTY", "NFO", 22630, "SELL", "3h", pd.Timestamp("2026-10-27 12:00"))
+    check("futures SELL call -> option-buy idea = ATM PE (22600 PE)", oi_ and oi_["symbol"] == "NIFTY25NOV2622600PE")
     check("stop distance: daily 1.5 ATR, 3h 2 ATR (EXIT-001)", BO.stop_k("1d") == 1.5 and BO.stop_k("3h") == 2.0)
     sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
     lv = dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")])

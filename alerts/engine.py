@@ -300,7 +300,7 @@ def scan(api, master, now, state, only=None):
         q = quotes.get(c["token"])
         oi = oi_reading(state, c["symbol"], q, now)
         info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
-        _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d))
+        _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d), master=master)
         for tf, _, mins, _ in TFS:
             if not RSI_REVERSAL_CALLS:
                 break
@@ -357,7 +357,7 @@ def _switch_day(state, c, d):
     return pd.Timestamp(sw[0][0]).normalize() if sw else None
 
 
-def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=None):
+def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=None, master=None):
     """Volume-breakout alerts on 3-hour and daily candles + trailing-stop follow-ups."""
     if h1full is None or h1full.empty:
         info["breakout"] = "no 1-hour history"; return
@@ -402,11 +402,12 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         s_ = 1 if sig["side"] == "BUY" else -1
         if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
             info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
+        opt = BO.option_idea(master, name, ex, live or sig["close"], sig["side"], tf, now) if master is not None else None
         if sig.get("pattern"):
-            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, kind=f"3-hour · {sig['pattern'].title()}"))
+            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, kind=f"3-hour · {sig['pattern'].title()}", opt=opt))
             msgs.append(PT.reason_msg(name, tf, sig, lv, oi, BO.details(ex, c, tf, sig, lv, live)))
         else:
-            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
+            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, opt=opt))
             msgs.append(BO.reason_msg(name, tf, sig, lv, oi, q, BO.details(ex, c, tf, sig, lv, live)))
         ref = live or sig["close"]
         state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * BO.stop_k(tf) * sig["atr"], 2),

@@ -77,7 +77,28 @@ def _levels(sig, live, k=2.0):
     return s, ref, R
 
 
-def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None):
+OPT_MIN_DAYS = {"3h": 5, "1d": 15}     # option expiry must be at least this many days away (time to work)
+
+
+def option_idea(master, name, ex, px, side, tf, now):
+    """ATM option to BUY for this futures call (CE for BUY, PE for SELL), nearest expiry ≥ OPT_MIN_DAYS away. None if not found."""
+    try:
+        typ = "CE" if side == "BUY" else "PE"
+        types = ["OPTFUT", "OPTCOM"] if ex == "MCX" else ["OPTIDX", "OPTSTK"]
+        lo = pd.Timestamp(now).normalize() + pd.Timedelta(days=OPT_MIN_DAYS.get(tf, 5))
+        o = master[(master["name"] == name) & (master["exch_seg"] == ex) & master["instrumenttype"].isin(types)
+                   & master["symbol"].str.endswith(typ) & (master["expiry_dt"] >= lo)]
+        if o.empty:
+            return None
+        o = o[o["expiry_dt"] == o["expiry_dt"].min()].copy()
+        o["K"] = o["strike"].astype(float) / 100
+        r = o.iloc[(o["K"] - px).abs().argsort().iloc[0]]
+        return dict(symbol=r["symbol"], K=float(r["K"]), typ=typ, expiry=pd.Timestamp(r["expiry_dt"]), lot=int(r["lotsize"]))
+    except Exception:
+        return None
+
+
+def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None, opt=None):
     """Message 1 – short, eye-catching call card. All other details go in message 2 (reason_msg)."""
     s, ref, R = _levels(sig, live, k or stop_k(tf))
     head = "🟢 BUY" if s > 0 else "🔴 SELL"
@@ -91,6 +112,8 @@ def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=Non
         f"🎯 Target 2  : {_f(ref + 2 * s * R)}",
         f"🎯 Target 3  : {_f(ref + 3 * s * R)}",
         "━━━━━━━━━━━━━━",
+        *([f"🅾️ Option buy: {opt['symbol']} ({opt['K']:g} {opt['typ']}, ATM, exp {opt['expiry']:%d-%b}) · exit when the future hits SL/targets"]
+          if opt else []),
         f"{seg} · {pd.Timestamp(c['expiry']):%b} fut · {kind or SHORT_TF[tf]}" + (f" · lot {lot}" if lot else "")])
 
 
