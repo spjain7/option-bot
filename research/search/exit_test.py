@@ -11,7 +11,7 @@ VARS = {"V0": (2.0, 3.0, False, False), "V1": (1.5, 3.0, False, False), "V2": (2
         "V3": (2.0, 3.0, True, True), "V4": (1.5, 3.0, True, True), "V5": (2.0, 2.0, False, False)}
 
 
-def run(f, sig, swd, nx, sk, tk, be, half, cost):
+def run(f, sig, swd, nx, sk, tk, be, half, cost, tx=None):
     o, h, l, c, a = f["o"], f["h"], f["l"], f["c"], f["atr"]
     out, pos = [], None
     for i in range(210, len(c) - 1):
@@ -26,6 +26,7 @@ def run(f, sig, swd, nx, sk, tk, be, half, cost):
             if (o[i] <= st) if s > 0 else (o[i] >= st): px = o[i]
             elif (l[i] <= st) if s > 0 else (h[i] >= st): px = st
             elif nx[i] or i - k0 >= 40: px = c[i] if nx[i] else o[i + 1]
+            elif tx and ((c[i] < f[tx][i]) if s > 0 else (c[i] > f[tx + "_s"][i])): px = c[i]
             if px is not None:
                 rest = 0.5 if (half and booked) else 1.0
                 out.append((f["t"][k0], bank + rest * s * (px - e0), cost[k0] * (1.25 if half and booked else 1.0), risk))
