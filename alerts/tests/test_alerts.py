@@ -263,6 +263,19 @@ def test_breakout():
     dE.loc[dE.index[-1], ["open", "close", "high", "low", "volume"]] = [131.5, 128.7, 131.8, 128.5, 300.0]
     be_ = STK2.evaluate_bear_engulf(dE)
     check("stock: bearish engulfing after a rise on 3× volume -> SELL, SL 1.5 ATR, target 1R", be_["side"] == "SELL" and be_["tr"] == 1.0 and be_["k"] == 1.5)
+    from alerts import optfilter as OF
+    class OApi:
+        def __init__(self, ltp, vix=(14.0, 14.0)): self.ltp, self.v = ltp, vix
+        def quotes(self, d):
+            if "NSE" in d: return {OF.VIX_TOKEN: {"ltp": self.v[0], "close": self.v[1]}}
+            return {"T": {"ltp": self.ltp, "tradeVolume": 10, "depth": {"buy": [{"price": self.ltp * 0.995}], "sell": [{"price": self.ltp * 1.005}]}}}
+    dly = pd.DataFrame(dict(close=22600 * np.exp(np.cumsum(np.r_[0, np.tile([0.008, -0.008], 15)]))))
+    op_ = dict(token="T", K=22600.0, typ="CE", expiry=pd.Timestamp("2026-11-10"))
+    ok1 = OF.check(OApi(250.0), "NFO", "NIFTY", op_, 22600.0, dly, pd.Timestamp("2026-10-28 12:00"))
+    ok2 = OF.check(OApi(900.0), "NFO", "NIFTY", op_, 22600.0, dly, pd.Timestamp("2026-10-28 12:00"))
+    ok3 = OF.check(OApi(250.0, (16.0, 14.0)), "NFO", "NIFTY", op_, 22600.0, dly, pd.Timestamp("2026-10-28 12:00"))
+    check("option buy: fair premium passes; expensive premium (IV ≫ realised) and a VIX jump block the option call",
+          ok1[0] and not ok2[0] and "expensive" in ok2[3] and not ok3[0] and "VIX" in ok3[3])
     from alerts import report as RP
     lg = {}
     RP.add(lg, key="k", mark_key="1", seg="NSE", cat="FUTURES", name="NIFTY", symbol="NIFTY25NOV26FUT", type="Positional (3-hour)",

@@ -6,7 +6,7 @@ MCX futures + NIFTY / BANKNIFTY futures. ALERTS ONLY: no orders, no auto-trading
 import os
 import pandas as pd
 from crude import data as CD
-from alerts import signals as S, breakout as BO, patterns as PT, report as RP
+from alerts import signals as S, breakout as BO, patterns as PT, report as RP, optfilter as OF
 PATTERN_TFS = ()               # OFF: chart-pattern calls failed once the exit-simulator bug was fixed (INST-PAT-001)
 
 RSI_REVERSAL_CALLS = False   # off since 22-Oct-2026: the RSI-reversal rule lost money in every test (alerts/STATS.md,
@@ -449,15 +449,15 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         RP.add(state, key=key, mark_key=c["token"], seg=seg, cat="FUTURES", name=name, symbol=c["symbol"], type=RP.CALL_TYPE[tf],
                side=sig["side"], entry=round(ref, 2), sl=round(ref - s_ * R_, 2), target=round(tgt, 2) if tgt else None,
                lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")), time=str(now))
-        if opt:
-            prem = None
-            try:
-                qq = api.quotes({ex: [opt["token"]]}) if api is not None else {}
-                prem = float((qq.get(opt["token"]) or {}).get("ltp") or 0) or None
-            except Exception:
+        if opt and api is not None:
+            ok, prem, onotes, oskip = OF.check(api, ex, name, opt, live or sig["close"], dd, now)
+            if not ok:
                 prem = None
-            om, (osl, otg) = BO.option_msg(name, ex, tf, sig, opt, prem, live)
-            msgs.append(om)
+                reason = reason.replace("Not investment advice.", f"• Option  : no option-buy call – {oskip}\nNot investment advice.")
+            else:
+                reason = reason.replace("Not investment advice.", f"• Option  : {' · '.join(onotes)}\nNot investment advice.")
+                om, (osl, otg) = BO.option_msg(name, ex, tf, sig, opt, prem, live)
+                msgs.append(om)
             if prem:
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg=seg, cat="OPTION BUY", name=name, symbol=opt["symbol"],
                        type=RP.CALL_TYPE[tf], side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=round(otg, 2) if otg else None,

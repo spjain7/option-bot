@@ -258,6 +258,20 @@ def open_alert(api, master, state, now, u, mode, d, fut_px, why, msgs, rep):
     if not ok:
         rep.append(f"{u['name']} {mode} signal skipped: {why_not}"); state["done"][key] = "skipped"; return
     entry = ask if ask > 0 else ltp
+    try:                                                # same "expensive premium" guard as the futures-call option buys
+        from alerts.optfilter import hv20, IV_HV_MAX
+        from greeks import implied_vol
+        dly = api.candles("NFO", u["token"], "ONE_DAY", now - pd.Timedelta(days=45), now)
+        hv = hv20(dly[dly["time"].dt.normalize() < now.normalize()]) if dly is not None and len(dly) else None
+        T = max((pd.Timestamp(o["expiry"]) - now.normalize()).days, 0.5) / 365
+        iv = implied_vol(ltp, fut_px, o["K"], T, 0.065, typ)
+        if iv and hv:
+            if iv > IV_HV_MAX * hv:
+                rep.append(f"{u['name']} {mode} signal skipped: premium expensive (IV {iv * 100:.0f}% vs {hv * 100:.0f}%)")
+                state["done"][key] = "skipped"; return
+            why = list(why) + [f"Premium fair: IV {iv * 100:.0f}% vs 20-day move {hv * 100:.0f}%"]
+    except Exception:
+        pass
     R = RULES[mode]
     a = {"id": state["next_id"], "mode": mode, "name": u["name"], "kind": u["kind"], "dir": d, **o, "entry": round(entry, 2),
          "sl": round(entry * (1 - R["sl"]), 2), "tg": round(entry * (1 + R["tg"]), 2), "sl_pct": R["sl"] * 100, "tg_pct": R["tg"] * 100,

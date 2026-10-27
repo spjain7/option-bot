@@ -11,7 +11,7 @@ Backtest (after costs): design +0.20R/trade, unseen hold-out +0.085R/trade, ~47%
 import time
 import numpy as np
 import pandas as pd
-from alerts import patterns as PT, breakout as BO, signals as S, report as RP
+from alerts import patterns as PT, breakout as BO, signals as S, report as RP, optfilter as OF
 from crude import data as CD, indicators as I
 
 ENABLED = True
@@ -395,19 +395,21 @@ def scan(api, master, now, state, msgs, rep, engine):
                side=sig["side"], entry=round(sig["close"], 2), sl=round(sig["close"] - s_ * R_, 2), target=tgt,
                lot=c["lot"], mult=c["lot"], time=str(now))
         opt = BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)
+        why_ = reason_engulf(name, sig, lv) if sig.get("pattern") else reason_msg(name, sig, lv)
         if opt:
-            prem = None
-            try:
-                prem = float((api.quotes({"NFO": [opt["token"]]}).get(opt["token"]) or {}).get("ltp") or 0) or None
-            except Exception:
+            ok, prem, onotes, oskip = OF.check(api, "NFO", name, opt, sig["close"], d, now)
+            if not ok:
                 prem = None
-            om, (osl, otg) = BO.option_msg(name, "NFO", "1d", sig, opt, prem, k=sig.get("k", CFG["stop_atr"]), tr=sig.get("tr", 0))
-            msgs.append(om)
+                why_ = why_.replace("Not investment advice.", f"• Option  : no option-buy call – {oskip}\nNot investment advice.")
+            else:
+                why_ = why_.replace("Not investment advice.", f"• Option  : {' · '.join(onotes)}\nNot investment advice.")
+                om, (osl, otg) = BO.option_msg(name, "NFO", "1d", sig, opt, prem, k=sig.get("k", CFG["stop_atr"]), tr=sig.get("tr", 0))
+                msgs.append(om)
             if prem:
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
                        type="Positional", side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=None, lot=opt["lot"],
                        mult=opt["lot"], time=str(now), und_entry=sig["close"], und_side=sig["side"])
-        msgs.append(reason_engulf(name, sig, lv) if sig.get("pattern") else reason_msg(name, sig, lv))
+        msgs.append(why_)
         state["day"]["alerts"] += 1
         found += 1
         if hasattr(api, "api"):
