@@ -707,7 +707,7 @@
    "trailed": true,
    "n": 15,
    "last_candle": "2026-10-27 09:00:00",
-   "checked": "2026-10-27 12:30:00",
+   "checked": "2026-10-27 12:45:00",
    "contract": "SILVER04DEC26FUT"
   },
   {
@@ -721,7 +721,7 @@
    "trailed": true,
    "n": 12,
    "last_candle": "2026-10-27 09:00:00",
-   "checked": "2026-10-27 12:30:00",
+   "checked": "2026-10-27 12:45:00",
    "contract": "GOLD04DEC26FUT"
   },
   {
@@ -735,7 +735,7 @@
    "trailed": false,
    "n": 2,
    "last_candle": "2026-10-26 09:00:00",
-   "checked": "2026-10-27 12:30:00",
+   "checked": "2026-10-27 12:45:00",
    "contract": "GOLD04DEC26FUT"
   },
   {
@@ -749,7 +749,7 @@
    "trailed": false,
    "n": 2,
    "last_candle": "2026-10-26 09:00:00",
-   "checked": "2026-10-27 12:30:00",
+   "checked": "2026-10-27 12:45:00",
    "contract": "SILVER04DEC26FUT"
   },
   {
@@ -763,7 +763,7 @@
    "trailed": true,
    "n": 10,
    "last_candle": "2026-10-27 09:00:00",
-   "checked": "2026-10-27 12:30:00",
+   "checked": "2026-10-27 12:45:00",
    "contract": "NATURALGAS24NOV26FUT"
   }
  ],
