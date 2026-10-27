@@ -11,21 +11,23 @@ import pandas as pd
 from crude import indicators as I
 
 CFG = dict(N=20, vol_x=1.5, stop_atr=2.0, trail_atr=3.0, max_candles=40, ema=200)
-# Exits (27-Oct-2026, after fixing a short-side bug in the exit simulator – research/search/REGISTRY_EXIT.md):
-#  3h : stop 2 ATR + ONE target at 3R (full exit) + 40-candle time exit. Trend change = WARNING message only
-#       (exiting on it tested worse). Booking 50% at T1 was REMOVED – with the corrected test it lost money.
-#  1d : stop 1.5 ATR, no fixed target – trailing stop 3 ATR + exit when a daily close crosses back over EMA20
-#       (both better than the old exit in design and hold-out). A fixed daily target cut profit by 35-90%.
-STOP_ATR = {"3h": 2.0, "1d": 1.5}
-TARGET_R = {"3h": 3.0, "1d": None}
-TRAIL = {"3h": False, "1d": True}
-TREND_EXIT_EMA = {"1d": 20}
-TREND_WARN_EMA = {"3h": 20}
+# Exits – PAT-002 (27-Oct-2026, research/search/REGISTRY_PAT2.md, corrected simulator): ONE stop + ONE target, no trailing.
+#  3h : breakout + volume + EMA200, stop 2 ATR, target 2R       (win 43% / 43%, profit in both periods, 67% of instruments)
+#  1d : breakout + volume + EMA200, stop 1.5 ATR, target 3R     (win 45% / 46%, 78% of instruments)
+#  1w : 20-week breakout, stop 3 ATR(weekly), target 2R         (win 50% / 51%, big targets; only 20 + 41 trades – small sample)
+#  Trend change (close back across EMA20 of the same chart) = WARNING message before the stop, not an automatic exit.
+#  Small targets (0.5R) won 66-77% of trades but LOST money – so no 80-90% setup is used.
+STOP_ATR = {"3h": 2.0, "1d": 1.5, "1w": 3.0}
+TARGET_R = {"3h": 2.0, "1d": 3.0, "1w": 2.0}
+TRAIL = {"3h": False, "1d": False, "1w": False}
+TREND_EXIT_EMA = {}
+TREND_WARN_EMA = {"3h": 20, "1d": 20, "1w": 20}
+MAX_CANDLES = {"3h": 40, "1d": 40, "1w": 26}
 
 
 def stop_k(tf):
     return STOP_ATR.get(tf, CFG["stop_atr"])
-TFLABEL = {"3h": "SWING (3-hour candles)", "1d": "POSITIONAL (daily candles)"}
+TFLABEL = {"3h": "SWING (3-hour candles)", "1d": "POSITIONAL (daily candles)", "1w": "POSITIONAL (weekly candles)"}
 
 
 def daily_candles(h1c, session_close):
@@ -63,6 +65,29 @@ def evaluate(df):
     return dict(out, side=None, why=why)
 
 
+def weekly_candles(daily):
+    if daily is None or daily.empty:
+        return None
+    w = daily.copy(); w["wk"] = w["time"].dt.to_period("W")
+    return w.groupby("wk").agg(time=("time", "first"), open=("open", "first"), high=("high", "max"), low=("low", "min"),
+                               close=("close", "last"), volume=("volume", "sum")).reset_index(drop=True)
+
+
+def evaluate_weekly(df):
+    """Weekly: close beyond the 20-week high/low (no EMA200 – needs 4 years of weeks). Only COMPLETED weeks."""
+    if df is None or len(df) < 25:
+        return dict(side=None, why="needs 25 weekly candles")
+    c, h, l, v = df["close"], df["high"], df["low"], df["volume"].astype(float)
+    hh, ll = h.shift(1).rolling(20).max().iloc[-1], l.shift(1).rolling(20).min().iloc[-1]
+    va = v.rolling(20).mean().shift(1).iloc[-1]
+    x = df.iloc[-1]
+    out = dict(candle=str(x.time), close=float(x.close), hh=float(hh), ll=float(ll), ema200=float(I.ema(c, 20).iloc[-1]),
+               atr=float(I.atr(df, 14).iloc[-1]), vol_x=float(x.volume / va) if va and va > 0 else None,
+               adx=float(I.adx(df).iloc[-1]), rsi=float(I.rsi(c, 14).iloc[-1]))
+    side = "BUY" if x.close > hh else "SELL" if x.close < ll else None
+    return dict(out, side=side, why=None if side else "no 20-week breakout")
+
+
 def _f(x):
     return f"{x:,.2f}" if abs(x) < 1000 else f"{x:,.0f}"
 
@@ -81,7 +106,7 @@ def _levels(sig, live, k=2.0):
     return s, ref, R
 
 
-OPT_MIN_DAYS = {"3h": 2, "1d": 2}      # nearest option expiry with at least 2 days left (user choice 27-Oct)
+OPT_MIN_DAYS = {"3h": 2, "1d": 2, "1w": 20}      # nearest option expiry with at least 2 days left (user choice 27-Oct)
 
 
 def option_idea(master, name, ex, px, side, tf, now):
@@ -132,7 +157,7 @@ def details(ex, c, tf, sig, levels, live=None, k=None):
             "━━━━━━━━━━━━━━━━━━", "📌 WHY"]
 
 
-CHART = {"3h": "3-hour", "1d": "Daily"}
+CHART = {"3h": "3-hour", "1d": "Daily", "1w": "Weekly"}
 
 
 def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
@@ -142,7 +167,7 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
         setup = f"{sig['pattern'].title()} – closed {'above' if s > 0 else 'below'} {_f(sig['level'])}"
     else:
         lvl = sig["hh"] if s > 0 else sig["ll"]
-        setup = f"{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} 20-candle {'high' if s > 0 else 'low'} {_f(lvl)}"
+        setup = f"{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} 20-{'week' if tf == '1w' else 'candle'} {'high' if s > 0 else 'low'} {_f(lvl)}"
     L = [f"📌 WHY – {name} {sig['side']}", "━━━━━━━━━━━━━━",
          f"• Chart   : {CHART.get(tf, tf)} candle closed {_f(sig['close'])}",
          f"• Setup   : {setup}"]
@@ -153,7 +178,7 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
         L.append(f"• OI      : {oi['label']} (OI {oi['chg_pct']:+.2f}%) {'✅' if oi['label'] in good else '⚠️ not confirming'}")
     else:
         L.append("• OI      : not available")
-    L.append(f"• Trend   : {'above' if sig['close'] > sig['ema200'] else 'below'} 200 EMA {_f(sig['ema200'])} "
+    L.append(f"• Trend   : {'above' if sig['close'] > sig['ema200'] else 'below'} {'20-week' if tf == '1w' else '200'} EMA {_f(sig['ema200'])} "
              f"{'✅' if (sig['close'] > sig['ema200']) == (s > 0) else '⚠️'}")
     L.append(f"• RSI/ADX : {sig.get('rsi') or 0:.0f} / {sig.get('adx') or 0:.0f}")
     nxt = (levels["resistance"] if s > 0 else levels["support"])[:1]
@@ -218,11 +243,11 @@ def manage(state, msgs, name, tf, frame, c15, now):
                 e = float(I.ema(frame["close"], tw).iloc[-1])
                 if (cl < e) if s > 0 else (cl > e):
                     p["warned"] = True
-                    msgs.append(f"⚠️ TREND CHANGE WARNING – {name} {p['side']} ({tf}): 3h close {_f(cl)} {'below' if s > 0 else 'above'} "
+                    msgs.append(f"⚠️ TREND CHANGE WARNING – {name} {p['side']}: {CHART.get(tf, tf)} close {_f(cl)} {'below' if s > 0 else 'above'} "
                                 f"EMA{tw} ({_f(e)}) · stop {_f(p['stop'])} · consider exiting early to cut the loss "
                                 f"(open {s * (cl - p['entry']) / p['risk']:+.1f}R)")
-            if done is None and p["n"] >= CFG["max_candles"]:
-                done = (cl, f"time exit after {CFG['max_candles']} candles")
+            if done is None and p["n"] >= MAX_CANDLES.get(tf, CFG["max_candles"]):
+                done = (cl, f"time exit after {MAX_CANDLES.get(tf, CFG['max_candles'])} candles")
         if done:
             r = s * (done[0] - p["entry"]) / p["risk"]
             msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {name} {p['side']} ({tf}) at ~{_f(done[0])}: {done[1]} · "

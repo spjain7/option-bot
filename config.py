@@ -4,6 +4,7 @@
 OPTION_ENGINE_ENABLED = True     # Engine A: option-selling calls + trade management
 RSI_SELL_ENABLED      = True     # option SELL: hourly RSI > 80 / < 25 + OI positioning (short covering / long unwinding) – runner.rsi_exhaustion
 RSI_SELL_HIGH         = 80
+INTRADAY_MAX_DTE      = 7        # intraday option SELL only on expiries ≤ 7 days away (realistic same-day target)
 RSI_SELL_LOW          = 25
 RSI_ENGINE_ENABLED    = False    # Engine B: OFF 27-Oct-2026 – RSI-extreme / candle-reversal calls lost money in backtests (alerts/EXPERIMENTS.md); duplicate futures calls; saves Angel API quota
 SELL_STYLE            = "NAKED"  # "NAKED"  = single CE or PE sell only (your choice)
@@ -103,6 +104,7 @@ RULES = {
     # target_pct: book profit when premium has fallen X%  | sl_pct: stop-loss when premium has risen Y% (NAKED)
     # sl_mult / adjust_delta: used only in HEDGED mode
     "intraday": {"target_pct": 35, "sl_pct": 35, "sl_mult": 2.0, "adjust_delta": 0.40},
+    # INTRADAY_MAX_DTE: an intraday sell needs a near expiry – a 30-day option does not lose 35% in a few hours
     "weekly":   {"target_pct": 50, "sl_pct": 50, "sl_mult": 2.0, "adjust_delta": 0.35},
     "monthly":  {"target_pct": 50, "sl_pct": 50, "sl_mult": 2.0, "adjust_delta": 0.35},
 }
@@ -112,7 +114,7 @@ MONTHLY_EXIT_DTE     = 3         # close monthly trades 3 days before expiry
 
 # ═════════════ ENTRY WINDOWS / FILTERS ═════════════
 INTRADAY_FIRST_SCAN  = "10:15"   # after first 1-hour candle closes
-INTRADAY_LAST_ENTRY  = "14:20"
+INTRADAY_LAST_ENTRY  = "13:30"    # 27-Oct: ≥ 1h40m before the 15:10 exit (no near-close intraday calls)
 POSITIONAL_WINDOW    = ("14:40", "15:20")   # weekly/monthly entries late in the day
 WEEKLY_MAX_DTE       = 7         # open weekly trade when expiry is <= 7 days away (and > 0)
 MONTHLY_DTE_RANGE    = (15, 45)  # open monthly trade when 15-45 days to expiry
@@ -151,7 +153,7 @@ MAX_CAPITAL_USE      = 0.50      # never suggest lots needing more than 50% of c
 MCX_OPTIONS_ENABLED  = True
 MCX_UNDERLYINGS      = ["CRUDEOIL", "NATURALGAS", "GOLD", "SILVER"]   # mega lots only (27-Oct: GOLDM/SILVERM removed – duplicate calls)
 MCX_FIRST_SCAN       = "10:00"   # after first 1-hour candle (09:00-10:00)
-MCX_LAST_ENTRY       = "22:30"
+MCX_LAST_ENTRY       = "21:00"    # 27-Oct: ≥ 2h before the 23:00 exit (22:17 NG call had 43 min left)
 MCX_INTRADAY_EXIT    = "23:00"
 MCX_POSITIONAL_WINDOW = ("22:30", "23:15")
 MCX_MIN_DTE          = 2         # skip option expiries closer than this

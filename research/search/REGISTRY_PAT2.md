@@ -15,3 +15,13 @@ PASS: avg ₹/lot > 0 at 2× costs in BOTH periods, ≥ 40 trades per period (we
 in the hold-out. Reported: win %, avg ₹/lot. "80-90%" is reported where it happens; it is not a pass condition.
 Many combinations (~5 entries × 6 filters × 4 SL × 6 TGT × 3 TF) → a hold-out pass can still be luck; the best are
 re-checked per year before any live use.
+
+## RESULT (27-Oct-2026), avg ₹/lot at 2× costs design / hold-out, win % design / hold-out
+MCX + index: 78 of 1,428 passed; STOCKS: 4 of 1,680 (weekly only, 0.5R targets, small samples) – stocks not used.
+Chosen (live): 3h breakout+vol+EMA200 SL 2 ATR / T 2R: ₹1,407 / ₹10,605 · win 43% / 43% · 67% instruments
+               daily same entry SL 1.5 ATR / T 3R: ₹18,291 / ₹39,092 · win 45% / 46% · 78% instruments
+               weekly 20-week breakout SL 3 ATR / T 2R: ₹80,674 / ₹2,32,440 · win 50% / 51% · 20 / 41 trades (small)
+Why patterns "failed": 3h flag / H&S are only marginally positive before Jul-2024 (₹500-2,400/lot – noise after costs);
+most of their hold-out profit comes from the 2024-26 gold/silver trend. Volume / OI filters did not change that.
+80-90% win rates appear only with 0.5R targets – and every one of those LOST money (e.g. daily breakout SL 1.5 ATR / T 0.5R:
+77% / 70% wins, -₹10,185 per trade in the hold-out). No profitable 80-90% setup exists in this data.

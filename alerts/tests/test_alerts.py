@@ -199,20 +199,19 @@ def test_breakout():
     st["bo_active"][0]["tf"] = "1d"
     msgs = []
     BO.manage(st, msgs, "GOLD", "1d", fr, None, pd.Timestamp("2026-03-01 15:05"))
-    check("daily call: trailing stop raised after a new higher close and an update is sent",
-          st["bo_active"][0]["stop"] > 96 and any("TRAIL UPDATE" in m for m in msgs))
+    check("daily call: no trailing (one stop, one target) – stop stays 96", st["bo_active"][0]["stop"] == 96 and not any("TRAIL" in m for m in msgs))
     c15 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 15:15"]), open=[110], high=[110], low=[st["bo_active"][0]["stop"] - 1], close=[105], volume=[1.0]))
     BO.manage(st, msgs, "GOLD", "1d", fr, c15, pd.Timestamp("2026-03-01 15:35"))
-    check("trailing stop hit -> EXIT message with result in R, alert closed", not st["bo_active"] and any("EXIT" in m and "R" in m for m in msgs))
+    check("stop-loss hit -> EXIT message with result in R, alert closed", not st["bo_active"] and any("EXIT" in m and "stop-loss" in m for m in msgs))
     st2 = dict(bo_active=[dict(name="SILVER", tf="3h", side="BUY", entry=100.0, stop=96.0, risk=4.0, best=100.0, trailed=False, n=0,
                                last_candle="2026-03-01 09:00:00", checked="2026-03-01 09:00:00", contract="X")], day=dict(outcomes=[]))
     m2 = []
-    b1 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 09:15"]), open=[101], high=[108], low=[99.5], close=[107], volume=[1.0]))
+    b1 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 09:15"]), open=[101], high=[106], low=[99.5], close=[105], volume=[1.0]))
     BO.manage(st2, m2, "SILVER", "3h", None, b1, pd.Timestamp("2026-03-01 09:32"))
     check("3h call: no partial booking, no trailing before the single target", st2["bo_active"] and st2["bo_active"][0]["stop"] == 96.0 and not m2)
-    b2 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 09:30"]), open=[110], high=[112.5], low=[109], close=[112], volume=[1.0]))
+    b2 = pd.DataFrame(dict(time=pd.to_datetime(["2026-03-01 09:30"]), open=[106], high=[108.5], low=[105], close=[108], volume=[1.0]))
     BO.manage(st2, m2, "SILVER", "3h", None, b2, pd.Timestamp("2026-03-01 09:47"))
-    check("3h call: single TARGET (3R = 112) hit -> full exit +3.00R", not st2["bo_active"] and any("TARGET HIT" in x and "+3.00R" in x for x in m2))
+    check("3h call: single TARGET (2R = 108) hit -> full exit +2.00R", not st2["bo_active"] and any("TARGET HIT" in x and "+2.00R" in x for x in m2))
     st4 = dict(bo_active=[dict(name="GOLD", tf="3h", side="BUY", entry=100.0, stop=96.0, risk=4.0, best=100.0, trailed=False, n=0,
                                last_candle=str(pre["time"].iloc[-2]), checked="2026-03-01 09:00:00", contract="X")], day=dict(outcomes=[]))
     fw = pre.copy(); fw.loc[fw.index[-1], ["close", "low"]] = [98.0, 97.5]
@@ -226,8 +225,8 @@ def test_breakout():
     fr.loc[fr.index[-1], ["close", "low"]] = [last - 30, last - 31]
     m3 = []
     BO.manage(st3, m3, "GOLD", "1d", fr, None, pd.Timestamp("2026-03-02 15:35"))
-    check("daily call: close back below EMA20 -> TREND CHANGE exit alert (no waiting for the stop)",
-          not st3["bo_active"] and any("TREND CHANGE" in x for x in m3))
+    check("daily call: close back below EMA20 -> TREND CHANGE WARNING before the stop (call stays open)",
+          st3["bo_active"] and any("TREND CHANGE WARNING" in x for x in m3))
     from alerts import patterns as PT
     rng = np.random.default_rng(1)
     cc = list(100 + np.cumsum(rng.normal(0, 0.3, 100)))
@@ -244,6 +243,10 @@ def test_breakout():
                             lotsize=75, expiry_dt=pd.Timestamp("2026-11-25")) for k in (22500, 22600) for t in ("CE", "PE")])
     oi_ = BO.option_idea(om, "NIFTY", "NFO", 22630, "SELL", "3h", pd.Timestamp("2026-10-27 12:00"))
     check("futures SELL call -> option-buy idea = ATM PE (22600 PE)", oi_ and oi_["symbol"] == "NIFTY25NOV2622600PE")
+    dd_ = pd.DataFrame(dict(time=pd.bdate_range("2025-06-02", periods=200), open=100.0, high=101.0, low=99.0, close=100.0, volume=10.0))
+    dd_.loc[dd_.index[-5:], ["close", "high"]] = [[104.0, 105.0]] * 5
+    wk_ = BO.weekly_candles(dd_)
+    check("weekly: close above the 20-week high -> weekly BUY call", BO.evaluate_weekly(wk_)["side"] == "BUY" and len(wk_) == 40)
     from alerts import report as RP
     lg = {}
     RP.add(lg, key="k", mark_key="1", seg="NSE", cat="FUTURES", name="NIFTY", symbol="NIFTY25NOV26FUT", type="Positional (3-hour)",
@@ -252,14 +255,14 @@ def test_breakout():
     rr = RP.rows_for(lg, "NSE", "2026-10-28", {})
     check("call ledger: closed SELL 22630 -> 22150, lot 75 = +₹36,000 in the day report",
           rr and rr[0]["status"] == "CLOSED" and rr[0]["pnl"] == 36000 and "36,000" in RP.text_table(rr, "t"))
-    check("exits: daily stop 1.5 ATR + trailing, 3h stop 2 ATR + one 3R target", BO.stop_k("1d") == 1.5 and BO.stop_k("3h") == 2.0
-          and BO.TARGET_R["3h"] == 3.0 and BO.TARGET_R["1d"] is None and BO.OPT_MIN_DAYS["3h"] == 2)
+    check("exits: one stop + one target (3h 2 ATR/2R, daily 1.5 ATR/3R, weekly 3 ATR/2R)", BO.stop_k("1d") == 1.5 and BO.stop_k("3h") == 2.0
+          and BO.TARGET_R["3h"] == 2.0 and BO.TARGET_R["1d"] == 3.0 and BO.TARGET_R["1w"] == 2.0 and BO.OPT_MIN_DAYS["3h"] == 2)
     sig = dict(side="BUY", candle="2026-03-01 12:00", close=111.0, hh=108.0, ll=90.0, ema200=100.0, atr=2.0, vol_x=2.1, adx=30.0, rsi=65.0)
     lv = dict(support=[(108.0, "swing high")], resistance=[(115.0, "pivot R1")])
     cg = dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04")
     m = BO.call_msg("GOLD", "MCX", cg, "3h", sig, lv)
-    check("simple call card: buy at, SL and ONE target (3R = 123)",
-          all(k in m for k in ("BUY  GOLD FUT", "Entry", "SL      : 107", "Target  : 123", "Lot")) and "Target 2" not in m and len(m.splitlines()) == 6)
+    check("simple call card: entry, SL and ONE target (2R = 119)",
+          all(k in m for k in ("BUY  GOLD FUT", "Entry", "SL      : 107", "Target  : 119", "Lot")) and "Target 2" not in m and len(m.splitlines()) == 6)
     w = BO.reason_msg("GOLD", "3h", sig, lv, dict(oi=16500, chg_pct=0.8, gap_min=15, label="Long buildup"), None, BO.details("MCX", cg, "3h", sig, lv))
     check("second message WHY: candle timeframe, setup, volume, OI position, trend, next level, exit plan",
           all(k in w for k in ("📌 WHY", "3-hour candle", "BREAKOUT above", "Volume", "Long buildup", "200 EMA", "Next resistance", "TREND CHANGE")))
