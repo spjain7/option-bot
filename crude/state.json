@@ -9,13 +9,13 @@
   "intraday": {
    "open": [],
    "closed": [],
-   "last_eval_bar": "2026-10-26 23:15:00",
+   "last_eval_bar": "2026-10-27 23:30:00",
    "last_exit_bar": null
   },
   "positional": {
    "open": [],
    "closed": [],
-   "last_eval_bar": "2026-10-26 21:00:00",
+   "last_eval_bar": "2026-10-27 21:00:00",
    "last_exit_bar": null
   }
  },
@@ -95,6 +95,13 @@
    "time": "2026-10-27 23:59:50",
    "contract": "CRUDEOIL19NOV26FUT",
    "oi": 1490000,
+   "ltp": 9505.0,
+   "volume": 42400
+  },
+  {
+   "time": "2026-10-27 23:59:50",
+   "contract": "CRUDEOIL19NOV26FUT",
+   "oi": 1490900,
    "ltp": 9505.0,
    "volume": 42400
   }
@@ -819,6 +826,68 @@
       "no setup: no confirmed breakout and no pullback-and-resume candle"
      ],
      "bar": "2026-10-26 21:00:00"
+    }
+   },
+   "actions": [],
+   "errors": []
+  },
+  {
+   "time": "2026-10-28 00:17:10.355654",
+   "session": "PRE-OPEN",
+   "api": {
+    "15m": "ok (840 candles, last start 27-Oct 23:30)",
+    "1h": "ok (1049 candles, last start 27-Oct 23:00)",
+    "quote": "ok"
+   },
+   "data": {
+    "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
+    "last_closed_15m": "2026-10-27 23:30:00",
+    "bars_15m": 840,
+    "last_closed_1h": "2026-10-27 23:00:00",
+    "bars_1h": 599,
+    "last_closed_3h": "2026-10-27 21:00:00",
+    "bars_3h": 199,
+    "age_15m_min": 47.2,
+    "quote_age_min": 17.3,
+    "ltp": 9505.0,
+    "day_volume": 42400,
+    "quality": {
+     "blocks": [],
+     "notes": [],
+     "quote_vs_candle_atr": 0.0
+    },
+    "volume": "available",
+    "oi_current": 1490900,
+    "oi_change": {
+     "status": "OK",
+     "label": "Flat / no clear OI signal",
+     "d_oi_pct": 0.094,
+     "d_price": 0.0,
+     "gap_min": 29.8,
+     "oi": 1490900,
+     "oi_prev": 1489500
+    },
+    "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
+    "daily_pnl": 0.0,
+    "drawdown_pct": 0.0,
+    "open_risk_rs": 0
+   },
+   "decisions": {
+    "intraday": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "1-hour trend MIXED: close 9505 EMA20 9610 EMA50 9582 EMA200 9170 ADX 9.5"
+     ],
+     "bar": "2026-10-27 23:30:00"
+    },
+    "positional": {
+     "decision": "NONE",
+     "side": null,
+     "blocks": [
+      "3-hour trend MIXED: close 9505 EMA20 9545 EMA50 9279 EMA200 n/a (history 199 bars) ADX 35.5"
+     ],
+     "bar": "2026-10-27 21:00:00"
     }
    },
    "actions": [],
