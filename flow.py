@@ -123,7 +123,7 @@ def run(bot, nse_on, mcx_on):
         except Exception as e_:
             print("pre-move error", e_)
     bot.flow_events = [e for e in events if e.get("bias")]      # used by the fast-track in runner
-    if not events:
+    if not events or not getattr(C, "FLOW_ALERTS_SEND", True):
         return
     events.sort(key=lambda e: e["score"], reverse=True)
     events = events[:C.FLOW_MAX_PER_MSG]
