@@ -92,6 +92,44 @@ def plain_entry(t, ch, why):
     return [x for x in L if x]
 
 
+def rsi_exhaustion(cd, bu):
+    """User rule (27-Oct-2026): hourly RSI > 80 / < 25 + futures OI positioning decides the option-SELL side.
+      RSI > 80 + SHORT COVERING (price up, OI down – rally from shorts exiting)  -> SELL CE (rally likely to fade)
+      RSI > 80 + LONG BUILDUP  (fresh longs, strong trend)                       -> no CE sell
+      RSI < 25 + LONG UNWINDING (price down, OI down – fall from longs exiting)  -> SELL PE
+      RSI < 25 + SHORT BUILDUP (fresh shorts)                                    -> no PE sell
+    Volume: the signal candle's volume vs the 20-candle average is shown (climax > 1.5×).
+    Backtest note (research/search/REGISTRY_RSISELL.md): OTM sells after RSI extremes win ~85-91%, about the same as on
+    ordinary days – the OI positioning part could not be backtested (no intraday OI history)."""
+    if cd is None or len(cd) < 30 or not bu:
+        return None
+    r = float(market_rsi(cd["close"]).iloc[-1])
+    v = cd["volume"].astype(float) if "volume" in cd else None
+    vx = float(v.iloc[-1] / v.iloc[-21:-1].mean()) if v is not None and v.iloc[-21:-1].mean() > 0 else None
+    vtxt = f", volume {vx:.1f}×" if vx else ""
+    lab = bu.get("label")
+    if r >= C.RSI_SELL_HIGH:
+        if lab == "Short covering":
+            return dict(action="sell", bias="BEARISH", why=f"RSI(1h) {r:.0f} > {C.RSI_SELL_HIGH} + SHORT COVERING (price {bu['px_chg']:+.2f}%, "
+                        f"OI {bu['oi_chg']:+.2f}%{vtxt}) – rally from shorts exiting, likely to fade → SELL CE")
+        if lab == "Long buildup":
+            return dict(action="block", bias_blocked="BEARISH", why=f"RSI {r:.0f} but LONG BUILDUP – strong up-trend, no CE sell")
+    if r <= C.RSI_SELL_LOW:
+        if lab == "Long unwinding":
+            return dict(action="sell", bias="BULLISH", why=f"RSI(1h) {r:.0f} < {C.RSI_SELL_LOW} + LONG UNWINDING (price {bu['px_chg']:+.2f}%, "
+                        f"OI {bu['oi_chg']:+.2f}%{vtxt}) – fall from longs exiting, likely to bounce → SELL PE")
+        if lab == "Short buildup":
+            return dict(action="block", bias_blocked="BULLISH", why=f"RSI {r:.0f} but SHORT BUILDUP – strong down-trend, no PE sell")
+    return None
+
+
+def market_rsi(close, n=14):
+    d = close.diff()
+    up, dn = d.clip(lower=0), -d.clip(upper=0)
+    rs = up.ewm(alpha=1 / n, adjust=False).mean() / dn.ewm(alpha=1 / n, adjust=False).mean()
+    return 100 - 100 / (1 + rs)
+
+
 def confidence(t, td, bu, ch):
     """0-100: how many independent things agree with this sell. No RSI here."""
     bias, pts, why = t["bias"], 0, []
@@ -158,35 +196,31 @@ def exit_by(t):
 
 
 def fmt_naked(t, conf, why, ch=None, status=None):
+    """Option SELL call: message 1 = the call, message 2 = WHY (returned joined by a split marker)."""
     l = [x for x in t["legs"] if x["side"] == "SELL"][0]
-    lot = t["lot"]
-    icon = "🔴" if l["typ"] == "CE" else "🟢"
     ex = {"MCX": "MCX", "BFO": "BSE"}.get(t.get("exch"), "NSE")
-    kind = {"intraday": "Intraday", "weekly": "Weekly (positional)", "monthly": "Monthly (positional)"}[t["mode"]]
-    gain = (t["credit"] - t["target_val"]) * lot
-    loss = (t["sl_val"] - t["credit"]) * lot
+    kind = "Intraday" if t["mode"] == "intraday" else "Positional"
     direction = "above" if l["typ"] == "CE" else "below"
-    L = [f"{icon} *SELL {t['name']} {k_(l['K'])} {l['typ']}*  ({ex}) #{t['id']}",
-         f"{kind} | Expiry {pd.Timestamp(t['expiry']):%d %b} | {t['name']} now {t['spot_at_entry']:,.1f}",
-         "",
-         f"💰 Sell at: *₹{l['entry']}*",
-         f"🎯 Target: *₹{t['target_val']}* → buy back (profit ≈ {rs(gain)}/lot)",
-         f"🛑 Stop-loss: *₹{t['sl_val']}* → buy back (loss ≈ {rs(loss)}/lot)",
-         f"🛑 Also exit if {t['name']} goes {direction} *{t['spot_stop']:,.1f}*",
-         f"⏰ Exit latest: {exit_by(t)}",
-         "",
-         f"Confidence: *{conf}/100* | Reward:Risk 1:{round(gain / loss, 1) if loss else '-'} | "
-         f"Chance of profit ≈ {t['pop']}%"]
-    if ch:
-        L.append(f"📍 {sr_text(ch)}")
+    call = [f"{'🔴' if l['typ'] == 'CE' else '🟢'} SELL  {t['name']} {k_(l['K'])} {l['typ']}  ·  {kind}",
+            "━━━━━━━━━━━━━━",
+            f"Entry   : ₹{l['entry']}",
+            f"SL      : ₹{t['sl_val']}  (or {t['name']} {direction} {t['spot_stop']:,.1f})",
+            f"Target  : ₹{t['target_val']}",
+            f"Lot     : {t['lot']}  ·  exp {pd.Timestamp(t['expiry']):%d-%b}  ·  {ex}",
+            f"Exit by : {exit_by(t)}"]
+    W = [f"📌 WHY – {t['name']} {k_(l['K'])} {l['typ']} SELL", "━━━━━━━━━━━━━━",
+         f"• Chart   : {'1-hour' if t['mode'] == 'intraday' else 'Daily'} candles · {t['name']} {t['spot_at_entry']:,.1f} · "
+         f"view {t.get('bias', '').lower()}"]
+    for w in (why or [])[:5]:
+        W.append(f"• {w}")
     if status and (status.get("day") or status.get("hour")):
-        L.append(f"📊 OI today: {status.get('day') or 'building'}" +
-                 (f" · last 1h: {status['hour']}" if status.get("hour") else ""))
-    if why:
-        L += ["*Why:*"] + [f"• {w}" for w in why]
-    L += ["", f"Lots: {t['lots']} | Margin ≈ {rs(t['margin_rs'])}/lot (estimate – Angel One shows exact)",
-          "_Place the SL order at Angel One right after selling. Estimates, not certainty._"]
-    return "\n".join(L)
+        W.append(f"• OI      : today {status.get('day') or 'building'}" + (f" · last 1h {status['hour']}" if status.get("hour") else ""))
+    if ch:
+        W.append(f"• Levels  : {sr_text(ch)}")
+    W.append(f"• Odds    : confidence {conf}/100 · chance of profit ≈ {t['pop']}%")
+    W.append(f"• Margin  : ≈ {rs(t['margin_rs'])}/lot (Angel One shows exact)")
+    W.append("Not investment advice.")
+    return "\n".join(call) + "\n<<SPLIT>>\n" + "\n".join(W)
 
 
 EXPLAIN = {
@@ -362,7 +396,7 @@ class Bot:
         ch["rv"] = rv or 0.0
         ch["pivots"] = M.pivots(daily)
         bias, score = M.combine_bias(trend, bu, ch["pcr"])
-        return {"spot": spot, "tok": tok, "fut": fut, "td": td, "bu": bu, "ch": ch, "rv": rv,
+        return {"spot": spot, "tok": tok, "fut": fut, "td": td, "bu": bu, "ch": ch, "rv": rv, "cd": cd if is_hourly else None,
                 "bias": bias, "score": score, "fut_tok": fut_tok,
                 "status": flow.status(self.st.s, fut_tok) if fut_tok else {"day": None, "hour": None}}
 
@@ -379,6 +413,11 @@ class Bot:
         if not v:
             return
         spot, td, bu, ch, rv, bias, score = v["spot"], v["td"], v["bu"], v["ch"], v["rv"], v["bias"], v["score"]
+        rsi_rule = rsi_exhaustion(v.get("cd"), bu) if getattr(C, "RSI_SELL_ENABLED", False) else None
+        if rsi_rule and rsi_rule["action"] == "block" and bias == rsi_rule["bias_blocked"]:
+            self.why(name, rsi_rule["why"]); return
+        if rsi_rule and rsi_rule["action"] == "sell":
+            bias = rsi_rule["bias"]
         # confirmation: intraday direction must repeat on consecutive hourly checks
         hist = self.st.s.setdefault("bias_hist", {})
         hk, now = f"{exch}|{name}|{mode}", now_ist()
@@ -387,6 +426,8 @@ class Bot:
             now - pd.Timestamp(prev["t"]) <= pd.Timedelta(minutes=C.CONFIRM_WINDOW_MIN) else 1
         hist[hk] = {"bias": bias, "t": str(now), "n": n}
         if fast and fast == bias:                        # ⚡ futures buildup already confirms this direction
+            n = max(n, C.CONFIRM_CHECKS)
+        if rsi_rule and rsi_rule["action"] == "sell":     # RSI exhaustion + OI positioning: shoot the call now
             n = max(n, C.CONFIRM_CHECKS)
         if mode == "intraday" and n < C.CONFIRM_CHECKS:
             self.why(name, f"{bias.lower()} – waiting confirmation on next scan" if bias != "NEUTRAL"
@@ -430,6 +471,9 @@ class Bot:
         if t["gamma_risk"] in order and order.index(t["gamma_risk"]) >= order.index(C.GAMMA_BLOCK):
             self.why(name, f"gamma risk {t['gamma_risk']} (too close to expiry)"); return
         conf, reasons = confidence(t, td, bu, ch)
+        if rsi_rule and rsi_rule["action"] == "sell":
+            reasons = [rsi_rule["why"]] + list(reasons)
+            conf = max(conf, C.MIN_CONFIDENCE)
         if C.SELL_STYLE == "NAKED" and conf < C.MIN_CONFIDENCE:
             self.why(name, f"{bias.lower()} but confidence {conf}/100 (need {C.MIN_CONFIDENCE})"); return
         t.update({"name": name, "mode": mode, "expiry": str(pd.Timestamp(expiry).date()), "confidence": conf,
@@ -438,7 +482,8 @@ class Bot:
                   "exit_time": C.MCX_INTRADAY_EXIT if exch == "MCX" else C.INTRADAY_EXIT_TIME})
         self.st.add(t)
         if len(t["legs"]) == 1:
-            notify.send(fmt_naked(t, conf, reasons, ch, v.get("status")))
+            for part in fmt_naked(t, conf, reasons, ch, v.get("status")).split("\n<<SPLIT>>\n"):
+                notify.send(part)
         else:
             notify.send(fmt_entry(t, ch, view_text(bias, score, td, bu, ch, vix, ivr), simple_why(td, bu, ch)))
 

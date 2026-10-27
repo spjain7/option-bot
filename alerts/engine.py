@@ -425,12 +425,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
             info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
         opt = BO.option_idea(master, name, ex, live or sig["close"], sig["side"], tf, now) if master is not None else None
-        if sig.get("pattern"):
-            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, kind=f"3-hour · {sig['pattern'].title()}", opt=opt))
-            msgs.append(PT.reason_msg(name, tf, sig, lv, oi, BO.details(ex, c, tf, sig, lv, live)))
-        else:
-            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, opt=opt))
-            msgs.append(BO.reason_msg(name, tf, sig, lv, oi, q, BO.details(ex, c, tf, sig, lv, live)))
+        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
+        reason = BO.reason_msg(name, tf, sig, lv, oi, q)
         ref = live or sig["close"]
         key = f"{name}|{tf}|{last}"
         R_ = BO.stop_k(tf) * sig["atr"]
@@ -455,6 +451,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg=seg, cat="OPTION BUY", name=name, symbol=opt["symbol"],
                        type=RP.CALL_TYPE[tf], side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=round(otg, 2) if otg else None,
                        lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=ref, und_side=sig["side"])
+        msgs.append(reason)
         state["day"]["alerts"] += 1
 
 

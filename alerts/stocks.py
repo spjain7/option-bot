@@ -103,22 +103,21 @@ def evaluate(d):
 
 
 def reason_msg(name, sig, lv, plan=None):
+    """Message 2 – WHY (same clean layout as the MCX / index calls)."""
     s = 1 if sig["side"] == "BUY" else -1
     lvl = sig["hh"] if s > 0 else sig["ll"]
-    pts = [f"{'📈' if s > 0 else '📉'} Breakout: closed {BO._f(sig['close'])}, "
-           f"{'above the 20-day high (resistance)' if s > 0 else 'below the 20-day low (support)'} {BO._f(lvl)}",
-           f"🔊 Volume: {sig['vol_x']:.1f}× the 20-day average – real participation",
-           f"🏦 OI: {sig['doi'] * 100:+.1f}% with price {sig['dp'] * 100:+.1f}% → "
-           f"{'LONG BUILDUP – fresh buyers' if s > 0 else 'SHORT BUILDUP – fresh sellers'} ✅",
-           f"🧭 Trend: {'above' if s > 0 else 'below'} the 200-day EMA ({BO._f(sig['ema200'])}) – with the main trend",
-           f"💪 ADX {sig['adx']:.0f} · 📊 RSI {sig['rsi']:.0f}"
-           + (" ⚠️ stretched – don't chase" if (s > 0 and sig['rsi'] > 75) or (s < 0 and sig['rsi'] < 25) else "")]
+    L = [f"📌 WHY – {name} {sig['side']}", "━━━━━━━━━━━━━━",
+         f"• Chart   : Daily candle closed {BO._f(sig['close'])}",
+         f"• Setup   : {'BREAKOUT above 20-day high' if s > 0 else 'BREAKDOWN below 20-day low'} {BO._f(lvl)}",
+         f"• Volume  : {sig['vol_x']:.1f}× average ✅",
+         f"• OI      : {'Long buildup' if s > 0 else 'Short buildup'} (OI {sig['doi'] * 100:+.1f}%, price {sig['dp'] * 100:+.1f}%) ✅",
+         f"• Trend   : {'above' if s > 0 else 'below'} 200-day EMA {BO._f(sig['ema200'])} ✅",
+         f"• RSI/ADX : {sig['rsi']:.0f} / {sig['adx']:.0f}"]
     nxt = (lv["resistance"] if s > 0 else lv["support"])[:1]
     if nxt:
-        pts.append(f"🧱 Next {'resistance' if s > 0 else 'support'}: {BO._f(nxt[0][0])} ({nxt[0][1]})")
-    pts.append(NOTE)
-    return "\n".join([f"💡 {sig['side']} {name} FUT – details & reason", "━━━━━━━━━━━━━━━━━━", *(plan or []), *pts,
-                      "Backtested, not guaranteed · not investment advice."])
+        L.append(f"• Next {'resistance' if s > 0 else 'support'}: {BO._f(nxt[0][0])}")
+    L += ["• Exit    : trailing SL updates · exit before expiry", "Not investment advice."]
+    return "\n".join(L)
 
 
 # ── 3-hour stock calls (STOCK-PAT-001, research/search/REGISTRY_STKPAT.md): breakout, head & shoulders, double top/bottom,
@@ -331,15 +330,14 @@ def scan(api, master, now, state, msgs, rep, engine):
             continue
         lv = S.levels(d, h, sig["close"], sig["atr"])
         cc = dict(symbol=c["symbol"], expiry=c["expiry"])
-        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], kind="Stock future · daily", k=CFG["stop_atr"],
+        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], k=CFG["stop_atr"],
                                 opt=BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)))
-        msgs.append(reason_msg(name, sig, lv, BO.details("NFO", cc, "1d", sig, lv, k=CFG["stop_atr"])))
         s_ = 1 if sig["side"] == "BUY" else -1
         key = f"{name}|1dSTK|{last}"
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=sig["close"],
                                  stop=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), risk=CFG["stop_atr"] * sig["atr"],
                                  best=sig["close"], trailed=False, n=0, last_candle=last, key=key))
-        RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional (daily)",
+        RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional",
                side=sig["side"], entry=round(sig["close"], 2), sl=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), target=None,
                lot=c["lot"], mult=c["lot"], time=str(now))
         opt = BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)
@@ -353,8 +351,9 @@ def scan(api, master, now, state, msgs, rep, engine):
             msgs.append(om)
             if prem:
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
-                       type="Positional (daily)", side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=None, lot=opt["lot"],
+                       type="Positional", side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=None, lot=opt["lot"],
                        mult=opt["lot"], time=str(now), und_entry=sig["close"], und_side=sig["side"])
+        msgs.append(reason_msg(name, sig, lv))
         state["day"]["alerts"] += 1
         found += 1
         if hasattr(api, "api"):

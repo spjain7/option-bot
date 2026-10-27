@@ -259,10 +259,10 @@ def test_breakout():
     cg = dict(symbol="GOLD04DEC26FUT", expiry="2026-12-04")
     m = BO.call_msg("GOLD", "MCX", cg, "3h", sig, lv)
     check("simple call card: buy at, SL and ONE target (3R = 123)",
-          all(k in m for k in ("BUY  GOLD", "Buy at", "Stop loss", "Target    : 123")) and "Target 2" not in m and "Resistance" not in m)
+          all(k in m for k in ("BUY  GOLD FUT", "Entry", "SL      : 107", "Target  : 123", "Lot")) and "Target 2" not in m and len(m.splitlines()) == 6)
     w = BO.reason_msg("GOLD", "3h", sig, lv, dict(oi=16500, chg_pct=0.8, gap_min=15, label="Long buildup"), None, BO.details("MCX", cg, "3h", sig, lv))
-    check("second message: trade plan (contract, no-chase, trailing, S/R) + why (breakout, volume, trend, ADX, RSI, OI, backtest)",
-          all(k in w for k in ("GOLD04DEC26FUT", "chase", "TREND CHANGE", "Resistance", "Support", "Breakout", "Volume", "200 EMA", "ADX", "RSI", "Long buildup", "Backtest")))
+    check("second message WHY: candle timeframe, setup, volume, OI position, trend, next level, exit plan",
+          all(k in w for k in ("📌 WHY", "3-hour candle", "BREAKOUT above", "Volume", "Long buildup", "200 EMA", "Next resistance", "TREND CHANGE")))
 
 
 def test_stocks():
@@ -298,10 +298,10 @@ def test_stocks():
     msgs, rep = [], dict(errors=[])
     STK.scan(api, m, pd.Timestamp("2026-10-15 12:17"), st, msgs, rep, sys.modules["alerts.engine"])
     check("12:15 block: no DAILY stock call (daily rule runs after the 15:30 close; only the 3h scan may run)",
-          not any("Stock future · daily" in x for x in msgs))
+          not any("Daily candle" in x for x in msgs))
     STK.scan(api, m, pd.Timestamp("2026-10-15 15:32"), st, msgs, rep, sys.modules["alerts.engine"])
     check("OI-confirmed breakout -> BUY call (lot size) + WHY message with LONG BUILDUP",
-          any("BUY  TCS" in x and "lot 175" in x for x in msgs) and any("BUY TCS FUT – details" in x and "LONG BUILDUP" in x for x in msgs))
+          any("BUY  TCS FUT" in x and "Lot     : 175" in x for x in msgs) and any("WHY – TCS BUY" in x and "Long buildup" in x and "Daily candle" in x for x in msgs))
     hh = pd.DataFrame(dict(time=pd.to_datetime(["2026-10-15 09:15", "2026-10-15 10:15", "2026-10-15 11:15", "2026-10-15 12:15"]),
                            open=1.0, high=2.0, low=0.5, close=1.5, volume=10.0))
     check("3h stock frame: 09:15-12:15 block complete, 12:15 block still forming is dropped", len(STK.frame3h(hh)) == 1)
@@ -316,12 +316,12 @@ def test_stocks():
     check("then back to entry -> exit +0.50R", not s3["active3h"] and any("+0.50R" in x for x in mm))
     msgs2 = []
     STK.scan(api, m, pd.Timestamp("2026-10-15 15:47"), st, msgs2, rep, sys.modules["alerts.engine"])
-    check("no duplicate stock call later the same day", not any("Stock future · daily" in x for x in msgs2))
+    check("no duplicate stock call later the same day", not any("Daily candle" in x for x in msgs2))
     api2 = Api(oi.assign(oi=[1e6] * 60), series={("1", "ONE_HOUR"): h}, now=pd.Timestamp("2026-10-15 15:32"))
     st2 = E.new_state(); st2["day"] = dict(date="2026-10-15", alerts=0, watches=0, startup_sent=True, eod_sent=False, outcomes=[])
     m3 = []
     STK.scan(api2, m, pd.Timestamp("2026-10-15 15:32"), st2, m3, dict(errors=[]), sys.modules["alerts.engine"])
-    check("same breakout WITHOUT an OI rise -> no DAILY call (OI confirmation required)", not any("Stock future · daily" in x for x in m3))
+    check("same breakout WITHOUT an OI rise -> no DAILY call (OI confirmation required)", not any("Daily candle" in x for x in m3))
 
 
 def test_telegram_delivery():

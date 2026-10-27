@@ -104,19 +104,17 @@ def option_idea(master, name, ex, px, side, tf, now):
 
 
 def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None, opt=None):
-    """Message 1 – short, eye-catching call card. All other details go in message 2 (reason_msg)."""
+    """Message 1 – the futures call: entry, SL, one target, lot. Nothing else."""
     s, ref, R = _levels(sig, live, k or stop_k(tf))
-    head = "🟢 BUY" if s > 0 else "🔴 SELL"
-    seg = "MCX" if ex == "MCX" else "NSE F&O"
+    tg = TARGET_R.get(tf)
+    lot = lot or c.get("lot")
     return "\n".join([
-        f"{head}  {name}",
+        f"{'🟢 BUY' if s > 0 else '🔴 SELL'}  {name} FUT  ·  Positional",
         "━━━━━━━━━━━━━━",
-        f"👉 {'Buy' if s > 0 else 'Sell'} at   : {_f(ref)}",
-        f"🛑 Stop loss : {_f(ref - s * R)}",
-        (f"🎯 Target    : {_f(ref + s * TARGET_R[tf] * R)}" if TARGET_R.get(tf)
-         else "🎯 Target    : ride the trend – exit on trailing SL or TREND CHANGE alert"),
-        "━━━━━━━━━━━━━━",
-        f"{seg} · {pd.Timestamp(c['expiry']):%b} fut · {kind or SHORT_TF[tf]}" + (f" · lot {lot}" if lot else "")])
+        f"Entry   : {_f(ref)}",
+        f"SL      : {_f(ref - s * R)}",
+        f"Target  : {_f(ref + s * tg * R)}" if tg else "Target  : trail – exit on TREND CHANGE alert",
+        f"Lot     : {lot or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}"])
 
 
 def details(ex, c, tf, sig, levels, live=None, k=None):
@@ -134,35 +132,37 @@ def details(ex, c, tf, sig, levels, live=None, k=None):
             "━━━━━━━━━━━━━━━━━━", "📌 WHY"]
 
 
+CHART = {"3h": "3-hour", "1d": "Daily"}
+
+
 def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
-    """Message 2 – why the call was issued."""
+    """Message 2 – WHY: candle timeframe, setup, volume, OI position, trend, next level, exit plan."""
     s = 1 if sig["side"] == "BUY" else -1
-    lvl = sig["hh"] if s > 0 else sig["ll"]
-    pts = []
-    pts.append(f"{'📈' if s > 0 else '📉'} Breakout: closed at {_f(sig['close'])}, {'above' if s > 0 else 'below'} the 20-candle "
-               f"{'high' if s > 0 else 'low'} {_f(lvl)} – price escaped its recent range.")
-    pts.append(f"🔊 Volume: {sig['vol_x']:.1f}× normal – big players took part, so it is less likely to be a fake breakout.")
-    pts.append(f"🧭 Trend: price is {'above' if s > 0 else 'below'} the 200 EMA ({_f(sig['ema200'])}) – trading with the main trend, not against it.")
-    adx = sig.get("adx") or 0
-    pts.append(f"💪 Trend strength (ADX {adx:.0f}): " + ("strong" if adx >= 25 else "building" if adx >= 18 else "weak – smaller size"))
-    r = sig.get("rsi") or 50
-    if (s > 0 and r > 75) or (s < 0 and r < 25):
-        pts.append(f"⚠️ RSI {r:.0f}: already stretched – entry only near the call price, never chase.")
+    if sig.get("pattern"):
+        setup = f"{sig['pattern'].title()} – closed {'above' if s > 0 else 'below'} {_f(sig['level'])}"
     else:
-        pts.append(f"📊 RSI {r:.0f}: momentum supports the move.")
+        lvl = sig["hh"] if s > 0 else sig["ll"]
+        setup = f"{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} 20-candle {'high' if s > 0 else 'low'} {_f(lvl)}"
+    L = [f"📌 WHY – {name} {sig['side']}", "━━━━━━━━━━━━━━",
+         f"• Chart   : {CHART.get(tf, tf)} candle closed {_f(sig['close'])}",
+         f"• Setup   : {setup}"]
+    if sig.get("vol_x"):
+        L.append(f"• Volume  : {sig['vol_x']:.1f}× average {'✅' if sig['vol_x'] > 1.5 else ''}")
     if oi and oi.get("label"):
         good = {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}[sig["side"]]
-        pts.append(f"🏦 OI: {oi['label']} ({oi['chg_pct']:+.2f}% in {oi['gap_min']:.0f} min) – "
-                   + ("supports the call ✅" if oi["label"] in good else "does NOT confirm – be careful ⚠️"))
-    elif oi:
-        pts.append(f"🏦 OI {oi['oi']:,.0f}: change not measurable yet (needs a second reading).")
+        L.append(f"• OI      : {oi['label']} (OI {oi['chg_pct']:+.2f}%) {'✅' if oi['label'] in good else '⚠️ not confirming'}")
+    else:
+        L.append("• OI      : not available")
+    L.append(f"• Trend   : {'above' if sig['close'] > sig['ema200'] else 'below'} 200 EMA {_f(sig['ema200'])} "
+             f"{'✅' if (sig['close'] > sig['ema200']) == (s > 0) else '⚠️'}")
+    L.append(f"• RSI/ADX : {sig.get('rsi') or 0:.0f} / {sig.get('adx') or 0:.0f}")
     nxt = (levels["resistance"] if s > 0 else levels["support"])[:1]
     if nxt:
-        pts.append(f"🧱 Next {'resistance' if s > 0 else 'support'}: {_f(nxt[0][0])} ({nxt[0][1]}) – watch for a pause there.")
-    pts.append("📚 Backtest 2022-26 (after costs): ≈40% of breakouts win, but winners are 2-3× bigger than losers – "
-               "follow the stop strictly and let the trailing stop ride the trend.")
-    return "\n".join([f"💡 {sig['side']} {name} – details & reason", "━━━━━━━━━━━━━━━━━━", *(plan or []), *pts,
-                       "Backtested, not guaranteed · not investment advice."])
+        L.append(f"• Next {'resistance' if s > 0 else 'support'}: {_f(nxt[0][0])}")
+    L.append("• Exit    : SL or target · ⚠️ TREND CHANGE alert comes before the SL" if TARGET_R.get(tf)
+             else "• Exit    : trailing SL updates · TREND CHANGE alert = exit")
+    L.append("Not investment advice.")
+    return "\n".join(L)
 
 
 def close_ledger(state, key, fut_exit, why, now):
@@ -235,17 +235,14 @@ def manage(state, msgs, name, tf, frame, c15, now):
 
 
 def option_msg(name, ex, tf, sig, opt, prem, live=None, k=None):
-    """Separate OPTION-BUY call for a futures signal: ATM CE (buy) / PE (sell); SL and target follow the future's levels."""
+    """OPTION-BUY call for the same signal: ATM CE (buy) / PE (sell). Premium SL/target ≈ futures levels × delta 0.5."""
     s, ref, R = _levels(sig, live, k or stop_k(tf))
     sl_f, tg_f = ref - s * R, (ref + s * TARGET_R[tf] * R if TARGET_R.get(tf) else None)
-    est = lambda fut: max(0.05, prem + 0.5 * s * (fut - ref)) if prem else None      # ≈ delta 0.5
-    L = [f"{'🟢' if opt['typ'] == 'CE' else '🔴'} OPTION BUY  {name} {opt['K']:g} {opt['typ']}",
+    est = lambda fut: max(0.05, prem + 0.5 * s * (fut - ref)) if prem else None
+    L = [f"{'🟢' if opt['typ'] == 'CE' else '🔴'} BUY  {name} {opt['K']:g} {opt['typ']}  ·  Positional",
          "━━━━━━━━━━━━━━",
-         f"👉 Buy at    : {('₹' + _f(prem)) if prem else 'market price (LTP not available)'}",
-         f"🛑 Stop loss : exit when {name} fut {'falls to' if s > 0 else 'rises to'} {_f(sl_f)}" + (f" (≈ ₹{_f(est(sl_f))})" if prem else ""),
-         (f"🎯 Target    : exit when {name} fut reaches {_f(tg_f)}" + (f" (≈ ₹{_f(est(tg_f))})" if prem else "")) if tg_f
-         else "🎯 Target    : ride the trend – exit with the futures call (trailing SL / TREND CHANGE alert)",
-         "━━━━━━━━━━━━━━",
-         f"{opt['symbol']} · exp {opt['expiry']:%d-%b} · lot {opt['lot']} · {('MCX' if ex == 'MCX' else 'NSE F&O')} · "
-         f"{'Positional (3-hour)' if tf == '3h' else 'Positional (daily)'}"]
+         f"Entry   : {('₹' + _f(prem)) if prem else 'market (LTP n/a)'}",
+         f"SL      : {('₹' + _f(est(sl_f)) + '  ') if prem else ''}(fut {_f(sl_f)})",
+         (f"Target  : {('₹' + _f(est(tg_f)) + '  ') if prem else ''}(fut {_f(tg_f)})") if tg_f else "Target  : trail – exit with the futures call",
+         f"Lot     : {opt['lot']}  ·  exp {opt['expiry']:%d-%b}  ·  {'MCX' if ex == 'MCX' else 'NSE'}"]
     return "\n".join(L), (est(sl_f), est(tg_f) if tg_f else None)
