@@ -7,6 +7,7 @@ Plan: entry next candle open (≈ live price) · initial SL 2 ATR · then a 3 AT
 Backtest (Jul-2022 → Oct-2026, 9 futures, after costs + slippage, exploratory): 3h ≈ +0.15R/trade at 2× costs, ~41% wins;
 daily ≈ +0.2R. ALERTS ONLY – no orders.
 """
+import numpy as np
 import pandas as pd
 from crude import indicators as I
 
@@ -17,17 +18,20 @@ CFG = dict(N=20, vol_x=1.5, stop_atr=2.0, trail_atr=3.0, max_candles=40, ema=200
 #  1w : 20-week breakout, stop 3 ATR(weekly), target 2R         (win 50% / 51%, big targets; only 20 + 41 trades – small sample)
 #  Trend change (close back across EMA20 of the same chart) = WARNING message before the stop, not an automatic exit.
 #  Small targets (0.5R) won 66-77% of trades but LOST money – so no 80-90% setup is used.
-STOP_ATR = {"3h": 2.0, "1d": 1.5, "1w": 3.0}
-TARGET_R = {"3h": 2.0, "1d": 3.0, "1w": 2.0}
-TRAIL = {"3h": False, "1d": False, "1w": False}
+#  1m : MONTHLY breakout/breakdown (SR-001): first daily close beyond last month's high/low, with the weekly AND monthly
+#       trend agreeing; stop 1.5 ATR(daily), target 2R, max 20 sessions. ₹6,030 / ₹24,459 per lot (2× costs), win 50% / 46%,
+#       profitable in both periods but only 5 of 9 instruments positive – a near-pass, labelled as such.
+STOP_ATR = {"3h": 2.0, "1d": 1.5, "1w": 3.0, "1m": 1.5}
+TARGET_R = {"3h": 2.0, "1d": 3.0, "1w": 2.0, "1m": 2.0}
+TRAIL = {"3h": False, "1d": False, "1w": False, "1m": False}
 TREND_EXIT_EMA = {}
-TREND_WARN_EMA = {"3h": 20, "1d": 20, "1w": 20}
-MAX_CANDLES = {"3h": 40, "1d": 40, "1w": 26}
+TREND_WARN_EMA = {"3h": 20, "1d": 20, "1w": 20, "1m": 20}
+MAX_CANDLES = {"3h": 40, "1d": 40, "1w": 26, "1m": 20}
 
 
 def stop_k(tf):
     return STOP_ATR.get(tf, CFG["stop_atr"])
-TFLABEL = {"3h": "SWING (3-hour candles)", "1d": "POSITIONAL (daily candles)", "1w": "POSITIONAL (weekly candles)"}
+TFLABEL = {"3h": "SWING (3-hour candles)", "1d": "POSITIONAL (daily candles)", "1w": "POSITIONAL (weekly candles)", "1m": "POSITIONAL (monthly level)"}
 
 
 def daily_candles(h1c, session_close):
@@ -88,6 +92,45 @@ def evaluate_weekly(df):
     return dict(out, side=side, why=None if side else "no 20-week breakout")
 
 
+def htf_levels(daily):
+    """Support / resistance from completed daily candles: last week's and last month's high / low, monthly pivot."""
+    if daily is None or len(daily) < 30:
+        return None
+    d = daily.copy(); t = d["time"]
+    last = t.iloc[-1]
+    w, m = t.dt.to_period("W"), t.dt.to_period("M")
+    pw = d[w == (last.to_period("W") - 1)]; pm = d[m == (last.to_period("M") - 1)]
+    if pw.empty or pm.empty:
+        return None
+    ph, pl, pc = float(pm["high"].max()), float(pm["low"].min()), float(pm["close"].iloc[-1])
+    return dict(pwh=float(pw["high"].max()), pwl=float(pw["low"].min()), pmh=ph, pml=pl, mp=(ph + pl + pc) / 3)
+
+
+def evaluate_monthly(daily):
+    """MONTHLY breakout / breakdown on the last completed daily candle (SR-001 MB|mtf)."""
+    if daily is None or len(daily) < 150:
+        return dict(side=None, why="needs 150 daily candles")
+    d = daily.reset_index(drop=True)
+    lv = htf_levels(d.iloc[:-1])
+    if lv is None:
+        return dict(side=None, why="no previous month")
+    t = d["time"]
+    W = d.groupby(t.dt.to_period("W"))["close"].last(); M = d.groupby(t.dt.to_period("M"))["close"].last()
+    W, M = W.iloc[:-1], M.iloc[:-1]                                   # completed weeks / months only
+    wtr = np.sign(W.iloc[-1] - W.ewm(span=20, adjust=False).mean().iloc[-1])
+    mtr = np.sign(M.iloc[-1] - M.ewm(span=10, adjust=False).mean().iloc[-1])
+    x, pc = d.iloc[-1], d["close"].iloc[-2]
+    v = d["volume"].astype(float); va = v.rolling(20).mean().shift(1).iloc[-1]
+    out = dict(candle=str(x.time), close=float(x.close), hh=lv["pmh"], ll=lv["pml"], ema200=float(I.ema(d["close"], 200).iloc[-1]),
+               atr=float(I.atr(d, 14).iloc[-1]), vol_x=float(x.volume / va) if va and va > 0 else None,
+               adx=float(I.adx(d).iloc[-1]), rsi=float(I.rsi(d["close"], 14).iloc[-1]), monthly=True)
+    if x.close > lv["pmh"] >= pc and wtr > 0 and mtr > 0:
+        return dict(out, side="BUY")
+    if x.close < lv["pml"] <= pc and wtr < 0 and mtr < 0:
+        return dict(out, side="SELL")
+    return dict(out, side=None, why="no monthly breakout with weekly + monthly trend")
+
+
 def _f(x):
     return f"{x:,.2f}" if abs(x) < 1000 else f"{x:,.0f}"
 
@@ -106,7 +149,7 @@ def _levels(sig, live, k=2.0):
     return s, ref, R
 
 
-OPT_MIN_DAYS = {"3h": 2, "1d": 2, "1w": 20}      # nearest option expiry with at least 2 days left (user choice 27-Oct)
+OPT_MIN_DAYS = {"3h": 2, "1d": 2, "1w": 20, "1m": 10}      # nearest option expiry with at least 2 days left (user choice 27-Oct)
 
 
 def option_idea(master, name, ex, px, side, tf, now):
@@ -157,17 +200,18 @@ def details(ex, c, tf, sig, levels, live=None, k=None):
             "━━━━━━━━━━━━━━━━━━", "📌 WHY"]
 
 
-CHART = {"3h": "3-hour", "1d": "Daily", "1w": "Weekly"}
+CHART = {"3h": "3-hour", "1d": "Daily", "1w": "Weekly", "1m": "Daily"}
 
 
-def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
+def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None, htf=None):
     """Message 2 – WHY: candle timeframe, setup, volume, OI position, trend, next level, exit plan."""
     s = 1 if sig["side"] == "BUY" else -1
     if sig.get("pattern"):
         setup = f"{sig['pattern'].title()} – closed {'above' if s > 0 else 'below'} {_f(sig['level'])}"
     else:
         lvl = sig["hh"] if s > 0 else sig["ll"]
-        setup = f"{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} 20-{'week' if tf == '1w' else 'candle'} {'high' if s > 0 else 'low'} {_f(lvl)}"
+        what = "last month's" if tf == "1m" else f"20-{'week' if tf == '1w' else 'candle'}"
+        setup = f"{'MONTHLY ' if tf == '1m' else 'WEEKLY ' if tf == '1w' else ''}{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} {what} {'high' if s > 0 else 'low'} {_f(lvl)}"
     L = [f"📌 WHY – {name} {sig['side']}", "━━━━━━━━━━━━━━",
          f"• Chart   : {CHART.get(tf, tf)} candle closed {_f(sig['close'])}",
          f"• Setup   : {setup}"]
@@ -178,12 +222,17 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
         L.append(f"• OI      : {oi['label']} (OI {oi['chg_pct']:+.2f}%) {'✅' if oi['label'] in good else '⚠️ not confirming'}")
     else:
         L.append("• OI      : not available")
+    if tf == "1m":
+        L.append("• Trend   : weekly and monthly trend agree ✅ (near-pass rule: profitable in both test periods, 5 of 9 instruments)")
     L.append(f"• Trend   : {'above' if sig['close'] > sig['ema200'] else 'below'} {'20-week' if tf == '1w' else '200'} EMA {_f(sig['ema200'])} "
              f"{'✅' if (sig['close'] > sig['ema200']) == (s > 0) else '⚠️'}")
     L.append(f"• RSI/ADX : {sig.get('rsi') or 0:.0f} / {sig.get('adx') or 0:.0f}")
     nxt = (levels["resistance"] if s > 0 else levels["support"])[:1]
     if nxt:
         L.append(f"• Next {'resistance' if s > 0 else 'support'}: {_f(nxt[0][0])}")
+    if htf:
+        L.append(f"• Levels  : week H {_f(htf['pwh'])} / L {_f(htf['pwl'])} · month H {_f(htf['pmh'])} / L {_f(htf['pml'])} · "
+                 f"monthly pivot {_f(htf['mp'])}")
     L.append("• Exit    : SL or target · ⚠️ TREND CHANGE alert comes before the SL" if TARGET_R.get(tf)
              else "• Exit    : trailing SL updates · TREND CHANGE alert = exit")
     L.append("Not investment advice.")

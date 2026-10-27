@@ -247,6 +247,15 @@ def test_breakout():
     dd_.loc[dd_.index[-5:], ["close", "high"]] = [[104.0, 105.0]] * 5
     wk_ = BO.weekly_candles(dd_)
     check("weekly: close above the 20-week high -> weekly BUY call", BO.evaluate_weekly(wk_)["side"] == "BUY" and len(wk_) == 40)
+    tm_ = pd.bdate_range("2025-11-03", periods=260); cm_ = np.linspace(100, 200, 260)
+    dm_ = pd.DataFrame(dict(time=tm_, open=cm_, high=cm_ + 0.5, low=cm_ - 0.5, close=cm_, volume=100.0))
+    lm_ = dm_.time.iloc[-1]; pmh_ = dm_[dm_.time.dt.to_period("M") == lm_.to_period("M") - 1].high.max()
+    dm_.loc[dm_.time.dt.to_period("M") == lm_.to_period("M"), ["open", "high", "low", "close"]] = pmh_ - 3
+    dm_.loc[dm_.index[-1], ["close", "high"]] = [pmh_ + 1, pmh_ + 1.5]
+    check("monthly: first daily close above last month's high with weekly + monthly up-trend -> MONTHLY BUY",
+          BO.evaluate_monthly(dm_)["side"] == "BUY" and BO.evaluate_monthly(dm_.iloc[:-1])["side"] is None)
+    w_ = BO.reason_msg("GOLD", "1m", dict(BO.evaluate_monthly(dm_), side="BUY"), dict(support=[], resistance=[]), None, htf=BO.htf_levels(dm_.iloc[:-1]))
+    check("WHY shows MONTHLY BREAKOUT and week / month support-resistance levels", "MONTHLY BREAKOUT" in w_ and "month H" in w_)
     from alerts import report as RP
     lg = {}
     RP.add(lg, key="k", mark_key="1", seg="NSE", cat="FUTURES", name="NIFTY", symbol="NIFTY25NOV26FUT", type="Positional (3-hour)",
