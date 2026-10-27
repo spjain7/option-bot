@@ -95,6 +95,42 @@
     "rs_per_point": 1250,
     "lots": 1
    }
+  },
+  {
+   "id": 9,
+   "mode": "intraday",
+   "name": "COPPER",
+   "exch": "MCX",
+   "side": "BUY",
+   "symbol": "COPPER30NOV26FUT",
+   "token": "578634",
+   "expiry": "30-Nov-2026",
+   "mult": 2500,
+   "entry": 1402.3,
+   "sl": 1393.15,
+   "t1": 1411.45,
+   "t2": 1420.6,
+   "R": 9.15,
+   "t1_hit": false,
+   "opened": "2026-10-27 17:04",
+   "candle": "2026-10-27 16:00:00",
+   "opt": {
+    "symbol": "COPPER23NOV261390CE",
+    "token": "581741",
+    "strike": 1390.0,
+    "typ": "CE",
+    "expiry": "23-Nov-2026",
+    "entry": 34.28,
+    "delta": 0.58,
+    "iv": 18.3,
+    "sl": 28.76,
+    "t1": 39.8,
+    "t2": 45.79,
+    "cost_lot": 85700,
+    "risk_lot": 13800,
+    "rs_per_point": 2500,
+    "lots": 0
+   }
   }
  ],
  "closed": [
@@ -576,7 +612,13 @@
   "intra|ALUMINIUM|2026-10-27 15:00": "2026-10-27",
   "pos|NIFTY|2026-10-27": "2026-10-27",
   "pos|BANKNIFTY|2026-10-27": "2026-10-27",
-  "pos|BANKNIFTY|2026-10-27|watch": "2026-10-27"
+  "pos|BANKNIFTY|2026-10-27|watch": "2026-10-27",
+  "intra|GOLD|2026-10-27 16:00": "2026-10-27",
+  "intra|CRUDEOIL|2026-10-27 16:00": "2026-10-27",
+  "intra|COPPER|2026-10-27 16:00": "2026-10-27",
+  "intra|COPPER|2026-10-27 16:00|call": "2026-10-27",
+  "intra|ZINC|2026-10-27 16:00": "2026-10-27",
+  "intra|ALUMINIUM|2026-10-27 16:00": "2026-10-27"
  },
  "last_state": {
   "pos|GOLD": "CALL|SELL",
@@ -599,5 +641,5 @@
   "2026-10-23": true,
   "2026-10-26": true
  },
- "next_id": 9
+ "next_id": 10
 }
