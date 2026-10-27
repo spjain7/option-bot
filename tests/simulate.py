@@ -5,13 +5,13 @@ from pathlib import Path
 import numpy as np, pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-import greeks as G, config as C, market, positions, runner, notify, strategy, rsi_alert, flow
+import greeks as G, config as C, market, positions, runner, notify, strategy, flow
 C.BOUNCE_FILTER = False   # synthetic candles here; the bounce guard is tested in tests/test_guards.py
 
 SENT = []
 notify.send = lambda text, *a, **k: (SENT.append(text), print("\n" + "─" * 60 + "\n" + text))
 CLOCK = {"now": pd.Timestamp("2026-09-21 11:20")}
-for mod in (market, positions, runner, rsi_alert, flow):
+for mod in (market, positions, runner, flow):
     mod.now_ist = lambda: CLOCK["now"]
 
 UND = {  # name: spot, iv, strike step, lot, trend(+1/-1)
@@ -131,6 +131,7 @@ def run_at(ts, fn):
 
 
 def main():
+    C.INTRADAY_MAX_DTE = 99            # fixture expiries are 8 days out; the ≤7-day rule is checked separately
     positions.STATE_FILE = ROOT / "tests" / "_sim_state.json"
     positions.STATE_FILE.unlink(missing_ok=True)
     C.MONTHLY_STOCKS = ["RELIANCE", "HDFCBANK"]
@@ -180,20 +181,6 @@ def main():
     run_at("2026-09-25 15:40", bot.report)          # Friday -> weekly summary
     st.save()
 
-    print("\n=== ENGINE B: independent RSI alerts (MCX crude evening) ===")
-    rsi_alert.STATE_FILE = ROOT / "tests" / "_sim_rsi.json"; rsi_alert.STATE_FILE.unlink(missing_ok=True)
-    C.OPTION_ENGINE_ENABLED = False                       # RSI must still work with options disabled
-    n0 = len(SENT)
-    run_at("2026-09-21 20:05", lambda: rsi_alert.run(FakeAngel(), MASTER))
-    crude = [m for m in SENT[n0:] if "CRUDEOIL" in m]
-    assert crude and "OVERSOLD" in crude[0], SENT[n0:]
-    n1 = len(SENT)
-    run_at("2026-09-21 20:20", lambda: rsi_alert.run(FakeAngel(), MASTER))    # same candle -> no repeat
-    assert not [m for m in SENT[n1:] if "CRUDEOIL" in m]
-    run_at("2026-09-21 21:05", lambda: rsi_alert.run(FakeAngel(), MASTER))    # next candle -> continuation
-    assert [m for m in SENT[n1:] if "CRUDEOIL" in m and "STILL" in m]
-    C.OPTION_ENGINE_ENABLED = True
-
     print("\n=== MCX option selling: on-demand view + hourly scan (evening) ===")
     C.MCX_UNDERLYINGS = ["CRUDEOIL"]
     st.s["positions"].clear()
@@ -214,8 +201,6 @@ def main():
     print("\n=== Separation check: engines never import each other ===")
     for f in ("strategy.py", "market.py", "positions.py", "greeks.py"):
         assert "rsi" not in (ROOT / f).read_text().lower(), f
-    src = (ROOT / "rsi_alert.py").read_text()
-    assert not any(f"import {m}" in src for m in ("strategy", "market", "positions", "greeks"))
 
     print("\n=== NAKED single-leg sells: confirmation, confidence, clear SL/target ===")
     C.SELL_STYLE, C.CONFIRM_CHECKS, C.GAMMA_BLOCK = "NAKED", 2, "HIGH"
@@ -233,7 +218,8 @@ def main():
     p = nk[0]
     gain, loss = p["credit"] - p["target_val"], p["sl_val"] - p["credit"]
     assert gain >= loss - 1e-6 and p["confidence"] >= C.MIN_CONFIDENCE and p["spot_stop"] < p["spot_at_entry"]
-    assert any("📍 Support" in m and "Resistance" in m for m in SENT if "SELL NIFTY" in m), "S/R line missing"
+    assert any("SELL  NIFTY" in m and "Entry" in m and "SL" in m for m in SENT), "call message missing"
+    assert any("WHY – NIFTY" in m and "Levels" in m and "Support" in m for m in SENT), "S/R line missing in WHY"
     # Crude case from live data: price 8,766 after a big fall -> every support must be BELOW, resistance ABOVE
     txt = runner.sr_text({"F": 8766, "put_wall": 9000, "call_wall": 10000,
                           "pivots": {"S3": 8570, "S2": 8900, "S1": 9071, "P": 9235, "R1": 9400, "R2": 9570, "R3": 9900,
@@ -266,12 +252,12 @@ def main():
 
     print("\n=== SENSEX (BSE) naked call ===")
     C.INTRADAY_UNDERLYINGS = ["SENSEX"]; st.s["bias_hist"] = {}; UND["NIFTY"][0] = 25000
-    run_at("2026-09-22 13:50", bot.intraday_scan); run_at("2026-09-22 14:05", bot.intraday_scan)
+    run_at("2026-09-22 12:50", bot.intraday_scan); run_at("2026-09-22 13:05", bot.intraday_scan)   # last entry 13:30
     sx = st.open_positions("intraday", "SENSEX")
     assert sx and sx[0]["exch"] == "BFO", "SENSEX call missing"
     print("SENSEX call:", sx[0]["legs"][0]["K"], sx[0]["legs"][0]["typ"], "conf", sx[0]["confidence"])
 
-    print("\n=== ⚡ OI / volume flow alert ===")
+    print("\n=== ⚡ OI / volume flow (data only, no info alert) ===")
     C.INTRADAY_UNDERLYINGS = ["NIFTY", "BANKNIFTY", "SENSEX"]
     fut_tok = MASTER[(MASTER.name == "NIFTY") & (MASTER.instrumenttype == "FUTIDX")].sort_values("expiry_dt").iloc[0]["token"]
     FUT_STATE[fut_tok] = {"ltp": 25000, "oi": 10_000_000, "vol": 50_000}
@@ -280,7 +266,8 @@ def main():
     n1 = len(SENT)
     run_at("2026-09-23 12:00", lambda: flow.run(bot, True, False))
     fl = [m for m in SENT[n1:] if "OI / VOLUME ALERT" in m]
-    assert fl and "LONG BUILDUP" in fl[0] and "NIFTY" in fl[0], SENT[n1:]
+    assert not fl, "info-only OI/volume alerts are switched off (buy/sell calls only)"
+    assert any(e["name"] == "NIFTY" and e["bias"] for e in bot.flow_events), "flow data still collected for the selling engine"
     # ⚡ fast track: the buildup itself confirms -> sell call in the SAME run (no waiting)
     C.SELL_STYLE = "NAKED"; st.s["positions"].clear(); st.s["closed"].clear(); st.s["bias_hist"] = {}
     run_at("2026-09-23 12:00", lambda: bot.fast_track(bot.flow_events))
@@ -297,7 +284,7 @@ def main():
     n2 = len(SENT)
     run_at("2026-09-23 12:15", lambda: flow.run(bot, True, False))
     bm = [m for m in SENT[n2:] if "BIG MOVE ALERT" in m]
-    assert bm and "NIFTY" in bm[0] and "fell" in bm[0], SENT[n2:]
+    assert not bm, "big-move info alert is switched off"
     FUT_STATE.clear()
     UND["NIFTY"][0] = 25000
     C.SELL_STYLE = "HEDGED"; st.s["positions"].clear()
@@ -306,7 +293,6 @@ def main():
     run_at("2026-09-24 11:20", bot.intraday_scan)
     assert len(SENT) == n2 and not st.s["positions"]
     C.EVENT_DATES = {}
-    rsi_alert.STATE_FILE.unlink(missing_ok=True)
     print("\nALL SIMULATION CHECKS PASSED ✅")
 
 

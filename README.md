@@ -1,3 +1,15 @@
+# CURRENT SYSTEM (27-Oct-2026) – one alert system, three kinds of calls, ALERTS ONLY (no orders)
+Runs every 15 min in `.github/workflows/market-loop.yml` → `scripts/market_loop.sh`:
+1. **Futures BUY/SELL** – `alerts/` (MCX 7 + NIFTY/BANKNIFTY: 3h, daily, weekly, monthly breakouts; stock futures:
+   daily OI breakout + bearish engulfing). Each call: Entry / SL / one target + WHY message + option-buy call.
+2. **Option BUY** – with every futures call (`alerts/breakout.py option_idea`, guards in `alerts/optfilter.py`) and
+   intraday stock option buys (`obuy/`).
+3. **Option SELL** – `runner.py` (Engine A) incl. the hourly RSI 80/25 + OI rule.
+Day report image: `alerts/report.py`. Research and pass/fail records: `research/search/REGISTRY_*.md`.
+Removed 27-Oct: crude paper engine from the loop, old trading-calls engine (`calls/`), RSI-alert engine (`rsi_alert.py`),
+MCX buy/sell engine (`mcx_trade.py`), paper MCX research (`paper/`), info-only alerts. Old history: branch `archive-history`.
+The sections below are older documentation and may describe removed parts.
+
 # Option-Selling Bot + Independent RSI Alerts (cloud, no install)
 
 Two **separate engines** run free on GitHub Actions and send alerts to Telegram (and optionally WhatsApp).

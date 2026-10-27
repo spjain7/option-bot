@@ -25,11 +25,8 @@ import config as C
 import market as M
 import strategy as S
 import notify
-import rsi_alert                      # Engine B - separate module, shares only data + Telegram
 import flow                           # OI / volume activity alerts (part of Engine A, no RSI)
 from guards import bounce               # never sell INTO a fresh bounce / drop
-import mcx_trade                      # Engine C - MCX buy/sell alerts (futures + option buying)
-from calls import engine as calls_engine   # Engine D - Telegram trading calls (intraday + positional)
 from angel import Angel, load_master, now_ist
 from positions import Store, check, _hm
 
@@ -784,10 +781,6 @@ def main():
     store = None
     if mode == "chatid":                  # Telegram check: lists chats that messaged the bot + sends a test
         notify.telegram_check(); return
-    if mode == "calls" and not C.CALLS_ENABLED:
-        print("Trading-call engine is disabled (CALLS_ENABLED = False) - nothing to do."); return
-    if mode == "mcxtrade" and not C.MCXT_ENABLED:   # without this, a manual "mcxtrade" run would fall through to Engine A
-        print("MCX buy/sell engine is disabled (MCXT_ENABLED = False) - nothing to do."); return
     try:
         api = Angel()
         if mode == "test":
@@ -800,34 +793,6 @@ def main():
                         f"PCR {ch['pcr'] if ch else '-'} | ATM IV {ch['atm_iv'] if ch else '-'} | VIX {b.vix()['vix']}")
             return
         master = load_master()
-
-        # ENGINE B - RSI alerts: fully independent, its failure never touches Engine A (and vice versa)
-        if C.RSI_ENGINE_ENABLED and mode == "auto":
-            try:
-                rsi_alert.run(api, master)
-            except Exception as e:
-                traceback.print_exc()
-                notify.send(f"⚠️ RSI engine error: {type(e).__name__}: {str(e)[:200]}")
-
-        # ENGINE D - Telegram trading calls: independent, its failure never stops the other engines
-        if C.CALLS_ENABLED and mode in ("auto", "calls"):
-            try:
-                calls_engine.run(api, master, force=mode == "calls")
-            except Exception as e:
-                traceback.print_exc()
-                notify.send(f"⚠️ Trading-call engine error: {type(e).__name__}: {str(e)[:200]}")
-            if mode == "calls":
-                return
-
-        # ENGINE C - MCX buy/sell: independent, its failure never stops the other engines
-        if C.MCXT_ENABLED and mode in ("auto", "mcxtrade"):
-            try:
-                mcx_trade.run(api, master, force=mode == "mcxtrade")
-            except Exception as e:
-                traceback.print_exc()
-                notify.send(f"⚠️ MCX buy/sell engine error: {type(e).__name__}: {str(e)[:200]}")
-            if mode == "mcxtrade":
-                return
 
         # ENGINE A - option selling (NSE + MCX)
         store = Store()

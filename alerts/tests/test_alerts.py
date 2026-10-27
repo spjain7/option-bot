@@ -378,9 +378,10 @@ def test_telegram_delivery():
 def test_no_orders():
     src = "\n".join(f.read_text() for f in (ROOT / "alerts").rglob("*.py") if "tests" not in f.parts)
     check("alerts package has no order API (alert-only, no auto trading)", not re.search(r"placeOrder|modifyOrder|cancelOrder|place_order", src))
-    wf = (ROOT / ".github" / "workflows" / "alerts.yml").read_text()
-    check("workflow: own concurrency group, Telegram sent after state push", "group: buy-sell-alerts" in wf
-          and wf.index("Save state") < wf.index("alerts.run flush"))
+    lp = (ROOT / "scripts" / "market_loop.sh").read_text()
+    check("market loop: state saved BEFORE Telegram is sent; every engine has a time limit (no stuck loop)",
+          lp.index("save alerts-state alerts state.json; then") < lp.index("python -m alerts.run flush")
+          and "timeout 1200 python -m alerts.run scan" in lp and "timeout 600 python runner.py" in lp)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-name: Market loop (option selling + alerts + crude paper, every 15 min)
+name: Market loop (option selling + option buying + futures calls, every 15 min)
 
 # GitHub's cron skips many scheduled runs, so ONE run per trading day loops inside the jobs instead (a scan every 15 min,
 # 2 min after each candle closes). Three back-to-back jobs (each < 6 h) cover 08:55 IST -> 00:20 IST (NSE 09:15-15:30, MCX 09:00-23:30/23:55):
@@ -36,10 +36,8 @@ permissions:
 env:
   ALERTS_STATE_DIR: state/alerts
   ALERTS_TELEGRAM: "1"
-  CRUDE_STATE_DIR: state/crude
   OBUY_STATE_DIR: state/obuy
   OBUY_TELEGRAM: "1"
-  CRUDE_TELEGRAM: "1"
   ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
   ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
   ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Runs the option-selling engine, the alert engine and the crude PAPER engine every 15 minutes (2 min after each candle closes) until END (IST HH:MM).
+# Runs the option-selling engine, the option-buy engine and the buy/sell alert engine every 15 minutes (2 min after each candle closes) until END (IST HH:MM).
 # Used because GitHub's cron skips most scheduled runs. State is restored/saved to its branch around every scan;
 # Telegram is sent only after the save. A failed iteration is reported and the loop continues.
 set -uo pipefail
 END="$1"                                  # e.g. 14:50
-git config user.name "option-bot loop"; git config user.email "bot@users.noreply.github.com"
+[ "${MARKET_LOOP_DRY:-0}" = "1" ] || { git config user.name "option-bot loop"; git config user.email "bot@users.noreply.github.com"; }   # not in the offline test
 
 restore() {  # $1 branch  $2 subdir
   rm -rf "state/$2"; mkdir -p "state/$2"
@@ -43,7 +43,7 @@ options() {
   rm -rf /tmp/opt; git worktree prune
   if ! (git fetch -q origin main && git worktree add -q --detach /tmp/opt FETCH_HEAD); then echo "::error::option engine checkout failed"; return; fi
   mkdir -p .cache && ln -sfn "$PWD/.cache" /tmp/opt/.cache
-  (cd /tmp/opt && python runner.py auto); local rc=$?
+  (cd /tmp/opt && timeout 600 python runner.py auto); local rc=$?   # a hung API call can never block the loop
   (cd /tmp/opt && git add state/*.json 2>/dev/null
    if ! git diff --cached --quiet; then
      git commit -qm "state $(date -u +%F_%H%M)"
@@ -57,7 +57,7 @@ obuy() {
   if n=$(restore obuy-state obuy); then
     export OBUY_NEW_STATE=$n
     # run the latest code (fresh worktree made by options()), state stays in this job's state/obuy
-    if [ -d /tmp/opt ]; then (cd /tmp/opt && OBUY_STATE_DIR="$OLDPWD/state/obuy" python -m obuy.run scan); else python -m obuy.run scan; fi; local rc=$?
+    if [ -d /tmp/opt ]; then (cd /tmp/opt && OBUY_STATE_DIR="$OLDPWD/state/obuy" timeout 420 python -m obuy.run scan); else timeout 420 python -m obuy.run scan; fi; local rc=$?
     if [ -f state/obuy/state.json ] && save obuy-state obuy state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
     SAVE_OK=$SAVE_OK OBUY_STATE_DIR="$PWD/state/obuy" python -m obuy.run flush
     echo "option-buy scan exit $rc, save $SAVE_OK"
@@ -72,23 +72,13 @@ iteration() {
   # ---- buy/sell alerts ----
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n
-    python -m alerts.run scan; rc=$?
+    timeout 1200 python -m alerts.run scan; rc=$?   # the 15:30 stock scan (181 futures) can take ~10 min
     if [ -f state/alerts/state.json ] && save alerts-state alerts state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
     [ -f state/alerts/outbox.json ] && SAVE_OK=$SAVE_OK python -m alerts.run flush
     save alerts-state alerts state.json pending.json || echo "::warning::could not save the undelivered-message queue"
     echo "alerts scan exit $rc, save $SAVE_OK"
   else
     echo "::error::alerts state restore failed"
-  fi
-  # ---- crude paper engine ----
-  if n=$(restore crude-state crude); then
-    export CRUDE_NEW_ACCOUNT=$n MODE=scan
-    python -m crude.run scan; rc=$?
-    if [ -f state/crude/state.json ] && save crude-state crude state.json scan_log.jsonl last_run.json; then SAVE_OK=success; else SAVE_OK=failure; fi
-    SAVE_OK=$SAVE_OK python -m crude.run flush
-    echo "crude scan exit $rc, save $SAVE_OK"
-  else
-    echo "::error::crude state restore failed"
   fi
 }
 
@@ -108,6 +98,9 @@ else
   end_s=$(TZ=Asia/Kolkata date -d "$(ist +%F) $END" +%s)
   [ "${END%%:*}" -lt 6 ] && end_s=$((end_s + 86400))              # 00:20 = after midnight
 fi
+# never run into GitHub's 6-hour job limit (358 min in the workflow): stop by 345 min after this job started
+cap_s=$(( $(date +%s) + 345 * 60 ))
+[ -z "${MARKET_LOOP_NOW:-}" ] && [ "$end_s" -gt "$cap_s" ] && end_s=$cap_s
 if [ "${MARKET_LOOP_DRY:-0}" = "1" ]; then echo "would run until $(TZ=Asia/Kolkata date -d "@$end_s" '+%d-%b %H:%M') IST"; exit 0; fi
 while true; do
   now_s=$(TZ=Asia/Kolkata date +%s)
