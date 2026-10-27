@@ -14,3 +14,13 @@ Timeframes: DAILY (stocks 181, NIFTY/BANKNIFTY) and 1-HOUR (same instruments, ma
 Stop: PT = beyond the pattern low/high + 0.1 ATR; A1.5 = 1.5 ATR. Target: R0.5, R1, R2.
 PASS: avg ₹/lot > 0 at 2× costs in design (< 2024-07) AND hold-out, ≥ 40 trades per period, ≥ 55% of instruments
 positive. Win % reported.
+
+## RESULT (27-Oct-2026): 8 of 1,518 passed – all BEARISH, all stock futures, daily
+Why the patterns "don't work": on their own every pattern LOSES after costs (stocks daily 37-54% wins, -₹450…-₹6,500 per
+lot; index and all 1-hour versions lose too). A single candle is common and usually just noise.
+What works: BEARISH ENGULFING on a stock future after a rise, with volume > 1.5×: SL 1.5 ATR, target 1R →
+win 55% / 68%, ₹2,065 / ₹7,208 per lot at 2× costs, 66% of stocks positive (58 + 75 trades). + near 20-day high: 54% / 69%.
+Hanging man + OI falling (short covering on the rally) passed only thinly (₹315 / ₹2,798).
+Bullish patterns (hammer, bullish engulfing, morning star) failed with every filter, incl. volume and OI.
+Index futures: too few daily patterns (4-34 per period); hourly versions all lose.
+Caution: the hold-out (Jul-2024 → Oct-2026) contained a long market decline, which favours bearish signals.
