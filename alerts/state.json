@@ -695,78 +695,7 @@
    "ltp": 331.75
   }
  },
- "bo_active": [
-  {
-   "name": "SILVER",
-   "tf": "3h",
-   "side": "SELL",
-   "entry": 203737.0,
-   "stop": 199314.39,
-   "risk": 4193.725906657,
-   "best": 192196.0,
-   "trailed": true,
-   "n": 18,
-   "last_candle": "2026-10-27 18:00:00",
-   "checked": "2026-10-27 21:00:00",
-   "contract": "SILVER04DEC26FUT"
-  },
-  {
-   "name": "GOLD",
-   "tf": "3h",
-   "side": "SELL",
-   "entry": 143710.0,
-   "stop": 144303.84,
-   "risk": 1627.9613962272074,
-   "best": 141927.0,
-   "trailed": true,
-   "n": 15,
-   "last_candle": "2026-10-27 18:00:00",
-   "checked": "2026-10-27 21:00:00",
-   "contract": "GOLD04DEC26FUT"
-  },
-  {
-   "name": "GOLD",
-   "tf": "1d",
-   "side": "SELL",
-   "entry": 143303.0,
-   "stop": 147535.82,
-   "risk": 4232.822198024087,
-   "best": 142150.0,
-   "trailed": false,
-   "n": 2,
-   "last_candle": "2026-10-26 09:00:00",
-   "checked": "2026-10-27 21:00:00",
-   "contract": "GOLD04DEC26FUT"
-  },
-  {
-   "name": "SILVER",
-   "tf": "1d",
-   "side": "SELL",
-   "entry": 199917.0,
-   "stop": 210613.78,
-   "risk": 10696.780680991378,
-   "best": 195900.0,
-   "trailed": false,
-   "n": 2,
-   "last_candle": "2026-10-26 09:00:00",
-   "checked": "2026-10-27 21:00:00",
-   "contract": "SILVER04DEC26FUT"
-  },
-  {
-   "name": "NATURALGAS",
-   "tf": "3h",
-   "side": "SELL",
-   "entry": 298.5,
-   "stop": 302.47,
-   "risk": 9.21177656021161,
-   "best": 286.6,
-   "trailed": true,
-   "n": 13,
-   "last_candle": "2026-10-27 18:00:00",
-   "checked": "2026-10-27 21:00:00",
-   "contract": "NATURALGAS24NOV26FUT"
-  }
- ],
+ "bo_active": [],
  "stk": {
   "active": [],
   "last_block": "2026-10-27 15:30:00",
