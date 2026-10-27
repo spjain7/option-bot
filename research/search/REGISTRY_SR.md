@@ -19,3 +19,11 @@ Targets: NX = next level in the trade direction (e.g. PMH after a weekly breakou
 One position per instrument, max 20 sessions, full costs, roll / rollover handled as before.
 PASS: avg ₹/lot > 0 at 2× costs in BOTH periods (design < 2024-07-01, hold-out after), ≥ 40 trades per period,
 ≥ 60% of instruments positive in the hold-out. Win % reported – the goal is the highest win % among PASSING rules.
+
+## RESULT (27-Oct-2026): 0 of 160 (MCX + index) and 0 of 240 (stocks) passed all rules
+- Highest win rates: weekly / monthly support bounces and breakouts with a 0.5R target – 64-74% wins, but LOSING
+  (e.g. stock monthly-support bounce + volume + trend: 67% / 64% wins, -₹138 / -₹4,045 per lot). No 80% setup exists.
+- Near-pass (profitable in both periods at 2× costs, but only 5 of 9 instruments positive):
+  MCX+index MONTHLY breakout + weekly & monthly trend, SL 1.5 ATR, T 2R: ₹6,030 / ₹24,459 · win 50% / 46%  → added live, labelled
+  MCX+index WEEKLY-high breakout + trend, SL 1.5 ATR, T 2R: ₹2,719 / ₹24,708 · win 46% / 45% (the 20-week breakout is already live)
+- S/R as SL (beyond the level) or as target (next level) did not beat ATR-based SL / R-multiple targets.
