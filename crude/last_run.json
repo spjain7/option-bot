@@ -1,12 +1,12 @@
 {
- "time": "2026-10-27 05:32:09.061393",
+ "time": "2026-10-27 05:47:08.686084",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
  "run": {
   "event": "schedule",
   "number": "27",
-  "delay_min": 0.2,
+  "delay_min": 0.1,
   "previous_run": {
    "number": 13,
    "event": "workflow_dispatch",
@@ -27,8 +27,8 @@
   "bars_1h": 584,
   "last_closed_3h": "2026-10-26 21:00:00",
   "bars_3h": 194,
-  "age_15m_min": 362.2,
-  "quote_age_min": 15.1,
+  "age_15m_min": 377.1,
+  "quote_age_min": 6.8,
   "ltp": 9715.0,
   "day_volume": 39987,
   "quality": {
@@ -39,8 +39,13 @@
   "volume": "available",
   "oi_current": 1464200,
   "oi_change": {
-   "status": "UNAVAILABLE",
-   "reason": "no earlier OI snapshot 10-40 min ago for this contract today"
+   "status": "OK",
+   "label": "Flat / no clear OI signal",
+   "d_oi_pct": 0.0,
+   "d_price": 0.0,
+   "gap_min": 23.3,
+   "oi": 1464200,
+   "oi_prev": 1464200
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
