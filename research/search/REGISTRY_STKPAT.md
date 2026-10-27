@@ -10,3 +10,7 @@ PASS: ≥ 100 trades per period, avg ₹/lot > 0 at 2× costs in design (< 2024-
  flag      ₹7,978 / ₹7,614 · win 67% / 72% · 71%  PASS → live
  hs        ₹2,699 / ₹5,317 · win 75% / 75% · 78%  PASS → live
  squeeze   ₹2,833 / ₹4,230 · win 65% / 68% · 70%  PASS (not used – lowest win rate)
+
+## ⚠️ CORRECTION (27-Oct-2026, later): the exit simulator had a bug for SELL trades – the "+1R" check for shorts
+was always true, so half of every short was booked at +1R on the first candle. Re-run with the bug fixed:
+All stock 3h rules LOSE (breakout ₹-3,964 / ₹-2,366, H&S ₹-3,495 / ₹-2,018, win 47-50%) → stock 3h calls OFF.

@@ -11,7 +11,7 @@ Backtest (after costs): design +0.20R/trade, unseen hold-out +0.085R/trade, ~47%
 import time
 import numpy as np
 import pandas as pd
-from alerts import patterns as PT, breakout as BO, signals as S
+from alerts import patterns as PT, breakout as BO, signals as S, report as RP
 from crude import data as CD, indicators as I
 
 ENABLED = True
@@ -124,7 +124,7 @@ def reason_msg(name, sig, lv, plan=None):
 # ── 3-hour stock calls (STOCK-PAT-001, research/search/REGISTRY_STKPAT.md): breakout, head & shoulders, double top/bottom,
 #    flag on 3-hour candles (2 per session: 09:15-12:15, 12:15-15:15). Hold-out 2024-26 win rates 72-75%, 71-80% of stocks
 #    positive after costs. Exits: stop 2 ATR, book 50% at T1 + stop to entry, trailing 3 ATR (3h closes), max 40 candles.
-STOCK3H_ENABLED = True
+STOCK3H_ENABLED = False          # OFF: lost money once the exit-simulator bug was fixed (STOCK-PAT-001)
 STOCK3H_KINDS = ("hs", "double", "flag")
 NOTE3H = ("📚 Backtest 2022-26 (stock futures, 3h, after costs, book 50% at T1 + stop to entry): breakouts and patterns won "
           "~72-75% of trades in 2024-26 – not guaranteed.")
@@ -266,6 +266,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                 msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: "
                             f"{'trailing stop' if p['trailed'] else 'stop-loss'} hit · result {r:+.2f}R")
                 state["day"].setdefault("outcomes", []).append(dict(name=p["name"], tf="1d", side=p["side"], result=f"stop {r:+.2f}R"))
+                BO.close_ledger(state, p.get("key"), float(ltp), "stop", now)
             else:
                 keep.append(p)
         st["active"] = keep
@@ -316,6 +317,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                 r = s_ * (px - p["entry"]) / p["risk"]
                 msgs.append(f"⏹ EXIT – {name} FUT {p['side']} at ~{BO._f(px)}: "
                             f"{'expiry day – exit (or roll with the same stop)' if p['n'] < CFG['max_days'] else '40-session time exit'} · {r:+.2f}R")
+                BO.close_ledger(state, p.get("key"), px, "expiry/time exit", now)
                 st["active"] = [x for x in st["active"] if x is not p]
         if len(d) < 30:
             continue
@@ -333,9 +335,26 @@ def scan(api, master, now, state, msgs, rep, engine):
                                 opt=BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)))
         msgs.append(reason_msg(name, sig, lv, BO.details("NFO", cc, "1d", sig, lv, k=CFG["stop_atr"])))
         s_ = 1 if sig["side"] == "BUY" else -1
+        key = f"{name}|1dSTK|{last}"
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=sig["close"],
                                  stop=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), risk=CFG["stop_atr"] * sig["atr"],
-                                 best=sig["close"], trailed=False, n=0, last_candle=last))
+                                 best=sig["close"], trailed=False, n=0, last_candle=last, key=key))
+        RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional (daily)",
+               side=sig["side"], entry=round(sig["close"], 2), sl=round(sig["close"] - s_ * CFG["stop_atr"] * sig["atr"], 2), target=None,
+               lot=c["lot"], mult=c["lot"], time=str(now))
+        opt = BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)
+        if opt:
+            prem = None
+            try:
+                prem = float((api.quotes({"NFO": [opt["token"]]}).get(opt["token"]) or {}).get("ltp") or 0) or None
+            except Exception:
+                prem = None
+            om, (osl, otg) = BO.option_msg(name, "NFO", "1d", sig, opt, prem, k=CFG["stop_atr"])
+            msgs.append(om)
+            if prem:
+                RP.add(state, key=key + "|OPT", mark_key=c["token"], seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
+                       type="Positional (daily)", side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=None, lot=opt["lot"],
+                       mult=opt["lot"], time=str(now), und_entry=sig["close"], und_side=sig["side"])
         state["day"]["alerts"] += 1
         found += 1
         if hasattr(api, "api"):

@@ -68,7 +68,7 @@ obuy() {
 
 iteration() {
   options
-  obuy
+  # obuy  – OFF 27-Oct-2026: one system – option-BUY calls now come with every futures call (alerts/), not from separate rules
   # ---- buy/sell alerts ----
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n

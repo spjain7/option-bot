@@ -59,6 +59,21 @@ def _pack(msgs, limit=3800):
     return out
 
 
+def send_photo(path, caption):
+    """Send a PNG to the Telegram chat. Returns (ok, detail). Never prints the token."""
+    import requests
+    tok, chat = os.getenv("TELEGRAM_TOKEN", ""), os.getenv("TELEGRAM_CHAT_ID", "")
+    if not tok or not chat or not Path(path).exists():
+        return False, "no token/chat or image"
+    try:
+        with open(path, "rb") as f:
+            r = requests.post(f"https://api.telegram.org/bot{tok}/sendPhoto", data={"chat_id": chat, "caption": caption[:1000]},
+                              files={"photo": f}, timeout=30)
+        return (True, "ok") if r.ok else (False, f"HTTP {r.status_code}")
+    except Exception as e:
+        return False, type(e).__name__
+
+
 def flush():
     import time
     from crude.run import telegram
@@ -71,10 +86,17 @@ def flush():
     if os.getenv("SAVE_OK", "success") != "success":
         msgs = ["⚠️ ALERTS – state could not be saved this run; alerts below may repeat next run.\n"] + msgs
     if len(msgs) > MAX_SINGLE:
-        msgs = _pack(msgs)
+        photos = [m for m in msgs if m.startswith("PHOTO::")]
+        msgs = photos + _pack([m for m in msgs if not m.startswith("PHOTO::")])
     failed = []
     for k, m in enumerate(msgs):
-        ok, d = telegram(m) if os.getenv("ALERTS_TELEGRAM", "1") == "1" else (True, "telegram off")
+        if m.startswith("PHOTO::"):
+            _, path, cap = m.split("::", 2)
+            ok, d = send_photo(path, cap) if os.getenv("ALERTS_TELEGRAM", "1") == "1" else (True, "telegram off")
+            if not ok:
+                ok, d = True, f"photo not sent ({d}) – text version follows"
+        else:
+            ok, d = telegram(m) if os.getenv("ALERTS_TELEGRAM", "1") == "1" else (True, "telegram off")
         print(("sent" if ok else "TELEGRAM FAILED") + f": {d} | {m.splitlines()[0][:80]}")
         if not ok:
             failed.append(m)

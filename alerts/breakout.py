@@ -11,12 +11,16 @@ import pandas as pd
 from crude import indicators as I
 
 CFG = dict(N=20, vol_x=1.5, stop_atr=2.0, trail_atr=3.0, max_candles=40, ema=200)
-# EXIT-001 (27-Oct-2026, research/search/REGISTRY_EXIT.md): daily stop 1.5 ATR (better than 2 ATR in design AND hold-out);
-# 3h: book 50% at T1 (1R) and move the stop to entry – same profit as before (97-160%), win rate 41% -> 79-83%.
+# Exits (27-Oct-2026, after fixing a short-side bug in the exit simulator – research/search/REGISTRY_EXIT.md):
+#  3h : stop 2 ATR + ONE target at 3R (full exit) + 40-candle time exit. Trend change = WARNING message only
+#       (exiting on it tested worse). Booking 50% at T1 was REMOVED – with the corrected test it lost money.
+#  1d : stop 1.5 ATR, no fixed target – trailing stop 3 ATR + exit when a daily close crosses back over EMA20
+#       (both better than the old exit in design and hold-out). A fixed daily target cut profit by 35-90%.
 STOP_ATR = {"3h": 2.0, "1d": 1.5}
-HALF_AT_T1 = {"3h": True, "1d": False}
-# TREND-EXIT-001: daily calls exit when a daily candle closes back across EMA20 (trend change) – better in design and hold-out
+TARGET_R = {"3h": 3.0, "1d": None}
+TRAIL = {"3h": False, "1d": True}
 TREND_EXIT_EMA = {"1d": 20}
+TREND_WARN_EMA = {"3h": 20}
 
 
 def stop_k(tf):
@@ -77,7 +81,7 @@ def _levels(sig, live, k=2.0):
     return s, ref, R
 
 
-OPT_MIN_DAYS = {"3h": 5, "1d": 15}     # option expiry must be at least this many days away (time to work)
+OPT_MIN_DAYS = {"3h": 2, "1d": 2}      # nearest option expiry with at least 2 days left (user choice 27-Oct)
 
 
 def option_idea(master, name, ex, px, side, tf, now):
@@ -93,7 +97,8 @@ def option_idea(master, name, ex, px, side, tf, now):
         o = o[o["expiry_dt"] == o["expiry_dt"].min()].copy()
         o["K"] = o["strike"].astype(float) / 100
         r = o.iloc[(o["K"] - px).abs().argsort().iloc[0]]
-        return dict(symbol=r["symbol"], K=float(r["K"]), typ=typ, expiry=pd.Timestamp(r["expiry_dt"]), lot=int(r["lotsize"]))
+        return dict(symbol=r["symbol"], token=str(r["token"]), K=float(r["K"]), typ=typ, expiry=pd.Timestamp(r["expiry_dt"]),
+                    lot=int(r["lotsize"]))
     except Exception:
         return None
 
@@ -108,12 +113,9 @@ def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=Non
         "━━━━━━━━━━━━━━",
         f"👉 {'Buy' if s > 0 else 'Sell'} at   : {_f(ref)}",
         f"🛑 Stop loss : {_f(ref - s * R)}",
-        f"🎯 Target 1  : {_f(ref + s * R)}" + ("  (book 50%, SL → entry)" if HALF_AT_T1.get(tf) else ""),
-        f"🎯 Target 2  : {_f(ref + 2 * s * R)}",
-        f"🎯 Target 3  : {_f(ref + 3 * s * R)}",
+        (f"🎯 Target    : {_f(ref + s * TARGET_R[tf] * R)}" if TARGET_R.get(tf)
+         else "🎯 Target    : ride the trend – exit on trailing SL or TREND CHANGE alert"),
         "━━━━━━━━━━━━━━",
-        *([f"🅾️ Option buy: {opt['symbol']} ({opt['K']:g} {opt['typ']}, ATM, exp {opt['expiry']:%d-%b}) · exit when the future hits SL/targets"]
-          if opt else []),
         f"{seg} · {pd.Timestamp(c['expiry']):%b} fut · {kind or SHORT_TF[tf]}" + (f" · lot {lot}" if lot else "")])
 
 
@@ -123,9 +125,9 @@ def details(ex, c, tf, sig, levels, live=None, k=None):
     return ["📋 TRADE PLAN",
             f"📄 Contract: {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · exp {pd.Timestamp(c['expiry']):%d-%b-%Y}",
             f"🚫 Don't chase beyond {_f(ref + s * 0.5 * sig['atr'])}",
-            ("✅ At T1: book 50% and move the stop-loss to entry (no loss possible on the rest)" if HALF_AT_T1.get(tf)
-             else "✅ Hold for the trend – exit on the trailing stop OR when a daily candle closes back across EMA20 (trend change alert)"),
-            "🔁 Trailing SL: 3 ATR from best close (updates follow)",
+            (f"✅ One target {TARGET_R[tf]:g}R – full exit there · ⚠️ TREND CHANGE warning if a 3h close crosses EMA20 against you"
+             if TARGET_R.get(tf) else
+             "✅ No fixed target – exit on the trailing stop (3 ATR from best close) OR the TREND CHANGE alert (daily close across EMA20)"),
             f"🧱 Resistance: {_lv(levels['resistance'])}",
             f"🛟 Support   : {_lv(levels['support'])}",
             f"⏱ Signal candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} ({TFLABEL[tf]}) · alert only – no auto trade",
@@ -163,8 +165,21 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None):
                        "Backtested, not guaranteed · not investment advice."])
 
 
+def close_ledger(state, key, fut_exit, why, now):
+    """Close the futures row and its option-buy row (option exit ≈ entry premium + 0.5 × futures move)."""
+    for L in state.get("ledger", []):
+        if L["status"] != "OPEN" or not key:
+            continue
+        if L.get("key") == key:
+            L.update(status="CLOSED", exit=round(fut_exit, 2), note=why.replace("🎯 ", "")[:24], closed=str(now))
+        elif L.get("key") == key + "|OPT":
+            s = 1 if L.get("und_side") == "BUY" else -1
+            L.update(status="CLOSED", exit=round(max(0.05, L["entry"] + 0.5 * s * (fut_exit - L["und_entry"])), 2),
+                     note=why.replace("🎯 ", "")[:24], closed=str(now))
+
+
 def manage(state, msgs, name, tf, frame, c15, now):
-    """Trailing-stop follow-ups for open breakout alerts of this instrument/timeframe."""
+    """Follow-ups for open breakout alerts of this instrument/timeframe: stop, single target, trailing, trend change."""
     keep = []
     for p in state.get("bo_active", []):
         if p["name"] != name or p["tf"] != tf:
@@ -172,17 +187,12 @@ def manage(state, msgs, name, tf, frame, c15, now):
         s = 1 if p["side"] == "BUY" else -1
         done = None
         bars = c15[c15["time"] > pd.Timestamp(p["checked"])] if c15 is not None and len(c15) else pd.DataFrame()
-        t1 = p["entry"] + s * p["risk"]
-        for b in bars.itertuples():
+        tg = p["entry"] + s * TARGET_R[tf] * p["risk"] if TARGET_R.get(tf) else None
+        for b in bars.itertuples():                       # stop first inside a candle (conservative)
             if (b.low <= p["stop"]) if s > 0 else (b.high >= p["stop"]):
-                done = (p["stop"], "stop at entry (after T1)" if p.get("t1") and p["stop"] == p["entry"]
-                        else "trailing stop hit" if p["trailed"] else "stop-loss hit"); break
-            if HALF_AT_T1.get(tf) and not p.get("t1") and ((b.high >= t1) if s > 0 else (b.low <= t1)):
-                p["t1"] = True
-                if s * (p["entry"] - p["stop"]) > 0:
-                    p["stop"] = p["entry"]
-                msgs.append(f"🎯 T1 HIT – {name} {p['side']} ({tf}) at {_f(t1)} · BOOK 50% now · move stop-loss to entry "
-                            f"{_f(p['entry'])} for the rest (trailing continues)")
+                done = (p["stop"], "trailing stop hit" if p["trailed"] else "stop-loss hit"); break
+            if tg is not None and ((b.high >= tg) if s > 0 else (b.low <= tg)):
+                done = (tg, "🎯 TARGET HIT"); break
         if len(bars):
             p["checked"] = str(bars["time"].iloc[-1])
         if done is None and frame is not None and len(frame) and str(frame["time"].iloc[-1]) != p["last_candle"]:
@@ -192,25 +202,50 @@ def manage(state, msgs, name, tf, frame, c15, now):
                 p["best"] = max(p["best"], b.close) if s > 0 else min(p["best"], b.close)
                 p["n"] += 1
             p["last_candle"] = str(frame["time"].iloc[-1])
-            ns = p["best"] - s * CFG["trail_atr"] * a
-            if s * (ns - p["stop"]) > 0.25 * a:
-                p["stop"], p["trailed"] = round(ns, 2), True
-                msgs.append(f"🔁 TRAIL UPDATE – {name} {p['side']} ({tf}) · new stop {_f(p['stop'])} · best close {_f(p['best'])} · "
-                            f"open P&L {s * (p['best'] - p['entry']) / p['risk']:+.1f}R")
+            cl = float(frame["close"].iloc[-1])
+            if TRAIL.get(tf):
+                ns = p["best"] - s * CFG["trail_atr"] * a
+                if s * (ns - p["stop"]) > 0.25 * a:
+                    p["stop"], p["trailed"] = round(ns, 2), True
+                    msgs.append(f"🔁 TRAIL UPDATE – {name} {p['side']} ({tf}) · new stop {_f(p['stop'])} · best close {_f(p['best'])}")
             te = TREND_EXIT_EMA.get(tf)
             if te and len(frame) > te:
-                e = float(I.ema(frame["close"], te).iloc[-1]); cl = float(frame["close"].iloc[-1])
+                e = float(I.ema(frame["close"], te).iloc[-1])
                 if (cl < e) if s > 0 else (cl > e):
                     done = (cl, f"TREND CHANGE – daily close {'below' if s > 0 else 'above'} EMA{te} ({_f(e)})")
+            tw = TREND_WARN_EMA.get(tf)
+            if done is None and tw and len(frame) > tw and not p.get("warned"):
+                e = float(I.ema(frame["close"], tw).iloc[-1])
+                if (cl < e) if s > 0 else (cl > e):
+                    p["warned"] = True
+                    msgs.append(f"⚠️ TREND CHANGE WARNING – {name} {p['side']} ({tf}): 3h close {_f(cl)} {'below' if s > 0 else 'above'} "
+                                f"EMA{tw} ({_f(e)}) · stop {_f(p['stop'])} · consider exiting early to cut the loss "
+                                f"(open {s * (cl - p['entry']) / p['risk']:+.1f}R)")
             if done is None and p["n"] >= CFG["max_candles"]:
-                done = (frame["close"].iloc[-1], f"time exit after {CFG['max_candles']} candles")
+                done = (cl, f"time exit after {CFG['max_candles']} candles")
         if done:
             r = s * (done[0] - p["entry"]) / p["risk"]
-            if p.get("t1"):
-                r = 0.5 * 1.0 + 0.5 * r                    # half booked at T1 (+1R) + rest
-            msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {name} {p['side']} BREAKOUT ({tf}) at ~{_f(done[0])}: {done[1]} · "
+            msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {name} {p['side']} ({tf}) at ~{_f(done[0])}: {done[1]} · "
                         f"result {r:+.2f}R (entry {_f(p['entry'])})")
             state["day"].setdefault("outcomes", []).append(dict(name=name, tf=tf, side=p["side"], result=f"{done[1]} {r:+.2f}R"))
+            close_ledger(state, p.get("key"), float(done[0]), done[1], now)
         else:
             keep.append(p)
     state["bo_active"] = keep
+
+
+def option_msg(name, ex, tf, sig, opt, prem, live=None, k=None):
+    """Separate OPTION-BUY call for a futures signal: ATM CE (buy) / PE (sell); SL and target follow the future's levels."""
+    s, ref, R = _levels(sig, live, k or stop_k(tf))
+    sl_f, tg_f = ref - s * R, (ref + s * TARGET_R[tf] * R if TARGET_R.get(tf) else None)
+    est = lambda fut: max(0.05, prem + 0.5 * s * (fut - ref)) if prem else None      # ≈ delta 0.5
+    L = [f"{'🟢' if opt['typ'] == 'CE' else '🔴'} OPTION BUY  {name} {opt['K']:g} {opt['typ']}",
+         "━━━━━━━━━━━━━━",
+         f"👉 Buy at    : {('₹' + _f(prem)) if prem else 'market price (LTP not available)'}",
+         f"🛑 Stop loss : exit when {name} fut {'falls to' if s > 0 else 'rises to'} {_f(sl_f)}" + (f" (≈ ₹{_f(est(sl_f))})" if prem else ""),
+         (f"🎯 Target    : exit when {name} fut reaches {_f(tg_f)}" + (f" (≈ ₹{_f(est(tg_f))})" if prem else "")) if tg_f
+         else "🎯 Target    : ride the trend – exit with the futures call (trailing SL / TREND CHANGE alert)",
+         "━━━━━━━━━━━━━━",
+         f"{opt['symbol']} · exp {opt['expiry']:%d-%b} · lot {opt['lot']} · {('MCX' if ex == 'MCX' else 'NSE F&O')} · "
+         f"{'Positional (3-hour)' if tf == '3h' else 'Positional (daily)'}"]
+    return "\n".join(L), (est(sl_f), est(tg_f) if tg_f else None)
