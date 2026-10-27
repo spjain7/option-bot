@@ -392,6 +392,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     if wk is not None and len(wk) and pd.Timestamp(wk["time"].iloc[-1]).to_period("W") == now.to_period("W"):
         wk = wk.iloc[:-1]
     frames["1w"] = wk
+    frames["1m"] = dd                                               # monthly breakout is checked on daily closes
+    htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
     for tf, fr in frames.items():
         BO.manage(state, msgs, name, tf, fr, c15, now)
@@ -402,7 +404,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if state["last_eval"].get(k) == last:
             continue
         state["last_eval"][k] = last
-        sig = BO.evaluate_weekly(fr) if tf == "1w" else BO.evaluate(fr)
+        sig = BO.evaluate_weekly(fr) if tf == "1w" else BO.evaluate_monthly(fr) if tf == "1m" else BO.evaluate(fr)
         info[f"bo_{tf}"] = f"{sig['side'] or 'none'} · {sig.get('why', '')} · vol {sig.get('vol_x') or 0:.2f}×"
         if sig.get("hh") is not None:
             state.setdefault("status", {})[f"{name}|{tf}"] = dict(candle=last, close=round(sig["close"], 2), buy_above=round(sig["hh"], 2),
@@ -417,6 +419,11 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             continue
         if sw_day is not None and pd.Timestamp(sig["candle"]).normalize() == sw_day:
             info[f"bo_{tf}"] += " · skipped: contract-switch day (volume distorted)"; continue
+        if oi and oi.get("label") and oi["label"] not in {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}[sig["side"]]:
+            info[f"bo_{tf}"] += f" · skipped: OI {oi['label']} does not confirm"; continue
+        if any(p["name"] == name and p["tf"] in (tf, "1d", "1m") and tf in ("1d", "1m") and p["tf"] != "3h"
+               for p in state["bo_active"]) and tf in ("1d", "1m"):
+            info[f"bo_{tf}"] += " · already in an open daily/monthly call"; continue
         if any(p["name"] == name and p["tf"] == tf for p in state["bo_active"]):
             info[f"bo_{tf}"] += " · already in an open breakout alert"; continue
         sid = f"{k}|{last}|{sig['side']}" + (f"|{sig['pattern']}" if sig.get("pattern") else "")
@@ -430,7 +437,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
         opt = BO.option_idea(master, name, ex, live or sig["close"], sig["side"], tf, now) if master is not None else None
         msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
-        reason = BO.reason_msg(name, tf, sig, lv, oi, q)
+        reason = BO.reason_msg(name, tf, sig, lv, oi, q, htf=htf)
         ref = live or sig["close"]
         key = f"{name}|{tf}|{last}"
         R_ = BO.stop_k(tf) * sig["atr"]
