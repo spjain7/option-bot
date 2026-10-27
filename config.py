@@ -145,7 +145,7 @@ MAX_CAPITAL_USE      = 0.50      # never suggest lots needing more than 50% of c
 
 # ═════════════ MCX OPTION SELLING (commodity options on futures) ═════════════
 MCX_OPTIONS_ENABLED  = True
-MCX_UNDERLYINGS      = ["CRUDEOIL", "NATURALGAS", "GOLD", "SILVER", "GOLDM", "SILVERM"]
+MCX_UNDERLYINGS      = ["CRUDEOIL", "NATURALGAS", "GOLD", "SILVER"]   # mega lots only (27-Oct: GOLDM/SILVERM removed – duplicate calls)
 MCX_FIRST_SCAN       = "10:00"   # after first 1-hour candle (09:00-10:00)
 MCX_LAST_ENTRY       = "22:30"
 MCX_INTRADAY_EXIT    = "23:00"
@@ -194,6 +194,6 @@ RSI_OVERSOLD         = 20
 RSI_OVERBOUGHT       = 80
 RSI_ALERT_MODE       = "entry_and_continuation"   # "entry" | "every_hour" | "entry_and_continuation"
 RSI_NSE              = ["NIFTY", "BANKNIFTY", "FINNIFTY", "SENSEX"]             # spot indices
-RSI_MCX              = ["GOLD", "GOLDM", "SILVER", "SILVERM", "COPPER", "CRUDEOIL",
-                        "NATURALGAS", "NATGASMINI", "ALUMINIUM", "ZINC"]         # near-month futures
+RSI_MCX              = ["GOLD", "SILVER", "COPPER", "CRUDEOIL",
+                        "NATURALGAS", "ALUMINIUM", "ZINC"]         # near-month futures (mega lots only)
 RSI_SHOW_HISTORY     = True      # add past statistics after similar RSI extremes (info only)
