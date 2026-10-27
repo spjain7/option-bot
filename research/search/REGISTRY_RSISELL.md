@@ -14,3 +14,9 @@ sr (close within 0.5 daily ATR of the 20-day high for CE sells / 20-day low for 
 against (daily trend is against the RSI move: CE sell when yesterday's close < daily EMA50, PE sell when above).
 Contract-switch / rollover days excluded. Design < 2024-07-01, hold-out after.
 PASS (per universe, per rule): in BOTH periods n ≥ 60, WIN ≥ 80% and WIN ≥ baseline + 5 points.
+
+## RESULT (27-Oct-2026): 0 of 396 rules passed
+Selling 1 daily-ATR OTM after hourly RSI > 80 / < 25 does win often (stocks next day: CE 86-91%, PE 91%), but selling the
+same strike on ANY day at 11:00 wins just as often or more (baseline 90-94%). RSI extremes add no edge; adding
+volume / OI / support-resistance filters did not create one either (none ≥ baseline + 5 points in both periods).
+INDEX: too few RSI extremes (29 / 10 CE, 18 / 65 PE) to judge. Option-selling engine left unchanged.
