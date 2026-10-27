@@ -1,5 +1,5 @@
 {
- "time": "2026-10-27 20:47:37.027673",
+ "time": "2026-10-27 21:03:28.409691",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -15,38 +15,38 @@
   }
  },
  "api": {
-  "15m": "ok (839 candles, last start 27-Oct 20:45)",
-  "1h": "ok (1046 candles, last start 27-Oct 20:00)",
+  "15m": "ok (839 candles, last start 27-Oct 21:00)",
+  "1h": "ok (1047 candles, last start 27-Oct 21:00)",
   "quote": "ok"
  },
  "data": {
   "roll": "20-Aug not measurable (history cut), 22-Sep old\u2212new +293, 20-Oct old\u2212new +345",
-  "last_closed_15m": "2026-10-27 20:30:00",
+  "last_closed_15m": "2026-10-27 20:45:00",
   "bars_15m": 838,
-  "last_closed_1h": "2026-10-27 19:00:00",
-  "bars_1h": 595,
-  "last_closed_3h": "2026-10-27 15:00:00",
-  "bars_3h": 197,
-  "age_15m_min": 2.6,
+  "last_closed_1h": "2026-10-27 20:00:00",
+  "bars_1h": 596,
+  "last_closed_3h": "2026-10-27 18:00:00",
+  "bars_3h": 198,
+  "age_15m_min": 3.5,
   "quote_age_min": -0.1,
-  "ltp": 9517.0,
-  "day_volume": 35933,
+  "ltp": 9536.0,
+  "day_volume": 36502,
   "quality": {
    "blocks": [],
    "notes": [],
    "missing_15m_today": 0,
-   "quote_vs_candle_atr": 0.02
+   "quote_vs_candle_atr": 0.25
   },
   "volume": "available",
-  "oi_current": 1473100,
+  "oi_current": 1473600,
   "oi_change": {
    "status": "OK",
-   "label": "Short buildup",
-   "d_oi_pct": 0.402,
-   "d_price": -16.0,
-   "gap_min": 13.7,
-   "oi": 1473100,
-   "oi_prev": 1467200
+   "label": "Flat / no clear OI signal",
+   "d_oi_pct": 0.034,
+   "d_price": 19.0,
+   "gap_min": 15.9,
+   "oi": 1473600,
+   "oi_prev": 1473100
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
   "daily_pnl": 0.0,
@@ -57,35 +57,30 @@
   "intraday": {
    "decision": "NONE",
    "blocks": [
-    "1-hour trend MIXED: close 9567 EMA20 9657 EMA50 9593 EMA200 9155 ADX 10.0"
+    "1-hour trend MIXED: close 9523 EMA20 9644 EMA50 9591 EMA200 9159 ADX 9.7"
    ],
    "metrics": {
     "trend_1h": "MIXED",
-    "trend_1h_detail": "close 9567 EMA20 9657 EMA50 9593 EMA200 9155 ADX 10.0",
-    "adx_1h": 10.007160772429359,
-    "rsi": 35.77072245380512
+    "trend_1h_detail": "close 9523 EMA20 9644 EMA50 9591 EMA200 9159 ADX 9.7",
+    "adx_1h": 9.70014055314398,
+    "rsi": 36.91044451033121
    },
-   "bar_time": "2026-10-27 20:30:00",
+   "bar_time": "2026-10-27 20:45:00",
    "new_candle": true
   },
   "positional": {
    "decision": "NONE",
-   "side": "BUY",
    "blocks": [
-    "swing structure not HH/HL: swings H 9828\u21929827, L 9576\u21929562"
+    "3-hour trend MIXED: close 9523 EMA20 9550 EMA50 9270 EMA200 n/a (history 198 bars) ADX 36.9"
    ],
    "metrics": {
-    "trend_3h": "UP",
-    "trend_3h_detail": "close 9589 EMA20 9552 EMA50 9260 EMA200 n/a (history 197 bars) ADX 38.1",
-    "adx_3h": 38.05402744760518,
-    "rsi": 55.439779377499725,
-    "vol_x": 1.7992508695264424,
-    "atr": 155.40784222549715,
-    "atr_x": 0.9616017106955285,
-    "structure": "swings H 9828\u21929827, L 9576\u21929562"
+    "trend_3h": "MIXED",
+    "trend_3h_detail": "close 9523 EMA20 9550 EMA50 9270 EMA200 n/a (history 198 bars) ADX 36.9",
+    "adx_3h": 36.88021964253274,
+    "rsi": 52.10384388178416
    },
-   "bar_time": "2026-10-27 15:00:00",
-   "new_candle": false
+   "bar_time": "2026-10-27 18:00:00",
+   "new_candle": true
   }
  },
  "actions": [],
