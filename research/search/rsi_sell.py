@@ -32,6 +32,7 @@ def study(name, h, oi, bad_days):
         d["weak_up"] = d["weak_dn"] = False
     days = list(d.index); pos = {x: i for i, x in enumerate(days)}
     rows, done = [], set()
+    HD = {k: g for k, g in h.groupby("day")}
     for r in h.itertuples():
         if r.day in done or pd.isna(r.rsi) or r.day not in pos:
             continue
@@ -48,7 +49,8 @@ def study(name, h, oi, bad_days):
         dr = d.iloc[i]
         if pd.isna(dr.atr):
             continue
-        after = h[(h["time"] > r.time) & (h["day"] <= days[i + 5])]
+        g0 = HD[r.day]
+        after = pd.concat([g0[g0["time"] > r.time]] + [HD[x] for x in days[i + 1:i + 6] if x in HD])
         fl = {}
         if sig:
             done.add(r.day)
