@@ -388,6 +388,10 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     if dd is not None and len(dd) and is_open(ex, now):                # today's daily candle is still forming
         dd = dd[dd["time"].dt.normalize() < now.normalize()]
     frames["1d"] = dd
+    wk = BO.weekly_candles(dd)                                      # completed weeks only (current week still forming)
+    if wk is not None and len(wk) and pd.Timestamp(wk["time"].iloc[-1]).to_period("W") == now.to_period("W"):
+        wk = wk.iloc[:-1]
+    frames["1w"] = wk
     state.setdefault("bo_active", [])
     for tf, fr in frames.items():
         BO.manage(state, msgs, name, tf, fr, c15, now)
@@ -398,7 +402,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if state["last_eval"].get(k) == last:
             continue
         state["last_eval"][k] = last
-        sig = BO.evaluate(fr)
+        sig = BO.evaluate_weekly(fr) if tf == "1w" else BO.evaluate(fr)
         info[f"bo_{tf}"] = f"{sig['side'] or 'none'} · {sig.get('why', '')} · vol {sig.get('vol_x') or 0:.2f}×"
         if sig.get("hh") is not None:
             state.setdefault("status", {})[f"{name}|{tf}"] = dict(candle=last, close=round(sig["close"], 2), buy_above=round(sig["hh"], 2),
