@@ -1,5 +1,5 @@
 {
- "time": "2026-10-27 23:32:37.204253",
+ "time": "2026-10-27 23:47:40.356170",
  "version": "crude-paper 1.0.0",
  "mode": "PAPER",
  "run_mode": "scan",
@@ -27,8 +27,8 @@
   "bars_1h": 599,
   "last_closed_3h": "2026-10-27 21:00:00",
   "bars_3h": 199,
-  "age_15m_min": 2.6,
-  "quote_age_min": 2.6,
+  "age_15m_min": 17.7,
+  "quote_age_min": 17.7,
   "ltp": 9505.0,
   "day_volume": 42400,
   "quality": {
@@ -38,14 +38,14 @@
    "quote_vs_candle_atr": 0.0
   },
   "volume": "available",
-  "oi_current": 1489500,
+  "oi_current": 1490300,
   "oi_change": {
    "status": "OK",
    "label": "Long buildup",
-   "d_oi_pct": 0.479,
+   "d_oi_pct": 0.533,
    "d_price": 11.0,
    "gap_min": 12.2,
-   "oi": 1489500,
+   "oi": 1490300,
    "oi_prev": 1482400
   },
   "oi_history": "UNAVAILABLE (Angel getOIData returns AB1012 for MCX)",
@@ -66,7 +66,7 @@
     "rsi": 39.403436819810075
    },
    "bar_time": "2026-10-27 23:30:00",
-   "new_candle": true
+   "new_candle": false
   },
   "positional": {
    "decision": "NONE",
@@ -80,7 +80,7 @@
     "rsi": 51.19900567422604
    },
    "bar_time": "2026-10-27 21:00:00",
-   "new_candle": true
+   "new_candle": false
   }
  },
  "actions": [],
