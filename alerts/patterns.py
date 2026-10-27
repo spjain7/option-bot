@@ -24,7 +24,7 @@ def _pivots(h, l):
     return ph, pl
 
 
-def detect(df):
+def detect(df, kinds=("hs", "flag")):
     """Pattern completed on the LAST candle of df: (side +1/-1/0, pattern name, neckline/level)."""
     o, h, l, c = (df[x].values.astype(float) for x in ("open", "high", "low", "close"))
     a = I.atr(df, 14).values
@@ -35,8 +35,23 @@ def detect(df):
     ph, pl = _pivots(h, l)
     lows = [j for j in range(n - K) if pl[j] and j + K <= i]
     highs = [j for j in range(n - K) if ph[j] and j + K <= i]
+    # double bottom / top (stock futures only – STOCK-PAT-001)
+    if "double" in kinds and len(lows) >= 2:
+        l1, l2 = lows[-2:]
+        hb = [x for x in highs if l1 < x < l2]
+        if hb and l2 - l1 >= 5 and abs(l[l1] - l[l2]) <= 0.5 * a[i] and i - l2 <= 30:
+            neck = max(h[x] for x in hb)
+            if c[i] > neck >= c[i - 1]:
+                return 1, "DOUBLE BOTTOM", neck
+    if "double" in kinds and len(highs) >= 2:
+        h1, h2 = highs[-2:]
+        lb = [x for x in lows if h1 < x < h2]
+        if lb and h2 - h1 >= 5 and abs(h[h1] - h[h2]) <= 0.5 * a[i] and i - h2 <= 30:
+            neck = min(l[x] for x in lb)
+            if c[i] < neck <= c[i - 1]:
+                return -1, "DOUBLE TOP", neck
     # head & shoulders (inverse = bullish)
-    if len(lows) >= 3:
+    if "hs" in kinds and len(lows) >= 3:
         a1, b1, c1 = lows[-3:]
         if l[b1] < l[a1] and l[b1] < l[c1] and abs(l[a1] - l[c1]) <= a[i] and i - c1 <= 30:
             hb = [x for x in highs if a1 < x < c1]
@@ -44,7 +59,7 @@ def detect(df):
                 neck = max(h[x] for x in hb)
                 if c[i] > neck >= c[i - 1]:
                     return 1, "INVERSE HEAD & SHOULDERS", neck
-    if len(highs) >= 3:
+    if "hs" in kinds and len(highs) >= 3:
         a1, b1, c1 = highs[-3:]
         if h[b1] > h[a1] and h[b1] > h[c1] and abs(h[a1] - h[c1]) <= a[i] and i - c1 <= 30:
             lb = [x for x in lows if a1 < x < c1]
@@ -53,7 +68,7 @@ def detect(df):
                 if c[i] < neck <= c[i - 1]:
                     return -1, "HEAD & SHOULDERS", neck
     # flag
-    for m in range(3, 9):
+    for m in (range(3, 9) if "flag" in kinds else ()):
         s0 = i - m
         if s0 - 6 < 0:
             break
@@ -68,11 +83,11 @@ def detect(df):
     return 0, None, None
 
 
-def evaluate(df):
+def evaluate(df, kinds=("hs", "flag")):
     """Same output shape as breakout.evaluate, plus 'pattern' and 'level'."""
     if df is None or len(df) < 60:
         return dict(side=None, why="not enough candles for patterns")
-    s, name, lvl = detect(df)
+    s, name, lvl = detect(df, kinds)
     c, v = df["close"], df["volume"].astype(float)
     va = v.rolling(20).mean().shift(1).iloc[-1]
     x = df.iloc[-1]
@@ -83,18 +98,18 @@ def evaluate(df):
     return dict(out, side={1: "BUY", -1: "SELL"}.get(s), why=None if s else "no pattern")
 
 
-def reason_msg(name, tf, sig, levels, oi=None, plan=None):
+def reason_msg(name, tf, sig, levels, oi=None, plan=None, note=None):
     s = 1 if sig["side"] == "BUY" else -1
     f = lambda v: f"{v:,.2f}" if abs(v) < 1000 else f"{v:,.0f}"
     pts = [f"📐 Pattern: {sig['pattern']} completed – candle closed at {f(sig['close'])}, "
-           f"{'above' if s > 0 else 'below'} the {'neckline' if 'SHOULDERS' in sig['pattern'] else 'flag'} {f(sig['level'])}"]
+           f"{'above' if s > 0 else 'below'} the {'flag' if 'FLAG' in sig['pattern'] else 'neckline'} {f(sig['level'])}"]
     if sig.get("vol_x"):
         pts.append(f"🔊 Volume: {sig['vol_x']:.1f}× normal")
     pts.append(f"🧭 200 EMA {f(sig['ema200'])}: price {'above' if sig['close'] > sig['ema200'] else 'below'}")
     pts.append(f"💪 ADX {sig['adx']:.0f} · 📊 RSI {sig['rsi']:.0f}")
     if oi and oi.get("label"):
         pts.append(f"🏦 OI: {oi['label']} ({oi['chg_pct']:+.2f}% in {oi['gap_min']:.0f} min)")
-    pts.append("📚 Backtest 2022-26 (3h, after costs, book 50% at T1 + stop to entry): flags won ~80%, "
-               "head & shoulders ~79-85% of trades – not guaranteed.")
+    pts.append(note or ("📚 Backtest 2022-26 (3h, after costs, book 50% at T1 + stop to entry): flags won ~80%, "
+                        "head & shoulders ~79-85% of trades – not guaranteed."))
     return "\n".join([f"💡 {sig['side']} {name} – {sig['pattern']} – details & reason", "━━━━━━━━━━━━━━━━━━",
                       *(plan or []), *pts, "Backtested, not guaranteed · not investment advice."])
