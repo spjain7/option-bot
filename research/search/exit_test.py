@@ -17,14 +17,16 @@ def run(f, sig, swd, nx, sk, tk, be, half, cost, tx=None):
     for i in range(210, len(c) - 1):
         if pos is not None:
             s, e0, st, risk, k0, best, booked, bank = pos
-            if not booked and half and ((h[i] >= e0 + s * risk) if s > 0 else (l[i] <= e0 - s * risk)):
-                bank += 0.5 * risk; booked = True              # half lot booked at +1R
-                st = e0 if s * (e0 - st) > 0 else st
-            if be and not half and not booked and ((h[i] >= e0 + s * risk) if s > 0 else (l[i] <= e0 - s * risk)):
-                booked = True; st = e0 if s * (e0 - st) > 0 else st
             px = None
+            # conservative candle order: the CURRENT stop is checked first (a candle touching both the stop and T1 = stop)
             if (o[i] <= st) if s > 0 else (o[i] >= st): px = o[i]
             elif (l[i] <= st) if s > 0 else (h[i] >= st): px = st
+            if px is None and not booked and (half or be) and ((h[i] >= e0 + s * risk) if s > 0 else (l[i] <= e0 - s * risk)):
+                if half: bank += 0.5 * risk
+                booked = True
+                st = e0 if s * (e0 - st) > 0 else st
+                if (l[i] <= st) if s > 0 else (h[i] >= st): px = st     # back to entry inside the same candle
+            if px is not None: pass
             elif nx[i] or i - k0 >= 40: px = c[i] if nx[i] else o[i + 1]
             elif tx and ((c[i] < f[tx][i]) if s > 0 else (c[i] > f[tx + "_s"][i])): px = c[i]
             if px is not None:

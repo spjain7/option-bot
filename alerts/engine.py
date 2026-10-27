@@ -5,7 +5,8 @@ MCX futures + NIFTY / BANKNIFTY futures. ALERTS ONLY: no orders, no auto-trading
 """
 import pandas as pd
 from crude import data as CD
-from alerts import signals as S, breakout as BO
+from alerts import signals as S, breakout as BO, patterns as PT
+PATTERN_TFS = ("3h",)          # chart-pattern calls passed only on 3-hour candles (INST-PAT-001)
 
 RSI_REVERSAL_CALLS = False   # off since 22-Oct-2026: the RSI-reversal rule lost money in every test (alerts/STATS.md,
                              # research/search). Volume-breakout alerts replace it. Set True to bring the old calls back.
@@ -381,13 +382,18 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             state.setdefault("status", {})[f"{name}|{tf}"] = dict(candle=last, close=round(sig["close"], 2), buy_above=round(sig["hh"], 2),
                                                                    sell_below=round(sig["ll"], 2), ema200=round(sig["ema200"], 2),
                                                                    vol_x=round(sig.get("vol_x") or 0, 2), result=sig["side"] or sig.get("why"))
+        if not sig["side"] and tf in PATTERN_TFS:                     # no breakout -> chart pattern (INST-PAT-001)
+            ps = PT.evaluate(fr)
+            info[f"pat_{tf}"] = ps.get("pattern") or ps.get("why")
+            if ps["side"]:
+                sig = ps
         if not sig["side"]:
             continue
         if sw_day is not None and pd.Timestamp(sig["candle"]).normalize() == sw_day:
             info[f"bo_{tf}"] += " · skipped: contract-switch day (volume distorted)"; continue
         if any(p["name"] == name and p["tf"] == tf for p in state["bo_active"]):
             info[f"bo_{tf}"] += " · already in an open breakout alert"; continue
-        sid = f"{k}|{last}|{sig['side']}"
+        sid = f"{k}|{last}|{sig['side']}" + (f"|{sig['pattern']}" if sig.get("pattern") else "")
         if sid in state["seen"]:
             continue
         state["seen"] = (state["seen"] + [sid])[-2000:]
@@ -396,8 +402,12 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         s_ = 1 if sig["side"] == "BUY" else -1
         if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
             info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
-        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
-        msgs.append(BO.reason_msg(name, tf, sig, lv, oi, q, BO.details(ex, c, tf, sig, lv, live)))
+        if sig.get("pattern"):
+            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live, kind=f"3-hour · {sig['pattern'].title()}"))
+            msgs.append(PT.reason_msg(name, tf, sig, lv, oi, BO.details(ex, c, tf, sig, lv, live)))
+        else:
+            msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
+            msgs.append(BO.reason_msg(name, tf, sig, lv, oi, q, BO.details(ex, c, tf, sig, lv, live)))
         ref = live or sig["close"]
         state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * BO.stop_k(tf) * sig["atr"], 2),
                                        risk=BO.stop_k(tf) * sig["atr"], best=ref, trailed=False, n=0, last_candle=last,
