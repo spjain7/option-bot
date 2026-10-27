@@ -12,7 +12,7 @@ import pandas as pd
 MCX_RS_PER_POINT = {"CRUDEOIL": 100, "NATURALGAS": 1250, "GOLD": 100, "SILVER": 30, "COPPER": 2500, "ZINC": 5000, "ALUMINIUM": 5000}
 OPT_STATE_CANDIDATES = [os.getenv("OPT_STATE_FILE", ""), "/tmp/opt/state/state.json",
                         str(Path(__file__).resolve().parents[1] / "state" / "state.json")]
-CALL_TYPE = {"3h": "Positional", "1d": "Positional", "1w": "Positional (weekly)"}
+CALL_TYPE = {"3h": "Positional", "1d": "Positional", "1w": "Positional (weekly)", "1m": "Positional (monthly)"}
 
 
 def mult_for(name, ex, lot):
