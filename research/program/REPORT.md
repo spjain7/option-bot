@@ -174,3 +174,32 @@ Script `research/program/reversal.py`; tables in `results/rev_tables.md` and `re
 - **Costs on intraday candles** take 0.07–0.21R per trade because intraday stops are small.
 
 **Conclusion:** RSI-extreme reversal entries for futures, with any mix of candle, volume, ADX, OI, VWAP and EMA confirmation, do not reach 70 % wins with a profit on 1-hour or 15-minute candles. The RSI-80/25 rule stays where it is live today: as an option-SELL trigger. That is a different trade (premium decay) and cannot be backtested without option-price history.
+
+## Addendum: EMAX-002, EMA crossover with volume and OI (owner's request), 28-Oct-2026
+Script `research/program/emax.py`; tables in `results/emax_tables.md` and `results/emax_variants.csv`. 1,527 variants were tested:
+- **EMA pairs:** 9/21, 20/50, 50/200 (+ 5/13 on 15m and 1h).
+- **Confirmations:** volume, OI and EMA200 in all combinations.
+- **Exits:** 3 (opposite cross, 2-ATR stop with 2R target, 3-ATR trailing stop).
+- **Timeframes:** 15m, 1h, 3h, daily.
+- **Markets:** MCX, index, stocks, NSE 2011–26, international proxies 2005–26.
+
+40 variants are profitable at 2× costs (PF ≥ 1.2) in every period. They cluster in **MCX BUY on 3-hour candles**:
+
+| Candidate | Trades | Win % | Exp 1× (2×) | PF | Max DD R | By instrument | By year |
+|---|---|---|---|---|---|---|---|
+| MCX 3h EMA9/21 BUY above EMA200, exit on opposite cross (3-ATR safety stop) | 400 | 39 | +0.32 (+0.27) | 1.98 | 9.6 | 6 of 7 positive (GOLD +0.82, CRUDE +0.54, SILVER +0.29; COPPER −0.07) | 2022 ≈ 0, 2023 −0.04, 2024 +0.51, 2025 +0.38, 2026 +0.27 |
+| Same, plus volume ≥ 1.5× | 101 | 41 | +0.30 (+0.26) | 2.03 | 4.1 | mixed (n small) | |
+| Same, no EMA200 filter | 658 | 37 | +0.22 (+0.17) | 1.67 | 12.3 | 5 of 7 | |
+| MCX 3h EMA9/21 SELL (comparison) | 654 | 33 | −0.02 (−0.07) | 0.96 | 39.6 | 1 of 7 | negative |
+| Proxy (international) daily 20/50 BUY, 2005–26 | 276 | 32 | +0.28 (+0.26) | 1.51 | 30.1 | 5 of 6 | long losing years (2013–15, 2018) |
+| Stocks 3h EMA50/200 SELL, exit on opposite cross | 715 | 54 | +0.15 (+0.13) | 1.52 | 18.5 | broad | positive every year |
+| Stocks 3h EMA9/21 BUY + OI long buildup | 852 | 37 | −0.04 (−0.06) | 0.88 | 64 | — | negative (OI confirmation does not help) |
+| Index 3h EMA9/21 BUY | 80 | 33 | +0.01 (−0.02) | 1.03 | | | no edge |
+
+**Conclusions:**
+- **The EMA crossover is a trend-following edge for MCX BUY:** a low win rate (about 40 %), but winners average +1.6R and losers −0.5R.
+- **Not 80 % accuracy.**
+- **Volume adds little; OI cannot be tested for MCX** (no history) and **does not help for stocks.**
+- **MCX 3h EMA BUY overlaps with the live 3h breakout BUY** (both are trend-following on the same instruments).
+- **The stocks 3h 50/200 SELL is a new, broad, modest candidate.**
+- **Recommendation:** shadow-log both before any live use.
