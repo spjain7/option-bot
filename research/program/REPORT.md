@@ -302,3 +302,29 @@ Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
   | Hammer BUY | Stocks | — | — | about −0.05R | |
 
 - **Next-day-open entry (no breakout wait) is much worse** for all patterns. Waiting for the breakout is what makes these work.
+
+## Addendum: RR1-001, the four candle patterns with a 1:1 target, 28-Oct-2026
+- **Script:** `research/program/rr1.py`; trades in `results/rr1_trades.csv.gz`.
+- **Windows:** 1h and 3h, last 2 months (pattern from 22-Aug-2026); daily, last 1 year (from 22-Oct-2025). Full 2022–26 history is shown for comparison.
+- **Rules:** EMA20/50 trend; breakout entry; stop beyond the pattern; target 1R; net of normal costs.
+
+**Break-even win rate.** At 1:1, the win rate needed to break even is above 50% by the cost share of R:
+
+| Timeframe and market | Cost per trade | Win rate needed |
+|---|---|---|
+| 1h MCX | ~0.3R | ~60% |
+| 1h stocks | ~0.15R | ~55% |
+| Daily | ~0.05R | ~52–53% |
+
+**Findings:**
+- **Recent window:**
+  - Stock SELL patterns were strong (hanging man and bearish engulfing, 59–68% wins on 1h, 3h and daily).
+  - Stock BUY patterns were weak (34–48% wins). This matches a falling stock market in Aug–Oct 2026.
+  - MCX 1h/3h BUY hammer: 63% and 70% wins.
+- **Full history (2022–26), win rates are mostly 50–60%. Positive after costs:**
+  - MCX daily hammer: 63%, +0.15R;
+  - MCX daily bullish engulfing: 62%, +0.19R;
+  - stocks daily hanging man: 58%, +0.14R;
+  - index daily hanging man: 74%, +0.44R (n = 19).
+- **Full history, negative after costs:** most 1h patterns. They win 51–56%, but costs take 0.15–0.3R of each trade.
+- **Ambiguous candles:** few. Up to 4% of 1h stock trades touched the stop and the target in the same candle; the "best case" win rate moves by 1–4 points.
