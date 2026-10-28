@@ -56,6 +56,11 @@ if __name__ == "__main__":
         rows = [r for x in p.map(one, list(man["name"])) for r in x]
     T = pd.DataFrame(rows)
     out = ROOT / "research/dq/results"; out.mkdir(parents=True, exist_ok=True)
+    T["cause"] = np.select(
+        [(T["old"] == T["new"]) & (T["old_be"] == T["new_be"]), T["hold"], T["truncated"], T["applied"],
+         T["why"].astype(str).str.contains("OI change not usable")],
+        ["unchanged", "data hold", "demerger: pre-event history dropped", "price history adjusted for a verified split/bonus",
+         "OI validation"], default="UNEXPLAINED")
     T.to_csv(out / "signals_old_vs_new.csv", index=False)
     L = ["# Live Stock OI rules – signals before vs after the data-quality fixes (2024-01-01 → 2026-10-22)\n"]
     for lab, a, b in (("OI breakout (BUY + SELL)", "old", "new"), ("Bearish engulfing SELL", "old_be", "new_be")):
@@ -72,9 +77,7 @@ if __name__ == "__main__":
             cause = np.where(add["applied"], "price adjusted for a verified split/bonus", "other")
             L.append("added by cause: " + str(pd.Series(cause).value_counts().to_dict()) + "\n")
             L.append(add[["name", "day", b, "new_doi"]].head(40).to_markdown(index=False) + "\n")
-        unrelated = T[(T[a] != T[b]) & ~T["applied"] & ~T["truncated"] & ~T["hold"] & (T[a].notna() | T[b].notna())]
-        if a == "old":
-            unrelated = unrelated[~unrelated["why"].astype(str).str.contains("OI change not usable")]
+        unrelated = T[(T[a] != T[b]) & (T[a].notna() | T[b].notna()) & (T["cause"] == "UNEXPLAINED")]
         L.append(f"changes NOT explained by a corporate action, hold or OI validation: {len(unrelated)}\n")
     (out / "compare.md").write_text("\n".join(L))
     print("\n".join(L))

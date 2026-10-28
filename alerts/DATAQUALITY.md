@@ -15,6 +15,20 @@ also unchanged.
 | Rollover window | Unchanged: no signal 3 sessions before to 2 sessions after expiry. | `stocks.in_rollover_window` |
 | Logging | Blocked breakouts print `[rejected] stock X: breakout not confirmed – OI change not usable (<reason>)`. Holds are listed under `[stocks] data_holds`. | `run.py` |
 
+## Adjustment maths (NSE method)
+- **Factors:** a split or consolidation A:B (old face value : new face value) has factor **A/B**. A bonus A:B (A new shares
+  for every B held) has factor **(A+B)/B**. Several actions on the same ex-date multiply (e.g. BAJFINANCE: 2/1 × (4+1)/1 = 10).
+- **What changes:** futures prices are divided by the factor; market lot and positions are multiplied by it.
+- **Source of the factor:** each registry entry gives its ratio in `components`. The factor is computed from that ratio
+  when loaded, and an entry whose stated `price_factor` contradicts its ratio is ignored, so the stock goes on hold.
+- **Open calls:** entry, SL, target, best price, risk and ATR are divided by the factor; lot is multiplied by it. The same
+  applies to the report-ledger row (and its `mult`), the linked option-buy row (premium ÷ factor, lot × factor) and the
+  shadow record. Rupee risk per position, reward/risk and P&L per position are therefore unchanged.
+- **Closed calls:** calls closed before the ex-date keep their historical prices.
+- **Restarts:** every record stores its own `ca_adjusted` tags, so a restart cannot apply an event twice.
+- **Lot rounding:** NSE rounds fractional lots (e.g. a 1:2 bonus, factor 1.5). The tracker keeps the exact multiplier so
+  P&L stays continuous.
+
 ## Shadow label: OI +2–4 % (research candidate E1; never changes a live call)
 Every live OI-breakout BUY is written to `state.stk.shadow` with:
 - signal candle and close, validated OI change and extension;
