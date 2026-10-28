@@ -1,0 +1,84 @@
+
+##### without the stop-width cap
+
+S1: 1× costs {'n': 738, 'win': 42.0, 'avg_win': np.float64(1.72), 'avg_loss': np.float64(-1.05), 'exp': np.float64(0.111), 'pf': np.float64(1.18), 'maxdd_R': 38.6, 'lose_streak': 12}
+    2× costs exp 0.045 pf 1.07
+  by per: design: n289 w43.6% +0.156R (+0.079); holdout: n449 w41.0% +0.083R (+0.024)
+  by year: 2022: n35 w37.1% +0.017R (-0.036); 2023: n161 w40.4% +0.085R (+0.001); 2024: n188 w39.4% +0.035R (-0.032); 2025: n198 w47.0% +0.239R (+0.170); 2026: n156 w41.7% +0.089R (+0.044)
+  by side: BUY: n433 w46.4% +0.266R (+0.202); SELL: n305 w35.7% -0.109R (-0.177)
+  by regime: range/hi-vol: n93 w34.4% -0.145R (-0.210); range/lo-vol: n104 w43.3% +0.163R (+0.082); trend/hi-vol: n279 w42.7% +0.131R (+0.079); trend/lo-vol: n262 w43.5% +0.160R (+0.086)
+  instruments positive: 7/9
+
+S2: 1× costs {'n': 135, 'win': 43.0, 'avg_win': np.float64(2.1), 'avg_loss': np.float64(-1.02), 'exp': np.float64(0.324), 'pf': np.float64(1.56), 'maxdd_R': 22.9, 'lose_streak': 15}
+    2× costs exp 0.285 pf 1.48
+  by per: design: n33 w48.5% +0.613R (+0.562); holdout: n102 w41.2% +0.231R (+0.196)
+  by year: 2023: n13 w53.8% +0.550R (+0.495); 2024: n37 w37.8% +0.220R (+0.175); 2025: n52 w42.3% +0.385R (+0.348); 2026: n33 w45.5% +0.257R (+0.228)
+  by side: BUY: n99 w47.5% +0.550R (+0.514); SELL: n36 w30.6% -0.297R (-0.344)
+  by regime: range/hi-vol: n11 w27.3% -0.545R (-0.581); range/lo-vol: n14 w50.0% -0.048R (-0.102); trend/hi-vol: n62 w41.9% +0.507R (+0.477); trend/lo-vol: n48 w45.8% +0.396R (+0.349)
+  instruments positive: 6/9
+
+S3: 1× costs {'n': 217, 'win': 48.4, 'avg_win': np.float64(1.37), 'avg_loss': np.float64(-0.91), 'exp': np.float64(0.194), 'pf': np.float64(1.41), 'maxdd_R': 14.8, 'lose_streak': 8}
+    2× costs exp 0.155 pf 1.32
+  by per: design: n91 w51.6% +0.245R (+0.202); holdout: n126 w46.0% +0.157R (+0.121)
+  by year: 2022: n14 w57.1% +0.072R (+0.040); 2023: n45 w51.1% +0.319R (+0.274); 2024: n64 w42.2% +0.014R (-0.029); 2025: n61 w54.1% +0.352R (+0.316); 2026: n33 w42.4% +0.130R (+0.098)
+  by side: BUY: n167 w48.5% +0.269R (+0.231); SELL: n50 w48.0% -0.058R (-0.101)
+  by regime: range/hi-vol: n15 w53.3% +0.011R (-0.012); range/lo-vol: n27 w66.7% +0.552R (+0.509); trend/hi-vol: n86 w39.5% -0.029R (-0.065); trend/lo-vol: n89 w50.6% +0.331R (+0.288)
+  instruments positive: 7/9
+
+S4: 1× costs {'n': 945, 'win': 46.3, 'avg_win': np.float64(0.89), 'avg_loss': np.float64(-0.71), 'exp': np.float64(0.03), 'pf': np.float64(1.08), 'maxdd_R': 40.8, 'lose_streak': 14}
+    2× costs exp 0.012 pf 1.03
+  by per: design: n278 w49.6% +0.123R (+0.104); holdout: n667 w45.0% -0.009R (-0.027)
+  by year: 2023: n81 w54.3% +0.224R (+0.201); 2024: n339 w45.7% +0.057R (+0.039); 2025: n249 w43.4% -0.054R (-0.073); 2026: n276 w47.5% +0.016R (-0.001)
+  by side: BUY: n662 w43.2% -0.028R (-0.047); SELL: n283 w53.7% +0.166R (+0.149)
+  by regime: range/hi-vol: n111 w59.5% +0.308R (+0.292); range/lo-vol: n69 w34.8% -0.254R (-0.274); trend/hi-vol: n478 w47.9% +0.089R (+0.072); trend/lo-vol: n287 w41.5% -0.107R (-0.129)
+  instruments positive: 71/158
+
+S5: 1× costs {'n': 133, 'win': 61.7, 'avg_win': np.float64(0.74), 'avg_loss': np.float64(-0.76), 'exp': np.float64(0.166), 'pf': np.float64(1.57), 'maxdd_R': 8.4, 'lose_streak': 5}
+    2× costs exp 0.14 pf 1.46
+  by per: design: n58 w55.2% +0.078R (+0.050); holdout: n75 w66.7% +0.234R (+0.210)
+  by year: 2022: n7 w71.4% +0.291R (+0.266); 2023: n37 w48.6% -0.017R (-0.048); 2024: n23 w56.5% +0.083R (+0.061); 2025: n27 w48.1% +0.044R (+0.019); 2026: n39 w84.6% +0.450R (+0.427)
+  by side: SELL: n133 w61.7% +0.166R (+0.140)
+  by regime: range/hi-vol: n26 w69.2% +0.290R (+0.268); range/lo-vol: n31 w51.6% +0.068R (+0.041); trend/hi-vol: n42 w66.7% +0.209R (+0.187); trend/lo-vol: n34 w58.8% +0.106R (+0.075)
+  instruments positive: 55/92
+
+##### WITH the 28-Oct stop-width cap
+
+S1: 1× costs {'n': 562, 'win': 42.7, 'avg_win': np.float64(1.72), 'avg_loss': np.float64(-1.07), 'exp': np.float64(0.123), 'pf': np.float64(1.2), 'maxdd_R': 32.8, 'lose_streak': 10}
+    2× costs exp 0.05 pf 1.08
+  by per: design: n230 w41.7% +0.113R (+0.030); holdout: n332 w43.4% +0.130R (+0.063)
+  by year: 2022: n23 w26.1% -0.323R (-0.390); 2023: n125 w40.8% +0.128R (+0.037); 2024: n155 w39.4% +0.029R (-0.041); 2025: n157 w46.5% +0.188R (+0.112); 2026: n102 w48.0% +0.261R (+0.207)
+  by side: BUY: n347 w47.3% +0.271R (+0.202); SELL: n215 w35.3% -0.116R (-0.196)
+  by regime: range/hi-vol: n72 w34.7% -0.155R (-0.229); range/lo-vol: n79 w43.0% +0.149R (+0.061); trend/hi-vol: n193 w45.1% +0.181R (+0.121); trend/lo-vol: n218 w43.1% +0.154R (+0.074)
+  instruments positive: 6/8
+
+S2: 1× costs {'n': 105, 'win': 49.5, 'avg_win': np.float64(2.08), 'avg_loss': np.float64(-1.03), 'exp': np.float64(0.512), 'pf': np.float64(1.99), 'maxdd_R': 12.9, 'lose_streak': 12}
+    2× costs exp 0.467 pf 1.86
+  by per: design: n30 w50.0% +0.709R (+0.655); holdout: n75 w49.3% +0.433R (+0.392)
+  by year: 2023: n12 w58.3% +0.680R (+0.622); 2024: n30 w43.3% +0.416R (+0.368); 2025: n41 w48.8% +0.566R (+0.524); 2026: n22 w54.5% +0.449R (+0.412)
+  by side: BUY: n78 w52.6% +0.718R (+0.677); SELL: n27 w40.7% -0.084R (-0.140)
+  by regime: range/hi-vol: n6 w50.0% -0.151R (-0.202); range/lo-vol: n11 w45.5% -0.128R (-0.190); trend/hi-vol: n45 w48.9% +0.710R (+0.675); trend/lo-vol: n43 w51.2% +0.561R (+0.512)
+  instruments positive: 7/8
+
+S3: 1× costs {'n': 166, 'win': 48.8, 'avg_win': np.float64(1.45), 'avg_loss': np.float64(-0.91), 'exp': np.float64(0.245), 'pf': np.float64(1.53), 'maxdd_R': 8.1, 'lose_streak': 5}
+    2× costs exp 0.201 pf 1.41
+  by per: design: n75 w50.7% +0.292R (+0.244); holdout: n91 w47.3% +0.205R (+0.165)
+  by year: 2022: n9 w55.6% +0.139R (+0.096); 2023: n36 w50.0% +0.376R (+0.325); 2024: n52 w44.2% +0.097R (+0.052); 2025: n48 w54.2% +0.388R (+0.349); 2026: n21 w42.9% +0.103R (+0.062)
+  by side: BUY: n141 w50.4% +0.306R (+0.265); SELL: n25 w40.0% -0.101R (-0.162)
+  by regime: range/hi-vol: n6 w16.7% -0.484R (-0.515); range/lo-vol: n22 w68.2% +0.529R (+0.481); trend/hi-vol: n63 w41.3% +0.017R (-0.024); trend/lo-vol: n75 w52.0% +0.411R (+0.365)
+  instruments positive: 6/8
+
+S4: 1× costs {'n': 681, 'win': 45.7, 'avg_win': np.float64(0.92), 'avg_loss': np.float64(-0.73), 'exp': np.float64(0.024), 'pf': np.float64(1.06), 'maxdd_R': 35.8, 'lose_streak': 10}
+    2× costs exp 0.004 pf 1.01
+  by per: design: n210 w49.5% +0.140R (+0.119); holdout: n471 w43.9% -0.027R (-0.048)
+  by year: 2023: n73 w54.8% +0.213R (+0.190); 2024: n253 w47.0% +0.097R (+0.077); 2025: n193 w43.5% -0.031R (-0.052); 2026: n162 w42.0% -0.109R (-0.129)
+  by side: BUY: n524 w42.7% -0.046R (-0.066); SELL: n157 w55.4% +0.258R (+0.238)
+  by regime: range/hi-vol: n64 w56.2% +0.335R (+0.316); range/lo-vol: n56 w33.9% -0.255R (-0.276); trend/hi-vol: n292 w47.9% +0.100R (+0.081); trend/lo-vol: n269 w43.1% -0.074R (-0.096)
+  instruments positive: 63/143
+
+S5: 1× costs {'n': 127, 'win': 61.4, 'avg_win': np.float64(0.73), 'avg_loss': np.float64(-0.75), 'exp': np.float64(0.158), 'pf': np.float64(1.55), 'maxdd_R': 7.3, 'lose_streak': 5}
+    2× costs exp 0.132 pf 1.44
+  by per: design: n55 w54.5% +0.064R (+0.036); holdout: n72 w66.7% +0.230R (+0.206)
+  by year: 2022: n7 w71.4% +0.291R (+0.266); 2023: n37 w48.6% -0.017R (-0.048); 2024: n20 w55.0% +0.047R (+0.024); 2025: n25 w48.0% +0.048R (+0.022); 2026: n38 w84.2% +0.436R (+0.412)
+  by side: SELL: n127 w61.4% +0.158R (+0.132)
+  by regime: range/hi-vol: n25 w72.0% +0.342R (+0.320); range/lo-vol: n30 w50.0% +0.037R (+0.010); trend/hi-vol: n38 w65.8% +0.180R (+0.158); trend/lo-vol: n34 w58.8% +0.106R (+0.075)
+  instruments positive: 54/92
