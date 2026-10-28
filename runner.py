@@ -28,7 +28,7 @@ import notify
 import flow                           # OI / volume activity alerts (part of Engine A, no RSI)
 from guards import bounce               # never sell INTO a fresh bounce / drop
 from angel import Angel, load_master, now_ist
-from positions import Store, check, _hm
+from positions import Store, check, _hm, range_check
 
 
 def at(s):
@@ -687,6 +687,20 @@ class Bot:
                 continue
             T = M.time_to_expiry(p["expiry"], ex)
             action, value, info = check(p, qs, spots[key], T, now)
+            touched = None
+            if len(p["legs"]) == 1 and p["legs"][0]["side"] == "SELL" and action not in ("SL", "SPOT"):
+                # SL / target touched between two scans (1-minute highs / lows since the last check)
+                since = p.get("checked") or p["opened"]
+                try:
+                    bars = self.api.candles(ex, p["legs"][0]["token"], "ONE_MINUTE", pd.Timestamp(since) - pd.Timedelta(minutes=2), now)
+                except Exception:
+                    bars = None
+                ra, rv, rt = range_check(p, bars, since)
+                if ra and (ra == "SL" or action is None or action == "ADJUST"):
+                    action, value, touched = ra, rv, rt
+                    info = dict(info or {}, value=rv, pnl=round(p["credit"] - rv, 2))
+                if bars is not None and len(bars):
+                    p["checked"] = str(pd.Timestamp(bars["time"].iloc[-1]) - pd.Timedelta(minutes=1))   # last bar was still forming
             if not action:
                 continue
             pnl = info["pnl"] * p["lot"]
@@ -712,7 +726,9 @@ class Bot:
                 head = {"TARGET": "✅ *BOOK PROFIT*", "SL": "🛑 *STOP-LOSS HIT*",
                         "SPOT": f"🛑 *PRICE STOP* – {p['name']} crossed {p['spot_stop']:,.1f}",
                         "TIME": "⏰ *TIME EXIT*"}[action]
-                notify.send(f"{head}\n{what}\nBuy back now at ≈ ₹{info['value']} (sold at ₹{p['credit']})"
+                when = (f"\n⏱ Level ₹{info['value']} was touched at {touched:%H:%M} (between scans) – booked at that level; "
+                        "if still open, exit now at market." if touched is not None else "")
+                notify.send(f"{head}\n{what}\nBuy back now at ≈ ₹{info['value']} (sold at ₹{p['credit']})" + when
                             + ("\n_Don't wait for recovery._" if action in ("SL", "SPOT") else "") + tally)
             else:
                 msg = {"TARGET": "✅ *BOOK PROFIT*", "SL": "🛑 *STOP-LOSS HIT – EXIT*", "TIME": "⏰ *TIME EXIT*",

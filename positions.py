@@ -113,6 +113,24 @@ def check(p, qs, spot, T, now):
     return None, value, info
 
 
+def range_check(p, bars, since):
+    """Levels touched BETWEEN two scans (the scan only sees the LTP every ~15 min).
+    p: single-leg SELL position; bars: 1-minute candles of the sold option (time, high, low); since: last check time.
+    -> (action, level, time) or (None, None, None). Stop-loss wins if both were touched (bar order unknown)."""
+    if len(p.get("legs", [])) != 1 or p["legs"][0].get("side") != "SELL" or bars is None or len(bars) == 0:
+        return None, None, None
+    b = bars[pd.to_datetime(bars["time"]) > pd.Timestamp(since)]
+    if b.empty:
+        return None, None, None
+    hit_sl = b[b["high"] >= p["sl_val"]]
+    hit_tg = b[b["low"] <= p["target_val"]]
+    if len(hit_sl):
+        return "SL", float(p["sl_val"]), pd.Timestamp(hit_sl["time"].iloc[0])
+    if len(hit_tg):
+        return "TARGET", float(p["target_val"]), pd.Timestamp(hit_tg["time"].iloc[0])
+    return None, None, None
+
+
 def _hm(s):
     h, m = map(int, s.split(":"))
     return pd.Timedelta(hours=h, minutes=m)
