@@ -156,7 +156,7 @@ MCX_LAST_ENTRY       = "21:45"    # ≥ 75 min before the 23:00 exit
 MCX_INTRADAY_EXIT    = "23:00"
 MCX_POSITIONAL_WINDOW = ("22:30", "23:15")
 MCX_MIN_DTE          = 3         # skip option expiries closer than this (28-Oct: 2-day GOLD PE sell – fast-moving premium)
-INTRADAY_MAX_DTE     = 7         # 28-Oct: an intraday (same-day) sell needs real time decay; longer expiries = positional scans
+INTRADAY_MAX_DTE     = 7         # NSE/BSE only (28-Oct): stock-option intraday sells on 16+ day expiries lost (41 % wins); MCX exempt – its 8+ day intraday sells were the best live segment
 SR_BUFFER_PCT        = 0.3       # 28-Oct: no PE sell within 0.3 % below resistance / CE sell within 0.3 % above support
 FLIP_CHECK           = True
 FLIP_MIN_OI_PCT      = 1.0       # 28-Oct: a fresh flip from sideways needs futures OI change >= 1 % in the same direction

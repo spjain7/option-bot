@@ -299,14 +299,15 @@ def manage(state, msgs, name, tf, frame, c15, now):
                 ns = p["best"] - s * CFG["trail_atr"] * a
                 if s * (ns - p["stop"]) > 0.25 * a:
                     p["stop"], p["trailed"] = round(ns, 2), True
-                    msgs.append(f"🔁 TRAIL UPDATE – {name} {p['side']} ({tf}) · new stop {_fp(p['stop'])} · best close {_fp(p['best'])}")
+                    if not p.get("shadow"):
+                        msgs.append(f"🔁 TRAIL UPDATE – {name} {p['side']} ({tf}) · new stop {_fp(p['stop'])} · best close {_fp(p['best'])}")
             te = TREND_EXIT_EMA.get(tf)
             if te and len(frame) > te:
                 e = float(I.ema(frame["close"], te).iloc[-1])
                 if (cl < e) if s > 0 else (cl > e):
                     done = (cl, f"TREND CHANGE – daily close {'below' if s > 0 else 'above'} EMA{te} ({_fp(e)})")
             tw = TREND_WARN_EMA.get(tf)
-            if done is None and tw and len(frame) > tw and not p.get("warned"):
+            if done is None and tw and len(frame) > tw and not p.get("warned") and not p.get("shadow"):
                 e = float(I.ema(frame["close"], tw).iloc[-1])
                 if (cl < e) if s > 0 else (cl > e):
                     p["warned"] = True
@@ -315,7 +316,14 @@ def manage(state, msgs, name, tf, frame, c15, now):
                                 f"(open {s * (cl - p['entry']) / p['risk']:+.1f}R)")
             if done is None and p["n"] >= MAX_CANDLES.get(tf, CFG["max_candles"]):
                 done = (cl, f"time exit after {MAX_CANDLES.get(tf, CFG['max_candles'])} candles")
-        if done:
+        if done and p.get("shadow"):                       # log-only record: outcome kept, nothing sent, no ledger row
+            r = s * (done[0] - p["entry"]) / p["risk"]
+            state.setdefault("shadow_bo", []).append(dict(label=p["shadow"], name=name, tf=tf, side=p["side"], entry=p["entry"],
+                                                          stop=p["stop"], target=p.get("target"), exit=float(done[0]), why=done[1],
+                                                          r=round(r, 3), opened=p.get("opened"), closed=str(now)))
+            state["shadow_bo"] = state["shadow_bo"][-1000:]
+            print(f"[shadow] {name} {tf} {p['side']} {p['shadow']}: {done[1]} {r:+.2f}R")
+        elif done:
             r = s * (done[0] - p["entry"]) / p["risk"]
             msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {name} {p['side']} ({tf}) at ~{_fp(done[0])}: {done[1]} · "
                         f"result {r:+.2f}R (entry {_fp(p['entry'])})")

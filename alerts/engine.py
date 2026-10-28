@@ -5,7 +5,7 @@ MCX futures + NIFTY / BANKNIFTY futures. ALERTS ONLY: no orders, no auto-trading
 """
 import os
 import pandas as pd
-from crude import data as CD
+from crude import data as CD, indicators as I
 from alerts import signals as S, breakout as BO, patterns as PT, report as RP, optfilter as OF, tradeplan as TP
 PATTERN_TFS = ()               # OFF: chart-pattern calls failed once the exit-simulator bug was fixed (INST-PAT-001)
 
@@ -381,6 +381,30 @@ def _switch_day(state, c, d):
     return pd.Timestamp(sw[0][0]).normalize() if sw else None
 
 
+SHADOW_ONLY = {("3h", "SELL")}        # 28-Oct-2026 (approved): logged and tracked, never sent
+
+
+def _shadow_rec(name, tf, side, plan, last, now, c, key, label):
+    return dict(name=name, tf=tf, side=side, entry=plan["entry"], stop=plan["sl"], target=plan["target"], risk=plan["risk_unit"],
+                best=plan["entry"], trailed=False, n=0, last_candle=last, tick=plan["tick"], checked=str(now),
+                contract=c["symbol"], key=key, token=c["token"], shadow=label, opened=str(now))
+
+
+def ha_tags(fr, sig):
+    """HA-1 conditions (STRATEGY-PROGRAM-001): RSI(14) < 75 and/or prior compression (20-bar range in ATR ≤ its 100-bar median)."""
+    tags = []
+    if sig.get("rsi") is not None and sig["rsi"] < 75:
+        tags.append("RSI<75")
+    try:
+        a = I.atr(fr, 14)
+        comp = (fr["high"].rolling(20).max() - fr["low"].rolling(20).min()) / a
+        if comp.iloc[-1] <= comp.rolling(100, min_periods=40).median().iloc[-1]:
+            tags.append("compression")
+    except Exception:
+        pass
+    return tags
+
+
 def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=None, master=None, api=None):
     """Volume-breakout alerts on 3-hour and daily candles + trailing-stop follow-ups."""
     if h1full is None or h1full.empty:
@@ -426,11 +450,12 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             info[f"bo_{tf}"] += " · skipped: contract-switch day (volume distorted)"; continue
         if oi and oi.get("label") and oi["label"] not in {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}[sig["side"]]:
             info[f"bo_{tf}"] += f" · skipped: OI {oi['label']} does not confirm"; continue
-        if any(p["name"] == name and p["tf"] in (tf, "1d", "1m") and tf in ("1d", "1m") and p["tf"] != "3h"
+        if any(p["name"] == name and p["tf"] in (tf, "1d", "1m") and tf in ("1d", "1m") and p["tf"] != "3h" and not p.get("shadow")
                for p in state["bo_active"]) and tf in ("1d", "1m"):
             info[f"bo_{tf}"] += " · already in an open daily/monthly call"; continue
-        if any(p["name"] == name and p["tf"] == tf for p in state["bo_active"]):
-            info[f"bo_{tf}"] += " · already in an open breakout alert"; continue
+        shadow_only = (tf, sig["side"]) in SHADOW_ONLY
+        if any(p["name"] == name and p["tf"] == tf and bool(p.get("shadow")) == shadow_only for p in state["bo_active"]):
+            info[f"bo_{tf}"] += " · already in an open breakout alert" + (" (log-only)" if shadow_only else ""); continue
         sid = f"{k}|{last}|{sig['side']}" + (f"|{sig['pattern']}" if sig.get("pattern") else "")
         if sid in state["seen"]:
             continue
@@ -447,12 +472,28 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if not plan["valid"]:
             print(f"[rejected] {name} {tf} {sig['side']}: {plan['reason']}")
             info[f"bo_{tf}"] += f" · skipped: {plan['reason']}"; continue
+        key = f"{name}|{tf}|{last}"
+        if shadow_only:                                   # 28-Oct approval: 3h SELL lost money in every test -> log only
+            state["bo_active"].append(_shadow_rec(name, tf, sig["side"], plan, last, now, c, key, "3h SELL (log only, not sent)"))
+            info[f"bo_{tf}"] += " · 3h SELL logged only (not sent – STRATEGY-PROGRAM-001)"
+            print(f"[shadow] {name} {tf} SELL logged only: entry {plan['entry']} SL {plan['sl']} target {plan['target']}")
+            continue
         opt = BO.option_idea(master, name, ex, plan["entry"], sig["side"], tf, now) if master is not None else None
         msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, plan=plan))
         reason = BO.reason_msg(name, tf, sig, lv, oi, q, htf=htf)
         if plan.get("warn"):
             reason = reason.replace("Not investment advice.", f"• Note    : {plan['warn']}\nNot investment advice.")
-        key = f"{name}|{tf}|{last}"
+        if tf == "3h" and sig["side"] == "BUY":            # 28-Oct approval: high-accuracy variant HA-1, log only
+            try:
+                ha = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf=tf, side="BUY", signal_time=sig["candle"],
+                                     signal_close=sig.get("close"), atr=sig.get("atr"), stop_mult=3.0, target_r=0.5, tick=c.get("tick"),
+                                     lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")), max_sl_pct=2.5, live=live, quote=q,
+                                     now=now, require_live=is_open(ex, now), min_rr=0.45)
+                tags = ha_tags(fr, sig)
+                if ha["valid"] and tags:
+                    state["bo_active"].append(_shadow_rec(name, tf, "BUY", ha, last, now, c, key + "|HA1", "HA-1 " + "+".join(tags)))
+            except Exception as e_:
+                print("HA-1 shadow skipped:", e_)
         state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=plan["entry"], stop=plan["sl"], target=plan["target"],
                                        risk=plan["risk_unit"], best=plan["entry"], trailed=False, n=0, last_candle=last, tick=plan["tick"],
                                        checked=str(now), contract=c["symbol"], key=key, token=c["token"]))

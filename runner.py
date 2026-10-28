@@ -437,7 +437,7 @@ class Bot:
             why = f"already {n_today} calls today"
         if why:
             self.why(name, why); return
-        if mode == "intraday" and M.dte(expiry) > getattr(C, "INTRADAY_MAX_DTE", 99):
+        if mode == "intraday" and exch != "MCX" and M.dte(expiry) > getattr(C, "INTRADAY_MAX_DTE", 99):
             self.why(name, f"nearest expiry {M.dte(expiry)} days away – too little time decay for a same-day sell "
                            "(longer expiries are handled by the positional scan)"); return
         v = self.view(name, expiry, trend_interval, exch, stock, mode)
@@ -643,7 +643,7 @@ class Bot:
             if self.st.done(key) or self.st.open_positions("intraday", name):
                 continue
             self.st.mark(key)
-            exp = self.mcx_expiry(name, C.MCX_MIN_DTE, getattr(C, "INTRADAY_MAX_DTE", 99)) or self.mcx_expiry(name)
+            exp = self.mcx_expiry(name)                  # 28-Oct: MCX intraday sells on 8+ day expiries were the best live segment
             if exp is not None:
                 try:
                     self.try_open(name, "intraday", exp, "ONE_HOUR", exch="MCX")

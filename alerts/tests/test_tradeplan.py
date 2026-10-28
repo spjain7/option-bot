@@ -157,7 +157,7 @@ def test_end_to_end_consistency_duplicates_restart():
     q = {"ltp": live, "exchFeedTime": "28-Oct-2026 12:16:50"}
     msgs, info = [], {}
     E._breakouts(st, msgs, info, "NIFTY", "NFO", c, h, None, pd.Timestamp("2026-10-28 12:17"), None, q)
-    a = [p for p in st["bo_active"] if p["tf"] == "3h"]
+    a = [p for p in st["bo_active"] if p["tf"] == "3h" and not p.get("shadow")]
     check("3h breakout fixture produces exactly one NIFTY BUY call", len(a) == 1 and any("BUY  NIFTY FUT" in m for m in msgs))
     p = a[0]; L = [r for r in st["ledger"] if r["key"] == p["key"]][0]
     card = [m for m in msgs if "BUY  NIFTY FUT" in m][0]
@@ -167,7 +167,7 @@ def test_end_to_end_consistency_duplicates_restart():
           and f"Target  : {TP.fmt(p['target'], 0.05)}" in card)
     n = len(msgs)
     E._breakouts(st, msgs, info, "NIFTY", "NFO", c, h, None, pd.Timestamp("2026-10-28 12:32"), None, q)
-    check("same candle 15 min later -> no duplicate call", len(msgs) == n and len(st["bo_active"]) == len(a) + 0)
+    check("same candle 15 min later -> no duplicate call", len(msgs) == n and len([x for x in st["bo_active"] if not x.get("shadow")]) == len(a))
     st2 = json.loads(json.dumps(st, default=str))                    # process restart: state saved and restored
     bar = pd.DataFrame(dict(time=[pd.Timestamp("2026-10-28 12:45")], open=[p["entry"]], high=[p["target"] + 1], low=[p["entry"] - 1],
                             close=[p["target"]], volume=[1.0]))

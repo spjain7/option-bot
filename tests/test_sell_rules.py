@@ -37,7 +37,7 @@ check(R.near_level(ng, 292.0, "BEARISH") is None, "NG CE sell at 292 with suppor
 check(R.near_level(ng, 290.5, "BEARISH") is not None, "CE sell at 290.5 just above support 290 -> blocked")
 
 # rule 1 / MCX near expiry – config + try_open gate
-check(C.INTRADAY_MAX_DTE == 7 and C.MCX_MIN_DTE == 3, "intraday window: expiry 3..7 days for MCX, ≤ 7 days for all intraday sells")
+check(C.INTRADAY_MAX_DTE == 7 and C.MCX_MIN_DTE == 3, "intraday: ≤ 7 days for NSE/BSE option sells, MCX any expiry ≥ 3 days")
 
 
 class St:
@@ -52,12 +52,15 @@ bot.blocked = lambda mode: None
 bot.view = lambda *a, **k: msgs.append("VIEW") or None
 far = (pd.Timestamp.now().normalize() + pd.Timedelta(days=23)).strftime("%Y-%m-%d")
 near = (pd.Timestamp.now().normalize() + pd.Timedelta(days=5)).strftime("%Y-%m-%d")
-bot.try_open("NATURALGAS", "intraday", far, "ONE_HOUR", exch="MCX")
+bot.try_open("ICICIBANK", "intraday", far, "ONE_HOUR", stock=True, exch="NFO")
 check(msgs and "too little time decay" in msgs[-1] and "VIEW" not in msgs,
-      "NG 28-Oct replay: intraday sell on a 23-day option -> not sent (reason logged)")
+      "stock-option intraday sell on a 23-day option -> not sent (these lost: 41 % wins live), reason logged")
 msgs.clear()
-bot.try_open("NATURALGAS", "intraday", near, "ONE_HOUR", exch="MCX")
-check(msgs == ["VIEW"], "intraday sell on a 5-day option -> goes on to the normal checks")
+bot.try_open("NATURALGAS", "intraday", far, "ONE_HOUR", exch="MCX")
+check(msgs == ["VIEW"], "MCX intraday sell on a 23-day option -> allowed again (28-Oct: best live segment, approved)")
+msgs.clear()
+bot.try_open("NIFTY", "intraday", near, "ONE_HOUR")
+check(msgs == ["VIEW"], "index intraday sell on a 5-day option -> goes on to the normal checks")
 msgs.clear()
 bot.try_open("NIFTY", "monthly", far, "ONE_DAY")
 check(msgs == ["VIEW"], "positional (monthly) sells are not affected by the intraday DTE window")
