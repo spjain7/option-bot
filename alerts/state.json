@@ -665,14 +665,12 @@
   ]
  },
  "day": {
-  "date": "2026-10-28",
-  "alerts": 2,
+  "date": "2026-10-29",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
-  "eod_sent": true,
-  "outcomes": [],
-  "rep_nse": true,
-  "rep_mcx": true
+  "startup_sent": false,
+  "eod_sent": false,
+  "outcomes": []
  },
  "history": [],
  "oi": {
