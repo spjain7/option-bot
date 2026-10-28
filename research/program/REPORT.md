@@ -234,3 +234,29 @@ Script `research/program/emax3.py`; results in `results/emax3_variants.csv`.
 - **The Choppiness filter does not help MCX BUY**, but it does help INDEX 1h 12/26 SELL (CH < 45): n 120, 45% wins, +0.32R, PF 1.93, mostly NIFTY.
 - **Elsewhere, trend filters show no consistent gain.** Medians across pairs are mixed for stocks, MCX SELL and MCX 1h.
 - **Win rates stay at 40–50%**; the edge comes from winners about 2–3× the size of losers.
+
+## Addendum: HAM-001, 1-hour hammer BUY after a downtrend / hanging man SELL after an uptrend, 28-Oct-2026
+Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
+- **Rules:**
+  - stop 0.05 ATR beyond the candle's low (hammer) or high (hanging man);
+  - target 1R, 2R or 3R; maximum 20 candles.
+- **Variants:**
+  - 3 trend definitions: EMA20/50, 20-bar swing extreme after a 5-bar move, or both;
+  - entry at the next open, or on a break of the candle's high/low (confirmation);
+  - with and without volume ≥ 1.5×, and candle range ≥ 1 ATR.
+- **Scale:** 432 variants; 2 pass, both INDEX hammer with volume.
+
+**Results (both trend definitions together, 2R target, net at 2× costs):**
+
+| Setup | Market | Trades | Win % | Result |
+|---|---|---|---|---|
+| Hammer BUY | Stocks | 7,882 | 34 | −0.44R (gross −0.09R) |
+| Hammer BUY | MCX | 924 | 34 | −0.88R (gross −0.03R) |
+| Hammer BUY | Index | 110 | 50 | −0.27R |
+| Hanging man SELL, next-open entry | all markets | — | 21–29 | −1.3R to −3.1R |
+| Hammer BUY, best filters (confirmation entry, volume, candle ≥ 1 ATR) | Stocks / MCX | — | 40–43 | −0.13R to −0.20R |
+| Index hammer + volume, both trend definitions, next-open entry | Index | 46 | 70 | +0.55R |
+
+- **Hanging man:** the candle closes near its high, so the stop is only about 0.25–0.4 ATR away. Normal noise hits it, and costs are large relative to that small risk. With confirmation entry it is about −0.03 to −0.7R.
+- **Index hammer + volume:** small sample. The EMA-only trend version (n 70) gives +0.19R and lost in 2023 and 2026. Treat it as a watch item, not an edge.
+- **Conclusion:** no tradable edge on stocks or MCX. Index hammer + volume is too small to trust.
