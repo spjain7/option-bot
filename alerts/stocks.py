@@ -15,6 +15,7 @@ import pandas as pd
 from alerts import patterns as PT, breakout as BO, signals as S, report as RP, optfilter as OF, tradeplan as TP
 from crude import data as CD, indicators as I
 from alerts import dataquality as DQ
+from alerts import candle_setups as CS
 
 ENABLED = True
 # the 15:30 scan of ~180 stock futures can take longer than the alerts step's time limit (scripts/market_loop.sh, 1200 s);
@@ -491,6 +492,10 @@ def scan(api, master, now, state, msgs, rep, engine):
                 DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=px, exit_time=str(now),
                                 exit_reason="expiry/time exit", exit_basis="daily close")
                 st["active"] = [x for x in st["active"] if x is not p]
+        try:                                                # 29-Oct (approved, live): daily hanging-man SELL setup
+            CS.on_stock_daily(state, msgs, name, c, d, now, allow_new=not dq["holds"] and not first_session_after_expiry(d["time"].iloc[-1]))
+        except Exception as e_:
+            print(f"[setup] {name} skipped: {type(e_).__name__}: {e_}")
         if len(d) < 30:
             continue
         last = str(d["time"].iloc[-1])
@@ -554,6 +559,8 @@ def scan(api, master, now, state, msgs, rep, engine):
     if complete:
         st["last_block"] = blk
         st.pop("progress", None)
+    if daily_block:
+        rep["stocks"]["candle_setups"] = CS.summary(state)
     if daily_block and st.get("shadow"):
         rep["stocks"]["shadow_OI_2_4"] = DQ.shadow_summary(st)
     if st.get("dq_holds"):

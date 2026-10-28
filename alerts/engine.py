@@ -7,6 +7,7 @@ import os
 import pandas as pd
 from crude import data as CD, indicators as I
 from alerts import signals as S, breakout as BO, patterns as PT, report as RP, optfilter as OF, tradeplan as TP
+from alerts import candle_setups as CS
 PATTERN_TFS = ()               # OFF: chart-pattern calls failed once the exit-simulator bug was fixed (INST-PAT-001)
 
 RSI_REVERSAL_CALLS = False   # off since 22-Oct-2026: the RSI-reversal rule lost money in every test (alerts/STATS.md,
@@ -424,6 +425,13 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     frames["1m"] = dd                                               # monthly breakout is checked on daily closes
     htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
+    if ex == "MCX":                                                  # 29-Oct (approved, live): candle-setup calls
+        try:
+            lv_ = (q or {}).get("ltp")
+            CS.on_mcx(state, msgs, name, ex, c, dd, frames["3h"], c15, now, live=float(lv_) if lv_ not in (None, "", 0) else None)
+            info["setups"] = " · ".join(f"{r['setup']} {r['status']}" for r in state["candle_setups"]["open"] if r["name"] == name) or "none"
+        except Exception as e_:
+            print(f"[setup] {name} skipped: {type(e_).__name__}: {e_}")
     for tf, fr in frames.items():
         BO.manage(state, msgs, name, tf, fr, c15, now)
         if fr is None or len(fr) < 30:

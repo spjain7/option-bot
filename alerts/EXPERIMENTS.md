@@ -16,3 +16,21 @@ Data 2020-26 already seen → exploratory. Code: `alerts/exp_filters.py`; result
 | F3 next-candle confirm | 469 (66%) | −0.060 | 49.9 | 0.88 | +0.039 | yes (+0.03 / +0.05) | 10/13 | −0.011 | 36% / 69% |
 F3 is the most consistent (better in both halves and 10 of 13 groups) but misses the +0.05R and bootstrap thresholds;
 all variants remain negative after costs.
+
+## CANDLE-SETUPS – live from 29-Oct-2026 (owner approved: "do live not in log mode")
+Code: `alerts/candle_setups.py`, tests `alerts/tests/test_candle_setups.py` (15 checks). Research: branch
+`exp/strategy-program-001`, `research/program/REPORT.md` (DCP-001, EMAX-003, RR1, VERIFY-EXITS).
+
+| Setup | Rule | Backtest 2022–26, after costs | Live code replayed over 2022–26 (before costs) |
+|---|---|---|---|
+| MCX daily hammer breakout BUY | hammer → BUY above its high within 3 sessions; SL 0.05 ATR below its low; target 2R; 20 sessions | +0.36R, 52% wins, 333 trades; every year and all 7 commodities positive | 352 trades, 52.3% wins, +0.44R; all 7 positive |
+| Stock daily hanging-man breakdown SELL | hanging man while EMA20 > EMA50 → SELL below its low within 3 sessions; SL above its high; 2R; 20 sessions | +0.18R, 44% wins, 1,217 trades (flat 2023, 2025) | 40 stocks: 254 trades, 46.5% wins, +0.31R |
+| MCX 3-hour EMA 13/48 BUY | EMA13 crosses above EMA48, ADX(14) ≥ 20 and rising → BUY next open; exit after opposite cross; safety SL 3 ATR | +0.67R, 48% wins, **79 trades (small sample, GOLD-heavy)** | 88 trades, 44% wins, +0.60R |
+
+- **Message flow:** setup (with trigger, stop and target) → TRIGGERED → EXIT (target, stop, time or contract change), or
+  CANCELLED (no breakout within 3 sessions, or the stop was touched first). Calls are written to the ledger used by the daily call reports.
+- **Tracking:** MCX uses 15-minute candles; stocks use daily candles after the 15:30 close.
+  - A gap through the target or stop fills at the open.
+  - If one candle touches both, the stop is counted.
+- **Review:** compare live results with the backtest after 4 weeks (owner review scheduled).
+- **Rule kept for any future hourly pattern call:** skip pattern candles starting 14:15 and 15:15 (`hourly_pattern_allowed`).
