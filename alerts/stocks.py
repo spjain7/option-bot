@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 from alerts import patterns as PT, breakout as BO, signals as S, report as RP, optfilter as OF, tradeplan as TP
 from crude import data as CD, indicators as I
+from alerts import dataquality as DQ
 
 ENABLED = True
 # the 15:30 scan of ~180 stock futures can take longer than the alerts step's time limit (scripts/market_loop.sh, 1200 s);
@@ -94,13 +95,21 @@ def evaluate(d):
     e = I.ema(c, CFG["ema"]).iloc[-1]
     a = float(I.atr(d, 14).iloc[-1])
     dp = c.pct_change().iloc[-1]
-    doi = d["oi"].pct_change().iloc[-1] if d["oi"].notna().iloc[-2:].all() else np.nan
+    if "doi" in d:                                     # validated by dataquality.validate_daily_oi (NaN = invalid)
+        doi = d["doi"].iloc[-1]
+        oi_why = d["oi_reason"].iloc[-1] if "oi_reason" in d else None
+    else:
+        doi = d["oi"].pct_change().iloc[-1] if d["oi"].notna().iloc[-2:].all() else np.nan
+        oi_why = None
     out = dict(candle=str(x.time), close=float(x.close), hh=float(hh), ll=float(ll), ema200=float(e), atr=a,
                vol_x=float(x.volume / va) if va else None, dp=float(dp), doi=None if pd.isna(doi) else float(doi),
                adx=float(I.adx(d).iloc[-1]), rsi=float(I.rsi(c, 14).iloc[-1]))
-    if in_rollover_window(x.time) or pd.isna(doi):
-        return dict(out, side=None, why="OI change not usable (rollover window / missing)")
     vok = out["vol_x"] is not None and out["vol_x"] > CFG["vol_x"]
+    if in_rollover_window(x.time):
+        return dict(out, side=None, why="OI change not usable (rollover window)")
+    if pd.isna(doi):
+        bo = (x.close > hh and vok and dp > 0 and x.close > e) or (x.close < ll and vok and dp < 0 and x.close < e)
+        return dict(out, side=None, why=f"OI change not usable ({oi_why or 'missing'})", oi_blocked=bool(bo))
     if x.close > hh and vok and dp > 0 and doi >= CFG["oi_up"] and x.close > e:
         return dict(out, side="BUY")
     if x.close < ll and vok and dp < 0 and doi >= CFG["oi_up"] and x.close < e:
@@ -306,6 +315,42 @@ def scan3h(name, c, h, fr, now, master, st, state, msgs):
     return 1
 
 
+def rescale_for_corporate_actions(st, state, msgs, now, registry=None):
+    """Open calls whose stock went ex-split / ex-bonus after the signal: entry / SL / target rescaled once by the verified
+    factor (prices now trade in new units). Demerger (no official factor): tracking stops – levels are not comparable."""
+    reg = DQ.REGISTRY if registry is None else registry
+    keep = []
+    for p in st.get("active", []):
+        k = str(p.get("key", ""))
+        sig_day = pd.Timestamp(k.split("|")[-1][:10]) if k.count("|") >= 2 else None
+        drop = False
+        for e in reg.get(p["name"], []):
+            tag = str(e["ex"].date())
+            if sig_day is None or not (sig_day < e["ex"] <= now.normalize()) or tag in p.get("ca_rescaled", []):
+                continue
+            p.setdefault("ca_rescaled", []).append(tag)
+            f = e.get("price_factor")
+            if e["type"] == "market":
+                continue
+            if f is None:
+                msgs.append(f"ℹ️ {p['name']}: {e['type']} on {tag} – no official price factor, the open call's levels are no "
+                            "longer comparable; tracking stopped (manage it manually).")
+                for L in state.get("ledger", []):
+                    if L.get("key") in (p.get("key"), k + "|OPT") and L["status"] == "OPEN":
+                        L.update(status="CLOSED", exit=None, note=f"{e['type']} – untracked", closed=str(now))
+                DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=None, exit_time=str(now),
+                                exit_reason=f"{e['type']} – untracked", flags=["no comparable exit price"])
+                drop = True
+                break
+            DQ.apply_ca_to_call(p, state, st, e, tag)
+            msgs.append(f"ℹ️ {p['name']}: {e['type']} on {tag} (price ×{float(f):g}) – open call levels rescaled: "
+                        f"entry {BO._f(p['entry'])} · SL {BO._f(p['stop'])} · lot ×{e.get('adj_factor', 1 / float(f)):g} "
+                        "(risk per lot and R:R unchanged)")
+        if not drop:
+            keep.append(p)
+    st["active"] = keep
+
+
 def scan(api, master, now, state, msgs, rep, engine):
     if not ENABLED:
         rep["stocks"] = "disabled"
@@ -324,6 +369,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                     "tracked – ignore any of them you may have. New stock calls use the tested OI-breakout rule.")
     uni = universe(master, now)
     rep["stocks"] = dict(universe=len(uni))
+    rescale_for_corporate_actions(st, state, msgs, now)
     if st["active"] and (engine.is_open("NFO", now) or engine._just_closed("NFO", now)):
         try:
             q = api.quotes({"NFO": [p["token"] for p in st["active"]]})
@@ -344,13 +390,18 @@ def scan(api, master, now, state, msgs, rep, engine):
                     for L in state.get("ledger", []):
                         if L.get("key") in (p.get("key"), (p.get("key") or "") + "|OPT") and L["status"] == "OPEN":
                             L.update(status="CLOSED", exit=L["entry"], note="cancelled – gap", closed=str(now))
+                    DQ.shadow_event(st, p.get("key"), now, status="cancelled", cancel_price=float(ltp), cancel_time=str(now))
                     continue
                 p["pending"] = False
+                DQ.shadow_event(st, p.get("key"), now, status="active", entry_fill=float(ltp), entry_time=str(now),
+                                entry_quote_time=TP.quote_time(q.get(p["token"]) or {}) and str(TP.quote_time(q.get(p["token"]))),
+                                entry_basis="first scan LTP after the open – not a broker fill")
                 keep.append(p); continue
             if ltp and p.get("target") and s * (ltp - p["target"]) >= 0:
                 r = s * (ltp - p["entry"]) / p["risk"]
                 msgs.append(f"✅ EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: 🎯 TARGET HIT · result {r:+.2f}R")
                 BO.close_ledger(state, p.get("key"), float(p["target"]), "target", now)
+                DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=float(p["target"]), exit_time=str(now), exit_reason="target")
                 continue
             if ltp and s * (ltp - p["stop"]) <= 0:
                 r = s * (ltp - p["entry"]) / p["risk"]
@@ -358,6 +409,8 @@ def scan(api, master, now, state, msgs, rep, engine):
                             f"{'trailing stop' if p['trailed'] else 'stop-loss'} hit · result {r:+.2f}R")
                 state["day"].setdefault("outcomes", []).append(dict(name=p["name"], tf="1d", side=p["side"], result=f"stop {r:+.2f}R"))
                 BO.close_ledger(state, p.get("key"), float(ltp), "stop", now)
+                DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=float(ltp), exit_time=str(now),
+                                exit_reason="trailing stop" if p["trailed"] else "stop", exit_basis="scan LTP – not a broker fill")
             else:
                 keep.append(p)
         st["active"] = keep
@@ -376,6 +429,13 @@ def scan(api, master, now, state, msgs, rep, engine):
         prog = dict(blk=blk, done=[])
     st["progress"] = prog                                  # saved with the state even if a later step fails
     found, complete, t0 = 0, True, time.monotonic()
+    qoi = {}
+    if daily_block:                                         # live quote OI to cross-check the daily OI (flag only)
+        try:
+            qq = api.quotes({"NFO": [c["token"] for n, c in uni.items() if n not in prog["done"]]}) or {}
+            qoi = {t: v.get("opnInterest") for t, v in qq.items()}
+        except Exception:
+            qoi = {}
     for name, c in uni.items():
         if name in prog["done"]:
             continue
@@ -400,6 +460,13 @@ def scan(api, master, now, state, msgs, rep, engine):
         if not daily_block:
             continue
         d = daily_with_oi(h, oi)
+        d, h, dq = DQ.reconcile(name, d, h)
+        if dq["holds"]:
+            st.setdefault("dq_holds", {})[name] = dict(time=str(now), reasons=dq["holds"])
+            rep.setdefault("stock_skips", []).append(f"{name}: data hold – {'; '.join(dq['holds'])}")
+        else:
+            st.setdefault("dq_holds", {}).pop(name, None)
+        d = DQ.validate_daily_oi(d, qoi.get(c["token"]), dq["ca_days"])
         for p in [p for p in st["active"] if p["name"] == name]:
             s_ = 1 if p["side"] == "BUY" else -1
             new = d[d["time"] > pd.Timestamp(p["last_candle"])]
@@ -421,6 +488,8 @@ def scan(api, master, now, state, msgs, rep, engine):
                 msgs.append(f"⏹ EXIT – {name} FUT {p['side']} at ~{BO._f(px)}: "
                             f"{'expiry day – exit (or roll with the same stop)' if p['n'] < p.get('max_days', CFG['max_days']) else 'time exit'} · {r:+.2f}R")
                 BO.close_ledger(state, p.get("key"), px, "expiry/time exit", now)
+                DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=px, exit_time=str(now),
+                                exit_reason="expiry/time exit", exit_basis="daily close")
                 st["active"] = [x for x in st["active"] if x is not p]
         if len(d) < 30:
             continue
@@ -429,7 +498,11 @@ def scan(api, master, now, state, msgs, rep, engine):
         if state["last_eval"].get(k) == last:
             continue
         state["last_eval"][k] = last
+        if dq["holds"]:
+            continue                                        # suppressed until the data is verified / corrected
         sig = evaluate(d)
+        if sig.get("oi_blocked"):
+            rep.setdefault("stock_skips", []).append(f"{name}: breakout not confirmed – {sig['why']}")
         if not sig["side"] and BEAR_ENGULF_ENABLED:
             be = evaluate_bear_engulf(d)
             if be["side"]:
@@ -450,11 +523,13 @@ def scan(api, master, now, state, msgs, rep, engine):
         # entry = today's close; the call becomes ACTIVE only if tomorrow's opening price is still inside the entry zone
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=plan["entry"],
                                  stop=plan["sl"], risk=plan["risk_unit"], target=plan["target"], tick=plan["tick"], atr=float(sig["atr"]),
-                                 max_days=sig.get("max_days", CFG["max_days"]), pending=True,
+                                 max_days=sig.get("max_days", CFG["max_days"]), pending=True, lot=c["lot"],
                                  best=plan["entry"], trailed=False, n=0, last_candle=last, key=key))
         RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional",
                side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],
                lot=c["lot"], mult=c["lot"], time=str(now))
+        if sig["side"] == "BUY" and not sig.get("pattern"):  # shadow log – the +2–4 % label never changes this call
+            DQ.shadow_add(st, key=key, name=name, sig=sig, plan=plan, lot=c["lot"], now=now, oi_flags=d["oi_flags"].iloc[-1] or "")
         opt = BO.option_idea(master, name, "NFO", plan["entry"], sig["side"], "1d", now)
         why_ = reason_engulf(name, sig, lv) if sig.get("pattern") else reason_msg(name, sig, lv)
         why_ = why_.replace("Not investment advice.", f"• Entry   : next open must be within {TP.MAX_CHASE_ATR} ATR of {TP.fmt(plan['entry'], plan['tick'])} "
@@ -479,6 +554,10 @@ def scan(api, master, now, state, msgs, rep, engine):
     if complete:
         st["last_block"] = blk
         st.pop("progress", None)
+    if daily_block and st.get("shadow"):
+        rep["stocks"]["shadow_OI_2_4"] = DQ.shadow_summary(st)
+    if st.get("dq_holds"):
+        rep["stocks"]["data_holds"] = sorted(st["dq_holds"])
     left = len([n for n in uni if n not in prog["done"]])
     rep["stocks"].update(scan=(f"{'3h + daily' if daily_block else '3h'} scan of {len(uni)} stock futures done" if complete else
                                f"stock scan paused after {SCAN_BUDGET_SEC:.0f}s – {left} stocks left, continues next cycle"),

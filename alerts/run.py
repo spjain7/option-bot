@@ -12,6 +12,18 @@ SD = Path(os.getenv("ALERTS_STATE_DIR", str(ROOT / "state" / "alerts")))
 STATE, OUTBOX = SD / "state.json", SD / "outbox.json"
 
 
+def log_report(rep):
+    """Run-log lines (GitHub Actions log): per-instrument status, stock scan summary, every rejected / held stock signal."""
+    for n, i in rep["instruments"].items():
+        print(f"[{n}] " + " | ".join(f"{k}: {v}" for k, v in i.items()))
+    if isinstance(rep.get("stocks"), dict):
+        print("[stocks] " + " | ".join(f"{k}: {v}" for k, v in rep["stocks"].items()))
+    for x in rep.get("stock_skips", []):
+        print("[rejected] stock", x)
+    for e in rep["errors"]:
+        print("::warning::" + e)
+
+
 def scan():
     from alerts import engine as E
     from angel import Angel, load_master, now_ist
@@ -33,12 +45,7 @@ def scan():
     print("website price snapshot:", share.push(api, master, now))
     tmp = STATE.with_suffix(".tmp"); tmp.write_text(json.dumps(state, indent=1, default=str)); os.replace(tmp, STATE)
     OUTBOX.write_text(json.dumps(dict(messages=msgs), indent=1))
-    for n, i in rep["instruments"].items():
-        print(f"[{n}] " + " | ".join(f"{k}: {v}" for k, v in i.items()))
-    for x in rep.get("stock_skips", []):
-        print("[rejected] stock", x)
-    for e in rep["errors"]:
-        print("::warning::" + e)
+    log_report(rep)
     summ = os.getenv("GITHUB_STEP_SUMMARY")
     if summ:
         with open(summ, "a") as f:
