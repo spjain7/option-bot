@@ -8,7 +8,9 @@ Prior trend (before the candle):
   T2 swing – BUY: the candle's low is the lowest low of the last 20 bars and close i-1 < close i-6 (5-bar fall)
              SELL: the candle's high is the highest high of the last 20 bars and close i-1 > close i-6
   T3 both
-Entry:  E1 next candle's open · E2 confirmation: next candle(s) within 3 bars trade beyond the pattern candle's high (BUY) /
+Entry:  E3 confirmation close: a candle within 3 bars CLOSES beyond the pattern's high (BUY) / low (SELL) → enter next
+        open (stop stays at the pattern candle) ·
+        E1 next candle's open · E2 confirmation: next candle(s) within 3 bars trade beyond the pattern candle's high (BUY) /
         low (SELL) → fill at that level (or the open if it gaps beyond); cancelled if the stop is hit first.
 Stop:   BUY 0.05 ATR below the candle's low · SELL 0.05 ATR above the candle's high (owner's rule; small tick buffer).
 Target: 1R, 2R, 3R · time exit after 20 candles · stop checked before target in a candle · gap through stop fills at the open ·
@@ -57,7 +59,19 @@ def sim(f, sig, side, entry, tgt, cost):
         if i < 210 or i <= busy or i >= n - 3 or sw[i] or not a[i] > 0:
             continue
         st = l[i] - 0.05 * a[i] if side > 0 else h[i] + 0.05 * a[i]
-        if entry == "E1":
+        if entry == "E3":                     # confirmation CLOSE: within 3 candles a candle closes beyond the pattern high/low
+            lvl = h[i] if side > 0 else l[i]
+            j0 = None
+            for j in range(i + 1, min(i + 4, n - 1)):
+                if sw[j] or sw[j + 1]:
+                    break
+                if (l[j] <= st) if side > 0 else (h[j] >= st):
+                    break
+                if side * (c[j] - lvl) > 0:
+                    j0, e0 = j + 1, o[j + 1]; break
+            if j0 is None:
+                continue
+        elif entry == "E1":
             j0 = i + 1
             if sw[j0]:
                 continue
@@ -119,7 +133,7 @@ def one(job):
                     sig = sig & X[k]
                 if not sig.any():
                     continue
-                for en in ("E1", "E2"):
+                for en in ("E1", "E2", "E3"):
                     for tg in TGT:
                         for (i, r1, r2, ratr, bars) in sim(f, sig, side, en, tg, cost):
                             rows.append((seg, a, "BUY hammer" if side > 0 else "SELL hanging man", tr, "+".join(opts) or "none",

@@ -260,3 +260,15 @@ Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
 - **Hanging man:** the candle closes near its high, so the stop is only about 0.25–0.4 ATR away. Normal noise hits it, and costs are large relative to that small risk. With confirmation entry it is about −0.03 to −0.7R.
 - **Index hammer + volume:** small sample. The EMA-only trend version (n 70) gives +0.19R and lost in 2023 and 2026. Treat it as a watch item, not an edge.
 - **Conclusion:** no tradable edge on stocks or MCX. Index hammer + volume is too small to trust.
+- **HAM-001 follow-up (confirmation-close entry E3).** A candle within 3 bars must close beyond the pattern's high/low; entry at the next open; stop unchanged. Both trend definitions, 2R target, net at 2× costs:
+
+  | Setup | Market | Breakout entry (E2) | Close entry (E3) |
+  |---|---|---|---|
+  | Hammer BUY | Stocks | −0.20R | −0.22R |
+  | Hammer BUY | MCX | −0.46R | −0.43R |
+  | Hammer BUY | Index | −0.12R | −0.03R |
+  | Hanging man SELL | Stocks | −0.20R | −0.25R |
+  | Hanging man SELL | MCX | −0.69R | −0.62R |
+
+  - Before costs, all are about zero. The candle has no directional edge, even after confirmation.
+  - Index hammer + volume with breakout entry: 35 trades, 66–80% wins, +0.34 to +0.39R. This is the only positive case and is too small to rely on.
