@@ -736,40 +736,7 @@
    "ltp": 333.4
   }
  },
- "bo_active": [
-  {
-   "name": "GOLD",
-   "tf": "1w",
-   "side": "SELL",
-   "entry": 143454.0,
-   "stop": 162934.29,
-   "risk": 19480.29437892474,
-   "best": 143454.0,
-   "trailed": false,
-   "n": 0,
-   "last_candle": "2026-10-19 09:00:00",
-   "checked": "2026-10-28 12:10:39.134351",
-   "contract": "GOLD04DEC26FUT",
-   "key": "GOLD|1w|2026-10-19 09:00:00",
-   "token": "495213"
-  },
-  {
-   "name": "SILVER",
-   "tf": "1w",
-   "side": "SELL",
-   "entry": 195151.0,
-   "stop": 249445.54,
-   "risk": 54294.535541919686,
-   "best": 195151.0,
-   "trailed": false,
-   "n": 0,
-   "last_candle": "2026-10-19 09:00:00",
-   "checked": "2026-10-28 12:10:39.134351",
-   "contract": "SILVER04DEC26FUT",
-   "key": "SILVER|1w|2026-10-19 09:00:00",
-   "token": "495214"
-  }
- ],
+ "bo_active": [],
  "stk": {
   "active": [],
   "last_block": "2026-10-28 12:15:00",
@@ -1000,8 +967,11 @@
    "lot": 1,
    "mult": 100,
    "time": "2026-10-28 12:10:39.134351",
-   "status": "OPEN",
-   "date": "2026-10-28"
+   "status": "CLOSED",
+   "date": "2026-10-28",
+   "exit": 143454.0,
+   "note": "withdrawn \u2013 weekly calls off",
+   "closed": "2026-10-28 14:45"
   },
   {
    "key": "SILVER|1w|2026-10-19 09:00:00",
@@ -1018,8 +988,11 @@
    "lot": 30,
    "mult": 30,
    "time": "2026-10-28 12:10:39.134351",
-   "status": "OPEN",
-   "date": "2026-10-28"
+   "status": "CLOSED",
+   "date": "2026-10-28",
+   "exit": 195151.0,
+   "note": "withdrawn \u2013 weekly calls off",
+   "closed": "2026-10-28 14:45"
   },
   {
    "key": "SILVER|1w|2026-10-19 09:00:00|OPT",
@@ -1038,8 +1011,11 @@
    "time": "2026-10-28 12:10:39.134351",
    "und_entry": 195151.0,
    "und_side": "SELL",
-   "status": "OPEN",
-   "date": "2026-10-28"
+   "status": "CLOSED",
+   "date": "2026-10-28",
+   "exit": 7242.0,
+   "note": "withdrawn \u2013 weekly calls off",
+   "closed": "2026-10-28 14:45"
   }
  ]
 }
