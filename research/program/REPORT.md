@@ -138,3 +138,21 @@ Forward data from 29-Oct-2026 only. Thresholds are fixed now and are not tuned o
 | S1 SELL shadow | exp at 2× costs > +0.1R | exp ≤ 0 → stays off |
 | +2–4 % OI label (S4 BUY) | label exp at 2× costs > 0 and > all calls | otherwise |
 | Option-sell 28-Oct rules | blocked calls' tracked outcome worse than the calls sent | blocked calls would have won more → remove the rule |
+
+## Addendum: SEARCH-80 (owner's 80 % goal), 28-Oct-2026 evening
+Script `research/program/search80.py`; tables in `results/search80_tables.md` and `results/search80_variants.csv`.
+
+**What was tested:**
+- **24 BUY setups:** trend breakouts (EMA cross, MACD, Supertrend, Donchian, ADX, Bollinger squeeze, inside bar, NR7); uptrend pullbacks (RSI(2), 3 lower closes, lower Bollinger, Williams %R, Stochastic, EMA20 pull-back, 10-day low, gap-down reversal); candle patterns (bullish engulfing, hammer, morning star, piercing); volume/OI dips.
+- **7 exits:** small targets with wide stops; close above SMA5; first profitable close; close above the previous high.
+- **2 regime settings.**
+- **7 datasets:** MCX daily and 3h, index daily and 3h, NIFTY/BANKNIFTY daily 2011–26, international proxies 2005–26, 181 stock futures.
+- **2,380 variants in total.**
+
+**Results:**
+- **≥ 80 % wins in train, validation and test (sample-size minimum met):** 0 variants, even ignoring profit.
+- **Gate ≥ 80 % (or ≥ 75 %) wins plus exp at 2× costs > 0 and PF ≥ 1.2 in every period:** 0 variants.
+- **Gate at ≥ 70 % wins:** 1 variant. Stocks: morning star with NIFTY above EMA200, exit at the first profitable close. Wins 76 / 81 / 74 %, +0.04 / +0.03 / +0.05R per trade at 2× costs, 73 % of stocks positive in the test period. That is a small edge.
+- **Best earlier result:** HA-1 (3h BUY, stop 3 ATR capped at 2.5 %, target 0.5R, RSI < 75 or compression), 77–82 % wins. It is already logged live beside every 3h BUY since 28-Oct.
+
+**Conclusion:** on this data, 80 % winning trades with positive profit after costs is not achievable reliably in any segment. Win rates of about 75–80 % are possible only with small targets, and the profit per trade then falls to +0.03–0.15R.
