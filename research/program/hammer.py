@@ -100,6 +100,8 @@ def sim(f, sig, side, entry, tgt, cost):
                 px, j = c[j - 1], j - 1; break
             if j > j0 and side * (o[j] - st) <= 0:
                 px = o[j]; break
+            if j > j0 and side * (o[j] - tp) >= 0:            # gap through the target: filled at the open
+                px = o[j]; break
             if (l[j] <= st) if side > 0 else (h[j] >= st):
                 px = st; break
             if (h[j] >= tp) if side > 0 else (l[j] <= tp):

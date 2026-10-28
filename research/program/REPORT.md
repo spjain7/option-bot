@@ -272,3 +272,33 @@ Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
 
   - Before costs, all are about zero. The candle has no directional edge, even after confirmation.
   - Index hammer + volume with breakout entry: 35 trades, 66–80% wins, +0.34 to +0.39R. This is the only positive case and is too small to rely on.
+
+## Addendum: exit cross-check (owner found 360ONE 22-Sep wrongly booked as a stop), 28-Oct-2026
+- **Bug:** the hammer simulator checked the stop before a candle that OPENED beyond the target. For 360ONE on 23-Sep 09:15, the candle opened at 1090.5, above the 1086.91 target, and its low was below the stop. The trade was booked as a stop.
+- **Fix:** a gap through the target now fills at the open (hammer.py, hammer_log.py, daily_candles.py).
+- **Impact:** 109 of 32,246 hourly calls changed from stop to target (3 in the last month: 360ONE ×2, SBIN). Averages moved by about 0.01–0.04R; conclusions are unchanged.
+- **`verify_exits.py` independently re-walks all 32,246 hourly and 7,367 daily calls from the raw candles:**
+  - 0 real logic errors. 31 flags were price touching a level to within 0.01 because of rounding in the log.
+  - 568 hourly calls (1.8%) and 8 daily calls had one candle touch both the stop and the target. The order inside such a candle is unknown, so they are booked as stops.
+  - If all of those were targets instead, the hourly averages would move to: stocks BUY −0.02R, stocks SELL −0.01R, MCX −0.12/−0.18R. Still not positive.
+  - 15-minute data (Aug–Oct 2026 only) resolved 4 of them, all stop first.
+- **The same stop-before-gap-target order exists in harness.py, reversal.py, emax.py (Y2) and stock_oi_buy.py.** It makes those results slightly cautious; they are not yet re-run.
+
+## Addendum: DCP-001, daily hammer / hanging man / engulfing, breakout entry, 28-Oct-2026
+- **Script:** `research/program/daily_candles.py`.
+- **Rules:** EMA20/50 trend before the pattern; entry on a break of the pattern day's high/low within 3 days; stop beyond the pattern; 2R target; 20 days maximum.
+- **Results after normal costs, 2022–26:**
+
+  | Pattern | Market | Trades | Win % | Result | Notes |
+  |---|---|---|---|---|---|
+  | **Hammer BUY** | MCX | 102 | 53 | **+0.31R** | |
+  | Hammer BUY, any trend | MCX | 333 | — | **+0.36R** | every year 2022–26 positive; all 7 commodities positive; passes all periods |
+  | Bullish engulfing BUY | MCX | 60 | — | +0.15R | without the trend filter: 165 trades, +0.35R, passes |
+  | **Hanging man SELL** | Stocks | 1,217 | 44 | **+0.18R** | flat in 2023 and 2025 |
+  | **Hanging man SELL** | NSE index 2011–26 | 111 | — | **+0.21R** | |
+  | Hanging man SELL | MCX | — | — | about 0 | |
+  | Bearish engulfing SELL | all markets | — | — | about 0 to −0.3R | |
+  | Bullish engulfing BUY | Stocks / index | — | — | negative | |
+  | Hammer BUY | Stocks | — | — | about −0.05R | |
+
+- **Next-day-open entry (no breakout wait) is much worse** for all patterns. Waiting for the breakout is what makes these work.

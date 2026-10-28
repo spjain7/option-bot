@@ -64,6 +64,8 @@ def log(job):
                     px, why, j = c[j - 1], "contract roll", j - 1; break
                 if j > j0 and side * (o[j] - st) <= 0:
                     px, why = o[j], "stop (gap)"; break
+                if j > j0 and side * (o[j] - tp) >= 0:            # gap through the target: filled at the open
+                    px, why = o[j], "target 2R"; break
                 if (l[j] <= st) if side > 0 else (h[j] >= st):
                     px, why = st, "stop"; break
                 if (h[j] >= tp) if side > 0 else (l[j] <= tp):
@@ -79,6 +81,8 @@ def log(job):
             while k < n and k - j0 < WATCH:
                 if k > j0 and sw[k]:
                     break
+                if side * (o[k] - best) > 0:                 # the open happens first: count it even on a stop candle
+                    best, bt, worst_before_best = o[k], k, worst
                 hit = (l[k] <= st) if side > 0 else (h[k] >= st)
                 if hit:
                     stop_t = tm[k]; worst = st; break

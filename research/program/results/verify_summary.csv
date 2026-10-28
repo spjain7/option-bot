@@ -1,0 +1,19 @@
+log,segment,call,trades,gap_target,clean_target,clean_stop,gap_stop,both_touched,resolved_by_15m,of_which_target,time_or_roll,logic_errors,not_found,avg_R_booked,avg_R_with_15m,avg_R_if_all_both_were_targets
+hourly hammer / hanging man,INDEX,BUY,251,14,81,110,19,1,0,0,26,0,0,0.06,0.06,0.072
+hourly hammer / hanging man,INDEX,SELL,179,15,47,84,19,4,0,0,10,0,0,-0.142,-0.142,-0.075
+hourly hammer / hanging man,MCX,BUY,1994,73,660,1012,104,15,1,0,130,4,0,-0.139,-0.139,-0.117
+hourly hammer / hanging man,MCX,SELL,1092,28,381,560,66,10,0,0,47,4,0,-0.209,-0.209,-0.182
+hourly hammer / hanging man,STOCKS,BUY,18510,632,5388,9279,1159,273,2,0,1779,19,0,-0.065,-0.065,-0.021
+hourly hammer / hanging man,STOCKS,SELL,10220,372,3121,5327,660,265,1,0,475,4,0,-0.086,-0.086,-0.008
+daily patterns,INDEX,BUY bull engulfing,13,0,1,8,0,0,0,0,4,0,0,-0.425,-0.425,-0.425
+daily patterns,INDEX,BUY hammer,31,1,7,15,3,0,0,0,5,0,0,-0.159,-0.159,-0.159
+daily patterns,INDEX,SELL bear engulfing,33,0,6,16,3,0,0,0,8,0,0,-0.284,-0.284,-0.284
+daily patterns,INDEX,SELL hanging man,19,2,6,8,1,0,0,0,2,0,0,0.272,0.272,0.272
+daily patterns,MCX,BUY bull engulfing,60,2,11,18,2,0,0,0,27,0,0,0.155,0.155,0.155
+daily patterns,MCX,BUY hammer,102,0,40,43,1,0,0,0,18,0,0,0.314,0.314,0.314
+daily patterns,MCX,SELL bear engulfing,106,1,20,40,8,0,0,0,37,0,0,-0.029,-0.029,-0.029
+daily patterns,MCX,SELL hanging man,64,1,16,33,2,0,0,0,12,1,0,-0.017,-0.017,-0.017
+daily patterns,STOCKS,BUY bull engulfing,1131,16,158,487,58,0,0,0,412,1,0,-0.135,-0.135,-0.135
+daily patterns,STOCKS,BUY hammer,2272,41,514,1118,91,2,0,0,506,2,0,-0.046,-0.046,-0.043
+daily patterns,STOCKS,SELL bear engulfing,2319,31,373,961,66,3,0,0,885,0,0,-0.05,-0.05,-0.047
+daily patterns,STOCKS,SELL hanging man,1217,51,337,554,33,3,0,0,239,1,0,0.177,0.177,0.185
