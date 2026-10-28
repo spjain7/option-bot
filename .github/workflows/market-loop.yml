@@ -24,6 +24,9 @@ on:
     - cron: "10 14 * * 1-5"    # 19:40
     - cron: "0 16 * * 1-5"     # 21:30
   workflow_dispatch:
+  push:                        # emergency start: a commit that changes .github/kick starts the loop (GitHub skipped every cron on 28-Oct)
+    branches: [main]
+    paths: [".github/kick"]
 
 concurrency:
   group: market-loop
