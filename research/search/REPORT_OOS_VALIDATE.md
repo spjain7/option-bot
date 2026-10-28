@@ -59,3 +59,10 @@ stable.
 | 3 | Drop **S3 SELL** | n = 25, negative recently | weak (too few trades) |
 | 4 | S1 stop 2.5 ATR / S3 target 3R | train-selected, not confirmed beyond noise | not supported |
 | 5 | Forward paper record of every call from 29-Oct-2026, judged after ≥ 30 trades per rule | the only clean test | recommended |
+
+## Correction (28-Oct-2026, STOCK-OI-BUY-001)
+The S4 stock simulation here exits **one session before the rollover window** (3 sessions before expiry). Live calls are
+held to the **expiry-day close**, and the stitched prices switch contract only after expiry, so that exit is valid. With
+the live exit the stock OI BUY result is +0.26 / −0.01 / −0.07R per trade (Nov-23–Jun-24 / Jul-24–Jun-25 / Jul-25–Oct-26),
+i.e. roughly break-even recently, not the −0.19 / −0.17R reported above. The early-exit model costs −0.11R per trade
+[95 % CI −0.21, −0.02]. Details: REPORT_STOCK_OI_BUY.md.
