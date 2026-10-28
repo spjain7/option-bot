@@ -56,7 +56,8 @@ st = {"open": [{**base, "token": "a"}, {**base, "token": "b", "id": 2}, {**base,
 msgs = []
 E.manage(Api({"a": 65, "b": 170, "c": 120}), st, now, msgs)
 check([a["why_exit"] for a in st["closed"]] == ["stop-loss hit", "target hit"] and len(st["open"]) == 1, "track: SL and target closed, other still open")
-check(st["closed"][0]["exit"] == 70 and st["closed"][0]["ret"] < -0.3 and st["closed"][1]["ret"] > 0.5, "track: exits at the SL/target price, costs reduce returns")
+check(st["closed"][0]["exit"] == 65 and st["closed"][0]["ret"] < -0.35 and st["closed"][1]["exit"] == 160 and st["closed"][1]["ret"] > 0.5,
+      "track: premium gapped below SL exits at the LTP (65, not the SL 70); target at its level; costs reduce returns")
 E.manage(Api({"c": 120}), st, pd.Timestamp("2026-10-23 15:17"), msgs)
 check(st["closed"][-1]["why_exit"] == "time exit" and not st["open"] and len(msgs) == 3, "track: time exit at 15:15")
 check(E.exit_time(pd.Timestamp("2026-10-23 09:32"), "positional") == pd.Timestamp("2026-10-27 15:15"), "positional exit: 3rd session (skips the weekend)")

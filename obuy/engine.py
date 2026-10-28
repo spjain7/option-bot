@@ -177,7 +177,7 @@ def exit_msg(a):
         head = ("✅ " if a["ret"] > 0 else "❌ ") + "TIME EXIT"
     return "\n".join([f"{head} • {a['name']} {a['K']:g} {'CE' if up else 'PE'} (#{a['id']})",
                       f"{rs_(a['entry'])} → {rs_(a['exit'])}",
-                      f"Result: {a['ret'] * 100:+.1f}% • {'+' if a['rs_lot'] >= 0 else '−'}₹{abs(a['rs_lot']):,.0f} per lot (after costs)"])
+                      f"Result: {a['ret'] * 100:+.1f}% • {'+' if a['rs_lot'] >= 0 else '−'}₹{abs(a['rs_lot']):,.0f} per lot (from quoted premium after modelled costs – not a broker fill)"])
 
 
 def scorecard(state, now):
@@ -215,7 +215,7 @@ def manage(api, state, now, msgs):
         ltp = float((q.get(a["token"]) or {}).get("ltp") or 0)
         why = px = None
         if ltp > 0 and ltp <= a["sl"]:
-            why, px = "stop-loss hit", a["sl"]
+            why, px = "stop-loss hit", min(ltp, a["sl"])          # a premium that gapped below the SL exits at the LTP, not the SL
         elif ltp >= a["tg"]:
             why, px = "target hit", a["tg"]
         elif now >= pd.Timestamp(a["exit_at"]) and ltp > 0:

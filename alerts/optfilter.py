@@ -45,6 +45,7 @@ def check(api, ex, name, opt, fut_px, daily, now):
         if spr > (0.05 if ex == "MCX" else 0.03):
             return False, ltp, notes, f"bid-ask spread {spr * 100:.1f}% too wide"
         notes.append(f"spread {spr * 100:.1f}%")
+        opt["spread"] = round(spr, 4)                       # kept for the cost model of the report
     dte = max((pd.Timestamp(opt["expiry"]).normalize() - pd.Timestamp(now).normalize()).days, 0)
     T = max(dte, 0.5) / 365
     iv = implied_vol(ltp, float(fut_px), float(opt["K"]), T, 0.065, opt["typ"])

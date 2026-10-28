@@ -454,7 +454,8 @@ def scan(api, master, now, state, msgs, rep, engine):
             else:
                 why_ = why_.replace("Not investment advice.", f"• Option  : {' · '.join(onotes)}\nNot investment advice.")
                 msgs.append(BO.option_msg(name, "NFO", "1d", sig, opt, oplan["entry"], oplan=oplan)[0])
-                RP.add(state, key=key + "|OPT", mark_key=c["token"], seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
+                RP.add(state, key=key + "|OPT", mark_key=opt["token"], opt_token=opt["token"], opt_ex="NFO", spread=opt.get("spread"),
+                       kind=RP.opt_kind("NSE", name), basis=RP.BASIS_QUOTE, seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
                        type="Positional", side="BUY", entry=oplan["entry"], sl=oplan["sl"], target=oplan["target"], tick=oplan["tick"],
                        lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
         msgs.append(why_)

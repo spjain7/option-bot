@@ -257,16 +257,17 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None, htf=None):
 
 
 def close_ledger(state, key, fut_exit, why, now):
-    """Close the futures row and its option-buy row (option exit ≈ entry premium + 0.5 × futures move)."""
+    """Close the futures row and its option-buy row. Option exit = the premium last quoted for the option (report.
+    option_exit_on_futures_close); only when none is available, the estimate entry + 0.5 × futures move, labelled 'estimated'."""
+    from alerts import report as RP
     for L in state.get("ledger", []):
         if L["status"] != "OPEN" or not key:
             continue
         if L.get("key") == key:
             L.update(status="CLOSED", exit=round(fut_exit, 2), note=why.replace("🎯 ", "")[:24], closed=str(now))
         elif L.get("key") == key + "|OPT":
-            s = 1 if L.get("und_side") == "BUY" else -1
-            L.update(status="CLOSED", exit=round(max(0.05, L["entry"] + 0.5 * s * (fut_exit - L["und_entry"])), 2),
-                     note=why.replace("🎯 ", "")[:24], closed=str(now))
+            px, basis = RP.option_exit_on_futures_close(L, fut_exit, now)
+            L.update(status="CLOSED", exit=px, basis=basis, note=why.replace("🎯 ", "")[:24], closed=str(now))
 
 
 def manage(state, msgs, name, tf, frame, c15, now):

@@ -248,6 +248,10 @@ def scan(api, master, now, state, only=None):
                 quotes.update(api.quotes({ex: toks}))
             except Exception as e:
                 rep["errors"].append(f"quotes {ex}: {type(e).__name__}")
+    try:                                                   # option-buy rows followed on their own premium
+        RP.track_options(api, state, now, is_open)
+    except Exception as e:
+        rep["errors"].append(f"option premium tracking: {type(e).__name__}")
     for name, ex in names:
         info = rep["instruments"].setdefault(name, {})
         if not is_open(ex, now) and not _just_closed(ex, now):
@@ -466,7 +470,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             else:
                 reason = reason.replace("Not investment advice.", f"• Option  : {' · '.join(onotes)}\nNot investment advice.")
                 msgs.append(BO.option_msg(name, ex, tf, sig, opt, oplan["entry"], oplan=oplan)[0])
-                RP.add(state, key=key + "|OPT", mark_key=c["token"], seg=seg, cat="OPTION BUY", name=name, symbol=opt["symbol"],
+                RP.add(state, key=key + "|OPT", mark_key=opt["token"], opt_token=opt["token"], opt_ex=ex, spread=opt.get("spread"),
+                       kind=RP.opt_kind(seg, name), basis=RP.BASIS_QUOTE, seg=seg, cat="OPTION BUY", name=name, symbol=opt["symbol"],
                        type=RP.CALL_TYPE[tf], side="BUY", entry=oplan["entry"], sl=oplan["sl"], target=oplan["target"], tick=oplan["tick"],
                        lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
         msgs.append(reason)
