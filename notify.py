@@ -11,15 +11,59 @@ def _plain(t):
     return t.replace("*", "").replace("_", "")
 
 
+from pathlib import Path
+import json, time
+PENDING = Path(__file__).resolve().parent / "state" / "telegram_pending.json"
+
+
+def _post(url, data, tries=4):
+    """POST with Telegram rate-limit handling (HTTP 429 -> wait retry_after and retry). Returns the response or None."""
+    for i in range(tries):
+        try:
+            r = requests.post(url, timeout=20, data=data)
+        except Exception:
+            time.sleep(3); continue
+        if r.status_code == 429:
+            try:
+                wait = float(r.json().get("parameters", {}).get("retry_after", 5))
+            except Exception:
+                wait = 5
+            time.sleep(min(wait + 1, 60)); continue
+        return r
+    return None
+
+
+def _queue(text):
+    try:
+        q = json.loads(PENDING.read_text()) if PENDING.exists() else []
+        PENDING.parent.mkdir(exist_ok=True)
+        PENDING.write_text(json.dumps((q + [text])[-50:]))
+    except Exception as e:
+        print("could not queue Telegram message:", e)
+
+
+def resend_pending():
+    """Re-send messages that failed in an earlier run (called once per run by runner.py)."""
+    if not (TG_TOKEN and TG_CHAT) or not PENDING.exists():
+        return
+    if not json.loads(PENDING.read_text() or "[]"):
+        return
+    q = json.loads(PENDING.read_text() or "[]")
+    PENDING.write_text("[]")                         # keep the (empty) file so the state commit records the change
+    for t in q:
+        send(t)
+
+
 def send(text, csv_df=None, fname="signals.csv"):
     print("\n" + text + "\n")
     if TG_TOKEN and TG_CHAT:
         base = f"https://api.telegram.org/bot{TG_TOKEN}"
         try:
-            r = requests.post(f"{base}/sendMessage", timeout=20,
-                              data={"chat_id": TG_CHAT, "text": text, "parse_mode": "Markdown"})
-            if not r.ok:
-                requests.post(f"{base}/sendMessage", timeout=20, data={"chat_id": TG_CHAT, "text": _plain(text)})
+            r = _post(f"{base}/sendMessage", {"chat_id": TG_CHAT, "text": text, "parse_mode": "Markdown"})
+            if r is None or not r.ok:
+                r = _post(f"{base}/sendMessage", {"chat_id": TG_CHAT, "text": _plain(text)})
+            if r is None or not r.ok:
+                _queue(text)                       # kept in state/telegram_pending.json and re-sent by the next run
             if csv_df is not None and not csv_df.empty:
                 buf = io.BytesIO(csv_df.to_csv(index=False).encode())
                 requests.post(f"{base}/sendDocument", timeout=60,

@@ -280,4 +280,5 @@ def load_master():
     df["expiry_dt"] = pd.to_datetime(df["expiry"], format="%d%b%Y", errors="coerce")
     df["strike"] = pd.to_numeric(df["strike"], errors="coerce")
     df["lotsize"] = pd.to_numeric(df["lotsize"], errors="coerce")
+    df["tick"] = pd.to_numeric(df["tick_size"], errors="coerce") / 100 if "tick_size" in df else float("nan")   # paise -> ₹
     return df

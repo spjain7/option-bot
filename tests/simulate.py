@@ -216,7 +216,7 @@ def main():
     assert nk and nk[0]["strategy"] == "Single PE Sell" and len(nk[0]["legs"]) == 1
     p = nk[0]
     gain, loss = p["credit"] - p["target_val"], p["sl_val"] - p["credit"]
-    assert gain >= loss - 1e-6 and p["confidence"] >= C.MIN_CONFIDENCE and p["spot_stop"] < p["spot_at_entry"]
+    assert gain >= loss - 0.05 - 1e-6 and p["confidence"] >= C.MIN_CONFIDENCE and p["spot_stop"] < p["spot_at_entry"]
     assert any("SELL  NIFTY" in m and "Entry" in m and "SL" in m for m in SENT), "call message missing"
     assert any("WHY – NIFTY" in m and "Levels" in m and "Support" in m for m in SENT), "S/R line missing in WHY"
     # Crude case from live data: price 8,766 after a big fall -> every support must be BELOW, resistance ABOVE

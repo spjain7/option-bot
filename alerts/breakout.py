@@ -10,6 +10,7 @@ daily ≈ +0.2R. ALERTS ONLY – no orders.
 import numpy as np
 import pandas as pd
 from crude import indicators as I
+from alerts import tradeplan as TP
 
 CFG = dict(N=20, vol_x=1.5, stop_atr=2.0, trail_atr=3.0, max_candles=40, ema=200)
 # Exits – PAT-002 (27-Oct-2026, research/search/REGISTRY_PAT2.md, corrected simulator): ONE stop + ONE target, no trailing.
@@ -170,14 +171,25 @@ def option_idea(master, name, ex, px, side, tf, now):
         o = o[o["expiry_dt"] == o["expiry_dt"].min()].copy()
         o["K"] = o["strike"].astype(float) / 100
         r = o.iloc[(o["K"] - px).abs().argsort().iloc[0]]
+        tk = r.get("tick") if hasattr(r, "get") else None
         return dict(symbol=r["symbol"], token=str(r["token"]), K=float(r["K"]), typ=typ, expiry=pd.Timestamp(r["expiry_dt"]),
-                    lot=int(r["lotsize"]))
+                    lot=int(r["lotsize"]), tick=float(tk) if tk is not None and tk == tk and tk > 0 else None)
     except Exception:
         return None
 
 
-def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None, opt=None, tr=None):
-    """Message 1 – the futures call: entry, SL, one target, lot. Nothing else. tr: target in R (0 = trailing, no target)."""
+def call_msg(name, ex, c, tf, sig, levels, live=None, lot=None, kind=None, k=None, opt=None, tr=None, plan=None):
+    """Message 1 – the futures call: entry, SL, one target, lot. Nothing else. tr: target in R (0 = trailing, no target).
+    With `plan` (alerts/tradeplan.py) the message shows exactly the validated, tick-rounded levels that are tracked."""
+    if plan is not None:
+        t = plan["tick"]
+        return "\n".join([
+            f"{'🟢 BUY' if plan['side'] == 'BUY' else '🔴 SELL'}  {name} FUT  ·  Positional",
+            "━━━━━━━━━━━━━━",
+            f"Entry   : {TP.fmt(plan['entry'], t)}",
+            f"SL      : {TP.fmt(plan['sl'], t)}",
+            f"Target  : {TP.fmt(plan['target'], t)}" if plan.get("target") else "Target  : trail – exit on TREND CHANGE alert",
+            f"Lot     : {lot or plan.get('lot') or c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}"])
     s, ref, R = _levels(sig, live, k or stop_k(tf))
     tg = TARGET_R.get(tf) if tr is None else (tr or None)
     lot = lot or c.get("lot")
@@ -264,9 +276,10 @@ def manage(state, msgs, name, tf, frame, c15, now):
         if p["name"] != name or p["tf"] != tf:
             keep.append(p); continue
         s = 1 if p["side"] == "BUY" else -1
+        _fp = (lambda x, t=p.get("tick"): TP.fmt(x, t)) if p.get("tick") else _f
         done = None
         bars = c15[c15["time"] > pd.Timestamp(p["checked"])] if c15 is not None and len(c15) else pd.DataFrame()
-        tg = p["entry"] + s * TARGET_R[tf] * p["risk"] if TARGET_R.get(tf) else None
+        tg = p["target"] if "target" in p else (p["entry"] + s * TARGET_R[tf] * p["risk"] if TARGET_R.get(tf) else None)
         for b in bars.itertuples():                       # stop first inside a candle (conservative)
             if (b.low <= p["stop"]) if s > 0 else (b.high >= p["stop"]):
                 done = (p["stop"], "trailing stop hit" if p["trailed"] else "stop-loss hit"); break
@@ -286,26 +299,26 @@ def manage(state, msgs, name, tf, frame, c15, now):
                 ns = p["best"] - s * CFG["trail_atr"] * a
                 if s * (ns - p["stop"]) > 0.25 * a:
                     p["stop"], p["trailed"] = round(ns, 2), True
-                    msgs.append(f"🔁 TRAIL UPDATE – {name} {p['side']} ({tf}) · new stop {_f(p['stop'])} · best close {_f(p['best'])}")
+                    msgs.append(f"🔁 TRAIL UPDATE – {name} {p['side']} ({tf}) · new stop {_fp(p['stop'])} · best close {_fp(p['best'])}")
             te = TREND_EXIT_EMA.get(tf)
             if te and len(frame) > te:
                 e = float(I.ema(frame["close"], te).iloc[-1])
                 if (cl < e) if s > 0 else (cl > e):
-                    done = (cl, f"TREND CHANGE – daily close {'below' if s > 0 else 'above'} EMA{te} ({_f(e)})")
+                    done = (cl, f"TREND CHANGE – daily close {'below' if s > 0 else 'above'} EMA{te} ({_fp(e)})")
             tw = TREND_WARN_EMA.get(tf)
             if done is None and tw and len(frame) > tw and not p.get("warned"):
                 e = float(I.ema(frame["close"], tw).iloc[-1])
                 if (cl < e) if s > 0 else (cl > e):
                     p["warned"] = True
-                    msgs.append(f"⚠️ TREND CHANGE WARNING – {name} {p['side']}: {CHART.get(tf, tf)} close {_f(cl)} {'below' if s > 0 else 'above'} "
-                                f"EMA{tw} ({_f(e)}) · stop {_f(p['stop'])} · consider exiting early to cut the loss "
+                    msgs.append(f"⚠️ TREND CHANGE WARNING – {name} {p['side']}: {CHART.get(tf, tf)} close {_fp(cl)} {'below' if s > 0 else 'above'} "
+                                f"EMA{tw} ({_fp(e)}) · stop {_fp(p['stop'])} · consider exiting early to cut the loss "
                                 f"(open {s * (cl - p['entry']) / p['risk']:+.1f}R)")
             if done is None and p["n"] >= MAX_CANDLES.get(tf, CFG["max_candles"]):
                 done = (cl, f"time exit after {MAX_CANDLES.get(tf, CFG['max_candles'])} candles")
         if done:
             r = s * (done[0] - p["entry"]) / p["risk"]
-            msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {name} {p['side']} ({tf}) at ~{_f(done[0])}: {done[1]} · "
-                        f"result {r:+.2f}R (entry {_f(p['entry'])})")
+            msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {name} {p['side']} ({tf}) at ~{_fp(done[0])}: {done[1]} · "
+                        f"result {r:+.2f}R (entry {_fp(p['entry'])})")
             state["day"].setdefault("outcomes", []).append(dict(name=name, tf=tf, side=p["side"], result=f"{done[1]} {r:+.2f}R"))
             close_ledger(state, p.get("key"), float(done[0]), done[1], now)
         else:
@@ -313,16 +326,19 @@ def manage(state, msgs, name, tf, frame, c15, now):
     state["bo_active"] = keep
 
 
-def option_msg(name, ex, tf, sig, opt, prem, live=None, k=None, tr=None):
-    """OPTION-BUY call for the same signal: ATM CE (buy) / PE (sell). SL / target as % of the premium; also exit when the
-    futures call exits (its SL / target / trend-change alert)."""
-    slp, tgp = OPT_SL_TG.get(tf, (0.35, 0.80))
-    osl, otg = (round(prem * (1 - slp), 2), round(prem * (1 + tgp), 2)) if prem else (None, None)
+def option_msg(name, ex, tf, sig, opt, prem, live=None, k=None, tr=None, oplan=None):
+    """OPTION-BUY call for the same signal: ATM CE (buy) / PE (sell). SL / target on the PREMIUM (kept separate from the
+    futures stop); also exit when the futures call exits. With `oplan` the tracked, tick-rounded levels are shown."""
+    if oplan is None:
+        slp, tgp = OPT_SL_TG.get(tf, (0.35, 0.80))
+        oplan = TP.option_plan(premium=prem, sl_pct=slp, tg_pct=tgp, tick=opt.get("tick"), lot=opt["lot"])
+    t = oplan["tick"]
+    ok = oplan["valid"]
     L = [f"{'🟢' if opt['typ'] == 'CE' else '🔴'} BUY  {name} {opt['K']:g} {opt['typ']}  ·  Positional",
          "━━━━━━━━━━━━━━",
-         f"Entry   : {('₹' + _f(prem)) if prem else 'market (LTP n/a)'}",
-         f"SL      : {('₹' + _f(osl)) if prem else '-'}  (−{slp * 100:.0f}%)",
-         f"Target  : {('₹' + _f(otg)) if prem else '-'}  (+{tgp * 100:.0f}%)",
+         f"Entry   : {('₹' + TP.fmt(oplan['entry'], t)) if ok else 'market (LTP n/a)'}",
+         f"SL      : {('₹' + TP.fmt(oplan['sl'], t)) if ok else '-'}  (−{oplan.get('sl_pct', 0) * 100:.0f}%)",
+         f"Target  : {('₹' + TP.fmt(oplan['target'], t)) if ok else '-'}  (+{oplan.get('tg_pct', 0) * 100:.0f}%)",
          f"Lot     : {opt['lot']}  ·  exp {opt['expiry']:%d-%b}  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
          "Also exit when the futures call exits"]
-    return "\n".join(L), (osl, otg)
+    return "\n".join(L), ((oplan["sl"], oplan["target"]) if ok else (None, None))

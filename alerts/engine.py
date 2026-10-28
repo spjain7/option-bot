@@ -6,7 +6,7 @@ MCX futures + NIFTY / BANKNIFTY futures. ALERTS ONLY: no orders, no auto-trading
 import os
 import pandas as pd
 from crude import data as CD
-from alerts import signals as S, breakout as BO, patterns as PT, report as RP, optfilter as OF
+from alerts import signals as S, breakout as BO, patterns as PT, report as RP, optfilter as OF, tradeplan as TP
 PATTERN_TFS = ()               # OFF: chart-pattern calls failed once the exit-simulator bug was fixed (INST-PAT-001)
 
 RSI_REVERSAL_CALLS = False   # off since 22-Oct-2026: the RSI-reversal rule lost money in every test (alerts/STATS.md,
@@ -67,7 +67,9 @@ def contracts(master, name, ex, now):
     if k is None:
         return None
     use = rows[k]
+    tk = getattr(use, "tick", None)
     return dict(symbol=use.symbol, token=str(use.token), expiry=str(use.expiry_dt.date()), is_front=(k == 0), lot=int(use.lotsize),
+                tick=float(tk) if tk is not None and tk == tk and tk > 0 else None,
                 next_token=str(rows[k + 1].token) if k + 1 < len(rows) else None)
 
 
@@ -430,41 +432,42 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if sid in state["seen"]:
             continue
         state["seen"] = (state["seen"] + [sid])[-2000:]
-        lv = S.levels(fr, h1full, sig["close"], sig["atr"])
+        lv = S.levels(fr, h1full, sig["close"], sig["atr"]) if TP.finite(sig.get("close"), sig.get("atr")) else dict(support=[], resistance=[])
         live = (q or {}).get("ltp")
+        live = float(live) if live not in (None, "", 0) else None
         s_ = 1 if sig["side"] == "BUY" else -1
-        slpct = BO.stop_k(tf) * sig["atr"] / sig["close"] * 100
-        if slpct > BO.MAX_SL_PCT.get(tf, 4.0):
-            info[f"bo_{tf}"] += f" · skipped: stop-loss {slpct:.1f}% away (max {BO.MAX_SL_PCT.get(tf)}%)"; continue
-        if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
-            info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
-        opt = BO.option_idea(master, name, ex, live or sig["close"], sig["side"], tf, now) if master is not None else None
-        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, live))
+        plan = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf=tf, side=sig["side"], signal_time=sig["candle"],
+                               signal_close=sig.get("close"), atr=sig.get("atr"), stop_mult=BO.stop_k(tf), target_r=BO.TARGET_R.get(tf),
+                               tick=c.get("tick"), lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")),
+                               max_sl_pct=BO.MAX_SL_PCT.get(tf, 4.0), live=live, quote=q, now=now, require_live=is_open(ex, now),
+                               levels=lv)
+        if not plan["valid"]:
+            info[f"bo_{tf}"] += f" · skipped: {plan['reason']}"; continue
+        opt = BO.option_idea(master, name, ex, plan["entry"], sig["side"], tf, now) if master is not None else None
+        msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, plan=plan))
         reason = BO.reason_msg(name, tf, sig, lv, oi, q, htf=htf)
-        ref = live or sig["close"]
+        if plan.get("warn"):
+            reason = reason.replace("Not investment advice.", f"• Note    : {plan['warn']}\nNot investment advice.")
         key = f"{name}|{tf}|{last}"
-        R_ = BO.stop_k(tf) * sig["atr"]
-        tgt = ref + s_ * BO.TARGET_R[tf] * R_ if BO.TARGET_R.get(tf) else None
-        state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=ref, stop=round(ref - s_ * R_, 2),
-                                       risk=R_, best=ref, trailed=False, n=0, last_candle=last,
+        state["bo_active"].append(dict(name=name, tf=tf, side=sig["side"], entry=plan["entry"], stop=plan["sl"], target=plan["target"],
+                                       risk=plan["risk_unit"], best=plan["entry"], trailed=False, n=0, last_candle=last, tick=plan["tick"],
                                        checked=str(now), contract=c["symbol"], key=key, token=c["token"]))
         seg = "MCX" if ex == "MCX" else "NSE"
         RP.add(state, key=key, mark_key=c["token"], seg=seg, cat="FUTURES", name=name, symbol=c["symbol"], type=RP.CALL_TYPE[tf],
-               side=sig["side"], entry=round(ref, 2), sl=round(ref - s_ * R_, 2), target=round(tgt, 2) if tgt else None,
-               lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")), time=str(now))
+               side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],
+               lot=c.get("lot"), mult=plan["mult"], time=str(now))
         if opt and api is not None:
-            ok, prem, onotes, oskip = OF.check(api, ex, name, opt, live or sig["close"], dd, now)
-            if not ok:
-                prem = None
-                reason = reason.replace("Not investment advice.", f"• Option  : no option-buy call – {oskip}\nNot investment advice.")
+            ok, prem, onotes, oskip = OF.check(api, ex, name, opt, plan["entry"], dd, now)
+            oplan = TP.option_plan(premium=prem, sl_pct=BO.OPT_SL_TG.get(tf, (0.35, 0.8))[0], tg_pct=BO.OPT_SL_TG.get(tf, (0.35, 0.8))[1],
+                                   tick=opt.get("tick"), lot=opt["lot"]) if ok else dict(valid=False, reason=oskip)
+            if not oplan["valid"]:
+                reason = reason.replace("Not investment advice.", f"• Option  : no option-buy call – {oplan['reason']}\nNot investment advice.")
             else:
                 reason = reason.replace("Not investment advice.", f"• Option  : {' · '.join(onotes)}\nNot investment advice.")
-                om, (osl, otg) = BO.option_msg(name, ex, tf, sig, opt, prem, live)
-                msgs.append(om)
-            if prem:
+                msgs.append(BO.option_msg(name, ex, tf, sig, opt, oplan["entry"], oplan=oplan)[0])
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg=seg, cat="OPTION BUY", name=name, symbol=opt["symbol"],
-                       type=RP.CALL_TYPE[tf], side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=round(otg, 2) if otg else None,
-                       lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=ref, und_side=sig["side"])
+                       type=RP.CALL_TYPE[tf], side="BUY", entry=oplan["entry"], sl=oplan["sl"], target=oplan["target"], tick=oplan["tick"],
+                       lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
         msgs.append(reason)
         state["day"]["alerts"] += 1
 

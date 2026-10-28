@@ -473,6 +473,18 @@ class Bot:
             conf = max(conf, C.MIN_CONFIDENCE)
         if C.SELL_STYLE == "NAKED" and conf < C.MIN_CONFIDENCE:
             self.why(name, f"{bias.lower()} but confidence {conf}/100 (need {C.MIN_CONFIDENCE})"); return
+        try:                                              # option-premium levels on the exchange tick (28-Oct audit)
+            from alerts.tradeplan import tick_round
+            lt = self.master[self.master["token"].astype(str) == str(t["legs"][0]["token"])]
+            tk = float(lt["tick"].iloc[0]) if len(lt) and "tick" in lt and lt["tick"].iloc[0] == lt["tick"].iloc[0] else 0.05
+            t["sl_val"] = tick_round(t["sl_val"], tk)
+            t["target_val"] = tick_round(t["target_val"], tk)
+            gain_, loss_ = t["credit"] - t["target_val"], t["sl_val"] - t["credit"]
+            naked_ = len(t["legs"]) == 1                  # the reward/risk rule applies to naked sells (as in strategy.py)
+            if not (t["target_val"] < t["credit"] < t["sl_val"]) or (naked_ and gain_ < C.MIN_RR * loss_ - tk - 1e-9):
+                self.why(name, "levels invalid after tick rounding"); return
+        except Exception as e_:
+            print(name, "tick rounding skipped:", e_)
         t.update({"name": name, "mode": mode, "expiry": str(pd.Timestamp(expiry).date()), "confidence": conf,
                   "dte": M.dte(expiry), "spot_at_entry": spot, "exch": exch,
                   "fut_token": str(v["fut"]["token"]) if v["fut"] else None,
@@ -791,6 +803,7 @@ def main():
                         f"PCR {ch['pcr'] if ch else '-'} | ATM IV {ch['atm_iv'] if ch else '-'} | VIX {b.vix()['vix']}")
             return
         master = load_master()
+        notify.resend_pending()                      # option-sell messages that failed (e.g. Telegram 429) in an earlier run
 
         # ENGINE A - option selling (NSE + MCX)
         store = Store()

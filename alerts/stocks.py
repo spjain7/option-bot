@@ -11,7 +11,7 @@ Backtest (after costs): design +0.20R/trade, unseen hold-out +0.085R/trade, ~47%
 import time
 import numpy as np
 import pandas as pd
-from alerts import patterns as PT, breakout as BO, signals as S, report as RP, optfilter as OF
+from alerts import patterns as PT, breakout as BO, signals as S, report as RP, optfilter as OF, tradeplan as TP
 from crude import data as CD, indicators as I
 
 ENABLED = True
@@ -55,7 +55,9 @@ def universe(master, now):
     for r in m.itertuples():
         if r.name in out or CD.trading_days_between(now.normalize(), r.expiry_dt) <= 2:
             continue
-        out[r.name] = dict(symbol=r.symbol, token=str(r.token), expiry=str(r.expiry_dt.date()), lot=int(r.lotsize))
+        tk = getattr(r, "tick", None)
+        out[r.name] = dict(symbol=r.symbol, token=str(r.token), expiry=str(r.expiry_dt.date()), lot=int(r.lotsize),
+                           tick=float(tk) if tk is not None and tk == tk and tk > 0 else None)
     return out
 
 
@@ -106,6 +108,7 @@ def evaluate(d):
 # SELL, SL 1.5 ATR, target 1R, max 10 sessions. Win 55% / 68%, ₹2,065 / ₹7,208 per lot at 2× costs, 66% of stocks +.
 # All bullish candles (hammer, bullish engulfing, morning star) failed and are not used.
 BEAR_ENGULF_ENABLED = True
+MAX_SL_PCT = 6.0      # stock futures: a stop further than 6% from entry is not sent (2-ATR stops on volatile stocks)
 
 
 def evaluate_bear_engulf(d):
@@ -125,6 +128,25 @@ def evaluate_bear_engulf(d):
     if eng and x.close > e20 and r5 > 0 and vx > 1.5 and not in_rollover_window(x.time):
         return dict(out, side="SELL")
     return dict(out, side=None)
+
+
+def validate_pending(p, ltp, now):
+    """Stock calls are sent after the close with entry = the close. At the next session (from 09:16) the opening price
+    must still be inside the entry zone. -> ("wait" | "cancel" | "active", message)."""
+    if not ltp or now < now.normalize() + pd.Timedelta(hours=9, minutes=16) or str(now.date()) <= p["last_candle"][:10]:
+        return "wait", None
+    s = 1 if p["side"] == "BUY" else -1
+    t = p.get("tick") or 0.05
+    ltp = float(ltp); a_ = p.get("atr") or p["risk"]
+    mv = s * (ltp - p["entry"]) / a_
+    why_c = ("opened beyond the stop-loss" if s * (ltp - p["stop"]) <= 0 else
+             f"opened {mv:.2f} ATR past the entry (no chasing)" if mv > TP.MAX_CHASE_ATR else
+             f"opened {-mv:.2f} ATR against the entry" if mv < -TP.MAX_AGAINST_ATR else None)
+    if why_c:
+        return "cancel", (f"🚫 CANCELLED – {p['name']} FUT {p['side']} (entry {TP.fmt(p['entry'], t)}): {why_c} "
+                          f"(price {TP.fmt(ltp, t)}). Do not take this call.")
+    return "active", (f"✅ ACTIVE – {p['name']} FUT {p['side']}: price {TP.fmt(ltp, t)} is inside the entry zone. "
+                      f"SL {TP.fmt(p['stop'], t)}" + (f" · target {TP.fmt(p['target'], t)}" if p.get("target") else ""))
 
 
 def reason_engulf(name, sig, lv):
@@ -301,6 +323,34 @@ def scan(api, master, now, state, msgs, rep, engine):
         for p in st["active"]:
             s = 1 if p["side"] == "BUY" else -1
             ltp = (q.get(p["token"]) or {}).get("ltp")
+            if p.get("pending"):
+                verdict, note = validate_pending(p, ltp, now)
+                if verdict == "wait":
+                    keep.append(p); continue
+                msgs.append(note)
+                if verdict == "cancel":
+                    for L in state.get("ledger", []):
+                        if L.get("key") in (p.get("key"), (p.get("key") or "") + "|OPT") and L["status"] == "OPEN":
+                            L.update(status="CLOSED", exit=L["entry"], note="cancelled – gap", closed=str(now))
+                    continue
+                p["pending"] = False
+                keep.append(p); continue
+                ltp = float(ltp); a_ = p.get("atr") or p["risk"]
+                mv = s * (ltp - p["entry"]) / a_
+                why_c = ("opened beyond the stop-loss" if s * (ltp - p["stop"]) <= 0 else
+                         f"opened {mv:.2f} ATR past the entry (no chasing)" if mv > TP.MAX_CHASE_ATR else
+                         f"opened {-mv:.2f} ATR against the entry" if mv < -TP.MAX_AGAINST_ATR else None)
+                if why_c:
+                    msgs.append(f"🚫 CANCELLED – {p['name']} FUT {p['side']} (entry {TP.fmt(p['entry'], p.get('tick') or 0.05)}): {why_c} "
+                                f"(price {TP.fmt(ltp, p.get('tick') or 0.05)}). Do not take this call.")
+                    for L in state.get("ledger", []):
+                        if L.get("key") in (p.get("key"), (p.get("key") or "") + "|OPT") and L["status"] == "OPEN":
+                            L.update(status="CLOSED", exit=L["entry"], note="cancelled – gap", closed=str(now))
+                    continue
+                p["pending"] = False
+                msgs.append(f"✅ ACTIVE – {p['name']} FUT {p['side']}: opened at {TP.fmt(ltp, p.get('tick') or 0.05)}, inside the entry zone. "
+                            f"SL {TP.fmt(p['stop'], p.get('tick') or 0.05)}" + (f" · target {TP.fmt(p['target'], p.get('tick') or 0.05)}" if p.get("target") else ""))
+                keep.append(p); continue
             if ltp and p.get("target") and s * (ltp - p["target"]) >= 0:
                 r = s * (ltp - p["entry"]) / p["risk"]
                 msgs.append(f"✅ EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: 🎯 TARGET HIT · result {r:+.2f}R")
@@ -380,35 +430,41 @@ def scan(api, master, now, state, msgs, rep, engine):
                 sig = be
         if not sig["side"] or first_session_after_expiry(sig["candle"]) or any(p["name"] == name for p in st["active"]):
             continue
-        lv = S.levels(d, h, sig["close"], sig["atr"])
         cc = dict(symbol=c["symbol"], expiry=c["expiry"])
-        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], k=sig.get("k", CFG["stop_atr"]), tr=sig.get("tr", 0),
-                                opt=BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)))
-        s_ = 1 if sig["side"] == "BUY" else -1
+        k_ = sig.get("k", CFG["stop_atr"])
+        plan = TP.futures_plan(name=name, ex="NFO", contract=c["symbol"], tf="1d", side=sig["side"], signal_time=sig["candle"],
+                               signal_close=sig.get("close"), atr=sig.get("atr"), stop_mult=k_, target_r=sig.get("tr") or None,
+                               tick=c.get("tick"), lot=c["lot"], mult=c["lot"], max_sl_pct=MAX_SL_PCT, live=None, now=now,
+                               require_live=False)
+        if not plan["valid"]:
+            rep.setdefault("stock_skips", []).append(f"{name}: {plan['reason']}"); continue
+        lv = S.levels(d, h, sig["close"], sig["atr"])
+        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], plan=plan))
         key = f"{name}|1dSTK|{last}"
-        k_ = sig.get("k", CFG["stop_atr"]); R_ = k_ * sig["atr"]
-        tgt = round(sig["close"] + s_ * sig["tr"] * R_, 2) if sig.get("tr") else None
-        st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=sig["close"],
-                                 stop=round(sig["close"] - s_ * R_, 2), risk=R_, target=tgt, max_days=sig.get("max_days", CFG["max_days"]),
-                                 best=sig["close"], trailed=False, n=0, last_candle=last, key=key))
+        # entry = today's close; the call becomes ACTIVE only if tomorrow's opening price is still inside the entry zone
+        st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=plan["entry"],
+                                 stop=plan["sl"], risk=plan["risk_unit"], target=plan["target"], tick=plan["tick"], atr=float(sig["atr"]),
+                                 max_days=sig.get("max_days", CFG["max_days"]), pending=True,
+                                 best=plan["entry"], trailed=False, n=0, last_candle=last, key=key))
         RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional",
-               side=sig["side"], entry=round(sig["close"], 2), sl=round(sig["close"] - s_ * R_, 2), target=tgt,
+               side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],
                lot=c["lot"], mult=c["lot"], time=str(now))
-        opt = BO.option_idea(master, name, "NFO", sig["close"], sig["side"], "1d", now)
+        opt = BO.option_idea(master, name, "NFO", plan["entry"], sig["side"], "1d", now)
         why_ = reason_engulf(name, sig, lv) if sig.get("pattern") else reason_msg(name, sig, lv)
+        why_ = why_.replace("Not investment advice.", f"• Entry   : next open must be within {TP.MAX_CHASE_ATR} ATR of {TP.fmt(plan['entry'], plan['tick'])} "
+                            "– otherwise the call is cancelled at 09:17\nNot investment advice.")
         if opt:
-            ok, prem, onotes, oskip = OF.check(api, "NFO", name, opt, sig["close"], d, now)
-            if not ok:
-                prem = None
-                why_ = why_.replace("Not investment advice.", f"• Option  : no option-buy call – {oskip}\nNot investment advice.")
+            ok, prem, onotes, oskip = OF.check(api, "NFO", name, opt, plan["entry"], d, now)
+            oplan = TP.option_plan(premium=prem, sl_pct=BO.OPT_SL_TG["1d"][0], tg_pct=BO.OPT_SL_TG["1d"][1], tick=opt.get("tick"),
+                                   lot=opt["lot"]) if ok else dict(valid=False, reason=oskip)
+            if not oplan["valid"]:
+                why_ = why_.replace("Not investment advice.", f"• Option  : no option-buy call – {oplan['reason']}\nNot investment advice.")
             else:
                 why_ = why_.replace("Not investment advice.", f"• Option  : {' · '.join(onotes)}\nNot investment advice.")
-                om, (osl, otg) = BO.option_msg(name, "NFO", "1d", sig, opt, prem, k=sig.get("k", CFG["stop_atr"]), tr=sig.get("tr", 0))
-                msgs.append(om)
-            if prem:
+                msgs.append(BO.option_msg(name, "NFO", "1d", sig, opt, oplan["entry"], oplan=oplan)[0])
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
-                       type="Positional", side="BUY", entry=round(prem, 2), sl=round(osl, 2), target=None, lot=opt["lot"],
-                       mult=opt["lot"], time=str(now), und_entry=sig["close"], und_side=sig["side"])
+                       type="Positional", side="BUY", entry=oplan["entry"], sl=oplan["sl"], target=oplan["target"], tick=oplan["tick"],
+                       lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
         msgs.append(why_)
         state["day"]["alerts"] += 1
         found += 1
