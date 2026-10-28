@@ -1,0 +1,391 @@
+dataset,strat,side,variant,train_n,train_win,train_exp2,train_pf,valid_n,valid_win,valid_exp2,valid_pf,test_n,test_win,test_exp2,test_pf,verdict
+angel,S1,BUY,X3 2ATR/0.5R + A1 trend ADX≥25,103,73.8,-0.022,1.14,57,57.9,-0.254,0.57,90,64.4,-0.139,0.77,fail
+angel,S1,BUY,X3 2ATR/0.5R + A2 high volatility,98,66.3,-0.139,0.8,42,57.1,-0.204,0.63,75,73.3,0.004,1.21,fail
+angel,S1,BUY,X3 2ATR/0.5R + A3 low volatility,89,78.7,0.035,1.45,80,76.2,-0.022,1.2,95,74.7,-0.035,1.15,train only
+angel,S1,BUY,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,109,66.1,-0.146,0.78,58,62.1,-0.161,0.73,86,72.1,-0.024,1.11,fail
+angel,S1,BUY,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,40,80.0,0.03,1.54,33,72.7,-0.053,1.12,27,66.7,-0.116,0.84,train only
+angel,S1,BUY,X3 2ATR/0.5R + A6 momentum ROC20 aligned,183,72.7,-0.048,1.06,119,69.7,-0.085,0.95,165,73.3,-0.03,1.12,fail
+angel,S1,BUY,X3 2ATR/0.5R + B1 extension ≤1 ATR,140,74.3,-0.029,1.15,92,70.7,-0.077,0.97,129,72.9,-0.044,1.08,fail
+angel,S1,BUY,X3 2ATR/0.5R + B2 close near extreme (CLV),143,72.7,-0.053,1.06,94,70.2,-0.078,0.96,118,78.0,0.035,1.43,fail
+angel,S1,BUY,X3 2ATR/0.5R + B3 strong body ≥50%,137,74.5,-0.032,1.14,95,71.6,-0.068,1.0,124,75.0,-0.016,1.19,fail
+angel,S1,BUY,X3 2ATR/0.5R + B4 prior compression,63,69.8,-0.094,0.92,38,68.4,-0.146,0.8,50,80.0,0.037,1.55,fail
+angel,S1,BUY,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,145,73.1,-0.038,1.09,96,67.7,-0.111,0.87,126,73.8,-0.013,1.19,fail
+angel,S1,BUY,X3 2ATR/0.5R + C1 volume ≥2×,131,73.3,-0.04,1.1,69,62.3,-0.21,0.65,103,72.8,-0.027,1.13,fail
+angel,S1,BUY,X3 2ATR/0.5R + C2 RSI not exhausted,131,74.0,-0.036,1.13,101,68.3,-0.118,0.86,110,75.5,-0.008,1.25,fail
+angel,S1,BUY,X3 2ATR/0.5R + none,183,72.7,-0.048,1.06,119,69.7,-0.085,0.95,165,73.3,-0.03,1.12,fail
+angel,S1,BUY,X4 3ATR/0.5R + A1 trend ADX≥25,57,75.4,0.036,1.32,35,71.4,0.015,1.26,63,65.1,-0.095,0.85,train only
+angel,S1,BUY,X4 3ATR/0.5R + A2 high volatility,54,77.8,0.067,1.5,17,70.6,0.008,1.2,44,77.3,0.084,1.57,train only
+angel,S1,BUY,X4 3ATR/0.5R + A3 low volatility,55,70.9,-0.048,1.02,61,80.3,0.112,1.87,77,72.7,-0.02,1.12,fail
+angel,S1,BUY,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,63,73.0,-0.004,1.16,31,74.2,0.016,1.24,57,71.9,-0.012,1.12,fail
+angel,S1,BUY,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,22,81.8,0.086,1.81,21,85.7,0.184,3.12,12,66.7,-0.113,0.84,train+valid only
+angel,S1,BUY,X4 3ATR/0.5R + A6 momentum ROC20 aligned,102,73.5,-0.004,1.17,77,77.9,0.084,1.65,115,73.9,0.006,1.21,fail
+angel,S1,BUY,X4 3ATR/0.5R + B1 extension ≤1 ATR,79,72.2,-0.031,1.08,61,83.6,0.147,2.16,91,74.7,0.014,1.25,fail
+angel,S1,BUY,X4 3ATR/0.5R + B2 close near extreme (CLV),81,80.2,0.095,1.71,62,75.8,0.062,1.49,86,74.4,0.014,1.24,train+valid only
+angel,S1,BUY,X4 3ATR/0.5R + B3 strong body ≥50%,81,77.8,0.058,1.48,64,73.4,0.02,1.29,89,75.3,0.025,1.3,train only
+angel,S1,BUY,X4 3ATR/0.5R + B4 prior compression,34,82.4,0.116,1.91,26,76.9,0.036,1.38,38,81.6,0.097,1.82,PASS all 3
+angel,S1,BUY,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,84,72.6,-0.012,1.13,60,75.0,0.03,1.33,89,73.0,0.008,1.21,fail
+angel,S1,BUY,X4 3ATR/0.5R + C1 volume ≥2×,75,74.7,0.017,1.26,47,68.1,-0.061,0.97,71,76.1,0.041,1.36,fail
+angel,S1,BUY,X4 3ATR/0.5R + C2 RSI not exhausted,69,76.8,0.033,1.37,66,80.3,0.096,1.72,77,76.6,0.032,1.37,PASS all 3
+angel,S1,BUY,X4 3ATR/0.5R + none,102,73.5,-0.004,1.17,77,77.9,0.084,1.65,115,73.9,0.006,1.21,fail
+angel,S1,SELL,X3 2ATR/0.5R + A1 trend ADX≥25,45,68.9,-0.192,0.79,44,68.2,-0.114,0.85,38,63.2,-0.211,0.63,fail
+angel,S1,SELL,X3 2ATR/0.5R + A2 high volatility,62,67.7,-0.149,0.82,49,67.3,-0.119,0.84,32,62.5,-0.24,0.6,fail
+angel,S1,SELL,X3 2ATR/0.5R + A3 low volatility,60,71.7,-0.16,0.86,28,60.7,-0.268,0.57,46,63.0,-0.174,0.7,fail
+angel,S1,SELL,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,54,72.2,-0.078,1.04,43,72.1,-0.053,1.04,32,62.5,-0.22,0.63,fail
+angel,S1,SELL,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,58,69.0,-0.17,0.79,32,65.6,-0.144,0.77,29,72.4,-0.08,0.99,fail
+angel,S1,SELL,X3 2ATR/0.5R + A6 momentum ROC20 aligned,119,68.9,-0.168,0.8,75,64.0,-0.188,0.7,78,62.8,-0.201,0.65,fail
+angel,S1,SELL,X3 2ATR/0.5R + B1 extension ≤1 ATR,97,67.0,-0.208,0.72,58,60.3,-0.242,0.6,59,59.3,-0.277,0.54,fail
+angel,S1,SELL,X3 2ATR/0.5R + B2 close near extreme (CLV),93,74.2,-0.081,1.06,58,65.5,-0.165,0.75,46,63.0,-0.173,0.71,fail
+angel,S1,SELL,X3 2ATR/0.5R + B3 strong body ≥50%,96,71.9,-0.127,0.92,59,66.1,-0.164,0.76,52,65.4,-0.18,0.7,fail
+angel,S1,SELL,X3 2ATR/0.5R + B4 prior compression,40,72.5,-0.149,0.88,24,50.0,-0.37,0.41,26,53.8,-0.381,0.42,fail
+angel,S1,SELL,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,86,68.6,-0.166,0.81,54,63.0,-0.209,0.66,56,66.1,-0.16,0.73,fail
+angel,S1,SELL,X3 2ATR/0.5R + C1 volume ≥2×,63,69.8,-0.165,0.81,56,57.1,-0.294,0.52,39,69.2,-0.112,0.83,fail
+angel,S1,SELL,X3 2ATR/0.5R + C2 RSI not exhausted,98,68.4,-0.188,0.76,52,53.8,-0.33,0.47,54,61.1,-0.248,0.58,fail
+angel,S1,SELL,X3 2ATR/0.5R + none,119,68.9,-0.168,0.8,75,64.0,-0.188,0.7,78,62.8,-0.201,0.65,fail
+angel,S1,SELL,X4 3ATR/0.5R + A1 trend ADX≥25,34,58.8,-0.268,0.58,19,84.2,0.152,2.27,17,76.5,0.004,1.27,fail
+angel,S1,SELL,X4 3ATR/0.5R + A2 high volatility,41,73.2,-0.04,1.1,14,85.7,0.173,2.51,9,66.7,-0.165,0.7,fail
+angel,S1,SELL,X4 3ATR/0.5R + A3 low volatility,53,62.3,-0.228,0.64,21,57.1,-0.274,0.54,31,74.2,-0.016,1.12,fail
+angel,S1,SELL,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,35,71.4,-0.074,1.0,12,91.7,0.245,4.42,9,66.7,-0.078,0.91,fail
+angel,S1,SELL,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,44,68.2,-0.119,0.86,14,71.4,-0.03,1.07,21,71.4,-0.087,0.91,fail
+angel,S1,SELL,X4 3ATR/0.5R + A6 momentum ROC20 aligned,89,67.4,-0.141,0.81,34,70.6,-0.067,0.99,40,72.5,-0.05,1.0,fail
+angel,S1,SELL,X4 3ATR/0.5R + B1 extension ≤1 ATR,75,65.3,-0.176,0.74,25,64.0,-0.165,0.73,35,68.6,-0.093,0.87,fail
+angel,S1,SELL,X4 3ATR/0.5R + B2 close near extreme (CLV),71,71.8,-0.065,1.02,28,71.4,-0.055,1.03,22,63.6,-0.139,0.75,fail
+angel,S1,SELL,X4 3ATR/0.5R + B3 strong body ≥50%,72,69.4,-0.11,0.9,28,67.9,-0.108,0.87,27,70.4,-0.05,1.0,fail
+angel,S1,SELL,X4 3ATR/0.5R + B4 prior compression,35,68.6,-0.131,0.85,11,45.5,-0.413,0.36,15,66.7,-0.131,0.76,fail
+angel,S1,SELL,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,62,67.7,-0.125,0.86,24,66.7,-0.133,0.81,30,76.7,0.058,1.56,fail
+angel,S1,SELL,X4 3ATR/0.5R + C1 volume ≥2×,45,60.0,-0.253,0.59,26,61.5,-0.205,0.65,15,73.3,0.009,1.28,fail
+angel,S1,SELL,X4 3ATR/0.5R + C2 RSI not exhausted,77,66.2,-0.157,0.77,23,56.5,-0.271,0.54,32,71.9,-0.048,1.0,fail
+angel,S1,SELL,X4 3ATR/0.5R + none,89,67.4,-0.141,0.81,34,70.6,-0.067,0.99,40,72.5,-0.05,1.0,fail
+angel,S2,BUY,X3 2ATR/0.5R + A1 trend ADX≥25,16,100.0,0.426,,6,66.7,0.06,1.42,21,81.0,0.178,2.01,fail
+angel,S2,BUY,X3 2ATR/0.5R + A2 high volatility,15,86.7,0.223,2.9,9,33.3,-0.464,0.26,16,87.5,0.266,3.24,fail
+angel,S2,BUY,X3 2ATR/0.5R + A3 low volatility,7,85.7,0.214,2.67,12,58.3,-0.18,0.63,21,81.0,0.2,2.57,fail
+angel,S2,BUY,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,19,94.7,0.347,8.15,11,36.4,-0.365,0.34,22,95.5,0.377,9.51,fail
+angel,S2,BUY,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,2,100.0,0.387,,5,80.0,0.01,1.3,1,100.0,0.366,,fail
+angel,S2,BUY,X3 2ATR/0.5R + A6 momentum ROC20 aligned,22,86.4,0.22,2.82,21,47.6,-0.302,0.43,37,83.8,0.229,2.84,train only
+angel,S2,BUY,X3 2ATR/0.5R + B1 extension ≤1 ATR,16,81.2,0.151,1.95,17,47.1,-0.303,0.42,30,80.0,0.175,2.19,fail
+angel,S2,BUY,X3 2ATR/0.5R + B2 close near extreme (CLV),16,87.5,0.237,3.13,19,47.4,-0.325,0.38,30,83.3,0.193,2.28,fail
+angel,S2,BUY,X3 2ATR/0.5R + B3 strong body ≥50%,17,82.4,0.164,2.09,20,50.0,-0.264,0.48,27,85.2,0.227,2.66,fail
+angel,S2,BUY,X3 2ATR/0.5R + B4 prior compression,2,100.0,0.447,,14,42.9,-0.365,0.34,11,72.7,0.118,1.8,fail
+angel,S2,BUY,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,19,89.5,0.265,3.79,15,60.0,-0.09,0.82,30,86.7,0.243,2.96,fail
+angel,S2,BUY,X3 2ATR/0.5R + C1 volume ≥2×,13,100.0,0.422,,6,66.7,-0.074,0.88,23,91.3,0.361,9.47,fail
+angel,S2,BUY,X3 2ATR/0.5R + C2 RSI not exhausted,8,75.0,0.046,1.33,20,50.0,-0.263,0.48,24,83.3,0.224,2.98,fail
+angel,S2,BUY,X3 2ATR/0.5R + none,22,86.4,0.22,2.82,21,47.6,-0.302,0.43,37,83.8,0.229,2.84,train only
+angel,S2,BUY,X4 3ATR/0.5R + A1 trend ADX≥25,7,100.0,0.457,,1,100.0,0.457,,4,75.0,0.035,1.16,fail
+angel,S2,BUY,X4 3ATR/0.5R + A2 high volatility,8,75.0,0.114,1.58,1,0.0,-1.019,0.0,1,100.0,0.484,,fail
+angel,S2,BUY,X4 3ATR/0.5R + A3 low volatility,4,75.0,0.266,6.46,5,80.0,0.143,1.84,10,70.0,0.055,1.37,fail
+angel,S2,BUY,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,8,100.0,0.457,,1,0.0,-1.019,0.0,5,100.0,0.407,,fail
+angel,S2,BUY,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,1,100.0,0.427,,1,100.0,0.408,,1,0.0,-0.222,0.0,fail
+angel,S2,BUY,X4 3ATR/0.5R + A6 momentum ROC20 aligned,11,72.7,0.139,1.87,6,66.7,-0.05,0.93,11,72.7,0.094,1.59,fail
+angel,S2,BUY,X4 3ATR/0.5R + B1 extension ≤1 ATR,8,62.5,0.025,1.18,6,66.7,-0.05,0.93,9,66.7,0.002,1.13,fail
+angel,S2,BUY,X4 3ATR/0.5R + B2 close near extreme (CLV),8,75.0,0.104,1.56,4,50.0,-0.303,0.46,8,75.0,0.166,2.24,fail
+angel,S2,BUY,X4 3ATR/0.5R + B3 strong body ≥50%,10,70.0,0.105,1.63,6,66.7,-0.05,0.93,5,60.0,0.01,1.14,fail
+angel,S2,BUY,X4 3ATR/0.5R + B4 prior compression,0,,,,3,100.0,0.438,,3,0.0,-0.78,0.0,fail
+angel,S2,BUY,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,8,75.0,0.104,1.56,4,75.0,0.066,1.37,10,70.0,0.044,1.29,fail
+angel,S2,BUY,X4 3ATR/0.5R + C1 volume ≥2×,4,100.0,0.455,,3,66.7,-0.054,0.92,3,66.7,0.166,4.36,fail
+angel,S2,BUY,X4 3ATR/0.5R + C2 RSI not exhausted,4,50.0,-0.242,0.52,5,80.0,0.15,1.87,9,66.7,0.007,1.15,fail
+angel,S2,BUY,X4 3ATR/0.5R + none,11,72.7,0.139,1.87,6,66.7,-0.05,0.93,11,72.7,0.094,1.59,fail
+angel,S2,SELL,X3 2ATR/0.5R + A1 trend ADX≥25,1,100.0,0.393,,1,100.0,0.443,,5,80.0,-0.131,0.79,fail
+angel,S2,SELL,X3 2ATR/0.5R + A2 high volatility,0,,,,2,100.0,0.406,,6,83.3,-0.105,0.81,fail
+angel,S2,SELL,X3 2ATR/0.5R + A3 low volatility,11,72.7,-0.029,1.11,1,100.0,0.395,,2,100.0,0.418,,fail
+angel,S2,SELL,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,1,100.0,0.457,,0,,,,4,75.0,-0.263,0.6,fail
+angel,S2,SELL,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,6,66.7,-0.095,0.86,3,100.0,0.402,,3,66.7,-0.518,0.39,fail
+angel,S2,SELL,X3 2ATR/0.5R + A6 momentum ROC20 aligned,11,72.7,-0.029,1.11,3,100.0,0.402,,8,87.5,0.026,1.19,fail
+angel,S2,SELL,X3 2ATR/0.5R + B1 extension ≤1 ATR,10,60.0,-0.226,0.61,1,100.0,0.443,,4,75.0,-0.282,0.58,fail
+angel,S2,SELL,X3 2ATR/0.5R + B2 close near extreme (CLV),8,75.0,0.014,1.27,3,100.0,0.402,,6,83.3,-0.112,0.8,fail
+angel,S2,SELL,X3 2ATR/0.5R + B3 strong body ≥50%,8,62.5,-0.183,0.69,3,100.0,0.402,,6,83.3,-0.112,0.8,fail
+angel,S2,SELL,X3 2ATR/0.5R + B4 prior compression,5,60.0,-0.179,0.66,1,100.0,0.443,,1,100.0,0.45,,fail
+angel,S2,SELL,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,7,57.1,-0.269,0.54,2,100.0,0.406,,7,100.0,0.376,,fail
+angel,S2,SELL,X3 2ATR/0.5R + C1 volume ≥2×,2,100.0,0.403,,0,,,,2,50.0,-0.997,0.19,fail
+angel,S2,SELL,X3 2ATR/0.5R + C2 RSI not exhausted,11,72.7,-0.029,1.11,2,100.0,0.419,,6,83.3,-0.114,0.79,fail
+angel,S2,SELL,X3 2ATR/0.5R + none,11,72.7,-0.029,1.11,3,100.0,0.402,,8,87.5,0.026,1.19,fail
+angel,S2,SELL,X4 3ATR/0.5R + A1 trend ADX≥25,0,,,,1,0.0,-0.14,0.0,3,66.7,-0.239,0.59,fail
+angel,S2,SELL,X4 3ATR/0.5R + A2 high volatility,0,,,,1,0.0,-0.14,0.0,3,66.7,-0.388,0.31,fail
+angel,S2,SELL,X4 3ATR/0.5R + A3 low volatility,4,75.0,0.102,1.69,0,,,,1,100.0,0.445,,fail
+angel,S2,SELL,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,0,,,,0,,,,1,0.0,-1.616,0.0,fail
+angel,S2,SELL,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,4,75.0,0.102,1.69,1,0.0,-0.14,0.0,1,0.0,-1.616,0.0,fail
+angel,S2,SELL,X4 3ATR/0.5R + A6 momentum ROC20 aligned,4,75.0,0.102,1.69,1,0.0,-0.14,0.0,4,75.0,-0.18,0.61,fail
+angel,S2,SELL,X4 3ATR/0.5R + B1 extension ≤1 ATR,3,66.7,-0.019,1.1,1,0.0,-0.14,0.0,3,66.7,-0.239,0.59,fail
+angel,S2,SELL,X4 3ATR/0.5R + B2 close near extreme (CLV),3,33.3,-0.51,0.26,1,0.0,-0.14,0.0,3,66.7,-0.391,0.31,fail
+angel,S2,SELL,X4 3ATR/0.5R + B3 strong body ≥50%,3,33.3,-0.51,0.26,1,0.0,-0.14,0.0,3,66.7,-0.391,0.31,fail
+angel,S2,SELL,X4 3ATR/0.5R + B4 prior compression,2,50.0,-0.203,0.58,1,0.0,-0.14,0.0,0,,,,fail
+angel,S2,SELL,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,3,66.7,-0.019,1.1,1,0.0,-0.14,0.0,3,100.0,0.299,,fail
+angel,S2,SELL,X4 3ATR/0.5R + C1 volume ≥2×,0,,,,0,,,,2,50.0,-0.581,0.3,fail
+angel,S2,SELL,X4 3ATR/0.5R + C2 RSI not exhausted,4,75.0,0.102,1.69,1,0.0,-0.14,0.0,3,66.7,-0.391,0.31,fail
+angel,S2,SELL,X4 3ATR/0.5R + none,4,75.0,0.102,1.69,1,0.0,-0.14,0.0,4,75.0,-0.18,0.61,fail
+angel,S3,BUY,X3 2ATR/0.5R + A1 trend ADX≥25,25,88.0,0.262,3.33,7,71.4,0.141,1.87,7,85.7,0.218,2.7,train only
+angel,S3,BUY,X3 2ATR/0.5R + A2 high volatility,15,60.0,-0.105,0.78,12,50.0,-0.292,0.4,9,88.9,0.27,3.61,fail
+angel,S3,BUY,X3 2ATR/0.5R + A3 low volatility,27,81.5,0.167,2.13,21,66.7,-0.037,0.97,21,66.7,0.05,1.4,train only
+angel,S3,BUY,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,22,72.7,0.073,1.39,14,42.9,-0.366,0.31,10,90.0,0.372,431.7,fail
+angel,S3,BUY,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,1,100.0,0.39,,3,66.7,-0.165,0.58,1,0.0,-1.073,0.0,fail
+angel,S3,BUY,X3 2ATR/0.5R + A6 momentum ROC20 aligned,43,74.4,0.079,1.46,33,60.6,-0.13,0.72,30,73.3,0.116,1.81,fail
+angel,S3,BUY,X3 2ATR/0.5R + B1 extension ≤1 ATR,42,73.8,0.069,1.41,32,59.4,-0.149,0.68,28,71.4,0.092,1.64,fail
+angel,S3,BUY,X3 2ATR/0.5R + B2 close near extreme (CLV),34,70.6,0.019,1.18,30,63.3,-0.083,0.83,24,83.3,0.287,6.2,fail
+angel,S3,BUY,X3 2ATR/0.5R + B3 strong body ≥50%,31,67.7,-0.029,1.01,27,63.0,-0.064,0.89,23,78.3,0.222,3.32,fail
+angel,S3,BUY,X3 2ATR/0.5R + B4 prior compression,14,57.1,-0.132,0.73,21,66.7,-0.035,0.98,15,73.3,0.138,2.03,fail
+angel,S3,BUY,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,35,80.0,0.16,2.02,18,61.1,-0.046,0.93,22,72.7,0.103,1.69,train only
+angel,S3,BUY,X3 2ATR/0.5R + C1 volume ≥2×,2,100.0,0.446,,2,0.0,-1.09,0.0,5,80.0,0.135,1.8,fail
+angel,S3,BUY,X3 2ATR/0.5R + C2 RSI not exhausted,37,70.3,0.018,1.18,32,59.4,-0.149,0.68,27,74.1,0.096,1.64,fail
+angel,S3,BUY,X3 2ATR/0.5R + none,43,74.4,0.079,1.46,33,60.6,-0.13,0.72,30,73.3,0.116,1.81,fail
+angel,S3,BUY,X4 3ATR/0.5R + A1 trend ADX≥25,14,71.4,0.052,1.27,5,80.0,0.175,1.93,1,100.0,0.445,,fail
+angel,S3,BUY,X4 3ATR/0.5R + A2 high volatility,11,27.3,-0.485,0.22,5,40.0,-0.428,0.32,1,100.0,0.082,,fail
+angel,S3,BUY,X4 3ATR/0.5R + A3 low volatility,15,80.0,0.141,1.81,11,81.8,0.182,2.07,13,61.5,-0.032,0.98,fail
+angel,S3,BUY,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,14,50.0,-0.184,0.59,6,33.3,-0.525,0.24,4,100.0,0.34,,fail
+angel,S3,BUY,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,1,100.0,0.427,,0,,,,1,0.0,-0.565,0.0,fail
+angel,S3,BUY,X4 3ATR/0.5R + A6 momentum ROC20 aligned,27,59.3,-0.106,0.77,16,68.8,-0.009,1.02,14,64.3,-0.024,1.01,fail
+angel,S3,BUY,X4 3ATR/0.5R + B1 extension ≤1 ATR,27,59.3,-0.106,0.77,15,66.7,-0.041,0.92,14,64.3,-0.024,1.01,fail
+angel,S3,BUY,X4 3ATR/0.5R + B2 close near extreme (CLV),21,57.1,-0.167,0.63,14,71.4,0.025,1.14,11,72.7,0.074,1.49,fail
+angel,S3,BUY,X4 3ATR/0.5R + B3 strong body ≥50%,19,52.6,-0.222,0.53,13,76.9,0.109,1.53,9,66.7,-0.002,1.09,fail
+angel,S3,BUY,X4 3ATR/0.5R + B4 prior compression,10,40.0,-0.368,0.33,9,88.9,0.283,3.67,7,42.9,-0.355,0.31,fail
+angel,S3,BUY,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,23,60.9,-0.072,0.85,10,80.0,0.14,1.77,9,66.7,0.055,1.43,fail
+angel,S3,BUY,X4 3ATR/0.5R + C1 volume ≥2×,0,,,,1,0.0,-1.019,0.0,0,,,,fail
+angel,S3,BUY,X4 3ATR/0.5R + C2 RSI not exhausted,24,54.2,-0.177,0.62,15,66.7,-0.041,0.92,13,61.5,-0.063,0.88,fail
+angel,S3,BUY,X4 3ATR/0.5R + none,27,59.3,-0.106,0.77,16,68.8,-0.009,1.02,14,64.3,-0.024,1.01,fail
+angel,S3,SELL,X3 2ATR/0.5R + A1 trend ADX≥25,3,100.0,0.285,,3,33.3,-0.642,0.11,2,50.0,-0.316,0.45,fail
+angel,S3,SELL,X3 2ATR/0.5R + A2 high volatility,2,100.0,0.407,,1,100.0,0.199,,3,33.3,-0.628,0.21,fail
+angel,S3,SELL,X3 2ATR/0.5R + A3 low volatility,10,70.0,-0.046,1.08,2,0.0,-1.063,0.0,0,,,,fail
+angel,S3,SELL,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,2,100.0,0.407,,0,,,,1,0.0,-1.062,0.0,fail
+angel,S3,SELL,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,4,100.0,0.345,,0,,,,0,,,,fail
+angel,S3,SELL,X3 2ATR/0.5R + A6 momentum ROC20 aligned,12,75.0,0.029,1.45,3,33.3,-0.642,0.11,3,33.3,-0.628,0.21,fail
+angel,S3,SELL,X3 2ATR/0.5R + B1 extension ≤1 ATR,11,72.7,0.027,1.42,3,33.3,-0.642,0.11,3,33.3,-0.628,0.21,fail
+angel,S3,SELL,X3 2ATR/0.5R + B2 close near extreme (CLV),8,87.5,0.247,9.18,2,50.0,-0.43,0.22,2,0.0,-1.16,0.0,fail
+angel,S3,SELL,X3 2ATR/0.5R + B3 strong body ≥50%,7,71.4,0.056,1.61,1,0.0,-1.067,0.0,1,0.0,-1.067,0.0,fail
+angel,S3,SELL,X3 2ATR/0.5R + B4 prior compression,4,75.0,0.202,4.5,2,50.0,-0.43,0.22,1,0.0,-1.253,0.0,fail
+angel,S3,SELL,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,6,66.7,-0.081,0.95,2,50.0,-0.434,0.22,3,33.3,-0.697,0.19,fail
+angel,S3,SELL,X3 2ATR/0.5R + C1 volume ≥2×,0,,,,0,,,,1,100.0,0.43,,fail
+angel,S3,SELL,X3 2ATR/0.5R + C2 RSI not exhausted,11,72.7,0.027,1.42,2,50.0,-0.43,0.22,2,0.0,-1.158,0.0,fail
+angel,S3,SELL,X3 2ATR/0.5R + none,12,75.0,0.029,1.45,3,33.3,-0.642,0.11,3,33.3,-0.628,0.21,fail
+angel,S3,SELL,X4 3ATR/0.5R + A1 trend ADX≥25,1,100.0,0.035,,3,33.3,-0.651,0.08,2,50.0,-0.294,0.47,fail
+angel,S3,SELL,X4 3ATR/0.5R + A2 high volatility,1,100.0,0.461,,1,100.0,0.132,,3,33.3,-0.541,0.23,fail
+angel,S3,SELL,X4 3ATR/0.5R + A3 low volatility,6,66.7,-0.013,1.18,2,0.0,-1.042,0.0,0,,,,fail
+angel,S3,SELL,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,1,100.0,0.461,,0,,,,1,0.0,-1.041,0.0,fail
+angel,S3,SELL,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,3,66.7,0.202,9.32,0,,,,0,,,,fail
+angel,S3,SELL,X4 3ATR/0.5R + A6 momentum ROC20 aligned,7,71.4,0.055,1.61,3,33.3,-0.651,0.08,3,33.3,-0.541,0.23,fail
+angel,S3,SELL,X4 3ATR/0.5R + B1 extension ≤1 ATR,6,66.7,0.058,1.56,3,33.3,-0.651,0.08,3,33.3,-0.541,0.23,fail
+angel,S3,SELL,X4 3ATR/0.5R + B2 close near extreme (CLV),5,100.0,0.341,,2,50.0,-0.454,0.15,2,0.0,-1.039,0.0,fail
+angel,S3,SELL,X4 3ATR/0.5R + B3 strong body ≥50%,3,100.0,0.409,,1,0.0,-1.044,0.0,1,0.0,-1.045,0.0,fail
+angel,S3,SELL,X4 3ATR/0.5R + B4 prior compression,2,100.0,0.419,,2,50.0,-0.454,0.15,1,0.0,-1.034,0.0,fail
+angel,S3,SELL,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,4,75.0,-0.083,0.87,2,50.0,-0.456,0.15,3,33.3,-0.541,0.23,fail
+angel,S3,SELL,X4 3ATR/0.5R + C1 volume ≥2×,0,,,,0,,,,1,100.0,0.453,,fail
+angel,S3,SELL,X4 3ATR/0.5R + C2 RSI not exhausted,6,66.7,0.058,1.56,2,50.0,-0.454,0.15,2,0.0,-1.038,0.0,fail
+angel,S3,SELL,X4 3ATR/0.5R + none,7,71.4,0.055,1.61,3,33.3,-0.651,0.08,3,33.3,-0.541,0.23,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + A1 trend ADX≥25,12,75.0,0.148,2.19,2,100.0,0.437,,3,66.7,-0.071,0.9,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + A2 high volatility,6,83.3,0.131,1.93,1,100.0,0.442,,6,33.3,-0.43,0.28,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + A3 low volatility,14,64.3,0.054,1.47,2,50.0,-0.319,0.45,6,50.0,-0.18,0.62,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,9,77.8,0.14,2.13,2,100.0,0.435,,6,50.0,-0.184,0.6,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,3,100.0,0.427,,0,,,,0,,,,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + A6 momentum ROC20 aligned,19,68.4,0.058,1.47,3,66.7,-0.066,0.9,12,41.7,-0.305,0.42,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + B1 extension ≤1 ATR,14,64.3,-0.018,1.08,3,66.7,-0.065,0.9,10,30.0,-0.449,0.25,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + B2 close near extreme (CLV),14,57.1,-0.075,0.87,3,66.7,-0.066,0.9,9,44.4,-0.312,0.42,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + B3 strong body ≥50%,12,75.0,0.147,2.13,3,66.7,-0.066,0.9,11,45.5,-0.237,0.51,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + B4 prior compression,5,100.0,0.358,,1,0.0,-1.068,0.0,3,33.3,-0.369,0.31,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,13,61.5,0.028,1.31,3,66.7,-0.066,0.9,11,36.4,-0.371,0.33,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + C1 volume ≥2×,4,100.0,0.333,,0,,,,1,100.0,0.423,,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + C2 RSI not exhausted,11,81.8,0.121,1.83,2,50.0,-0.313,0.45,8,25.0,-0.482,0.2,fail
+nseidx,S2,BUY,X3 2ATR/0.5R + none,19,68.4,0.058,1.47,3,66.7,-0.066,0.9,12,41.7,-0.305,0.42,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + A1 trend ADX≥25,6,66.7,0.066,1.64,1,100.0,0.455,,1,100.0,0.447,,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + A2 high volatility,0,,,,0,,,,4,50.0,-0.232,0.53,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + A3 low volatility,8,62.5,0.054,1.51,1,100.0,0.453,,5,60.0,0.029,1.24,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,2,100.0,0.448,,1,100.0,0.453,,3,66.7,0.037,1.23,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,1,100.0,0.351,,0,,,,0,,,,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + A6 momentum ROC20 aligned,8,62.5,0.054,1.51,1,100.0,0.453,,8,50.0,-0.153,0.65,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + B1 extension ≤1 ATR,7,57.1,0.038,1.36,1,100.0,0.455,,7,42.9,-0.239,0.49,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + B2 close near extreme (CLV),6,50.0,-0.031,1.0,1,100.0,0.453,,6,50.0,-0.255,0.51,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + B3 strong body ≥50%,5,80.0,0.196,3.88,1,100.0,0.453,,8,50.0,-0.153,0.65,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + B4 prior compression,1,100.0,0.165,,0,,,,1,100.0,0.449,,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,7,57.1,-0.002,1.16,1,100.0,0.453,,7,42.9,-0.24,0.49,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + C1 volume ≥2×,2,100.0,0.441,,0,,,,1,100.0,0.449,,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + C2 RSI not exhausted,4,75.0,0.154,2.27,0,,,,5,40.0,-0.216,0.5,fail
+nseidx,S2,BUY,X4 3ATR/0.5R + none,8,62.5,0.054,1.51,1,100.0,0.453,,8,50.0,-0.153,0.65,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + A1 trend ADX≥25,4,75.0,0.072,1.38,0,,,,5,100.0,0.442,,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + A2 high volatility,4,75.0,0.071,1.38,0,,,,7,71.4,0.16,2.21,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + A3 low volatility,1,0.0,-1.063,0.0,0,,,,2,100.0,0.43,,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,4,75.0,0.071,1.38,0,,,,4,100.0,0.453,,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,4,75.0,0.071,1.38,0,,,,3,100.0,0.445,,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + A6 momentum ROC20 aligned,5,60.0,-0.156,0.69,0,,,,9,77.8,0.22,3.08,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + B1 extension ≤1 ATR,4,25.0,-0.452,0.22,0,,,,5,100.0,0.437,,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + B2 close near extreme (CLV),5,60.0,-0.156,0.69,0,,,,7,71.4,0.157,2.2,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + B3 strong body ≥50%,5,60.0,-0.156,0.69,0,,,,8,75.0,0.194,2.64,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + B4 prior compression,0,,,,0,,,,3,66.7,-0.063,0.89,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,3,66.7,-0.103,0.8,0,,,,8,75.0,0.193,2.64,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + C1 volume ≥2×,2,100.0,0.445,,0,,,,0,,,,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + C2 RSI not exhausted,4,50.0,-0.306,0.46,0,,,,6,66.7,0.104,1.75,fail
+nseidx,S2,SELL,X3 2ATR/0.5R + none,5,60.0,-0.156,0.69,0,,,,9,77.8,0.22,3.08,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + A1 trend ADX≥25,0,,,,0,,,,3,66.7,0.259,9.11,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + A2 high volatility,0,,,,0,,,,4,50.0,0.192,8.61,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + A3 low volatility,0,,,,0,,,,2,100.0,0.453,,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,0,,,,0,,,,2,100.0,0.464,,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,0,,,,0,,,,3,66.7,0.268,9.25,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + A6 momentum ROC20 aligned,0,,,,0,,,,6,66.7,0.279,17.16,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + B1 extension ≤1 ATR,0,,,,0,,,,5,80.0,0.341,18.37,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + B2 close near extreme (CLV),0,,,,0,,,,4,50.0,0.189,8.55,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + B3 strong body ≥50%,0,,,,0,,,,4,50.0,0.189,8.55,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + B4 prior compression,0,,,,0,,,,2,50.0,0.172,4.64,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,0,,,,0,,,,4,50.0,0.187,8.52,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + C1 volume ≥2×,0,,,,0,,,,0,,,,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + C2 RSI not exhausted,0,,,,0,,,,5,60.0,0.244,12.89,fail
+nseidx,S2,SELL,X4 3ATR/0.5R + none,0,,,,0,,,,6,66.7,0.279,17.16,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + A1 trend ADX≥25,40,52.5,-0.261,0.51,14,71.4,0.095,1.88,9,66.7,-0.073,0.89,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + A2 high volatility,13,84.6,0.201,2.63,12,75.0,0.001,1.14,14,42.9,-0.348,0.36,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + A3 low volatility,66,56.1,-0.193,0.61,22,63.6,-0.024,1.03,28,75.0,0.064,1.41,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,26,57.7,-0.196,0.61,10,80.0,0.064,1.61,14,42.9,-0.37,0.34,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,5,80.0,0.131,1.8,1,0.0,-1.07,0.0,3,66.7,-0.177,0.57,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + A6 momentum ROC20 aligned,80,60.0,-0.141,0.72,33,69.7,-0.0,1.12,42,64.3,-0.073,0.88,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + B1 extension ≤1 ATR,74,58.1,-0.166,0.66,33,69.7,-0.0,1.12,42,64.3,-0.073,0.88,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + B2 close near extreme (CLV),66,59.1,-0.131,0.73,28,71.4,0.02,1.2,34,64.7,-0.062,0.91,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + B3 strong body ≥50%,57,56.1,-0.186,0.62,24,66.7,-0.039,0.97,27,59.3,-0.129,0.73,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + B4 prior compression,40,57.5,-0.12,0.74,17,58.8,-0.098,0.79,16,56.2,-0.146,0.7,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,67,58.2,-0.175,0.65,24,66.7,-0.023,1.03,28,57.1,-0.144,0.71,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + C1 volume ≥2×,2,100.0,0.423,,0,,,,0,,,,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + C2 RSI not exhausted,71,60.6,-0.123,0.75,32,65.6,-0.031,1.0,39,61.5,-0.112,0.78,fail
+nseidx,S3,BUY,X3 2ATR/0.5R + none,80,60.0,-0.141,0.72,33,69.7,-0.0,1.12,42,64.3,-0.073,0.88,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + A1 trend ADX≥25,21,66.7,0.021,1.22,6,50.0,0.1,2.16,6,33.3,-0.41,0.29,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + A2 high volatility,7,85.7,0.362,34.48,3,0.0,-0.657,0.0,9,22.2,-0.642,0.09,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + A3 low volatility,32,62.5,-0.06,0.9,13,53.8,-0.042,0.93,22,68.2,0.055,1.35,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,9,55.6,-0.103,0.78,2,50.0,0.062,1.55,9,22.2,-0.639,0.09,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,1,0.0,-0.363,0.0,1,0.0,-1.047,0.0,1,0.0,-0.633,0.0,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + A6 momentum ROC20 aligned,39,66.7,0.016,1.2,14,50.0,-0.081,0.79,31,54.8,-0.147,0.66,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + B1 extension ≤1 ATR,36,63.9,-0.012,1.07,14,50.0,-0.081,0.79,31,54.8,-0.147,0.66,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + B2 close near extreme (CLV),33,63.6,-0.019,1.04,10,40.0,-0.217,0.45,26,53.8,-0.179,0.58,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + B3 strong body ≥50%,28,64.3,-0.034,0.99,9,33.3,-0.257,0.4,22,50.0,-0.215,0.51,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + B4 prior compression,21,76.2,0.139,2.31,9,33.3,-0.307,0.35,13,53.8,-0.159,0.61,train only
+nseidx,S3,BUY,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,34,61.8,-0.044,0.95,11,45.5,-0.121,0.66,23,56.5,-0.141,0.67,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + C1 volume ≥2×,1,100.0,0.441,,0,,,,0,,,,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + C2 RSI not exhausted,34,70.6,0.076,1.54,13,38.5,-0.14,0.6,29,51.7,-0.199,0.55,fail
+nseidx,S3,BUY,X4 3ATR/0.5R + none,39,66.7,0.016,1.2,14,50.0,-0.081,0.79,31,54.8,-0.147,0.66,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + A1 trend ADX≥25,5,60.0,-0.159,0.69,2,100.0,0.451,,5,40.0,-0.55,0.16,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + A2 high volatility,4,75.0,0.069,1.38,2,100.0,0.451,,4,50.0,-0.356,0.42,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + A3 low volatility,9,66.7,-0.068,0.9,0,,,,4,50.0,-0.419,0.25,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,3,66.7,-0.054,0.92,2,100.0,0.451,,2,50.0,-0.31,0.46,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,4,75.0,0.066,1.37,2,100.0,0.451,,1,100.0,0.442,,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + A6 momentum ROC20 aligned,13,69.2,-0.026,1.02,2,100.0,0.451,,8,50.0,-0.388,0.34,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + B1 extension ≤1 ATR,12,66.7,-0.065,0.91,2,100.0,0.451,,8,50.0,-0.388,0.34,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + B2 close near extreme (CLV),8,50.0,-0.313,0.46,2,100.0,0.451,,5,60.0,-0.282,0.44,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + B3 strong body ≥50%,11,63.6,-0.109,0.79,1,100.0,0.445,,3,33.3,-0.564,0.23,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + B4 prior compression,5,60.0,-0.17,0.68,1,100.0,0.443,,3,33.3,-0.618,0.21,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,8,87.5,0.249,3.16,1,100.0,0.456,,5,40.0,-0.63,0.14,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + C2 RSI not exhausted,13,69.2,-0.026,1.02,2,100.0,0.451,,6,50.0,-0.412,0.3,fail
+nseidx,S3,SELL,X3 2ATR/0.5R + none,13,69.2,-0.026,1.02,2,100.0,0.451,,8,50.0,-0.388,0.34,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + A1 trend ADX≥25,1,0.0,-0.706,0.0,0,,,,5,40.0,-0.533,0.16,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + A2 high volatility,0,,,,0,,,,3,33.3,-0.545,0.23,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + A3 low volatility,3,33.3,-0.438,0.28,0,,,,4,50.0,-0.405,0.25,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,0,,,,0,,,,2,50.0,-0.29,0.47,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,0,,,,0,,,,1,100.0,0.461,,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + A6 momentum ROC20 aligned,3,33.3,-0.438,0.28,0,,,,7,42.9,-0.465,0.24,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + B1 extension ≤1 ATR,3,33.3,-0.438,0.28,0,,,,7,42.9,-0.465,0.24,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + B2 close near extreme (CLV),2,0.0,-0.882,0.0,0,,,,4,50.0,-0.406,0.25,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + B3 strong body ≥50%,3,33.3,-0.438,0.28,0,,,,3,33.3,-0.542,0.24,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + B4 prior compression,2,0.0,-0.882,0.0,0,,,,2,0.0,-1.043,0.0,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,2,50.0,-0.128,0.7,0,,,,5,40.0,-0.535,0.16,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + C2 RSI not exhausted,3,33.3,-0.438,0.28,0,,,,5,40.0,-0.533,0.16,fail
+nseidx,S3,SELL,X4 3ATR/0.5R + none,3,33.3,-0.438,0.28,0,,,,7,42.9,-0.465,0.24,fail
+proxy,S2,BUY,X3 2ATR/0.5R + A1 trend ADX≥25,24,62.5,-0.114,0.77,7,85.7,0.237,2.77,9,77.8,0.12,1.63,fail
+proxy,S2,BUY,X3 2ATR/0.5R + A2 high volatility,6,83.3,0.216,2.38,6,66.7,-0.106,0.8,7,71.4,0.002,1.12,fail
+proxy,S2,BUY,X3 2ATR/0.5R + A3 low volatility,47,63.8,-0.11,0.79,10,80.0,0.149,1.86,16,68.8,-0.014,1.01,fail
+proxy,S2,BUY,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,16,68.8,-0.024,1.01,5,80.0,0.129,1.8,11,72.7,0.034,1.22,fail
+proxy,S2,BUY,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,12,66.7,-0.107,0.82,3,100.0,0.462,,2,0.0,-1.111,0.0,fail
+proxy,S2,BUY,X3 2ATR/0.5R + A6 momentum ROC20 aligned,53,66.0,-0.074,0.87,16,75.0,0.054,1.3,23,69.6,-0.009,1.04,fail
+proxy,S2,BUY,X3 2ATR/0.5R + B1 extension ≤1 ATR,39,64.1,-0.107,0.8,13,84.6,0.203,2.27,19,68.4,-0.022,0.99,fail
+proxy,S2,BUY,X3 2ATR/0.5R + B2 close near extreme (CLV),30,50.0,-0.311,0.45,11,72.7,0.028,1.16,18,72.2,0.026,1.17,fail
+proxy,S2,BUY,X3 2ATR/0.5R + B3 strong body ≥50%,34,58.8,-0.193,0.63,10,70.0,-0.017,1.01,17,64.7,-0.089,0.83,fail
+proxy,S2,BUY,X3 2ATR/0.5R + B4 prior compression,12,58.3,-0.174,0.65,6,66.7,-0.106,0.8,6,66.7,-0.059,0.89,fail
+proxy,S2,BUY,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,47,70.2,-0.01,1.06,14,78.6,0.122,1.69,13,61.5,-0.142,0.72,fail
+proxy,S2,BUY,X3 2ATR/0.5R + C1 volume ≥2×,40,70.0,-0.015,1.04,8,75.0,0.065,1.37,10,70.0,-0.017,1.05,fail
+proxy,S2,BUY,X3 2ATR/0.5R + C2 RSI not exhausted,41,68.3,-0.04,0.96,13,76.9,0.077,1.41,18,72.2,0.034,1.19,fail
+proxy,S2,BUY,X3 2ATR/0.5R + none,53,66.0,-0.074,0.87,16,75.0,0.054,1.3,23,69.6,-0.009,1.04,fail
+proxy,S2,BUY,X4 3ATR/0.5R + A1 trend ADX≥25,17,82.4,0.203,2.22,3,100.0,0.454,,2,100.0,0.434,,fail
+proxy,S2,BUY,X4 3ATR/0.5R + A2 high volatility,3,100.0,0.474,,4,75.0,0.07,1.38,2,100.0,0.392,,fail
+proxy,S2,BUY,X4 3ATR/0.5R + A3 low volatility,28,75.0,0.063,1.31,5,100.0,0.459,,6,83.3,0.227,2.41,train only
+proxy,S2,BUY,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,8,87.5,0.267,3.3,3,66.7,-0.06,0.91,4,100.0,0.437,,fail
+proxy,S2,BUY,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,6,66.7,-0.145,0.74,1,100.0,0.484,,1,100.0,0.482,,fail
+proxy,S2,BUY,X4 3ATR/0.5R + A6 momentum ROC20 aligned,31,77.4,0.103,1.5,9,88.9,0.287,3.74,8,87.5,0.268,3.28,train only
+proxy,S2,BUY,X4 3ATR/0.5R + B1 extension ≤1 ATR,22,77.3,0.096,1.45,8,87.5,0.276,3.31,7,85.7,0.251,2.85,train only
+proxy,S2,BUY,X4 3ATR/0.5R + B2 close near extreme (CLV),16,75.0,0.067,1.33,5,100.0,0.466,,6,100.0,0.449,,fail
+proxy,S2,BUY,X4 3ATR/0.5R + B3 strong body ≥50%,18,83.3,0.174,1.98,5,100.0,0.466,,6,100.0,0.449,,fail
+proxy,S2,BUY,X4 3ATR/0.5R + B4 prior compression,3,33.3,-0.629,0.21,4,75.0,0.071,1.38,1,100.0,0.482,,fail
+proxy,S2,BUY,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,29,79.3,0.139,1.72,9,88.9,0.287,3.74,5,80.0,0.143,1.84,train only
+proxy,S2,BUY,X4 3ATR/0.5R + C1 volume ≥2×,25,80.0,0.148,1.78,6,83.3,0.207,2.34,4,75.0,0.054,1.35,train only
+proxy,S2,BUY,X4 3ATR/0.5R + C2 RSI not exhausted,24,75.0,0.064,1.3,8,87.5,0.264,3.26,6,83.3,0.213,2.37,train only
+proxy,S2,BUY,X4 3ATR/0.5R + none,31,77.4,0.103,1.5,9,88.9,0.287,3.74,8,87.5,0.268,3.28,train only
+proxy,S2,SELL,X3 2ATR/0.5R + A1 trend ADX≥25,12,58.3,-0.192,0.63,4,100.0,0.43,,5,80.0,0.078,1.55,fail
+proxy,S2,SELL,X3 2ATR/0.5R + A2 high volatility,10,70.0,-0.08,0.92,4,100.0,0.43,,9,88.9,0.252,3.22,fail
+proxy,S2,SELL,X3 2ATR/0.5R + A3 low volatility,27,63.0,-0.127,0.76,3,100.0,0.472,,6,66.7,-0.222,0.64,fail
+proxy,S2,SELL,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,6,50.0,-0.339,0.44,4,100.0,0.43,,1,100.0,0.358,,fail
+proxy,S2,SELL,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,13,76.9,0.081,1.5,3,100.0,0.481,,5,80.0,0.159,1.87,fail
+proxy,S2,SELL,X3 2ATR/0.5R + A6 momentum ROC20 aligned,37,64.9,-0.115,0.8,6,100.0,0.443,,15,80.0,0.062,1.39,fail
+proxy,S2,SELL,X3 2ATR/0.5R + B1 extension ≤1 ATR,31,67.7,-0.07,0.91,5,100.0,0.467,,13,76.9,0.007,1.16,fail
+proxy,S2,SELL,X3 2ATR/0.5R + B2 close near extreme (CLV),24,66.7,-0.058,0.91,5,100.0,0.468,,5,100.0,0.466,,fail
+proxy,S2,SELL,X3 2ATR/0.5R + B3 strong body ≥50%,25,68.0,-0.037,0.96,5,100.0,0.44,,7,85.7,0.133,1.63,fail
+proxy,S2,SELL,X3 2ATR/0.5R + B4 prior compression,13,69.2,-0.035,0.98,2,100.0,0.477,,4,75.0,0.05,1.26,fail
+proxy,S2,SELL,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,23,73.9,0.028,1.26,5,100.0,0.446,,12,83.3,0.089,1.55,fail
+proxy,S2,SELL,X3 2ATR/0.5R + C1 volume ≥2×,27,66.7,-0.098,0.84,3,66.7,-0.094,0.86,11,72.7,-0.074,0.92,fail
+proxy,S2,SELL,X3 2ATR/0.5R + C2 RSI not exhausted,37,64.9,-0.115,0.8,4,100.0,0.476,,14,78.6,0.041,1.29,fail
+proxy,S2,SELL,X3 2ATR/0.5R + none,37,64.9,-0.115,0.8,6,100.0,0.443,,15,80.0,0.062,1.39,fail
+proxy,S2,SELL,X4 3ATR/0.5R + A1 trend ADX≥25,6,83.3,0.199,2.34,1,100.0,0.382,,0,,,,fail
+proxy,S2,SELL,X4 3ATR/0.5R + A2 high volatility,5,80.0,0.089,1.68,1,100.0,0.382,,0,,,,fail
+proxy,S2,SELL,X4 3ATR/0.5R + A3 low volatility,17,76.5,0.097,1.5,1,100.0,0.484,,3,66.7,-0.259,0.48,fail
+proxy,S2,SELL,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,2,50.0,-0.335,0.45,1,100.0,0.382,,0,,,,fail
+proxy,S2,SELL,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,8,100.0,0.443,,1,100.0,0.484,,0,,,,fail
+proxy,S2,SELL,X4 3ATR/0.5R + A6 momentum ROC20 aligned,22,77.3,0.095,1.54,2,100.0,0.433,,3,66.7,-0.259,0.48,train only
+proxy,S2,SELL,X4 3ATR/0.5R + B1 extension ≤1 ATR,18,77.8,0.101,1.58,0,,,,3,66.7,-0.259,0.48,fail
+proxy,S2,SELL,X4 3ATR/0.5R + B2 close near extreme (CLV),12,75.0,0.089,1.42,1,100.0,0.484,,0,,,,fail
+proxy,S2,SELL,X4 3ATR/0.5R + B3 strong body ≥50%,12,75.0,0.09,1.42,2,100.0,0.433,,1,0.0,-1.245,0.0,fail
+proxy,S2,SELL,X4 3ATR/0.5R + B4 prior compression,6,83.3,0.199,2.33,1,100.0,0.484,,0,,,,fail
+proxy,S2,SELL,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,14,92.9,0.328,6.0,2,100.0,0.433,,3,66.7,-0.259,0.48,fail
+proxy,S2,SELL,X4 3ATR/0.5R + C1 volume ≥2×,21,76.2,0.079,1.45,1,100.0,0.382,,2,50.0,-0.589,0.1,train only
+proxy,S2,SELL,X4 3ATR/0.5R + C2 RSI not exhausted,22,77.3,0.095,1.54,1,100.0,0.484,,3,66.7,-0.259,0.48,train only
+proxy,S2,SELL,X4 3ATR/0.5R + none,22,77.3,0.095,1.54,2,100.0,0.433,,3,66.7,-0.259,0.48,train only
+proxy,S3,BUY,X3 2ATR/0.5R + A1 trend ADX≥25,54,51.9,-1.125,0.29,12,75.0,0.051,1.3,19,78.9,0.126,1.6,fail
+proxy,S3,BUY,X3 2ATR/0.5R + A2 high volatility,43,74.4,-0.384,0.75,16,68.8,-0.048,0.96,23,91.3,0.295,3.94,fail
+proxy,S3,BUY,X3 2ATR/0.5R + A3 low volatility,93,57.0,-0.604,0.44,15,73.3,0.04,1.26,39,69.2,-0.048,0.96,fail
+proxy,S3,BUY,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,58,63.8,-0.262,0.68,19,63.2,-0.13,0.76,30,80.0,0.13,1.69,fail
+proxy,S3,BUY,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,10,80.0,0.128,1.69,1,100.0,0.428,,5,60.0,-0.148,0.7,fail
+proxy,S3,BUY,X3 2ATR/0.5R + A6 momentum ROC20 aligned,134,63.4,-0.454,0.57,30,70.0,-0.015,1.05,60,76.7,0.066,1.38,fail
+proxy,S3,BUY,X3 2ATR/0.5R + B1 extension ≤1 ATR,111,64.9,-0.104,0.8,24,70.8,0.01,1.12,50,76.0,0.062,1.34,fail
+proxy,S3,BUY,X3 2ATR/0.5R + B2 close near extreme (CLV),94,66.0,-0.068,0.88,21,66.7,-0.042,0.94,41,80.5,0.162,1.91,fail
+proxy,S3,BUY,X3 2ATR/0.5R + B3 strong body ≥50%,86,68.6,-0.027,0.99,17,70.6,0.016,1.12,34,79.4,0.147,1.79,fail
+proxy,S3,BUY,X3 2ATR/0.5R + B4 prior compression,55,50.9,-1.004,0.29,16,68.8,-0.028,1.0,30,73.3,0.04,1.24,fail
+proxy,S3,BUY,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,108,62.0,-0.559,0.51,28,67.9,-0.048,0.95,41,80.5,0.118,1.66,fail
+proxy,S3,BUY,X3 2ATR/0.5R + C1 volume ≥2×,9,66.7,-0.067,0.9,1,100.0,0.439,,2,100.0,0.472,,fail
+proxy,S3,BUY,X3 2ATR/0.5R + C2 RSI not exhausted,113,66.4,-0.079,0.85,24,70.8,0.007,1.12,57,75.4,0.045,1.29,fail
+proxy,S3,BUY,X3 2ATR/0.5R + none,135,63.0,-0.458,0.56,30,70.0,-0.015,1.05,60,76.7,0.066,1.38,fail
+proxy,S3,BUY,X4 3ATR/0.5R + A1 trend ADX≥25,27,40.7,-1.416,0.21,6,66.7,-0.094,0.82,3,33.3,-0.629,0.21,fail
+proxy,S3,BUY,X4 3ATR/0.5R + A2 high volatility,18,66.7,-0.632,0.59,6,50.0,-0.371,0.41,3,66.7,-0.189,0.69,fail
+proxy,S3,BUY,X4 3ATR/0.5R + A3 low volatility,47,57.4,-0.649,0.46,9,88.9,0.285,3.74,13,69.2,-0.033,0.99,fail
+proxy,S3,BUY,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,23,60.9,-0.314,0.69,8,62.5,-0.161,0.69,5,40.0,-0.532,0.27,fail
+proxy,S3,BUY,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,7,71.4,0.034,1.18,1,100.0,0.452,,2,50.0,-0.285,0.48,fail
+proxy,S3,BUY,X4 3ATR/0.5R + A6 momentum ROC20 aligned,63,60.3,-0.55,0.54,13,76.9,0.078,1.41,16,68.8,-0.062,0.92,fail
+proxy,S3,BUY,X4 3ATR/0.5R + B1 extension ≤1 ATR,48,64.6,-0.065,0.87,10,80.0,0.157,1.88,14,71.4,-0.026,1.03,fail
+proxy,S3,BUY,X4 3ATR/0.5R + B2 close near extreme (CLV),39,64.1,-0.085,0.82,8,75.0,0.095,1.43,10,90.0,0.303,4.18,fail
+proxy,S3,BUY,X4 3ATR/0.5R + B3 strong body ≥50%,38,65.8,-0.066,0.87,5,80.0,0.167,1.9,9,88.9,0.294,3.75,fail
+proxy,S3,BUY,X4 3ATR/0.5R + B4 prior compression,24,41.7,-1.329,0.22,7,71.4,0.014,1.15,5,80.0,0.109,1.69,fail
+proxy,S3,BUY,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,50,62.0,-0.632,0.54,12,75.0,0.045,1.26,10,60.0,-0.237,0.59,fail
+proxy,S3,BUY,X4 3ATR/0.5R + C1 volume ≥2×,4,100.0,0.434,,0,,,,0,,,,fail
+proxy,S3,BUY,X4 3ATR/0.5R + C2 RSI not exhausted,49,67.3,-0.023,0.99,11,81.8,0.179,2.11,15,73.3,0.001,1.12,fail
+proxy,S3,BUY,X4 3ATR/0.5R + none,63,60.3,-0.55,0.54,13,76.9,0.078,1.41,16,68.8,-0.062,0.92,fail
+proxy,S3,SELL,X3 2ATR/0.5R + A1 trend ADX≥25,38,68.4,-0.062,0.91,8,37.5,-0.576,0.25,2,0.0,-1.083,0.0,fail
+proxy,S3,SELL,X3 2ATR/0.5R + A2 high volatility,39,66.7,-0.074,0.89,9,44.4,-0.58,0.28,6,50.0,-0.386,0.41,fail
+proxy,S3,SELL,X3 2ATR/0.5R + A3 low volatility,54,63.0,-0.12,0.77,10,70.0,-0.037,0.99,9,77.8,0.05,1.37,fail
+proxy,S3,SELL,X3 2ATR/0.5R + A4 vol expanding ATR14>ATR50,32,56.2,-0.22,0.58,10,50.0,-0.478,0.36,1,0.0,-1.239,0.0,fail
+proxy,S3,SELL,X3 2ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,8,62.5,-0.117,0.77,1,0.0,-1.091,0.0,3,66.7,-0.244,0.45,fail
+proxy,S3,SELL,X3 2ATR/0.5R + A6 momentum ROC20 aligned,90,63.3,-0.119,0.77,18,55.6,-0.337,0.48,14,64.3,-0.165,0.68,fail
+proxy,S3,SELL,X3 2ATR/0.5R + B1 extension ≤1 ATR,73,63.0,-0.126,0.76,13,61.5,-0.16,0.71,10,70.0,-0.086,0.85,fail
+proxy,S3,SELL,X3 2ATR/0.5R + B2 close near extreme (CLV),62,66.1,-0.07,0.88,7,71.4,0.007,1.13,9,66.7,-0.114,0.75,fail
+proxy,S3,SELL,X3 2ATR/0.5R + B3 strong body ≥50%,66,63.6,-0.107,0.79,8,75.0,0.053,1.34,7,71.4,0.029,1.17,fail
+proxy,S3,SELL,X3 2ATR/0.5R + B4 prior compression,42,66.7,-0.051,0.94,9,66.7,-0.125,0.81,11,63.6,-0.199,0.62,fail
+proxy,S3,SELL,X3 2ATR/0.5R + B5 room ≥3 ATR to older level,62,58.1,-0.195,0.62,15,53.3,-0.393,0.42,8,62.5,-0.179,0.69,fail
+proxy,S3,SELL,X3 2ATR/0.5R + C1 volume ≥2×,14,50.0,-0.412,0.39,2,100.0,0.371,,0,,,,fail
+proxy,S3,SELL,X3 2ATR/0.5R + C2 RSI not exhausted,86,65.1,-0.094,0.83,15,53.3,-0.357,0.45,13,61.5,-0.213,0.59,fail
+proxy,S3,SELL,X3 2ATR/0.5R + none,90,63.3,-0.119,0.77,18,55.6,-0.337,0.48,14,64.3,-0.165,0.68,fail
+proxy,S3,SELL,X4 3ATR/0.5R + A1 trend ADX≥25,17,58.8,-0.147,0.7,5,20.0,-0.897,0.1,0,,,,fail
+proxy,S3,SELL,X4 3ATR/0.5R + A2 high volatility,12,66.7,-0.047,0.98,5,40.0,-0.648,0.23,1,0.0,-1.104,0.0,fail
+proxy,S3,SELL,X4 3ATR/0.5R + A3 low volatility,28,60.7,-0.105,0.78,5,40.0,-0.451,0.31,5,80.0,0.054,1.42,fail
+proxy,S3,SELL,X4 3ATR/0.5R + A4 vol expanding ATR14>ATR50,10,60.0,-0.164,0.68,6,50.0,-0.464,0.36,1,0.0,-1.104,0.0,fail
+proxy,S3,SELL,X4 3ATR/0.5R + A5 not stretched ≤3 ATR from EMA200,3,33.3,-0.556,0.23,1,0.0,-1.06,0.0,0,,,,fail
+proxy,S3,SELL,X4 3ATR/0.5R + A6 momentum ROC20 aligned,39,61.5,-0.102,0.8,10,40.0,-0.549,0.27,6,66.7,-0.139,0.7,fail
+proxy,S3,SELL,X4 3ATR/0.5R + B1 extension ≤1 ATR,32,62.5,-0.077,0.86,7,42.9,-0.459,0.32,5,80.0,0.054,1.42,fail
+proxy,S3,SELL,X4 3ATR/0.5R + B2 close near extreme (CLV),25,60.0,-0.085,0.81,3,33.3,-0.555,0.23,3,66.7,-0.168,0.54,fail
+proxy,S3,SELL,X4 3ATR/0.5R + B3 strong body ≥50%,27,59.3,-0.1,0.78,4,50.0,-0.321,0.44,3,66.7,-0.168,0.54,fail
+proxy,S3,SELL,X4 3ATR/0.5R + B4 prior compression,16,68.8,0.057,1.43,6,50.0,-0.361,0.42,3,66.7,-0.11,0.84,fail
+proxy,S3,SELL,X4 3ATR/0.5R + B5 room ≥3 ATR to older level,28,60.7,-0.098,0.8,9,44.4,-0.494,0.31,4,50.0,-0.337,0.43,fail
+proxy,S3,SELL,X4 3ATR/0.5R + C1 volume ≥2×,9,55.6,-0.223,0.59,2,100.0,0.414,,0,,,,fail
+proxy,S3,SELL,X4 3ATR/0.5R + C2 RSI not exhausted,38,63.2,-0.075,0.87,8,37.5,-0.565,0.25,5,80.0,0.037,1.36,fail
+proxy,S3,SELL,X4 3ATR/0.5R + none,39,61.5,-0.102,0.8,10,40.0,-0.549,0.27,6,66.7,-0.139,0.7,fail
