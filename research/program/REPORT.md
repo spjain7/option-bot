@@ -203,3 +203,34 @@ Script `research/program/emax.py`; tables in `results/emax_tables.md` and `resul
 - **MCX 3h EMA BUY overlaps with the live 3h breakout BUY** (both are trend-following on the same instruments).
 - **The stocks 3h 50/200 SELL is a new, broad, modest candidate.**
 - **Recommendation:** shadow-log both before any live use.
+
+## Addendum: EMAX-003, many EMA pairs, trend-only (no choppy market), 28-Oct-2026
+Script `research/program/emax3.py`; results in `results/emax3_variants.csv`.
+- **Pairs tested (14):** 5/13 to 100/200.
+- **Trend filters, measured on the crossover candle:**
+  - ADX ≥ 20;
+  - ADX ≥ 25;
+  - ADX ≥ 20 and rising (A20R);
+  - Choppiness Index < 50 or < 45;
+  - ADX ≥ 20 and price on the trade side of EMA200;
+  - each with and without volume.
+- **Scale:** 14,832 variants; 338 pass in every period (2.3%, so many will be luck).
+
+**Findings:**
+- **On MCX 3h BUY, slower pairs beat 9/21.**
+  - Plain crossover, opposite-cross exit, expectancy at 2× costs: 9/21 +0.17R, 13/48 +0.25R, 21/55 +0.23R.
+  - 21/55 passes under all 7 filters.
+- **"ADX ≥ 20 and rising" is the trend filter that lifts these slower pairs most.**
+  - It removes about 70–75% of trades.
+
+  | Variant | Trades | Win % | Exp 2× | PF | Max DD |
+  |---|---|---|---|---|---|
+  | 13/48 + A20R | 79 | 48 | +0.67R | 2.97 | 6.6R |
+  | 20/50 + A20R | 99 | 48 | +0.42R | 2.13 | 8.4R |
+  | 21/55 + A20R | 98 | 45 | +0.41R | 2.10 | 6.6R |
+
+  - All three lost in 2022 (n 7–8) and were positive in 2023–26.
+  - GOLD is the largest contributor; CRUDE and COPPER are flat or negative.
+- **The Choppiness filter does not help MCX BUY**, but it does help INDEX 1h 12/26 SELL (CH < 45): n 120, 45% wins, +0.32R, PF 1.93, mostly NIFTY.
+- **Elsewhere, trend filters show no consistent gain.** Medians across pairs are mixed for stocks, MCX SELL and MCX 1h.
+- **Win rates stay at 40–50%**; the edge comes from winners about 2–3× the size of losers.
