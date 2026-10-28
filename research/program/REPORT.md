@@ -380,3 +380,19 @@ Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
   - 2022–26: index hammer, 60.1% win, +0.04R.
   - Last 2 months: stocks hanging man, 64.6% win, +0.25R.
 - **Verdict:** skipping late candles helps by 1–2 points of win rate, but 1-hour patterns stay slightly negative after costs over 2022–26.
+
+## Addendum: STKFUT-CMP-001, 8 GitHub repositories vs the existing stock-futures alerts at a fixed 1:1, 29-Oct-2026
+- **Scripts:** `stkfut_cmp.py`, `stkfut_cmp_analyse.py`, `stkfut_cmp_15m.py`, `stkfut_vbt_export.py`, `stkfut_vbt_xcheck.py`.
+- **Execution and costs:** identical for every setup. STT is date-based: 0.0125% until 30-Sep-2024, 0.02% until 31-Mar-2026, 0.05% from 1-Apr-2026.
+- **Verdict:** no repository setup has an edge at 1:1.
+  - Setups tested: ORB, VWAP pullback, IB failure and gap-and-go; 119 intraday variants with 7 filters.
+  - Before costs: about 0. After costs: −0.04 to −0.13R.
+  - Positive in all 3 periods: 1 variant. Significant after Benjamini–Hochberg: 0.
+- **Only PASS:** the bot's own daily hanging-man SELL, with 1,062 trades, 58.9% wins, +0.16R after costs and PF 1.39. Its periods were +0.06, +0.21 and +0.21R, with p < 0.001. It was selected on this data, so live results are the true out-of-sample test.
+- **OI-breakout SELL:** +0.15R over 169 trades, but only 26 in training.
+- **OI-breakout BUY:** negative at 1:1 (−0.08R); keep its 2-ATR stop with trailing exit.
+- **NIFTY regime (nse-trading-lab `assess_tape`):** useful as a report label, but failed as a filter out of sample.
+- **vectorbt 0.28.1 cross-check:** 2,786 of 2,787 comparable trades identical.
+- **Cost model:** the stock cost model still uses 0.02% STT; it should move to the date-based rate (proposal; needs approval).
+- **HA-1 re-run after the gap-through-target fix:** still PASS all 3 (test +0.097 → +0.111R).
+- **PAT-002 live 3h breakout rule after the fix:** ₹1,565 / ₹11,386 per lot, 42.9% wins in both periods, 67% of instruments positive (before the fix: ₹1,407 / ₹10,605).
