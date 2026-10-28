@@ -45,6 +45,9 @@ env:
   ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
   ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
   ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+  # website price snapshot (share.py); without these two secrets nothing is sent
+  PR_FEED_URL: https://pokharna-company-xray-api.pokharnaresearch.workers.dev
+  PR_FEED_KEY: ${{ secrets.PR_FEED_KEY }}
   TELEGRAM_TOKEN:    ${{ secrets.TELEGRAM_TOKEN }}
   TELEGRAM_CHAT_ID:  ${{ secrets.TELEGRAM_CHAT_ID }}
   CALLMEBOT_PHONE:   ${{ secrets.CALLMEBOT_PHONE }}

@@ -29,6 +29,8 @@ def scan():
         OUTBOX.write_text(json.dumps(dict(messages=[f"⚠️ ALERTS – Angel login / instrument list failed: {type(e).__name__}. No alerts this run."])))
         print("::error::login failed"); return 2
     state, msgs, rep = E.scan(api, master, now, state)
+    import share                                              # prices for the website, with this same Angel session
+    print("website price snapshot:", share.push(api, master, now))
     tmp = STATE.with_suffix(".tmp"); tmp.write_text(json.dumps(state, indent=1, default=str)); os.replace(tmp, STATE)
     OUTBOX.write_text(json.dumps(dict(messages=msgs), indent=1))
     for n, i in rep["instruments"].items():
