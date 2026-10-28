@@ -53,7 +53,9 @@ def run(job):
                 j = t["j"]
                 both = (t["why"] == "stop") and ((h[j] >= t["tp"]) if side > 0 else (l[j] <= t["tp"]))
                 rows.append((seg.split()[0], tf, job[1], f"{'BUY' if side > 0 else 'SELL'} {pat}", tm[i], bool(TR[side][i]),
-                             rmin[i] if side > 0 else rmax[i], vx[i], vxp[i], t["why"], t["r1"], both, t["R"] / t["e0"] * 100))
+                             rmin[i] if side > 0 else rmax[i], vx[i], vxp[i], t["why"], t["r1"], both, t["R"] / t["e0"] * 100,
+                             f["high"].iat[i], f["low"].iat[i], tm[t["j0"]], t["e0"], t["st"], t["tp"], t["R"], tm[j], t["px"],
+                             t["gross"], t["cost"], j - t["j0"] + 1))
     return rows
 
 
@@ -62,7 +64,8 @@ def main():
     with Pool(2) as p:
         rows = [r for x in p.imap_unordered(run, J, chunksize=1) for r in x]
     T = pd.DataFrame(rows, columns=["market", "tf", "name", "pattern", "time", "trend_ok", "rsi_ext", "volx", "volx_prev",
-                                    "exit_reason", "net_R", "both_touched", "risk_pct"])
+                                    "exit_reason", "net_R", "both_touched", "risk_pct", "pat_high", "pat_low", "entry_time",
+                                    "entry", "stop", "target", "risk_pts", "exit_time", "exit", "gross_pts", "cost_pts", "bars"])
     T["time"] = pd.to_datetime(T["time"], format="mixed")
     T.to_csv(OUT / "rr1_rsi_trades.csv.gz", index=False)
     print(len(T))
