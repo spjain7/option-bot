@@ -6,7 +6,10 @@ target in R) – it only checks that the numbers are valid and tradable.
 
 Checks (a failed check = no call, with the reason logged):
   * signal close, ATR, live price must be finite and > 0 (no silent defaults for missing data)
-  * live quote not older than MAX_QUOTE_AGE_MIN (when the quote carries a timestamp)
+  * live entries during market hours need a valid exchange timestamp on the quote: missing / malformed -> rejected,
+    older than MAX_QUOTE_AGE_MIN -> rejected, more than MAX_CLOCK_SKEW_SEC in the future -> rejected.
+    Outside market hours (require_live=False) a timestamp is optional, but if present it must parse and pass the same checks.
+    All times are compared as naive Asia/Kolkata (exchange time); tz-aware values are converted first.
   * slippage both ways: live price must be within MAX_CHASE_ATR beyond the signal close (in the trade direction) and
     within MAX_AGAINST_ATR on the other side (a BUY whose price already fell back is not a BUY any more)
   * levels rounded to the instrument's tick, then risk / reward recomputed
@@ -15,9 +18,14 @@ Checks (a failed check = no call, with the reason logged):
   * reward / risk ≥ the strategy's minimum after rounding
 """
 import math
+import os
+import datetime as dt
 import pandas as pd
 
 MAX_QUOTE_AGE_MIN = 5
+MAX_CLOCK_SKEW_SEC = float(os.getenv("QUOTE_CLOCK_SKEW_SEC", "60"))   # quote may be at most this far "ahead" of our clock
+EXCH_TZ = "Asia/Kolkata"
+_FMTS = ("%d-%b-%Y %H:%M:%S", "%d-%b-%Y %H:%M:%S.%f", "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%d/%m/%Y %H:%M:%S")
 MAX_CHASE_ATR = 0.5
 MAX_AGAINST_ATR = 0.5
 
@@ -45,16 +53,59 @@ def fmt(x, tick=0.05):
     return f"{x:,.{decimals(tick)}f}"
 
 
-def quote_time(q):
-    """Exchange time of an Angel quote, or None when the quote has no timestamp."""
-    for k in ("exchFeedTime", "exchTradeTime"):
-        v = (q or {}).get(k)
-        if v:
-            try:
-                return pd.to_datetime(v, dayfirst=True)
-            except Exception:
-                pass
+def to_ist(t):
+    """Timestamp -> naive Asia/Kolkata. tz-aware values are converted; naive values are taken as exchange (IST) time."""
+    t = pd.Timestamp(t)
+    if t.tzinfo is not None:
+        t = t.tz_convert(EXCH_TZ).tz_localize(None)
+    return t
+
+
+def parse_exch_time(v):
+    """Strict parse of an Angel exchange time ('28-Oct-2026 12:16:30' and a few ISO forms). None if missing / malformed."""
+    if v is None or isinstance(v, bool):
+        return None
+    if isinstance(v, (pd.Timestamp, dt.datetime)):
+        return to_ist(v)
+    v = str(v).strip()
+    if not v:
+        return None
+    for f in _FMTS:
+        try:
+            return to_ist(dt.datetime.strptime(v, f))
+        except ValueError:
+            pass
+    try:                                                   # ISO with offset, e.g. 2026-10-28T06:46:30+00:00
+        t = pd.Timestamp(v)
+        if t.tzinfo is not None:
+            return to_ist(t)
+    except (ValueError, TypeError):
+        pass
     return None
+
+
+def quote_time(q):
+    """Exchange time of an Angel quote, or None when the quote has no (parseable) timestamp."""
+    return quote_check(q, None, require=False)[0]
+
+
+def quote_check(q, now, require=True):
+    """-> (time or None, reason or None). reason set = the quote must not be used for an entry."""
+    q = q or {}
+    raw = next((q.get(k) for k in ("exchFeedTime", "exchTradeTime") if q.get(k) not in (None, "")), None)
+    if raw is None:
+        return None, ("live quote has no exchange timestamp" if require else None)
+    t = parse_exch_time(raw)
+    if t is None:
+        return None, f"live quote timestamp malformed ({str(raw)[:30]!r})"
+    if now is None:
+        return t, None
+    age = (to_ist(now) - t).total_seconds()
+    if age < -MAX_CLOCK_SKEW_SEC:
+        return t, f"live quote timestamp {-age:.0f}s in the future (max skew {MAX_CLOCK_SKEW_SEC:.0f}s)"
+    if age / 60 > MAX_QUOTE_AGE_MIN:
+        return t, f"live quote stale ({age / 60:.0f} min old)"
+    return t, None
 
 
 def futures_plan(*, name, ex, contract, tf, side, signal_time, signal_close, atr, stop_mult, target_r, tick, lot, mult,
@@ -76,10 +127,12 @@ def futures_plan(*, name, ex, contract, tf, side, signal_time, signal_close, atr
         live = signal_close
     if not finite(live) or live <= 0:
         p["reason"] = "live price invalid"; return p
-    qt = quote_time(quote)
+    if require_live and now is None:
+        p["reason"] = "no clock time to check the live quote against"; return p
+    qt, why = quote_check(quote, now, require=require_live)
     p["quote_time"] = str(qt) if qt is not None else None
-    if qt is not None and now is not None and (pd.Timestamp(now) - qt).total_seconds() / 60 > MAX_QUOTE_AGE_MIN:
-        p["reason"] = f"live quote stale ({(pd.Timestamp(now) - qt).total_seconds() / 60:.0f} min old)"; return p
+    if why:
+        p["reason"] = why; return p
     move = s * (live - signal_close) / atr
     if move > MAX_CHASE_ATR:
         p["reason"] = f"price already ran {move:.2f} ATR past the signal (max {MAX_CHASE_ATR}) – no chasing"; return p

@@ -7,7 +7,12 @@ and the report ledger (`state["ledger"]`), so what you read is exactly what is t
 | Check | Rule | Where |
 |---|---|---|
 | Data | signal close, ATR and live price finite and > 0; missing live price during market hours = no call | `futures_plan` |
-| Quote age | live quote with an exchange timestamp older than 5 min = no call | `MAX_QUOTE_AGE_MIN` |
+| Quote timestamp (market hours) | live entry needs the quote's exchange time (`exchFeedTime`, else `exchTradeTime`); missing or malformed = no call | `quote_check` |
+| Quote age | older than 5 min = no call | `MAX_QUOTE_AGE_MIN` |
+| Quote in the future | more than 60 s ahead of our clock = no call (env `QUOTE_CLOCK_SKEW_SEC`) | `MAX_CLOCK_SKEW_SEC` |
+| Time zones | all times compared as naive Asia/Kolkata; tz-aware values converted first | `to_ist` |
+| Stock calls | sent after the close without a live quote; at the next open the quote must pass the same timestamp checks, otherwise the call keeps waiting (never activated or cancelled on an unverified price) | `stocks.validate_pending` |
+| Logging | every rejected signal prints `[rejected] <name> <tf> <side>: <reason>` in the run log | `engine._breakouts`, `run.py` |
 | Slippage | live price ≤ 0.5 ATR past the signal (no chasing) and ≤ 0.5 ATR against it (setup still valid) | `MAX_CHASE_ATR`, `MAX_AGAINST_ATR` |
 | Tick | entry, SL, target rounded to the contract tick from the instrument master (`tick_size`); SL rounded away from entry, target towards it; risk / reward recomputed | `tick_round` |
 | Sides | BUY: SL < entry < target · SELL: SL > entry > target | |

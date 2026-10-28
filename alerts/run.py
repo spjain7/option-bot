@@ -35,6 +35,8 @@ def scan():
     OUTBOX.write_text(json.dumps(dict(messages=msgs), indent=1))
     for n, i in rep["instruments"].items():
         print(f"[{n}] " + " | ".join(f"{k}: {v}" for k, v in i.items()))
+    for x in rep.get("stock_skips", []):
+        print("[rejected] stock", x)
     for e in rep["errors"]:
         print("::warning::" + e)
     summ = os.getenv("GITHUB_STEP_SUMMARY")

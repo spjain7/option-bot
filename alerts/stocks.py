@@ -130,11 +130,17 @@ def evaluate_bear_engulf(d):
     return dict(out, side=None)
 
 
-def validate_pending(p, ltp, now):
+def validate_pending(p, ltp, now, quote=None):
     """Stock calls are sent after the close with entry = the close. At the next session (from 09:16) the opening price
-    must still be inside the entry zone. -> ("wait" | "cancel" | "active", message)."""
+    must still be inside the entry zone. -> ("wait" | "cancel" | "active", message).
+    quote given (live scan): its exchange timestamp must be present, parseable, fresh and not in the future – otherwise
+    the call keeps waiting (never activated or cancelled on an unverified price); the reason is the message."""
     if not ltp or now < now.normalize() + pd.Timedelta(hours=9, minutes=16) or str(now.date()) <= p["last_candle"][:10]:
         return "wait", None
+    if quote is not None:
+        _, bad = TP.quote_check(quote, now, require=True)
+        if bad:
+            return "wait", f"{p['name']} pending check postponed: {bad}"
     s = 1 if p["side"] == "BUY" else -1
     t = p.get("tick") or 0.05
     ltp = float(ltp); a_ = p.get("atr") or p["risk"]
@@ -324,8 +330,10 @@ def scan(api, master, now, state, msgs, rep, engine):
             s = 1 if p["side"] == "BUY" else -1
             ltp = (q.get(p["token"]) or {}).get("ltp")
             if p.get("pending"):
-                verdict, note = validate_pending(p, ltp, now)
+                verdict, note = validate_pending(p, ltp, now, quote=q.get(p["token"]) or {})
                 if verdict == "wait":
+                    if note:
+                        print("[stock pending]", note)
                     keep.append(p); continue
                 msgs.append(note)
                 if verdict == "cancel":
@@ -334,22 +342,6 @@ def scan(api, master, now, state, msgs, rep, engine):
                             L.update(status="CLOSED", exit=L["entry"], note="cancelled – gap", closed=str(now))
                     continue
                 p["pending"] = False
-                keep.append(p); continue
-                ltp = float(ltp); a_ = p.get("atr") or p["risk"]
-                mv = s * (ltp - p["entry"]) / a_
-                why_c = ("opened beyond the stop-loss" if s * (ltp - p["stop"]) <= 0 else
-                         f"opened {mv:.2f} ATR past the entry (no chasing)" if mv > TP.MAX_CHASE_ATR else
-                         f"opened {-mv:.2f} ATR against the entry" if mv < -TP.MAX_AGAINST_ATR else None)
-                if why_c:
-                    msgs.append(f"🚫 CANCELLED – {p['name']} FUT {p['side']} (entry {TP.fmt(p['entry'], p.get('tick') or 0.05)}): {why_c} "
-                                f"(price {TP.fmt(ltp, p.get('tick') or 0.05)}). Do not take this call.")
-                    for L in state.get("ledger", []):
-                        if L.get("key") in (p.get("key"), (p.get("key") or "") + "|OPT") and L["status"] == "OPEN":
-                            L.update(status="CLOSED", exit=L["entry"], note="cancelled – gap", closed=str(now))
-                    continue
-                p["pending"] = False
-                msgs.append(f"✅ ACTIVE – {p['name']} FUT {p['side']}: opened at {TP.fmt(ltp, p.get('tick') or 0.05)}, inside the entry zone. "
-                            f"SL {TP.fmt(p['stop'], p.get('tick') or 0.05)}" + (f" · target {TP.fmt(p['target'], p.get('tick') or 0.05)}" if p.get("target") else ""))
                 keep.append(p); continue
             if ltp and p.get("target") and s * (ltp - p["target"]) >= 0:
                 r = s * (ltp - p["entry"]) / p["risk"]

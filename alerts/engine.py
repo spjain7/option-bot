@@ -442,6 +442,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                                max_sl_pct=BO.MAX_SL_PCT.get(tf, 4.0), live=live, quote=q, now=now, require_live=is_open(ex, now),
                                levels=lv)
         if not plan["valid"]:
+            print(f"[rejected] {name} {tf} {sig['side']}: {plan['reason']}")
             info[f"bo_{tf}"] += f" · skipped: {plan['reason']}"; continue
         opt = BO.option_idea(master, name, ex, plan["entry"], sig["side"], tf, now) if master is not None else None
         msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, plan=plan))

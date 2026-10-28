@@ -24,9 +24,46 @@ CASES = [("NIFTY", "NFO", 22600.0, 60.0, 0.05, 75), ("BANKNIFTY", "NFO", 51200.0
          ("TCS", "NFO", 3450.0, 30.0, 0.10, 175), ("GOLD", "MCX", 143454.0, 900.0, 1.0, 1), ("NATURALGAS", "MCX", 288.3, 3.1, 0.10, 1250)]
 
 
+FRESH = {"exchFeedTime": "28-Oct-2026 12:16:40"}
+
+
 def plan(**k):
-    a = dict(BASE); a.update(k)
+    a = dict(BASE, quote=FRESH); a.update(k)
     return TP.futures_plan(**a)
+
+
+def test_quote_timestamps():
+    b = dict(name="NIFTY", ex="NFO", tf="3h", side="BUY", signal_close=22600.0, atr=60.0, stop_mult=2.0, target_r=2.0, tick=0.05,
+             live=22610.0)
+    r = lambda q, **k: plan(**dict(b, **k), quote=q)
+    check("valid Angel timestamp (40 s old) -> accepted", r({"exchFeedTime": "28-Oct-2026 12:16:20"})["valid"])
+    check("exchTradeTime used when exchFeedTime is absent", r({"exchTradeTime": "28-Oct-2026 12:16:00"})["valid"])
+    for label, q in (("no quote at all", None), ("quote without timestamp", {"ltp": 22610.0}),
+                     ("empty timestamp", {"exchFeedTime": ""})):
+        x = r(q)
+        check(f"market hours, {label} -> rejected, reason says no timestamp", not x["valid"] and "no exchange timestamp" in x["reason"])
+    for raw in ("t", "28-Oct-2026", "99-Abc-2026 12:00:00", "12:16:30", "not a time"):
+        x = r({"exchFeedTime": raw})
+        check(f"malformed timestamp {raw!r} -> rejected as malformed", not x["valid"] and "malformed" in x["reason"])
+    x = r({"exchFeedTime": "28-Oct-2026 12:05:00"})
+    check("12-minute-old timestamp -> rejected as stale", not x["valid"] and "stale" in x["reason"])
+    x = r({"exchFeedTime": "28-Oct-2026 12:20:00"})
+    check("timestamp 3 min in the future -> rejected", not x["valid"] and "future" in x["reason"])
+    check(f"timestamp 30 s ahead (inside the {TP.MAX_CLOCK_SKEW_SEC:.0f}s clock-skew tolerance) -> accepted",
+          r({"exchFeedTime": "28-Oct-2026 12:17:30"})["valid"])
+    check("timestamp a day in the future -> rejected", not r({"exchFeedTime": "29-Oct-2026 12:16:40"})["valid"])
+    check("UTC ISO timestamp converted to IST (06:46:40Z = 12:16:40 IST) -> accepted",
+          r({"exchFeedTime": "2026-10-28T06:46:40+00:00"})["valid"])
+    check("UTC ISO timestamp 06:30Z (= 12:00 IST, 17 min old) -> rejected as stale",
+          "stale" in r({"exchFeedTime": "2026-10-28T06:30:00+00:00"})["reason"])
+    check("tz-aware 'now' handled the same as naive IST", r(FRESH, now=pd.Timestamp("2026-10-28 06:47", tz="UTC"))["valid"])
+    x = r(FRESH, now=None)
+    check("market-hours entry without a clock time -> rejected", not x["valid"] and "clock" in x["reason"])
+    off = dict(b, live=None, require_live=False)
+    check("outside market hours / stock call: no quote needed (waits for next-session validation)", plan(**off, quote=None)["valid"])
+    check("outside market hours: a malformed timestamp still rejects", not plan(**off, quote={"exchFeedTime": "junk"})["valid"])
+    check("quote_time(): malformed -> None, Angel format parsed",
+          TP.quote_time({"exchFeedTime": "junk"}) is None and TP.quote_time(FRESH) == pd.Timestamp("2026-10-28 12:16:40"))
 
 
 def test_valid_both_sides_all_markets():
@@ -145,7 +182,7 @@ def test_end_to_end_consistency_duplicates_restart():
                  {"ltp": live, "exchFeedTime": "28-Oct-2026 11:40:00"})
     check("same signal with a 37-minute-old quote -> no call", not st3["bo_active"] or all(x["tf"] != "3h" for x in st3["bo_active"]))
     m4 = []; st4 = E.new_state(); st4["day"] = dict(st["day"])
-    E._breakouts(st4, m4, {}, "NIFTY", "NFO", c2, h, None, pd.Timestamp("2026-10-28 12:17"), None, {"ltp": live - 400})
+    E._breakouts(st4, m4, {}, "NIFTY", "NFO", c2, h, None, pd.Timestamp("2026-10-28 12:17"), None, {"ltp": live - 400, "exchFeedTime": "28-Oct-2026 12:16:50"})
     check("same signal but live price already far below (adverse gap) -> no call", not any(x["tf"] == "3h" for x in st4["bo_active"]))
 
 
@@ -168,6 +205,13 @@ def test_stock_next_open_gap():
     check("stock call: next open inside the zone -> ACTIVE", STK.validate_pending(p, 3455.0, nx)[0] == "active")
     check("stock call: big gap UP (+1 ATR) -> CANCELLED (no chasing)", STK.validate_pending(p, 3482.0, nx)[0] == "cancel")
     check("stock call: gap DOWN through the stop -> CANCELLED", STK.validate_pending(p, 3380.0, nx)[0] == "cancel")
+    for label, q in (("no timestamp", {"ltp": 3455.0}), ("malformed timestamp", {"exchFeedTime": "x"}),
+                     ("stale (yesterday's) quote", {"exchFeedTime": "27-Oct-2026 15:29:59"}),
+                     ("future timestamp", {"exchFeedTime": "28-Oct-2026 09:30:00"})):
+        v, note = STK.validate_pending(p, 3482.0, nx, quote=q)
+        check(f"stock pending + {label} -> keeps WAITING (not activated / cancelled), reason given", v == "wait" and bool(note))
+    check("stock pending + fresh quote inside the zone -> ACTIVE",
+          STK.validate_pending(p, 3455.0, nx, quote={"exchFeedTime": "28-Oct-2026 09:16:58"})[0] == "active")
 
 
 def test_telegram_failure_queues():
@@ -193,7 +237,7 @@ def test_telegram_failure_queues():
 
 
 if __name__ == "__main__":
-    for t in (test_valid_both_sides_all_markets, test_invalid_inputs, test_stale_quote_and_gaps, test_tick_and_wide_stop,
+    for t in (test_valid_both_sides_all_markets, test_invalid_inputs, test_quote_timestamps, test_stale_quote_and_gaps, test_tick_and_wide_stop,
               test_option_plan_and_filter, test_support_resistance_warning, test_end_to_end_consistency_duplicates_restart,
               test_missing_volume_and_oi, test_stock_next_open_gap, test_telegram_failure_queues):
         t()
