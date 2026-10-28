@@ -72,7 +72,9 @@ iteration() {
   # ---- buy/sell alerts ----
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n
-    timeout 1200 python -m alerts.run scan; rc=$?   # the 15:30 stock scan (181 futures) can take ~10 min
+    # run the LATEST main code (fresh worktree made by options()), so fixes pushed during the day apply at the next scan
+    if [ -d /tmp/opt ]; then (cd /tmp/opt && ALERTS_STATE_DIR="$OLDPWD/state/alerts" timeout 1200 python -m alerts.run scan); \
+    else timeout 1200 python -m alerts.run scan; fi; rc=$?   # the 15:30 stock scan (181 futures) can take ~10 min
     if [ -f state/alerts/state.json ] && save alerts-state alerts state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
     [ -f state/alerts/outbox.json ] && SAVE_OK=$SAVE_OK python -m alerts.run flush
     save alerts-state alerts state.json pending.json || echo "::warning::could not save the undelivered-message queue"

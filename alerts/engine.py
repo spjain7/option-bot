@@ -391,7 +391,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     wk = BO.weekly_candles(dd)                                      # completed weeks only (current week still forming)
     if wk is not None and len(wk) and pd.Timestamp(wk["time"].iloc[-1]).to_period("W") == now.to_period("W"):
         wk = wk.iloc[:-1]
-    frames["1w"] = wk
+    # weekly calls OFF 28-Oct: stop-loss 3 weekly ATR = 13-28% away (GOLD / SILVER) – not tradable
     frames["1m"] = dd                                               # monthly breakout is checked on daily closes
     htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
@@ -433,6 +433,9 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         lv = S.levels(fr, h1full, sig["close"], sig["atr"])
         live = (q or {}).get("ltp")
         s_ = 1 if sig["side"] == "BUY" else -1
+        slpct = BO.stop_k(tf) * sig["atr"] / sig["close"] * 100
+        if slpct > BO.MAX_SL_PCT.get(tf, 4.0):
+            info[f"bo_{tf}"] += f" · skipped: stop-loss {slpct:.1f}% away (max {BO.MAX_SL_PCT.get(tf)}%)"; continue
         if live and s_ * (live - sig["close"]) > 0.5 * sig["atr"]:
             info[f"bo_{tf}"] += " · skipped: price already ran > 0.5 ATR (no chasing)"; continue
         opt = BO.option_idea(master, name, ex, live or sig["close"], sig["side"], tf, now) if master is not None else None

@@ -27,6 +27,11 @@ TRAIL = {"3h": False, "1d": False, "1w": False, "1m": False}
 TREND_EXIT_EMA = {}
 TREND_WARN_EMA = {"3h": 20, "1d": 20, "1w": 20, "1m": 20}
 MAX_CANDLES = {"3h": 40, "1d": 40, "1w": 26, "1m": 20}
+# 28-Oct sanity rule: a call whose stop-loss is too far from entry is not tradable for one lot -> no call.
+# (weekly SILVER SELL had its SL 28% away; daily SILVER 1.5 ATR ≈ 7%.)
+MAX_SL_PCT = {"3h": 2.5, "1d": 4.0, "1w": 0.0, "1m": 4.0}
+# option-buy calls: SL / target as % of the premium (same as the intraday option-buy engine), not from the futures move
+OPT_SL_TG = {"3h": (0.30, 0.60), "1d": (0.35, 0.80), "1m": (0.35, 0.80)}
 
 
 def stop_k(tf):
@@ -309,15 +314,15 @@ def manage(state, msgs, name, tf, frame, c15, now):
 
 
 def option_msg(name, ex, tf, sig, opt, prem, live=None, k=None, tr=None):
-    """OPTION-BUY call for the same signal: ATM CE (buy) / PE (sell). Premium SL/target ≈ futures levels × delta 0.5."""
-    s, ref, R = _levels(sig, live, k or stop_k(tf))
-    trr = TARGET_R.get(tf) if tr is None else (tr or None)
-    sl_f, tg_f = ref - s * R, (ref + s * trr * R if trr else None)
-    est = lambda fut: max(0.05, prem + 0.5 * s * (fut - ref)) if prem else None
+    """OPTION-BUY call for the same signal: ATM CE (buy) / PE (sell). SL / target as % of the premium; also exit when the
+    futures call exits (its SL / target / trend-change alert)."""
+    slp, tgp = OPT_SL_TG.get(tf, (0.35, 0.80))
+    osl, otg = (round(prem * (1 - slp), 2), round(prem * (1 + tgp), 2)) if prem else (None, None)
     L = [f"{'🟢' if opt['typ'] == 'CE' else '🔴'} BUY  {name} {opt['K']:g} {opt['typ']}  ·  Positional",
          "━━━━━━━━━━━━━━",
          f"Entry   : {('₹' + _f(prem)) if prem else 'market (LTP n/a)'}",
-         f"SL      : {('₹' + _f(est(sl_f)) + '  ') if prem else ''}(fut {_f(sl_f)})",
-         (f"Target  : {('₹' + _f(est(tg_f)) + '  ') if prem else ''}(fut {_f(tg_f)})") if tg_f else "Target  : trail – exit with the futures call",
-         f"Lot     : {opt['lot']}  ·  exp {opt['expiry']:%d-%b}  ·  {'MCX' if ex == 'MCX' else 'NSE'}"]
-    return "\n".join(L), (est(sl_f), est(tg_f) if tg_f else None)
+         f"SL      : {('₹' + _f(osl)) if prem else '-'}  (−{slp * 100:.0f}%)",
+         f"Target  : {('₹' + _f(otg)) if prem else '-'}  (+{tgp * 100:.0f}%)",
+         f"Lot     : {opt['lot']}  ·  exp {opt['expiry']:%d-%b}  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
+         "Also exit when the futures call exits"]
+    return "\n".join(L), (osl, otg)

@@ -131,7 +131,6 @@ def run_at(ts, fn):
 
 
 def main():
-    C.INTRADAY_MAX_DTE = 99            # fixture expiries are 8 days out; the ≤7-day rule is checked separately
     positions.STATE_FILE = ROOT / "tests" / "_sim_state.json"
     positions.STATE_FILE.unlink(missing_ok=True)
     C.MONTHLY_STOCKS = ["RELIANCE", "HDFCBANK"]

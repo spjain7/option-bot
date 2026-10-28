@@ -404,8 +404,6 @@ class Bot:
                       if p["name"] == name and p["mode"] == mode and p.get("opened", "").startswith(today))
         if not why and mode == "intraday" and n_today >= C.MAX_CALLS_PER_NAME_DAY:
             why = f"already {n_today} calls today"
-        if not why and mode == "intraday" and M.dte(expiry) > getattr(C, "INTRADAY_MAX_DTE", 99):
-            why = f"intraday needs expiry ≤ {C.INTRADAY_MAX_DTE} days (this one {M.dte(expiry)} days – target not reachable today)"
         if why:
             self.why(name, why); return
         v = self.view(name, expiry, trend_interval, exch, stock, mode)

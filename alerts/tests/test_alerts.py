@@ -276,6 +276,11 @@ def test_breakout():
     ok3 = OF.check(OApi(250.0, (16.0, 14.0)), "NFO", "NIFTY", op_, 22600.0, dly, pd.Timestamp("2026-10-28 12:00"))
     check("option buy: fair premium passes; expensive premium (IV ≫ realised) and a VIX jump block the option call",
           ok1[0] and not ok2[0] and "expensive" in ok2[3] and not ok3[0] and "VIX" in ok3[3])
+    om_, (osl_, otg_) = BO.option_msg("SILVER", "MCX", "1d", dict(side="SELL", close=195151.0, atr=9000.0),
+                                      dict(K=195000.0, typ="PE", lot=30, expiry=pd.Timestamp("2026-11-27")), 7242.0)
+    check("option-buy SL / target are % of the premium (−35% / +80%), never ₹0.05 or 8× the premium",
+          osl_ == round(7242 * 0.65, 2) and otg_ == round(7242 * 1.8, 2) and "−35%" in om_)
+    check("SL sanity cap: daily max 4% of price, 3h 2.5%, weekly calls off", BO.MAX_SL_PCT["1d"] == 4.0 and BO.MAX_SL_PCT["1w"] == 0.0)
     from alerts import report as RP
     lg = {}
     RP.add(lg, key="k", mark_key="1", seg="NSE", cat="FUTURES", name="NIFTY", symbol="NIFTY25NOV26FUT", type="Positional (3-hour)",
@@ -381,7 +386,7 @@ def test_no_orders():
     lp = (ROOT / "scripts" / "market_loop.sh").read_text()
     check("market loop: state saved BEFORE Telegram is sent; every engine has a time limit (no stuck loop)",
           lp.index("save alerts-state alerts state.json; then") < lp.index("python -m alerts.run flush")
-          and "timeout 1200 python -m alerts.run scan" in lp and "timeout 600 python runner.py" in lp)
+          and "timeout 1200 python -m alerts.run scan" in lp and 'ALERTS_STATE_DIR="$OLDPWD/state/alerts"' in lp and "timeout 600 python runner.py" in lp)
 
 
 if __name__ == "__main__":

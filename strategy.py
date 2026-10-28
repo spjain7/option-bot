@@ -133,7 +133,11 @@ def build_trade(chain, bias, mode, allow_condor=True):
     sign = lambda l: -1 if l["side"] == "SELL" else 1
     pg = {g: round(sum(sign(l) * l[g] for l in legs) * lot, 2) for g in ("delta", "gamma", "theta", "vega")}
 
-    rules = C.RULES["intraday" if mode.startswith("intraday") else mode]
+    rules = dict(C.RULES["intraday" if mode.startswith("intraday") else mode])
+    if mode.startswith("intraday"):                  # a far expiry cannot lose 35% in a few hours: smaller, reachable target
+        dte_ = chain.get("dte", 0) or 0
+        pct = 35 if dte_ <= 7 else 20 if dte_ <= 20 else 15
+        rules["target_pct"] = rules["sl_pct"] = pct
     sl_val = credit * (1 + rules["sl_pct"] / 100) if naked else credit * rules["sl_mult"]
     if naked and credit * lot < C.MIN_PREMIUM_RS_PER_LOT:
         return None
