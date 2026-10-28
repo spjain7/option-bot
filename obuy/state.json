@@ -1,5 +1,32 @@
 {
- "open": [],
+ "open": [
+  {
+   "id": 1,
+   "mode": "intraday",
+   "name": "BSE",
+   "kind": "stock",
+   "dir": 1,
+   "token": "92914",
+   "symbol": "BSE23NOV263450CE",
+   "K": 3450.0,
+   "expiry": "2026-11-23",
+   "lot": 200,
+   "entry": 155.1,
+   "sl": 108.57,
+   "tg": 248.16,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-10-28 10:50:30.589225",
+   "exit_at": "2026-10-28 15:15:00",
+   "why": [
+    "Futures crossed above VWAP (3,465.3)",
+    "RSI 68 (strong momentum)",
+    "Last 1 hour: price +0.25%, OI +0.5%",
+    "Premium fair: IV 39% vs 20-day move 36%"
+   ],
+   "exit_by": "28 Oct 15:15"
+  }
+ ],
  "closed": [],
  "done": {
   "positional-scan|2026-10-23": "2026-10-23 09:34:10.463882",
@@ -10,274 +37,275 @@
   "intraday|CANBK|2026-10-26": "2026-10-26 10:46:29.454047",
   "scorecard|2026-10-26": "2026-10-26 15:35:06.638385",
   "positional-scan|2026-10-27": "2026-10-27 11:53:12.097370",
-  "scorecard|2026-10-27": "2026-10-27 15:37:22.805219"
+  "scorecard|2026-10-27": "2026-10-27 15:37:22.805219",
+  "intraday|BSE|2026-10-28": "2026-10-28 10:50:30.589225"
  },
- "next_id": 1,
+ "next_id": 2,
  "universe": {
-  "day": "2026-10-27",
+  "day": "2026-10-28",
   "items": [
    {
-    "name": "FEDERALBNK",
-    "token": "48839",
-    "lot": 2500,
+    "name": "TVSMOTOR",
+    "token": "61735",
+    "lot": 175,
     "kind": "stock"
    },
    {
-    "name": "APLAPOLLO",
-    "token": "48727",
-    "lot": 350,
+    "name": "M&M",
+    "token": "61637",
+    "lot": 200,
     "kind": "stock"
    },
    {
     "name": "BEL",
-    "token": "48756",
+    "token": "61512",
     "lot": 1425,
     "kind": "stock"
    },
    {
     "name": "ADANIENT",
-    "token": "48711",
+    "token": "61478",
     "lot": 309,
     "kind": "stock"
    },
    {
-    "name": "MIDCPNIFTY",
-    "token": "48703",
-    "lot": 120,
-    "kind": "index"
-   },
-   {
-    "name": "BHEL",
-    "token": "48764",
-    "lot": 2625,
-    "kind": "stock"
-   },
-   {
-    "name": "LT",
-    "token": "48920",
-    "lot": 175,
-    "kind": "stock"
-   },
-   {
-    "name": "ADANIPOWER",
-    "token": "48720",
-    "lot": 3550,
-    "kind": "stock"
-   },
-   {
-    "name": "HDFCBANK",
-    "token": "48864",
-    "lot": 650,
-    "kind": "stock"
-   },
-   {
-    "name": "KOTAKBANK",
-    "token": "48906",
-    "lot": 2000,
-    "kind": "stock"
-   },
-   {
-    "name": "PAYTM",
-    "token": "48964",
-    "lot": 725,
-    "kind": "stock"
-   },
-   {
-    "name": "ITC",
-    "token": "48896",
-    "lot": 1725,
-    "kind": "stock"
-   },
-   {
-    "name": "JIOFIN",
-    "token": "48898",
-    "lot": 2350,
-    "kind": "stock"
-   },
-   {
-    "name": "SBIN",
-    "token": "48994",
-    "lot": 750,
-    "kind": "stock"
-   },
-   {
-    "name": "TATASTEEL",
-    "token": "49012",
-    "lot": 2750,
-    "kind": "stock"
-   },
-   {
-    "name": "TCS",
-    "token": "49013",
-    "lot": 225,
-    "kind": "stock"
-   },
-   {
-    "name": "TECHM",
-    "token": "49014",
-    "lot": 600,
-    "kind": "stock"
-   },
-   {
-    "name": "TMPV",
-    "token": "49019",
-    "lot": 1600,
-    "kind": "stock"
-   },
-   {
-    "name": "WIPRO",
-    "token": "49033",
-    "lot": 3000,
-    "kind": "stock"
-   },
-   {
-    "name": "BSE",
-    "token": "48776",
-    "lot": 200,
-    "kind": "stock"
-   },
-   {
-    "name": "AMBUJACEM",
-    "token": "48725",
-    "lot": 1200,
-    "kind": "stock"
-   },
-   {
-    "name": "RELIANCE",
-    "token": "48987",
-    "lot": 500,
-    "kind": "stock"
-   },
-   {
-    "name": "BANKBARODA",
-    "token": "48742",
-    "lot": 2925,
-    "kind": "stock"
-   },
-   {
-    "name": "BHARTIARTL",
-    "token": "48758",
-    "lot": 475,
-    "kind": "stock"
-   },
-   {
-    "name": "MCX",
-    "token": "48937",
-    "lot": 225,
-    "kind": "stock"
-   },
-   {
-    "name": "BANKNIFTY",
-    "token": "48699",
-    "lot": 30,
-    "kind": "index"
-   },
-   {
     "name": "NIFTY",
-    "token": "48704",
+    "token": "61471",
     "lot": 65,
     "kind": "index"
    },
    {
-    "name": "INDUSINDBK",
-    "token": "48883",
-    "lot": 700,
+    "name": "MIDCPNIFTY",
+    "token": "61470",
+    "lot": 120,
+    "kind": "index"
+   },
+   {
+    "name": "APLAPOLLO",
+    "token": "61486",
+    "lot": 350,
     "kind": "stock"
    },
    {
-    "name": "HINDUNILVR",
-    "token": "48869",
-    "lot": 300,
-    "kind": "stock"
-   },
-   {
-    "name": "MARUTI",
-    "token": "48928",
-    "lot": 50,
-    "kind": "stock"
-   },
-   {
-    "name": "NTPC",
-    "token": "48954",
-    "lot": 1500,
-    "kind": "stock"
-   },
-   {
-    "name": "ETERNAL",
-    "token": "48838",
-    "lot": 2425,
-    "kind": "stock"
-   },
-   {
-    "name": "AXISBANK",
-    "token": "48736",
-    "lot": 625,
-    "kind": "stock"
-   },
-   {
-    "name": "PNB",
-    "token": "48974",
-    "lot": 8000,
-    "kind": "stock"
-   },
-   {
-    "name": "M&M",
-    "token": "48924",
-    "lot": 200,
-    "kind": "stock"
-   },
-   {
-    "name": "HCLTECH",
-    "token": "48860",
-    "lot": 400,
-    "kind": "stock"
-   },
-   {
-    "name": "PFC",
-    "token": "48969",
-    "lot": 1300,
-    "kind": "stock"
-   },
-   {
-    "name": "TRENT",
-    "token": "49021",
+    "name": "TCS",
+    "token": "61724",
     "lot": 225,
     "kind": "stock"
    },
    {
-    "name": "FINNIFTY",
-    "token": "48702",
-    "lot": 60,
-    "kind": "index"
-   },
-   {
-    "name": "INDUSTOWER",
-    "token": "48884",
-    "lot": 1700,
-    "kind": "stock"
-   },
-   {
     "name": "BAJFINANCE",
-    "token": "48740",
+    "token": "61507",
     "lot": 750,
     "kind": "stock"
    },
    {
-    "name": "ICICIBANK",
-    "token": "48874",
+    "name": "HDFCBANK",
+    "token": "61582",
+    "lot": 650,
+    "kind": "stock"
+   },
+   {
+    "name": "WIPRO",
+    "token": "61746",
+    "lot": 3000,
+    "kind": "stock"
+   },
+   {
+    "name": "BANKBARODA",
+    "token": "61509",
+    "lot": 2925,
+    "kind": "stock"
+   },
+   {
+    "name": "CANBK",
+    "token": "61527",
+    "lot": 6750,
+    "kind": "stock"
+   },
+   {
+    "name": "TECHM",
+    "token": "61725",
+    "lot": 600,
+    "kind": "stock"
+   },
+   {
+    "name": "JSWSTEEL",
+    "token": "61619",
+    "lot": 675,
+    "kind": "stock"
+   },
+   {
+    "name": "ITC",
+    "token": "61615",
+    "lot": 1725,
+    "kind": "stock"
+   },
+   {
+    "name": "INDUSINDBK",
+    "token": "61606",
     "lot": 700,
     "kind": "stock"
    },
    {
-    "name": "IDEA",
-    "token": "48877",
-    "lot": 71475,
+    "name": "ADANIPOWER",
+    "token": "61481",
+    "lot": 3550,
+    "kind": "stock"
+   },
+   {
+    "name": "AXISBANK",
+    "token": "61504",
+    "lot": 625,
+    "kind": "stock"
+   },
+   {
+    "name": "ETERNAL",
+    "token": "61565",
+    "lot": 2425,
+    "kind": "stock"
+   },
+   {
+    "name": "HINDALCO",
+    "token": "61585",
+    "lot": 700,
+    "kind": "stock"
+   },
+   {
+    "name": "BSE",
+    "token": "61525",
+    "lot": 200,
+    "kind": "stock"
+   },
+   {
+    "name": "SAIL",
+    "token": "61702",
+    "lot": 4700,
+    "kind": "stock"
+   },
+   {
+    "name": "FINNIFTY",
+    "token": "61469",
+    "lot": 60,
+    "kind": "index"
+   },
+   {
+    "name": "LAURUSLABS",
+    "token": "61629",
+    "lot": 425,
+    "kind": "stock"
+   },
+   {
+    "name": "KOTAKBANK",
+    "token": "61627",
+    "lot": 2000,
     "kind": "stock"
    },
    {
     "name": "INFY",
-    "token": "48886",
+    "token": "61608",
     "lot": 400,
+    "kind": "stock"
+   },
+   {
+    "name": "IDFCFIRSTB",
+    "token": "61599",
+    "lot": 9275,
+    "kind": "stock"
+   },
+   {
+    "name": "IDEA",
+    "token": "61598",
+    "lot": 71475,
+    "kind": "stock"
+   },
+   {
+    "name": "HINDUNILVR",
+    "token": "61591",
+    "lot": 300,
+    "kind": "stock"
+   },
+   {
+    "name": "DIVISLAB",
+    "token": "61558",
+    "lot": 100,
+    "kind": "stock"
+   },
+   {
+    "name": "COALINDIA",
+    "token": "61540",
+    "lot": 1350,
+    "kind": "stock"
+   },
+   {
+    "name": "BHEL",
+    "token": "61516",
+    "lot": 2625,
+    "kind": "stock"
+   },
+   {
+    "name": "BANKNIFTY",
+    "token": "61466",
+    "lot": 30,
+    "kind": "index"
+   },
+   {
+    "name": "SBIN",
+    "token": "61706",
+    "lot": 750,
+    "kind": "stock"
+   },
+   {
+    "name": "BHARTIARTL",
+    "token": "61515",
+    "lot": 475,
+    "kind": "stock"
+   },
+   {
+    "name": "TATASTEEL",
+    "token": "61723",
+    "lot": 2750,
+    "kind": "stock"
+   },
+   {
+    "name": "RELIANCE",
+    "token": "61697",
+    "lot": 500,
+    "kind": "stock"
+   },
+   {
+    "name": "PNB",
+    "token": "61682",
+    "lot": 8000,
+    "kind": "stock"
+   },
+   {
+    "name": "PFC",
+    "token": "61677",
+    "lot": 1300,
+    "kind": "stock"
+   },
+   {
+    "name": "LT",
+    "token": "61633",
+    "lot": 175,
+    "kind": "stock"
+   },
+   {
+    "name": "JIOFIN",
+    "token": "61617",
+    "lot": 2350,
+    "kind": "stock"
+   },
+   {
+    "name": "FEDERALBNK",
+    "token": "61566",
+    "lot": 2500,
+    "kind": "stock"
+   },
+   {
+    "name": "ICICIBANK",
+    "token": "61595",
+    "lot": 700,
     "kind": "stock"
    }
   ]
