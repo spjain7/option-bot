@@ -358,3 +358,25 @@ Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
   | Daily STOCKS hanging man (no RSI needed) | 2,808 | 58 | +0.12R |
 
 - **Not established:** no 80% setup.
+
+## Addendum: RR1, 1-hour patterns without the 15:15 candle (owner's request), 28-Oct-2026
+- **The NSE 15:15 hourly candle is only 15 minutes long** (15:15–15:30), and its breakout comes after the overnight gap.
+- **Stocks, trend as asked, 2022–26, win rate by pattern-candle time:**
+
+  | Candle | Win % |
+  |---|---|
+  | 15:15 | 44–48 (hammer 43.8, hanging man 44.8) |
+  | 14:15 | 47 |
+  | 09:15–13:15 | 51–55 |
+
+- **Results with those candles skipped:**
+
+  | Data | All candles | Skip 15:15 | Skip 14:15 and 15:15 |
+  |---|---|---|---|
+  | 2022–26, pooled | 51.6% win, −0.093R | 52.1%, −0.078R | 53.3%, −0.053R |
+  | Last 2 months | 49.9%, −0.14R | 50.0%, −0.14R | 51.4%, −0.11R |
+
+- **Best rows after skipping 14:15 and 15:15:**
+  - 2022–26: index hammer, 60.1% win, +0.04R.
+  - Last 2 months: stocks hanging man, 64.6% win, +0.25R.
+- **Verdict:** skipping late candles helps by 1–2 points of win rate, but 1-hour patterns stay slightly negative after costs over 2022–26.
