@@ -328,3 +328,33 @@ Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
   - index daily hanging man: 74%, +0.44R (n = 19).
 - **Full history, negative after costs:** most 1h patterns. They win 51–56%, but costs take 0.15–0.3R of each trade.
 - **Ambiguous candles:** few. Up to 4% of 1h stock trades touched the stop and the target in the same candle; the "best case" win rate moves by 1–4 points.
+
+## Addendum: RR1-RSI, RSI and volume filters on the 1:1 candle-pattern trades, 28-Oct-2026
+- **Scripts:** `rr1_rsi.py` and `rr1_rsi_analyse.py`; variants in `results/rr1_rsi_variants.csv`.
+- **Method:** every pattern signal is simulated once (273k trades); the filters are then applied to the same trades.
+- **Filters:**
+  - RSI(14) extreme in the pattern candle or the 2 before (BUY ≤ 30 or ≤ 25; SELL ≥ 70 or ≥ 75);
+  - pattern-candle volume ≥ 1.5× or 2×, or the previous candle's volume ≥ 1.5× (climax);
+  - EMA20/50 trend, or any.
+- **Scale:** 790 variants; 30 are positive in all three periods (3.8%, about what chance would give).
+- **Pooled across markets and patterns (trend version), RSI and volume do not raise the win rate:**
+
+  | Candles | No filter | Best filter combination | RSI and volume extremes |
+  |---|---|---|---|
+  | 1h | 51.8%, −0.10R | RSI 25/75 + volume 2×: 54.7%, +0.03R | — |
+  | 3h | 51.3%, −0.02R | — | lower: 38–49% |
+  | Daily | 50.2%, −0.02R | — | lower: 34–48% |
+
+  On 3h and daily candles, a stretched RSI with a volume spike more often means the trend continues than that it reverses.
+- **Pockets that held in every period** (small samples):
+
+  | Setup | Trades | Win % | Result |
+  |---|---|---|---|
+  | 1h INDEX hammer + volume ≥ 1.5× (downtrend) | 51 | 75 | +0.56R |
+  | 3h MCX hanging man + RSI ≥ 70 | 85 | 66 | +0.22R |
+  | 1h STOCKS hanging man + RSI ≥ 70 + volume ≥ 2× | 135 | 61 | +0.16R |
+  | Daily MCX hammer | 408 | 59 | +0.13R |
+  | Daily MCX hammer + previous-day volume ≥ 1.5× | 74 | 64 | +0.24R |
+  | Daily STOCKS hanging man (no RSI needed) | 2,808 | 58 | +0.12R |
+
+- **Not established:** no 80% setup.
