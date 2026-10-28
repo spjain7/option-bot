@@ -155,7 +155,11 @@ MCX_FIRST_SCAN       = "10:00"   # after first 1-hour candle (09:00-10:00)
 MCX_LAST_ENTRY       = "21:45"    # ≥ 75 min before the 23:00 exit
 MCX_INTRADAY_EXIT    = "23:00"
 MCX_POSITIONAL_WINDOW = ("22:30", "23:15")
-MCX_MIN_DTE          = 2         # skip option expiries closer than this
+MCX_MIN_DTE          = 3         # skip option expiries closer than this (28-Oct: 2-day GOLD PE sell – fast-moving premium)
+INTRADAY_MAX_DTE     = 7         # 28-Oct: an intraday (same-day) sell needs real time decay; longer expiries = positional scans
+SR_BUFFER_PCT        = 0.3       # 28-Oct: no PE sell within 0.3 % below resistance / CE sell within 0.3 % above support
+FLIP_CHECK           = True
+FLIP_MIN_OI_PCT      = 1.0       # 28-Oct: a fresh flip from sideways needs futures OI change >= 1 % in the same direction
 MCX_MONTHLY_DTE      = (7, 40)   # positional MCX trade when option expiry is 7-40 days away
 MCX_MIN_SHORT_OI     = 50        # MCX strikes have lower OI than NSE
 MCX_CHAIN_RANGE_PCT  = {"intraday": 0.25, "monthly": 0.30}   # commodities are volatile: load wide

@@ -184,6 +184,37 @@ def sr_text(ch):
     return f"Support {' · '.join(sup) or '-'} | Resistance {' · '.join(res) or '-'}"
 
 
+def flip_confirmed(bias, came_from, bu):
+    """28-Oct: a direction that just appeared after a sideways reading must be backed by real futures positioning
+    (Long buildup for bullish / Short buildup for bearish, OI change >= FLIP_MIN_OI_PCT). -> (ok, reason)"""
+    if bias == "NEUTRAL" or came_from != "NEUTRAL":
+        return True, ""
+    need = {"BULLISH": "Long buildup", "BEARISH": "Short buildup"}[bias]
+    lim = getattr(C, "FLIP_MIN_OI_PCT", 1.0)
+    if bu and bu.get("label") == need and abs(bu.get("oi_chg") or 0) >= lim:
+        return True, ""
+    got = f"{bu.get('label')} (OI {bu.get('oi_chg', 0):+.2f}%)" if bu else "no OI data"
+    return False, f"{bias.lower()} flip from sideways not backed by futures positioning – need {need} with OI ≥ {lim}%, have {got}"
+
+
+def near_level(ch, spot, bias):
+    """28-Oct: never sell a PE just under resistance (price likely to turn down) or a CE just above support."""
+    if bias not in ("BULLISH", "BEARISH") or not spot:
+        return None
+    buf = getattr(C, "SR_BUFFER_PCT", 0.3) / 100
+    pv = ch.get("pivots") or {}
+    lv = [v for v in list(pv.values()) + [ch.get("call_wall"), ch.get("put_wall")] if v]
+    if bias == "BULLISH":
+        res = [v for v in lv if spot < v <= spot * (1 + buf)]
+        if res:
+            return f"bullish but price {spot:,.1f} is right under resistance {min(res):,.1f} – no PE sell there"
+    else:
+        sup = [v for v in lv if spot * (1 - buf) <= v < spot]
+        if sup:
+            return f"bearish but price {spot:,.1f} is right above support {max(sup):,.1f} – no CE sell there"
+    return None
+
+
 def exit_by(t):
     if t["mode"] == "intraday":
         return f"{t.get('exit_time')} today"
@@ -406,6 +437,9 @@ class Bot:
             why = f"already {n_today} calls today"
         if why:
             self.why(name, why); return
+        if mode == "intraday" and M.dte(expiry) > getattr(C, "INTRADAY_MAX_DTE", 99):
+            self.why(name, f"nearest expiry {M.dte(expiry)} days away – too little time decay for a same-day sell "
+                           "(longer expiries are handled by the positional scan)"); return
         v = self.view(name, expiry, trend_interval, exch, stock, mode)
         if not v:
             return
@@ -419,9 +453,12 @@ class Bot:
         hist = self.st.s.setdefault("bias_hist", {})
         hk, now = f"{exch}|{name}|{mode}", now_ist()
         prev = hist.get(hk)
-        n = prev["n"] + 1 if prev and prev["bias"] == bias and \
-            now - pd.Timestamp(prev["t"]) <= pd.Timedelta(minutes=C.CONFIRM_WINDOW_MIN) else 1
-        hist[hk] = {"bias": bias, "t": str(now), "n": n}
+        recent = prev and now - pd.Timestamp(prev["t"]) <= pd.Timedelta(minutes=C.CONFIRM_WINDOW_MIN)
+        n = prev["n"] + 1 if recent and prev["bias"] == bias else 1
+        came_from = (prev.get("from", "NEUTRAL") if recent and prev["bias"] == bias else
+                     prev["bias"] if recent else "NEUTRAL")
+        hist[hk] = {"bias": bias, "t": str(now), "n": n, "from": came_from}
+        flip_ok, flip_why = flip_confirmed(bias, came_from, bu)
         if fast and fast == bias:                        # ⚡ futures buildup already confirms this direction
             n = max(n, C.CONFIRM_CHECKS)
         if rsi_rule and rsi_rule["action"] == "sell":     # RSI exhaustion + OI positioning: shoot the call now
@@ -429,6 +466,11 @@ class Bot:
         if mode == "intraday" and n < C.CONFIRM_CHECKS:
             self.why(name, f"{bias.lower()} – waiting confirmation on next scan" if bias != "NEUTRAL"
                      else "sideways – no side to sell"); return
+        if mode == "intraday" and getattr(C, "FLIP_CHECK", True) and not (rsi_rule and rsi_rule["action"] == "sell") and not flip_ok:
+            self.why(name, flip_why); return
+        near = near_level(ch, spot, bias)
+        if near:
+            self.why(name, near); return
         if getattr(C, "BOUNCE_FILTER", False) and bias in ("BULLISH", "BEARISH"):
             try:
                 seg = "MCX" if exch == "MCX" else M.spot_seg(name)
@@ -601,7 +643,7 @@ class Bot:
             if self.st.done(key) or self.st.open_positions("intraday", name):
                 continue
             self.st.mark(key)
-            exp = self.mcx_expiry(name)
+            exp = self.mcx_expiry(name, C.MCX_MIN_DTE, getattr(C, "INTRADAY_MAX_DTE", 99)) or self.mcx_expiry(name)
             if exp is not None:
                 try:
                     self.try_open(name, "intraday", exp, "ONE_HOUR", exch="MCX")

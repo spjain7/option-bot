@@ -136,6 +136,9 @@ def main():
     C.MONTHLY_STOCKS = ["RELIANCE", "HDFCBANK"]
     C.SELL_STYLE, C.CONFIRM_CHECKS, C.INTRADAY_STOCKS, C.GAMMA_BLOCK = "HEDGED", 1, [], "EXTREME"   # part 1: hedged engine
     C.INTRADAY_UNDERLYINGS, C.WEEKLY_UNDERLYINGS = ["NIFTY", "BANKNIFTY"], ["NIFTY"]
+    # this simulation tests the order / exit MECHANICS end to end; the 28-Oct selection rules (DTE window, S/R buffer,
+    # flip check) have their own tests in tests/test_sell_rules.py and are switched off here so the fixture still trades
+    C.INTRADAY_MAX_DTE, C.SR_BUFFER_PCT, C.FLIP_CHECK = 99, 0.0, False
     st = positions.Store()
     bot = runner.Bot(FakeAngel(), MASTER, st)
 

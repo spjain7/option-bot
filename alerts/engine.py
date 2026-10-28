@@ -385,6 +385,9 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     """Volume-breakout alerts on 3-hour and daily candles + trailing-stop follow-ups."""
     if h1full is None or h1full.empty:
         info["breakout"] = "no 1-hour history"; return
+    if "volume" in h1full and float(h1full["volume"].tail(100).fillna(0).sum()) == 0:
+        info["not_traded"] = True                         # 28-Oct: ALUMINIUM / ZINC mega contracts show no volume
+        info["breakout"] = "skipped: contract not traded (zero volume) – volume rule cannot work"; return
     frames = {"3h": positional_candles(h1full, ex, now)}
     dd = BO.daily_candles(h1full, None)
     if dd is not None and len(dd) and is_open(ex, now):                # today's daily candle is still forming
@@ -517,7 +520,9 @@ def startup_msg(now, rep):
     return (f"📡 BUY/SELL ALERTS ACTIVE – {now:%d-%b-%Y %H:%M} IST\n"
             "Strategy: VOLUME BREAKOUT – close beyond the 20-candle high/low with volume > 1.5× average, in the 200-EMA "
             "trend direction. Swing (3-hour candles) + positional (daily candles). SL 2 ATR, then 3-ATR trailing stop updates.\n"
-            f"Instruments with data now: {', '.join(ok) or 'none (markets closed)'}\n"
+            f"Instruments with data now: {', '.join(n for n in ok if not rep['instruments'][n].get('not_traded')) or 'none (markets closed)'}\n"
+            + (f"Not traded (zero volume, no calls possible): {', '.join(n for n in ok if rep['instruments'][n].get('not_traded'))}\n"
+               if any(rep['instruments'][n].get('not_traded') for n in ok) else "")
             + (f"Data problems: {'; '.join(rep['errors'][:6])}\n" if rep["errors"] else "") + WARN)
 
 
