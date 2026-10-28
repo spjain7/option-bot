@@ -185,6 +185,8 @@ def simulate(f, sig, side, k, tgt_r, maxh, cap, cost, start=210, swing=False):
                 px, why, j = c[j - 1], "roll", j - 1; break
             if j > i + 1 and ((o[j] <= st) if side > 0 else (o[j] >= st)):
                 px, why = o[j], "stop-gap"; break
+            if j > i + 1 and ((o[j] >= tp) if side > 0 else (o[j] <= tp)):  # gap through the target fills at the open (VERIFY-EXITS, 29-Oct)
+                px, why = o[j], "target-gap"; break
             if (l[j] <= st) if side > 0 else (h[j] >= st):
                 px, why = st, "stop"; break
             if (h[j] >= tp) if side > 0 else (l[j] <= tp):

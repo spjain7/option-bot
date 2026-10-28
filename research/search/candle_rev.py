@@ -57,6 +57,7 @@ def sim(df, sig, conf, stop_kind, tg, cost, swd, maxh=10):
         px, j = None, k + 1
         while j < n:
             if (o[j] <= st) if s > 0 else (o[j] >= st): px = o[j]; break
+            if (o[j] >= tp) if s > 0 else (o[j] <= tp): px = o[j]; break  # gap through the target fills at the open (VERIFY-EXITS, 29-Oct)
             if (l[j] <= st) if s > 0 else (h[j] >= st): px = st; break
             if (h[j] >= tp) if s > 0 else (l[j] <= tp): px = tp; break
             if swd[j] or j - k >= maxh: px = c[j]; break

@@ -55,6 +55,7 @@ def simulate(f, sig, slkind, tgkind, swd, nx, cost, maxhold, start):
         px = None; j = i + 1
         while j < n:
             if (o[j] <= st) if s > 0 else (o[j] >= st): px = o[j]; break
+            if (o[j] >= tp) if s > 0 else (o[j] <= tp): px = o[j]; break  # gap through the target fills at the open (VERIFY-EXITS, 29-Oct)
             if (l[j] <= st) if s > 0 else (h[j] >= st): px = st; break
             if (h[j] >= tp) if s > 0 else (l[j] <= tp): px = tp; break
             if nx[j] or j - (i + 1) >= maxhold: px = c[j]; break

@@ -112,6 +112,8 @@ def sim(f, sig, side, ex, cost, cap):
                 px, j = c[j - 1], j - 1; break
             if j > i + 1 and side * (o[j] - st) <= 0:
                 px = o[j]; break
+            if j > i + 1 and side * (o[j] - tp) >= 0:  # gap through the target fills at the open (VERIFY-EXITS, 29-Oct)
+                px = o[j]; break
             if (l[j] <= st) if side > 0 else (h[j] >= st):
                 px = st; break
             if (h[j] >= tp) if side > 0 else (l[j] <= tp):

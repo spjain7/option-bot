@@ -61,6 +61,7 @@ def sim(df, sig, k_sl, tgt_r, maxh, swd, cost, trail=None, start=210, mkt=None):
             if j > i + 1 and swd[j]:
                 px, why, j = c[j - 1], "roll", j - 1; break          # last close of the old contract
             if (o[j] <= st) if s > 0 else (o[j] >= st): px, why = o[j], "stop-gap"; break
+            if tp is not None and ((o[j] >= tp) if s > 0 else (o[j] <= tp)): px, why = o[j], "target-gap"; break  # gap through the target fills at the open (VERIFY-EXITS, 29-Oct)
             if (l[j] <= st) if s > 0 else (h[j] >= st): px, why = st, "stop"; break
             if tp is not None and ((h[j] >= tp) if s > 0 else (l[j] <= tp)): px, why = tp, "target"; break
             if j - (i + 1) >= maxh: px, why = c[j], "time"; break
