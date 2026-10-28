@@ -156,3 +156,21 @@ Script `research/program/search80.py`; tables in `results/search80_tables.md` an
 - **Best earlier result:** HA-1 (3h BUY, stop 3 ATR capped at 2.5 %, target 0.5R, RSI < 75 or compression), 77–82 % wins. It is already logged live beside every 3h BUY since 28-Oct.
 
 **Conclusion:** on this data, 80 % winning trades with positive profit after costs is not achievable reliably in any segment. Win rates of about 75–80 % are possible only with small targets, and the profit per trade then falls to +0.03–0.15R.
+
+## Addendum: REV-001, RSI-reversal futures calls with every confirmation (owner's request), 28-Oct-2026
+Script `research/program/reversal.py`; tables in `results/rev_tables.md` and `results/rev_variants.csv`.
+
+**Setup tested:**
+- **Base signal:** BUY when RSI(14) < 25 (also < 20); SELL when RSI(14) > 75 (also > 80).
+- **Confirmations, in all 64 on/off combinations:** reversal candle (hammer, hanging man, shooting star, engulfing, morning/evening star, piercing, dark cloud); volume ≥ 1.5× plus relative volume by time of day ≥ 1.5×; ADX < 25; OI positioning (short buildup before a BUY, long buildup before a SELL); price ≥ 1 ATR away from VWAP; EMA200 trend side.
+- **Exits:** 4 options (0.5R or 1R targets, or back to VWAP/EMA20).
+- **Data:** 1-hour candles 2022–26 (MCX, NIFTY/BANKNIFTY, 181 stocks) and 15-minute candles with intraday OI for 2 months (Aug–Oct 2026; 4 indices, 40 stocks, 4 MCX).
+- **3,164 variants in total.**
+
+**Results:**
+- **80 %, 75 % and 70 % win gates** (with exp at 2× costs > 0 and PF ≥ 1.2 in every period): **0 variants** pass any of them.
+- **Base RSI 75/25 reversal:** 56–64 % wins, but −0.2 to −0.5R per trade after costs in every segment.
+- **Before costs:** only 57 of 778 adequately sampled variants (7 %) are positive in every period, about what chance gives. The best ones are 15-minute stock variants with only 2 months of data.
+- **Costs on intraday candles** take 0.07–0.21R per trade because intraday stops are small.
+
+**Conclusion:** RSI-extreme reversal entries for futures, with any mix of candle, volume, ADX, OI, VWAP and EMA confirmation, do not reach 70 % wins with a profit on 1-hour or 15-minute candles. The RSI-80/25 rule stays where it is live today: as an option-SELL trigger. That is a different trade (premium decay) and cannot be backtested without option-price history.
