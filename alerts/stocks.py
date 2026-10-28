@@ -342,16 +342,10 @@ def rescale_for_corporate_actions(st, state, msgs, now, registry=None):
                                 exit_reason=f"{e['type']} – untracked", flags=["no comparable exit price"])
                 drop = True
                 break
-            for fld in ("entry", "stop", "best", "risk", "target", "atr"):
-                if p.get(fld) is not None:
-                    p[fld] = round(float(p[fld]) * float(f), 4)
-            for r in st.get("shadow", []):
-                if r["key"] == p.get("key"):
-                    for fld in ("entry_plan", "stop", "risk", "entry_fill", "signal_close"):
-                        if r.get(fld) is not None:
-                            r[fld] = round(float(r[fld]) * float(f), 4)
+            DQ.apply_ca_to_call(p, state, st, e, tag)
             msgs.append(f"ℹ️ {p['name']}: {e['type']} on {tag} (price ×{float(f):g}) – open call levels rescaled: "
-                        f"entry {BO._f(p['entry'])} · SL {BO._f(p['stop'])}")
+                        f"entry {BO._f(p['entry'])} · SL {BO._f(p['stop'])} · lot ×{e.get('adj_factor', 1 / float(f)):g} "
+                        "(risk per lot and R:R unchanged)")
         if not drop:
             keep.append(p)
     st["active"] = keep
@@ -529,7 +523,7 @@ def scan(api, master, now, state, msgs, rep, engine):
         # entry = today's close; the call becomes ACTIVE only if tomorrow's opening price is still inside the entry zone
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=plan["entry"],
                                  stop=plan["sl"], risk=plan["risk_unit"], target=plan["target"], tick=plan["tick"], atr=float(sig["atr"]),
-                                 max_days=sig.get("max_days", CFG["max_days"]), pending=True,
+                                 max_days=sig.get("max_days", CFG["max_days"]), pending=True, lot=c["lot"],
                                  best=plan["entry"], trailed=False, n=0, last_candle=last, key=key))
         RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional",
                side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],

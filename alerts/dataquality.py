@@ -41,8 +41,32 @@ def load_registry(path=CA_FILE):
         return {}
     out = {}
     for e in ev:
-        out.setdefault(e["symbol"], []).append(dict(e, ex=pd.Timestamp(e["ex_date"])))
+        e = dict(e, ex=pd.Timestamp(e["ex_date"]))
+        if e.get("components"):
+            af = adjustment_factor(e["components"])
+            if e.get("price_factor") is not None and abs(e["price_factor"] * af - 1) > 1e-4:
+                print(f"corporate action {e['symbol']} {e['ex_date']}: price_factor {e['price_factor']} ≠ 1/{af} – event ignored (hold)")
+                continue
+            e.update(adj_factor=af, price_factor=1.0 / af)
+        elif e["type"] not in ("demerger", "market"):
+            print(f"corporate action {e['symbol']} {e['ex_date']}: no components – event ignored (hold)")
+            continue
+        out.setdefault(e["symbol"], []).append(e)
     return out
+
+
+def adjustment_factor(components):
+    """NSE equity-derivatives method: split / consolidation A:B -> A/B; bonus A:B -> (A+B)/B; several actions multiply.
+    Prices ÷ factor, market lot and positions × factor."""
+    af = 1.0
+    for c in components:
+        a, b = float(c["A"]), float(c["B"])
+        if a <= 0 or b <= 0:
+            raise ValueError(f"bad ratio {c}")
+        af *= a / b if c["kind"] in ("split", "consolidation") else (a + b) / b if c["kind"] == "bonus" else float("nan")
+    if not math.isfinite(af):
+        raise ValueError(f"unknown component kind in {components}")
+    return af
 
 
 REGISTRY = load_registry()
@@ -227,3 +251,43 @@ def shadow_summary(st):
     out["open_or_pending"] = sum(1 for r in st.get("shadow", []) if r.get("status") in ("pending", "active"))
     out["cancelled"] = sum(1 for r in st.get("shadow", []) if r.get("status") == "cancelled")
     return out
+
+
+def apply_ca_to_call(p, state, st, e, tag):
+    """Rescale ONE open call for a split / bonus, NSE style: prices × price_factor (= ÷ adjustment factor), lot / quantity ×
+    adjustment factor. Rupee risk per position, reward/risk and P&L per position stay the same. Every object carries its
+    own 'ca_adjusted' tags, so a restart (state saved and reloaded) can never apply the same event twice."""
+    f = float(e["price_factor"])
+    af = float(e.get("adj_factor") or 1.0 / f)
+
+    def once(obj):
+        done = obj.setdefault("ca_adjusted", [])
+        if tag in done:
+            return False
+        done.append(tag)
+        return True
+
+    if once(p):
+        for fld in ("entry", "stop", "best", "risk", "target", "atr"):
+            if p.get(fld) is not None:
+                p[fld] = float(p[fld]) * f
+        if p.get("lot"):
+            p["lot"] = float(p["lot"]) * af
+    key = p.get("key")
+    for L in state.get("ledger", []):
+        if L.get("key") not in (key, f"{key}|OPT") or L.get("status") != "OPEN" or not once(L):
+            continue
+        for fld in ("entry", "sl", "target", "und_entry"):
+            if L.get(fld) is not None:
+                L[fld] = float(L[fld]) * f
+        for fld in ("lot", "mult"):
+            if L.get(fld):
+                L[fld] = float(L[fld]) * af
+    for r in st.get("shadow", []):
+        if r.get("key") != key or not once(r):
+            continue
+        for fld in ("entry_plan", "stop", "risk", "entry_fill", "signal_close", "cost_est"):
+            if r.get(fld) is not None:
+                r[fld] = float(r[fld]) * f
+        if r.get("lot"):
+            r["lot"] = float(r["lot"]) * af

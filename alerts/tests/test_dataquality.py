@@ -196,23 +196,84 @@ def test_shadow_log():
     check("summary compares baseline and the +2–4 % label on IDENTICAL signals", sm["baseline"]["n"] == 1 and sm["OI +2-4% label"]["n"] == 1)
 
 
+def test_nse_factors():
+    af = DQ.adjustment_factor
+    check("NSE formula: split A:B -> A/B (FV 10 -> 2 = 5), bonus A:B -> (A+B)/B (1:1 = 2, 2:1 = 3, 1:2 = 1.5)",
+          af([dict(kind="split", A=10, B=2)]) == 5 and af([dict(kind="bonus", A=1, B=1)]) == 2
+          and af([dict(kind="bonus", A=2, B=1)]) == 3 and af([dict(kind="bonus", A=1, B=2)]) == 1.5)
+    check("combined actions on one ex-date multiply: BAJFINANCE split 2:1 × bonus 4:1 = 10; BAJAJFINSV 5:1 × 1:1 = 10",
+          af([dict(kind="split", A=2, B=1), dict(kind="bonus", A=4, B=1)]) == 10
+          and af([dict(kind="split", A=5, B=1), dict(kind="bonus", A=1, B=1)]) == 10)
+    reg = DQ.load_registry()
+    ev = [e for v in reg.values() for e in v if e["type"] != "demerger"]
+    check("all 26 split / bonus events: price factor = 1 / NSE adjustment factor computed from the stated ratio",
+          len(ev) == 26 and all(abs(e["price_factor"] * DQ.adjustment_factor(e["components"]) - 1) < 1e-12 for e in ev))
+    exp = {"KOTAKBANK": 5.0, "DRREDDY": 5.0, "BAJFINANCE": 10.0, "HINDPETRO": 1.5, "TRENT": 1.5, "BSE": 3.0, "PATANJALI": 3.0,
+           "ANGELONE": 10.0, "HAL": 2.0, "PERSISTENT": 2.0}
+    got = {e["symbol"]: e["adj_factor"] for e in ev if e["symbol"] in exp}
+    check("spot values: KOTAKBANK 5 (NSE: lot 400 -> 2000), BAJFINANCE 10, HINDPETRO/TRENT 1.5, BSE/PATANJALI 3, ANGELONE 10",
+          got == exp)
+    import json, tempfile
+    bad = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
+    json.dump(dict(events=[dict(symbol="X", ex_date="2025-01-01", type="split", components=[dict(kind="split", A=10, B=2)], price_factor=0.5),
+                           dict(symbol="Y", ex_date="2025-01-01", type="split", components=None, price_factor=0.2)]), bad); bad.close()
+    check("registry entry whose stated factor contradicts its ratio, or a split without a ratio -> ignored (stock goes on HOLD)",
+          DQ.load_registry(bad.name) == {})
+
+
 def test_open_call_rescale():
-    reg = {"DRREDDY": [dict(symbol="DRREDDY", ex_date="2024-10-28", ex=pd.Timestamp("2024-10-28"), type="split", price_factor=0.2)],
+    import json
+    reg = {"DRREDDY": [dict(symbol="DRREDDY", ex_date="2024-10-28", ex=pd.Timestamp("2024-10-28"), type="split", price_factor=0.2, adj_factor=5.0)],
            "VEDL": [dict(symbol="VEDL", ex_date="2026-04-30", ex=pd.Timestamp("2026-04-30"), type="demerger", price_factor=None)]}
-    st = dict(active=[dict(name="DRREDDY", side="BUY", entry=6500.0, stop=6300.0, best=6550.0, risk=200.0, target=None, atr=100.0,
-                           key="DRREDDY|1dSTK|2024-10-22 09:15:00", token="1"),
-                      dict(name="VEDL", side="BUY", entry=500.0, stop=480.0, best=500.0, risk=20.0, key="VEDL|1dSTK|2026-04-27 09:15:00", token="2")])
-    state = dict(ledger=[dict(key="VEDL|1dSTK|2026-04-27 09:15:00", status="OPEN", entry=500.0)])
+    key = "DRREDDY|1dSTK|2024-10-22 09:15:00"
+    st = dict(active=[dict(name="DRREDDY", side="BUY", entry=6500.0, stop=6300.0, best=6550.0, risk=200.0, target=6900.0, atr=100.0,
+                           key=key, token="1", lot=125),
+                      dict(name="VEDL", side="BUY", entry=500.0, stop=480.0, best=500.0, risk=20.0, key="VEDL|1dSTK|2026-04-27 09:15:00", token="2")],
+              shadow=[dict(key=key, side="BUY", entry_plan=6500.0, entry_fill=6510.0, stop=6300.0, risk=200.0, lot=125, cost_est=5.2,
+                           signal_close=6500.0, status="active")])
+    state = dict(ledger=[dict(key=key, cat="FUTURES", seg="NSE", status="OPEN", entry=6500.0, sl=6300.0, target=6900.0, lot=125, mult=125, side="BUY"),
+                         dict(key=key + "|OPT", cat="OPTION BUY", seg="NSE", status="OPEN", entry=120.0, sl=78.0, target=216.0, lot=125, mult=125,
+                              und_entry=6500.0, side="BUY"),
+                         dict(key="DRREDDY|1dSTK|2024-09-02 09:15:00", cat="FUTURES", status="CLOSED", entry=6000.0, sl=5800.0, exit=6200.0,
+                              lot=125, mult=125, side="BUY"),
+                         dict(key="VEDL|1dSTK|2026-04-27 09:15:00", status="OPEN", entry=500.0)])
+    p0 = dict(st["active"][0])
+    risk_rs0, rr0 = p0["risk"] * p0["lot"], (p0["target"] - p0["entry"]) / (p0["entry"] - p0["stop"])
+    from alerts import report as RP
+    pnl0 = RP.pnl_rs(dict(state["ledger"][0]), mark=6600.0)
     msgs = []
     STK.rescale_for_corporate_actions(st, state, msgs, pd.Timestamp("2024-10-28 09:20"), registry=reg)
-    p = st["active"][0]
-    check("open call across a 1:5 split: entry / SL rescaled once (6500 -> 1300, 6300 -> 1260) before any stop check",
-          p["entry"] == 1300.0 and p["stop"] == 1260.0 and p["risk"] == 40.0 and any("rescaled" in m for m in msgs))
-    STK.rescale_for_corporate_actions(st, state, msgs, pd.Timestamp("2024-10-29 09:20"), registry=reg)
-    check("…and never twice", st["active"][0]["entry"] == 1300.0)
+    p, L, O, H, S = st["active"][0], state["ledger"][0], state["ledger"][1], state["ledger"][2], st["shadow"][0]
+    check("1:5 split: entry / SL / target ÷ 5 (6500 -> 1300, 6300 -> 1260, 6900 -> 1380), lot × 5 (125 -> 625)",
+          abs(p["entry"] - 1300) < 1e-9 and abs(p["stop"] - 1260) < 1e-9 and abs(p["target"] - 1380) < 1e-9 and p["lot"] == 625)
+    check("rupee risk per position, reward/risk and remaining risk unchanged",
+          abs(p["risk"] * p["lot"] - risk_rs0) < 1e-6 and abs((p["target"] - p["entry"]) / (p["entry"] - p["stop"]) - rr0) < 1e-12
+          and abs((p["entry"] - p["stop"]) * p["lot"] - (p0["entry"] - p0["stop"]) * p0["lot"]) < 1e-6)
+    check("report ledger row rescaled the same way: P&L at the equivalent price (6600 -> 1320) unchanged",
+          abs(RP.pnl_rs(L, mark=1320.0) - pnl0) <= 1 and L["mult"] == 625)
+    check("linked option-buy row: premium ÷ 5, lot × 5, underlying reference ÷ 5",
+          abs(O["entry"] - 24) < 1e-9 and O["lot"] == 625 and abs(O["und_entry"] - 1300) < 1e-9)
+    check("calls closed BEFORE the ex-date keep their historical prices and P&L", H["entry"] == 6000.0 and H["mult"] == 125)
+    check("shadow record rescaled (entry fill, stop, risk, cost ÷ 5; lot × 5) – R results unchanged",
+          abs(S["entry_fill"] - 1302) < 1e-9 and abs(S["risk"] - 40) < 1e-9 and S["lot"] == 625 and abs(S["cost_est"] - 1.04) < 1e-9)
+    snap = json.dumps(dict(st=st, state=state), sort_keys=True, default=str)
+    st2, state2 = (lambda j: (j["st"], j["state"]))(json.loads(snap))           # restart: state saved and reloaded
+    for t in ("2024-10-28 09:35", "2024-10-28 15:40", "2024-10-29 09:20"):
+        STK.rescale_for_corporate_actions(st2, state2, [], pd.Timestamp(t), registry=reg)
+    p2 = st2["active"][0]
+    check("restart + later scans: the same split is never applied twice (call, ledger, option row, shadow all unchanged)",
+          json.dumps(st2["active"][0], sort_keys=True) == json.dumps(p, sort_keys=True)
+          and json.dumps(state2["ledger"][:3], sort_keys=True, default=str) == json.dumps(state["ledger"][:3], sort_keys=True, default=str)
+          and st2["shadow"][0]["entry_fill"] == S["entry_fill"] and p2["ca_adjusted"] == ["2024-10-28"])
+    p3 = dict(p0, ca_rescaled=[])                                  # even if the call's tag list were lost, the ledger keeps its own
+    st3 = dict(active=[p3], shadow=[])
+    state3 = dict(ledger=[dict(L)])
+    STK.rescale_for_corporate_actions(st3, state3, [], pd.Timestamp("2024-10-29 09:20"), registry=reg)
+    check("each record carries its own tag: an already-adjusted ledger row is not adjusted again",
+          state3["ledger"][0]["entry"] == L["entry"] and state3["ledger"][0]["mult"] == 625)
     STK.rescale_for_corporate_actions(st, state, msgs, pd.Timestamp("2026-04-30 09:20"), registry=reg)
     check("open call across a demerger (no official factor): tracking stopped with a message, ledger closed without an invented exit",
-          all(x["name"] != "VEDL" for x in st["active"]) and state["ledger"][0]["exit"] is None and any("demerger" in m for m in msgs))
+          all(x["name"] != "VEDL" for x in st["active"]) and state["ledger"][3]["exit"] is None and any("demerger" in m for m in msgs))
 
 
 def test_scan_hold_end_to_end():
@@ -258,10 +319,22 @@ def test_scan_hold_end_to_end():
              sys.modules["alerts.engine"])
     check("corrupt OI baseline -> no call; 'breakout not confirmed – corrupt OI' logged",
           not any("TCS FUT" in x for x in m3) and any("corrupt" in x for x in rep3.get("stock_skips", [])))
+    import io, contextlib
+    from alerts import run as R
+    buf = io.StringIO()
+    rep2.setdefault("instruments", {}); rep3.setdefault("instruments", {})
+    with contextlib.redirect_stdout(buf):
+        R.log_report(rep2); R.log_report(rep3)
+    log = buf.getvalue()
+    check("run log shows the exact lines: '[rejected] stock TCS: data hold – unexplained price gap …', "
+          "'[rejected] stock TCS: breakout not confirmed – OI change not usable (corrupt OI baseline …)' and the [stocks] data_holds list",
+          "[rejected] stock TCS: data hold – unexplained price gap" in log
+          and "[rejected] stock TCS: breakout not confirmed – OI change not usable (corrupt OI baseline" in log
+          and "data_holds: ['TCS']" in log)
 
 
 if __name__ == "__main__":
     for t in (test_registry, test_each_corporate_action, test_holds_and_genuine_moves, test_oi_validation, test_signal_rule_unchanged,
-              test_shadow_log, test_open_call_rescale, test_scan_hold_end_to_end):
+              test_shadow_log, test_nse_factors, test_open_call_rescale, test_scan_hold_end_to_end):
         t()
     print(f"\nALL {len(OK)} DATA-QUALITY CHECKS PASSED")
