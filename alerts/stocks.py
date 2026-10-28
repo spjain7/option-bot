@@ -8,6 +8,7 @@ Daily candles, evaluated once after the NSE close (first scan after 15:30 IST):
 Plan: entry next session open · SL 2 ATR · 3-ATR trailing stop on daily closes · exit on expiry day or after 40 sessions.
 Backtest (after costs): design +0.20R/trade, unseen hold-out +0.085R/trade, ~47% wins, ~25 alerts a month.
 """
+import os
 import time
 import numpy as np
 import pandas as pd
@@ -15,6 +16,9 @@ from alerts import patterns as PT, breakout as BO, signals as S, report as RP, o
 from crude import data as CD, indicators as I
 
 ENABLED = True
+# the 15:30 scan of ~180 stock futures can take longer than the alerts step's time limit (scripts/market_loop.sh, 1200 s);
+# it stops after this many seconds and continues with the remaining stocks in the next cycle (progress kept in state)
+SCAN_BUDGET_SEC = float(os.getenv("STOCK_SCAN_BUDGET_SEC", "720"))
 MAX_LOT = 3000
 CFG = dict(N=20, vol_x=1.5, oi_up=0.02, ema=200, stop_atr=2.0, trail_atr=3.0, max_days=40)
 NOTE = "📚 Stock rule backtest (2022-26, after costs): design +0.20R, unseen 2024-26 +0.085R per trade, ~47% wins – modest edge."
@@ -363,12 +367,22 @@ def scan(api, master, now, state, msgs, rep, engine):
     if blk is None or st["last_block"] == blk:
         rep["stocks"]["scan"] = "stock scans run after 12:15 (3h) and after the 15:30 close (3h + daily)"
         return
-    st["last_block"] = blk
     daily_block = blk.endswith("15:30:00")
     if not daily_block and not STOCK3H_ENABLED:
+        st["last_block"] = blk
         return
-    found = 0
+    prog = st.get("progress") or {}
+    if prog.get("blk") != blk:
+        prog = dict(blk=blk, done=[])
+    st["progress"] = prog                                  # saved with the state even if a later step fails
+    found, complete, t0 = 0, True, time.monotonic()
     for name, c in uni.items():
+        if name in prog["done"]:
+            continue
+        if time.monotonic() - t0 > SCAN_BUDGET_SEC:
+            complete = False
+            break
+        prog["done"].append(name)
         try:
             h = api.candles("NFO", c["token"], "ONE_HOUR", now - pd.Timedelta(days=400 if daily_block else 200), now)
             oi = (api.oi_history("NFO", c["token"], "ONE_DAY", now - pd.Timedelta(days=60), now)
@@ -462,4 +476,10 @@ def scan(api, master, now, state, msgs, rep, engine):
         found += 1
         if hasattr(api, "api"):
             time.sleep(0.1)
-    rep["stocks"].update(scan=f"{'3h + daily' if daily_block else '3h'} scan of {len(uni)} stock futures done", new_calls=found)
+    if complete:
+        st["last_block"] = blk
+        st.pop("progress", None)
+    left = len([n for n in uni if n not in prog["done"]])
+    rep["stocks"].update(scan=(f"{'3h + daily' if daily_block else '3h'} scan of {len(uni)} stock futures done" if complete else
+                               f"stock scan paused after {SCAN_BUDGET_SEC:.0f}s – {left} stocks left, continues next cycle"),
+                         new_calls=found)

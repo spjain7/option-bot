@@ -359,6 +359,22 @@ def test_stocks():
     m3 = []
     STK.scan(api2, m, pd.Timestamp("2026-10-15 15:32"), st2, m3, dict(errors=[]), sys.modules["alerts.engine"])
     check("same breakout WITHOUT an OI rise -> no DAILY call (OI confirmation required)", not any("Daily candle" in x for x in m3))
+    st4 = E.new_state(); st4["day"] = dict(date="2026-10-15", alerts=0, watches=0, startup_sent=True, eod_sent=False, outcomes=[])
+    m4, rep4 = [], dict(errors=[])
+    keep = STK.SCAN_BUDGET_SEC
+    STK.SCAN_BUDGET_SEC = -1.0                                     # time budget already used up
+    try:
+        STK.scan(api, m, pd.Timestamp("2026-10-15 15:32"), st4, m4, rep4, sys.modules["alerts.engine"])
+    finally:
+        STK.SCAN_BUDGET_SEC = keep
+    check("15:30 stock scan over its time budget -> pauses, block NOT marked done, progress kept (no lost scan)",
+          st4["stk"]["last_block"] != "2026-10-15 15:30:00" and st4["stk"]["progress"]["blk"] == "2026-10-15 15:30:00"
+          and "paused" in rep4["stocks"]["scan"] and not any("Daily candle" in x for x in m4))
+    STK.scan(api, m, pd.Timestamp("2026-10-15 15:47"), st4, m4, rep4, sys.modules["alerts.engine"])
+    check("next cycle resumes the remaining stocks: the call is sent once and the block is then marked done",
+          sum("BUY  TCS FUT" in x for x in m4) == 1 and st4["stk"]["last_block"] == "2026-10-15 15:30:00" and "progress" not in st4["stk"])
+    STK.scan(api, m, pd.Timestamp("2026-10-15 16:02"), st4, m4, rep4, sys.modules["alerts.engine"])
+    check("after completion no stock is scanned twice", sum("BUY  TCS FUT" in x for x in m4) == 1)
 
 
 def test_telegram_delivery():
