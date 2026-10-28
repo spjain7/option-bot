@@ -1,5 +1,6 @@
 {
- "open": [
+ "open": [],
+ "closed": [
   {
    "id": 1,
    "mode": "intraday",
@@ -24,10 +25,14 @@
     "Last 1 hour: price +0.25%, OI +0.5%",
     "Premium fair: IV 39% vs 20-day move 36%"
    ],
-   "exit_by": "28 Oct 15:15"
+   "exit_by": "28 Oct 15:15",
+   "exit": 171.85,
+   "ret": 0.09387033913604122,
+   "rs_lot": 2912,
+   "why_exit": "time exit",
+   "closed": "2026-10-28 15:18:16.432882"
   }
  ],
- "closed": [],
  "done": {
   "positional-scan|2026-10-23": "2026-10-23 09:34:10.463882",
   "positional|COALINDIA|2026-10-23": "2026-10-23 09:34:10.463882",
