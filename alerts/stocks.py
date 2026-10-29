@@ -484,6 +484,13 @@ def scan(api, master, now, state, msgs, rep, engine):
         if h is None or h.empty:
             continue
         h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
+        try:                                                    # 29-Oct: option idea when a proven stock setup triggers
+            from obuy import improve as IMP
+            CS.OPTION_HOOK = lambda r, _h=h: IMP.option_for_futures_call(
+                api, master, r["name"], 1 if r["side"] == "BUY" else -1, r["entry"], r["stop"], r["target"], now,
+                daily=BO.daily_candles(_h, None).iloc[:-1], hold_days=3)
+        except Exception:
+            CS.OPTION_HOOK = None
         if CS.ENABLED.get("STK_SWEEP3H"):                       # 29-Oct (approved, live): 3h equal-highs sweep SELL
             try:
                 CS.on_stock_3h(state, msgs, name, c, frame3h(h), now,

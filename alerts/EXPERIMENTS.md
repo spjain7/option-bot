@@ -50,3 +50,19 @@ Code: `alerts/candle_setups.py`, tests `alerts/tests/test_candle_setups.py` (15 
   - Exploratory evidence (Aug–Oct 2026): SELL with volume + OI falling, 48 trades, 75% wins, +0.28R. BUY sweeps were negative.
   - Review after about 100 trades.
 - **Tests:** `alerts/tests/test_candle_setups.py`, 23 checks.
+
+## OPTION-BUY IMPROVEMENTS – live from 29-Oct-2026 (owner: "do all improvement required")
+Code: `obuy/improve.py`, `obuy/engine.py`; tests: `obuy/tests/test_improve.py` (19 checks).
+These are pricing-based guards, **not backtested**: no option-price history exists to test them, so the live scorecard is the test.
+
+| Rule | What it does |
+|---|---|
+| Strike | Compare ATM with 1 strike in-the-money; ITM is used when its gain on a normal move is ≥ 90% of ATM's (less time decay); otherwise ATM |
+| Normal move | Skip when a normal move cannot lift the premium by the 30% stop. Intraday normal move = daily ATR × √(minutes left / 375); positional = 1 ATR; time decay included |
+| OI wall | Skip when a strike before that move has ≥ 2× the bought strike's OI |
+| F&O ban | Skip stocks in today's NSE ban list. If the list cannot be fetched, the check is skipped and that is reported |
+| Time | Intraday: no new buys after 13:30, and the option must be ≥ 4 days from expiry |
+| Exits (intraday) | Besides −30% / +60%: exit when the premium is not +10% after 60 min, or when a 15-min futures candle closes back across VWAP |
+| Option ideas | When a stock hanging-man or sweep SELL triggers, a PE (or CE) idea is attached, judged on the futures stop and target with 3 days of decay. It is sent only if the gain at the target ≥ the loss at the stop and IV ≤ 1.5× realised. Exit when the futures call exits |
+
+Not added: a company-results calendar (no reliable free feed); the IV ≤ 1.5× realised check catches inflated pre-event premiums.

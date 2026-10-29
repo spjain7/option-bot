@@ -28,6 +28,7 @@ ENABLED = {"MCX_HAMMER": True, "STK_HANGMAN": True, "MCX_EMA1348": True, "STK_SW
 SWEEP15_LOG = True        # 15-minute stock sweep: every sweep is recorded (both sides) for review
 SWEEP15_SEND = True       # 29-Oct (owner): SEND the 15-min SELL sweeps that have volume ≥ 1.5× AND OI falling (test phase)
 HOURLY_SKIP = ("14:15", "15:15")
+OPTION_HOOK = None        # set by alerts.stocks.scan: r -> option-idea message (obuy.improve.option_for_futures_call)
 KEEP_CLOSED = 600
 P = dict(entry_window=3, stop_buf_atr=0.05, target_r=2.0, max_days=20, max_stop_pct=6.0)
 EMA = dict(fast=13, slow=48, adx_min=20.0, adx_lookback=3, stop_atr=3.0, max_candles=120)
@@ -157,6 +158,13 @@ def _enter(state, msgs, r, e0, t, gapped):
            target=r.get("target"), tick=r.get("tick"), lot=r.get("lot"), mult=r.get("mult"), time=str(t))
     if ENABLED.get(r["setup"]):
         msgs.append(entry_msg(r, gapped))
+        if OPTION_HOOK is not None and r["setup"] in ("STK_HANGMAN", "STK_SWEEP3H"):
+            try:
+                m_ = OPTION_HOOK(r)
+                if m_:
+                    msgs.append(m_)
+            except Exception as e_:
+                print(f"[opt-idea] {r['name']} skipped: {type(e_).__name__}: {e_}")
     print(f"[setup] {r['setup']} {r['name']} {r['side']} entered {e0} stop {r['stop']} target {r.get('target')}")
 
 

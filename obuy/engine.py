@@ -8,13 +8,17 @@ Only the two setups that did best in the real-option-price backtest (research/se
   POSITIONAL (stocks + indices)
      Yesterday closed beyond the 20-day high/low with volume > 1.5x the 20-day average and OI up -> BUY CE/PE at the
      open. SL -35%, target +80%, exit by 15:15 on the 3rd session.
-Option: ATM strike of the nearest monthly expiry with >= 3 days left. Skipped if the option has not traded today or
+Option (29-Oct improvements, obuy/improve.py): ATM or one strike in-the-money (ITM when its gain on a normal move is ≥ 90 % of
+ATM's), intraday ≥ 4 days to expiry; skipped when a normal move cannot lift the premium by the 30 % risk, when a strike before
+that move has ≥ 2× OI (wall), for F&O-ban stocks, and for intraday signals after 13:30. Extra exits: no +10 % within 60 min,
+or a 15-min futures close back across VWAP. Option: nearest monthly expiry. Skipped if the option has not traded today or
 its bid-ask spread is over 3%. Every alert is tracked (SL / target / time) with real option prices, and a daily scorecard
 is sent, so the setups prove themselves (or not) with real results.
 """
 import numpy as np
 import pandas as pd
 from research.search import obuy_month as RM          # the SAME feature code the backtest used
+from obuy import improve as IM                       # 29-Oct improvements: strike, normal-move, OI wall, ban, time, exits
 
 INDICES = {"NIFTY": "99926000", "BANKNIFTY": "99926009", "FINNIFTY": "99926037", "MIDCPNIFTY": "99926074"}
 TOP_STOCKS = 40
@@ -166,15 +170,17 @@ def entry_msg(a):
                     f"• Chart   : {'15-minute' if a['mode'] == 'intraday' else 'Daily'} futures candles",
                     *[f"• {x}" for x in why],
                     f"• Risk    : SL −{a['sl_pct']:.0f}% · target +{a['tg_pct']:.0f}% of premium",
+                    *([f"• Also exit: if the premium is not +{IM.TIME_STOP_GAIN * 100:.0f}% after {IM.TIME_STOP_MIN} min, "
+                       "or a 15-min futures candle closes back across VWAP (alert will follow)"] if a["mode"] == "intraday" else []),
                     "Not investment advice."])
     return [call, w]
 
 
 def exit_msg(a):
     up = a["dir"] > 0
-    head = {"target hit": "✅ TARGET HIT", "stop-loss hit": "❌ STOP-LOSS HIT", "time exit": "⏰ TIME EXIT"}[a["why_exit"]]
-    if a["why_exit"] == "time exit":
-        head = ("✅ " if a["ret"] > 0 else "❌ ") + "TIME EXIT"
+    head = {"target hit": "✅ TARGET HIT", "stop-loss hit": "❌ STOP-LOSS HIT", "time exit": "⏰ TIME EXIT"}.get(a["why_exit"])
+    if head is None or a["why_exit"] == "time exit":
+        head = ("✅ " if a["ret"] > 0 else "❌ ") + ("TIME EXIT" if a["why_exit"] == "time exit" else "EXIT – " + a["why_exit"])
     return "\n".join([f"{head} • {a['name']} {a['K']:g} {'CE' if up else 'PE'} (#{a['id']})",
                       f"{rs_(a['entry'])} → {rs_(a['exit'])}",
                       f"Result: {a['ret'] * 100:+.1f}% • {'+' if a['rs_lot'] >= 0 else '−'}₹{abs(a['rs_lot']):,.0f} per lot (after costs)"])
@@ -220,6 +226,17 @@ def manage(api, state, now, msgs):
             why, px = "target hit", a["tg"]
         elif now >= pd.Timestamp(a["exit_at"]) and ltp > 0:
             why, px = "time exit", ltp
+        elif a.get("mode") == "intraday" and ltp > 0 and now >= pd.Timestamp(a["opened"]) + pd.Timedelta(minutes=IM.TIME_STOP_MIN) \
+                and ltp < a["entry"] * (1 + IM.TIME_STOP_GAIN):
+            why, px = f"no follow-through in {IM.TIME_STOP_MIN} min", ltp
+        elif a.get("mode") == "intraday" and ltp > 0 and a.get("fut_token") and hasattr(api, "candles"):
+            try:
+                fdf = fut_frame(api, a["fut_token"], now - pd.Timedelta(days=4), now)
+                fi = last_completed(fdf, now) if fdf is not None else None
+                if fi is not None and pd.Timestamp(fdf["time"].iat[fi]) >= pd.Timestamp(a["opened"]) and IM.vwap_invalid(fdf, fi, a["dir"]):
+                    why, px = "futures closed back across VWAP", ltp
+            except Exception:
+                pass
         if why:
             r, rs = cost_ret(a["entry"], px, a["lot"], a["kind"])
             a.update({"exit": round(px, 2), "ret": r, "rs_lot": round(rs), "why_exit": why, "closed": str(now)})
@@ -248,34 +265,81 @@ def open_alert(api, master, state, now, u, mode, d, fut_px, why, msgs, rep):
         return
     typ = "CE" if d > 0 else "PE"
     # positional: the option must expire at least 2 days AFTER the planned exit (no holding into expiry-day decay)
-    lo = exit_time(now, mode).normalize() + pd.Timedelta(days=2) if mode == "positional" else None
+    lo = exit_time(now, mode).normalize() + pd.Timedelta(days=2) if mode == "positional" else \
+        now.normalize() + pd.Timedelta(days=IM.MIN_DTE_INTRADAY)
     o = pick_option(master, u["name"], fut_px, typ, now, lo)
     if not o:
         rep.append(f"{u['name']}: no option found"); return
-    q = api.quotes({"NFO": [o["token"]]}).get(o["token"]) or {}
-    ltp, bid, ask, traded = option_quote(q)
-    ok, why_not = liquid(ltp, bid, ask, traded)
-    if not ok:
-        rep.append(f"{u['name']} {mode} signal skipped: {why_not}"); state["done"][key] = "skipped"; return
-    entry = ask if ask > 0 else ltp
-    try:                                                # same "expensive premium" guard as the futures-call option buys
-        from alerts.optfilter import hv20, IV_HV_MAX
-        from greeks import implied_vol
+    from alerts.optfilter import hv20, IV_HV_MAX
+    from greeks import implied_vol
+    try:
         dly = api.candles("NFO", u["token"], "ONE_DAY", now - pd.Timedelta(days=45), now)
-        hv = hv20(dly[dly["time"].dt.normalize() < now.normalize()]) if dly is not None and len(dly) else None
-        T = max((pd.Timestamp(o["expiry"]) - now.normalize()).days, 0.5) / 365
-        iv = implied_vol(ltp, fut_px, o["K"], T, 0.065, typ)
-        if iv and hv:
-            if iv > IV_HV_MAX * hv:
-                rep.append(f"{u['name']} {mode} signal skipped: premium expensive (IV {iv * 100:.0f}% vs {hv * 100:.0f}%)")
-                state["done"][key] = "skipped"; return
-            why = list(why) + [f"Premium fair: IV {iv * 100:.0f}% vs 20-day move {hv * 100:.0f}%"]
+        dd = dly[dly["time"].dt.normalize() < now.normalize()] if dly is not None and len(dly) else None
     except Exception:
-        pass
+        dd = None
+    hv = hv20(dd) if dd is not None else None
+    atr_d = float((dd["high"] - dd["low"]).tail(14).mean()) if dd is not None and len(dd) >= 10 else None
+    mv = IM.normal_move(atr_d, now, mode) if atr_d else None
+    hold = (RULES[mode]["days"] if mode == "positional" else
+            max((now.normalize() + pd.Timedelta(hours=15, minutes=15) - now).total_seconds(), 0) / 86400)
+    T = max((pd.Timestamp(o["expiry"]) - now.normalize()).days, 0.5) / 365
+    try:
+        chain = IM.strikes(master, u["name"], typ, o["expiry"])
+    except Exception:
+        chain = None
+    # 29-Oct: evaluate ATM and one strike in-the-money; ITM (less time decay) is used when its projected gain on a normal
+    # move is at least 90 % of the ATM's – otherwise ATM (a bigger % move for the same underlying move)
+    cands = [o]
+    itm = IM.itm_strike(chain, fut_px, typ) if chain is not None and len(chain) else None
+    if itm and itm["token"] != o["token"]:
+        cands.append(itm)
+    ev = []
+    for c_ in cands:
+        q_ = api.quotes({"NFO": [c_["token"]]}).get(c_["token"]) or {}
+        ltp_, bid_, ask_, tr_ = option_quote(q_)
+        ok_, wn_ = liquid(ltp_, bid_, ask_, tr_)
+        if not ok_:
+            ev.append(dict(o=c_, ok=False, why=wn_)); continue
+        en_ = ask_ if ask_ > 0 else ltp_
+        iv_ = implied_vol(ltp_, fut_px, c_["K"], T, 0.065, typ)
+        g_ = IM.projected_gain(en_, fut_px, c_["K"], T, iv_, typ, mv, hold) if iv_ and mv else None
+        ev.append(dict(o=c_, ok=True, entry=en_, ltp=ltp_, iv=iv_, g=g_))
+    good = [e for e in ev if e["ok"]]
+    if not good:
+        rep.append(f"{u['name']} {mode} signal skipped: {ev[0]['why']}"); state["done"][key] = "skipped"; return
+    pick = good[0]
+    if len(good) > 1 and good[0]["g"] is not None and good[1]["g"] is not None and good[1]["g"] >= 0.9 * good[0]["g"]:
+        pick = good[1]
+    elif good[0]["o"] is not o:
+        pick = good[0]
+    o, entry, iv, g = pick["o"], pick["entry"], pick["iv"], pick["g"]
+    itm_used = (o["K"] < fut_px) == (typ == "CE") and o["K"] != cands[0]["K"]
+    why = list(why) + [f"Strike  : {o['K']:g} ({'1 strike in-the-money – less time decay' if itm_used else 'at-the-money'})"]
+    if iv and hv:                                       # same "expensive premium" guard as the futures-call option buys
+        if iv > IV_HV_MAX * hv:
+            rep.append(f"{u['name']} {mode} signal skipped: premium expensive (IV {iv * 100:.0f}% vs {hv * 100:.0f}%)")
+            state["done"][key] = "skipped"; return
+        why = list(why) + [f"Premium fair: IV {iv * 100:.0f}% vs 20-day move {hv * 100:.0f}%"]
+    if g is not None:                                   # 29-Oct: a NORMAL move must pay at least the risk
+        if g < RULES[mode]["sl"]:
+            rep.append(f"{u['name']} {mode} signal skipped: a normal move ({mv:,.1f} pts) lifts the premium only {g * 100:+.0f}% "
+                       f"(< the {RULES[mode]['sl'] * 100:.0f}% risk)")
+            state["done"][key] = "skipped"; return
+        why = list(why) + [f"Move    : a normal move ({mv:,.1f} pts) ≈ {g * 100:+.0f}% on this option (risk {RULES[mode]['sl'] * 100:.0f}%)"]
+        try:
+            w = IM.oi_wall(api, chain, fut_px, typ, mv, o["K"]) if chain is not None and len(chain) else None
+        except Exception:
+            w = None
+        if w:
+            rep.append(f"{u['name']} {mode} signal skipped: OI wall at {w[0]:g} {typ} ({w[1]:.1f}× the bought strike's OI)")
+            state["done"][key] = "skipped"; return
+        why = list(why) + ["OI wall : none before the normal-move level"]
+    else:
+        why = list(why) + ["Move    : not checked (IV or daily range unavailable)"]
     R = RULES[mode]
     a = {"id": state["next_id"], "mode": mode, "name": u["name"], "kind": u["kind"], "dir": d, **o, "entry": round(entry, 2),
          "sl": round(entry * (1 - R["sl"]), 2), "tg": round(entry * (1 + R["tg"]), 2), "sl_pct": R["sl"] * 100, "tg_pct": R["tg"] * 100,
-         "opened": str(now), "exit_at": str(exit_time(now, mode)), "why": why}
+         "opened": str(now), "exit_at": str(exit_time(now, mode)), "why": why, "fut_token": u.get("token")}
     a["exit_by"] = f"{pd.Timestamp(a['exit_at']):%d %b %H:%M}"
     state["next_id"] += 1
     state["open"].append(a); state["done"][key] = str(now)
@@ -290,6 +354,11 @@ def scan(api, master, now, state):
     t = hm(now)
     if "09:30" <= t <= "14:47":
         items = universe(api, master, now, state)
+        ban = IM.ban_list(state, now)                     # 29-Oct: no new positions in F&O-ban stocks
+        if ban is None:
+            rep.append("F&O ban list not available – ban check skipped this run")
+        elif ban:
+            items = [u for u in items if u["name"] not in ban]
         if POSITIONAL_ENABLED and not state["done"].get(f"positional-scan|{now:%Y-%m-%d}"):
             state["done"][f"positional-scan|{now:%Y-%m-%d}"] = str(now)
             for u in items:
@@ -318,6 +387,8 @@ def scan(api, master, now, state):
                     rep.append(f"{u['name']} sweep15 log error {type(e_).__name__}")
                 i = last_completed(df, now) if df is not None else None
                 s = intraday_signal(df, i) if i is not None else 0
+                if s and t > IM.LAST_ENTRY:                   # 29-Oct: no new intraday option buys after 13:30
+                    rep.append(f"{u['name']} intraday signal after {IM.LAST_ENTRY} – not sent (time decay)"); s = 0
                 if s:
                     r = df.iloc[i]
                     open_alert(api, master, state, now, u, "intraday", s, float(r["close"]),
