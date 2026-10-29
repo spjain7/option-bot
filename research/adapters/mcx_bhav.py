@@ -92,22 +92,17 @@ def _rows(js):
     return None
 
 
-CANDIDATES = [                                        # MCX moved its data API (mcx-data 1.2 calls /GetSpotMarketPrice directly)
-    ("GET", "/GetDateWiseBhavCopy", "params"),
-    ("POST", "/GetDateWiseBhavCopy", "json"),
-    ("POST", "/backpage.aspx/GetDateWiseBhavCopy", "json"),
-    ("GET", "/backpage.aspx/GetDateWiseBhavCopy", "params"),
-]
+# from the page's own script (assets/customjs/BhavCopy.js, 29-Oct-2026):
+#   GetData("/GetDateWiseBhavCopy", "GET", {InstrumentName, fromDate}) -> response.Data
+FORMATS = ["%Y%m%d", "%d/%m/%Y", "%d-%m-%Y", "%m/%d/%Y", "%d%b%Y"]
+CANDIDATES = [("GET", "/GetDateWiseBhavCopy", f) for f in FORMATS]
 
 
-def _ask(s, how, path, mode, d):
-    q = {"Date": f"{d:%Y%m%d}", "InstrumentName": "ALL"}
+def _ask(s, how, path, fmt, d):
     h = {"Accept": "application/json, text/javascript, */*; q=0.01", "X-Requested-With": "XMLHttpRequest",
-         "Content-Type": "application/json; charset=UTF-8", "Origin": BASE}
-    if how == "GET":
-        r = s.get(BASE + path, params=dict(q, culture="en"), headers=h, timeout=40)
-    else:
-        r = s.post(BASE + path, json=q, headers=h, timeout=40)
+         "Referer": f"{BASE}/market-data/bhavcopy"}
+    r = s.get(BASE + path, params={"InstrumentName": "ALL", "fromDate": d.strftime(fmt).upper() if "%b" in fmt else d.strftime(fmt)},
+              headers=h, timeout=40)
     t = r.text.strip()
     rows = None
     if r.status_code == 200 and t[:1] in "{[":
@@ -146,7 +141,7 @@ def backfill(start, end=None):
     for how, path, mode in CANDIDATES:
         try:
             r, rows = _ask(s, how, path, mode, test_day)
-            print(f"try {how} {path}: HTTP {r.status_code}, {len(r.text)} bytes, rows {None if rows is None else len(rows)}, "
+            print(f"try {how} {path} fromDate {test_day.strftime(mode)}: HTTP {r.status_code}, {len(r.text)} bytes, rows {None if rows is None else len(rows)}, "
                   f"reply starts {r.text.strip()[:90]!r}")
             if rows:
                 use = (how, path, mode); break
