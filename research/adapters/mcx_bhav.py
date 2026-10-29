@@ -125,7 +125,9 @@ def probe(s):
             jt = s.get(u if u.startswith("http") else BASE + ("" if u.startswith("/") else "/") + u, timeout=30).text
             for m in re.findall(r"['\"/]((?:backpage\.aspx/)?Get[A-Za-z]*Bhav[A-Za-z]*)", jt, re.I):
                 names.add(m)
-            for m in list(re.finditer(r"Get(DateWise|Commoditywise)BhavCopy", jt))[:3]:
+            for m in list(re.finditer(r"(function\s+GetData|GetData\s*=|GetData\s*\(url|apiBase|baseUrl|API_URL|ApiUrl)", jt))[:4]:
+                print("   def:", u[-50:], "…", jt[max(0, m.start() - 100):m.end() + 700])
+            for m in list(re.finditer(r"Get(DateWise|Commoditywise)BhavCopy", jt))[:1]:
                 print("   js:", u[-50:], "…", jt[max(0, m.start() - 300):m.end() + 300].replace("\n", " ")[:620])
         except Exception:
             pass
