@@ -1,5 +1,36 @@
 {
- "open": [],
+ "open": [
+  {
+   "id": 2,
+   "mode": "intraday",
+   "name": "LAURUSLABS",
+   "kind": "stock",
+   "dir": 1,
+   "token": "111752",
+   "symbol": "LAURUSLABS23NOV262200CE",
+   "K": 2200.0,
+   "expiry": "2026-11-23",
+   "lot": 425,
+   "entry": 88.8,
+   "sl": 62.16,
+   "tg": 142.08,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-10-29 10:36:40.811153",
+   "exit_at": "2026-10-29 15:15:00",
+   "why": [
+    "Futures crossed above VWAP (2,202.1)",
+    "RSI 65 (strong momentum)",
+    "Last 1 hour: price +0.36%, OI +0.5%",
+    "Strike  : 2200 (at-the-money)",
+    "Premium fair: IV 37% vs 20-day move 34%",
+    "Move    : a normal move (51.4 pts) \u2248 +33% on this option (risk 30%)",
+    "OI wall : none before the normal-move level"
+   ],
+   "fut_token": "61629",
+   "exit_by": "29 Oct 15:15"
+  }
+ ],
  "closed": [
   {
    "id": 1,
@@ -45,9 +76,10 @@
   "scorecard|2026-10-27": "2026-10-27 15:37:22.805219",
   "intraday|BSE|2026-10-28": "2026-10-28 10:50:30.589225",
   "intraday|SAIL|2026-10-28": "skipped",
-  "scorecard|2026-10-28": "2026-10-28 15:33:36.942986"
+  "scorecard|2026-10-28": "2026-10-28 15:33:36.942986",
+  "intraday|LAURUSLABS|2026-10-29": "2026-10-29 10:36:40.811153"
  },
- "next_id": 2,
+ "next_id": 3,
  "universe": {
   "day": "2026-10-29",
   "items": [
@@ -365,12 +397,33 @@
     "waited": 0,
     "lot": 2750,
     "send": false
+   },
+   {
+    "name": "LAURUSLABS",
+    "contract": null,
+    "side": "SELL",
+    "level": "PD",
+    "status": "pending",
+    "day": "2026-10-29 00:00:00",
+    "sweep_time": "2026-10-29 10:30:00",
+    "trigger": 2194.9,
+    "stop": 2218.1980562010954,
+    "vol_x": 1.18,
+    "oi_change_pct": -0.233,
+    "V": false,
+    "OD": true,
+    "last_bar": "2026-10-29 10:30:00",
+    "logged": "2026-10-29 10:36:40.811153",
+    "waited": 0,
+    "lot": 425,
+    "send": false
    }
   ],
   "closed": [],
   "seen": [
    "TVSMOTOR|2026-10-29 09:30:00|PD|-1",
-   "TATASTEEL|2026-10-29 09:30:00|PD|1"
+   "TATASTEEL|2026-10-29 09:30:00|PD|1",
+   "LAURUSLABS|2026-10-29 10:30:00|PD|-1"
   ]
  }
 }
