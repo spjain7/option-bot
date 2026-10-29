@@ -411,7 +411,7 @@
     "oi_change_pct": -0.233,
     "V": false,
     "OD": true,
-    "last_bar": "2026-10-29 14:00:00",
+    "last_bar": "2026-10-29 14:30:00",
     "logged": "2026-10-29 10:36:40.811153",
     "waited": 1,
     "lot": 425,
@@ -435,30 +435,30 @@
     "oi_change_pct": 0.002,
     "V": false,
     "OD": false,
-    "last_bar": "2026-10-29 14:15:00",
+    "last_bar": "2026-10-29 14:30:00",
     "logged": "2026-10-29 14:21:26.567395",
-    "waited": 0,
+    "waited": 1,
     "lot": 650,
     "send": false
    },
    {
-    "name": "TATASTEEL",
+    "name": "PNB",
     "contract": null,
     "side": "SELL",
     "level": "SW",
     "status": "pending",
     "day": "2026-10-29 00:00:00",
-    "sweep_time": "2026-10-29 14:15:00",
-    "trigger": 169.9,
-    "stop": 170.2259413361151,
-    "vol_x": 0.72,
-    "oi_change_pct": 0.015,
+    "sweep_time": "2026-10-29 14:30:00",
+    "trigger": 123.62,
+    "stop": 123.96154014134103,
+    "vol_x": 0.57,
+    "oi_change_pct": 0.027,
     "V": false,
     "OD": false,
-    "last_bar": "2026-10-29 14:15:00",
-    "logged": "2026-10-29 14:21:26.567395",
+    "last_bar": "2026-10-29 14:30:00",
+    "logged": "2026-10-29 14:36:25.342343",
     "waited": 0,
-    "lot": 2750,
+    "lot": 8000,
     "send": false
    }
   ],
@@ -564,6 +564,29 @@
     "exit_reason": "cancelled",
     "exit": null,
     "closed": "2026-10-29 14:21:26.567395"
+   },
+   {
+    "name": "TATASTEEL",
+    "contract": null,
+    "side": "SELL",
+    "level": "SW",
+    "status": "closed",
+    "day": "2026-10-29 00:00:00",
+    "sweep_time": "2026-10-29 14:15:00",
+    "trigger": 169.9,
+    "stop": 170.2259413361151,
+    "vol_x": 0.72,
+    "oi_change_pct": 0.015,
+    "V": false,
+    "OD": false,
+    "last_bar": "2026-10-29 14:30:00",
+    "logged": "2026-10-29 14:21:26.567395",
+    "waited": 1,
+    "lot": 2750,
+    "send": false,
+    "exit_reason": "cancelled",
+    "exit": null,
+    "closed": "2026-10-29 14:36:25.342343"
    }
   ],
   "seen": [
@@ -573,7 +596,8 @@
    "HINDALCO|2026-10-29 12:00:00|SW|1",
    "PNB|2026-10-29 14:00:00|SW|-1",
    "HDFCBANK|2026-10-29 14:15:00|SW|-1",
-   "TATASTEEL|2026-10-29 14:15:00|SW|-1"
+   "TATASTEEL|2026-10-29 14:15:00|SW|-1",
+   "PNB|2026-10-29 14:30:00|SW|-1"
   ]
  }
 }
