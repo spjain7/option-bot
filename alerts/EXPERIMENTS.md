@@ -34,3 +34,19 @@ Code: `alerts/candle_setups.py`, tests `alerts/tests/test_candle_setups.py` (15 
   - If one candle touches both, the stop is counted.
 - **Review:** compare live results with the backtest after 4 weeks (owner review scheduled).
 - **Rule kept for any future hourly pattern call:** skip pattern candles starting 14:15 and 15:15 (`hourly_pattern_allowed`).
+
+## LIQUIDITY SWEEP – live from 29-Oct-2026 (owner approved; research SWEEP-001 / SWEEP-15 on exp/strategy-program-001)
+- **STK_SWEEP3H (live).** Stock futures, 3-hour candles. A sweep candle goes above equal highs and closes back below them → SELL below its low within 3 candles. Stop 0.05 ATR above its high, target 1R, time exit after 20 candles.
+  - **Sent only when volume and OI support the call:**
+    - sweep-candle volume ≥ 1.5× average;
+    - previous session was not a long buildup;
+    - OI did not rise during the sweep candle (15-minute OI; skipped if unavailable).
+  - **Backtest 2022–26 (volume + previous-day OI):** 387 trades, 58.4% wins, +0.15R after costs, every year positive.
+  - **Live-code replay:** 411 trades, 57.7%, +0.17R before costs.
+  - **The sweep-candle OI check is new:** it has 15-minute evidence only, as no historical intraday OI exists.
+  - **Scans run after 12:15 and after the 15:30 close.** The 12:15 block now fetches 1-hour candles for the stock universe.
+- **Sweep15 (log only, never sent).** Top-40 stock futures, 15-minute candles from the option-buy loop (no extra API calls).
+  - Every sweep of the 20-candle or previous-day high/low is recorded, both sides, with volume and OI-falling flags, and tracked to the close at 1:1.
+  - Exploratory evidence (Aug–Oct 2026): SELL with volume + OI falling, 48 trades, 75% wins, +0.28R. BUY sweeps were negative.
+  - Review after about 100 trades.
+- **Tests:** `alerts/tests/test_candle_setups.py`, 23 checks.

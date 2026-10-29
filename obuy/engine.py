@@ -311,6 +311,11 @@ def scan(api, master, now, state):
                 continue
             try:
                 df = fut_frame(api, u["token"], now - pd.Timedelta(days=7), now)
+                try:                                     # 29-Oct (approved): 15-min liquidity-sweep LOG ONLY, never sent
+                    from alerts import candle_setups as CS
+                    CS.sweep15_log(state, u["name"], u.get("symbol"), df, now)
+                except Exception as e_:
+                    rep.append(f"{u['name']} sweep15 log error {type(e_).__name__}")
                 i = last_completed(df, now) if df is not None else None
                 s = intraday_signal(df, i) if i is not None else 0
                 if s:

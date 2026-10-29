@@ -8,6 +8,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from alerts import candle_setups as CS  # noqa: E402
+from crude import indicators as I  # noqa: E402
 
 OK = []
 C = dict(symbol="GOLD26DECFUT", token="t1", tick=1.0, lot=1)
@@ -188,7 +189,63 @@ def test_engine_path():
           sum("BUY SETUP – GOLD FUT (MCX)" in m for m in msgs) == 1 and st["candle_setups"]["open"][0]["setup"] == "MCX_HAMMER")
 
 
+def sweep_frame(vol_last=3000.0):
+    """3-hour candles: a range with two equal pivot highs at 110, then a candle that pokes to 111 and closes at 108."""
+    t = pd.date_range("2026-08-03 09:15", periods=120, freq="3h")
+    rows = []
+    for k in range(119):
+        base = 100 + 4 * np.sin(k / 3.0)
+        hi = 110.0 if k in (100, 108) else min(base + 1.5, 109.0)
+        rows.append((t[k], base, hi, base - 1.5, base + 0.2, 1000.0))
+    rows.append((t[119], 108.5, 111.0, 107.0, 108.0, vol_last))
+    return pd.DataFrame(rows, columns=["time", "open", "high", "low", "close", "volume"])
+
+
+STK = dict(symbol="TCS26NOVFUT", token="t", tick=0.05, lot=175)
+
+
+def test_sweep3h():
+    f = sweep_frame()
+    i = len(f) - 1
+    check("equal highs at 110 are found before the sweep candle", abs(CS.equal_high_at(f, i, float(I.atr(f, 14).iat[i])) - 110.0) < 1e-9)
+    st, m = {"day": {}}, []
+    CS.on_stock_3h(st, m, "TCS", STK, f, pd.Timestamp("2026-10-20 15:40"), lambda d: "SB", lambda a, b: -0.8)
+    r = st["candle_setups"]["open"][0] if st["candle_setups"]["open"] else {}
+    check("sweep above equal highs + volume 3× + OI support -> SELL SETUP below the candle low, stop above its high, 1:1",
+          len(m) == 1 and "SELL SETUP – TCS FUT (NSE) · 3-HOUR LIQUIDITY SWEEP" in m[0] and r["trigger"] == 107.0 and r["stop"] > 111.0
+          and "Target 1R" in m[0] and "OI" in m[0])
+    for lab, why, vol, doi in (("low volume", None, 1200.0, -0.8), ("previous day long buildup", "LB", 3000.0, -0.8),
+                               ("OI rising during the sweep", "SB", 3000.0, 0.6), ("OI unavailable", "SB", 3000.0, None)):
+        st2, m2 = {"day": {}}, []
+        CS.on_stock_3h(st2, m2, "TCS", STK, sweep_frame(vol), pd.Timestamp("2026-10-20 15:40"), lambda d, w=why: w, lambda a, b, x=doi: x)
+        check(f"no alert when {lab}", not m2 and not st2["candle_setups"]["open"])
+    R = r["stop"] - r["trigger"]
+    nxt = pd.DataFrame([(f["time"].iat[i] + pd.Timedelta(hours=3), 107.5, 108.0, 106.5, 106.8, 1000.0),
+                        (f["time"].iat[i] + pd.Timedelta(hours=6), 106.8, 107.0, 107.0 - R - 0.5, 106.0, 1000.0)], columns=f.columns)
+    g = pd.concat([f, nxt], ignore_index=True)
+    CS.on_stock_3h(st, m, "TCS", STK, g, pd.Timestamp("2026-10-21 15:40"), lambda d: "SB", lambda a, b: -0.8)
+    cl = st["candle_setups"]["closed"]
+    check("breaks the low -> TRIGGERED at the trigger, then target 1R -> EXIT +1R",
+          any("TRIGGERED" in x for x in m) and cl and cl[0]["exit_reason"].endswith("target 1R") and abs(cl[0]["gross_R"] - 1) < 1e-6)
+
+
+def test_sweep15_log_only():
+    t = pd.date_range("2026-10-19 09:15", periods=26, freq="15min").append(pd.date_range("2026-10-20 09:15", periods=26, freq="15min")) \
+          .append(pd.date_range("2026-10-21 09:15", periods=12, freq="15min"))
+    n = len(t)
+    px = 100 + np.sin(np.arange(n) / 4.0)
+    f = pd.DataFrame(dict(time=t, open=px, high=px + 0.3, low=px - 0.3, close=px, volume=1000.0, oi=np.linspace(1e6, 1.1e6, n)))
+    hi = f["high"].iloc[-21:-1].max()
+    f.loc[n - 1, ["open", "high", "low", "close", "volume"]] = [hi - 0.1, hi + 0.8, hi - 0.4, hi - 0.3, 2500.0]
+    f.loc[n - 1, "oi"] = f["oi"].iloc[n - 2] * 0.99
+    ob = {}
+    CS.sweep15_log(ob, "TCS", None, f, pd.Timestamp("2026-10-21 12:20"))
+    r = ob.get("sweep15", {}).get("open", [])
+    check("15-min sweep above the 20-candle high is LOGGED with volume and OI-falling flags (log only – no message API at all)",
+          len(r) == 1 and r[0]["side"] == "SELL" and r[0]["V"] and r[0]["OD"])
+
+
 if __name__ == "__main__":
     test_hammer_flow(); test_gap_through_target(); test_cancellations(); test_contract_change_and_one_at_a_time()
-    test_stock_hanging_man_needs_uptrend(); test_ema_cross(); test_hourly_rule(); test_engine_path()
+    test_stock_hanging_man_needs_uptrend(); test_ema_cross(); test_hourly_rule(); test_engine_path(); test_sweep3h(); test_sweep15_log_only()
     print(f"\nALL {len(OK)} CANDLE-SETUP CHECKS PASSED")

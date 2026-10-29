@@ -74,6 +74,37 @@ def last_block_end(now):
     return str(b) if now >= b + pd.Timedelta(minutes=1) else str(a) if now >= a + pd.Timedelta(minutes=1) else None
 
 
+def prev_oi_label(api, c, h, day, now):
+    """OI label of the last completed session before `day`: LB price↑ OI↑, SB price↓ OI↑, SC price↑ OI↓, LU price↓ OI↓.
+    None when unknown (no OI, or the session was the first after an expiry – OI of a new contract is not comparable)."""
+    try:
+        oi = api.oi_history("NFO", c["token"], "ONE_DAY", pd.Timestamp(day) - pd.Timedelta(days=15), now)
+    except Exception:
+        return None
+    d = daily_with_oi(h, oi)
+    d = d[d["day"] < pd.Timestamp(day)].tail(2)
+    if len(d) < 2 or d["oi"].isna().any() or first_session_after_expiry(d["time"].iloc[-1]):
+        return None
+    dp = d["close"].iloc[-1] / d["close"].iloc[-2] - 1
+    do = d["oi"].iloc[-1] / d["oi"].iloc[-2] - 1
+    return "LB" if dp > 0 and do > 0 else "SB" if dp < 0 and do > 0 else "SC" if dp > 0 and do < 0 else "LU" if dp < 0 and do < 0 else None
+
+
+def sweep_oi_change(api, c, t0, t1):
+    """OI % change over a candle [t0, t1): last 15-minute OI before t0 vs the last one inside the candle. None if missing."""
+    try:
+        o = api.oi_history("NFO", c["token"], "FIFTEEN_MINUTE", pd.Timestamp(t0) - pd.Timedelta(days=4), pd.Timestamp(t1))
+    except Exception:
+        return None
+    if o is None or o.empty:
+        return None
+    o = o.assign(time=pd.to_datetime(o["time"])).sort_values("time")
+    b, d = o[o["time"] < t0], o[(o["time"] >= t0) & (o["time"] < t1)]
+    if b.empty or d.empty or not b["oi"].iloc[-1] > 0:
+        return None
+    return float((d["oi"].iloc[-1] / b["oi"].iloc[-1] - 1) * 100)
+
+
 def daily_with_oi(h1c, oi):
     d = BO.daily_candles(h1c, None)
     d["day"] = d["time"].dt.normalize()
@@ -422,7 +453,7 @@ def scan(api, master, now, state, msgs, rep, engine):
         rep["stocks"]["scan"] = "stock scans run after 12:15 (3h) and after the 15:30 close (3h + daily)"
         return
     daily_block = blk.endswith("15:30:00")
-    if not daily_block and not STOCK3H_ENABLED:
+    if not daily_block and not STOCK3H_ENABLED and not CS.ENABLED.get("STK_SWEEP3H"):
         st["last_block"] = blk
         return
     prog = st.get("progress") or {}
@@ -453,6 +484,13 @@ def scan(api, master, now, state, msgs, rep, engine):
         if h is None or h.empty:
             continue
         h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
+        if CS.ENABLED.get("STK_SWEEP3H"):                       # 29-Oct (approved, live): 3h equal-highs sweep SELL
+            try:
+                CS.on_stock_3h(state, msgs, name, c, frame3h(h), now,
+                               lambda day, _c=c, _h=h: prev_oi_label(api, _c, _h, day, now),
+                               lambda t0, t1, _c=c: sweep_oi_change(api, _c, t0, t1))
+            except Exception as e_:
+                print(f"[setup] STK_SWEEP3H {name} skipped: {type(e_).__name__}: {e_}")
         if STOCK3H_ENABLED:
             try:
                 found += scan3h(name, c, h, frame3h(h), now, master, st, state, msgs)
