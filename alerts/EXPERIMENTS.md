@@ -66,3 +66,9 @@ These are pricing-based guards, **not backtested**: no option-price history exis
 | Option ideas | When a stock hanging-man or sweep SELL triggers, a PE (or CE) idea is attached, judged on the futures stop and target with 3 days of decay. It is sent only if the gain at the target ≥ the loss at the stop and IV ≤ 1.5× realised. Exit when the futures call exits |
 
 Not added: a company-results calendar (no reliable free feed); the IV ≤ 1.5× realised check catches inflated pre-event premiums.
+
+## 1H BIG MOVE WATCH (owner request, live 29-Oct-2026 – watch 2-3 days)
+Information alert, NOT a trade call (no entry / SL / target): a completed 1-hour futures candle closes beyond the 20-hour
+high/low with volume ≥ 2× and OI supporting the move. MCX + NIFTY/BANKNIFTY (alerts engine) and the option-buy stock list
+(hourly from the 15-min candles already fetched, no extra API calls). Tracked (best / worst / last) with an end-of-day
+summary. Hourly breakout CALLS were rejected by research BO1H-001/002 (9,491 combos, none survive). Code: alerts/watch1h.py.

@@ -307,6 +307,14 @@ def scan(api, master, now, state, only=None):
         oi = oi_reading(state, c["symbol"], q, now)
         info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
         _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d), master=master, api=api)
+        try:                                               # 29-Oct (owner): 1H BIG MOVE watch – information only, not a call
+            from alerts import watch1h as W1
+            sd = _switch_day(state, c, d)
+            if sd is None or (now.normalize() - sd).days > 3:
+                info["watch1h"] = "sent" if W1.check(state, msgs, name, "MCX" if ex == "MCX" else "INDEX", full_1h, now,
+                                                     oi=(oi or {}).get("label")) else "none"
+        except Exception as e_:
+            print(f"[watch1h] {name} skipped: {type(e_).__name__}: {e_}")
         for tf, _, mins, _ in TFS:
             if not RSI_REVERSAL_CALLS:
                 break
@@ -364,6 +372,17 @@ def scan(api, master, now, state, only=None):
             msgs += RP.build(state, seg, now, marks, os.getenv("ALERTS_STATE_DIR", "state/alerts"))
         except Exception as e:
             rep["errors"].append(f"report {seg}: {type(e).__name__}: {str(e)[:80]}")
+    try:                                                   # 1H BIG MOVE watch: end-of-day summary per exchange
+        from alerts import watch1h as W1
+        for ex_, segs in (("NFO", ["INDEX"]), ("MCX", ["MCX"])):
+            fk = f"watch1h_sum_{ex_}"
+            if _just_closed(ex_, now) and not state["day"].get(fk):
+                state["day"][fk] = True
+                sm = W1.summary_msg(state, d, segs)
+                if sm:
+                    msgs.append(sm)
+    except Exception as e_:
+        print(f"[watch1h] summary skipped: {type(e_).__name__}: {e_}")
     if all(not is_open(ex, now) for ex in ("MCX", "NFO")) and now > CD.session_close(now) and not state["day"]["eod_sent"]:
         state["day"]["eod_sent"] = True                  # replaced by the call reports above
     return state, msgs, rep

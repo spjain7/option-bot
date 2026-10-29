@@ -322,6 +322,11 @@ def scan(api, master, now, state):
                     CS.sweep15_log(state, u["name"], u.get("symbol"), df, now, msgs, u.get("lot"))
                 except Exception as e_:
                     rep.append(f"{u['name']} sweep15 log error {type(e_).__name__}")
+                try:                                     # 29-Oct (owner): 1H BIG MOVE watch – information only, not a call
+                    from alerts import watch1h as W1
+                    W1.check(state, msgs, u["name"], "STOCK FUT", W1.hourly_from_15m(df, now), now)
+                except Exception as e_:
+                    rep.append(f"{u['name']} watch1h error {type(e_).__name__}")
                 i = last_completed(df, now) if df is not None else None
                 s = intraday_signal(df, i) if i is not None else 0
                 if s:
@@ -342,6 +347,15 @@ def scan(api, master, now, state):
                                    now, msgs, u.get("lot"))
         except Exception as e_:
             rep.append(f"sweep15 close tracking error {type(e_).__name__}")
+    if t >= "15:30" and not state["done"].get(f"watch1h|{now:%Y-%m-%d}"):
+        state["done"][f"watch1h|{now:%Y-%m-%d}"] = str(now)
+        try:
+            from alerts import watch1h as W1
+            sm = W1.summary_msg(state, f"{now:%Y-%m-%d}", ["STOCK FUT"])
+            if sm:
+                msgs.append(sm)
+        except Exception as e_:
+            rep.append(f"watch1h summary error {type(e_).__name__}")
     if t >= "15:30" and not state["done"].get(f"scorecard|{now:%Y-%m-%d}"):
         state["done"][f"scorecard|{now:%Y-%m-%d}"] = str(now)
         if state["closed"] or state["open"]:
