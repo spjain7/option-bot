@@ -1,0 +1,38 @@
+name: Research - 5-min stock data (manual, no alerts)
+
+# 5-MIN-001: 5-minute NSE cash (95 days) + current-month futures with OI for all stock F&O names, saved to the
+# branch "research-m5" for the pre-move footprint study and 5-min intraday rules. Research only: no Telegram, main untouched.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Restore earlier downloads (resume)
+        run: git fetch -q origin research-m5 && git archive FETCH_HEAD research/data/m5 | tar -x || true
+      - name: Fetch 5-min data
+        run: timeout 16200 python -m research.adapters.angel_5m || echo "::warning::fetch stopped early – run again to resume"
+        env:
+          ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
+          ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
+          ANGEL_PIN:         ${{ secrets.ANGEL_PIN }}
+          ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
+      - name: Save to research-m5
+        if: always()
+        run: |
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp -r research/data/m5 /tmp/keep/ 2>/dev/null || exit 0
+          git fetch -q origin research-m5 && git switch -q -f -C research-m5 FETCH_HEAD || git switch -q -f --orphan research-m5
+          git rm -rqf --cached . > /dev/null 2>&1 || true
+          mkdir -p research/data && rm -rf research/data/m5 && cp -r /tmp/keep/m5 research/data/
+          git add -f research/data/m5 && git commit -qm "m5 data $(date -u +%F_%H%M)" && git push -q origin HEAD:research-m5 || echo "nothing new"
+          echo "files: $(ls research/data/m5 | wc -l)"
