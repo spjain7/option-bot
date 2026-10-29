@@ -423,3 +423,14 @@ Rule family of the live 3h call on 1h bars (MCX 7, NIFTY/BANKNIFTY, ~180 stock f
   9,491 combos · 126 positive in train AND valid · 0 survive BH-FDR 10 % · of the 126, 22 positive in test (median −0.10R).
   Best train/valid combos (stocks BUY, vol 2.5×, ADX ≥25 rising, ADR used ≤0.8, OI long buildup) fall to ≈0 / negative in test.
 Verdict: no hourly breakout call is supported; not deployed.
+
+## MCX-TIGHT-001 – per-commodity tight filters, 1h / 3h / daily (29-Oct-2026, owner request)
+10,626 combos (EMA side, volume 1.5/2/2.5×, ADX, ADR room, room to older level, 5 exits) per commodity × timeframe × side, 2× costs.
+770 positive in train AND valid; 0 survive BH-FDR 10 % (samples per commodity are small: 20–80 trades per period).
+Consistent across train / valid / test (not proven):
+* GOLD 1h BUY (breakout, vol ≥2×, room, stop 2 ATR, 2R): +0.38 / +0.59 / +0.32R (59 / 30 / 52 trades); 311 of 327 passing combos
+  positive in test – but 2026 ≈ −0.02R and the gold BULL market (2022-25) drives it; GOLD SELL loses (−0.25R).
+* SILVER 1h SELL (below EMA100, vol ≥2×, ADX ≥20, room, stop 1.5 ATR, 1R): +0.19 / +0.31 / +0.43R, 72 % wins in test (58/32/36 trades).
+* SILVER 1h/3h BUY, COPPER 1h BUY (vol ≥2.5×, S/R stop, 1R): positive in all periods on 15-50 trades each – thin.
+* CRUDEOIL, NATURALGAS, ZINC, ALUMINIUM: negative in every period (ALUMINIUM −0.6R: costs vs a small range).
+Today (29-Oct): no MCX breakout at all (prices inside their 20-candle range); SILVER 3h broke below 191,401 on 1.1× volume (< 1.5×).
