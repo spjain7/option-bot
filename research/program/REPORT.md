@@ -456,3 +456,12 @@ previous day's real ATM IV (NSE bhavcopy). Patterns 09:30-11:30: prev-day-high b
 * 306 combos: 0 positive in both months.
 * "Made high": 26 % of ALL signals saw the ATM option rise ≥ 30 % at some point before 15:15 (median best +8…+14 %), while the average
   trade held to 15:15 lost 2.4 %. Posting only the moves that ran (and their peak) produces a "perfect" record from a coin-flip rule.
+
+## BIGMOVE-001 – footprints before big moves (29-Oct-2026, owner: "every move leaves a footprint")
+178 F&O stocks, NSE bhavcopy Jul-2022→Oct-2026, 137,771 stock-days. Big move next day = |return| ≥ 2× its 20-day average (13.4 % of days).
+* Footprints exist for SIZE: IV ÷ HV20 > 1.64 -> 25 % big-move days (1.9×); IV rank > 0.7 1.4×; IV up > 22 % in 5 days 1.4×; volume > 1.9× 1.3×.
+  Calm / cheap options (IV ÷ HV < 0.77, range compression ATR5/ATR20 < 0.74) -> 3-8 % (big moves rarer). OI buildup label: no effect.
+* Walk-forward model (train 2022-24, test 2025-26): AUC 0.66; each day's top 5 stocks -> 30 % big moves vs 13.6 % (2.2×).
+* NOT direction: big-move direction accuracy 53.5 % vs 51.7 % always-majority (AUC 0.56); confident subset 55.6 %.
+* Trading it: ATM straddle close -> next close on the top-5 (real option prices, 3 % costs): median −6 %, 25 % wins; the +1.4 % average
+  comes from the best 1 % (Q1-2025); without them −6 %. The option market already prices the coming move (that IS the footprint).
