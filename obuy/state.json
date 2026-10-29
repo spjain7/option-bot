@@ -1,34 +1,5 @@
 {
- "open": [
-  {
-   "id": 3,
-   "mode": "intraday",
-   "name": "HINDALCO",
-   "kind": "stock",
-   "dir": -1,
-   "token": "119180",
-   "symbol": "HINDALCO23NOV26890PE",
-   "K": 890.0,
-   "expiry": "2026-11-23",
-   "lot": 700,
-   "entry": 29.05,
-   "sl": 20.34,
-   "tg": 46.48,
-   "sl_pct": 30.0,
-   "tg_pct": 60.0,
-   "opened": "2026-10-29 12:06:07.171772",
-   "exit_at": "2026-10-29 15:15:00",
-   "why": [
-    "Futures crossed below VWAP (891.8)",
-    "RSI 36 (weak momentum)",
-    "Last 1 hour: price -0.56%, OI +0.3%",
-    "Strike  : 890 (at-the-money)",
-    "Move    : not checked (IV or daily range unavailable)"
-   ],
-   "fut_token": "61585",
-   "exit_by": "29 Oct 15:15"
-  }
- ],
+ "open": [],
  "closed": [
   {
    "id": 1,
@@ -95,6 +66,39 @@
    "rs_lot": -1464,
    "why_exit": "futures closed back across VWAP",
    "closed": "2026-10-29 11:36:00.543459"
+  },
+  {
+   "id": 3,
+   "mode": "intraday",
+   "name": "HINDALCO",
+   "kind": "stock",
+   "dir": -1,
+   "token": "119180",
+   "symbol": "HINDALCO23NOV26890PE",
+   "K": 890.0,
+   "expiry": "2026-11-23",
+   "lot": 700,
+   "entry": 29.05,
+   "sl": 20.34,
+   "tg": 46.48,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-10-29 12:06:07.171772",
+   "exit_at": "2026-10-29 15:15:00",
+   "why": [
+    "Futures crossed below VWAP (891.8)",
+    "RSI 36 (weak momentum)",
+    "Last 1 hour: price -0.56%, OI +0.3%",
+    "Strike  : 890 (at-the-money)",
+    "Move    : not checked (IV or daily range unavailable)"
+   ],
+   "fut_token": "61585",
+   "exit_by": "29 Oct 15:15",
+   "exit": 27.25,
+   "ret": -0.07479541676911734,
+   "rs_lot": -1521,
+   "why_exit": "no follow-through in 60 min",
+   "closed": "2026-10-29 14:04:54.197523"
   }
  ],
  "done": {
@@ -407,7 +411,7 @@
     "oi_change_pct": -0.233,
     "V": false,
     "OD": true,
-    "last_bar": "2026-10-29 12:30:00",
+    "last_bar": "2026-10-29 14:00:00",
     "logged": "2026-10-29 10:36:40.811153",
     "waited": 1,
     "lot": 425,
@@ -418,23 +422,23 @@
     "entry_time": "2026-10-29 10:45:00"
    },
    {
-    "name": "HINDALCO",
+    "name": "PNB",
     "contract": null,
-    "side": "BUY",
+    "side": "SELL",
     "level": "SW",
     "status": "pending",
     "day": "2026-10-29 00:00:00",
-    "sweep_time": "2026-10-29 12:00:00",
-    "trigger": 889.5,
-    "stop": 886.4330650602343,
-    "vol_x": 0.45,
-    "oi_change_pct": 0.055,
+    "sweep_time": "2026-10-29 14:00:00",
+    "trigger": 122.81,
+    "stop": 123.3095262804723,
+    "vol_x": 0.84,
+    "oi_change_pct": 0.063,
     "V": false,
     "OD": false,
-    "last_bar": "2026-10-29 12:00:00",
-    "logged": "2026-10-29 12:06:07.171772",
+    "last_bar": "2026-10-29 14:00:00",
+    "logged": "2026-10-29 14:04:54.197523",
     "waited": 0,
-    "lot": 700,
+    "lot": 8000,
     "send": false
    }
   ],
@@ -489,13 +493,42 @@
     "exit": 168.9678745081174,
     "closed": "2026-10-29 12:06:07.171772",
     "gross_R": -1.0
+   },
+   {
+    "name": "HINDALCO",
+    "contract": null,
+    "side": "BUY",
+    "level": "SW",
+    "status": "closed",
+    "day": "2026-10-29 00:00:00",
+    "sweep_time": "2026-10-29 12:00:00",
+    "trigger": 889.5,
+    "stop": 886.4330650602343,
+    "vol_x": 0.45,
+    "oi_change_pct": 0.055,
+    "V": false,
+    "OD": false,
+    "last_bar": "2026-10-29 13:45:00",
+    "logged": "2026-10-29 12:06:07.171772",
+    "waited": 1,
+    "lot": 700,
+    "send": false,
+    "entry": 889.5,
+    "risk": 3.0669349397657015,
+    "target": 892.5669349397657,
+    "entry_time": "2026-10-29 12:15:00",
+    "exit_reason": "stop",
+    "exit": 886.4330650602343,
+    "closed": "2026-10-29 14:04:54.197523",
+    "gross_R": -1.0
    }
   ],
   "seen": [
    "TVSMOTOR|2026-10-29 09:30:00|PD|-1",
    "TATASTEEL|2026-10-29 09:30:00|PD|1",
    "LAURUSLABS|2026-10-29 10:30:00|PD|-1",
-   "HINDALCO|2026-10-29 12:00:00|SW|1"
+   "HINDALCO|2026-10-29 12:00:00|SW|1",
+   "PNB|2026-10-29 14:00:00|SW|-1"
   ]
  }
 }
