@@ -465,3 +465,13 @@ previous day's real ATM IV (NSE bhavcopy). Patterns 09:30-11:30: prev-day-high b
 * NOT direction: big-move direction accuracy 53.5 % vs 51.7 % always-majority (AUC 0.56); confident subset 55.6 %.
 * Trading it: ATM straddle close -> next close on the top-5 (real option prices, 3 % costs): median −6 %, 25 % wins; the +1.4 % average
   comes from the best 1 % (Q1-2025); without them −6 %. The option market already prices the coming move (that IS the footprint).
+
+## MCX-OI-001 – commodity volume + OI on the official MCX bhavcopy (29-Oct-2026)
+1,111 days (Jul-2022→Oct-2026), 13 contracts (big + mini), most-traded expiry per day, OI change within the same contract, 2× costs.
+* Next-day direction after LB / SB / SC / LU: 52-53 % up for every label – the label alone tells nothing (all commodities pooled).
+* Pooled "follow the buildup" (LB/SC buy, SB/LU sell) and "fade" lose in every period (−0.05…−0.3 ATR next day).
+* Precious metals only – follow the buildup with volume ≥ 1.5× and OI change ≥ 2 %: positive in train, valid AND test:
+  SILVER 1-day +0.04 / +0.29 / +0.20 ATR (3-day +0.11 / +0.46 / +0.23), 57 % wins, 111 signals;
+  SILVERM +0.23 / +0.12 / +0.23 (93); GOLDM (OI ≥ 5 %) +0.10 / +0.15 / +0.20, 3-day +0.68 / +0.39 / +0.73 (73).
+  Matches the earlier GOLD / SILVER 1h findings. Small samples, not FDR-tested – candidate for a tracked test only.
+* CRUDEOIL, NATURALGAS, COPPER, ZINC, ALUMINIUM: no OI / volume rule positive in both train and valid.
