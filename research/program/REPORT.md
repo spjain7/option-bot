@@ -396,3 +396,21 @@ Script `research/program/hammer.py`; results in `results/ham_variants.csv`.
 - **Cost model:** the stock cost model still uses 0.02% STT; it should move to the date-based rate (proposal; needs approval).
 - **HA-1 re-run after the gap-through-target fix:** still PASS all 3 (test +0.097 → +0.111R).
 - **PAT-002 live 3h breakout rule after the fix:** ₹1,565 / ₹11,386 per lot, 42.9% wins in both periods, 67% of instruments positive (before the fix: ₹1,407 / ₹10,605).
+
+## OBUY-REAL-001 – option buying on REAL NSE option prices (29-Oct-2026)
+Data: NSE F&O bhavcopy Jul-2022 → Oct-2026 (1,064 days, options ±12 % of futures, 2 nearest expiries). Signals on daily bars;
+option bought at the real open next day (expiry ≥ 15 days), exit when the futures call exits (daily-close based), 1 % slippage/side + costs.
+4,394 option trades priced (928 skipped: strike not traded at entry; 221 no exit price).
+
+Avg ₹ per lot (option | option + 60-min-style time stop | futures, same timing):
+| setup | ATM | ITM | OTM | futures |
+|---|---|---|---|---|
+| HANGMAN SELL (537) | −551 | −929 (−192 TS) | −517 | +358 |
+| BEARENG SELL (167) | −342 | −1,232 | −740 | +897 |
+| OIBRK BUY/SELL (778) | −3,414 | −2,855 | −3,176 | −2,040 |
+
+* Options lost money in every setup × strike; median premium return −8 % to −33 %. Win rate 33–40 % vs futures 46–52 %.
+* On stops the option loses ~45 % of the futures loss, but on targets it earns only ~55 % of the futures gain → net worse.
+* IV ≤ 1.5×HV + normal-move filters did NOT help (HANGMAN −881 filtered vs −666 all). Time stop reduces losses, never turns positive.
+* Test split HANGMAN ITM ≈ −50/lot (break-even) vs futures +861.
+Verdict: no option-buying edge on these signals; trade the futures leg. Live option IDEA messages remain informational only.
