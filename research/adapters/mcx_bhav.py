@@ -95,7 +95,7 @@ def _rows(js):
 # from the page's own script (assets/customjs/BhavCopy.js, 29-Oct-2026):
 #   GetData("/GetDateWiseBhavCopy", "GET", {InstrumentName, fromDate}) -> response.Data
 FORMATS = ["%Y%m%d", "%d/%m/%Y", "%d-%m-%Y", "%m/%d/%Y", "%d%b%Y"]
-CANDIDATES = [("GET", "/GetDateWiseBhavCopy", f) for f in FORMATS]
+CANDIDATES = [("GET", "/market-data/bhavcopy/GetDateWiseBhavCopy", f) for f in FORMATS]   # GetData(): origin + page path + method
 
 
 def _ask(s, how, path, fmt, d):
