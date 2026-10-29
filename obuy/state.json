@@ -1,5 +1,34 @@
 {
- "open": [],
+ "open": [
+  {
+   "id": 3,
+   "mode": "intraday",
+   "name": "HINDALCO",
+   "kind": "stock",
+   "dir": -1,
+   "token": "119180",
+   "symbol": "HINDALCO23NOV26890PE",
+   "K": 890.0,
+   "expiry": "2026-11-23",
+   "lot": 700,
+   "entry": 29.05,
+   "sl": 20.34,
+   "tg": 46.48,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-10-29 12:06:07.171772",
+   "exit_at": "2026-10-29 15:15:00",
+   "why": [
+    "Futures crossed below VWAP (891.8)",
+    "RSI 36 (weak momentum)",
+    "Last 1 hour: price -0.56%, OI +0.3%",
+    "Strike  : 890 (at-the-money)",
+    "Move    : not checked (IV or daily range unavailable)"
+   ],
+   "fut_token": "61585",
+   "exit_by": "29 Oct 15:15"
+  }
+ ],
  "closed": [
   {
    "id": 1,
@@ -82,9 +111,10 @@
   "intraday|SAIL|2026-10-28": "skipped",
   "scorecard|2026-10-28": "2026-10-28 15:33:36.942986",
   "intraday|LAURUSLABS|2026-10-29": "2026-10-29 10:36:40.811153",
-  "intraday|TCS|2026-10-29": "skipped"
+  "intraday|TCS|2026-10-29": "skipped",
+  "intraday|HINDALCO|2026-10-29": "2026-10-29 12:06:07.171772"
  },
- "next_id": 3,
+ "next_id": 4,
  "universe": {
   "day": "2026-10-29",
   "items": [
@@ -364,26 +394,6 @@
  "sweep15": {
   "open": [
    {
-    "name": "TATASTEEL",
-    "contract": null,
-    "side": "BUY",
-    "level": "PD",
-    "status": "pending",
-    "day": "2026-10-29 00:00:00",
-    "sweep_time": "2026-10-29 09:30:00",
-    "trigger": 169.39,
-    "stop": 168.9678745081174,
-    "vol_x": 0.27,
-    "oi_change_pct": 0.009,
-    "V": false,
-    "OD": false,
-    "last_bar": "2026-10-29 09:30:00",
-    "logged": "2026-10-29 09:34:51.137194",
-    "waited": 0,
-    "lot": 2750,
-    "send": false
-   },
-   {
     "name": "LAURUSLABS",
     "contract": null,
     "side": "SELL",
@@ -397,7 +407,7 @@
     "oi_change_pct": -0.233,
     "V": false,
     "OD": true,
-    "last_bar": "2026-10-29 11:45:00",
+    "last_bar": "2026-10-29 12:00:00",
     "logged": "2026-10-29 10:36:40.811153",
     "waited": 1,
     "lot": 425,
@@ -406,6 +416,26 @@
     "risk": 23.298056201095278,
     "target": 2171.601943798905,
     "entry_time": "2026-10-29 10:45:00"
+   },
+   {
+    "name": "HINDALCO",
+    "contract": null,
+    "side": "BUY",
+    "level": "SW",
+    "status": "pending",
+    "day": "2026-10-29 00:00:00",
+    "sweep_time": "2026-10-29 12:00:00",
+    "trigger": 889.5,
+    "stop": 886.4330650602343,
+    "vol_x": 0.45,
+    "oi_change_pct": 0.055,
+    "V": false,
+    "OD": false,
+    "last_bar": "2026-10-29 12:00:00",
+    "logged": "2026-10-29 12:06:07.171772",
+    "waited": 0,
+    "lot": 700,
+    "send": false
    }
   ],
   "closed": [
@@ -431,12 +461,41 @@
     "exit_reason": "cancelled",
     "exit": null,
     "closed": "2026-10-29 11:52:59.528446"
+   },
+   {
+    "name": "TATASTEEL",
+    "contract": null,
+    "side": "BUY",
+    "level": "PD",
+    "status": "closed",
+    "day": "2026-10-29 00:00:00",
+    "sweep_time": "2026-10-29 09:30:00",
+    "trigger": 169.39,
+    "stop": 168.9678745081174,
+    "vol_x": 0.27,
+    "oi_change_pct": 0.009,
+    "V": false,
+    "OD": false,
+    "last_bar": "2026-10-29 10:15:00",
+    "logged": "2026-10-29 09:34:51.137194",
+    "waited": 1,
+    "lot": 2750,
+    "send": false,
+    "entry": 169.7,
+    "risk": 0.7321254918825844,
+    "target": 170.43212549188257,
+    "entry_time": "2026-10-29 09:45:00",
+    "exit_reason": "stop",
+    "exit": 168.9678745081174,
+    "closed": "2026-10-29 12:06:07.171772",
+    "gross_R": -1.0
    }
   ],
   "seen": [
    "TVSMOTOR|2026-10-29 09:30:00|PD|-1",
    "TATASTEEL|2026-10-29 09:30:00|PD|1",
-   "LAURUSLABS|2026-10-29 10:30:00|PD|-1"
+   "LAURUSLABS|2026-10-29 10:30:00|PD|-1",
+   "HINDALCO|2026-10-29 12:00:00|SW|1"
   ]
  }
 }
