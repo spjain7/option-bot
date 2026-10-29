@@ -94,7 +94,7 @@ def _rows(js):
 
 # from the page's own script (assets/customjs/BhavCopy.js, 29-Oct-2026):
 #   GetData("/GetDateWiseBhavCopy", "GET", {InstrumentName, fromDate}) -> response.Data
-FORMATS = ["%Y%m%d", "%d/%m/%Y", "%d-%m-%Y", "%m/%d/%Y", "%d%b%Y"]
+FORMATS = ["%Y%m%d", "%d/%m/%Y", "%d-%m-%Y", "%m/%d/%Y", "%d%b%Y", "%Y-%m-%d", "%d %b %Y", "%m-%d-%Y"]
 CANDIDATES = [("GET", "/market-data/bhavcopy/GetDateWiseBhavCopy", f) for f in FORMATS]   # GetData(): origin + page path + method
 
 
@@ -125,7 +125,9 @@ def probe(s):
             jt = s.get(u if u.startswith("http") else BASE + ("" if u.startswith("/") else "/") + u, timeout=30).text
             for m in re.findall(r"['\"/]((?:backpage\.aspx/)?Get[A-Za-z]*Bhav[A-Za-z]*)", jt, re.I):
                 names.add(m)
-            for m in list(re.finditer(r"(function\s+GetData|GetData\s*=|GetData\s*\(url|apiBase|baseUrl|API_URL|ApiUrl)", jt))[:4]:
+            for m in list(re.finditer(r"(convertDateFormat\s*[=(:]|function\s+convertDateFormat)", jt))[:2]:
+                print("   date:", u[-50:], "…", jt[max(0, m.start() - 50):m.end() + 600])
+            for m in list(re.finditer(r"(function\s+GetData\b)", jt))[:1]:
                 print("   def:", u[-50:], "…", jt[max(0, m.start() - 100):m.end() + 700])
             for m in list(re.finditer(r"Get(DateWise|Commoditywise)BhavCopy", jt))[:1]:
                 print("   js:", u[-50:], "…", jt[max(0, m.start() - 300):m.end() + 300].replace("\n", " ")[:620])
@@ -145,7 +147,9 @@ def backfill(start, end=None):
             r, rows = _ask(s, how, path, mode, test_day)
             print(f"try {how} {path} fromDate {test_day.strftime(mode)}: HTTP {r.status_code}, {len(r.text)} bytes, rows {None if rows is None else len(rows)}, "
                   f"reply starts {r.text.strip()[:90]!r}")
-            if rows:
+            got = sorted(set(clean(rows)["date"])) if rows else []
+            print(f"   reply dates: {got[:3]}")
+            if rows and got == [f"{test_day:%Y-%m-%d}"]:       # MCX answers the LATEST day when it ignores the date
                 use = (how, path, mode); break
         except Exception as e:
             print(f"try {how} {path}: {type(e).__name__} {str(e)[:100]}")
@@ -160,9 +164,9 @@ def backfill(start, end=None):
             try:
                 r, rows = _ask(s, *use, d)
                 df = clean(rows or [])
-                if len(df):
-                    if "date" not in df or df["date"].isna().all():
-                        df["date"] = f"{d:%Y-%m-%d}"
+                if len(df) and set(df["date"]) != {f"{d:%Y-%m-%d}"}:
+                    miss += 1                                   # MCX returned another day (holiday -> latest) – skip
+                elif len(df):
                     save(df); ok += 1
                 else:
                     miss += 1
