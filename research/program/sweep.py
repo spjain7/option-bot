@@ -7,6 +7,7 @@ Entry: break of the sweep candle's low (SELL) / high (BUY) within 3 candles (sto
 Stop: 0.05 ATR beyond the sweep candle's extreme. Target 1R or 2R. Time exit 20 candles. Costs 1× (2× reported).
 Filters: V volume ≥ 1.5× · C strong rejection (close in the lower / upper third of the candle) · T counter-trend only
 (SELL when close > EMA50 – sweep above highs in a rise; BUY mirror).
+oi_prev: previous completed day's OI label (+1 long buildup, -1 short buildup, 0 other/none; stocks & index only).
 Markets: MCX + NIFTY/BANKNIFTY futures (1h, 3h, 1d) and 181 stock futures (1h, 3h, 1d), 2022-26.
 Periods: train < Jul-24 ≤ valid < Jul-25 ≤ test.
 """
@@ -57,7 +58,7 @@ def run(job):
     except Exception as e:
         print("skip", job[:2], e); return []
     rows = []
-    for seg, f, _od, cost in fr:
+    for seg, f, od, cost in fr:
         if "NSE" in seg or "proxy" in seg:
             continue
         tf = seg.split()[-1]
@@ -85,7 +86,7 @@ def run(job):
                     busy = t1["j"]
                     rows.append((seg.split()[0], tf, job[1], lvname, "BUY" if side > 0 else "SELL", tm[i],
                                  bool(vx[i] >= 1.5), bool((pos[i] >= 2 / 3) if side > 0 else (pos[i] <= 1 / 3)),
-                                 bool(c[i] < e50[i]) if side > 0 else bool(c[i] > e50[i]),
+                                 bool(c[i] < e50[i]) if side > 0 else bool(c[i] > e50[i]), int(od[i]),
                                  t1["r1"], t1["r2"], t2["r1"] if t2 else np.nan, t2["r2"] if t2 else np.nan))
     return rows
 
@@ -94,7 +95,7 @@ def main():
     J = [j for j in EX.jobs() if j[0] in ("mi", "stk")]
     with Pool(2) as p:
         rows = [r for x in p.imap_unordered(run, J, chunksize=1) for r in x]
-    T = pd.DataFrame(rows, columns=["market", "tf", "name", "level", "side", "time", "V", "C", "T",
+    T = pd.DataFrame(rows, columns=["market", "tf", "name", "level", "side", "time", "V", "C", "T", "oi_prev",
                                     "r1R", "r1R_2x", "r2R", "r2R_2x"])
     T["time"] = pd.to_datetime(T["time"], format="mixed", utc=True).dt.tz_localize(None)
     T["split"] = np.where(T["time"] < "2024-07-01", "train", np.where(T["time"] < "2025-07-01", "valid", "test"))
