@@ -122,14 +122,16 @@ def probe(s):
     """Print the endpoint names the bhavcopy page's own scripts use (to find the date-wise call when MCX changes it)."""
     r = s.get(f"{BASE}/market-data/bhavcopy", timeout=30)
     names = set(re.findall(r"['\"/]((?:backpage\.aspx/)?Get[A-Za-z]*Bhav[A-Za-z]*)", r.text, re.I))
+    for m in re.finditer(r"Get(DateWise|Commoditywise)BhavCopy", r.text):
+        print("   page:", r.text[max(0, m.start() - 300):m.end() + 300].replace("\n", " ")[:620])
     js = re.findall(r'<script[^>]+src=["\']([^"\']+\.js[^"\']*)', r.text)
     for u in js[:25]:
         try:
             jt = s.get(u if u.startswith("http") else BASE + ("" if u.startswith("/") else "/") + u, timeout=30).text
             for m in re.findall(r"['\"/]((?:backpage\.aspx/)?Get[A-Za-z]*Bhav[A-Za-z]*)", jt, re.I):
                 names.add(m)
-            for m in re.findall(r".{60}Bhav[Cc]opy.{80}", jt)[:3]:
-                print("   js:", u[-40:], "…", m)
+            for m in list(re.finditer(r"Get(DateWise|Commoditywise)BhavCopy", jt))[:3]:
+                print("   js:", u[-50:], "…", jt[max(0, m.start() - 300):m.end() + 300].replace("\n", " ")[:620])
         except Exception:
             pass
     print("bhavcopy endpoint names seen on the page / its scripts:", sorted(names) or "none")
