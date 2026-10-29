@@ -52,6 +52,23 @@ options() {
   echo "option engine exit $rc"
 }
 
+save_shallow() {   # $1 branch  $2 subdir  file – add one file on top of the branch tip without fetching its history
+  local br="$1" sub="$2" f="$3"
+  for attempt in 1 2 3; do
+    rm -rf /tmp/svs && git worktree prune
+    if git ls-remote --exit-code --heads origin "$br" > /dev/null 2>&1; then
+      git fetch -q --depth 1 origin "$br" && git worktree add -q /tmp/svs FETCH_HEAD
+    else
+      git worktree add -q --detach /tmp/svs && (cd /tmp/svs && git checkout -q --orphan "$br" && git rm -rqf --ignore-unmatch .)
+    fi
+    mkdir -p "/tmp/svs/$sub/$(TZ=Asia/Kolkata date +%Y-%m)" && cp "state/$sub/$f" "/tmp/svs/$sub/$(TZ=Asia/Kolkata date +%Y-%m)/"
+    (cd /tmp/svs && git add "$sub" && (git diff --cached --quiet || git commit -qm "$sub $(date -u +%F_%H%M)") \
+       && git push -q origin "HEAD:refs/heads/$br") && return 0
+    sleep 5
+  done
+  return 1
+}
+
 obuy() {
   # ---- option-BUY alerts (test phase; NSE hours only) ----
   if n=$(restore obuy-state obuy); then
@@ -115,15 +132,21 @@ if [ "${MARKET_LOOP_DRY:-0}" = "1" ]; then echo "would run until $(TZ=Asia/Kolka
 # fallback. ANGEL_WS=0 switches this off. The collector is restarted if it exits and stopped when this job ends.
 if [ "${ANGEL_WS:-1}" = "1" ]; then
   mkdir -p .cache/ws
-  ( while true; do timeout 21600 python -m wsfeed; echo "[ws] collector exited ($?) - restart in 20 s"; sleep 20; done ) >> .cache/ws/feed.log 2>&1 &
+  # restarts are paced (20 s, and 5 min after 4 restarts within 30 min) so Angel never sees a burst of logins
+  ( r=0; t0=$(date +%s); while true; do timeout 21600 python -m wsfeed; rc=$?
+      now=$(date +%s); [ $((now - t0)) -gt 1800 ] && { r=0; t0=$now; }; r=$((r + 1))
+      if [ "$r" -ge 4 ]; then echo "[ws] collector exited ($rc) - $r restarts in 30 min, pausing 5 min"; sleep 300; r=0; t0=$(date +%s)
+      else echo "[ws] collector exited ($rc) - restart in 20 s"; sleep 20; fi
+    done ) >> .cache/ws/feed.log 2>&1 &
   WS_LOOP=$!
   ws_end() {
     kill $WS_LOOP 2>/dev/null; pkill -f "python -m wsfeed" 2>/dev/null; sleep 2
     echo "[ws] collector log (last lines):"; tail -n 15 .cache/ws/feed.log 2>/dev/null
     # keep the day's bars (5-min, price / volume / OI incl. MCX OI that Angel has no history for) on the "ws-bars" branch
     f="ws_$(TZ=Asia/Kolkata date +%Y%m%d_%H%M).csv.gz"; mkdir -p state/wsbars
-    if n=$(python -c "import wsbars; print(wsbars.export('state/wsbars/$f'))") && [ "${n:-0}" -gt 0 ]; then
-      save ws-bars wsbars "$f" && echo "[ws] saved $n bars to ws-bars/$f" || echo "::warning::ws bars not saved"
+    # 1-minute bars as recorded (futures + options: price, volume, OI); shallow fetch so the growing branch is never cloned
+    if n=$(python -c "import wsbars; print(wsbars.export('state/wsbars/$f', step='ONE_MINUTE'))") && [ "${n:-0}" -gt 0 ]; then
+      save_shallow ws-bars wsbars "$f" && echo "[ws] saved $n one-minute bars to ws-bars/$f" || echo "::warning::ws bars not saved"
     fi
   }
   trap ws_end EXIT

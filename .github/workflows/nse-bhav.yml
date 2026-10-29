@@ -1,0 +1,42 @@
+name: Research - NSE F&O bhavcopy nightly (no alerts)
+
+# Official NSE F&O end-of-day file (all futures + options: OHLC, volume, OI) saved every evening to the branch
+# "research-nse-bhav" (only that day's zip is fetched – the branch history is not cloned). NSE archive only; no Angel calls.
+on:
+  schedule:
+    - cron: "41 14 * * 1-5"          # 20:11 IST, after NSE publishes the day's file
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install requests pandas
+      - name: Which days are already saved
+        run: |
+          mkdir -p research/data/nse_bhav_raw
+          if git ls-remote --exit-code --heads origin research-nse-bhav > /dev/null 2>&1; then
+            git fetch -q --depth 1 origin research-nse-bhav
+            for f in $(git ls-tree -r --name-only FETCH_HEAD | grep nse_bhav_raw/ | tail -n 10); do touch "$f"; done
+          fi
+      - run: python -m research.adapters.nse_daily
+      - name: Save to research-nse-bhav
+        run: |
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          new=$(find research/data/nse_bhav_raw -name '*.zip' -size +1k); [ -n "$new" ] || { echo "nothing new"; exit 0; }
+          mkdir -p /tmp/new && cp $new /tmp/new/
+          if git ls-remote --exit-code --heads origin research-nse-bhav > /dev/null 2>&1; then
+            git fetch -q --depth 1 origin research-nse-bhav && git switch -q -f -C research-nse-bhav FETCH_HEAD
+          else
+            git switch -q -f --orphan research-nse-bhav && git rm -rqf --cached . > /dev/null 2>&1 || true
+          fi
+          mkdir -p research/data/nse_bhav_raw && cp /tmp/new/*.zip research/data/nse_bhav_raw/
+          git add -f research/data/nse_bhav_raw && (git diff --cached --quiet || git commit -qm "nse bhav $(date -u +%F)") && git push -q origin HEAD:research-nse-bhav
+          echo "saved: $(ls /tmp/new)"

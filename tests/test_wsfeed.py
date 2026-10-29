@@ -165,8 +165,18 @@ mst = pd.DataFrame([dict(exch_seg="NFO", instrumenttype="FUTSTK", name="TITAN", 
                     dict(exch_seg="MCX", instrumenttype="FUTCOM", name="GOLD", token="20", expiry_dt=DAY + pd.Timedelta(days=35)),
                     dict(exch_seg="MCX", instrumenttype="FUTCOM", name="CARDAMOM", token="30", expiry_dt=DAY + pd.Timedelta(days=35))])
 tk = WF.tokens(mst, NOW)
-check("collector subscribes the 2 nearest stock expiries, index and followed MCX futures only",
-      sorted(tk["NFO"]) == ["1", "10", "2"] and tk["MCX"] == ["20"])
+check("collector subscribes the current-month stock future (next month only in expiry week), index and followed MCX",
+      sorted(tk["NFO"]) == ["1", "10"] and tk["MCX"] == ["20"])
+tk2 = WF.tokens(mst, DAY + pd.Timedelta(days=23))
+check("in the expiry week the next month is added", sorted(tk2["NFO"]) == ["1", "10", "2"])
+om = pd.DataFrame([dict(exch_seg="NFO", instrumenttype="OPTSTK", name="TITAN", token=f"{t}{k}", symbol=f"TITAN{k}{t}",
+                        expiry_dt=DAY + pd.Timedelta(days=27), strike=k * 100) for k in range(3000, 3601, 50) for t in ("CE", "PE")])
+ot = WF.option_tokens(om, NOW, {"TITAN": 3312.0}, ["TITAN"], set(), 100)
+ks = sorted({int(x["symbol"][5:9]) for x in ot})
+check("options: ATM ± 2 strikes, CE and PE (10 tokens) around the live price", len(ot) == 10 and ks == [3200, 3250, 3300, 3350, 3400])
+check("options: never above the remaining token room", len(WF.option_tokens(om, NOW, {"TITAN": 3312.0}, ["TITAN"], set(), 4)) == 4)
+check("options: tokens already subscribed are not added again",
+      len(WF.option_tokens(om, NOW, {"TITAN": 3312.0}, ["TITAN"], {x["token"] for x in ot}, 100)) == 0)
 
 # 8. export for the data branch
 with tempfile.TemporaryDirectory() as w:
