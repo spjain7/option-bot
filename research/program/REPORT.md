@@ -414,3 +414,12 @@ Avg ₹ per lot (option | option + 60-min-style time stop | futures, same timing
 * IV ≤ 1.5×HV + normal-move filters did NOT help (HANGMAN −881 filtered vs −666 all). Time stop reduces losses, never turns positive.
 * Test split HANGMAN ITM ≈ −50/lot (break-even) vs futures +861.
 Verdict: no option-buying edge on these signals; trade the futures leg. Live option IDEA messages remain informational only.
+
+## BO1H-001/002 – hourly futures breakout calls (29-Oct-2026, owner request)
+Rule family of the live 3h call on 1h bars (MCX 7, NIFTY/BANKNIFTY, ~180 stock futures, Jul-2022→Oct-2026, 2× costs).
+* BO1H-001 base (20-bar breakout, vol >1.5×, EMA200, stop 2 ATR, 2R): stocks BUY −0.11R (11,429 trades), SELL −0.07R; MCX BUY −0.07R,
+  SELL −0.21R; index BUY −0.20R, SELL −0.09R. OI confirm / no-resistance / no-14:15-15:15 filters do not make it positive.
+* BO1H-002 grid (owner: ADX/ADR, EMA 20/50/100/200, volume 1.5/2/2.5×, OI, room, exits 1R / 2R / S-R stop and target):
+  9,491 combos · 126 positive in train AND valid · 0 survive BH-FDR 10 % · of the 126, 22 positive in test (median −0.10R).
+  Best train/valid combos (stocks BUY, vol 2.5×, ADX ≥25 rising, ADR used ≤0.8, OI long buildup) fall to ≈0 / negative in test.
+Verdict: no hourly breakout call is supported; not deployed.
