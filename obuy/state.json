@@ -396,28 +396,7 @@
   ]
  },
  "sweep15": {
-  "open": [
-   {
-    "name": "PNB",
-    "contract": null,
-    "side": "SELL",
-    "level": "SW",
-    "status": "pending",
-    "day": "2026-10-29 00:00:00",
-    "sweep_time": "2026-10-29 14:30:00",
-    "trigger": 123.62,
-    "stop": 123.96154014134103,
-    "vol_x": 0.57,
-    "oi_change_pct": 0.027,
-    "V": false,
-    "OD": false,
-    "last_bar": "2026-10-29 14:30:00",
-    "logged": "2026-10-29 14:36:25.342343",
-    "waited": 0,
-    "lot": 8000,
-    "send": false
-   }
-  ],
+  "open": [],
   "closed": [
    {
     "name": "TVSMOTOR",
@@ -594,6 +573,29 @@
     "exit": 2218.1980562010954,
     "closed": "2026-10-29 15:10:34.611520",
     "gross_R": -1.0
+   },
+   {
+    "name": "PNB",
+    "contract": null,
+    "side": "SELL",
+    "level": "SW",
+    "status": "closed",
+    "day": "2026-10-29 00:00:00",
+    "sweep_time": "2026-10-29 14:30:00",
+    "trigger": 123.62,
+    "stop": 123.96154014134103,
+    "vol_x": 0.57,
+    "oi_change_pct": 0.027,
+    "V": false,
+    "OD": false,
+    "last_bar": "2026-10-29 14:45:00",
+    "logged": "2026-10-29 14:36:25.342343",
+    "waited": 1,
+    "lot": 8000,
+    "send": false,
+    "exit_reason": "cancelled",
+    "exit": null,
+    "closed": "2026-10-29 15:19:03.517128"
    }
   ],
   "seen": [
