@@ -85,6 +85,7 @@ iteration() {
   else
     echo "::error::alerts state restore failed"
   fi
+  [ -f .cache/ws/feed.log ] && { echo "[ws] collector:"; tail -n 2 .cache/ws/feed.log; }
   options
   obuy   # intraday STOCK option buys (VWAP + RSI + OI); positional option buys come with the futures calls (alerts/)
 }
@@ -109,6 +110,16 @@ fi
 cap_s=$(( $(date +%s) + 345 * 60 ))
 [ -z "${MARKET_LOOP_NOW:-}" ] && [ "$end_s" -gt "$cap_s" ] && end_s=$cap_s
 if [ "${MARKET_LOOP_DRY:-0}" = "1" ]; then echo "would run until $(TZ=Asia/Kolkata date -d "@$end_s" '+%d-%b %H:%M') IST"; exit 0; fi
+# ---- live 1-minute futures bars from the Angel WebSocket (29-Oct: the candle API rate-limits far below its published limit).
+# The engines read today's candles from .cache/ws and call the candle API only for older history (once a day) and as a
+# fallback. ANGEL_WS=0 switches this off. The collector is restarted if it exits and stopped when this job ends.
+if [ "${ANGEL_WS:-1}" = "1" ]; then
+  mkdir -p .cache/ws
+  ( while true; do timeout 21600 python -m wsfeed; echo "[ws] collector exited ($?) - restart in 20 s"; sleep 20; done ) >> .cache/ws/feed.log 2>&1 &
+  WS_LOOP=$!
+  trap 'kill $WS_LOOP 2>/dev/null; pkill -f "python -m wsfeed" 2>/dev/null; echo "[ws] collector log (last lines):"; tail -n 15 .cache/ws/feed.log 2>/dev/null' EXIT
+  echo "[ws] WebSocket collector started"
+fi
 while true; do
   now_s=$(TZ=Asia/Kolkata date +%s)
   [ "$now_s" -ge "$end_s" ] && { echo "reached $END IST – job done"; break; }

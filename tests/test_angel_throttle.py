@@ -49,7 +49,7 @@ class FakeSmart:
 def make(tmp, smart):
     a = A.Angel.__new__(A.Angel)
     a.api = smart
-    a._setup(cache_dir=tmp)
+    a._setup(cache_dir=tmp, ws=False)
     a.HIST_GAP = a.QUOTE_GAP = 0           # no pacing in tests
     return a
 
