@@ -364,26 +364,6 @@
  "sweep15": {
   "open": [
    {
-    "name": "TVSMOTOR",
-    "contract": null,
-    "side": "SELL",
-    "level": "PD",
-    "status": "pending",
-    "day": "2026-10-29 00:00:00",
-    "sweep_time": "2026-10-29 09:30:00",
-    "trigger": 4247.8,
-    "stop": 4284.705604598897,
-    "vol_x": 1.34,
-    "oi_change_pct": 0.551,
-    "V": false,
-    "OD": false,
-    "last_bar": "2026-10-29 09:30:00",
-    "logged": "2026-10-29 09:34:51.137194",
-    "waited": 0,
-    "lot": 175,
-    "send": false
-   },
-   {
     "name": "TATASTEEL",
     "contract": null,
     "side": "BUY",
@@ -417,7 +397,7 @@
     "oi_change_pct": -0.233,
     "V": false,
     "OD": true,
-    "last_bar": "2026-10-29 11:30:00",
+    "last_bar": "2026-10-29 11:45:00",
     "logged": "2026-10-29 10:36:40.811153",
     "waited": 1,
     "lot": 425,
@@ -428,7 +408,31 @@
     "entry_time": "2026-10-29 10:45:00"
    }
   ],
-  "closed": [],
+  "closed": [
+   {
+    "name": "TVSMOTOR",
+    "contract": null,
+    "side": "SELL",
+    "level": "PD",
+    "status": "closed",
+    "day": "2026-10-29 00:00:00",
+    "sweep_time": "2026-10-29 09:30:00",
+    "trigger": 4247.8,
+    "stop": 4284.705604598897,
+    "vol_x": 1.34,
+    "oi_change_pct": 0.551,
+    "V": false,
+    "OD": false,
+    "last_bar": "2026-10-29 09:45:00",
+    "logged": "2026-10-29 09:34:51.137194",
+    "waited": 1,
+    "lot": 175,
+    "send": false,
+    "exit_reason": "cancelled",
+    "exit": null,
+    "closed": "2026-10-29 11:52:59.528446"
+   }
+  ],
   "seen": [
    "TVSMOTOR|2026-10-29 09:30:00|PD|-1",
    "TATASTEEL|2026-10-29 09:30:00|PD|1",
