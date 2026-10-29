@@ -434,3 +434,14 @@ Consistent across train / valid / test (not proven):
 * SILVER 1h/3h BUY, COPPER 1h BUY (vol ≥2.5×, S/R stop, 1R): positive in all periods on 15-50 trades each – thin.
 * CRUDEOIL, NATURALGAS, ZINC, ALUMINIUM: negative in every period (ALUMINIUM −0.6R: costs vs a small range).
 Today (29-Oct): no MCX breakout at all (prices inside their 20-candle range); SILVER 3h broke below 191,401 on 1.1× volume (< 1.5×).
+
+## MCX-MULTI-001 – RSI reversal / divergence, candle & chart patterns, intraday ORB / ADR momentum (29-Oct-2026, owner)
+7 MCX futures, 1h / 3h / daily 2022-26 (+15-min Aug-Oct 2026, 4 commodities), filters volume / ADX / trend / ADR, 3 exits, 2× costs.
+MCX OI history is not available from Angel -> OI rules not testable (live only).
+* GROSS edge before costs ≈ 0 for every hourly intraday idea (RSI 25/30/35 reversal −0.02…0.00R, ORB +0.02R, ADR momentum +0.05R,
+  engulfing / pin / NR7 ≈ 0); costs ≈ 0.14R per trade -> all lose (exp1 −0.10…−0.21R). 15-min (2 months): all negative.
+* RSI reversals lose on 3h and daily too (gross −0.23…+0.05R).
+* 4,556 pooled combos: 6 positive in train AND valid, 0 survive FDR. Best: daily NR7 breakout BUY (stop 1.5 ATR, 1.5R)
+  +0.11 / +0.18 / +0.35R (56 / 50 / 55 trades, 4 of 6 commodities positive in test); 3h double-bottom BUY with EMA200, ADX < 20
+  +0.02 / +0.36 / +0.31R (62 / 32 / 51). Daily double bottom / engulfing gross +0.11…+0.15R (small samples).
+Verdict: no RSI-reversal or intraday commodity call is supported; nothing deployed.
