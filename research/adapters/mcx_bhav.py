@@ -71,7 +71,8 @@ def today():
     print(f"today: {len(df)} rows, dates {sorted(df['date'].unique()) if len(df) else []}, saved {save(df)} day file(s)")
     fut = df[df["instrument"] == "FUTCOM"] if len(df) else df
     if len(fut):
-        print(fut.sort_values("expiry").groupby("symbol").head(1)[["date", "symbol", "expiry", "close", "volume_lots", "oi_lots"]].to_string(index=False))
+        fut = fut.assign(_e=pd.to_datetime(fut["expiry"], format="%d%b%Y", errors="coerce"))
+        print(fut.sort_values("_e").groupby("symbol").head(1)[["date", "symbol", "expiry", "close", "volume_lots", "oi_lots"]].to_string(index=False))
 
 
 def _rows(js):
@@ -91,26 +92,74 @@ def _rows(js):
     return None
 
 
+CANDIDATES = [                                        # MCX moved its data API (mcx-data 1.2 calls /GetSpotMarketPrice directly)
+    ("GET", "/GetDateWiseBhavCopy", "params"),
+    ("POST", "/GetDateWiseBhavCopy", "json"),
+    ("POST", "/backpage.aspx/GetDateWiseBhavCopy", "json"),
+    ("GET", "/backpage.aspx/GetDateWiseBhavCopy", "params"),
+]
+
+
+def _ask(s, how, path, mode, d):
+    q = {"Date": f"{d:%Y%m%d}", "InstrumentName": "ALL"}
+    h = {"Accept": "application/json, text/javascript, */*; q=0.01", "X-Requested-With": "XMLHttpRequest",
+         "Content-Type": "application/json; charset=UTF-8", "Origin": BASE}
+    if how == "GET":
+        r = s.get(BASE + path, params=dict(q, culture="en"), headers=h, timeout=40)
+    else:
+        r = s.post(BASE + path, json=q, headers=h, timeout=40)
+    t = r.text.strip()
+    rows = None
+    if r.status_code == 200 and t[:1] in "{[":
+        try:
+            rows = _rows(r.json())
+        except Exception:
+            rows = None
+    return r, rows
+
+
+def probe(s):
+    """Print the endpoint names the bhavcopy page's own scripts use (to find the date-wise call when MCX changes it)."""
+    r = s.get(f"{BASE}/market-data/bhavcopy", timeout=30)
+    names = set(re.findall(r"['\"/]((?:backpage\.aspx/)?Get[A-Za-z]*Bhav[A-Za-z]*)", r.text, re.I))
+    js = re.findall(r'<script[^>]+src=["\']([^"\']+\.js[^"\']*)', r.text)
+    for u in js[:25]:
+        try:
+            jt = s.get(u if u.startswith("http") else BASE + ("" if u.startswith("/") else "/") + u, timeout=30).text
+            for m in re.findall(r"['\"/]((?:backpage\.aspx/)?Get[A-Za-z]*Bhav[A-Za-z]*)", jt, re.I):
+                names.add(m)
+            for m in re.findall(r".{60}Bhav[Cc]opy.{80}", jt)[:3]:
+                print("   js:", u[-40:], "…", m)
+        except Exception:
+            pass
+    print("bhavcopy endpoint names seen on the page / its scripts:", sorted(names) or "none")
+
+
 def backfill(start, end=None):
     s, _ = session()
     d0 = dt.date.fromisoformat(start)
     d1 = dt.date.fromisoformat(end) if end else dt.date.today() - dt.timedelta(days=1)
+    test_day = dt.date(2026, 10, 27)                      # a recent trading day with data
+    use = None
+    for how, path, mode in CANDIDATES:
+        try:
+            r, rows = _ask(s, how, path, mode, test_day)
+            print(f"try {how} {path}: HTTP {r.status_code}, {len(r.text)} bytes, rows {None if rows is None else len(rows)}, "
+                  f"reply starts {r.text.strip()[:90]!r}")
+            if rows:
+                use = (how, path, mode); break
+        except Exception as e:
+            print(f"try {how} {path}: {type(e).__name__} {str(e)[:100]}")
+    if use is None:
+        probe(s)
+        raise SystemExit("no date-wise bhavcopy endpoint answered – history builds from the daily 'today' run only")
+    print("using", use)
     ok = miss = err = 0
-    tried_first = False
     d = d0
     while d <= d1:
         if d.weekday() < 5 and not (OUT / f"{d:%Y%m%d}.csv").exists():
             try:
-                r = s.post(f"{BASE}/backpage.aspx/GetDateWiseBhavCopy",
-                           json={"Date": f"{d:%Y%m%d}", "InstrumentName": "ALL"},
-                           headers={"Content-Type": "application/json; charset=UTF-8", "X-Requested-With": "XMLHttpRequest"}, timeout=40)
-                rows = _rows(r.json()) if r.status_code == 200 and r.text.strip().startswith("{") else None
-                if not tried_first:
-                    tried_first = True
-                    print(f"first request {d}: HTTP {r.status_code}, {len(r.text)} bytes, rows {None if rows is None else len(rows)}; "
-                          f"start of reply: {r.text[:200]!r}")
-                    if r.status_code != 200 or rows is None:
-                        raise SystemExit("date-wise endpoint not usable from here – only the daily 'today' mode will build history")
+                r, rows = _ask(s, *use, d)
                 df = clean(rows or [])
                 if len(df):
                     if "date" not in df or df["date"].isna().all():
@@ -118,15 +167,19 @@ def backfill(start, end=None):
                     save(df); ok += 1
                 else:
                     miss += 1
-            except SystemExit:
-                raise
             except Exception as e:
                 err += 1
                 print(f"{d}: {type(e).__name__} {str(e)[:120]}")
-                if err > 20:
+                if err > 25:
                     print("too many errors – stopping"); break
                 time.sleep(5)
-            time.sleep(1.5)
+                try:
+                    s, _ = session()
+                except Exception:
+                    pass
+            time.sleep(1.2)
+            if (ok + miss) % 100 == 0 and ok + miss:
+                print(f"... {d}: saved {ok}, empty {miss}", flush=True)
         d += dt.timedelta(days=1)
     print(f"backfill done: saved {ok} days, empty/holiday {miss}, errors {err}")
 
