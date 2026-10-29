@@ -12,3 +12,4 @@ state/alerts/
 state/obuy/
 
 .cache/
+research/program/results/premove_*.csv.gz
