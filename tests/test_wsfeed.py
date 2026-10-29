@@ -168,5 +168,15 @@ tk = WF.tokens(mst, NOW)
 check("collector subscribes the 2 nearest stock expiries, index and followed MCX futures only",
       sorted(tk["NFO"]) == ["1", "10", "2"] and tk["MCX"] == ["20"])
 
+# 8. export for the data branch
+with tempfile.TemporaryDirectory() as w:
+    feed(w, "20", DAY + pd.Timedelta(hours=9), DAY + pd.Timedelta(hours=10), oi=4321)
+    pd.DataFrame([dict(token="20", exch="MCX", name="GOLD", symbol="GOLD04DEC26FUT", expiry="2026-12-04")]).to_csv(Path(w) / "tokens.csv", index=False)
+    out = Path(w) / "x" / "ws.csv.gz"
+    n = WB.export(out, d=w)
+    e = pd.read_csv(out)
+    check("export: 5-min bars with OI and symbol (MCX aligned 09:00)", n == 13 and e["symbol"].iat[0] == "GOLD04DEC26FUT"
+          and (e["oi"] == 4321).all() and e["time"].iat[0].endswith("09:00:00"))
+
 print(f"\nwsfeed: {ok} passed, {fail} failed")
 sys.exit(1 if fail else 0)

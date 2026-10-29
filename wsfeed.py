@@ -45,6 +45,12 @@ def main():
     master = load_master()
     now = now_ist()
     toks = tokens(master, now)
+    try:                                                  # token -> symbol map, kept with the exported bars
+        mm = master[master["token"].astype(str).isin([t for v in toks.values() for t in v])]
+        mm.assign(exch=mm["exch_seg"], expiry=mm["expiry_dt"].dt.strftime("%Y-%m-%d"))[["token", "exch", "name", "symbol", "expiry"]] \
+            .to_csv(WB._dir() / "tokens.csv", index=False)
+    except Exception as e:
+        print("[ws] token map not written:", e)
     os.chdir(WB._dir())                                  # the SDK writes a log folder into the working directory
     B, lock = WB.Builder(), threading.Lock()
     st = dict(start=str(now), last_tick={}, tokens=[t for v in toks.values() for t in v], ticks=0, pid=os.getpid(),

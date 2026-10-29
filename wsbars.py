@@ -181,5 +181,36 @@ def verify_ok(rest, ws, tol_px=0.003, tol_vol=0.35):
     return ok, f"{len(j)} bars · close diff {px * 100:.2f}% · high/low diff {hl * 100:.2f}% · volume ratio {vr if vr is None else round(vr, 2)}"
 
 
+def export(out, step="FIVE_MINUTE", d=None):
+    """All tokens' bars of the collector folder -> one gzip CSV (5-min bars with OI + symbol info) for the data branch."""
+    dd = _dir(d)
+    try:
+        info = pd.read_csv(dd / "tokens.csv", dtype=str).set_index("token")
+    except Exception:
+        info = pd.DataFrame(columns=["exch", "name", "symbol", "expiry"])
+    parts = []
+    for p in sorted(dd.glob("bars_*.csv")):
+        tok = p.stem[5:]
+        try:
+            m = pd.read_csv(p, names=COLS, header=None, parse_dates=["time"])
+        except Exception:
+            continue
+        if m.empty:
+            continue
+        ex = info.at[tok, "exch"] if tok in info.index else "NFO"
+        for day, g in m.groupby(m["time"].dt.normalize()):
+            b = aggregate(g.drop_duplicates("time", keep="last"), step, ex if ex in OPEN else "NFO")
+            b.insert(0, "token", tok)
+            for c in ("exch", "name", "symbol", "expiry"):
+                b[c] = info.at[tok, c] if tok in info.index and c in info.columns else ""
+            parts.append(b)
+    if not parts:
+        return 0
+    df = pd.concat(parts, ignore_index=True)
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(out, index=False, compression="gzip")
+    return len(df)
+
+
 def now_epoch():
     return time.time()

@@ -1,0 +1,44 @@
+name: Research - MCX bhavcopy with OI (daily + backfill, no alerts)
+
+# MCX-OI-001 (29-Oct-2026): official MCX daily bhavcopy (futures + options, OHLC, volume, OPEN INTEREST) saved to the branch
+# "research-mcx-bhav" so commodity OI rules can be backtested (Angel serves no MCX OI history). Research only: no Telegram,
+# no secrets, main is never touched. Daily run after the MCX close; manual run with a start date = backfill (best effort).
+on:
+  schedule:
+    - cron: "37 19 * * 1-5"          # 01:07 IST, after the MCX session (23:30 / 23:55) – the page then shows that day
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "backfill from (YYYY-MM-DD); empty = only today's page"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install pandas curl_cffi
+      - name: Restore saved days
+        run: git fetch -q origin research-mcx-bhav && git archive FETCH_HEAD research/data/mcx_bhav | tar -x || true
+      - name: Today's bhavcopy
+        run: python -m research.adapters.mcx_bhav today || echo "::warning::today's MCX bhavcopy not fetched"
+      - name: Backfill
+        if: ${{ github.event.inputs.start != '' && github.event.inputs.start != null }}
+        run: python -m research.adapters.mcx_bhav backfill "${{ github.event.inputs.start }}" || echo "::warning::backfill stopped"
+      - name: Save to research-mcx-bhav
+        if: always()
+        run: |
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp -r research/data/mcx_bhav /tmp/keep/ 2>/dev/null || exit 0
+          git fetch -q origin research-mcx-bhav && git switch -q -f -C research-mcx-bhav FETCH_HEAD || git switch -q -f --orphan research-mcx-bhav
+          git rm -rqf --cached . > /dev/null 2>&1 || true
+          mkdir -p research/data && rm -rf research/data/mcx_bhav && cp -r /tmp/keep/mcx_bhav research/data/
+          git add -f research/data/mcx_bhav && git commit -qm "mcx bhav $(date -u +%F_%H%M)" && git push -q origin HEAD:research-mcx-bhav || echo "nothing new"
+          echo "days saved: $(ls research/data/mcx_bhav/days | wc -l)"

@@ -117,7 +117,16 @@ if [ "${ANGEL_WS:-1}" = "1" ]; then
   mkdir -p .cache/ws
   ( while true; do timeout 21600 python -m wsfeed; echo "[ws] collector exited ($?) - restart in 20 s"; sleep 20; done ) >> .cache/ws/feed.log 2>&1 &
   WS_LOOP=$!
-  trap 'kill $WS_LOOP 2>/dev/null; pkill -f "python -m wsfeed" 2>/dev/null; echo "[ws] collector log (last lines):"; tail -n 15 .cache/ws/feed.log 2>/dev/null' EXIT
+  ws_end() {
+    kill $WS_LOOP 2>/dev/null; pkill -f "python -m wsfeed" 2>/dev/null; sleep 2
+    echo "[ws] collector log (last lines):"; tail -n 15 .cache/ws/feed.log 2>/dev/null
+    # keep the day's bars (5-min, price / volume / OI incl. MCX OI that Angel has no history for) on the "ws-bars" branch
+    f="ws_$(TZ=Asia/Kolkata date +%Y%m%d_%H%M).csv.gz"; mkdir -p state/wsbars
+    if n=$(python -c "import wsbars; print(wsbars.export('state/wsbars/$f'))") && [ "${n:-0}" -gt 0 ]; then
+      save ws-bars wsbars "$f" && echo "[ws] saved $n bars to ws-bars/$f" || echo "::warning::ws bars not saved"
+    fi
+  }
+  trap ws_end EXIT
   echo "[ws] WebSocket collector started"
 fi
 while true; do
