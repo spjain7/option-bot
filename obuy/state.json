@@ -1,36 +1,5 @@
 {
- "open": [
-  {
-   "id": 2,
-   "mode": "intraday",
-   "name": "LAURUSLABS",
-   "kind": "stock",
-   "dir": 1,
-   "token": "111752",
-   "symbol": "LAURUSLABS23NOV262200CE",
-   "K": 2200.0,
-   "expiry": "2026-11-23",
-   "lot": 425,
-   "entry": 88.8,
-   "sl": 62.16,
-   "tg": 142.08,
-   "sl_pct": 30.0,
-   "tg_pct": 60.0,
-   "opened": "2026-10-29 10:36:40.811153",
-   "exit_at": "2026-10-29 15:15:00",
-   "why": [
-    "Futures crossed above VWAP (2,202.1)",
-    "RSI 65 (strong momentum)",
-    "Last 1 hour: price +0.36%, OI +0.5%",
-    "Strike  : 2200 (at-the-money)",
-    "Premium fair: IV 37% vs 20-day move 34%",
-    "Move    : a normal move (51.4 pts) \u2248 +33% on this option (risk 30%)",
-    "OI wall : none before the normal-move level"
-   ],
-   "fut_token": "61629",
-   "exit_by": "29 Oct 15:15"
-  }
- ],
+ "open": [],
  "closed": [
   {
    "id": 1,
@@ -62,6 +31,41 @@
    "rs_lot": 2912,
    "why_exit": "time exit",
    "closed": "2026-10-28 15:18:16.432882"
+  },
+  {
+   "id": 2,
+   "mode": "intraday",
+   "name": "LAURUSLABS",
+   "kind": "stock",
+   "dir": 1,
+   "token": "111752",
+   "symbol": "LAURUSLABS23NOV262200CE",
+   "K": 2200.0,
+   "expiry": "2026-11-23",
+   "lot": 425,
+   "entry": 88.8,
+   "sl": 62.16,
+   "tg": 142.08,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-10-29 10:36:40.811153",
+   "exit_at": "2026-10-29 15:15:00",
+   "why": [
+    "Futures crossed above VWAP (2,202.1)",
+    "RSI 65 (strong momentum)",
+    "Last 1 hour: price +0.36%, OI +0.5%",
+    "Strike  : 2200 (at-the-money)",
+    "Premium fair: IV 37% vs 20-day move 34%",
+    "Move    : a normal move (51.4 pts) \u2248 +33% on this option (risk 30%)",
+    "OI wall : none before the normal-move level"
+   ],
+   "fut_token": "61629",
+   "exit_by": "29 Oct 15:15",
+   "exit": 86.45,
+   "ret": -0.03880128881823,
+   "rs_lot": -1464,
+   "why_exit": "futures closed back across VWAP",
+   "closed": "2026-10-29 11:36:00.543459"
   }
  ],
  "done": {
@@ -77,7 +81,8 @@
   "intraday|BSE|2026-10-28": "2026-10-28 10:50:30.589225",
   "intraday|SAIL|2026-10-28": "skipped",
   "scorecard|2026-10-28": "2026-10-28 15:33:36.942986",
-  "intraday|LAURUSLABS|2026-10-29": "2026-10-29 10:36:40.811153"
+  "intraday|LAURUSLABS|2026-10-29": "2026-10-29 10:36:40.811153",
+  "intraday|TCS|2026-10-29": "skipped"
  },
  "next_id": 3,
  "universe": {
@@ -403,7 +408,7 @@
     "contract": null,
     "side": "SELL",
     "level": "PD",
-    "status": "pending",
+    "status": "open",
     "day": "2026-10-29 00:00:00",
     "sweep_time": "2026-10-29 10:30:00",
     "trigger": 2194.9,
@@ -412,11 +417,15 @@
     "oi_change_pct": -0.233,
     "V": false,
     "OD": true,
-    "last_bar": "2026-10-29 10:30:00",
+    "last_bar": "2026-10-29 11:30:00",
     "logged": "2026-10-29 10:36:40.811153",
-    "waited": 0,
+    "waited": 1,
     "lot": 425,
-    "send": false
+    "send": false,
+    "entry": 2194.9,
+    "risk": 23.298056201095278,
+    "target": 2171.601943798905,
+    "entry_time": "2026-10-29 10:45:00"
    }
   ],
   "closed": [],
