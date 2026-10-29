@@ -475,3 +475,13 @@ previous day's real ATM IV (NSE bhavcopy). Patterns 09:30-11:30: prev-day-high b
   SILVERM +0.23 / +0.12 / +0.23 (93); GOLDM (OI ≥ 5 %) +0.10 / +0.15 / +0.20, 3-day +0.68 / +0.39 / +0.73 (73).
   Matches the earlier GOLD / SILVER 1h findings. Small samples, not FDR-tested – candidate for a tracked test only.
 * CRUDEOIL, NATURALGAS, COPPER, ZINC, ALUMINIUM: no OI / volume rule positive in both train and valid.
+
+## PREMOVE-002 / REV5-001 – every ≥ 1.5 % intraday move, 5-min futures + OI, 208 stocks, 27-Jul → 29-Oct-2026 (30-Oct)
+* Before a move starts: 5-min volume ~1.1× its normal (other moments 0.6×), the last hour's range is already WIDER (0.45-0.50 of
+  the day range vs 0.31) – no "quiet squeeze" before moves; a tight range makes a move LESS likely (0.4×).
+* OI up ≥ 1 % in 30 min + volume ≥ 2×: a move follows 3.4 % of the time (4.2× normal) but up/down 48/52 – size, not direction.
+* Direction hints are mean-reversion: day already −1.5 % + near the low + below VWAP + volume 2× -> of the moves that follow
+  80 % are UP (mirror: 69 % DOWN); same in Aug, Sep, Oct.
+* Traded (entry next 5-min open, stop beyond the day extreme, 1R / 2R, exit 15:15, real lots, 2× costs): 2,379 trades, win
+  44-49 %, gross ≈ 0 (−0.05 / +0.02 R), after costs −0.5R; −₹30 lakh total per lot over 3 months. Wider stops (≥ 0.6 %): still negative.
+  Reason: even with the hint, 97-98 % of the time no 1.5 % move comes, and the costs on a tight intraday stop are ~0.45R.
