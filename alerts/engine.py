@@ -71,7 +71,34 @@ def contracts(master, name, ex, now):
     tk = getattr(use, "tick", None)
     return dict(symbol=use.symbol, token=str(use.token), expiry=str(use.expiry_dt.date()), is_front=(k == 0), lot=int(use.lotsize),
                 tick=float(tk) if tk is not None and tk == tk and tk > 0 else None,
-                next_token=str(rows[k + 1].token) if k + 1 < len(rows) else None)
+                next_token=str(rows[k + 1].token) if k + 1 < len(rows) else None,
+                prev_token=str(rows[0].token) if k > 0 else None)
+
+
+def stitch_prev(nxt, front):
+    """29-Oct fix: after rolling to next month's contract, its own history is short (COPPER 84 / ZINC 34 / ALUMINIUM 39 daily
+    candles) and the daily breakout (needs 205) was never checked. Join the expiring contract's longer history before the
+    switch day (the day after the expiring contract last traded more volume), shifted by the measured price gap on the
+    day before the switch. -> (series, switch_day, gap) or (nxt, None, None) when it cannot be measured."""
+    if nxt is None or front is None or nxt.empty or front.empty:
+        return nxt, None, None
+    m = front[["time", "close", "volume"]].merge(nxt[["time", "close", "volume"]], on="time", suffixes=("_f", "_n"))
+    if len(m) < 10:
+        return nxt, None, None
+    m["day"] = m["time"].dt.normalize()
+    v = m.groupby("day")[["volume_f", "volume_n"]].sum()
+    days = list(v.index)
+    lead = [d for d in days if v.at[d, "volume_f"] > v.at[d, "volume_n"]]
+    sw = days[days.index(lead[-1]) + 1] if lead and days.index(lead[-1]) + 1 < len(days) else (days[0] if not lead else None)
+    if sw is None:
+        return nxt, None, None                           # the expiring contract still leads – nothing to stitch yet
+    before = m[m["day"] < sw]
+    ref = before[before["day"] == before["day"].max()] if len(before) else m[m["day"] == sw]
+    gap = float((ref["close_n"] - ref["close_f"]).median())
+    old = front[front["time"] < sw].copy()
+    old[["open", "high", "low", "close"]] = old[["open", "high", "low", "close"]] + gap
+    out = pd.concat([old, nxt[nxt["time"] >= sw]], ignore_index=True)
+    return out.sort_values("time").drop_duplicates("time").reset_index(drop=True), sw, gap
 
 
 def find_switch(front, nxt):
@@ -277,6 +304,15 @@ def scan(api, master, now, state, only=None):
             if df is None or df.empty:
                 info[tf] = "NO DATA"; rep["errors"].append(f"{name} {tf}: no candles"); continue
             frames[tf] = df.sort_values("time").drop_duplicates("time").reset_index(drop=True)
+        if not c["is_front"] and c.get("prev_token") and "1h" in frames:   # on next month's contract: join the older history
+            try:
+                fr_ = api.candles(ex, c["prev_token"], "ONE_HOUR", now - pd.Timedelta(days=400), now)
+                st_, sw_, gap_ = stitch_prev(frames["1h"], fr_)
+                if sw_ is not None:
+                    frames["1h"] = st_
+                    info["roll"] = f"history before {sw_:%d-%b} from the expiring contract, shifted {gap_:+.1f}"
+            except Exception as e_:
+                print(f"[roll] {name} stitch skipped: {type(e_).__name__}: {e_}")
         full_1h = frames["1h"].copy() if "1h" in frames else None   # RAW 400-day history for breakouts (as in the backtest)
         if c["is_front"] and c["next_token"] and "1h" in frames:
             key = f"{c['symbol']}|{d}"
