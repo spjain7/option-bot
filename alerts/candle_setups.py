@@ -25,7 +25,8 @@ from crude import indicators as I
 from alerts import tradeplan as TP, report as RP
 
 ENABLED = {"MCX_HAMMER": True, "STK_HANGMAN": True, "MCX_EMA1348": True, "STK_SWEEP3H": True}
-SWEEP15_LOG = True        # 15-minute stock sweep: LOG ONLY (never sent) until ~100 live trades confirm it
+SWEEP15_LOG = True        # 15-minute stock sweep: every sweep is recorded (both sides) for review
+SWEEP15_SEND = True       # 29-Oct (owner): SEND the 15-min SELL sweeps that have volume ≥ 1.5× AND OI falling (test phase)
 HOURLY_SKIP = ("14:15", "15:15")
 KEEP_CLOSED = 600
 P = dict(entry_window=3, stop_buf_atr=0.05, target_r=2.0, max_days=20, max_stop_pct=6.0)
@@ -499,10 +500,32 @@ def on_stock_3h(state, msgs, name, c, f3, now, prev_oi_label, sweep_oi_change):
 
 
 # ─────────────── 15-minute stock sweep – LOG ONLY ───────────────
-def sweep15_log(obstate, name, symbol, df, now):
+def _s15_who(r):
+    return f"{r['name']} FUT (NSE)"
+
+
+def _s15_setup_msg(r):
+    risk = r["stop"] - r["trigger"]
+    lvl = "previous-day high" if r["level"] == "PD" else "20-candle high"
+    return (f"🔴 SELL SETUP – {_s15_who(r)} · 15-MIN LIQUIDITY SWEEP (test phase)\n{LINE}\n"
+            f"Sweep    : 15-min candle {pd.Timestamp(r['sweep_time']):%d-%b %H:%M} went above the {lvl} and closed back below\n"
+            f"• SELL below : {r['trigger']:,.2f}  (stop-sell order, valid next 3 candles, today only)\n"
+            f"• Stop-loss  : {r['stop']:,.2f}\n"
+            f"• Target 1R  : {r['trigger'] - risk:,.2f}  (1:1)\n"
+            f"• Risk       : {risk:,.2f} pts ({risk / r['trigger'] * 100:.2f}%)" + (f" · ₹{risk * r['lot']:,.0f} per lot" if r.get("lot") else "") + "\n"
+            f"• Volume     : {r['vol_x']:.1f}× average ✅\n"
+            f"• OI         : {r['oi_change_pct']:+.2f}% on the sweep candle ✅ (falling – stop run, not fresh buying)\n"
+            f"• Exit       : by the day's close if neither stop nor target is hit\n"
+            "Evidence: Aug–Oct 2026 only, 48 trades, 75% wins, +0.28R after costs – SMALL SAMPLE, test phase. "
+            "BUY-side sweeps lost money and are not sent.\n" + WARN)
+
+
+def sweep15_log(obstate, name, symbol, df, now, msgs=None, lot=None):
     """From obuy.engine.scan with the 15-minute futures frame (time/open/high/low/close/volume/oi) of a top-40 stock.
     Records every 15-minute sweep of the 20-candle high/low and previous-day high/low (both sides) with its volume and
-    OI-direction flags, then tracks it to the day's close (1:1). Never sends a message."""
+    OI-direction flags, then tracks it to the day's close (1:1). SELL sweeps with volume ≥ 1.5× AND OI falling are SENT
+    (SWEEP15_SEND) with TRIGGERED / EXIT follow-ups; everything else is log only."""
+    msgs = msgs if msgs is not None else []
     if not SWEEP15_LOG or df is None or len(df) < 60:
         return
     s = obstate.setdefault("sweep15", dict(open=[], closed=[], seen=[]))
@@ -530,7 +553,10 @@ def sweep15_log(obstate, name, symbol, df, now):
                 else:
                     continue
                 R = sd * (e0 - r["stop"])
-                r.update(status="open", entry=float(e0), risk=float(R), target=float(e0 + sd * R))
+                r.update(status="open", entry=float(e0), risk=float(R), target=float(e0 + sd * R), entry_time=str(b.time))
+                if r.get("send"):
+                    msgs.append(f"✅ TRIGGERED – {_s15_who(r)} SELL (15-min sweep) at {e0:,.2f} · stop {r['stop']:,.2f} · "
+                                f"target {r['target']:,.2f}. {WARN}")
             if (b.low <= r["stop"]) if sd > 0 else (b.high >= r["stop"]):
                 done = ("stop", r["stop"]); break
             if (b.high >= r["target"]) if sd > 0 else (b.low <= r["target"]):
@@ -542,6 +568,14 @@ def sweep15_log(obstate, name, symbol, df, now):
             r.update(status="closed", exit_reason=done[0], exit=done[1], closed=str(now))
             if done[1] is not None and r.get("risk"):
                 r["gross_R"] = round(sd * (done[1] - r["entry"]) / r["risk"], 3)
+            if r.get("send"):
+                if done[1] is None or not r.get("risk"):
+                    msgs.append(f"⏹ CANCELLED – {_s15_who(r)} SELL 15-min sweep from {pd.Timestamp(r['sweep_time']):%H:%M}: no entry.")
+                else:
+                    g = r["gross_R"]
+                    msgs.append(f"{'✅' if g > 0 else '❌' if g < 0 else '➖'} EXIT – {_s15_who(r)} SELL (15-min sweep) at "
+                                f"{done[1]:,.2f}: {done[0]} · {g:+.2f}R" + (f" · {'+' if g >= 0 else '−'}₹{abs(g * r['risk'] * r['lot']):,.0f} per lot"
+                                                                             if r.get("lot") else "") + " before costs")
             s["closed"] = (s["closed"] + [r])[-1500:]
         else:
             keep.append(r)
@@ -572,7 +606,12 @@ def sweep15_log(obstate, name, symbol, df, now):
                                   stop=float(stop), vol_x=round(float(v[i] / va[i]), 2) if va[i] > 0 else None,
                                   oi_change_pct=None if doi is None else round(float(doi), 3),
                                   V=bool(va[i] > 0 and v[i] >= 1.5 * va[i]), OD=bool(doi is not None and doi < 0),
-                                  last_bar=str(f["time"].iat[i]), logged=str(now), waited=0))
+                                  last_bar=str(f["time"].iat[i]), logged=str(now), waited=0, lot=lot))
+            rec = s["open"][-1]
+            rec["send"] = bool(SWEEP15_SEND and side < 0 and rec["V"] and rec["OD"]
+                               and (rec["stop"] - rec["trigger"]) / rec["trigger"] * 100 <= P["max_stop_pct"])
+            if rec["send"]:
+                msgs.append(_s15_setup_msg(rec))
             print(f"[sweep15-log] {name} {lvname} {'SELL' if side < 0 else 'BUY'} sweep {f['time'].iat[i]:%H:%M} "
                   f"vol {v[i] / va[i] if va[i] > 0 else 0:.1f}x OI {doi if doi is not None else float('nan'):+.2f}% (log only)")
             return

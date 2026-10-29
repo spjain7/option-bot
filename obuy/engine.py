@@ -311,9 +311,9 @@ def scan(api, master, now, state):
                 continue
             try:
                 df = fut_frame(api, u["token"], now - pd.Timedelta(days=7), now)
-                try:                                     # 29-Oct (approved): 15-min liquidity-sweep LOG ONLY, never sent
+                try:                                     # 29-Oct (owner): 15-min liquidity sweep – SELL + volume + OI falling sent, rest logged
                     from alerts import candle_setups as CS
-                    CS.sweep15_log(state, u["name"], u.get("symbol"), df, now)
+                    CS.sweep15_log(state, u["name"], u.get("symbol"), df, now, msgs, u.get("lot"))
                 except Exception as e_:
                     rep.append(f"{u['name']} sweep15 log error {type(e_).__name__}")
                 i = last_completed(df, now) if df is not None else None
@@ -326,6 +326,16 @@ def scan(api, master, now, state):
                                 f"Last 1 hour: price {r['px_1h'] * 100:+.2f}%, OI {r['oi_1h'] * 100:+.1f}%"], msgs, rep)
             except Exception as e:
                 rep.append(f"{u['name']} intraday error {type(e).__name__}")
+    open15 = {r["name"] for r in (state.get("sweep15") or {}).get("open", [])}
+    if open15 and "14:47" < t <= "15:50":                 # follow open 15-min sweep calls to the close
+        try:
+            from alerts import candle_setups as CS
+            for u in universe(api, master, now, state):
+                if u["kind"] == "stock" and u["name"] in open15:
+                    CS.sweep15_log(state, u["name"], u.get("symbol"), fut_frame(api, u["token"], now - pd.Timedelta(days=7), now),
+                                   now, msgs, u.get("lot"))
+        except Exception as e_:
+            rep.append(f"sweep15 close tracking error {type(e_).__name__}")
     if t >= "15:30" and not state["done"].get(f"scorecard|{now:%Y-%m-%d}"):
         state["done"][f"scorecard|{now:%Y-%m-%d}"] = str(now)
         if state["closed"] or state["open"]:

@@ -45,7 +45,7 @@ Code: `alerts/candle_setups.py`, tests `alerts/tests/test_candle_setups.py` (15 
   - **Live-code replay:** 411 trades, 57.7%, +0.17R before costs.
   - **The sweep-candle OI check is new:** it has 15-minute evidence only, as no historical intraday OI exists.
   - **Scans run after 12:15 and after the 15:30 close.** The 12:15 block now fetches 1-hour candles for the stock universe.
-- **Sweep15 (log only, never sent).** Top-40 stock futures, 15-minute candles from the option-buy loop (no extra API calls).
+- **Sweep15 (29-Oct update: SELL + volume + OI falling now SENT, test phase; everything else logged).** Top-40 stock futures, 15-minute candles from the option-buy loop (no extra API calls).
   - Every sweep of the 20-candle or previous-day high/low is recorded, both sides, with volume and OI-falling flags, and tracked to the close at 1:1.
   - Exploratory evidence (Aug–Oct 2026): SELL with volume + OI falling, 48 trades, 75% wins, +0.28R. BUY sweeps were negative.
   - Review after about 100 trades.

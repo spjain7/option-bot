@@ -229,7 +229,7 @@ def test_sweep3h():
           any("TRIGGERED" in x for x in m) and cl and cl[0]["exit_reason"].endswith("target 1R") and abs(cl[0]["gross_R"] - 1) < 1e-6)
 
 
-def test_sweep15_log_only():
+def test_sweep15():
     t = pd.date_range("2026-10-19 09:15", periods=26, freq="15min").append(pd.date_range("2026-10-20 09:15", periods=26, freq="15min")) \
           .append(pd.date_range("2026-10-21 09:15", periods=12, freq="15min"))
     n = len(t)
@@ -238,14 +238,19 @@ def test_sweep15_log_only():
     hi = f["high"].iloc[-21:-1].max()
     f.loc[n - 1, ["open", "high", "low", "close", "volume"]] = [hi - 0.1, hi + 0.8, hi - 0.4, hi - 0.3, 2500.0]
     f.loc[n - 1, "oi"] = f["oi"].iloc[n - 2] * 0.99
-    ob = {}
-    CS.sweep15_log(ob, "TCS", None, f, pd.Timestamp("2026-10-21 12:20"))
+    ob, m = {}, []
+    CS.sweep15_log(ob, "TCS", None, f, pd.Timestamp("2026-10-21 12:20"), m, 175)
     r = ob.get("sweep15", {}).get("open", [])
-    check("15-min sweep above the 20-candle high is LOGGED with volume and OI-falling flags (log only – no message API at all)",
-          len(r) == 1 and r[0]["side"] == "SELL" and r[0]["V"] and r[0]["OD"])
+    check("15-min SELL sweep with volume + OI falling -> logged AND sent as a SELL SETUP (1:1, ₹ per lot)",
+          len(r) == 1 and r[0]["side"] == "SELL" and r[0]["V"] and r[0]["OD"] and r[0]["send"] and len(m) == 1
+          and "15-MIN LIQUIDITY SWEEP" in m[0] and "per lot" in m[0])
+    g = f.copy(); g.loc[len(g) - 1, "oi"] = g["oi"].iloc[-2] * 1.01
+    ob2, m2 = {}, []
+    CS.sweep15_log(ob2, "TCS", None, g, pd.Timestamp("2026-10-21 12:20"), m2, 175)
+    check("same sweep with OI rising -> logged only, not sent", len(ob2["sweep15"]["open"]) == 1 and not m2)
 
 
 if __name__ == "__main__":
     test_hammer_flow(); test_gap_through_target(); test_cancellations(); test_contract_change_and_one_at_a_time()
-    test_stock_hanging_man_needs_uptrend(); test_ema_cross(); test_hourly_rule(); test_engine_path(); test_sweep3h(); test_sweep15_log_only()
+    test_stock_hanging_man_needs_uptrend(); test_ema_cross(); test_hourly_rule(); test_engine_path(); test_sweep3h(); test_sweep15()
     print(f"\nALL {len(OK)} CANDLE-SETUP CHECKS PASSED")
