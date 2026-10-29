@@ -445,3 +445,14 @@ MCX OI history is not available from Angel -> OI rules not testable (live only).
   +0.11 / +0.18 / +0.35R (56 / 50 / 55 trades, 4 of 6 commodities positive in test); 3h double-bottom BUY with EMA200, ADX < 20
   +0.02 / +0.36 / +0.31R (62 / 32 / 51). Daily double bottom / engulfing gross +0.11…+0.15R (small samples).
 Verdict: no RSI-reversal or intraday commodity call is supported; nothing deployed.
+
+## CHAN-001 – the Telegram channel's apparent pattern, last 2 months (29-Oct-2026, owner request)
+40 stock futures, 15-min + OI, 20-Aug→22-Oct-2026 (37 sessions, 860 signals); option value modelled from the futures path with the
+previous day's real ATM IV (NSE bhavcopy). Patterns 09:30-11:30: prev-day-high break CE, prev-day-low break PE, failed gap (PE/CE),
+5-day high/low break; filters volume 1.5/2/3×, OI support, NIFTY direction; exits signal-bar stop 1R / 2R / hold to 15:15.
+* Futures after costs: every pattern negative (−0.3 … −0.9R; signal-bar stops are tight). Option (modelled) ≈ 0 … +5 %, failed-gap PE
+  best (+4.6 % at 1R, 65 % wins, 40 trades) but negative in the first month.
+* Channel-like filter (vol ≥ 2×, OI supports, market same way): 14-31 trades per pattern, all negative.
+* 306 combos: 0 positive in both months.
+* "Made high": 26 % of ALL signals saw the ATM option rise ≥ 30 % at some point before 15:15 (median best +8…+14 %), while the average
+  trade held to 15:15 lost 2.4 %. Posting only the moves that ran (and their peak) produces a "perfect" record from a coin-flip rule.
