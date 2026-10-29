@@ -102,6 +102,22 @@ class Angel:
         until, streak = self._breaker()
         return streak >= self.FAILFAST_AFTER and until > time.time()
 
+    def wait_clear(self, max_s=100):
+        """Priority callers (index / MCX futures calls): wait out an active block (at most max_s) and start a fresh streak,
+        instead of skipping the data. Returns True when the block is over."""
+        until, streak = self._breaker()
+        remaining = until - time.time()
+        if remaining > max_s:
+            return False
+        if remaining > 0:
+            print(f"[angel] priority fetch: waiting {remaining:.0f}s for the rate-limit pause to end")
+            time.sleep(remaining + 1)
+        try:
+            (self._dir / "breaker.json").write_text(json.dumps({"until": 0, "streak": 0}))
+        except Exception:
+            pass
+        return True
+
     def _gate(self):
         """May an API call go out now? Waits out a short cool-down; during a long block returns False (skip the call)."""
         until, streak = self._breaker()

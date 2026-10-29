@@ -67,8 +67,11 @@ obuy() {
 }
 
 iteration() {
-  options
-  obuy   # intraday STOCK option buys (VWAP + RSI + OI); positional option buys come with the futures calls (alerts/)
+  # 29-Oct: futures calls run FIRST (they were last and found Angel already rate-limiting -> NIFTY / BANKNIFTY / MCX skipped).
+  # The fresh worktree of the latest main is made here (it was made by options()).
+  rm -rf /tmp/opt; git worktree prune
+  (git fetch -q origin main && git worktree add -q --detach /tmp/opt FETCH_HEAD && mkdir -p .cache && ln -sfn "$PWD/.cache" /tmp/opt/.cache) \
+    || { echo "::warning::fresh checkout failed - alerts run on this job's code"; rm -rf /tmp/opt; }
   # ---- buy/sell alerts ----
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n
@@ -82,6 +85,8 @@ iteration() {
   else
     echo "::error::alerts state restore failed"
   fi
+  options
+  obuy   # intraday STOCK option buys (VWAP + RSI + OI); positional option buys come with the futures calls (alerts/)
 }
 
 # ---- trading-day window (IST). The loop only runs from 08:40 until 00:20 (NSE 09:15-15:30, MCX 09:00-23:30/23:55) on Mon-Fri

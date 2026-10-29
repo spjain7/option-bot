@@ -126,6 +126,21 @@ def test_failfast_and_probe():
         check("probe succeeds -> calls flow again", b.candles("MCX", "100", "ONE_HOUR", T0, NOW) is not None and b._breaker()[1] == 0)
 
 
+def test_priority_wait_clear():
+    with tempfile.TemporaryDirectory() as d:
+        a = make(d, FakeSmart())
+        (Path(d) / "breaker.json").write_text(json.dumps({"until": time.time() + 40, "streak": 6}))
+        check("blocked: fail-fast is on before the priority wait", a.failfast() is True)
+        with mock.patch("angel.time.sleep") as sl:
+            ok = a.wait_clear()
+        check("priority fetch waits out a 40 s block (not skipped)", ok and sl.called and sl.call_args_list[0].args[0] >= 39)
+        check("after the wait the streak is reset and the next call goes out", a.failfast() is False and
+              a.candles("MCX", "1", "ONE_HOUR", T0, NOW) is not None and a.api.n == 1)
+        (Path(d) / "breaker.json").write_text(json.dumps({"until": time.time() + 500, "streak": 6}))
+        with mock.patch("angel.time.sleep") as sl2:
+            check("a block longer than the limit is not waited for", a.wait_clear(max_s=100) is False and not sl2.called)
+
+
 def test_quotes_and_stats():
     with tempfile.TemporaryDirectory() as d:
         a = make(d, FakeSmart(["rate", "ok"]))
@@ -149,6 +164,6 @@ def test_detection():
 
 
 if __name__ == "__main__":
-    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_quotes_and_stats, test_detection):
+    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_priority_wait_clear, test_quotes_and_stats, test_detection):
         t()
     print("all angel throttle tests passed")

@@ -1,4 +1,4 @@
-"""Offline tests for the 29-Oct option-buy improvements (obuy/improve.py + obuy/engine.py). python -m obuy.tests.test_improve"""
+"""Offline tests for obuy/improve.py helpers (engine exits/entry rules reverted 29-Oct by owner; ban check kept). python -m obuy.tests.test_improve"""
 import sys
 from pathlib import Path
 import numpy as np
@@ -52,57 +52,6 @@ check(IM.ban_list(st, pd.Timestamp("2026-10-29 09:40"), fetch=lambda: "Sr No,Sym
       "F&O ban list parsed")
 check(IM.ban_list(st, pd.Timestamp("2026-10-29 10:40"), fetch=lambda: 1 / 0) == ["IEX", "RBLBANK"], "ban list fetched once a day (cached)")
 check(IM.ban_list({}, pd.Timestamp("2026-10-29 09:40"), fetch=lambda: 1 / 0) is None, "fetch failure -> unknown (None), never invented")
-
-# 5. exits: time stop and VWAP invalidation
-class MA:
-    def __init__(self, p, df=None): self.p, self.df = p, df
-    def quotes(self, ex): return {t: {"ltp": self.p.get(t, 0), "tradeVolume": 10} for t in ex["NFO"]}
-    def candles(self, ex, tok, iv, frm, to): return self.df
-    def oi_history(self, ex, tok, iv, frm, to): return None
-base = {"dir": 1, "name": "X", "K": 100, "lot": 100, "kind": "stock", "entry": 100.0, "sl": 70.0, "tg": 160.0, "mode": "intraday",
-        "exit_at": "2026-10-29 15:15", "symbol": "X", "id": 1, "opened": "2026-10-29 10:00", "token": "a"}
-s1, m1 = {"open": [dict(base)], "closed": []}, []
-E.manage(MA({"a": 105}), s1, pd.Timestamp("2026-10-29 11:05"), m1)
-check(s1["closed"] and s1["closed"][0]["why_exit"].startswith("no follow-through"), "time stop: premium +5% after 65 min -> exit")
-s2, m2 = {"open": [dict(base)], "closed": []}, []
-E.manage(MA({"a": 115}), s2, pd.Timestamp("2026-10-29 11:05"), m2)
-check(not s2["closed"], "premium +15% after 65 min -> keep")
-t = pd.date_range("2026-10-29 09:15", periods=8, freq="15min")
-fdf = pd.DataFrame(dict(time=t, open=1000.0, high=1001.0, low=999.0, close=[1002, 1003, 1004, 1003, 1001, 999, 998, 997.0],
-                        volume=1000, oi=1e6))
-fdf["vwap"] = 1000.5
-s3, m3 = {"open": [dict(base, fut_token="F")], "closed": []}, []
-E.fut_frame = lambda api, tok, frm, now: fdf
-E.manage(MA({"a": 112}, fdf), s3, pd.Timestamp("2026-10-29 11:17"), m3)
-check(s3["closed"] and s3["closed"][0]["why_exit"] == "futures closed back across VWAP" and "EXIT" in m3[0],
-      "VWAP invalidation: futures close back below VWAP -> exit message")
-
-# 6. entry: strike choice and the normal-move check (open_alert end to end)
-class OA:
-    def __init__(self, atr): self.atr = atr
-    def quotes(self, ex):
-        out = {}
-        for tk in ex["NFO"]:
-            typ, k = tk[:2], float(tk[2:])
-            pr = price(1005.0, k, 28 / 365, 0.28, 0.065, typ)
-            out[tk] = {"ltp": round(pr, 2), "tradeVolume": 100, "opnInterest": 1000,
-                       "depth": {"buy": [{"price": pr * 0.995}], "sell": [{"price": pr * 1.005}]}}
-        return out
-    def candles(self, ex, tok, iv, frm, to):
-        d = pd.bdate_range(end="2026-10-28", periods=30)
-        rng = np.random.default_rng(1); c = 1000 * np.exp(np.cumsum(rng.normal(0, 0.017, len(d))))
-        return pd.DataFrame(dict(time=d, open=c, high=c + self.atr / 2, low=c - self.atr / 2, close=c, volume=1000))
-E.fut_frame = lambda api, tok, frm, now: None
-for atr, want in ((40.0, True), (4.0, False)):
-    stt, msgs, rep = {"open": [], "closed": [], "done": {}, "next_id": 1}, [], []
-    E.open_alert(OA(atr), master, stt, pd.Timestamp("2026-10-29 10:05"), {"name": "ABC", "token": "F", "kind": "stock", "lot": 500},
-                 "intraday", 1, 1005.0, ["test signal"], msgs, rep)
-    if want:
-        a = stt["open"][0] if stt["open"] else {}
-        check(bool(msgs) and a.get("K") in (1000.0, 1020.0) and any("normal move" in x for x in a.get("why", [])),
-              f"daily range {atr:g}: alert sent with strike {a.get('K')} and the normal-move line")
-    else:
-        check(not msgs and any("normal move" in r for r in rep), f"daily range {atr:g}: skipped – a normal move cannot pay the 30% risk")
 
 # 7. option idea for a triggered futures call, judged on the futures stop / target
 mst = master.assign(instrumenttype="OPTSTK")

@@ -475,13 +475,24 @@ def scan(api, master, now, state, msgs, rep, engine):
             complete = False
             break
         prog["done"].append(name)
-        try:
-            h = api.candles("NFO", c["token"], "ONE_HOUR", now - pd.Timedelta(days=400 if daily_block else 200), now)
-            oi = (api.oi_history("NFO", c["token"], "ONE_DAY", now - pd.Timedelta(days=60), now)
-                  if daily_block and hasattr(api, "oi_history") else None)
-        except Exception:
-            h, oi = None, None
+
+        def _fetch(_c=c):
+            try:
+                h_ = api.candles("NFO", _c["token"], "ONE_HOUR", now - pd.Timedelta(days=400 if daily_block else 200), now)
+                oi_ = (api.oi_history("NFO", _c["token"], "ONE_DAY", now - pd.Timedelta(days=60), now)
+                       if daily_block and hasattr(api, "oi_history") else None)
+            except Exception:
+                h_, oi_ = None, None
+            return h_, oi_
+        h, oi = _fetch()
+        blocked = lambda: hasattr(api, "failfast") and api.failfast()
+        if (h is None or h.empty) and blocked() and hasattr(api, "wait_clear") and api.wait_clear():
+            h, oi = _fetch()                                   # 29-Oct: wait out an Angel rate-limit pause once, then retry
         if h is None or h.empty:
+            if blocked():                                      # still blocked: this stock was NOT scanned -> resume next
+                prog["done"].remove(name)                      # cycle (was: counted as done, the 12:15 scan of 29-Oct
+                complete = False                               # skipped all 207 stocks and reported "done")
+                break
             continue
         h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
         try:                                                    # 29-Oct: option idea when a proven stock setup triggers
@@ -612,5 +623,5 @@ def scan(api, master, now, state, msgs, rep, engine):
         rep["stocks"]["data_holds"] = sorted(st["dq_holds"])
     left = len([n for n in uni if n not in prog["done"]])
     rep["stocks"].update(scan=(f"{'3h + daily' if daily_block else '3h'} scan of {len(uni)} stock futures done" if complete else
-                               f"stock scan paused after {SCAN_BUDGET_SEC:.0f}s – {left} stocks left, continues next cycle"),
+                               f"stock scan paused (time budget or Angel rate limit) – {left} stocks left, continues next cycle"),
                          new_calls=found)

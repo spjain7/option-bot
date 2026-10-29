@@ -268,8 +268,10 @@ def scan(api, master, now, state, only=None):
                     rep["errors"].append(f"{name} {tf}: {type(e).__name__}")
                 if df is not None and not df.empty:
                     break
-                if hasattr(api, "failfast") and api.failfast():     # Angel is blocking us: more retries only make it worse
-                    break
+                if hasattr(api, "failfast") and api.failfast():     # Angel is blocking us: wait for the pause to end ONCE
+                    if attempt == 2 or not (hasattr(api, "wait_clear") and api.wait_clear()):   # (29-Oct: index / MCX data was
+                        break                                                               # skipped all day, breakouts missed)
+                    continue
                 if attempt < 2 and hasattr(api, "api"):
                     import time; time.sleep(2 + 2 * attempt)
             if df is None or df.empty:
