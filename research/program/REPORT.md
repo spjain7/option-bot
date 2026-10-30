@@ -526,3 +526,9 @@ Same 18 variants (lookback 5/10/20 · volume 1.5/2 · stop/target 2/2, 2.5/2.5, 
   periods at 3×. Best MCX BUY 3×: lookback 10, 2.5 ATR / 2.5R +0.25R (+0.15 / +0.14 / +0.46), 228 trades.
   Best stock SELL 3×: lookback 10, 2.5 ATR / 2.5R +0.14R, 51 % wins, 1,022 trades (+0.11 / +0.01 / +0.20).
 * Still below 4h (MCX BUY best +0.50R, 17/18 robust; stock SELL +0.17R). MCX SELL and stock BUY negative at every volume level.
+
+## TF1H-VOL – 1-hour candles with volume 3 / 4 / 5× (30-Oct-2026, owner)
+No variant positive in all three periods at any volume level. MCX BUY at 5×: −0.24…−0.45R in 2022-24, +0.07…+0.30R after (median
+−0.07R overall); stock SELL 5×: +0.03…+0.08R, mixed by period; MCX SELL and stock BUY negative. 3-month log (22 Jul – 21 Oct):
+MCX 1h BUY 5× 10 calls +₹4.26 lakh/lot (3 wins), stock 1h SELL 5× 212 calls 47 % wins +₹3.61 lakh, 82 stop hits – both behind the
+4-hour rules (+₹10.83 lakh, +₹7.97 lakh).
