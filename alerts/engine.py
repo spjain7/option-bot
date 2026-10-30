@@ -580,6 +580,12 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if not plan["valid"]:
             print(f"[rejected] {name} {tf} {sig['side']}: {plan['reason']}")
             info[f"bo_{tf}"] += f" · skipped: {plan['reason']}"; continue
+        if tf == "3h" and sig["side"] == "SELL":         # 30-Oct: no 3h SELL into support before the target (tested: −0.17R -> −0.10R)
+            sup_ = [x for x in (lv.get("support") or []) if x[0] < plan["entry"]]
+            if sup_ and plan.get("risk_unit") and (plan["entry"] - sup_[0][0]) < BO.TARGET_R["3h"] * plan["risk_unit"]:
+                why_ = f"support {sup_[0][0]:,.2f} ({sup_[0][1]}) before the {BO.TARGET_R['3h']:g}R target"
+                print(f"[rejected] {name} {tf} SELL: {why_}")
+                info[f"bo_{tf}"] += f" · skipped: {why_}"; continue
         key = f"{name}|{tf}|{last}"
         if shadow_only:                                   # 28-Oct approval: 3h SELL lost money in every test -> log only
             state["bo_active"].append(_shadow_rec(name, tf, sig["side"], plan, last, now, c, key, "3h SELL (log only, not sent)"))

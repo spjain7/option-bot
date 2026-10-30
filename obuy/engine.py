@@ -333,7 +333,19 @@ def scan(api, master, now, state):
                 s = intraday_signal(df, i) if i is not None else 0
                 if s:
                     r = df.iloc[i]
+                    try:                                  # 30-Oct: nearest resistance (CE) / support (PE) on the futures
+                        from alerts import signals as S_
+                        from crude import indicators as I_
+                        a15 = float(I_.atr(df.iloc[:i + 1], 14).iloc[-1])
+                        lv_ = S_.levels(df.iloc[:i + 1], df.iloc[:i + 1], float(r["close"]), a15)
+                        opp = (lv_["resistance"] if s > 0 else lv_["support"])[:1]
+                        srl = (f"{'Resistance' if s > 0 else 'Support'} {opp[0][0]:,.1f} ({opp[0][1]}), "
+                               f"{abs(opp[0][0] - float(r['close'])) / float(r['close']) * 100:.2f}% away") if opp else \
+                              f"No {'resistance' if s > 0 else 'support'} level near"
+                    except Exception:
+                        srl = None
                     open_alert(api, master, state, now, u, "intraday", s, float(r["close"]),
+                               ([srl] if srl else []) +
                                [f"Futures crossed {'above' if s > 0 else 'below'} VWAP ({r['vwap']:,.1f})",
                                 f"RSI {r['rsi']:.0f} ({'strong' if s > 0 else 'weak'} momentum)",
                                 f"Last 1 hour: price {r['px_1h'] * 100:+.2f}%, OI {r['oi_1h'] * 100:+.1f}%"], msgs, rep)
