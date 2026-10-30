@@ -494,3 +494,12 @@ the Angel set), Jul-2022→Oct-2026, 2× costs.
 * 3h BUY: N=20 +0.24R (315), N=10 +0.22R (374), N=5 +0.20R (434, +0.09 / +0.14 / +0.36) – similar; more trades with shorter N.
 * SELL (3h and daily): negative at EVERY lookback (3h −0.14…−0.17R; daily −0.04…−0.19R) – the lookback does not fix SELL.
 * Best per commodity (3h BUY): GOLD +0.44…+0.60R at all N, ZINC/SILVER/COPPER +0.13…+0.36R, ALUMINIUM negative.
+
+## PARAM-SWEEP-001 – one-at-a-time sensitivity of the live futures rules (30-Oct-2026, owner: "do this yourself")
+MCX (6) and NIFTY/BANKNIFTY, 3h + daily, both sides; lookback, volume, EMA, stop ATR, target R, max hold; "better" = beats live
+in train AND valid AND test, positive in all three, ≥ 60 % of the trades.
+* MCX 3h BUY (live +0.23 / +0.13 / +0.28R, 374 trades): stop 3 ATR (+0.28 / +0.19 / +0.33, 236), target 3R (+0.26 / +0.13 / +0.35, 344),
+  target 4R pass. Combination stop 2.5 ATR + 2.5R: +0.29 / +0.23 / +0.32R, 290 trades – better in every period.
+* MCX daily BUY (5-day lookback, +0.96 / +0.59 / +0.80): no change beats it everywhere.
+* MCX 3h SELL: negative at every setting tried. Daily SELL: 14-27 trades in 4 years – too few to tune.
+* INDEX: 7-30 trades per rule in 4 years – too few to tune anything.
