@@ -670,23 +670,12 @@
   ]
  },
  "day": {
-  "date": "2026-10-30",
-  "alerts": 7,
+  "date": "2026-10-31",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
-  "eod_sent": true,
-  "outcomes": [
-   {
-    "name": "GOLD",
-    "tf": "3h",
-    "side": "SELL",
-    "result": "\ud83c\udfaf TARGET HIT +2.00R"
-   }
-  ],
-  "rep_nse": true,
-  "watch1h_sum_NFO": true,
-  "watch1h_sum_MCX": true,
-  "rep_mcx": true
+  "startup_sent": false,
+  "eod_sent": false,
+  "outcomes": []
  },
  "history": [],
  "oi": {
