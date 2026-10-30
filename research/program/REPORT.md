@@ -503,3 +503,13 @@ in train AND valid AND test, positive in all three, ≥ 60 % of the trades.
 * MCX daily BUY (5-day lookback, +0.96 / +0.59 / +0.80): no change beats it everywhere.
 * MCX 3h SELL: negative at every setting tried. Daily SELL: 14-27 trades in 4 years – too few to tune.
 * INDEX: 7-30 trades per rule in 4 years – too few to tune anything.
+
+## TF5H-001 – 5-hour candles (30-Oct-2026, owner idea)
+MCX 5h = 09-14 / 14-19 / 19-close blocks; NSE 5h = every 5 consecutive 1h bars. Live breakout family, 18 variants, 2× costs.
+* MCX 5h BUY: 13 of 18 variants positive in train, valid AND test. Best: lookback 5, vol > 1.5×, stop 2.5 ATR, 2.5R ->
+  +0.42R/trade (+0.34 / +0.60 / +0.40), 148 trades, every commodity positive (GOLD +0.63, SILVER +0.54, ZINC +0.43, COPPER +0.25,
+  ALUMINIUM +0.10); 2023 −0.08, other years positive. Live 3h BUY ≈ +0.22R. 69 % of 5h trades have a 3h BUY within ±1 day.
+* STOCKS 5h SELL (breakdown, vol ≥ 2×, stop 2.5 ATR, 2.5R): +0.18R, 63 % wins, 152 trades in 66 stocks, positive every year 2023-26
+  (+0.26 / +0.34 / +0.10 / +0.25). Stocks 5h BUY and 3h BUY lose.
+* MCX SELL and all INDEX settings: no robust result (index has 8-30 trades).
+Selection caveat: 18 variants per timeframe/side, not FDR-corrected; MCX 5h BUY is robust across most variants.
