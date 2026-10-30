@@ -448,7 +448,39 @@ def _switch_day(state, c, d):
     return pd.Timestamp(sw[0][0]).normalize() if sw else None
 
 
-SHADOW_ONLY = {("3h", "SELL")}        # 28-Oct-2026 (approved): logged and tracked, never sent
+SHADOW_ONLY = set()                   # 28-Oct: 3h SELL was log-only; 30-Oct the owner asked for these calls again -> sent
+
+
+def _promote_shadow_sells(state, msgs, name, ex, c, q, now):
+    """30-Oct (owner): open 3h SELL calls that were only logged today are sent now, with the current price, and tracked
+    like every call (follow-ups, daily report)."""
+    for p in state.get("bo_active", []):
+        if p["name"] != name or p.get("shadow") != "3h SELL (log only, not sent)" or str(p.get("opened", ""))[:10] != str(now.date()):
+            continue
+        p.pop("shadow", None)
+        ltp = float((q or {}).get("ltp") or 0) or None
+        s_ = -1 if p["side"] == "SELL" else 1
+        where = ""
+        if ltp:
+            if s_ * (ltp - p["stop"]) <= 0:
+                where = " · ⚠️ price is already beyond the stop-loss – do not enter"
+            elif s_ * (ltp - p["target"]) >= 0:
+                where = " · price is already at the target – do not enter"
+            else:
+                where = f" · move so far {s_ * (ltp - p['entry']):+,.1f} pts"
+        msgs.append(f"🔴 {'SELL' if s_ < 0 else 'BUY'} – {name} FUT ({ex}) · SWING (3-hour candles) · signal at {pd.Timestamp(p['opened']):%H:%M}\n"
+                    f"Contract : {p.get('contract')}\n• Entry  : {p['entry']:,.2f}\n• Stop-loss : {p['stop']:,.2f}\n• Target : {p['target']:,.2f}\n"
+                    f"• Now    : {ltp:,.2f}{where}\n" if ltp else "")
+        if not ltp:
+            msgs[-1] = (f"🔴 SELL – {name} FUT ({ex}) · 3-hour · signal at {pd.Timestamp(p['opened']):%H:%M} · entry {p['entry']:,.2f} · "
+                        f"SL {p['stop']:,.2f} · target {p['target']:,.2f}")
+        msgs[-1] += ("\nThis 3h SELL was logged only (28-Oct rule) and is now sent; 3h SELL breakouts lost money in the 2022-26 "
+                     "backtest – smaller size. Alert only – not investment advice.")
+        seg = "MCX" if ex == "MCX" else "NSE"
+        RP.add(state, key=p.get("key"), mark_key=p.get("token"), seg=seg, cat="FUTURES", name=name, symbol=p.get("contract"),
+               type=RP.CALL_TYPE.get(p["tf"], "Positional"), side=p["side"], entry=p["entry"], sl=p["stop"], target=p["target"],
+               tick=p.get("tick"), lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")), time=p.get("opened"))
+        state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
 
 
 def _shadow_rec(name, tf, side, plan, last, now, c, key, label):
@@ -491,6 +523,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     frames["1m"] = dd                                               # monthly breakout is checked on daily closes
     htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
+    _promote_shadow_sells(state, msgs, name, ex, c, q, now)
     if ex == "MCX":                                                  # 29-Oct (approved, live): candle-setup calls
         try:
             lv_ = (q or {}).get("ltp")

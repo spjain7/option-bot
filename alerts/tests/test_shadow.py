@@ -42,24 +42,23 @@ C_ = dict(symbol="NIFTY25NOV26FUT", token="1", expiry="2026-11-25", lot=75, tick
 NOW = pd.Timestamp("2026-10-28 12:17")
 
 
-def test_sell_logged_only():
+def test_sell_sent():
+    """30-Oct (owner): 3h SELL calls are SENT again (were log-only since 28-Oct)."""
     h = hourly(-1)
     st = E.new_state(); st["day"] = day()
     live = float(h["close"].iloc[-1]) - 3.0
     msgs, info = [], {}
     E._breakouts(st, msgs, info, "NIFTY", "NFO", C_, h, None, NOW, None, {"ltp": live, "exchFeedTime": "28-Oct-2026 12:16:50"})
-    sh = [p for p in st["bo_active"] if p["tf"] == "3h"]
-    check("3h SELL breakout -> NO Telegram call, but a log-only record with entry / SL / target",
-          not any("SELL  NIFTY FUT" in m for m in msgs) and len(sh) == 1 and sh[0]["shadow"].startswith("3h SELL")
-          and sh[0]["side"] == "SELL" and "logged only" in info.get("bo_3h", ""))
-    check("log-only SELL creates no report-ledger row (not shown as a call)", not any(r["key"].startswith("NIFTY|3h") for r in st.get("ledger", [])))
-    p = sh[0]
-    bar = pd.DataFrame(dict(time=[pd.Timestamp("2026-10-28 12:45")], open=[p["entry"]], high=[p["entry"] + 1], low=[p["target"] - 1],
-                            close=[p["target"]], volume=[1.0]))
-    m2 = []
-    BO.manage(st, m2, "NIFTY", "3h", None, bar, pd.Timestamp("2026-10-28 13:02"))
-    check("log-only SELL reaching its target: NO message, outcome stored in shadow_bo (+2R)",
-          not m2 and abs(st["shadow_bo"][-1]["r"] - 2.0) < 0.01 and not any(x["tf"] == "3h" for x in st["bo_active"]))
+    real = [p for p in st["bo_active"] if p["tf"] == "3h" and not p.get("shadow")]
+    check("3h SELL breakout -> Telegram call + tracked + report-ledger row",
+          any("SELL  NIFTY FUT" in m for m in msgs) and len(real) == 1 and real[0]["side"] == "SELL"
+          and any(r["key"] == real[0]["key"] for r in st["ledger"]))
+    st2 = E.new_state(); st2["day"] = day()
+    st2["bo_active"] = [dict(real[0], shadow="3h SELL (log only, not sent)", opened="2026-10-28 12:17:00")]
+    m3 = []
+    E._promote_shadow_sells(st2, m3, "NIFTY", "NFO", C_, {"ltp": real[0]["entry"] - 5}, pd.Timestamp("2026-10-28 13:02"))
+    check("a 3h SELL logged only earlier today is sent once with the current price and added to the report",
+          len(m3) == 1 and "Now" in m3[0] and not st2["bo_active"][0].get("shadow") and len(st2["ledger"]) == 1)
 
 
 def test_buy_sent_and_ha_logged():
@@ -84,5 +83,5 @@ def test_buy_sent_and_ha_logged():
 
 
 if __name__ == "__main__":
-    test_sell_logged_only(); test_buy_sent_and_ha_logged()
+    test_sell_sent(); test_buy_sent_and_ha_logged()
     print(f"\nALL {len(OK)} SHADOW CHECKS PASSED")
