@@ -565,6 +565,8 @@ def sweep15_log(obstate, name, symbol, df, now, msgs=None, lot=None):
                 if r.get("send"):
                     msgs.append(f"✅ TRIGGERED – {_s15_who(r)} SELL (15-min sweep) at {e0:,.2f} · stop {r['stop']:,.2f} · "
                                 f"target {r['target']:,.2f}. {WARN}")
+            if r["status"] == "open":                    # high / low after the call (daily report)
+                r["hi"] = max(r.get("hi", r["entry"]), float(b.high)); r["lo"] = min(r.get("lo", r["entry"]), float(b.low))
             if (b.low <= r["stop"]) if sd > 0 else (b.high >= r["stop"]):
                 done = ("stop", r["stop"]); break
             if (b.high >= r["target"]) if sd > 0 else (b.low <= r["target"]):

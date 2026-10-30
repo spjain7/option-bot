@@ -93,7 +93,7 @@ iteration() {
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n
     # run the LATEST main code (fresh worktree made by options()), so fixes pushed during the day apply at the next scan
-    if [ -d /tmp/opt ]; then (cd /tmp/opt && ALERTS_STATE_DIR="$OLDPWD/state/alerts" timeout 1200 python -m alerts.run scan); \
+    if [ -d /tmp/opt ]; then (cd /tmp/opt && ALERTS_STATE_DIR="$OLDPWD/state/alerts" OBUY_STATE_FILE="$OLDPWD/state/obuy/state.json" timeout 1200 python -m alerts.run scan); \
     else timeout 1200 python -m alerts.run scan; fi; rc=$?   # the 15:30 stock scan (181 futures) can take ~10 min
     if [ -f state/alerts/state.json ] && save alerts-state alerts state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
     [ -f state/alerts/outbox.json ] && SAVE_OK=$SAVE_OK python -m alerts.run flush

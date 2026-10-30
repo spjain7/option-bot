@@ -263,6 +263,7 @@ def close_ledger(state, key, fut_exit, why, now):
             continue
         if L.get("key") == key:
             L.update(status="CLOSED", exit=round(fut_exit, 2), note=why.replace("🎯 ", "")[:24], closed=str(now))
+            L["hi"], L["lo"] = max(L.get("hi", fut_exit), fut_exit), min(L.get("lo", fut_exit), fut_exit)
         elif L.get("key") == key + "|OPT":
             s = 1 if L.get("und_side") == "BUY" else -1
             L.update(status="CLOSED", exit=round(max(0.05, L["entry"] + 0.5 * s * (fut_exit - L["und_entry"])), 2),

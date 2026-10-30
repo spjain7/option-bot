@@ -396,6 +396,15 @@ def scan(api, master, now, state, only=None):
     if not state["day"]["startup_sent"] and now.hour >= 8 and any(is_open(e, now) for e in ("MCX", "NFO")):
         msgs.insert(0, startup_msg(now, rep))
         state["day"]["startup_sent"] = True
+    try:                                                   # 30-Oct: high / low after every open call (one quote call per exchange)
+        for seg_, ex_ in (("NSE", "NFO"), ("MCX", "MCX")):
+            if not is_open(ex_, now):
+                continue
+            tk_ = sorted({r["mark_key"] for r in state.get("ledger", []) if r["seg"] == seg_ and r["status"] == "OPEN" and r.get("mark_key")})
+            if tk_:
+                RP.track(state, api.quotes({ex_: tk_}) or {}, now)
+    except Exception as e_:
+        print(f"[report] tracking skipped: {type(e_).__name__}: {e_}")
     # end-of-day call reports (table image + text): Index + Stock after the NSE close, MCX after the MCX close
     for seg, ex, flag in (("NSE", "NFO", "rep_nse"), ("MCX", "MCX", "rep_mcx")):
         if state["day"].get(flag) or now.weekday() >= 5 or is_open(ex, now) or not _after_close(ex, now):
@@ -404,7 +413,7 @@ def scan(api, master, now, state, only=None):
         try:
             toks = sorted({r["mark_key"] for r in state.get("ledger", []) if r["seg"] == seg and r["status"] == "OPEN" and r.get("mark_key")})
             qq = api.quotes({ex: toks}) if toks else {}
-            marks = {t: float((qq.get(t) or {}).get("ltp") or 0) or None for t in toks}
+            marks = {t: qq.get(t) for t in toks}
             msgs += RP.build(state, seg, now, marks, os.getenv("ALERTS_STATE_DIR", "state/alerts"))
         except Exception as e:
             rep["errors"].append(f"report {seg}: {type(e).__name__}: {str(e)[:80]}")

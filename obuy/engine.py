@@ -214,6 +214,8 @@ def manage(api, state, now, msgs):
     keep = []
     for a in state["open"]:
         ltp = float((q.get(a["token"]) or {}).get("ltp") or 0)
+        if ltp > 0:                                      # premium high / low after the call (daily report)
+            a["hi"], a["lo"], a["last"] = max(a.get("hi", a["entry"]), ltp), min(a.get("lo", a["entry"]), ltp), ltp
         why = px = None
         if ltp > 0 and ltp <= a["sl"]:
             why, px = "stop-loss hit", a["sl"]
