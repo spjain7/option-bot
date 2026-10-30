@@ -485,3 +485,12 @@ previous day's real ATM IV (NSE bhavcopy). Patterns 09:30-11:30: prev-day-high b
 * Traded (entry next 5-min open, stop beyond the day extreme, 1R / 2R, exit 15:15, real lots, 2× costs): 2,379 trades, win
   44-49 %, gross ≈ 0 (−0.05 / +0.02 R), after costs −0.5R; −₹30 lakh total per lot over 3 months. Wider stops (≥ 0.6 %): still negative.
   Reason: even with the hint, 97-98 % of the time no 1.5 % move comes, and the costs on a tight intraday stop are ~0.45R.
+
+## MCX-LOOKBACK-001 – breakout lookback 3 / 5 / 10 / 15 / 20 candles (30-Oct-2026, owner)
+Live MCX rule otherwise unchanged (vol > 1.5×, EMA200 side, 3h stop 2 ATR 2R · daily 1.5 ATR 3R), 6 commodities (NATURALGAS not in
+the Angel set), Jul-2022→Oct-2026, 2× costs.
+* Daily BUY: N=5 +0.78R/trade, 94 trades, +0.96 / +0.59 / +0.80 (train/valid/test) vs N=20 +0.73R, 63 trades, +1.61 / −0.15 / +0.87
+  -> shorter lookback = 50 % more trades, same average, positive in every period.
+* 3h BUY: N=20 +0.24R (315), N=10 +0.22R (374), N=5 +0.20R (434, +0.09 / +0.14 / +0.36) – similar; more trades with shorter N.
+* SELL (3h and daily): negative at EVERY lookback (3h −0.14…−0.17R; daily −0.04…−0.19R) – the lookback does not fix SELL.
+* Best per commodity (3h BUY): GOLD +0.44…+0.60R at all N, ZINC/SILVER/COPPER +0.13…+0.36R, ALUMINIUM negative.
