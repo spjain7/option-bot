@@ -451,7 +451,7 @@ def _switch_day(state, c, d):
 SHADOW_ONLY = set()                   # 28-Oct: 3h SELL was log-only; 30-Oct the owner asked for these calls again -> sent
 
 
-def _promote_shadow_sells(state, msgs, name, ex, c, q, now):
+def _promote_shadow_sells(state, msgs, name, ex, c, q, now, oi=None):
     """30-Oct (owner): open 3h SELL calls that were only logged today are sent now, with the current price, and tracked
     like every call (follow-ups, daily report)."""
     for p in state.get("bo_active", []):
@@ -474,6 +474,7 @@ def _promote_shadow_sells(state, msgs, name, ex, c, q, now):
         if not ltp:
             msgs[-1] = (f"🔴 SELL – {name} FUT ({ex}) · 3-hour · signal at {pd.Timestamp(p['opened']):%H:%M} · entry {p['entry']:,.2f} · "
                         f"SL {p['stop']:,.2f} · target {p['target']:,.2f}")
+        msgs[-1] += "\n• " + _oi_line(oi)
         msgs[-1] += ("\nThis 3h SELL was logged only (28-Oct rule) and is now sent; 3h SELL breakouts lost money in the 2022-26 "
                      "backtest – smaller size. Alert only – not investment advice.")
         seg = "MCX" if ex == "MCX" else "NSE"
@@ -523,10 +524,11 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     frames["1m"] = dd                                               # monthly breakout is checked on daily closes
     htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
-    _promote_shadow_sells(state, msgs, name, ex, c, q, now)
+    _promote_shadow_sells(state, msgs, name, ex, c, q, now, oi)
     if ex == "MCX":                                                  # 29-Oct (approved, live): candle-setup calls
         try:
             lv_ = (q or {}).get("ltp")
+            CS.OI_NOTE = _oi_line(oi).replace("OI     : ", "")          # 30-Oct: OI line in every setup message
             CS.on_mcx(state, msgs, name, ex, c, dd, frames["3h"], c15, now, live=float(lv_) if lv_ not in (None, "", 0) else None)
             info["setups"] = " · ".join(f"{r['setup']} {r['status']}" for r in state["candle_setups"]["open"] if r["name"] == name) or "none"
         except Exception as e_:

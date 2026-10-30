@@ -509,6 +509,7 @@ def scan(api, master, now, state, msgs, rep, engine):
             CS.OPTION_HOOK = None
         if CS.ENABLED.get("STK_SWEEP3H"):                       # 29-Oct (approved, live): 3h equal-highs sweep SELL
             try:
+                CS.OI_NOTE = None                                # never carry another stock's OI text
                 CS.on_stock_3h(state, msgs, name, c, frame3h(h), now,
                                lambda day, _c=c, _h=h: prev_oi_label(api, _c, _h, day, now),
                                lambda t0, t1, _c=c: sweep_oi_change(api, _c, t0, t1))
@@ -554,6 +555,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                                 exit_reason="expiry/time exit", exit_basis="daily close")
                 st["active"] = [x for x in st["active"] if x is not p]
         try:                                                # 29-Oct (approved, live): daily hanging-man SELL setup
+            CS.OI_NOTE = CS.oi_from_daily(d)                # 30-Oct: OI line in the setup / entry messages
             CS.on_stock_daily(state, msgs, name, c, d, now, allow_new=not dq["holds"] and not first_session_after_expiry(d["time"].iloc[-1]))
         except Exception as e_:
             print(f"[setup] {name} skipped: {type(e_).__name__}: {e_}")

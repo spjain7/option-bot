@@ -83,6 +83,28 @@ def _rs(r, pts):
 
 
 # ─────────────── messages ───────────────
+OI_NOTE = None        # 30-Oct: OI text for the instrument being processed, set by the caller (engine / stocks) before each call
+
+
+def oi_from_daily(d):
+    """Stock daily candles with an 'oi' column -> 'OI 1,23,450 (+3.2 % on the day, price −1.1 %) → Short buildup' or None."""
+    try:
+        x = d.dropna(subset=["oi"]).tail(2)
+        if len(x) < 2 or x["oi"].iloc[0] <= 0:
+            return None
+        doi = x["oi"].iloc[1] / x["oi"].iloc[0] - 1
+        dp = x["close"].iloc[1] / x["close"].iloc[0] - 1
+        lab = ("Long buildup" if dp > 0 else "Short buildup") if doi > 0 else ("Short covering" if dp > 0 else "Long unwinding")
+        return f"{x['oi'].iloc[1]:,.0f} ({doi * 100:+.1f}% on the day, price {dp * 100:+.2f}%) → {lab}"
+    except Exception:
+        return None
+
+
+def _oi_txt(r, key="oi_note"):
+    v = r.get(key)
+    return f"• OI         : {v}\n" if v else "• OI         : not available\n"
+
+
 def sr_line(df, side, trig, stop, target_r):
     """30-Oct (owner: "support / resistance must be taken care of in every call"): the nearest opposing level (resistance for a
     BUY, support for a SELL) from real candles (prev-day H/L, pivots, swing highs/lows – alerts.signals.levels), its distance in R
@@ -122,7 +144,7 @@ def setup_msg(r):
             f"• Risk       : {_f(r, risk)} pts ({risk / r['trigger'] * 100:.2f}%) · {_rs(r, risk)} per lot\n"
             f"• Time exit  : after 20 sessions if neither stop nor target is hit\n"
             f"• Trend      : {('downtrend (EMA20 < EMA50)' if buy else 'uptrend (EMA20 > EMA50)') if r.get('trend_ok') else 'no prior downtrend (pattern only)'}\n"
-            + (f"{r['sr']}\n" if r.get("sr") else "") +
+            + (f"{r['sr']}\n" if r.get("sr") else "") + _oi_txt(r) +
             f"{STATS[r['setup']]}\n"
             + ("Follow-ups for stock calls are sent after the 15:30 close – keep the stop-loss and target as orders.\n"
                if r["setup"] == "STK_HANGMAN" else "")
@@ -136,7 +158,7 @@ def ema_msg(r, live=None):
             f"• Safety SL  : 3 ATR below the entry (~{_f(r, (live or r['cross_close']) - EMA['stop_atr'] * r['atr'])}); exact level sent at entry\n"
             f"• Exit       : when EMA13 closes back below EMA48 on the 3-hour chart – an exit alert will follow\n"
             f"• Target     : none fixed (trend-following; winners averaged about 2R)\n"
-            + (f"{r['sr']}\n" if r.get("sr") else "") +
+            + (f"{r['sr']}\n" if r.get("sr") else "") + _oi_txt(r) +
             f""
             f"• ADX(14)    : {r['adx']} and rising\n"
             f"{STATS['MCX_EMA1348']}\n{WARN}")
@@ -147,7 +169,7 @@ def entry_msg(r, gapped):
             + (" (opened beyond the trigger – filled at the open)" if gapped else "")
             + f"\nStop-loss {_f(r, r['stop'])}" + (f" · target {_f(r, r['target'])}" if r.get("target") else
                                                    " · exit on the opposite EMA cross")
-            + f" · risk {_rs(r, r['risk'])} per lot. {WARN}")
+            + f" · risk {_rs(r, r['risk'])} per lot\n" + _oi_txt(r, "oi_entry") + WARN)
 
 
 def exit_msg(r):
@@ -178,7 +200,7 @@ def _close(s, msgs, state, r, px, t, why, now):
 def _enter(state, msgs, r, e0, t, gapped):
     sd = 1 if r["side"] == "BUY" else -1
     risk = sd * (e0 - r["stop"])
-    r.update(status="open", entry=round(e0, 4), entry_time=str(t), risk=round(risk, 4))
+    r.update(status="open", entry=round(e0, 4), entry_time=str(t), risk=round(risk, 4), oi_entry=OI_NOTE)
     if r["setup"] != "MCX_EMA1348":
         r["target"] = round(e0 + sd * r.get("target_r", P["target_r"]) * risk, 4)
     RP.add(state, key=r["key"], mark_key=r.get("token"), seg="MCX" if r["setup"].startswith("MCX") else "NSE", cat="FUTURES",
@@ -399,7 +421,7 @@ def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
              pattern=dict(open=float(df["open"].iloc[i]), high=hi, low=lo, close=float(df["close"].iloc[i])),
              trigger=TP.tick_round(trig, tick), stop=TP.tick_round(stop, tick, "down" if sd > 0 else "up"), atr=round(a, 4), tick=tick, mult=mult, lot=lot,
              trend_ok=tr, vol_x=round(float(v.iloc[i] / va), 2) if va and va > 0 else None,
-             sr=sr_line(df.iloc[:i + 1], side, trig, stop, P["target_r"])[0],
+             sr=sr_line(df.iloc[:i + 1], side, trig, stop, P["target_r"])[0], oi_note=OI_NOTE,
              last_bar=str(df["time"].iloc[i]), logged=str(now), key=f"{setup}|{name}|{str(df['time'].iloc[i])[:10]}")
     s["open"].append(r)
     msgs.append(setup_msg(r))
@@ -426,6 +448,7 @@ def _new_ema(state, msgs, s, name, c, f3, now, mult, live):
     s["open"].append(r)
     _px = float(f3["close"].iloc[i]); _a = float(I.atr(f3, 14).iloc[i])
     r["sr"] = sr_line(f3.iloc[:i + 1], "BUY", _px, _px - EMA["stop_atr"] * _a, None)[0]
+    r["oi_note"] = OI_NOTE
     msgs.append(ema_msg(r, live))
     print(f"[setup] MCX_EMA1348 {name} BUY cross {r['pattern_time']} ADX {r['adx']}")
 
