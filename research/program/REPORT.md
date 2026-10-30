@@ -513,3 +513,10 @@ MCX 5h = 09-14 / 14-19 / 19-close blocks; NSE 5h = every 5 consecutive 1h bars. 
   (+0.26 / +0.34 / +0.10 / +0.25). Stocks 5h BUY and 3h BUY lose.
 * MCX SELL and all INDEX settings: no robust result (index has 8-30 trades).
 Selection caveat: 18 variants per timeframe/side, not FDR-corrected; MCX 5h BUY is robust across most variants.
+
+## TFNH-001 – 2h / 4h / 5h / 6h candles (30-Oct-2026, owner: "same setting for 4 hours?")
+Same 18 variants (lookback 5/10/20 · volume 1.5/2 · stop/target 2/2, 2.5/2.5, 1.5/3). Variants positive in all 3 periods:
+* MCX BUY: 2h 4/18 · 4h 17/18 (median +0.31R) · 5h 13/18 (+0.34R) · 6h 16/18 (+0.38R). Best 4h: lookback 10, vol > 2×, stop 1.5 ATR,
+  3R -> +0.50R (+0.53 / +0.27 / +0.64), 246 trades. Proposed 5h setting on 4h: +0.26R, 257 trades.
+* STOCK SELL: 2h 4/18 · 4h 6/18 (median +0.13R) · 5h 7/18 · 6h 1/18. Best 4h: lookback 5, vol > 2×, 2 ATR / 2R -> +0.17R
+  (+0.11 / +0.04 / +0.23), 892 trades. MCX SELL and stock BUY: negative on every candle size.
