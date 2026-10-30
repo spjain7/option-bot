@@ -687,24 +687,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-10-30 21:17:01.484750",
-   "oi": 1587800.0,
-   "ltp": 9889.0
+   "time": "2026-10-30 21:32:01.600159",
+   "oi": 1592100.0,
+   "ltp": 9893.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-10-30 21:17:01.484750",
-   "oi": 74240000.0,
-   "ltp": 276.6
+   "time": "2026-10-30 21:32:01.600159",
+   "oi": 74160000.0,
+   "ltp": 276.3
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-10-30 21:17:01.484750",
-   "oi": 16121.0,
-   "ltp": 138570.0
+   "time": "2026-10-30 21:32:01.600159",
+   "oi": 16143.0,
+   "ltp": 138545.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-10-30 21:17:01.484750",
-   "oi": 543330.0,
-   "ltp": 179521.0
+   "time": "2026-10-30 21:32:01.600159",
+   "oi": 544020.0,
+   "ltp": 179801.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -742,19 +742,19 @@
    "ltp": 54805.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-10-30 21:17:01.484750",
-   "oi": 17487500.0,
-   "ltp": 1375.65
+   "time": "2026-10-30 21:32:01.600159",
+   "oi": 17555000.0,
+   "ltp": 1375.8
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-10-30 21:17:01.484750",
+   "time": "2026-10-30 21:32:01.600159",
    "oi": 10630.0,
-   "ltp": 407.2
+   "ltp": 407.0
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-10-30 21:17:01.484750",
+   "time": "2026-10-30 21:32:01.600159",
    "oi": 22505.0,
-   "ltp": 330.05
+   "ltp": 330.4
   }
  },
  "bo_active": [
@@ -771,7 +771,7 @@
    "n": 3,
    "last_candle": "2026-10-30 18:00:00",
    "tick": 1.0,
-   "checked": "2026-10-30 21:00:00",
+   "checked": "2026-10-30 21:15:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|3h|2026-10-30 09:00:00",
    "token": "495214",
@@ -790,7 +790,7 @@
    "n": 0,
    "last_candle": "2026-10-30 18:00:00",
    "tick": 1.0,
-   "checked": "2026-10-30 21:02:01.368927",
+   "checked": "2026-10-30 21:15:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|3h|2026-10-30 18:00:00",
    "token": "495213"
@@ -1277,8 +1277,8 @@
    "date": "2026-10-30",
    "uhi": 9925.0,
    "ulo": 9806.0,
-   "ulast": 9889.0,
-   "uat": "2026-10-30 21:17:01.484750"
+   "ulast": 9890.0,
+   "uat": "2026-10-30 21:32:01.600159"
   },
   {
    "key": "DIVISLAB|1dSTK|2026-10-30 09:15:00",
@@ -1444,8 +1444,8 @@
    "date": "2026-10-30",
    "uhi": 185300.0,
    "ulo": 179249.0,
-   "ulast": 179521.0,
-   "uat": "2026-10-30 21:17:01.484750"
+   "ulast": 179836.0,
+   "uat": "2026-10-30 21:32:01.600159"
   },
   {
    "key": "GOLD|3h|2026-10-30 18:00:00",
@@ -1466,9 +1466,9 @@
    "status": "OPEN",
    "date": "2026-10-30",
    "uhi": 138860.0,
-   "ulo": 138566.0,
-   "ulast": 138566.0,
-   "uat": "2026-10-30 21:17:01.484750"
+   "ulo": 138554.0,
+   "ulast": 138554.0,
+   "uat": "2026-10-30 21:32:01.600159"
   }
  ],
  "candle_setups": {
@@ -1523,10 +1523,10 @@
     "lot": 100,
     "trend_ok": false,
     "vol_x": 0.94,
-    "last_bar": "2026-10-30 21:00:00",
+    "last_bar": "2026-10-30 21:15:00",
     "logged": "2026-10-29 23:32:10.159478",
     "key": "MCX_HAMMER|CRUDEOIL|2026-10-29",
-    "last_px": 9875.0,
+    "last_px": 9885.0,
     "entry": 9831.0,
     "entry_time": "2026-10-30 09:00:00",
     "risk": 343.0,
@@ -1759,5 +1759,123 @@
    "GOLD|SELL|2026-10-30",
    "SILVER|SELL|2026-10-30"
   ]
+ },
+ "fourh": {
+  "open": [],
+  "closed": [],
+  "last": {
+   "CRUDEOIL|MCX": "2026-10-30 17:00:00",
+   "NATURALGAS|MCX": "2026-10-30 17:00:00",
+   "GOLD|MCX": "2026-10-30 17:00:00",
+   "SILVER|MCX": "2026-10-30 17:00:00",
+   "COPPER|MCX": "2026-10-30 17:00:00",
+   "ZINC|MCX": "2026-10-30 17:00:00",
+   "ALUMINIUM|MCX": "2026-10-30 17:00:00"
+  },
+  "stk_progress": {
+   "blk": "2026-10-30 15:30",
+   "done": [
+    "SBICARD",
+    "LICI",
+    "INDHOTEL",
+    "HCLTECH",
+    "GODFRYPHLP",
+    "DELHIVERY",
+    "CHOLAFIN",
+    "LTF",
+    "CAMS",
+    "BEL",
+    "AUBANK",
+    "ATHERENERG",
+    "APOLLOHOSP",
+    "ADANIENT",
+    "UPL",
+    "BRITANNIA",
+    "TITAN",
+    "LUPIN",
+    "PAYTM",
+    "CUMMINSIND",
+    "CONCOR",
+    "CDSL",
+    "BIOCON",
+    "BDL",
+    "AMBUJACEM",
+    "M&M",
+    "ALKEM",
+    "TCS",
+    "TATAPOWER",
+    "TATACONSUM",
+    "PRESTIGE",
+    "PGEL",
+    "PERSISTENT",
+    "TIINDIA",
+    "TATASTEEL",
+    "SUNPHARMA",
+    "VOLTAS",
+    "NAM-INDIA",
+    "MAZDOCK",
+    "MAXHEALTH",
+    "KFINTECH",
+    "KEI",
+    "INDUSTOWER",
+    "NESTLEIND",
+    "ICICIGI",
+    "CROMPTON",
+    "COFORGE",
+    "CIPLA",
+    "BSE",
+    "BANKBARODA",
+    "BAJFINANCE",
+    "GVT&D",
+    "RADICO",
+    "VBL",
+    "WAAREEENER",
+    "RELIANCE",
+    "PFC",
+    "MARICO",
+    "KPITTECH",
+    "KALYANKJIL",
+    "INDIGO",
+    "HYUNDAI",
+    "HINDZINC",
+    "FORCEMOT",
+    "EICHERMOT",
+    "BOSCHLTD",
+    "BHARATFORG",
+    "BAJAJFINSV",
+    "ADANIENSOL",
+    "NAVINFLUOR",
+    "DLF",
+    "HDFCBANK",
+    "HDFCLIFE",
+    "JUBLFOOD",
+    "SRF",
+    "SBIN",
+    "RECLTD",
+    "POWERINDIA",
+    "POLYCAB",
+    "ONGC",
+    "360ONE",
+    "OFSS",
+    "NTPC",
+    "NATIONALUM",
+    "MFSL",
+    "MARUTI",
+    "LTM",
+    "LT",
+    "OBEROIRLTY",
+    "AUROPHARMA",
+    "BHEL",
+    "COALINDIA",
+    "UNOMINDA",
+    "TMPV",
+    "TATAELXSI",
+    "SONACOMS",
+    "SOLARINDS",
+    "POLICYBZR",
+    "LODHA"
+   ],
+   "sent": 0
+  }
  }
 }
