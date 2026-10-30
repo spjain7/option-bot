@@ -398,7 +398,28 @@
   ]
  },
  "sweep15": {
-  "open": [],
+  "open": [
+   {
+    "name": "BEL",
+    "contract": null,
+    "side": "SELL",
+    "level": "PD",
+    "status": "pending",
+    "day": "2026-10-30 00:00:00",
+    "sweep_time": "2026-10-30 13:00:00",
+    "trigger": 371.3,
+    "stop": 372.74010385513327,
+    "vol_x": 0.33,
+    "oi_change_pct": -0.066,
+    "V": false,
+    "OD": true,
+    "last_bar": "2026-10-30 13:00:00",
+    "logged": "2026-10-30 13:07:51.757077",
+    "waited": 0,
+    "lot": 1425,
+    "send": false
+   }
+  ],
   "closed": [
    {
     "name": "TVSMOTOR",
@@ -608,7 +629,8 @@
    "PNB|2026-10-29 14:00:00|SW|-1",
    "HDFCBANK|2026-10-29 14:15:00|SW|-1",
    "TATASTEEL|2026-10-29 14:15:00|SW|-1",
-   "PNB|2026-10-29 14:30:00|SW|-1"
+   "PNB|2026-10-29 14:30:00|SW|-1",
+   "BEL|2026-10-30 13:00:00|PD|-1"
   ]
  },
  "watch1h": {
