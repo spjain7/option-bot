@@ -1,6 +1,6 @@
 """VOLUME BREAKOUT alerts (3-hour swing + daily positional) – the strongest rule found in research/search (STRAT-SEARCH-004/005).
 
-BUY : candle closes above the highest high of the previous 20 candles AND its volume > 1.5× the 20-candle average
+BUY : candle closes above the highest high of the previous 20 candles (MCX: 10 on 3-hour, 5 on daily – 30-Oct) AND its volume > 1.5× the 20-candle average
       AND close above EMA200 (trend side).            SELL: mirror (below the 20-candle low, below EMA200).
 Plan: entry next candle open (≈ live price) · initial SL 2 ATR · then a 3 ATR trailing stop on candle closes ·
       exit when the trailing stop is hit or after 40 candles. Reference levels 1R / 2R / 3R are shown, not fixed exits.
@@ -50,19 +50,26 @@ def daily_candles(h1c, session_close):
     return d
 
 
-def evaluate(df):
-    """df = completed candles. Returns dict with side BUY/SELL/None and the numbers behind it."""
+# 30-Oct (owner approved, MCX-LOOKBACK-001): commodity BUY breakouts use a shorter lookback – daily 5 days, 3-hour 10 candles
+# (daily BUY +0.78R/trade, positive in every period vs the 20-day rule's loss in 2024-25; 3h BUY same average, more trades).
+# SELL and index calls keep 20.
+BUY_LOOKBACK_MCX = {"1d": 5, "3h": 10}
+
+
+def evaluate(df, n_buy=None):
+    """df = completed candles. Returns dict with side BUY/SELL/None and the numbers behind it.
+    n_buy: lookback for the BUY breakout (default CFG['N'] = 20; SELL always uses CFG['N'])."""
     if df is None or len(df) < CFG["ema"] + 5:
         return dict(side=None, why=f"needs {CFG['ema'] + 5} candles, have {0 if df is None else len(df)}")
     c, h, l, v = df["close"], df["high"], df["low"], df["volume"].astype(float)
-    hh = h.shift(1).rolling(CFG["N"]).max().iloc[-1]
+    hh = h.shift(1).rolling(n_buy or CFG["N"]).max().iloc[-1]
     ll = l.shift(1).rolling(CFG["N"]).min().iloc[-1]
     va = v.rolling(20).mean().shift(1).iloc[-1]
     e = I.ema(c, CFG["ema"]).iloc[-1]
     a = float(I.atr(df, 14).iloc[-1])
     x = df.iloc[-1]
     vx = float(x.volume / va) if va and va > 0 else None
-    out = dict(candle=str(x.time), close=float(x.close), hh=float(hh), ll=float(ll), ema200=float(e), atr=a, vol_x=vx,
+    out = dict(candle=str(x.time), close=float(x.close), hh=float(hh), ll=float(ll), ema200=float(e), atr=a, vol_x=vx, n_buy=n_buy,
                adx=float(I.adx(df).iloc[-1]), rsi=float(I.rsi(c, 14).iloc[-1]))
     if vx is None:
         return dict(out, side=None, why="volume not available")
@@ -71,7 +78,8 @@ def evaluate(df):
     if x.close < ll and vx > CFG["vol_x"] and x.close < e:
         return dict(out, side="SELL")
     why = ("breakout without enough volume" if (x.close > hh or x.close < ll) and vx <= CFG["vol_x"]
-           else "breakout against the 200-EMA trend" if (x.close > hh or x.close < ll) else "no 20-candle breakout")
+           else "breakout against the 200-EMA trend" if (x.close > hh or x.close < ll)
+           else f"no breakout (BUY {n_buy}-candle high / SELL 20-candle low)" if n_buy else "no 20-candle breakout")
     return dict(out, side=None, why=why)
 
 
@@ -227,7 +235,8 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None, htf=None):
         setup = f"{sig['pattern'].title()} – closed {'above' if s > 0 else 'below'} {_f(sig['level'])}"
     else:
         lvl = sig["hh"] if s > 0 else sig["ll"]
-        what = "last month's" if tf == "1m" else f"20-{'week' if tf == '1w' else 'candle'}"
+        nb = sig.get("n_buy") if s > 0 else None
+        what = "last month's" if tf == "1m" else f"{nb or 20}-{'week' if tf == '1w' else 'day' if (nb and tf == '1d') else 'candle'}"
         setup = f"{'MONTHLY ' if tf == '1m' else 'WEEKLY ' if tf == '1w' else ''}{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} {what} {'high' if s > 0 else 'low'} {_f(lvl)}"
     L = [f"📌 WHY – {name} {sig['side']}", "━━━━━━━━━━━━━━",
          f"• Chart   : {CHART.get(tf, tf)} candle closed {_f(sig['close'])}",

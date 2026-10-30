@@ -540,7 +540,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         if state["last_eval"].get(k) == last:
             continue
         state["last_eval"][k] = last
-        sig = BO.evaluate_weekly(fr) if tf == "1w" else BO.evaluate_monthly(fr) if tf == "1m" else BO.evaluate(fr)
+        sig = (BO.evaluate_weekly(fr) if tf == "1w" else BO.evaluate_monthly(fr) if tf == "1m"
+               else BO.evaluate(fr, n_buy=BO.BUY_LOOKBACK_MCX.get(tf) if ex == "MCX" else None))
         info[f"bo_{tf}"] = f"{sig['side'] or 'none'} · {sig.get('why', '')} · vol {sig.get('vol_x') or 0:.2f}×"
         if sig.get("hh") is not None:
             state.setdefault("status", {})[f"{name}|{tf}"] = dict(candle=last, close=round(sig["close"], 2), buy_above=round(sig["hh"], 2),
