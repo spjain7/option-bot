@@ -532,3 +532,16 @@ No variant positive in all three periods at any volume level. MCX BUY at 5×: �
 −0.07R overall); stock SELL 5×: +0.03…+0.08R, mixed by period; MCX SELL and stock BUY negative. 3-month log (22 Jul – 21 Oct):
 MCX 1h BUY 5× 10 calls +₹4.26 lakh/lot (3 wins), stock 1h SELL 5× 212 calls 47 % wins +₹3.61 lakh, 82 stop hits – both behind the
 4-hour rules (+₹10.83 lakh, +₹7.97 lakh).
+
+## TOUCH-001 (30-Oct-2026) – enter on the touch vs wait for the candle close
+Script `research/program/touch.py`, results `results/touch_summary.csv`. Live rules, 1-hour bar resolution, 2x costs, one trade at a time.
+| Rule | CLOSE (today) n / R / all 3 periods | TOUCH at level n / R / all 3 | TOUCH, alert within the hour | TOUCH + volume pace |
+|---|---|---|---|---|
+| MCX 3h BUY | 441 / +0.16 / no | 830 / +0.15 / **yes** (total +121R vs +70R) | 719 / +0.08 | 464 / +0.14 / yes |
+| MCX 4h BUY | 277 / **+0.39 / yes** | 745 / +0.21 / no | 655 / +0.10 | 324 / +0.11 |
+| STK 3h SELL | 1,889 / +0.08 / no | 4,435 / +0.00 | 3,464 / −0.03 | 2,086 / −0.05 |
+| STK 4h SELL | 913 / **+0.17 / yes** | 3,564 / +0.07 | 2,866 / +0.07 | 1,139 / +0.06 |
+Waiting for the close enters ~0.8–1.0 ATR later, but the touch catches 2–4x more false breaks. Cutting a false break at the close
+(TOUCH+cut) is worse everywhere. Only MCX 3h BUY gains from the touch, and only with an order resting AT the level (a pre-placed
+stop-buy); an alert sent up to an hour later halves the edge. Verdict: keep close-based entries; candidate = MCX 3h BUY pending
+stop-buy level alerts (needs owner approval).
