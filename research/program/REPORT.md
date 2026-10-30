@@ -520,3 +520,9 @@ Same 18 variants (lookback 5/10/20 · volume 1.5/2 · stop/target 2/2, 2.5/2.5, 
   3R -> +0.50R (+0.53 / +0.27 / +0.64), 246 trades. Proposed 5h setting on 4h: +0.26R, 257 trades.
 * STOCK SELL: 2h 4/18 · 4h 6/18 (median +0.13R) · 5h 7/18 · 6h 1/18. Best 4h: lookback 5, vol > 2×, 2 ATR / 2R -> +0.17R
   (+0.11 / +0.04 / +0.23), 892 trades. MCX SELL and stock BUY: negative on every candle size.
+
+## TF2H-VOL – 2-hour candles with volume 2 / 2.5 / 3× (30-Oct-2026, owner)
+* Higher volume helps on 2h: MCX BUY median +0.09R (2×) -> +0.16R (3×); stock SELL +0.05R -> +0.11R, 7 of 9 variants positive in all
+  periods at 3×. Best MCX BUY 3×: lookback 10, 2.5 ATR / 2.5R +0.25R (+0.15 / +0.14 / +0.46), 228 trades.
+  Best stock SELL 3×: lookback 10, 2.5 ATR / 2.5R +0.14R, 51 % wins, 1,022 trades (+0.11 / +0.01 / +0.20).
+* Still below 4h (MCX BUY best +0.50R, 17/18 robust; stock SELL +0.17R). MCX SELL and stock BUY negative at every volume level.
