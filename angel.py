@@ -319,7 +319,7 @@ class Angel:
             self.stats["ws_fallback"] += 1
             return None
         hist = None
-        if frm < day0:
+        if frm < day0 and not (kind == "oi" and exch == "MCX"):
             hist = self._day_hist(kind, exch, token, interval, frm, day0)
             if hist is None:
                 self.stats["ws_fallback"] += 1
@@ -328,7 +328,8 @@ class Angel:
         h, m = WB.OPEN[exch]
         open_t = day0 + pd.Timedelta(hours=h, minutes=m)
         pre, boundary = None, None
-        if ws_start.normalize() == day0 and ws_start > open_t + pd.Timedelta(minutes=1) and now > open_t:
+        if ws_start.normalize() == day0 and ws_start > open_t + pd.Timedelta(minutes=1) and now > open_t \
+                and not (kind == "oi" and exch == "MCX"):
             boundary = WB.bucket_start(ws_start, interval, exch)
             pre = self._pre(kind, exch, token, interval, day0, ws_start)
             if pre is None:
@@ -383,11 +384,11 @@ class Angel:
         return df
 
     def oi_history(self, exch, token, interval, frm, to):
-        if exch == "MCX":                            # Angel does not serve OI history for MCX (AB1012)
-            return None
-        ws = self._ws_series(exch, token, interval, frm, to, "oi")
+        ws = self._ws_series(exch, token, interval, frm, to, "oi")   # live 1-minute OI from the stream (MCX too, 30-Oct)
         if ws is not None:
             return ws
+        if exch == "MCX":                            # Angel does not serve OI history for MCX (AB1012)
+            return None
         return self._oi_rest(exch, token, interval, frm, to)
 
     def _oi_rest(self, exch, token, interval, frm, to):

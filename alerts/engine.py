@@ -347,8 +347,15 @@ def scan(api, master, now, state, only=None):
             from alerts import watch1h as W1
             sd = _switch_day(state, c, d)
             if sd is None or (now.normalize() - sd).days > 3:
+                lab_ = None
+                if full_1h is not None and len(full_1h):              # 30-Oct: OI over the hour from the live 1-minute OI
+                    from alerts import four_hour as FH
+                    b_ = full_1h.iloc[-1]
+                    co_ = FH.candle_oi(api, ex, c["token"], b_["time"], pd.Timestamp(b_["time"]) + pd.Timedelta(hours=1),
+                                       float(b_["close"]) - float(b_["open"]))
+                    lab_ = (co_ or {}).get("label")
                 info["watch1h"] = "sent" if W1.check(state, msgs, name, "MCX" if ex == "MCX" else "INDEX", full_1h, now,
-                                                     oi=(oi or {}).get("label")) else "none"
+                                                     oi=lab_ or (oi or {}).get("label")) else "none"
         except Exception as e_:
             print(f"[watch1h] {name} skipped: {type(e_).__name__}: {e_}")
         for tf, _, mins, _ in TFS:
@@ -396,6 +403,11 @@ def scan(api, master, now, state, only=None):
     if not state["day"]["startup_sent"] and now.hour >= 8 and any(is_open(e, now) for e in ("MCX", "NFO")):
         msgs.insert(0, startup_msg(now, rep))
         state["day"]["startup_sent"] = True
+    try:                                                   # 30-Oct: 4-hour calls – stop / target / time exits on the live price
+        from alerts import four_hour as FH
+        FH.track(state, msgs, api, now, is_open)
+    except Exception as e_:
+        print(f"[4h] tracking skipped: {type(e_).__name__}: {e_}")
     try:                                                   # 30-Oct: high / low after every open call (one quote call per exchange)
         for seg_, ex_ in (("NSE", "NFO"), ("MCX", "MCX")):
             if not is_open(ex_, now):
@@ -525,6 +537,13 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
     _promote_shadow_sells(state, msgs, name, ex, c, q, now, oi)
+    if ex == "MCX":                                                  # 30-Oct (approved): 4-hour BUY
+        try:
+            from alerts import four_hour as FH
+            info["4h"] = FH.on_candles(state, msgs, api, name, ex, c, h1full, FH.four_hour(h1full, ex, now), q, now,
+                                       RP.mult_for(name, ex, c.get("lot")))
+        except Exception as e_:
+            print(f"[4h] {name} skipped: {type(e_).__name__}: {e_}")
     if ex == "MCX":                                                  # 29-Oct (approved, live): candle-setup calls
         try:
             lv_ = (q or {}).get("ltp")

@@ -293,6 +293,60 @@ def manage3h_quotes(api, st, msgs, state):
     st["active3h"] = keep
 
 
+SCAN4H_BUDGET_SEC = float(os.getenv("STOCK4H_BUDGET_SEC", "300"))
+
+
+def scan4h(api, now, state, msgs, uni, engine, rep):
+    """4-hour stock SELL (alerts/four_hour.py) on the 09:15-13:15 candle (scan from 13:17) and the 13:15-15:30 candle (after
+    the close). Resumes next cycle when the time budget or an Angel block stops it."""
+    from alerts import four_hour as FH
+    hm = f"{now:%H:%M}"
+    if now.weekday() >= 5 or hm < "13:17":
+        return
+    blk = f"{now:%Y-%m-%d} " + ("15:30" if hm >= "15:31" else "13:15")
+    st4 = FH.store(state)
+    if st4.get("stk_block") == blk:
+        return
+    prog = st4.get("stk_progress") or {}
+    if prog.get("blk") != blk:
+        prog = dict(blk=blk, done=[], sent=0)
+    st4["stk_progress"] = prog
+    t0, complete = time.monotonic(), True
+    after_close = hm >= "15:31"
+    for name, c in uni.items():
+        if name in prog["done"]:
+            continue
+        if time.monotonic() - t0 > SCAN4H_BUDGET_SEC or (hasattr(api, "failfast") and api.failfast()):
+            complete = False; break
+        try:
+            h = api.candles("NFO", c["token"], "ONE_HOUR", now - pd.Timedelta(days=200), now)
+        except Exception:
+            h = None
+        if h is None or h.empty:
+            if hasattr(api, "failfast") and api.failfast():
+                complete = False; break
+            prog["done"].append(name); continue
+        prog["done"].append(name)
+        h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
+        fr = FH.four_hour(h, "NFO", now)
+        if fr is None or len(fr) < 210 or not FH.evaluate(fr, FH.RULES["NFO"])["side"]:
+            continue
+        q = None
+        if not after_close:
+            try:
+                q = (api.quotes({"NFO": [c["token"]]}) or {}).get(str(c["token"]))
+            except Exception:
+                q = None
+        r = FH.on_candles(state, msgs, api, name, "NFO", c, h, fr, q, now, int(c.get("lot") or 1), after_close=after_close)
+        if r == "SENT":
+            prog["sent"] += 1
+    if complete:
+        st4["stk_block"] = blk
+        st4.pop("stk_progress", None)
+    rep.setdefault("stocks", {})["4h"] = (f"4h SELL scan {blk} {'done' if complete else 'paused – continues next cycle'}: "
+                                          f"{len(prog['done'])}/{len(uni)} stocks, {prog['sent']} call(s)")
+
+
 def scan3h(name, c, h, fr, now, master, st, state, msgs):
     """At a 3h close: trail / time-exit open 3h calls of this stock, then look for a new signal."""
     for p in [p for p in st.setdefault("active3h", []) if p["name"] == name]:
@@ -453,6 +507,10 @@ def scan(api, master, now, state, msgs, rep, engine):
             CS.live_watch(state, msgs, api, now)
         except Exception as e_:
             print(f"[setup] live watch skipped: {type(e_).__name__}: {e_}")
+    try:                                                       # 30-Oct (approved): 4-hour stock SELL after 13:15 / 15:30
+        scan4h(api, now, state, msgs, uni, engine, rep)
+    except Exception as e_:
+        print(f"[4h] stock scan skipped: {type(e_).__name__}: {e_}")
     blk = last_block_end(now)
     if blk is None or st["last_block"] == blk:
         rep["stocks"]["scan"] = "stock scans run after 12:15 (3h) and after the 15:30 close (3h + daily)"

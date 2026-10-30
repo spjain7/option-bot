@@ -72,3 +72,11 @@ Information alert, NOT a trade call (no entry / SL / target): a completed 1-hour
 high/low with volume ≥ 2× and OI supporting the move. MCX + NIFTY/BANKNIFTY (alerts engine) and the option-buy stock list
 (hourly from the 15-min candles already fetched, no extra API calls). Tracked (best / worst / last) with an end-of-day
 summary. Hourly breakout CALLS were rejected by research BO1H-001/002 (9,491 combos, none survive). Code: alerts/watch1h.py.
+
+## 4-HOUR CALLS (owner approved 30-Oct-2026, live)
+MCX 4h BUY (10-candle high, vol > 2×, EMA200, stop 1.5 ATR, 3R) and STOCK 4h SELL (NSE day blocks 09:15-13:15 / 13:15-15:30,
+5-candle low, vol > 2×, below EMA200, stop 2 ATR, 2R). Sent only when OI over the signal candle (live 1-minute OI) supports the
+side and no resistance (BUY) / support (SELL) lies within 0.5R of the entry. Tracked on the live price; in the daily report.
+Code: alerts/four_hour.py · research TFNH-001 / TFLOG-002 (branch exp/strategy-program-001).
+Also 30-Oct: the 1H BIG MOVE watch and MCX OI now read OI over the candle from the live 1-minute stream (OI "n/a" had blocked
+CRUDEOIL / GOLD hourly breakouts on 30-Oct).
