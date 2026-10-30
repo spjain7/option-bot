@@ -168,6 +168,48 @@ def _enter(state, msgs, r, e0, t, gapped):
     print(f"[setup] {r['setup']} {r['name']} {r['side']} entered {e0} stop {r['stop']} target {r.get('target')}")
 
 
+LIVE_SETUPS = ("STK_HANGMAN", "STK_SWEEP3H")
+
+
+def live_watch(state, msgs, api, now):
+    """30-Oct (owner: "will I be notified when it's active?"): stock setups are confirmed on completed candles after the close,
+    so during NSE hours the live price of every waiting / open stock setup is checked each scan (one quote call) and a LIVE
+    message is sent once when the trigger, the stop or the target is crossed. The official entry / exit (and the P&L) is
+    still confirmed on the completed candle after the close."""
+    s = _store(state)
+    rs = [r for r in s["open"] if r["setup"] in LIVE_SETUPS and ENABLED.get(r["setup"]) and r.get("token")]
+    if not rs:
+        return
+    q = api.quotes({"NFO": sorted({str(r["token"]) for r in rs})}) or {}
+    for r in rs:
+        ltp = float((q.get(str(r["token"])) or {}).get("ltp") or 0)
+        if ltp <= 0:
+            continue
+        sd = 1 if r["side"] == "BUY" else -1
+        live = r.setdefault("live", {})
+        trig_crossed = r["status"] == "open" or live.get("trigger") or sd * (ltp - r["trigger"]) > 0
+        if r["status"] == "pending" and not live.get("trigger") and not live.get("stop") and sd * (ltp - r["trigger"]) > 0:
+            live["trigger"] = str(now)
+            tgt = r["trigger"] + sd * r.get("target_r", P["target_r"]) * sd * (r["trigger"] - r["stop"])
+            msgs.append(f"🔔 LIVE – {_who(r)} {r['side']} setup is ACTIVE: price {_f(r, ltp)} crossed the trigger {_f(r, r['trigger'])}\n"
+                        f"Stop-loss {_f(r, r['stop'])} · target ≈ {_f(r, tgt)} ({r.get('target_r', P['target_r']):g}R from the trigger). "
+                        f"Confirmed on the completed candle after 15:30. {WARN}")
+        elif r["status"] == "pending" and not trig_crossed and not live.get("stop") and sd * (ltp - r["stop"]) <= 0:
+            live["stop"] = str(now)
+            msgs.append(f"⚠️ LIVE – {_who(r)} {r['side']} setup: price {_f(r, ltp)} reached the stop level {_f(r, r['stop'])} "
+                        f"before the trigger – the setup will be cancelled at the close. {WARN}")
+        elif trig_crossed:
+            tgt = r.get("target") or (r["trigger"] + r.get("target_r", P["target_r"]) * (r["trigger"] - r["stop"]))
+            if not live.get("stop") and sd * (ltp - r["stop"]) <= 0:
+                live["stop"] = str(now)
+                msgs.append(f"❌ LIVE – {_who(r)} {r['side']}: stop-loss {_f(r, r['stop'])} touched (price {_f(r, ltp)}). "
+                            f"Final exit confirmed after the close. {WARN}")
+            elif not live.get("target") and sd * (ltp - tgt) >= 0:
+                live["target"] = str(now)
+                msgs.append(f"🎯 LIVE – {_who(r)} {r['side']}: target {_f(r, tgt)} reached (price {_f(r, ltp)}). "
+                            f"Final exit confirmed after the close. {WARN}")
+
+
 def _sessions_after(daily, t):
     """Completed daily candles strictly after the day of t."""
     if daily is None or not len(daily):

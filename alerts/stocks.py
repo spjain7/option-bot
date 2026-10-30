@@ -448,6 +448,11 @@ def scan(api, master, now, state, msgs, rep, engine):
         st["active"] = keep
     if STOCK3H_ENABLED and engine.is_open("NFO", now):
         manage3h_quotes(api, st, msgs, state)
+    if engine.is_open("NFO", now):                            # 30-Oct: LIVE trigger / stop / target messages for stock setups
+        try:
+            CS.live_watch(state, msgs, api, now)
+        except Exception as e_:
+            print(f"[setup] live watch skipped: {type(e_).__name__}: {e_}")
     blk = last_block_end(now)
     if blk is None or st["last_block"] == blk:
         rep["stocks"]["scan"] = "stock scans run after 12:15 (3h) and after the 15:30 close (3h + daily)"
