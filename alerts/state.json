@@ -687,24 +687,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-10-30 21:32:01.600159",
-   "oi": 1592100.0,
-   "ltp": 9893.0
+   "time": "2026-10-30 21:47:01.757055",
+   "oi": 1602500.0,
+   "ltp": 9911.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-10-30 21:32:01.600159",
-   "oi": 74160000.0,
-   "ltp": 276.3
+   "time": "2026-10-30 21:47:01.757055",
+   "oi": 73458750.0,
+   "ltp": 276.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-10-30 21:32:01.600159",
-   "oi": 16143.0,
-   "ltp": 138545.0
+   "time": "2026-10-30 21:47:01.757055",
+   "oi": 16151.0,
+   "ltp": 138506.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-10-30 21:32:01.600159",
-   "oi": 544020.0,
-   "ltp": 179801.0
+   "time": "2026-10-30 21:47:01.757055",
+   "oi": 545430.0,
+   "ltp": 179620.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -742,19 +742,19 @@
    "ltp": 54805.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-10-30 21:32:01.600159",
-   "oi": 17555000.0,
-   "ltp": 1375.8
+   "time": "2026-10-30 21:47:01.757055",
+   "oi": 17605000.0,
+   "ltp": 1375.75
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-10-30 21:32:01.600159",
+   "time": "2026-10-30 21:47:01.757055",
    "oi": 10630.0,
-   "ltp": 407.0
+   "ltp": 407.2
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-10-30 21:32:01.600159",
-   "oi": 22505.0,
-   "ltp": 330.4
+   "time": "2026-10-30 21:47:01.757055",
+   "oi": 22565.0,
+   "ltp": 330.55
   }
  },
  "bo_active": [
@@ -771,7 +771,7 @@
    "n": 3,
    "last_candle": "2026-10-30 18:00:00",
    "tick": 1.0,
-   "checked": "2026-10-30 21:15:00",
+   "checked": "2026-10-30 21:30:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|3h|2026-10-30 09:00:00",
    "token": "495214",
@@ -790,7 +790,7 @@
    "n": 0,
    "last_candle": "2026-10-30 18:00:00",
    "tick": 1.0,
-   "checked": "2026-10-30 21:15:00",
+   "checked": "2026-10-30 21:30:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|3h|2026-10-30 18:00:00",
    "token": "495213"
@@ -1277,8 +1277,8 @@
    "date": "2026-10-30",
    "uhi": 9925.0,
    "ulo": 9806.0,
-   "ulast": 9890.0,
-   "uat": "2026-10-30 21:32:01.600159"
+   "ulast": 9910.0,
+   "uat": "2026-10-30 21:47:01.757055"
   },
   {
    "key": "DIVISLAB|1dSTK|2026-10-30 09:15:00",
@@ -1444,8 +1444,8 @@
    "date": "2026-10-30",
    "uhi": 185300.0,
    "ulo": 179249.0,
-   "ulast": 179836.0,
-   "uat": "2026-10-30 21:32:01.600159"
+   "ulast": 179703.0,
+   "uat": "2026-10-30 21:47:01.757055"
   },
   {
    "key": "GOLD|3h|2026-10-30 18:00:00",
@@ -1467,8 +1467,8 @@
    "date": "2026-10-30",
    "uhi": 138860.0,
    "ulo": 138554.0,
-   "ulast": 138554.0,
-   "uat": "2026-10-30 21:32:01.600159"
+   "ulast": 138568.0,
+   "uat": "2026-10-30 21:47:01.757055"
   }
  ],
  "candle_setups": {
@@ -1523,10 +1523,10 @@
     "lot": 100,
     "trend_ok": false,
     "vol_x": 0.94,
-    "last_bar": "2026-10-30 21:15:00",
+    "last_bar": "2026-10-30 21:30:00",
     "logged": "2026-10-29 23:32:10.159478",
     "key": "MCX_HAMMER|CRUDEOIL|2026-10-29",
-    "last_px": 9885.0,
+    "last_px": 9905.0,
     "entry": 9831.0,
     "entry_time": "2026-10-30 09:00:00",
     "risk": 343.0,
@@ -1873,7 +1873,110 @@
     "SONACOMS",
     "SOLARINDS",
     "POLICYBZR",
-    "LODHA"
+    "LODHA",
+    "KOTAKBANK",
+    "INFY",
+    "HINDUNILVR",
+    "HINDPETRO",
+    "HEROMOTOCO",
+    "GRASIM",
+    "DIXON",
+    "DIVISLAB",
+    "JIOFIN",
+    "APLAPOLLO",
+    "HAVELLS",
+    "FEDERALBNK",
+    "ADANIGREEN",
+    "ANANDRATHI",
+    "UNITDSPR",
+    "TRENT",
+    "SHRIRAMFIN",
+    "PREMIERENE",
+    "ADANIPORTS",
+    "PNBHOUSING",
+    "PIDILITIND",
+    "PHOENIXLTD",
+    "PAGEIND",
+    "MOTILALOFS",
+    "MUTHOOTFIN",
+    "LAURUSLABS",
+    "PIIND",
+    "ASIANPAINT",
+    "BHARTIARTL",
+    "CGPOWER",
+    "DMART",
+    "DABUR",
+    "ASTRAL",
+    "ENRIN",
+    "SYRMA",
+    "CUB",
+    "TVSMOTOR",
+    "SWIGGY",
+    "OIL",
+    "NAUKRI",
+    "MANKIND",
+    "LICHSGFIN",
+    "ICICILIFE",
+    "HAL",
+    "DRREDDY",
+    "GODREJCP",
+    "ABCAPITAL",
+    "ZYDUSLIFE",
+    "ANGELONE",
+    "BAJAJ-AUTO",
+    "BLUESTARCO",
+    "COLPAL",
+    "FORTIS",
+    "GLENMARK",
+    "GODREJPROP",
+    "HINDALCO",
+    "JINDALSTEL",
+    "JSWENERGY",
+    "KAYNES",
+    "MCX",
+    "MPHASIS",
+    "PATANJALI",
+    "SHREECEM",
+    "SIEMENS",
+    "AMBER",
+    "KARURVYSYA",
+    "VEDL",
+    "TORNTPHARM",
+    "AXISBANK",
+    "BPCL",
+    "COCHINSHIP",
+    "ETERNAL",
+    "HDFCAMC",
+    "ICICIBANK",
+    "INDIANB",
+    "ULTRACEMCO",
+    "INDUSINDBK",
+    "JSWSTEEL",
+    "PETRONET",
+    "POWERGRID",
+    "RVNL",
+    "SBILIFE",
+    "SUPREMEIND",
+    "TECHM",
+    "ITC",
+    "DATAPATTNS",
+    "ABB",
+    "COROMANDEL",
+    "NYKAA",
+    "RBLBANK",
+    "111NSETEST",
+    "101NSETEST",
+    "131NSETEST",
+    "181NSETEST",
+    "161NSETEST",
+    "041NSETEST",
+    "031NSETEST",
+    "011NSETEST",
+    "091NSETEST",
+    "151NSETEST",
+    "021NSETEST",
+    "061NSETEST",
+    "081NSETEST"
    ],
    "sent": 0
   }
