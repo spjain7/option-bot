@@ -67,6 +67,10 @@ class OQ:
 msg = IM.option_for_futures_call(OQ(1000.0), mst, "ABC", -1, 1000.0, 1015.0, 970.0, pd.Timestamp("2026-10-29 15:40"), hold_days=3)
 check(msg is not None and "BUY ABC" in msg and "PE" in msg and "If the futures reach the target" in msg,
       "SELL futures call (target 30 pts, stop 15 pts) -> PE option idea with gain/loss at the futures levels")
+import re as _re
+_d = float(_re.search(r"delta ≈ ([0-9.]+)", msg).group(1)) if msg else 0
+_k = float(_re.search(r"BUY ABC ([0-9.]+) PE", msg).group(1)) if msg else 0
+check(0.6 <= _d <= 0.9 and _k > 1000, f"PE strike in the money near delta 0.75 (got {_k:g}, delta {_d:.2f})")
 msg2 = IM.option_for_futures_call(OQ(1000.0), mst, "ABC", -1, 1000.0, 1030.0, 997.0, pd.Timestamp("2026-10-29 15:40"), hold_days=3)
 check(msg2 is None, "target only 3 pts away (stop 30) -> the option pays less than it risks -> no idea")
 

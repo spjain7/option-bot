@@ -93,6 +93,12 @@ check(r5 == "skipped: OI over the candle not available", "OI not available -> no
 fs = series(-1)
 _, m6, r6 = run(fs, -1, oi_up=True, ex="NFO", sr=dict(support=[], resistance=[]))
 check(r6 == "SENT" and "Short buildup" in m6[1] and "SELL" in m6[0], "stock SELL with short buildup -> call")
+FH.OPTION_HOOK = lambda r, h1: f"💡 OPTION IDEA – {r['name']} PE delta 0.75"
+_, m6b, r6b = run(fs, -1, oi_up=True, ex="NFO", sr=dict(support=[], resistance=[]))
+_, m6c, r6c = run(series(1), 1, oi_up=True, ex="MCX", sr=dict(support=[], resistance=[]))
+FH.OPTION_HOOK = None
+check(r6b == "SENT" and len(m6b) == 3 and "OPTION IDEA" in m6b[2] and not any("OPTION IDEA" in x for x in m6c),
+      "stock 4h SELL call carries the option idea (ITM, delta 0.75); MCX does not")
 
 # tracking
 rec = st["fourh"]["open"][0]

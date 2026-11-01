@@ -26,7 +26,7 @@ from alerts import tradeplan as TP, report as RP
 
 ENABLED = {"MCX_HAMMER": True, "STK_HANGMAN": True, "MCX_EMA1348": True, "STK_SWEEP3H": True}
 SWEEP15_LOG = True        # 15-minute stock sweep: every sweep is recorded (both sides) for review
-SWEEP15_SEND = True       # 29-Oct (owner): SEND the 15-min SELL sweeps that have volume ≥ 1.5× AND OI falling (test phase)
+SWEEP15_SEND = False      # 1-Nov (owner "yes all"): OFF – 15-min sweeps only had 2-month evidence; still logged (SWEEP15_LOG)
 HOURLY_SKIP = ("14:15", "15:15")
 OPTION_HOOK = None        # set by alerts.stocks.scan: r -> option-idea message (obuy.improve.option_for_futures_call)
 KEEP_CLOSED = 600

@@ -21,6 +21,7 @@ MIN_DTE_INTRADAY = 4
 WALL_X = 2.0
 TIME_STOP_MIN = 60
 TIME_STOP_GAIN = 0.10
+TARGET_DELTA = 0.75
 BAN_URL = "https://nsearchives.nseindia.com/content/fo/fo_secban.csv"
 
 
@@ -119,12 +120,17 @@ def option_for_futures_call(api, master, name, side, fut_entry, fut_stop, fut_ta
         print(f"[opt-idea] {name}: no option expiry far enough"); return None
     exp = o["expiry_dt"].min()
     chain = strikes(master, name, typ, f"{exp:%Y-%m-%d}")
-    atm = chain.iloc[(chain["K"] - fut_entry).abs().argsort().iloc[0]]
-    cands = [{"token": str(atm["token"]), "symbol": atm["symbol"], "K": float(atm["K"]), "lot": int(atm["lotsize"])}]
-    itm = itm_strike(chain, fut_entry, typ)
-    if itm and itm["token"] != cands[0]["token"]:
-        cands.append(itm)
     T = max((exp - now.normalize()).days, 0.5) / 365
+    # 1-Nov (owner "yes all", DELTA-001): strike nearest delta 0.75 (in the money). Real NSE options 2022-26 on the 4h stock SELL
+    # calls: delta 0.25 kept +₹240/lot, 0.50 +₹1,050, 0.75 +₹2,290, 0.90 +₹3,780 (futures +₹3,325); ≥ 0.75 positive in all 3 periods.
+    atm = chain.iloc[(chain["K"] - fut_entry).abs().argsort().iloc[0]]
+    q0 = api.quotes({"NFO": [str(atm["token"])]}) or {}
+    iv0 = implied_vol(float((q0.get(str(atm["token"])) or {}).get("ltp") or 0), fut_entry, float(atm["K"]), T, 0.065, typ) or 0.30
+    from greeks import greeks as _gk
+    ch = chain.assign(d=[abs(_gk(fut_entry, float(k), T, iv0, 0.065, typ)["delta"]) for k in chain["K"]])
+    ch = ch.iloc[(ch["d"] - TARGET_DELTA).abs().argsort()].head(3)                      # nearest 0.75 first, then neighbours
+    cands = [{"token": str(r["token"]), "symbol": r["symbol"], "K": float(r["K"]), "lot": int(r["lotsize"]), "d": float(r["d"])}
+             for _, r in ch.iterrows()]
     best = None
     q = api.quotes({"NFO": [c["token"] for c in cands]}) or {}
     for c in cands:
@@ -140,7 +146,7 @@ def option_for_futures_call(api, master, name, side, fut_entry, fut_stop, fut_ta
             continue
         up = projected_gain(prem, fut_entry, c["K"], T, iv, typ, abs(fut_target - fut_entry), hold_days)
         dn = projected_gain(prem, fut_entry, c["K"], T, iv, typ, -abs(fut_entry - fut_stop), hold_days)
-        if best is None or up / max(-dn, 1e-9) > best["rr"]:
+        if best is None:                                  # first liquid strike in delta order (nearest 0.75 wins)
             best = dict(c=c, prem=prem, iv=iv, up=up, dn=dn, rr=up / max(-dn, 1e-9))
     if best is None:
         print(f"[opt-idea] {name}: no liquid {typ} near the money"); return None
@@ -153,7 +159,8 @@ def option_for_futures_call(api, master, name, side, fut_entry, fut_stop, fut_ta
         print(f"[opt-idea] {name}: option pays less at the futures target ({best['up'] * 100:+.0f}%) than it loses at the stop "
               f"({best['dn'] * 100:+.0f}%) – no option idea"); return None
     c = best["c"]
-    return (f"💡 OPTION IDEA – BUY {name} {c['K']:g} {typ} ({pd.Timestamp(exp):%d-%b}) at ~₹{best['prem']:,.2f} · lot {c['lot']:,}\n"
+    return (f"💡 OPTION IDEA – BUY {name} {c['K']:g} {typ} ({pd.Timestamp(exp):%d-%b}) at ~₹{best['prem']:,.2f} · lot {c['lot']:,}"
+            f" · delta ≈ {c.get('d', 0):.2f} (in the money)\n"
             f"• If the futures reach the target: ≈ {best['up'] * 100:+.0f}% · if they hit the stop: ≈ {best['dn'] * 100:+.0f}% "
             f"(IV {best['iv'] * 100:.0f}%, {hold_days} days of time decay included)\n"
             f"• Exit the option when the FUTURES call exits (stop / target / time) – not on a premium %.\n"

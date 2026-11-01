@@ -66,10 +66,14 @@ def _track(st, name, h1):
         r["last"] = float(new["close"].iloc[-1])
 
 
+ENABLED = False   # 1-Nov (owner "yes all"): OFF – hourly breakouts had no robust edge (BO1H: 9,491 combos, none robust); focus on 4h
+
 def check(state, msgs, name, seg, h1, now, oi=None, unit=""):
     """h1 = completed hourly futures candles (time, open, high, low, close, volume[, oi]).
     oi = label string (MCX / index, from the engine's OI reading) or None -> derived from the hour's OI change if h1 has oi."""
     st = state.setdefault("watch1h", dict(open=[], seen=[]))
+    if not ENABLED:
+        return None
     if h1 is None or len(h1) < N + 2:
         return None
     h1 = h1.sort_values("time").reset_index(drop=True)

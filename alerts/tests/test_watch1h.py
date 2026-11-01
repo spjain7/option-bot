@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from alerts import watch1h as W
+assert W.ENABLED is False, 'live: 1H watch is OFF since 1-Nov'
+W.ENABLED = True   # the checks below test the mechanism
 
 ok = fail = 0
 

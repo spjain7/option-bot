@@ -8,6 +8,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from alerts import candle_setups as CS  # noqa: E402
+assert CS.SWEEP15_SEND is False, 'live: 15-min sweeps are log-only since 1-Nov'
+CS.SWEEP15_SEND = True   # the checks below test the sending mechanism
 from crude import indicators as I  # noqa: E402
 
 OK = []

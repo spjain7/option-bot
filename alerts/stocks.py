@@ -313,6 +313,17 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
     st4["stk_progress"] = prog
     t0, complete = time.monotonic(), True
     after_close = hm >= "15:31"
+    try:
+        from obuy import improve as IMP
+        from angel import load_master
+
+        def _opt(r, h1):                                 # master loaded only when a 4h call is actually sent
+            return IMP.option_for_futures_call(api, load_master(), r["name"], 1 if r["side"] == "BUY" else -1, r["entry"],
+                                               r["stop"], r["target"], now, daily=BO.daily_candles(h1, None).iloc[:-1], hold_days=5)
+        FH.OPTION_HOOK = _opt
+    except Exception as e_:
+        print(f"[4h] option idea off: {type(e_).__name__}: {e_}")
+        FH.OPTION_HOOK = None
     for name, c in uni.items():
         if name in prog["done"]:
             continue

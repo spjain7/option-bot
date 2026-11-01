@@ -22,6 +22,7 @@ RULES = {"MCX": dict(side="BUY", N=10, vol=2.0, k=1.5, r=3.0, cap=2.5, max_days=
          "NFO": dict(side="SELL", N=5, vol=2.0, k=2.0, r=2.0, cap=4.0, max_days=20, label="SWING (4-hour candles)")}
 GOOD = {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}
 NEAR_R = 0.5
+OPTION_HOOK = None        # set by alerts.stocks.scan4h: (call, 1h candles) -> option-idea message
 STATS = {"MCX": "📚 Backtest 2022-26 (after 2× costs): +0.50R per trade, 246 trades, positive in every period.",
          "NFO": "📚 Backtest 2023-26 (after 2× costs): +0.12R per trade, 1,452 trades; slightly negative in 2024-25 – smaller size."}
 WARN = "Alert only – not investment advice."
@@ -162,6 +163,13 @@ def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=
            type="Swing (4-hour)", side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=t,
            lot=c.get("lot"), mult=mult, time=str(now))
     state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
+    if OPTION_HOOK is not None and ex == "NFO":           # 1-Nov: option idea, in-the-money strike near delta 0.75 (DELTA-001)
+        try:
+            m_ = OPTION_HOOK(dict(name=name, side=sig["side"], entry=plan["entry"], stop=plan["sl"], target=plan["target"]), h1)
+            if m_:
+                msgs.append(m_)
+        except Exception as e_:
+            print(f"[4h] option idea {name} skipped: {type(e_).__name__}: {e_}")
     print(f"[4h] {name} {sig['side']} SENT entry {plan['entry']} SL {plan['sl']} target {plan['target']} OI {oi['label']}")
     return "SENT"
 
