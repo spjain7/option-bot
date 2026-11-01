@@ -579,3 +579,14 @@ Script `research/program/improve4.py`, summary `results/improve4_summary.csv`. 2
 ✓ = positive in all 3 periods. Half-booking / breakeven raise the win rate but cut the profit (they stop the big winners) – rejected.
 Daily ATR above median: no help. Stock OI label (daily-based): worse. NIFTY trend for stock SELL: +0.21R, D + NIFTY fails 2024-25.
 Recommendation: daily ADX ≥ 20 + daily trend agreeing on all three core rules (about half the calls, higher R per call).
+
+## WALLS-001 (1-Nov-2026) – option-OI walls (largest call / put OI strike) on 183 stock futures, daily, 2022-26
+Script `research/program/walls.py`, summary `results/walls_summary.csv`. Walls from the previous day's real option OI. 2x costs.
+| Setup | BUY n / win / R | SELL n / win / R |
+|---|---|---|
+| Close through the wall, vol ≥ 2x (2R) | 1,494 / 42 % / −0.07 | 1,221 / 52 % / +0.05 |
+| + futures OI up (2R) | 702 / 40 % / −0.11 | 464 / 58 % / **+0.16** (2022-24 −0.02, 2024-25 +0.09, 2025-26 +0.35) |
+| Stop-hunt beyond the wall, close back (2R) | 571 / 41 % / −0.11 | 617 / 47 % / +0.10 (2022-25 ≤ 0) |
+| ZYDUSLIFE sequence (stop-hunt, then wall break ≤ 5 days) | 51 / 47 % / +0.01 | 55 / 47 % / −0.05 |
+| ZYDUSLIFE sequence + OI up | 11 trades | 19 / 74 % / +0.30 (too few) |
+Verdict: the ZYDUSLIFE sequence is not a repeatable BUY edge. Put-wall breakdown + OI up (SELL) works since mid-2024 only – watch, not live.
