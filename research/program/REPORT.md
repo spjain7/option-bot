@@ -568,3 +568,14 @@ Positive in all 3 periods at 2R: Hanging Man (stocks +0.18R / 1,238; NSE index 2
 (stocks +0.10R / 218) – new, small edge; NSE index 2011-26 Evening Star (+0.29R, 37), Three Outside Down (+0.33R, 61), Tweezer Top
 (+0.11R, 77); MCX Piercing Line (13 trades – too few). MCX Hammer +0.31R (live). Worst: Three Outside Up (stocks −0.20R), Bullish
 Engulfing (−0.14R), Evening Doji Star (−0.17R).
+
+## IMPROVE-001 (1-Nov-2026) – confluence, trade management, regime filter on the core breakout calls
+Script `research/program/improve4.py`, summary `results/improve4_summary.csv`. 2x costs, 1-hour exits, previous-day daily values only.
+| Rule | Base n / win / R | + daily trend (D) | + daily ADX ≥ 20 | D + ADX | Half at 1R + stop to entry | Stop to entry at 1R |
+|---|---|---|---|---|---|---|
+| MCX 3h BUY | 442 / 45 % / +0.16 (valid −0.03) | 304 / 47 % / +0.25 ✓ | 241 / 49 % / +0.30 ✓ | 198 / 48 % / +0.31 ✓ | 59 % / +0.08 | 33 % / +0.08 |
+| MCX 4h BUY | 277 / 41 % / +0.40 ✓ | 186 / 42 % / +0.47 ✓ | 147 / 46 % / +0.66 ✓ | 119 / 46 % / +0.66 ✓ | 55 % / +0.07 | 27 % / +0.17 |
+| STK 4h SELL | 913 / 56 % / +0.17 ✓ | 596 / 60 % / +0.21 ✓ | 468 / 59 % / +0.20 ✓ | 365 / 61 % / +0.21 ✓ | 58 % / +0.14 | 53 % / +0.16 |
+✓ = positive in all 3 periods. Half-booking / breakeven raise the win rate but cut the profit (they stop the big winners) – rejected.
+Daily ATR above median: no help. Stock OI label (daily-based): worse. NIFTY trend for stock SELL: +0.21R, D + NIFTY fails 2024-25.
+Recommendation: daily ADX ≥ 20 + daily trend agreeing on all three core rules (about half the calls, higher R per call).
