@@ -44,7 +44,7 @@ def blocks(f1, market, n):
     return C, cid
 
 
-def run(f1, cost1, market, n, rule):
+def run(f1, cost1, market, n, rule, vars_=VARS):
     f1 = f1.reset_index(drop=True)
     C, cid = blocks(f1, market, n)
     if len(C) < 260:
@@ -59,7 +59,7 @@ def run(f1, cost1, market, n, rule):
     last = np.r_[first[1:] - 1, len(f1) - 1]
     size = last - first + 1
     out = []
-    for var in VARS:
+    for var in vars_:
         busy = -1
         for i in range(210, len(C) - 1):
             if not (atr[i - 1] > 0 and np.isfinite(lvl[i])) or F["switch"].iat[i]:
@@ -118,7 +118,8 @@ def run(f1, cost1, market, n, rule):
             if px is None:
                 px, why, j = c1[-1], "end", len(f1) - 1
             cst = cost1[min(start, len(cost1) - 1)]
-            out.append((var, C["time"].iat[i], (side * (px - e0) - 2 * cst) / R, why, side * (e0 - lvl[i]) / atr[i - 1]))
+            out.append((var, C["time"].iat[i], (side * (px - e0) - 2 * cst) / R, why, side * (e0 - lvl[i]) / atr[i - 1],
+                        f1["time"].iat[start], f1["time"].iat[j], e0, px, R))
             busy = j
     return out
 
@@ -144,7 +145,7 @@ def main():
     J = [j for j in EX.jobs() if (j[0] == "mi" and j[2] == "MCX") or j[0] == "stk"]
     with Pool(3) as p:
         rows = [r for x in p.imap_unordered(one, J, chunksize=2) for r in x]
-    T = pd.DataFrame(rows, columns=["market", "hours", "name", "var", "time", "r2", "exit", "slip_atr"])
+    T = pd.DataFrame(rows, columns=["market", "hours", "name", "var", "time", "r2", "exit", "slip_atr", "t_in", "t_out", "e0", "px", "R"])
     T["time"] = pd.to_datetime(T["time"], format="mixed")
     T["split"] = np.where(T.time < T1, "train", np.where(T.time < T2, "valid", "test"))
     T.to_csv(ROOT / "research/program/results/touch_trades.csv.gz", index=False)
