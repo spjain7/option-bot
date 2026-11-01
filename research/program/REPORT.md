@@ -545,3 +545,17 @@ Waiting for the close enters ~0.8–1.0 ATR later, but the touch catches 2–4x 
 (TOUCH+cut) is worse everywhere. Only MCX 3h BUY gains from the touch, and only with an order resting AT the level (a pre-placed
 stop-buy); an alert sent up to an hour later halves the edge. Verdict: keep close-based entries; candidate = MCX 3h BUY pending
 stop-buy level alerts (needs owner approval).
+
+## DELTA-001 (1-Nov-2026) – how option delta helps the live stock SELL calls
+Script `research/program/delta.py`. Real NSE option closes → IV per strike; puts priced (Black-76) at the futures entry/exit, 2 % spread cost.
+Trades on split-adjusted names (futures history ≠ option strikes, 8 %) skipped.
+4h SELL, ₹ per lot per trade (futures: +₹3,325, all 3 periods positive):
+| put delta | win | ₹/lot | premium ₹/lot | train / valid / test |
+|---|---|---|---|---|
+| 0.25 (OTM) | 38 % | +240 | 6,150 | +227 / −1,024 / +487 |
+| 0.50 (ATM) | 46 % | +1,054 | 15,870 | +538 / −274 / +1,539 |
+| 0.75 (ITM) | 52 % | +2,293 | 31,950 | +810 / +179 / +3,344 |
+| 0.90 (deep ITM) | 57 % | +3,779 | 46,380 | +2,153 / +1,254 / +4,896 |
+3h SELL: every delta below 0.9 loses before mid-2024 to mid-2025; futures +₹1,387. Net delta of option OI (level or 1-day change) as a
+filter: no bucket better in all 3 periods – no help. Verdict: for a futures call, the option should be ITM (delta ≥ 0.75); OTM keeps almost
+nothing of the move. Caveat: deep-ITM stock options trade thinly – real spreads may exceed 2 %.

@@ -132,6 +132,8 @@ def main():
         g = pe_by.get((d_in, t.name))
         if g is None or g.empty:
             continue
+        if abs(t.e0 / g["F"].iat[0] - 1) > 0.1:          # split-adjusted futures history vs unadjusted option strikes – skip
+            continue
         g = g[g["contracts"] > 0]
         exits = [d for d in days if d >= t.t_out.normalize()]
         if g.empty or not exits:
