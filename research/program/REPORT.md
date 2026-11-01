@@ -559,3 +559,12 @@ Trades on split-adjusted names (futures history ≠ option strikes, 8 %) skipped
 3h SELL: every delta below 0.9 loses before mid-2024 to mid-2025; futures +₹1,387. Net delta of option OI (level or 1-day change) as a
 filter: no bucket better in all 3 periods – no help. Verdict: for a futures call, the option should be ITM (delta ≥ 0.75); OTM keeps almost
 nothing of the move. Caveat: deep-ITM stock options trade thinly – real spreads may exceed 2 %.
+
+## ALLPAT-001 (1-Nov-2026) – all 20 patterns of the "Price Action RoadMap" reel
+Script `research/program/allpat.py`, summary `results/allpat_summary.csv`. Daily candles, trend context, entry on the break of the
+pattern candle within 3 days, stop beyond the pattern, 1R / 2R, 20 days, normal costs. Success = target before stop.
+Stocks (biggest sample): 17 of 20 patterns lose or are flat; success at 1:1 is 24–54 % (break-even ≈ 52 %).
+Positive in all 3 periods at 2R: Hanging Man (stocks +0.18R / 1,238; NSE index 2011-26 +0.21R) – already live; Gravestone Doji
+(stocks +0.10R / 218) – new, small edge; NSE index 2011-26 Evening Star (+0.29R, 37), Three Outside Down (+0.33R, 61), Tweezer Top
+(+0.11R, 77); MCX Piercing Line (13 trades – too few). MCX Hammer +0.31R (live). Worst: Three Outside Up (stocks −0.20R), Bullish
+Engulfing (−0.14R), Evening Doji Star (−0.17R).
