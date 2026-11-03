@@ -10,8 +10,8 @@ name: Market loop (option selling + option buying + futures calls, every 15 min)
 
 on:
   schedule:                    # UTC (IST = UTC + 5:30). 3-Nov: odd minutes – GitHub dropped EVERY :00/:15/:45 morning start on 2-Nov and
-                               # 3-Nov (loop began 16:15 IST, NSE missed); busy top-of-hour slots are shed first. Backup: an external
-                               # 08:47 / 10:47 / 13:47 IST workflow_dispatch that fires only when no loop run exists that day.
+                               # 3-Nov (loop began 16:15 IST, NSE missed); busy top-of-hour slots are shed first.
+                               # self-start chain: the evening job dispatches standby.yml, which starts the next day's loop at 08:41 IST.
     - cron: "13 3 * * 1-5"     # 08:43 IST  - first start
     - cron: "22 3 * * 1-5"     # 08:52 IST
     - cron: "37 3 * * 1-5"     # 09:07 IST  - backups from here on
@@ -40,7 +40,7 @@ concurrency:
 
 permissions:
   contents: write
-  actions: read
+  actions: write               # 3-Nov: the evening job starts standby.yml, which starts tomorrow's loop (self-starting chain)
 
 env:
   ALERTS_STATE_DIR: state/alerts
@@ -94,3 +94,8 @@ jobs:
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
       - run: bash scripts/market_loop.sh 00:20
+      - name: Start tomorrow's loop (standby.yml waits until 08:41 IST, then starts this workflow)
+        if: ${{ always() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/actions/workflows/standby.yml/dispatches" -f ref=main || echo "standby start failed – the cron starts remain"

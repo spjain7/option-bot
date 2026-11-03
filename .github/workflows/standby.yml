@@ -1,0 +1,76 @@
+name: Standby – start tomorrow's market loop (no alerts)
+
+# 3-Nov-2026 (owner: "system should auto run, no dependency"): GitHub dropped every morning cron start on 2-Nov and 3-Nov,
+# so the loop now restarts ITSELF. The evening job of market-loop.yml dispatches this workflow at ~00:20 IST; it waits on
+# GitHub's runner (two jobs, each < 6 h) until 08:41 IST of the next trading day and then dispatches market-loop.yml
+# (workflow_dispatch is the one event a workflow may raise with its own token). Fri night -> it waits for Monday via the
+# Sunday-night cron below. The cron starts here are only a backup in case the chain is ever broken.
+# No secrets, no trading code – it only sleeps and dispatches.
+
+on:
+  workflow_dispatch:
+  schedule:                    # UTC – backup only (00:43 IST Tue-Sat nights after a trading day, and Monday 00:43 IST)
+    - cron: "13 19 * * 0-4"
+
+concurrency:
+  group: standby
+  cancel-in-progress: false
+
+permissions:
+  actions: write
+
+jobs:
+  wait1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 358
+    outputs:
+      go: ${{ steps.w.outputs.go }}
+    steps:
+      - id: w
+        name: Sleep until 08:41 IST of the next trading day (first ≤ 5 h 50 min)
+        run: |
+          now=$(date +%s)
+          dow=$(TZ=Asia/Kolkata date +%u)            # 1 = Mon … 7 = Sun (IST)
+          hm=$(TZ=Asia/Kolkata date +%H%M)
+          if [ "$hm" -ge 0841 ] && [ "$hm" -lt 2100 ]; then
+            echo "day-time start ($hm IST) – the market loop handles today itself; nothing to do"; echo "go=no" >> $GITHUB_OUTPUT; exit 0
+          fi
+          if [ "$hm" -ge 2100 ]; then day="tomorrow"; ndow=$(( dow % 7 + 1 )); else day="today"; ndow=$dow; fi
+          if [ "$ndow" -ge 6 ]; then
+            echo "next day is a weekend (IST weekday $ndow) – Monday's start comes from the Sunday-night run"; echo "go=no" >> $GITHUB_OUTPUT; exit 0
+          fi
+          target=$(TZ=Asia/Kolkata date -d "$day 08:41" +%s)
+          left=$(( target - now ))
+          echo "target $(TZ=Asia/Kolkata date -d @$target '+%a %d-%b %H:%M IST') – $(( left / 60 )) min to wait"
+          echo "target=$target" >> $GITHUB_ENV
+          s=$(( left < 21000 ? left : 21000 )); [ "$s" -gt 0 ] && sleep "$s"
+          echo "go=yes" >> $GITHUB_OUTPUT
+          echo "target=$target" > target.txt
+      - if: steps.w.outputs.go == 'yes'
+        uses: actions/upload-artifact@v4
+        with: { name: target, path: target.txt, retention-days: 1 }
+  wait2:
+    needs: wait1
+    if: needs.wait1.outputs.go == 'yes'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 358
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: target }
+      - name: Sleep the rest, then start the market loop
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          . ./target.txt
+          left=$(( target - $(date +%s) ))
+          if [ "$left" -gt 21000 ]; then
+            sleep 21000
+            echo "still early – handing over to a new standby run"
+            gh api -X POST "repos/${{ github.repository }}/actions/workflows/standby.yml/dispatches" -f ref=main; exit 0
+          fi
+          [ "$left" -gt 0 ] && sleep "$left"
+          gh api "repos/${{ github.repository }}/actions/workflows/market-loop.yml/runs?per_page=10" \
+            --jq '.workflow_runs[] | select(.status=="in_progress" or .status=="queued") | .id' > running.txt || true
+          if [ -s running.txt ]; then echo "market loop already running/queued – nothing to do"; exit 0; fi
+          gh api -X POST "repos/${{ github.repository }}/actions/workflows/market-loop.yml/dispatches" -f ref=main
+          echo "market loop started at $(TZ=Asia/Kolkata date '+%H:%M IST')"
