@@ -609,3 +609,12 @@ Intraday (flat 23:20), 2R: BUY 999 trades 36 % win, gross +0.07R, net (2x costs)
 Swing 3R best gross: BUY +0.17R, net −0.40R. Every period negative after costs. SILVER 2R intraday: BUY 148, 37 % win, gross +0.09R,
 net −0.21R; SELL 166, 33 %, −0.30R. Per commodity gross BUY: COPPER +0.30R, GOLD +0.13R, SILVER +0.09R; all negative after costs.
 SILVER 3/5/10/15/30-min on the ~2.5 days of 1-minute stream: 11 trades in all, 2 wins, net −3,375 points (too few to judge).
+
+## LIQTL-003 (3-Nov-2026) – trendline signals held until the opposite signal (how the owner trades it)
+Script `research/program/liqtl_rev.py`, summary `results/liqtl_rev_summary.csv`.
+Stocks 5/10/15/30-min, intraday, no stop: BUY −0.67 / −0.49 / −0.38 / −0.23R; SELL −0.17 / −0.07 / −0.09 / 0.00R – still no edge.
+MCX 1-hour held overnight, no stop, reverse on the opposite signal: BUY 859 trades 43 % win +0.19R net, but 2022-24 −0.45R,
+2024-25 +0.36R, 2025-26 +1.03R (the metals bull run: GOLD +2.29R, SILVER +0.33R, COPPER/ZINC +0.49R; CRUDE −0.18, NATGAS −0.59,
+ALUMINIUM −1.18). SELL −0.85R. Verdict: a trend-following BUY that pays only in a strong trend – not robust.
+Why the owner's chart differs: every chart signal on 2/3-Nov fell in hours with no stream data (loop not running); the chart
+triangle is drawn one candle early (plotshape offset −1); fixed 1:2 exits cap a 5-min silver win at ≈ 800 points.
