@@ -12,7 +12,7 @@ on:
         description: "Only these instruments, comma separated (empty = all)"
         default: ""
       intervals:
-        description: "Candle intervals, comma separated (ONE_DAY, ONE_HOUR, FIFTEEN_MINUTE)"
+        description: "Candle intervals, comma separated (ONE_DAY, ONE_HOUR, FIFTEEN_MINUTE, FIVE_MINUTE, THREE_MINUTE, ONE_MINUTE)"
         default: "ONE_DAY,ONE_HOUR"
 
 concurrency:
@@ -25,7 +25,7 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,6 +36,10 @@ jobs:
       - name: Restore earlier research data (for partial re-fetch)
         run: |
           git fetch -q origin research-data && git archive FETCH_HEAD research/data/angel | tar -x -C . || true
+      - name: Wait until the live loop's day is over (00:25 IST) – never compete with live alerts for the Angel quota
+        run: |
+          m=$(( 10#$(TZ=Asia/Kolkata date +%H) * 60 + 10#$(TZ=Asia/Kolkata date +%M) ))
+          if [ "$m" -ge 500 ]; then s=$(( (1440 - m + 25) * 60 )); echo "waiting $((s/60)) min"; sleep "$s"; elif [ "$m" -lt 25 ]; then sleep $(( (25 - m) * 60 )); fi
       - name: Fetch Angel history (research only)
         run: python -m research.adapters.angel_hist
         env:
