@@ -590,3 +590,15 @@ Script `research/program/walls.py`, summary `results/walls_summary.csv`. Walls f
 | ZYDUSLIFE sequence (stop-hunt, then wall break ≤ 5 days) | 51 / 47 % / +0.01 | 55 / 47 % / −0.05 |
 | ZYDUSLIFE sequence + OI up | 11 trades | 19 / 74 % / +0.30 (too few) |
 Verdict: the ZYDUSLIFE sequence is not a repeatable BUY edge. Put-wall breakdown + OI up (SELL) works since mid-2024 only – watch, not live.
+
+## LIQTL-001 (3-Nov-2026) – "Liquidity Trendline With Signals [StratifyTrade]" (owner's Pine script)
+Script `research/program/liqtl.py` (faithful port: pivots 5/5, shared 'broken' flag, padding 2), summary `results/liqtl_summary.csv`.
+212 stock futures, 5-min 27-Jul → 29-Oct-2026; 10/15/30 min built from 5-min; 3-min not testable (no 1-min history).
+Entry next bar open, intraday (flat 15:20), costs 0.08 % round trip. Stop 1 ATR14 (the signal-bar stop is far worse: risk too small vs costs).
+| TF | BUY win / R (1R) | SELL win / R (1R) | best net | gross R (before costs) BUY / SELL |
+|---|---|---|---|---|
+| 5 min | 47 % / −0.46 | 51 % / −0.39 | −0.32 (SELL 3R) | −0.06 / +0.02 |
+| 10 min | 46 % / −0.32 | 52 % / −0.21 | −0.17 (SELL 3R) | −0.06 / +0.06 |
+| 15 min | 44 % / −0.31 | 52 % / −0.17 | −0.12 (SELL 3R) | −0.10 / +0.05 |
+| 30 min | 47 % / −0.23 | 52 % / −0.06 | ≈ 0 (SELL 2-3R) | −0.08 / +0.09 |
+Verdict: BUY breakouts lose even before costs; SELL breakdowns have a small gross edge that costs remove. Not tradeable as is.

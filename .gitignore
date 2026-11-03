@@ -15,3 +15,4 @@ state/obuy/
 research/program/results/premove_*.csv.gz
 research/program/results/delta_chain.csv.gz
 research/program/results/walls_panel.csv.gz
+research/data/m5/
