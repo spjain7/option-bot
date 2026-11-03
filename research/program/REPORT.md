@@ -618,3 +618,14 @@ MCX 1-hour held overnight, no stop, reverse on the opposite signal: BUY 859 trad
 ALUMINIUM −1.18). SELL −0.85R. Verdict: a trend-following BUY that pays only in a strong trend – not robust.
 Why the owner's chart differs: every chart signal on 2/3-Nov fell in hours with no stream data (loop not running); the chart
 triangle is drawn one candle early (plotshape offset −1); fixed 1:2 exits cap a 5-min silver win at ≈ 800 points.
+
+## LIQTL-004 (4-Nov-2026) – trendline indicator on 3 years of MCX 3/5/10/15/30-min (Angel front-month, 7 commodities)
+Script `research/program/liqtl_mcx5.py`; summary `results/liqtl_mcx5_summary.csv`, per name `results/liqtl_mcx5_by_name.csv`.
+Port verified against the owner's TradingView screenshots (2/3-Nov signals match; his chart is in UTC).
+No filter: every TF / exit loses after costs (5-min −2.3R, 30-min −0.6R; gross only +0.0…+0.27R). 3/5-min: cost ≥ 1R on most metals.
+Choppy filter that works: previous-day daily trend up (EMA20 > EMA50, close > EMA50) + signal-candle volume ≥ 1.5x (DT+VOL).
+SILVER+GOLD+CRUDE 15-min DT+VOL BUY, hold to opposite signal: 234 trades, 51 % win, +0.52R (2x costs), all 3 periods positive.
+SILVER 15-min DT+VOL BUY, 3-ATR trailing stop: 90 trades (2.7/month), 52 % win, +0.84R, avg +598 pts (win +1,886 / loss −811),
+periods +0.55 / +0.29 / +1.29R. GOLD same: 97, 39 %, +0.32R (2023-24 −0.09). SELL side: no robust version.
+Baseline without the trendline (daily up + volume + up candle, same exit): −0.10…−0.24R – the trendline adds the edge.
+Not usable: ALUMINIUM, ZINC, NATURALGAS, COPPER (costs 1-6R on intraday ATR). Caveat: 2023-26 was a metals bull market.
