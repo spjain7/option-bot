@@ -9,20 +9,26 @@ name: Market loop (option selling + option buying + futures calls, every 15 min)
 # ALERTS / PAPER only - no orders.
 
 on:
-  schedule:                    # UTC (IST = UTC + 5:30)
-    - cron: "15 3 * * 1-5"     # 08:45 IST  - first start
-    - cron: "25 3 * * 1-5"     # 08:55 IST
-    - cron: "45 3 * * 1-5"     # 09:15 IST  - backups from here on
-    - cron: "15 4 * * 1-5"     # 09:45
-    - cron: "0 5 * * 1-5"      # 10:30
-    - cron: "0 6 * * 1-5"      # 11:30
-    - cron: "0 7 * * 1-5"      # 12:30
-    - cron: "0 8 * * 1-5"      # 13:30
-    - cron: "0 9 * * 1-5"      # 14:30
-    - cron: "30 10 * * 1-5"    # 16:00
-    - cron: "10 12 * * 1-5"    # 17:40
-    - cron: "10 14 * * 1-5"    # 19:40
-    - cron: "0 16 * * 1-5"     # 21:30
+  schedule:                    # UTC (IST = UTC + 5:30). 3-Nov: odd minutes – GitHub dropped EVERY :00/:15/:45 morning start on 2-Nov and
+                               # 3-Nov (loop began 16:15 IST, NSE missed); busy top-of-hour slots are shed first. Backup: an external
+                               # 08:47 / 10:47 / 13:47 IST workflow_dispatch that fires only when no loop run exists that day.
+    - cron: "13 3 * * 1-5"     # 08:43 IST  - first start
+    - cron: "22 3 * * 1-5"     # 08:52 IST
+    - cron: "37 3 * * 1-5"     # 09:07 IST  - backups from here on
+    - cron: "53 3 * * 1-5"     # 09:23
+    - cron: "19 4 * * 1-5"     # 09:49
+    - cron: "41 4 * * 1-5"     # 10:11
+    - cron: "7 5 * * 1-5"      # 10:37
+    - cron: "38 5 * * 1-5"     # 11:08
+    - cron: "11 6 * * 1-5"     # 11:41
+    - cron: "43 6 * * 1-5"     # 12:13
+    - cron: "17 7 * * 1-5"     # 12:47
+    - cron: "9 8 * * 1-5"      # 13:39
+    - cron: "4 9 * * 1-5"      # 14:34
+    - cron: "33 10 * * 1-5"    # 16:03
+    - cron: "13 12 * * 1-5"    # 17:43
+    - cron: "11 14 * * 1-5"    # 19:41
+    - cron: "3 16 * * 1-5"     # 21:33
   workflow_dispatch:
   push:                        # emergency start: a commit that changes .github/kick starts the loop (GitHub skipped every cron on 28-Oct)
     branches: [main]
