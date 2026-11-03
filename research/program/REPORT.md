@@ -602,3 +602,10 @@ Entry next bar open, intraday (flat 15:20), costs 0.08 % round trip. Stop 1 ATR1
 | 15 min | 44 % / −0.31 | 52 % / −0.17 | −0.12 (SELL 3R) | −0.10 / +0.05 |
 | 30 min | 47 % / −0.23 | 52 % / −0.06 | ≈ 0 (SELL 2-3R) | −0.08 / +0.09 |
 Verdict: BUY breakouts lose even before costs; SELL breakdowns have a small gross edge that costs remove. Not tradeable as is.
+
+## LIQTL-002 (3-Nov-2026) – the same trendline indicator on MCX
+Script `research/program/liqtl_mcx.py`. 7 commodities, 1-hour candles Jul-2022 → Oct-2026, stop 1 ATR, next-bar-open entry.
+Intraday (flat 23:20), 2R: BUY 999 trades 36 % win, gross +0.07R, net (2x costs) −0.49R; SELL 1,077, 31 %, gross −0.03R.
+Swing 3R best gross: BUY +0.17R, net −0.40R. Every period negative after costs. SILVER 2R intraday: BUY 148, 37 % win, gross +0.09R,
+net −0.21R; SELL 166, 33 %, −0.30R. Per commodity gross BUY: COPPER +0.30R, GOLD +0.13R, SILVER +0.09R; all negative after costs.
+SILVER 3/5/10/15/30-min on the ~2.5 days of 1-minute stream: 11 trades in all, 2 wins, net −3,375 points (too few to judge).
