@@ -40,7 +40,11 @@ def load(exch, name, iv):
     if f is None or not f.exists():
         return None
     d = pd.read_csv(f, parse_dates=["time"])[["time", "open", "high", "low", "close", "volume"]]
-    return d.sort_values("time").drop_duplicates("time").iloc[:-1].reset_index(drop=True)
+    d = d.sort_values("time").drop_duplicates("time").iloc[:-1].reset_index(drop=True)
+    from research import dq_gate as DQG                        # DATA-AUDIT-001: INVALID data is refused, status is attached
+    st, why = DQG.require(exch, name, iv, start=d["time"].min() if len(d) else None)
+    d.attrs["dq_status"], d.attrs["dq_reasons"] = st, why
+    return d
 
 
 def daily_from(h):
