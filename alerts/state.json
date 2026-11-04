@@ -717,24 +717,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-04 16:17:01.647995",
-   "oi": 1035900.0,
-   "ltp": 9026.0
+   "time": "2026-11-04 16:32:01.834179",
+   "oi": 1029700.0,
+   "ltp": 9017.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-04 16:17:01.647995",
-   "oi": 68897500.0,
-   "ltp": 275.6
+   "time": "2026-11-04 16:32:01.834179",
+   "oi": 68898750.0,
+   "ltp": 276.1
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-04 16:17:01.647995",
-   "oi": 16030.0,
-   "ltp": 142600.0
+   "time": "2026-11-04 16:32:01.834179",
+   "oi": 16025.0,
+   "ltp": 142736.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-04 16:17:01.647995",
-   "oi": 514740.0,
-   "ltp": 186706.0
+   "time": "2026-11-04 16:32:01.834179",
+   "oi": 515160.0,
+   "ltp": 186950.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -772,19 +772,19 @@
    "ltp": 56017.2
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-04 16:17:01.647995",
-   "oi": 15780000.0,
-   "ltp": 1370.45
+   "time": "2026-11-04 16:32:01.834179",
+   "oi": 15810000.0,
+   "ltp": 1371.9
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-04 16:17:01.647995",
-   "oi": 8210.0,
-   "ltp": 416.4
+   "time": "2026-11-04 16:32:01.834179",
+   "oi": 8035.0,
+   "ltp": 416.65
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-04 16:17:01.647995",
-   "oi": 20385.0,
-   "ltp": 329.4
+   "time": "2026-11-04 16:32:01.834179",
+   "oi": 20390.0,
+   "ltp": 329.35
   }
  },
  "bo_active": [],
@@ -1633,8 +1633,16 @@
    "date": "2026-11-02",
    "uhi": 282.7,
    "ulo": 271.2,
-   "ulast": 274.9,
-   "uat": "2026-11-04 16:17:01.647995"
+   "ulast": 277.0,
+   "uat": "2026-11-04 16:32:01.834179",
+   "best_px": 283.7,
+   "worst_px": 271.2,
+   "mfe_R": 0.378,
+   "mae_R": -0.898,
+   "excursion_measure": "15-min candle highs/lows",
+   "excursion_upd": "2026-11-04 16:15:00",
+   "t1_hit": false,
+   "stop_touched": false
   },
   {
    "key": "PETRONET|1dSTK|2026-11-02 09:15:00",
@@ -1727,7 +1735,7 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-04 16:00:00",
+    "last_bar": "2026-11-04 16:15:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
     "last_px": 275.8,
@@ -2480,7 +2488,32 @@
     "KPITTECH",
     "KALYANKJIL",
     "INDIGO",
-    "HYUNDAI"
+    "HYUNDAI",
+    "HINDZINC",
+    "SBICARD",
+    "PHOENIXLTD",
+    "PAGEIND",
+    "MUTHOOTFIN",
+    "ANGELONE",
+    "ENRIN",
+    "ADANIENSOL",
+    "BAJAJFINSV",
+    "SYRMA",
+    "BHARATFORG",
+    "BOSCHLTD",
+    "CUB",
+    "ALKEM",
+    "AMBUJACEM",
+    "BDL",
+    "BIOCON",
+    "CDSL",
+    "CONCOR",
+    "CUMMINSIND",
+    "DLF",
+    "HDFCBANK",
+    "HDFCLIFE",
+    "JUBLFOOD",
+    "LAURUSLABS"
    ],
    "sent": 0
   }
@@ -2488,22 +2521,23 @@
  "news": {
   "sent_ev": [],
   "seen": [
-   "treasurysecretarybessentsaystheworldcanlivewithoutiranianoilastrumpweighsfurther"
+   "treasurysecretarybessentsaystheworldcanlivewithoutiranianoilastrumpweighsfurther",
+   "omansmdoawards600millionmazooncoppercontractminingcomau"
   ],
   "day": "2026-11-04",
-  "n": 1
+  "n": 2
  },
  "scan": {
-  "seq": 2,
-  "started": "2026-11-04 16:17:01.647995",
-  "finished": "2026-11-04 16:23:04.796930",
-  "seconds": 363,
+  "seq": 3,
+  "started": "2026-11-04 16:32:01.834179",
+  "finished": "2026-11-04 16:37:14.026487",
+  "seconds": 312,
   "status": "RATE_LIMITED",
-  "note": "api requests 41 ok 23 rate-limited 18 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 45 ok 26 rate-limited 19 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 41,
-   "ok": 23,
-   "rate_limited": 18,
+   "calls": 45,
+   "ok": 26,
+   "rate_limited": 19,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 1,
@@ -2511,6 +2545,14 @@
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
+ },
+ "paper": {
+  "E_BUY_v1": {
+   "pending": [],
+   "open": [],
+   "closed": [],
+   "seen": []
+  }
  }
 }
