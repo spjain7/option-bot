@@ -32,6 +32,40 @@ def add(state, **row):
     return row
 
 
+def track_excursions(state, token, bars, measure):
+    """MFE / MAE for every OPEN futures ledger row of this contract, from completed candles after the call time.
+    Prices (best_px / worst_px) and R multiples of the initial risk; `measure` says which bars were used (e.g.
+    '15-min candle highs/lows'). Rows are updated in place; closed rows keep their last values. Live ledger only –
+    paper trades are tracked separately in state['paper']."""
+    if bars is None or len(bars) == 0:
+        return 0
+    n = 0
+    tok = str(token)
+    for r in state.get("ledger", []):
+        if r.get("status") != "OPEN" or str(r.get("mark_key")) != tok or r.get("cat") != "FUTURES":
+            continue
+        try:
+            e, sl = float(r["entry"]), float(r["sl"])
+            t0 = pd.Timestamp(r["time"])
+        except (TypeError, ValueError, KeyError):
+            continue
+        s = 1 if r.get("side") == "BUY" else -1
+        risk = s * (e - sl)
+        after = bars[bars["time"] >= t0.floor("min")]
+        if risk <= 0 or after.empty:
+            continue
+        hi, lo = float(after["high"].max()), float(after["low"].min())
+        best = max(hi, r.get("best_px", hi)) if s > 0 else min(lo, r.get("best_px", lo))
+        worst = min(lo, r.get("worst_px", lo)) if s > 0 else max(hi, r.get("worst_px", hi))
+        r.update(best_px=best, worst_px=worst, mfe_R=round(s * (best - e) / risk, 3), mae_R=round(s * (worst - e) / risk, 3),
+                 excursion_measure=r.get("excursion_measure") or measure, excursion_upd=str(after["time"].iloc[-1]))
+        if r.get("target") not in (None, ""):
+            r["t1_hit"] = bool(r.get("t1_hit")) or s * (best - float(r["target"])) >= 0
+        r["stop_touched"] = bool(r.get("stop_touched")) or s * (worst - sl) <= 0
+        n += 1
+    return n
+
+
 def pnl_rs(r, mark=None):
     px = r.get("exit") if r["status"] == "CLOSED" else mark
     if px is None:
