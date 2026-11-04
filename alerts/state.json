@@ -717,24 +717,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-04 16:47:01.741714",
-   "oi": 1025100.0,
-   "ltp": 9036.0
+   "time": "2026-11-04 17:02:01.651538",
+   "oi": 1029900.0,
+   "ltp": 9030.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-04 16:47:01.741714",
-   "oi": 68930000.0,
-   "ltp": 276.0
+   "time": "2026-11-04 17:02:01.651538",
+   "oi": 68991250.0,
+   "ltp": 276.1
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-04 16:47:01.741714",
-   "oi": 16013.0,
-   "ltp": 142649.0
+   "time": "2026-11-04 17:02:01.651538",
+   "oi": 16015.0,
+   "ltp": 142668.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-04 16:47:01.741714",
-   "oi": 515310.0,
-   "ltp": 186506.0
+   "time": "2026-11-04 17:02:01.651538",
+   "oi": 515220.0,
+   "ltp": 186618.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -772,19 +772,19 @@
    "ltp": 56017.2
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-04 16:47:01.741714",
+   "time": "2026-11-04 17:02:01.651538",
    "oi": 15787500.0,
-   "ltp": 1370.5
+   "ltp": 1369.75
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-04 16:47:01.741714",
-   "oi": 8005.0,
+   "time": "2026-11-04 17:02:01.651538",
+   "oi": 7965.0,
    "ltp": 416.5
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-04 16:47:01.741714",
-   "oi": 20395.0,
-   "ltp": 329.45
+   "time": "2026-11-04 17:02:01.651538",
+   "oi": 20375.0,
+   "ltp": 329.75
   }
  },
  "bo_active": [],
@@ -1633,14 +1633,14 @@
    "date": "2026-11-02",
    "uhi": 282.7,
    "ulo": 271.2,
-   "ulast": 277.4,
-   "uat": "2026-11-04 16:47:01.741714",
+   "ulast": 275.5,
+   "uat": "2026-11-04 17:02:01.651538",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-04 16:30:00",
+   "excursion_upd": "2026-11-04 16:45:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1735,10 +1735,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-04 16:30:00",
+    "last_bar": "2026-11-04 16:45:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 276.0,
+    "last_px": 276.4,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2408,13 +2408,13 @@
   "open": [],
   "closed": [],
   "last": {
-   "CRUDEOIL|MCX": "2026-11-04 09:00:00",
-   "NATURALGAS|MCX": "2026-11-04 09:00:00",
-   "GOLD|MCX": "2026-11-04 09:00:00",
-   "SILVER|MCX": "2026-11-04 09:00:00",
-   "COPPER|MCX": "2026-11-04 09:00:00",
-   "ZINC|MCX": "2026-11-04 09:00:00",
-   "ALUMINIUM|MCX": "2026-11-04 09:00:00"
+   "CRUDEOIL|MCX": "2026-11-04 13:00:00",
+   "NATURALGAS|MCX": "2026-11-04 13:00:00",
+   "GOLD|MCX": "2026-11-04 13:00:00",
+   "SILVER|MCX": "2026-11-04 13:00:00",
+   "COPPER|MCX": "2026-11-04 13:00:00",
+   "ZINC|MCX": "2026-11-04 13:00:00",
+   "ALUMINIUM|MCX": "2026-11-04 13:00:00"
   },
   "stk_block": "2026-11-03 15:30",
   "stk_progress": {
@@ -2549,7 +2549,50 @@
     "ICICILIFE",
     "COROMANDEL",
     "HAL",
-    "DRREDDY"
+    "DRREDDY",
+    "CGPOWER",
+    "BHARTIARTL",
+    "ASIANPAINT",
+    "ADANIPORTS",
+    "ADANIGREEN",
+    "ZYDUSLIFE",
+    "VOLTAS",
+    "UNOMINDA",
+    "TMPV",
+    "TATAELXSI",
+    "SONACOMS",
+    "POLICYBZR",
+    "CHOLAFIN",
+    "EICHERMOT",
+    "GODFRYPHLP",
+    "POLYCAB",
+    "ONGC",
+    "OFSS",
+    "OBEROIRLTY",
+    "NTPC",
+    "NATIONALUM",
+    "MFSL",
+    "MARUTI",
+    "LTM",
+    "LT",
+    "JIOFIN",
+    "HAVELLS",
+    "GODREJCP",
+    "FEDERALBNK",
+    "DMART",
+    "DABUR",
+    "ASTRAL",
+    "PAYTM",
+    "PERSISTENT",
+    "PGEL",
+    "PRESTIGE",
+    "TATACONSUM",
+    "TATAPOWER",
+    "TCS",
+    "TIINDIA",
+    "ULTRACEMCO",
+    "SIEMENS",
+    "SHREECEM"
    ],
    "sent": 0
   }
@@ -2564,16 +2607,16 @@
   "n": 2
  },
  "scan": {
-  "seq": 4,
-  "started": "2026-11-04 16:47:01.741714",
-  "finished": "2026-11-04 16:52:31.507766",
-  "seconds": 329,
+  "seq": 5,
+  "started": "2026-11-04 17:02:01.651538",
+  "finished": "2026-11-04 17:07:18.894324",
+  "seconds": 317,
   "status": "RATE_LIMITED",
-  "note": "api requests 53 ok 37 rate-limited 16 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 60 ok 46 rate-limited 14 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 53,
-   "ok": 37,
-   "rate_limited": 16,
+   "calls": 60,
+   "ok": 46,
+   "rate_limited": 14,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 1,
