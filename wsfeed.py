@@ -107,6 +107,10 @@ def main():
     fut_name = {str(t): n for t, n in zip(master["token"].astype(str), master["name"])
                 if t in set(st["tokens"])}
     lastpx, value = {}, {}
+    # 4-Nov-2026 D3 diagnostics: WebSocket futures bars had no volume (MCX 0 %, NFO futures 11 %). Count, per exchange,
+    # futures ticks by subscription mode and whether the day-volume field is present / non-zero, and keep one raw sample
+    # per exchange (field names + values, no credentials) so the cause can be read from the job log.
+    vdiag, vsample = {}, {}
 
     def on_data(wsapp, msg):
         try:
@@ -117,6 +121,13 @@ def main():
             with lock:
                 tok, ltp, cv = str(msg["token"]), msg["last_traded_price"] / 100.0, msg.get("volume_trade_for_the_day") or 0
                 B.tick(tok, t, ltp, cv, msg.get("open_interest") or 0)
+                if tok in fut_name:
+                    k = f"{ex}|mode{msg.get('subscription_mode')}|{'vol>0' if cv else ('vol=0' if 'volume_trade_for_the_day' in msg else 'no-vol-field')}"
+                    vdiag[k] = vdiag.get(k, 0) + 1
+                    if ex not in vsample:
+                        vsample[ex] = {k_: msg.get(k_) for k_ in ("subscription_mode", "exchange_type", "token", "last_traded_price",
+                                                                  "volume_trade_for_the_day", "last_traded_quantity",
+                                                                  "total_buy_quantity", "total_sell_quantity", "open_interest")}
                 if tok in fut_name:
                     lastpx[tok], value[tok] = ltp, ltp * cv
                 st["last_tick"][ex] = str(now_ist()); st["ticks"] += 1
@@ -184,6 +195,9 @@ def main():
         if st["ticks"] // 50000 != last_n:
             last_n = st["ticks"] // 50000
             print(f"[ws] {n:%H:%M} ticks {st['ticks']:,} last {st['last_tick']}", flush=True)
+            with lock:
+                st["vol_diag"] = dict(vdiag)
+            print(f"[ws] futures volume diag {dict(sorted(vdiag.items()))} · sample {vsample}", flush=True)
     try:
         ws.close_connection()
     except Exception:

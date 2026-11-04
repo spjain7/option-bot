@@ -178,6 +178,25 @@ def test_time_budget():
         check("priority wait_clear refuses a pause longer than the budget", a.wait_clear() is False)
 
 
+def test_adaptive_pace():
+    """Rate-limit replies widen the shared request gap (×1.5, capped); successes narrow it back toward the base."""
+    with tempfile.TemporaryDirectory() as tmp:
+        a = make(tmp, FakeSmart())
+        base = a.HIST_GAP
+        check("starts at the base gap", a.pace() == base)
+        a._trip(); g1 = a.pace(); a._trip(); g2 = a.pace()
+        check("each rate-limit reply widens the gap", g1 >= max(0.5, base * 1.5) - 1e-6 and abs(g2 - g1 * 1.5) < 1e-3)
+        for _ in range(20):
+            a._trip()
+        check("gap is capped", a.pace() == a.PACE_MAX)
+        b = make(tmp, FakeSmart())
+        check("the learned gap is shared with another process", b.pace() == a.PACE_MAX)
+        for _ in range(200):
+            a._reset()
+        check("successes bring the gap back to the base", abs(a.pace() - base) < 1e-6)
+        check("quote pace is separate", a.pace("quote") == a.QUOTE_GAP)
+
+
 def test_detection():
     check("'exceeding access rate' text detected", A.Angel._is_rate(RATE_MSG))
     check("AB1021 detected", A.Angel._is_rate("AB1021 Too many requests"))
@@ -185,6 +204,6 @@ def test_detection():
 
 
 if __name__ == "__main__":
-    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_priority_wait_clear, test_quotes_and_stats, test_time_budget, test_detection):
+    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_priority_wait_clear, test_quotes_and_stats, test_time_budget, test_adaptive_pace, test_detection):
         t()
     print("all angel throttle tests passed")
