@@ -593,6 +593,10 @@ def scan(api, master, now, state, msgs, rep, engine):
             continue
         d = daily_with_oi(h, oi)
         d, h, dq = DQ.reconcile(name, d, h)
+        try:                                               # 4-Nov: MFE / MAE of open stock-futures calls (live ledger)
+            RP.track_excursions(state, c["token"], h, "1-hour candle highs/lows")
+        except Exception as e_:
+            print(f"[ledger] {name} excursion update skipped: {type(e_).__name__}: {e_}")
         if dq["holds"]:
             st.setdefault("dq_holds", {})[name] = dict(time=str(now), reasons=dq["holds"])
             rep.setdefault("stock_skips", []).append(f"{name}: data hold – {'; '.join(dq['holds'])}")
