@@ -80,3 +80,12 @@ side and no resistance (BUY) / support (SELL) lies within 0.5R of the entry. Tra
 Code: alerts/four_hour.py · research TFNH-001 / TFLOG-002 (branch exp/strategy-program-001).
 Also 30-Oct: the 1H BIG MOVE watch and MCX OI now read OI over the candle from the live 1-minute stream (OI "n/a" had blocked
 CRUDEOIL / GOLD hourly breakouts on 30-Oct).
+
+## 4-NOV-2026 – FUTURES ONLY + MCX NEWS (owner)
+- **Option SELL and option BUY switched off** (config `OPTION_ENGINE_ENABLED`, `OBUY_ENABLED`, `OPTION_IDEAS_ENABLED`); open sells are still managed to exit; all history kept.
+- **ICSS-001** (branch `exp/icss-backtest`): the owner's TradingView "BTC ICSS" (Conservative, default inputs) ported bar-by-bar on daily futures.
+  4,455 signals: 10-day direction right 49–54% vs random 46–56%; +1R before a 2-ATR stop 42–55% vs random 42–49%. **No edge over random entries** → not used.
+- **MCX news** (`alerts/news.py`, tests `alerts/tests/test_news.py`): each MCX futures call gets up to 3 headlines from the last 24h (Google News RSS),
+  a keyword tone tag (not a forecast) and any scheduled US event in the next 24h with its measured 1-hour move. Separate alerts: event heads-up 45–120 min before
+  events that measurably move MCX (NG storage Thu 1.7×, US jobs first Fri: SILVER 1.8×, GOLD 1.4×, COPPER 1.6×; CPI, FOMC), and high-impact headlines (max 4/day).
+  EIA crude Wednesday hour is only 1.1× a normal hour → shown on calls, no separate alert. CPI/FOMC dates are a list in `alerts/news.py` (DATED).

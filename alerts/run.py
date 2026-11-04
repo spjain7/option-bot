@@ -41,6 +41,11 @@ def scan():
         OUTBOX.write_text(json.dumps(dict(messages=[f"⚠️ ALERTS – Angel login / instrument list failed: {type(e).__name__}. No alerts this run."])))
         print("::error::login failed"); return 2
     state, msgs, rep = E.scan(api, master, now, state)
+    try:                                                      # 4-Nov-2026: MCX news / event context – never blocks a call
+        from alerts import news as NW
+        msgs = NW.enrich(msgs, now) + NW.alerts(state, now)
+    except Exception as e:
+        print(f"::warning::news step failed: {type(e).__name__}: {e}")
     import share                                              # prices for the website, with this same Angel session
     print("website price snapshot:", share.push(api, master, now))
     tmp = STATE.with_suffix(".tmp"); tmp.write_text(json.dumps(state, indent=1, default=str)); os.replace(tmp, STATE)
