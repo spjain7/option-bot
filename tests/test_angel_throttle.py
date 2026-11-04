@@ -197,6 +197,16 @@ def test_adaptive_pace():
         check("quote pace is separate", a.pace("quote") == a.QUOTE_GAP)
 
 
+def test_failed_after_retries():
+    """Data refused on every retry is counted as failed (missing for this scan), not hidden."""
+    with tempfile.TemporaryDirectory() as tmp:
+        sm = FakeSmart(["rate", "rate", "rate"])
+        a = make(tmp, sm); a.COOL_STEPS = (0, 0, 0, 0, 0)
+        check("all retries refused -> None, counted as failed", a._call(sm.getCandleData, {"x": 1}) is None and a.stats["failed"] == 1)
+        sm2 = FakeSmart(["nodata"]); b = make(tmp, sm2)
+        check("a real 'no data' reply is not counted as failed", b._call(sm2.getCandleData, {"x": 2}) is None and b.stats["failed"] == 0)
+
+
 def test_detection():
     check("'exceeding access rate' text detected", A.Angel._is_rate(RATE_MSG))
     check("AB1021 detected", A.Angel._is_rate("AB1021 Too many requests"))
@@ -204,6 +214,6 @@ def test_detection():
 
 
 if __name__ == "__main__":
-    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_priority_wait_clear, test_quotes_and_stats, test_time_budget, test_adaptive_pace, test_detection):
+    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_priority_wait_clear, test_quotes_and_stats, test_time_budget, test_adaptive_pace, test_failed_after_retries, test_detection):
         t()
     print("all angel throttle tests passed")
