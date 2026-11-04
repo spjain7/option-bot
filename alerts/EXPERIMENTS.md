@@ -93,10 +93,20 @@ CRUDEOIL / GOLD hourly breakouts on 30-Oct).
 ## INTEL-001 – pre-registered 4-Nov-2026 (shadow grade on live futures calls)
 - **Hypothesis:** live futures calls graded A or B by `alerts/intel.py` (regime fit, daily bias, structure, volume, OI, VWAP,
   reward:risk, room to the next level) end with a better result than calls graded C or NO TRADE.
+- **Coverage (grade_v intel-1.0):** futures breakout calls (3h / daily / monthly), MCX 4-hour calls, stock-futures daily
+  calls. Not yet graded: MCX candle-setup and 15-min sweep calls (their frames are not available at entry time).
 - **Data:** only calls sent live after this date (`alerts-state` ledger, fields `grade`, `regime`, `why_for`, `why_against`).
   Backtests and data already inspected are not evidence for this test. Grade rules are frozen while the test runs.
 - **Costs:** ledger P&L with 0.04 % (MCX/index) / 0.06 % (stocks) round trip, stop-first when a candle touches both levels.
 - **Sample:** at least 30 closed calls in A+B and 30 in C+NO TRADE; overlapping calls on the same instrument count once.
-- **Pass:** average R of A+B ≥ average R of C+NO TRADE + 0.3 R, and A+B average R > 0 after costs.
+- **Measure:** realised R per closed call from the ledger (exit vs entry ÷ initial risk, after costs). Primary statistic:
+  difference of MEAN R (A+B minus C+NO TRADE); median R and win rate reported beside it. Grades of one `grade_v` only.
+- **Fairness checks (all must hold):** the difference has the same sign in MCX and in NSE separately, and in BUY and SELL
+  separately; no single instrument contributes more than 25 % of either group; a one-sided bootstrap (10,000 resamples)
+  of the mean difference has p < 0.10.
+- **NO TRADE while in shadow:** nothing is blocked, so NO-TRADE calls are real sent calls with real outcomes. Once
+  `INTEL_BLOCK` is on, blocked calls are tracked as hypothetical trades (same entry / SL / target rules) in a separate
+  shadow list and never mixed with sent calls.
+- **Pass:** average R of A+B ≥ average R of C+NO TRADE + 0.3 R, and A+B average R > 0 after costs, plus the fairness checks.
 - **If pass:** `INTEL_IN_MESSAGE = True` (grade shown). A second, separate pass is needed before `INTEL_BLOCK = True`.
 - **If fail:** grade stays log-only; the rules are revised as INTEL-002 and tested on new calls only.

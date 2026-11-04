@@ -642,7 +642,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         RP.add(state, key=key, mark_key=c["token"], seg=seg, cat="FUTURES", name=name, symbol=c["symbol"], type=RP.CALL_TYPE[tf],
                side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],
                lot=c.get("lot"), mult=plan["mult"], time=str(now),
-               **({} if not gi else dict(grade=gi["grade"], regime=gi["context"]["regime"]["primary"], family="breakout",
+               **({} if not gi else dict(grade=gi["grade"], grade_v=_intel_version(), grade_pts=gi["points"],
+                                         regime=gi["context"]["regime"]["primary"], family="breakout",
                                          why_for=gi["reasons_for"][:5], why_against=gi["reasons_against"][:5])))
         if opt and api is not None:
             ok, prem, onotes, oskip = OF.check(api, ex, name, opt, plan["entry"], dd, now)
@@ -666,6 +667,11 @@ def _cfg(key, default):
         return getattr(C_, key, default)
     except Exception:
         return default
+
+
+def _intel_version():
+    from alerts import intel as IN
+    return IN.GRADE_VERSION
 
 
 def _intel_grade(name, tf, sig, fr, dd, c15, plan, oi):

@@ -12,6 +12,7 @@ import math
 import numpy as np
 import pandas as pd
 
+GRADE_VERSION = "intel-1.0"         # stored with every grade; change it whenever a grading rule changes (INTEL-001 is per version)
 ADX_TREND, ADX_RANGE = 22.0, 18.0
 VOL_EXP, VOL_CON = 1.25, 0.8            # ATR(14) vs its 100-bar median
 REL_VOL_HIGH, REL_VOL_ABN = 1.5, 2.5
@@ -331,3 +332,18 @@ def card(name, ex, side, tf_label, family, plan, g, signal_time, quote_time=None
               f"Invalidation: close beyond {plan.get('sl')}", f"Expiry: {expiry or 'see timeframe rules'}", "Status: CONFIRMED", "",
               "Risk warning: This is a research alert, not a guaranteed outcome."]
     return "\n".join(lines)
+
+
+def shadow_fields(side, family, sig_df, daily=None, intraday=None, plan=None, oi_label=None, tag=""):
+    """One interface for every engine: grade a setup and return the ledger fields (empty dict on any error, so a call is
+    never blocked or broken by grading). Prints one [intel] line for the run log."""
+    try:
+        g = grade(side, family, sig_df, daily=daily, intraday=intraday, plan=plan, oi_label=oi_label)
+        print(f"[intel] {tag} {side} {family}: grade {g['grade']} ({g['points']} pts, {GRADE_VERSION}) · "
+              f"{g['context']['regime']['primary']} · for: {'; '.join(g['reasons_for']) or '-'} · "
+              f"against: {'; '.join(g['reasons_against']) or '-'}")
+        return dict(grade=g["grade"], grade_v=GRADE_VERSION, grade_pts=g["points"], regime=g["context"]["regime"]["primary"],
+                    family=family, why_for=g["reasons_for"][:5], why_against=g["reasons_against"][:5])
+    except Exception as e:
+        print(f"[intel] {tag} grade skipped: {type(e).__name__}: {e}")
+        return {}

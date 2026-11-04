@@ -78,3 +78,9 @@ assert gi is not None and gi["grade"] in ("A", "B", "C", "NO TRADE"), gi
 r_ = E._intel_grade("X", "1d", sig, None, None, None, {}, None)   # missing data: no exception
 assert r_ is None or r_["grade"] == "NO TRADE", r_
 print("✅ engine hook grades a real plan and never raises")
+
+# one interface for every engine
+f = IN.shadow_fields("BUY", "breakout", up, daily=up, plan=plan, oi_label="Long buildup", tag="test")
+assert f["grade"] in ("A", "B") and f["grade_v"] == IN.GRADE_VERSION and f["family"] == "breakout" and isinstance(f["why_for"], list), f
+assert IN.shadow_fields("BUY", "breakout", "not a frame") == {} or IN.shadow_fields("BUY", "breakout", "not a frame")["grade"] == "NO TRADE"
+print("✅ shadow_fields: versioned ledger fields, never raises")
