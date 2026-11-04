@@ -1,5 +1,5 @@
 """Angel One SmartAPI market-data client (no orders are ever placed)."""
-import os, json, time, datetime as dt
+import os, json, random, time, datetime as dt
 from pathlib import Path
 import pandas as pd
 import requests
@@ -76,6 +76,27 @@ class Angel:
         d = getattr(self, "deadline", None)
         return float("inf") if not d else max(0.0, d - time.time())
 
+    # ── adaptive pacing (4-Nov-2026): the request gap is learned from Angel's own replies and shared by every engine
+    # process of the job through a small file. Each rate-limit reply widens the gap ×1.5 (max PACE_MAX); each success
+    # narrows it 3 % back toward the base gap. Measured, not guessed: the gap in force is printed in the stats line.
+    PACE_MAX = 4.0
+
+    def _pace_file(self, group):
+        return self._dir / f"pace_{group}.json"
+
+    def pace(self, group="hist"):
+        base = self.HIST_GAP if group == "hist" else self.QUOTE_GAP
+        try:
+            return max(base, min(self.PACE_MAX, float(json.loads(self._pace_file(group).read_text())["gap"])))
+        except Exception:
+            return base
+
+    def _set_pace(self, group, gap):
+        try:
+            self._pace_file(group).write_text(json.dumps({"gap": round(gap, 3), "at": int(time.time())}))
+        except Exception:
+            pass
+
     def _wait(self, gap=0.4):
         d = time.time() - self._last
         if d < gap:
@@ -106,9 +127,11 @@ class Angel:
     def _trip(self, group="hist"):
         """A rate-limit reply came back: pause every engine for a while (longer each time in a row)."""
         self.stats["rate_limited"] += 1
+        self._set_pace(group, min(self.PACE_MAX, max(0.5, self.pace(group) * 1.5)))
         _, streak = self._breaker(group)
         streak += 1
         cool = self.COOL_STEPS[min(streak - 1, len(self.COOL_STEPS) - 1)]
+        cool = round(cool * random.uniform(0.85, 1.15), 1)     # jitter: processes that tripped together do not retry together
         try:
             self._bfile(group).write_text(json.dumps({"until": time.time() + cool, "streak": streak}))
         except Exception:
@@ -116,6 +139,11 @@ class Angel:
         print(f"[angel] rate limit ({streak} in a row) - pausing {'quote' if group == 'quote' else 'candle/OI'} calls for {cool}s")
 
     def _reset(self, group="hist"):
+        base = self.HIST_GAP if group == "hist" else self.QUOTE_GAP
+        g = self.pace(group)
+        if g > base:
+            n = g * 0.97
+            self._set_pace(group, base if n - base < 0.05 else n)
         if self._breaker(group)[1]:
             try:
                 self._bfile(group).write_text(json.dumps({"until": 0, "streak": 0}))
@@ -177,7 +205,7 @@ class Angel:
         except Exception:
             pass
         s = self.stats
-        print(f"[angel-stats] API requests={s['calls']} ok={s['ok']} rate-limited={s['rate_limited']} skipped(blocked)={s['skipped']} "
+        print(f"[angel-stats] API requests={s['calls']} ok={s['ok']} rate-limited={s['rate_limited']} skipped(blocked)={s['skipped']} pace candle/quote={self.pace('hist'):.2f}/{self.pace('quote'):.2f}s "
               f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | skipped after time budget={s['deadline_skips']} | requests by all engines of this job in the last 60 min={hour} "
               f"(community-reported Angel cap for candles: ~5000/h)")
         st = WB.status(self._ws_dir)
@@ -199,7 +227,7 @@ class Angel:
             if not self._gate():                     # API is blocked: don't pile more requests on it (not cached: a later call may work)
                 self.stats["skipped"] += 1
                 return None
-            self._wait(self.HIST_GAP)
+            self._wait(self.pace("hist"))
             self._count()
             try:
                 r = fn(*a)
@@ -432,7 +460,7 @@ class Angel:
                     if not self._gate("quote"):
                         self.stats["skipped"] += 1
                         break
-                    self._wait(self.QUOTE_GAP)
+                    self._wait(self.pace("quote"))
                     self._count()
                     try:
                         r = self.api.getMarketData("FULL", {ex: toks[i:i + 50]})

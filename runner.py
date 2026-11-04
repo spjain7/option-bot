@@ -842,6 +842,8 @@ class Bot:
 
 
 def main():
+    import os as _os, time as _t
+    _os.environ.setdefault("ANGEL_DEADLINE", str(_t.time() + 540))   # P0 4-Nov: time budget inside the loop's 600 s timeout
     mode = sys.argv[1] if len(sys.argv) > 1 else "auto"
     now = now_ist()
     if mode == "auto" and (now.weekday() >= 5 or not (at("09:00") <= now <= at("23:59"))):
