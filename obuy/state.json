@@ -1,5 +1,32 @@
 {
- "open": [],
+ "open": [
+  {
+   "id": 4,
+   "mode": "intraday",
+   "name": "JSWSTEEL",
+   "kind": "stock",
+   "dir": 1,
+   "token": "134141",
+   "symbol": "JSWSTEEL23NOV261330CE",
+   "K": 1330.0,
+   "expiry": "2026-11-23",
+   "lot": 675,
+   "entry": 25.9,
+   "sl": 18.13,
+   "tg": 41.44,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-11-04 11:09:47.557142",
+   "exit_at": "2026-11-04 15:15:00",
+   "why": [
+    "Resistance 1,329.7 (pivot R1), 0.15% away",
+    "Futures crossed above VWAP (1,326.6)",
+    "RSI 62 (strong momentum)",
+    "Last 1 hour: price +0.14%, OI +0.1%"
+   ],
+   "exit_by": "04 Nov 15:15"
+  }
+ ],
  "closed": [
   {
    "id": 1,
@@ -116,9 +143,10 @@
   "watch1h|2026-10-29": "2026-10-29 15:33:57.218102",
   "scorecard|2026-10-29": "2026-10-29 15:33:57.218102",
   "watch1h|2026-10-30": "2026-10-30 15:38:17.754444",
-  "scorecard|2026-10-30": "2026-10-30 15:38:17.754444"
+  "scorecard|2026-10-30": "2026-10-30 15:38:17.754444",
+  "intraday|JSWSTEEL|2026-11-04": "2026-11-04 11:09:47.557142"
  },
- "next_id": 4,
+ "next_id": 5,
  "universe": {
   "day": "2026-11-04",
   "items": [
@@ -411,7 +439,7 @@
     "oi_change_pct": 0.365,
     "V": true,
     "OD": false,
-    "last_bar": "2026-11-04 10:15:00",
+    "last_bar": "2026-11-04 11:00:00",
     "logged": "2026-11-04 09:43:23.372607",
     "waited": 1,
     "lot": 700,
@@ -428,7 +456,7 @@
     "contract": null,
     "side": "SELL",
     "level": "SW",
-    "status": "pending",
+    "status": "open",
     "day": "2026-11-04 00:00:00",
     "sweep_time": "2026-11-04 10:00:00",
     "trigger": 282.2,
@@ -437,31 +465,17 @@
     "oi_change_pct": 0.05,
     "V": false,
     "OD": false,
-    "last_bar": "2026-11-04 10:00:00",
+    "last_bar": "2026-11-04 11:00:00",
     "logged": "2026-11-04 10:11:26.134597",
-    "waited": 0,
+    "waited": 1,
     "lot": 1725,
-    "send": false
-   },
-   {
-    "name": "BAJFINANCE",
-    "contract": null,
-    "side": "SELL",
-    "level": "SW",
-    "status": "pending",
-    "day": "2026-11-04 00:00:00",
-    "sweep_time": "2026-11-04 10:00:00",
-    "trigger": 989.6,
-    "stop": 994.5031873329928,
-    "vol_x": 2.17,
-    "oi_change_pct": 0.272,
-    "V": true,
-    "OD": false,
-    "last_bar": "2026-11-04 10:00:00",
-    "logged": "2026-11-04 10:11:26.134597",
-    "waited": 0,
-    "lot": 750,
-    "send": false
+    "send": false,
+    "entry": 282.2,
+    "risk": 1.9047067175348502,
+    "target": 280.29529328246514,
+    "entry_time": "2026-11-04 10:15:00",
+    "hi": 283.6,
+    "lo": 280.55
    }
   ],
   "closed": [
@@ -692,6 +706,36 @@
     "exit_reason": "target",
     "exit": 369.85989614486675,
     "closed": "2026-10-30 15:04:01.282566",
+    "gross_R": 1.0
+   },
+   {
+    "name": "BAJFINANCE",
+    "contract": null,
+    "side": "SELL",
+    "level": "SW",
+    "status": "closed",
+    "day": "2026-11-04 00:00:00",
+    "sweep_time": "2026-11-04 10:00:00",
+    "trigger": 989.6,
+    "stop": 994.5031873329928,
+    "vol_x": 2.17,
+    "oi_change_pct": 0.272,
+    "V": true,
+    "OD": false,
+    "last_bar": "2026-11-04 11:00:00",
+    "logged": "2026-11-04 10:11:26.134597",
+    "waited": 1,
+    "lot": 750,
+    "send": false,
+    "entry": 989.6,
+    "risk": 4.903187332992729,
+    "target": 984.6968126670073,
+    "entry_time": "2026-11-04 10:15:00",
+    "hi": 994.5,
+    "lo": 983.3,
+    "exit_reason": "target",
+    "exit": 984.6968126670073,
+    "closed": "2026-11-04 11:09:47.557142",
     "gross_R": 1.0
    }
   ],
