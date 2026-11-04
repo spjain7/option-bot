@@ -87,6 +87,10 @@ def scan():
           f"{state['scan']['finished'][11:19]} IST ({state['scan']['seconds']} s) · {state['scan']['note']}")
     tmp = STATE.with_suffix(".tmp"); tmp.write_text(json.dumps(state, indent=1, default=str)); os.replace(tmp, STATE)
     (SD / "scan.json").write_text(json.dumps(state["scan"], indent=1))
+    from alerts import paper as PP                            # hard guard: PAPER_ONLY items are never sent
+    msgs, dropped = PP.guard_outbox(msgs)
+    if dropped:
+        print(f"::error::{len(dropped)} PAPER_ONLY message(s) reached the outbox and were dropped (not sent)")
     OUTBOX.write_text(json.dumps(dict(messages=msgs), indent=1))
     log_report(rep)
     summ = os.getenv("GITHUB_STEP_SUMMARY")
@@ -115,7 +119,9 @@ def _pack(msgs, limit=3800):
 
 def send_photo(path, caption):
     """Send a PNG to the Telegram chat. Returns (ok, detail). Never prints the token."""
-    import requests
+    import requests, paperguard
+    if paperguard.blocked(caption):
+        return False, "blocked: PAPER_ONLY"
     tok, chat = os.getenv("TELEGRAM_TOKEN", ""), os.getenv("TELEGRAM_CHAT_ID", "")
     if not tok or not chat or not Path(path).exists():
         return False, "no token/chat or image"
@@ -134,6 +140,8 @@ def flush():
     if not OUTBOX.exists():
         print("::error::no outbox"); return 1
     msgs = json.loads(OUTBOX.read_text())["messages"]
+    import paperguard
+    msgs = [m for m in msgs if not paperguard.blocked(m)]          # hard guard, also for pending / hand-edited outboxes
     if PENDING.exists():                                   # messages that could not be delivered last time
         msgs = json.loads(PENDING.read_text()) + msgs
         PENDING.unlink()

@@ -110,3 +110,8 @@ CRUDEOIL / GOLD hourly breakouts on 30-Oct).
 - **Pass:** average R of A+B ≥ average R of C+NO TRADE + 0.3 R, and A+B average R > 0 after costs, plus the fairness checks.
 - **If pass:** `INTEL_IN_MESSAGE = True` (grade shown). A second, separate pass is needed before `INTEL_BLOCK = True`.
 - **If fail:** grade stays log-only; the rules are revised as INTEL-002 and tested on new calls only.
+
+## E_BUY_v1 – PAPER ONLY from 4-Nov-2026
+Compression breakout BUY on MCX 1-hour candles (RSIFAM-001 family E, BUY side). Frozen rules and the pre-registered
+prospective test VAL-EBUY-001: `docs/strategies/E_BUY_v1.md`. Recorded in `state["paper"]`, separate from the live ledger;
+never sent (hard guard `paperguard.py` in every Telegram sender). Tests: `alerts/tests/test_paper.py`.
