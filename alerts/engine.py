@@ -464,7 +464,9 @@ def _switch_day(state, c, d):
     return pd.Timestamp(sw[0][0]).normalize() if sw else None
 
 
-SHADOW_ONLY = set()                   # 28-Oct: 3h SELL was log-only; 30-Oct the owner asked for these calls again -> sent
+from alerts import strategies as ST
+SHADOW_ONLY = ST.shadow_bo()          # 4-Nov (owner: fewer, better calls): from the strategy registry – SELL breakouts (3h
+                                      # negative after costs; daily / monthly < 30 trades) are logged with outcomes, not sent
 
 
 def _promote_shadow_sells(state, msgs, name, ex, c, q, now, oi=None):
@@ -623,10 +625,16 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                 print(f"[rejected] {name} {tf} SELL: {why_}")
                 info[f"bo_{tf}"] += f" · skipped: {why_}"; continue
         key = f"{name}|{tf}|{last}"
+        clash = None if shadow_only else ST.conflict(state, name, sig["side"])
+        if clash:                                         # 4-Nov: no contradictory / duplicate live calls on one instrument
+            print(f"[conflict] {name} {tf} {sig['side']} not sent: {clash}")
+            info[f"bo_{tf}"] += f" · not sent: {clash}"
+            state["bo_active"].append(_shadow_rec(name, tf, sig["side"], plan, last, now, c, key + "|CONFLICT", f"conflict ({clash})"))
+            continue
         if shadow_only:                                   # 28-Oct approval: 3h SELL lost money in every test -> log only
-            state["bo_active"].append(_shadow_rec(name, tf, sig["side"], plan, last, now, c, key, "3h SELL (log only, not sent)"))
-            info[f"bo_{tf}"] += " · 3h SELL logged only (not sent – STRATEGY-PROGRAM-001)"
-            print(f"[shadow] {name} {tf} SELL logged only: entry {plan['entry']} SL {plan['sl']} target {plan['target']}")
+            state["bo_active"].append(_shadow_rec(name, tf, sig["side"], plan, last, now, c, key, f"{tf} {sig['side']} (registry SHADOW, not sent)"))
+            info[f"bo_{tf}"] += f" · {tf} {sig['side']} logged only (registry SHADOW: {ST.S[ST.bo_id(tf, sig['side'])][7]})"
+            print(f"[shadow] {name} {tf} {sig['side']} logged only: entry {plan['entry']} SL {plan['sl']} target {plan['target']}")
             continue
         gi = _intel_grade(name, tf, sig, fr, dd, c15, plan, oi)          # P2/P3 4-Nov: shadow grade (never blocks unless INTEL_BLOCK)
         if gi and gi["grade"] == "NO TRADE" and _cfg("INTEL_BLOCK", False):
@@ -639,6 +647,9 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                                     + "; ".join((gi["reasons_for"] + gi["reasons_against"])[:4]) + "\nNot investment advice.")
         if plan.get("warn"):
             reason = reason.replace("Not investment advice.", f"• Note    : {plan['warn']}\nNot investment advice.")
+        ev_ = ST.evidence_line(ST.bo_id(tf, sig["side"]))
+        if ev_:
+            reason = reason.replace("Not investment advice.", ev_ + "\nNot investment advice.")
         if tf == "3h" and sig["side"] == "BUY":            # 28-Oct approval: high-accuracy variant HA-1, log only
             try:
                 ha = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf=tf, side="BUY", signal_time=sig["candle"],
@@ -760,4 +771,14 @@ def eod_msg(day, state):
     return (f"📋 ALERTS – END OF DAY {pd.Timestamp(day['date']):%d-%b-%Y}\n"
             f"BUY/SELL alerts: {day['alerts']} · watch messages: {day['watches']} · suppressed by quality filter: {day.get('suppressed', 0)}\n"
             f"Closed today: " + (", ".join(f"{x['name']} {x['side']} {x['tf']}: {x['result'].split(' –')[0]}" for x in o) or "none") + "\n"
-            f"Still open: " + (", ".join(f"{a['name']} {a['side']} {a['tf']}" for a in state["active"]) or "none") + f"\n{WARN}")
+            f"Still open: " + (", ".join(f"{a['name']} {a['side']} {a['tf']}" for a in state["active"]) or "none")
+            + (("\n\n" + _scorecard(state)) if _scorecard(state) else "") + f"\n{WARN}")
+
+
+def _scorecard(state):
+    try:
+        from alerts import scorecard as SC
+        return SC.text(state)
+    except Exception as e:
+        print(f"[scorecard] skipped: {type(e).__name__}: {e}")
+        return ""

@@ -116,3 +116,32 @@ CRUDEOIL / GOLD hourly breakouts on 30-Oct).
 Compression breakout BUY on MCX 1-hour candles (RSIFAM-001 family E, BUY side). Frozen rules and the pre-registered
 prospective test VAL-EBUY-001: `docs/strategies/E_BUY_v1.md`. Recorded in `state["paper"]`, separate from the live ledger;
 never sent (hard guard `paperguard.py` in every Telegram sender). Tests: `alerts/tests/test_paper.py`.
+
+## CALL-QUALITY-001 – strategy registry, shadow demotions, conflict guard, live scorecard (4-Nov-2026, owner: fewer, better calls)
+Registry `alerts/strategies.py` decides per call type: LIVE (sent) · SHADOW (logged with tracked outcome, never sent) · PAPER.
+Rule: LIVE needs ≥ 70 backtest trades with positive expectancy after costs and a positive recent period; < 30 trades or
+negative / decaying → SHADOW. Evidence = STRATEGY-PROGRAM-001, TFNH-001, candle-setup studies (backtests of the live rules).
+
+| Call type | Trades | Win % | Avg R | PF | Status | Change today |
+|---|---|---|---|---|---|---|
+| MCX daily hammer BUY | 333 | 52 | +0.36 | – | LIVE A | – |
+| MCX 4h breakout BUY | 277 | 41 | +0.39 | – | LIVE A | – |
+| Index/MCX 3h breakout BUY | 345 | 48 | +0.28 | 1.51 | LIVE A | – |
+| Stock 4h breakdown SELL | 913 | 56 | +0.17 | – | LIVE A | – |
+| Daily breakout BUY | 72 | 51 | +0.71 | 2.63 | LIVE B | – |
+| Monthly breakout BUY | 116 | 49 | +0.28 | 1.62 | LIVE B | – |
+| MCX 3h EMA 13/48 BUY | 79 | 48 | +0.67 | – | LIVE B | – |
+| Stock OI breakdown SELL | 220 | 57 | +0.23 | 1.76 | LIVE B | – |
+| Stock bearish engulfing SELL | 120 | 59 | +0.20 | 1.65 | LIVE B | – |
+| Stock hanging-man SELL | 1217 | 44 | +0.18 | – | LIVE B | – |
+| Stock 3h sweep SELL | 387 | 58 | +0.15 | – | LIVE B | – |
+| 3h breakout SELL | 212 | 38 | −0.08 | 0.88 | **SHADOW** | was sent since 30-Oct |
+| Daily / monthly breakout SELL | 23 / 24 | – | −0.07 / +0.09 | – | **SHADOW** | were sent (n < 30) |
+| Stock OI breakout BUY | 623 | 45 | +0.08 (test −0.07) | 1.17 | **SHADOW** | was the most frequent live call |
+| MCX 1h compression BUY (E_BUY_v1) | 174 | 60 | +0.21 | – | PAPER | – |
+
+Also: a new call on an instrument that already has an OPEN live futures call is not sent (opposite side = contradiction,
+same side = duplicate) – logged with its outcome. LIVE WHY messages carry one "Record" line with the backtest evidence.
+The end-of-day message carries a measured scorecard (live / shadow / paper separately; T1 hit, profitable %, avg R, PF,
+MFE / MAE). Live ledger 28-Oct → 4-Nov (before this change): 5 closed calls – 3h SELL 2 target / 1 stop, daily SELL 1 stop,
+hammer 1 stop; stock OI BUY 4 of 7 cancelled at the open gap.

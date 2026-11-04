@@ -341,6 +341,11 @@ def test_stocks():
     STK.scan(api, m, pd.Timestamp("2026-10-15 15:32"), st, msgs, rep, sys.modules["alerts.engine"])
     check("OI-confirmed breakout -> BUY call (lot size) + WHY message with LONG BUILDUP",
           any("BUY  TCS FUT" in x and "Lot     : 175" in x for x in msgs) and any("WHY – TCS BUY" in x and "Long buildup" in x and "Daily candle" in x for x in msgs))
+    from alerts import strategies as ST_
+    check("4-Nov registry: stock OI BUY is SHADOW – its messages are marked (never sent), no ledger row, outcome still tracked",
+          all(x.startswith(ST_.SHADOW_MARK) for x in msgs if "TCS" in x and ("BUY  TCS FUT" in x or "WHY – TCS BUY" in x))
+          and not any(r.get("name") == "TCS" for r in st.get("ledger", []))
+          and any(p_.get("shadow") == "STK_OI_BUY" for p_ in st["stk"]["active"]))
     hh = pd.DataFrame(dict(time=pd.to_datetime(["2026-10-15 09:15", "2026-10-15 10:15", "2026-10-15 11:15", "2026-10-15 12:15"]),
                            open=1.0, high=2.0, low=0.5, close=1.5, volume=10.0))
     check("3h stock frame: 09:15-12:15 block complete, 12:15 block still forming is dropped", len(STK.frame3h(hh)) == 1)

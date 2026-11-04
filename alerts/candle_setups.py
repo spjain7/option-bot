@@ -445,6 +445,10 @@ def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
              sr=sr_line(df.iloc[:i + 1], side, trig, stop, P["target_r"])[0], oi_note=OI_NOTE,
              last_bar=str(df["time"].iloc[i]), logged=str(now), key=f"{setup}|{name}|{str(df['time'].iloc[i])[:10]}")
     _grade(r, df.iloc[:i + 1], df.iloc[:i + 1], "reversal", P["target_r"])
+    from alerts import strategies as ST_
+    clash = ST_.conflict(state, name, side)                    # 4-Nov: no contradictory / duplicate live calls
+    if clash:
+        print(f"[setup] {setup} {name} {side} not sent: {clash}"); return
     s["open"].append(r)
     msgs.append(setup_msg(r))
     print(f"[setup] {setup} {name} {side} pattern {r['pattern_time']}: trigger {r['trigger']} stop {r['stop']} trend {tr}")
@@ -470,6 +474,10 @@ def _new_ema(state, msgs, s, name, c, f3, now, mult, live):
     r["stop"] = round(float(f3["close"].iloc[i]) - EMA["stop_atr"] * float(I.atr(f3, 14).iloc[i]), 4)   # for the grade only
     _grade(r, f3.iloc[:i + 1], None, "breakout", None)
     r.pop("stop", None)
+    from alerts import strategies as ST_
+    clash = ST_.conflict(state, name, "BUY")
+    if clash:
+        print(f"[setup] MCX_EMA1348 {name} BUY not sent: {clash}"); return
     s["open"].append(r)
     _px = float(f3["close"].iloc[i]); _a = float(I.atr(f3, 14).iloc[i])
     r["sr"] = sr_line(f3.iloc[:i + 1], "BUY", _px, _px - EMA["stop_atr"] * _a, None)[0]
@@ -626,6 +634,10 @@ def on_stock_3h(state, msgs, name, c, f3, now, prev_oi_label, sweep_oi_change):
     if abs(r["stop"] - r["trigger"]) / r["trigger"] * 100 > P["max_stop_pct"]:
         print(f"[setup] STK_SWEEP3H {name}: stop too far – not sent"); return
     _grade(r, f3.iloc[:i + 1], None, "reversal", SW["target_r"])
+    from alerts import strategies as ST_
+    clash = ST_.conflict(state, name, "SELL")
+    if clash:
+        print(f"[setup] STK_SWEEP3H {name} SELL not sent: {clash}"); return
     s["open"].append(r)
     msgs.append(sweep_msg(r))
     print(f"[setup] STK_SWEEP3H {name} SELL below {r['trigger']} stop {r['stop']} vol {vx:.1f}x OI prev {lab} sweep {doi:+.2f}%")

@@ -80,6 +80,18 @@ def scan():
         msgs = NW.enrich(msgs, now) + NW.alerts(state, now)
     except Exception as e:
         print(f"::warning::news step failed: {type(e).__name__}: {e}")
+    from alerts import strategies as STR                      # 4-Nov: shadow-call messages are logged, never sent
+    shadow_msgs = [m for m in msgs if STR.SHADOW_MARK in str(m)]
+    if shadow_msgs:
+        msgs = [m for m in msgs if STR.SHADOW_MARK not in str(m)]
+        log = state.setdefault("shadow_log", [])
+        log.extend(dict(time=str(now), text=str(m).replace(STR.SHADOW_MARK, "", 1).strip()[:600]) for m in shadow_msgs)
+        state["shadow_log"] = log[-300:]
+        print(f"[shadow] {len(shadow_msgs)} shadow-call message(s) logged, not sent")
+    from alerts import paper as PP                            # hard guard: PAPER_ONLY items are never sent
+    msgs, dropped = PP.guard_outbox(msgs)
+    if dropped:
+        print(f"::error::{len(dropped)} PAPER_ONLY message(s) reached the outbox and were dropped (not sent)")
     import share                                              # prices for the website, with this same Angel session
     print("website price snapshot:", share.push(api, master, now))
     state["scan"] = scan_record(state.get("scan"), now, now_ist(), getattr(api, "stats", {}), rep, len(msgs))
@@ -87,10 +99,6 @@ def scan():
           f"{state['scan']['finished'][11:19]} IST ({state['scan']['seconds']} s) · {state['scan']['note']}")
     tmp = STATE.with_suffix(".tmp"); tmp.write_text(json.dumps(state, indent=1, default=str)); os.replace(tmp, STATE)
     (SD / "scan.json").write_text(json.dumps(state["scan"], indent=1))
-    from alerts import paper as PP                            # hard guard: PAPER_ONLY items are never sent
-    msgs, dropped = PP.guard_outbox(msgs)
-    if dropped:
-        print(f"::error::{len(dropped)} PAPER_ONLY message(s) reached the outbox and were dropped (not sent)")
     OUTBOX.write_text(json.dumps(dict(messages=msgs), indent=1))
     log_report(rep)
     summ = os.getenv("GITHUB_STEP_SUMMARY")

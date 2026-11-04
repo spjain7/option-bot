@@ -15,6 +15,7 @@ import pandas as pd
 from alerts import patterns as PT, breakout as BO, signals as S, report as RP, optfilter as OF, tradeplan as TP
 from crude import data as CD, indicators as I
 from alerts import dataquality as DQ
+from alerts import strategies as ST
 from alerts import candle_setups as CS
 
 ENABLED = True
@@ -154,6 +155,18 @@ def evaluate(d):
 # All bullish candles (hammer, bullish engulfing, morning star) failed and are not used.
 BEAR_ENGULF_ENABLED = True
 MAX_SL_PCT = 6.0      # stock futures: a stop further than 6% from entry is not sent (2-ATR stops on volatile stocks)
+
+
+def _shadow_close(state, p, px, why, now):
+    """Outcome of a SHADOW stock call (never sent) -> state['shadow_calls'] for the scorecard."""
+    if not p.get("shadow"):
+        return
+    s = 1 if p["side"] == "BUY" else -1
+    r = s * (float(px) - p["entry"]) / p["risk"] if p.get("risk") else None
+    state.setdefault("shadow_calls", []).append(dict(strategy=p["shadow"], name=p["name"], side=p["side"], entry=p["entry"],
+                                                    exit=float(px), R=None if r is None else round(r, 3), reason=why,
+                                                    opened=p.get("key"), closed=str(now)))
+    state["shadow_calls"] = state["shadow_calls"][-1000:]
 
 
 def evaluate_bear_engulf(d):
@@ -482,7 +495,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                     if note:
                         print("[stock pending]", note)
                     keep.append(p); continue
-                msgs.append(note)
+                msgs.append(ST.mark(note, p.get("shadow")))
                 if verdict == "cancel":
                     for L in state.get("ledger", []):
                         if L.get("key") in (p.get("key"), (p.get("key") or "") + "|OPT") and L["status"] == "OPEN":
@@ -496,14 +509,16 @@ def scan(api, master, now, state, msgs, rep, engine):
                 keep.append(p); continue
             if ltp and p.get("target") and s * (ltp - p["target"]) >= 0:
                 r = s * (ltp - p["entry"]) / p["risk"]
-                msgs.append(f"✅ EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: 🎯 TARGET HIT · result {r:+.2f}R")
+                msgs.append(ST.mark(f"✅ EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: 🎯 TARGET HIT · result {r:+.2f}R", p.get("shadow")))
+                _shadow_close(state, p, float(p["target"]), "target", now)
                 BO.close_ledger(state, p.get("key"), float(p["target"]), "target", now)
                 DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=float(p["target"]), exit_time=str(now), exit_reason="target")
                 continue
             if ltp and s * (ltp - p["stop"]) <= 0:
                 r = s * (ltp - p["entry"]) / p["risk"]
-                msgs.append(f"{'✅' if r > 0 else '❌'} EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: "
-                            f"{'trailing stop' if p['trailed'] else 'stop-loss'} hit · result {r:+.2f}R")
+                msgs.append(ST.mark(f"{'✅' if r > 0 else '❌'} EXIT – {p['name']} FUT {p['side']} at ~{BO._f(ltp)}: "
+                                    f"{'trailing stop' if p['trailed'] else 'stop-loss'} hit · result {r:+.2f}R", p.get("shadow")))
+                _shadow_close(state, p, float(ltp), "stop", now)
                 state["day"].setdefault("outcomes", []).append(dict(name=p["name"], tf="1d", side=p["side"], result=f"stop {r:+.2f}R"))
                 BO.close_ledger(state, p.get("key"), float(ltp), "stop", now)
                 DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=float(ltp), exit_time=str(now),
@@ -616,13 +631,14 @@ def scan(api, master, now, state, msgs, rep, engine):
                 ns = p["best"] - s_ * CFG["trail_atr"] * a
                 if s_ * (ns - p["stop"]) > 0.25 * a:
                     p["stop"], p["trailed"] = round(ns, 2), True
-                    msgs.append(f"🔁 TRAIL UPDATE – {name} FUT {p['side']} · new stop {BO._f(p['stop'])} · "
-                                f"open {s_ * (p['best'] - p['entry']) / p['risk']:+.1f}R")
+                    msgs.append(ST.mark(f"🔁 TRAIL UPDATE – {name} FUT {p['side']} · new stop {BO._f(p['stop'])} · "
+                                        f"open {s_ * (p['best'] - p['entry']) / p['risk']:+.1f}R", p.get("shadow")))
             if now.normalize() >= pd.Timestamp(p["expiry"]) or p["n"] >= p.get("max_days", CFG["max_days"]):
                 px = float(d["close"].iloc[-1])
                 r = s_ * (px - p["entry"]) / p["risk"]
-                msgs.append(f"⏹ EXIT – {name} FUT {p['side']} at ~{BO._f(px)}: "
-                            f"{'expiry day – exit (or roll with the same stop)' if p['n'] < p.get('max_days', CFG['max_days']) else 'time exit'} · {r:+.2f}R")
+                msgs.append(ST.mark(f"⏹ EXIT – {name} FUT {p['side']} at ~{BO._f(px)}: "
+                                    f"{'expiry day – exit (or roll with the same stop)' if p['n'] < p.get('max_days', CFG['max_days']) else 'time exit'} · {r:+.2f}R", p.get("shadow")))
+                _shadow_close(state, p, px, "expiry/time exit", now)
                 BO.close_ledger(state, p.get("key"), px, "expiry/time exit", now)
                 DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=px, exit_time=str(now),
                                 exit_reason="expiry/time exit", exit_basis="daily close")
@@ -659,13 +675,21 @@ def scan(api, master, now, state, msgs, rep, engine):
         if not plan["valid"]:
             rep.setdefault("stock_skips", []).append(f"{name}: {plan['reason']}"); continue
         lv = S.levels(d, h, sig["close"], sig["atr"])
-        msgs.append(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], plan=plan))
+        sid = "STK_ENGULF_SELL" if sig.get("pattern") else f"STK_OI_{sig['side']}"
+        clash = ST.conflict(state, name, sig["side"])
+        shadow = (not ST.is_live(sid)) or bool(clash)      # 4-Nov: registry SHADOW or a contradicting / duplicate call
+        if shadow:
+            why_s = clash or f"registry SHADOW – {ST.S[sid][7]}"
+            print(f"[shadow] {name} {sid} logged only: {why_s}")
+            rep.setdefault("stock_skips", []).append(f"{name}: {sid} logged only – {why_s}")
+        msgs.append(ST.mark(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], plan=plan), shadow))
         key = f"{name}|1dSTK|{last}"
         # entry = today's close; the call becomes ACTIVE only if tomorrow's opening price is still inside the entry zone
         st["active"].append(dict(name=name, token=c["token"], expiry=c["expiry"], side=sig["side"], entry=plan["entry"],
                                  stop=plan["sl"], risk=plan["risk_unit"], target=plan["target"], tick=plan["tick"], atr=float(sig["atr"]),
                                  max_days=sig.get("max_days", CFG["max_days"]), pending=True, lot=c["lot"],
-                                 best=plan["entry"], trailed=False, n=0, last_candle=last, key=key))
+                                 best=plan["entry"], trailed=False, n=0, last_candle=last, key=key,
+                                 **({"shadow": sid} if shadow else {})))
         gf = {}
         try:                                              # 4-Nov: shadow grade (alerts/intel.py) – stored only, never blocks
             import config as C_
@@ -675,13 +699,16 @@ def scan(api, master, now, state, msgs, rep, engine):
                                       plan=dict(plan, atr=sig.get("atr")), oi_label=None, tag=f"{name} 1d stock")
         except Exception as e_:
             print(f"[intel] {name} grade skipped: {type(e_).__name__}: {e_}")
-        RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional",
-               side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],
-               lot=c["lot"], mult=c["lot"], time=str(now), **gf)
+        if not shadow:                                     # shadow calls never enter the live ledger / reports
+            RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"],
+                   type="Positional", side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"],
+                   tick=plan["tick"], lot=c["lot"], mult=c["lot"], time=str(now), **gf)
         if sig["side"] == "BUY" and not sig.get("pattern"):  # shadow log – the +2–4 % label never changes this call
             DQ.shadow_add(st, key=key, name=name, sig=sig, plan=plan, lot=c["lot"], now=now, oi_flags=d["oi_flags"].iloc[-1] or "")
-        opt = BO.option_idea(master, name, "NFO", plan["entry"], sig["side"], "1d", now)
+        opt = None if shadow else BO.option_idea(master, name, "NFO", plan["entry"], sig["side"], "1d", now)
         why_ = reason_engulf(name, sig, lv) if sig.get("pattern") else reason_msg(name, sig, lv)
+        if not shadow and ST.evidence_line(sid):
+            why_ = why_.replace("Not investment advice.", ST.evidence_line(sid) + "\nNot investment advice.")
         why_ = why_.replace("Not investment advice.", f"• Entry   : next open must be within {TP.MAX_CHASE_ATR} ATR of {TP.fmt(plan['entry'], plan['tick'])} "
                             "– otherwise the call is cancelled at 09:17\nNot investment advice.")
         if opt:
@@ -696,8 +723,9 @@ def scan(api, master, now, state, msgs, rep, engine):
                 RP.add(state, key=key + "|OPT", mark_key=c["token"], seg="NSE", cat="OPTION BUY", name=name, symbol=opt["symbol"],
                        type="Positional", side="BUY", entry=oplan["entry"], sl=oplan["sl"], target=oplan["target"], tick=oplan["tick"],
                        lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
-        msgs.append(why_)
-        state["day"]["alerts"] += 1
+        msgs.append(ST.mark(why_, shadow))
+        if not shadow:
+            state["day"]["alerts"] += 1
         found += 1
         if hasattr(api, "api"):
             time.sleep(0.1)
