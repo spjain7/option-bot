@@ -182,9 +182,20 @@ class Angel:
         time.sleep(min(remaining, max(self.COOL_STEPS)))
         return True
 
+    def _ep(self, ep, what):
+        """4-Nov rate-limit diagnosis: ok / refused per endpoint (getCandleData vs getOIData ...) and the gap since the
+        previous request of this process when a refusal came back."""
+        d = self.stats.setdefault("by_endpoint", {}).setdefault(ep, {"ok": 0, "refused": 0, "refused_gap_s": []})
+        d[what] += 1
+        if what == "refused":
+            last = getattr(self, "_prev_req", None)
+            if last is not None:
+                d["refused_gap_s"].append(round(time.time() - last, 1))
+
     def _count(self):
         """Count one real API request (also appended to a per-job log so the hourly total can be reported)."""
         self.stats["calls"] += 1
+        self._prev_req, self._last_req = getattr(self, "_last_req", None), time.time()
         try:
             with open(self._dir / "calls.log", "a") as f:
                 f.write(f"{int(time.time())}\n")
@@ -208,6 +219,12 @@ class Angel:
         print(f"[angel-stats] API requests={s['calls']} ok={s['ok']} rate-limited={s['rate_limited']} skipped(blocked)={s['skipped']} pace candle/quote={self.pace('hist'):.2f}/{self.pace('quote'):.2f}s "
               f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | skipped after time budget={s['deadline_skips']} failed after retries={s['failed']} | requests by all engines of this job in the last 60 min={hour} "
               f"(community-reported Angel cap for candles: ~5000/h)")
+        be = s.get("by_endpoint") or {}
+        if be:
+            print("[angel-endpoints] " + " | ".join(
+                f"{k}: ok {v['ok']} refused {v['refused']}"
+                + (f" (gap before refusal median {sorted(v['refused_gap_s'])[len(v['refused_gap_s']) // 2]} s)" if v["refused_gap_s"] else "")
+                for k, v in be.items()))
         st = WB.status(self._ws_dir)
         if st:
             print(f"[ws] collector since {str(st.get('start'))[:16]} · ticks {st.get('ticks', 0):,} · last tick {st.get('last_tick')} · "
@@ -229,22 +246,26 @@ class Angel:
                 return None
             self._wait(self.pace("hist"))
             self._count()
+            ep = getattr(fn, "__name__", "?")
             try:
                 r = fn(*a)
             except Exception as e:                   # rate limit shows up as a non-JSON reply
                 msg = str(e)
                 print("API error:", msg[:120])
                 if self._is_rate(msg):
+                    self._ep(ep, "refused")
                     self._trip()
                 else:
                     time.sleep(1)
                 continue
             if r and r.get("status") and r.get("data") is not None:
                 self.stats["ok"] += 1
+                self._ep(ep, "ok")
                 self._reset()
                 self._cache[key] = r["data"]
                 return r["data"]
             if r and self._is_rate(f"{r.get('message', '')} {r.get('errorcode', '')}"):
+                self._ep(ep, "refused")
                 self._trip()
                 continue
             break                                    # real "bad request / no data" -> don't retry
