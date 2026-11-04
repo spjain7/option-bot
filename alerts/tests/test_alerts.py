@@ -403,7 +403,8 @@ def test_no_orders():
     check("alerts package has no order API (alert-only, no auto trading)", not re.search(r"placeOrder|modifyOrder|cancelOrder|place_order", src))
     lp = (ROOT / "scripts" / "market_loop.sh").read_text()
     check("market loop: state saved BEFORE Telegram is sent; every engine has a time limit (no stuck loop)",
-          lp.index("save alerts-state alerts state.json; then") < lp.index("python -m alerts.run flush")
+          lp.index("save alerts-state alerts state.json scan.json; then") < lp.index("python -m alerts.run flush")
+          and "seq1\" -le \"$seq0" in lp
           and "timeout 1200 python -m alerts.run scan" in lp and 'ALERTS_STATE_DIR="$OLDPWD/state/alerts"' in lp and "timeout 600 python runner.py" in lp)
 
 

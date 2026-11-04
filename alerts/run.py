@@ -24,6 +24,36 @@ def log_report(rep):
         print("::warning::" + e)
 
 
+def scan_record(prev, started, finished, stats, rep, n_msgs):
+    """Outcome of one scan, stored in the state (state['scan']) and in scan.json beside it, so the loop can prove the state
+    it saves comes from THIS scan (seq advanced) and say what was skipped. Outcomes:
+      SUCCESS          every planned API call was made, no errors
+      PARTIAL_SUCCESS  finished, but some instruments reported errors
+      RATE_LIMITED     Angel refused calls and some data was skipped
+      BUDGET_EXHAUSTED the time budget ran out; later calls were skipped (scan still saved)
+      NO_DATA          no instrument could be evaluated
+    (FAILED = the scan never wrote its record; the loop reports that.)"""
+    st = dict(stats or {})
+    errs = len((rep or {}).get("errors", []))
+    inst = (rep or {}).get("instruments", {}) or {}
+    if st.get("deadline_skips"):
+        status = "BUDGET_EXHAUSTED"
+    elif st.get("rate_limited") and st.get("skipped"):
+        status = "RATE_LIMITED"
+    elif inst and all(not v for v in inst.values()):
+        status = "NO_DATA"
+    elif errs:
+        status = "PARTIAL_SUCCESS"
+    else:
+        status = "SUCCESS"
+    note = (f"api requests {st.get('calls', 0)} ok {st.get('ok', 0)} rate-limited {st.get('rate_limited', 0)} "
+            f"skipped {st.get('skipped', 0)} (budget {st.get('deadline_skips', 0)}) · errors {errs} · messages {n_msgs}")
+    return dict(seq=int((prev or {}).get("seq", 0)) + 1, started=str(started), finished=str(finished),
+                seconds=int((finished - started).total_seconds()), status=status, note=note,
+                api={k: st.get(k, 0) for k in ("calls", "ok", "rate_limited", "skipped", "deadline_skips", "mem_hits", "disk_hits")},
+                errors=errs, messages=n_msgs)
+
+
 def scan():
     import time
     # P0 4-Nov: own time budget even when the loop script is an older copy (a running job keeps its checkout; this file
@@ -52,7 +82,11 @@ def scan():
         print(f"::warning::news step failed: {type(e).__name__}: {e}")
     import share                                              # prices for the website, with this same Angel session
     print("website price snapshot:", share.push(api, master, now))
+    state["scan"] = scan_record(state.get("scan"), now, now_ist(), getattr(api, "stats", {}), rep, len(msgs))
+    print(f"[scan] outcome {state['scan']['status']} · seq {state['scan']['seq']} · {state['scan']['started'][11:19]}–"
+          f"{state['scan']['finished'][11:19]} IST ({state['scan']['seconds']} s) · {state['scan']['note']}")
     tmp = STATE.with_suffix(".tmp"); tmp.write_text(json.dumps(state, indent=1, default=str)); os.replace(tmp, STATE)
+    (SD / "scan.json").write_text(json.dumps(state["scan"], indent=1))
     OUTBOX.write_text(json.dumps(dict(messages=msgs), indent=1))
     log_report(rep)
     summ = os.getenv("GITHUB_STEP_SUMMARY")

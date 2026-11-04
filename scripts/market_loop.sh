@@ -97,11 +97,26 @@ iteration() {
     # 4-Nov-2026 P0: time budget – after ANGEL_DEADLINE every API call is skipped, so the scan ends and saves its state
     # (before this, slow rate-limited scans were killed at 1200 s: no state saved, no alerts sent)
     export ANGEL_DEADLINE=$(( $(date +%s) + 1020 ))
+    seq0=$(python3 -c "import json;print(json.load(open('$PWD/state/alerts/scan.json'))['seq'])" 2>/dev/null || echo 0)
+    rm -f state/alerts/scan.json                 # written again only by a scan that finishes
     if [ -d /tmp/opt ]; then (cd /tmp/opt && ALERTS_STATE_DIR="$OLDPWD/state/alerts" OBUY_STATE_FILE="$OLDPWD/state/obuy/state.json" timeout 1200 python -m alerts.run scan); \
     else timeout 1200 python -m alerts.run scan; fi; rc=$?
     unset ANGEL_DEADLINE
     [ "$rc" = "124" ] && echo "::error::alerts scan killed by the 1200 s timeout – no state saved, no alerts sent this slot"   # the 15:30 stock scan (181 futures) can take ~10 min
-    if [ -f state/alerts/state.json ] && save alerts-state alerts state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
+    # 4-Nov-2026: save only state this scan produced (seq advanced); never re-push the restored old file as a "success"
+    seq1=$(python3 -c "import json;print(json.load(open('$PWD/state/alerts/scan.json'))['seq'])" 2>/dev/null || echo none)
+    outcome=$(python3 -c "import json;d=json.load(open('$PWD/state/alerts/scan.json'));print(d['status'],'-',d['note'])" 2>/dev/null || echo "FAILED - scan wrote no outcome (exit $rc)")
+    if [ "$seq1" = "none" ] || [ "$rc" = "124" ] || [ "$seq1" -le "$seq0" ] 2>/dev/null; then
+      SAVE_OK=failure; echo "::error::alerts outcome FAILED (exit $rc) – state NOT saved, last good state kept on alerts-state"
+    elif [ -f state/alerts/state.json ] && save alerts-state alerts state.json scan.json; then
+      SAVE_OK=success
+      back=$(git fetch -q origin alerts-state && git show FETCH_HEAD:alerts/scan.json 2>/dev/null | python3 -c "import json,sys;print(json.load(sys.stdin)['seq'])" 2>/dev/null || echo "?")
+      [ "$back" = "$seq1" ] || { echo "::warning::alerts state read-back seq $back != $seq1"; SAVE_OK=failure; }
+    else
+      SAVE_OK=failure
+    fi
+    echo "alerts outcome: $outcome · seq $seq1 · save $SAVE_OK"
+    [ -n "${GITHUB_STEP_SUMMARY:-}" ] && echo "- $(TZ=Asia/Kolkata date +%H:%M) IST alerts: $outcome · save $SAVE_OK" >> "$GITHUB_STEP_SUMMARY"
     [ -f state/alerts/outbox.json ] && SAVE_OK=$SAVE_OK python -m alerts.run flush
     save alerts-state alerts state.json pending.json || echo "::warning::could not save the undelivered-message queue"
     echo "alerts scan exit $rc, save $SAVE_OK"
