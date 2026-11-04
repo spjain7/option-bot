@@ -58,66 +58,7 @@
    "id": 14,
    "opened": "2026-10-29 22:32",
    "flags": [],
-   "checked": "2026-11-04 15:21:00"
-  },
-  {
-   "strategy": "Single CE Sell",
-   "bias": "BEARISH",
-   "legs": [
-    {
-     "symbol": "SILVER27NOV26195000CE",
-     "token": "577467",
-     "K": 195000.0,
-     "typ": "CE",
-     "side": "SELL",
-     "entry": 2859.5,
-     "delta": 0.251,
-     "iv": 40.9,
-     "gamma": 1.5713256371721046e-05,
-     "theta": -122.58267292900865,
-     "vega": 157.65489314313933
-    }
-   ],
-   "lot": 30,
-   "lots": 1,
-   "credit": 2859.5,
-   "width": null,
-   "max_loss": null,
-   "risk_rs": 42892,
-   "reward_rs": 42892,
-   "rr": 1.0,
-   "costs_rs": 80,
-   "rom_pct": null,
-   "gamma_risk": "MEDIUM",
-   "strike_em": 0.74,
-   "breakevens": [
-    197859.5
-   ],
-   "pos_greeks": {
-    "delta": -7.53,
-    "gamma": -0.0,
-    "theta": 3677.48,
-    "vega": -4729.65
-   },
-   "target_val": 1430.0,
-   "sl_val": 4289.5,
-   "adjust_delta": 0.35,
-   "spot_stop": 187200.0,
-   "margin_rs": 731625,
-   "pop": 75,
-   "name": "SILVER",
-   "mode": "monthly",
-   "expiry": "2026-11-27",
-   "confidence": 93,
-   "dte": 28,
-   "spot_at_entry": 179400.0,
-   "exch": "MCX",
-   "fut_token": "495214",
-   "exit_time": "23:00",
-   "id": 21,
-   "opened": "2026-10-30 22:43",
-   "flags": [],
-   "checked": "2026-11-04 15:21:00"
+   "checked": "2026-11-04 15:49:00"
   }
  ],
  "closed": [
@@ -1398,6 +1339,70 @@
    "pnl_rs_per_lot": -36775.0,
    "closed": "2026-11-04 09:28",
    "exit_reason": "SL"
+  },
+  {
+   "strategy": "Single CE Sell",
+   "bias": "BEARISH",
+   "legs": [
+    {
+     "symbol": "SILVER27NOV26195000CE",
+     "token": "577467",
+     "K": 195000.0,
+     "typ": "CE",
+     "side": "SELL",
+     "entry": 2859.5,
+     "delta": 0.251,
+     "iv": 40.9,
+     "gamma": 1.5713256371721046e-05,
+     "theta": -122.58267292900865,
+     "vega": 157.65489314313933
+    }
+   ],
+   "lot": 30,
+   "lots": 1,
+   "credit": 2859.5,
+   "width": null,
+   "max_loss": null,
+   "risk_rs": 42892,
+   "reward_rs": 42892,
+   "rr": 1.0,
+   "costs_rs": 80,
+   "rom_pct": null,
+   "gamma_risk": "MEDIUM",
+   "strike_em": 0.74,
+   "breakevens": [
+    197859.5
+   ],
+   "pos_greeks": {
+    "delta": -7.53,
+    "gamma": -0.0,
+    "theta": 3677.48,
+    "vega": -4729.65
+   },
+   "target_val": 1430.0,
+   "sl_val": 4289.5,
+   "adjust_delta": 0.35,
+   "spot_stop": 187200.0,
+   "margin_rs": 731625,
+   "pop": 75,
+   "name": "SILVER",
+   "mode": "monthly",
+   "expiry": "2026-11-27",
+   "confidence": 93,
+   "dte": 28,
+   "spot_at_entry": 179400.0,
+   "exch": "MCX",
+   "fut_token": "495214",
+   "exit_time": "23:00",
+   "id": 21,
+   "opened": "2026-10-30 22:43",
+   "flags": [],
+   "checked": "2026-11-04 15:21:00",
+   "exit_value": 4315.25,
+   "pnl_pts": -1455.75,
+   "pnl_rs_per_lot": -43672.0,
+   "closed": "2026-11-04 15:50",
+   "exit_reason": "SL"
   }
  ],
  "done": {
@@ -2513,7 +2518,8 @@
   "mcx_hourly|NATURALGAS|2026-11-04 12:00": "2026-11-04",
   "mcx_hourly|GOLD|2026-11-04 12:00": "2026-11-04",
   "mcx_hourly|SILVER|2026-11-04 12:00": "2026-11-04",
-  "summary|2026-11-04 12": "2026-11-04"
+  "summary|2026-11-04 12": "2026-11-04",
+  "report|2026-11-04": "2026-11-04"
  },
  "iv_hist": {
   "NIFTY": {
@@ -2545,7 +2551,8 @@
    "2026-10-29": 13.06,
    "2026-10-30": 12.12,
    "2026-11-02": 15.24,
-   "2026-11-03": 16.64
+   "2026-11-03": 16.64,
+   "2026-11-04": 14.77
   },
   "BANKNIFTY": {
    "2026-09-22": 11.48,
@@ -2576,7 +2583,8 @@
    "2026-10-29": 14.17,
    "2026-10-30": 14.44,
    "2026-11-02": 14.5,
-   "2026-11-03": 14.54
+   "2026-11-03": 14.54,
+   "2026-11-04": 13.78
   },
   "SENSEX": {
    "2026-09-22": 12.99,
@@ -2607,7 +2615,8 @@
    "2026-10-29": 19.65,
    "2026-10-30": 14.48,
    "2026-11-02": 16.67,
-   "2026-11-03": 19.35
+   "2026-11-03": 19.35,
+   "2026-11-04": 20.19
   }
  },
  "snap": {
