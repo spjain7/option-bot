@@ -717,24 +717,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-04 22:02:02.698300",
-   "oi": 1060800.0,
-   "ltp": 8642.0
+   "time": "2026-11-04 22:17:02.343820",
+   "oi": 1057700.0,
+   "ltp": 8558.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-04 22:02:02.698300",
-   "oi": 68331250.0,
-   "ltp": 278.1
+   "time": "2026-11-04 22:17:02.343820",
+   "oi": 68377500.0,
+   "ltp": 278.9
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-04 22:02:02.698300",
-   "oi": 15914.0,
-   "ltp": 142644.0
+   "time": "2026-11-04 22:17:02.343820",
+   "oi": 15934.0,
+   "ltp": 143220.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-04 22:02:02.698300",
-   "oi": 508740.0,
-   "ltp": 186213.0
+   "time": "2026-11-04 22:17:02.343820",
+   "oi": 508860.0,
+   "ltp": 187499.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -772,19 +772,19 @@
    "ltp": 56017.2
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-04 22:02:02.698300",
-   "oi": 16525000.0,
-   "ltp": 1362.45
+   "time": "2026-11-04 22:17:02.343820",
+   "oi": 16510000.0,
+   "ltp": 1363.3
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-04 22:02:02.698300",
+   "time": "2026-11-04 22:17:02.343820",
    "oi": 8055.0,
-   "ltp": 413.0
+   "ltp": 413.2
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-04 22:02:02.698300",
-   "oi": 20380.0,
-   "ltp": 327.15
+   "time": "2026-11-04 22:17:02.343820",
+   "oi": 20385.0,
+   "ltp": 327.3
   }
  },
  "bo_active": [],
@@ -1633,14 +1633,14 @@
    "date": "2026-11-02",
    "uhi": 282.7,
    "ulo": 271.2,
-   "ulast": 278.1,
-   "uat": "2026-11-04 22:02:02.698300",
+   "ulast": 278.8,
+   "uat": "2026-11-04 22:17:02.343820",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-04 21:45:00",
+   "excursion_upd": "2026-11-04 22:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1735,10 +1735,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-04 21:45:00",
+    "last_bar": "2026-11-04 22:00:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 277.8,
+    "last_px": 278.8,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2430,15 +2430,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 26,
-  "started": "2026-11-04 22:02:02.698300",
-  "finished": "2026-11-04 22:02:10.350680",
-  "seconds": 7,
+  "seq": 27,
+  "started": "2026-11-04 22:17:02.343820",
+  "finished": "2026-11-04 22:17:09.108759",
+  "seconds": 6,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 2 ok 2 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 2,
+   "ok": 2,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
