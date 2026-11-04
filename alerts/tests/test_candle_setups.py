@@ -256,3 +256,11 @@ if __name__ == "__main__":
     test_hammer_flow(); test_gap_through_target(); test_cancellations(); test_contract_change_and_one_at_a_time()
     test_stock_hanging_man_needs_uptrend(); test_ema_cross(); test_hourly_rule(); test_engine_path(); test_sweep3h(); test_sweep15()
     print(f"\nALL {len(OK)} CANDLE-SETUP CHECKS PASSED")
+
+# 4-Nov: every setup record carries a shadow grade and the ledger row copies it at entry
+from alerts import candle_setups as _CS  # noqa: E402
+_r = dict(setup="MCX_HAMMER", name="X", side="BUY", trigger=101.0, stop=99.0, atr=1.0)
+_CS._grade(_r, None, None, "reversal", 2.0)
+assert _r.get("grade") == "NO TRADE" and _r.get("grade_v"), _r            # no candles -> no context -> NO TRADE, never a crash
+assert set(_CS.GRADE_KEYS) <= set(_r), _r
+print("✅ setup records carry a versioned shadow grade")

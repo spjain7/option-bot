@@ -94,7 +94,8 @@ CRUDEOIL / GOLD hourly breakouts on 30-Oct).
 - **Hypothesis:** live futures calls graded A or B by `alerts/intel.py` (regime fit, daily bias, structure, volume, OI, VWAP,
   reward:risk, room to the next level) end with a better result than calls graded C or NO TRADE.
 - **Coverage (grade_v intel-1.0):** futures breakout calls (3h / daily / monthly), MCX 4-hour calls, stock-futures daily
-  calls. Not yet graded: MCX candle-setup and 15-min sweep calls (their frames are not available at entry time).
+  calls, MCX candle setups (hammer, EMA 13/48) and stock 3-hour sweeps / hanging-man (graded when the setup is recorded,
+  copied to the ledger at entry). Not graded: 15-min sweeps (log-only inside the option-buy engine, which is off).
 - **Data:** only calls sent live after this date (`alerts-state` ledger, fields `grade`, `regime`, `why_for`, `why_against`).
   Backtests and data already inspected are not evidence for this test. Grade rules are frozen while the test runs.
 - **Costs:** ledger P&L with 0.04 % (MCX/index) / 0.06 % (stocks) round trip, stop-first when a candle touches both levels.

@@ -197,6 +197,26 @@ def _close(s, msgs, state, r, px, t, why, now):
     print(f"[setup] {r['setup']} {r['name']} {r['side']} closed: {why} {px} ({r.get('gross_R')}R gross)")
 
 
+
+GRADE_KEYS = ("grade", "grade_v", "grade_pts", "regime", "family", "why_for", "why_against")
+
+
+def _grade(r, sig_df, daily, family, target_r):
+    """4-Nov: shadow grade (alerts/intel.py) stored on the setup record and copied to the ledger at entry. Never blocks."""
+    try:
+        import config as C_
+        if not getattr(C_, "INTEL_SHADOW", True):
+            return
+        from alerts import intel as IN
+        e, st = r.get("trigger") or r.get("cross_close"), r.get("stop")
+        ru = abs(float(e) - float(st)) if e is not None and st is not None else None
+        r.update(IN.shadow_fields(r["side"], family, sig_df, daily=daily, intraday=None,
+                                  plan=dict(entry=e, risk_unit=ru, atr=r.get("atr"), target_r=target_r),
+                                  tag=f"{r['name']} {r['setup']}"))
+    except Exception as e_:
+        print(f"[intel] {r.get('name')} {r.get('setup')} grade skipped: {type(e_).__name__}: {e_}")
+
+
 def _enter(state, msgs, r, e0, t, gapped):
     sd = 1 if r["side"] == "BUY" else -1
     risk = sd * (e0 - r["stop"])
@@ -205,7 +225,8 @@ def _enter(state, msgs, r, e0, t, gapped):
         r["target"] = round(e0 + sd * r.get("target_r", P["target_r"]) * risk, 4)
     RP.add(state, key=r["key"], mark_key=r.get("token"), seg="MCX" if r["setup"].startswith("MCX") else "NSE", cat="FUTURES",
            name=r["name"], symbol=r["contract"], type=TITLE[r["setup"]].title(), side=r["side"], entry=r["entry"], sl=r["stop"],
-           target=r.get("target"), tick=r.get("tick"), lot=r.get("lot"), mult=r.get("mult"), time=str(t))
+           target=r.get("target"), tick=r.get("tick"), lot=r.get("lot"), mult=r.get("mult"), time=str(t),
+           **{k: r[k] for k in GRADE_KEYS if k in r})
     if ENABLED.get(r["setup"]):
         msgs.append(entry_msg(r, gapped))
         if OPTION_HOOK is not None and r["setup"] in ("STK_HANGMAN", "STK_SWEEP3H"):
@@ -423,6 +444,7 @@ def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
              trend_ok=tr, vol_x=round(float(v.iloc[i] / va), 2) if va and va > 0 else None,
              sr=sr_line(df.iloc[:i + 1], side, trig, stop, P["target_r"])[0], oi_note=OI_NOTE,
              last_bar=str(df["time"].iloc[i]), logged=str(now), key=f"{setup}|{name}|{str(df['time'].iloc[i])[:10]}")
+    _grade(r, df.iloc[:i + 1], df.iloc[:i + 1], "reversal", P["target_r"])
     s["open"].append(r)
     msgs.append(setup_msg(r))
     print(f"[setup] {setup} {name} {side} pattern {r['pattern_time']}: trigger {r['trigger']} stop {r['stop']} trend {tr}")
@@ -445,6 +467,9 @@ def _new_ema(state, msgs, s, name, c, f3, now, mult, live):
              pattern_time=str(f3["time"].iloc[i]), cross_close=float(f3["close"].iloc[i]), atr=round(float(I.atr(f3, 14).iloc[i]), 4),
              adx=round(float(ax.iloc[i]), 1), tick=c.get("tick") or 1.0, mult=mult, lot=c.get("lot"),
              last_candle=str(f3["time"].iloc[i]), logged=str(now), key=f"MCX_EMA1348|{name}|{f3['time'].iloc[i]}")
+    r["stop"] = round(float(f3["close"].iloc[i]) - EMA["stop_atr"] * float(I.atr(f3, 14).iloc[i]), 4)   # for the grade only
+    _grade(r, f3.iloc[:i + 1], None, "breakout", None)
+    r.pop("stop", None)
     s["open"].append(r)
     _px = float(f3["close"].iloc[i]); _a = float(I.atr(f3, 14).iloc[i])
     r["sr"] = sr_line(f3.iloc[:i + 1], "BUY", _px, _px - EMA["stop_atr"] * _a, None)[0]
@@ -600,6 +625,7 @@ def on_stock_3h(state, msgs, name, c, f3, now, prev_oi_label, sweep_oi_change):
     r["sr"] = sr_line(f3.iloc[:i + 1], "SELL", r["trigger"], r["stop"], SW["target_r"])[0]
     if abs(r["stop"] - r["trigger"]) / r["trigger"] * 100 > P["max_stop_pct"]:
         print(f"[setup] STK_SWEEP3H {name}: stop too far – not sent"); return
+    _grade(r, f3.iloc[:i + 1], None, "reversal", SW["target_r"])
     s["open"].append(r)
     msgs.append(sweep_msg(r))
     print(f"[setup] STK_SWEEP3H {name} SELL below {r['trigger']} stop {r['stop']} vol {vx:.1f}x OI prev {lab} sweep {doi:+.2f}%")
