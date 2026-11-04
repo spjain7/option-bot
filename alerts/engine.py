@@ -343,6 +343,10 @@ def scan(api, master, now, state, only=None):
         oi = oi_reading(state, c["symbol"], q, now)
         info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
         _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d), master=master, api=api)
+        try:                                               # 4-Nov: MFE / MAE of open calls on this contract (live ledger)
+            RP.track_excursions(state, c["token"], cl.get("15m"), "15-min candle highs/lows")
+        except Exception as e_:
+            print(f"[ledger] {name} excursion update skipped: {type(e_).__name__}: {e_}")
         try:                                               # 29-Oct (owner): 1H BIG MOVE watch – information only, not a call
             from alerts import watch1h as W1
             sd = _switch_day(state, c, d)
