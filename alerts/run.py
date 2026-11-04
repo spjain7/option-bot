@@ -38,7 +38,7 @@ def scan_record(prev, started, finished, stats, rep, n_msgs):
     inst = (rep or {}).get("instruments", {}) or {}
     if st.get("deadline_skips"):
         status = "BUDGET_EXHAUSTED"
-    elif st.get("rate_limited") and st.get("skipped"):
+    elif st.get("rate_limited") and (st.get("skipped") or st.get("failed")):
         status = "RATE_LIMITED"
     elif inst and all(not v for v in inst.values()):
         status = "NO_DATA"
@@ -47,10 +47,10 @@ def scan_record(prev, started, finished, stats, rep, n_msgs):
     else:
         status = "SUCCESS"
     note = (f"api requests {st.get('calls', 0)} ok {st.get('ok', 0)} rate-limited {st.get('rate_limited', 0)} "
-            f"skipped {st.get('skipped', 0)} (budget {st.get('deadline_skips', 0)}) · errors {errs} · messages {n_msgs}")
+            f"skipped {st.get('skipped', 0)} (budget {st.get('deadline_skips', 0)}) failed {st.get('failed', 0)} · errors {errs} · messages {n_msgs}")
     return dict(seq=int((prev or {}).get("seq", 0)) + 1, started=str(started), finished=str(finished),
                 seconds=int((finished - started).total_seconds()), status=status, note=note,
-                api={k: st.get(k, 0) for k in ("calls", "ok", "rate_limited", "skipped", "deadline_skips", "mem_hits", "disk_hits")},
+                api={k: st.get(k, 0) for k in ("calls", "ok", "rate_limited", "skipped", "deadline_skips", "failed", "mem_hits", "disk_hits")},
                 errors=errs, messages=n_msgs)
 
 

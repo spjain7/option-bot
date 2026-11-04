@@ -15,3 +15,6 @@ assert scan_record(r, t0, t1, dict(calls=5, ok=5), dict(instruments={"GOLD": {}}
 assert scan_record(r, t0, t1, dict(calls=5, ok=5), dict(instruments=ok["instruments"], errors=["x"]), 0)["status"] == "PARTIAL_SUCCESS"
 assert scan_record(r, t0, t1, {}, ok, 2)["seq"] == 2, "sequence must advance from the previous record"
 print("ALL SCAN RECORD CHECKS PASSED")
+assert scan_record(r, t0, t1, dict(calls=32, ok=14, rate_limited=18, skipped=0, failed=2), ok, 2)["status"] == "RATE_LIMITED", \
+    "data lost after all retries must not read SUCCESS"
+print("✅ failed-after-retries counts as RATE_LIMITED")

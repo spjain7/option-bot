@@ -56,7 +56,7 @@ class Angel:
         self._cache, self._cc = {}, {}
         self._dir = Path(cache_dir) if cache_dir else CACHE / "api"
         self._dir.mkdir(parents=True, exist_ok=True)
-        self.stats = dict(calls=0, ok=0, rate_limited=0, skipped=0, mem_hits=0, disk_hits=0, ws_hits=0, ws_fallback=0, deadline_skips=0)
+        self.stats = dict(calls=0, ok=0, rate_limited=0, skipped=0, mem_hits=0, disk_hits=0, ws_hits=0, ws_fallback=0, deadline_skips=0, failed=0)
         # 4-Nov-2026 (P0): time budget. The loop kills a scan with `timeout`; a killed alerts scan saved NO state and sent
         # NO alerts (12:35-15:10 IST on 4-Nov, every scan exit 124). After ANGEL_DEADLINE (epoch seconds) every API call is
         # skipped at once (returns None, counted), so the scan finishes with the data it has and its state is saved.
@@ -206,7 +206,7 @@ class Angel:
             pass
         s = self.stats
         print(f"[angel-stats] API requests={s['calls']} ok={s['ok']} rate-limited={s['rate_limited']} skipped(blocked)={s['skipped']} pace candle/quote={self.pace('hist'):.2f}/{self.pace('quote'):.2f}s "
-              f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | skipped after time budget={s['deadline_skips']} | requests by all engines of this job in the last 60 min={hour} "
+              f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | skipped after time budget={s['deadline_skips']} failed after retries={s['failed']} | requests by all engines of this job in the last 60 min={hour} "
               f"(community-reported Angel cap for candles: ~5000/h)")
         st = WB.status(self._ws_dir)
         if st:
@@ -248,6 +248,8 @@ class Angel:
                 self._trip()
                 continue
             break                                    # real "bad request / no data" -> don't retry
+        else:
+            self.stats["failed"] += 1                # every retry refused / errored: this data is MISSING for the scan
         self._cache[key] = None
         return None
 
