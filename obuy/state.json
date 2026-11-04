@@ -1,35 +1,5 @@
 {
- "open": [
-  {
-   "id": 4,
-   "mode": "intraday",
-   "name": "JSWSTEEL",
-   "kind": "stock",
-   "dir": 1,
-   "token": "134141",
-   "symbol": "JSWSTEEL23NOV261330CE",
-   "K": 1330.0,
-   "expiry": "2026-11-23",
-   "lot": 675,
-   "entry": 25.9,
-   "sl": 18.13,
-   "tg": 41.44,
-   "sl_pct": 30.0,
-   "tg_pct": 60.0,
-   "opened": "2026-11-04 11:09:47.557142",
-   "exit_at": "2026-11-04 15:15:00",
-   "why": [
-    "Resistance 1,329.7 (pivot R1), 0.15% away",
-    "Futures crossed above VWAP (1,326.6)",
-    "RSI 62 (strong momentum)",
-    "Last 1 hour: price +0.14%, OI +0.1%"
-   ],
-   "exit_by": "04 Nov 15:15",
-   "hi": 32.0,
-   "lo": 25.9,
-   "last": 32.0
-  }
- ],
+ "open": [],
  "closed": [
   {
    "id": 1,
@@ -129,6 +99,40 @@
    "rs_lot": -1521,
    "why_exit": "no follow-through in 60 min",
    "closed": "2026-10-29 14:04:54.197523"
+  },
+  {
+   "id": 4,
+   "mode": "intraday",
+   "name": "JSWSTEEL",
+   "kind": "stock",
+   "dir": 1,
+   "token": "134141",
+   "symbol": "JSWSTEEL23NOV261330CE",
+   "K": 1330.0,
+   "expiry": "2026-11-23",
+   "lot": 675,
+   "entry": 25.9,
+   "sl": 18.13,
+   "tg": 41.44,
+   "sl_pct": 30.0,
+   "tg_pct": 60.0,
+   "opened": "2026-11-04 11:09:47.557142",
+   "exit_at": "2026-11-04 15:15:00",
+   "why": [
+    "Resistance 1,329.7 (pivot R1), 0.15% away",
+    "Futures crossed above VWAP (1,326.6)",
+    "RSI 62 (strong momentum)",
+    "Last 1 hour: price +0.14%, OI +0.1%"
+   ],
+   "exit_by": "04 Nov 15:15",
+   "hi": 32.0,
+   "lo": 25.9,
+   "last": 31.4,
+   "exit": 31.4,
+   "ret": 0.19602328728728727,
+   "rs_lot": 3427,
+   "why_exit": "time exit",
+   "closed": "2026-11-04 15:52:23.880236"
   }
  ],
  "done": {
@@ -147,7 +151,9 @@
   "scorecard|2026-10-29": "2026-10-29 15:33:57.218102",
   "watch1h|2026-10-30": "2026-10-30 15:38:17.754444",
   "scorecard|2026-10-30": "2026-10-30 15:38:17.754444",
-  "intraday|JSWSTEEL|2026-11-04": "2026-11-04 11:09:47.557142"
+  "intraday|JSWSTEEL|2026-11-04": "2026-11-04 11:09:47.557142",
+  "watch1h|2026-11-04": "2026-11-04 15:52:23.880236",
+  "scorecard|2026-11-04": "2026-11-04 15:52:23.880236"
  },
  "next_id": 5,
  "universe": {
