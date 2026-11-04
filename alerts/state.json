@@ -2410,18 +2410,19 @@
    "omansmdoawards600millionmazooncoppercontractminingcomau",
    "copperreboundsfrom3monthlowastightnessoffsetstariffaifearsbusinessrecorder",
    "oilnewscrudeoilfuturesfallasiranpeacetalkspressurewarpremiumfxempire",
-   "usoilpricescrashbelow90asjdvanceblamesiranwarforgopelectionlosswtifallsto8892bre"
+   "usoilpricescrashbelow90asjdvanceblamesiranwarforgopelectionlosswtifallsto8892bre",
+   "naturalgaswtioilbrentoilforecastsoildives10asschumersaysdemocratswouldendthewari"
   ],
   "day": "2026-11-05",
-  "n": 1
+  "n": 2
  },
  "scan": {
-  "seq": 34,
-  "started": "2026-11-05 00:02:01.962082",
-  "finished": "2026-11-05 00:02:11.905025",
-  "seconds": 9,
+  "seq": 35,
+  "started": "2026-11-05 00:17:01.504863",
+  "finished": "2026-11-05 00:17:07.466765",
+  "seconds": 5,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -2433,7 +2434,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 2
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
