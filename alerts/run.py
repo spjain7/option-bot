@@ -25,6 +25,10 @@ def log_report(rep):
 
 
 def scan():
+    import time
+    # P0 4-Nov: own time budget even when the loop script is an older copy (a running job keeps its checkout; this file
+    # comes from the latest main) – 1020 s inside the loop's 1200 s timeout, see angel.ANGEL_DEADLINE
+    os.environ.setdefault("ANGEL_DEADLINE", str(time.time() + 1020))
     from alerts import engine as E
     from angel import Angel, load_master, now_ist
     now = now_ist()
