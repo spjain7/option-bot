@@ -43,7 +43,7 @@ options() {
   rm -rf /tmp/opt; git worktree prune
   if ! (git fetch -q origin main && git worktree add -q --detach /tmp/opt FETCH_HEAD); then echo "::error::option engine checkout failed"; return; fi
   mkdir -p .cache && ln -sfn "$PWD/.cache" /tmp/opt/.cache
-  (cd /tmp/opt && timeout 600 python runner.py auto); local rc=$?   # a hung API call can never block the loop
+  (cd /tmp/opt && ANGEL_DEADLINE=$(( $(date +%s) + 540 )) timeout 600 python runner.py auto); local rc=$?   # a hung API call can never block the loop
   (cd /tmp/opt && git add state/*.json 2>/dev/null
    if ! git diff --cached --quiet; then
      git commit -qm "state $(date -u +%F_%H%M)"
@@ -94,8 +94,13 @@ iteration() {
   if n=$(restore alerts-state alerts); then
     export ALERTS_NEW_STATE=$n
     # run the LATEST main code (fresh worktree made by options()), so fixes pushed during the day apply at the next scan
+    # 4-Nov-2026 P0: time budget – after ANGEL_DEADLINE every API call is skipped, so the scan ends and saves its state
+    # (before this, slow rate-limited scans were killed at 1200 s: no state saved, no alerts sent)
+    export ANGEL_DEADLINE=$(( $(date +%s) + 1020 ))
     if [ -d /tmp/opt ]; then (cd /tmp/opt && ALERTS_STATE_DIR="$OLDPWD/state/alerts" OBUY_STATE_FILE="$OLDPWD/state/obuy/state.json" timeout 1200 python -m alerts.run scan); \
-    else timeout 1200 python -m alerts.run scan; fi; rc=$?   # the 15:30 stock scan (181 futures) can take ~10 min
+    else timeout 1200 python -m alerts.run scan; fi; rc=$?
+    unset ANGEL_DEADLINE
+    [ "$rc" = "124" ] && echo "::error::alerts scan killed by the 1200 s timeout – no state saved, no alerts sent this slot"   # the 15:30 stock scan (181 futures) can take ~10 min
     if [ -f state/alerts/state.json ] && save alerts-state alerts state.json; then SAVE_OK=success; else SAVE_OK=failure; fi
     [ -f state/alerts/outbox.json ] && SAVE_OK=$SAVE_OK python -m alerts.run flush
     save alerts-state alerts state.json pending.json || echo "::warning::could not save the undelivered-message queue"

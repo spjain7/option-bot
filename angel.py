@@ -56,10 +56,25 @@ class Angel:
         self._cache, self._cc = {}, {}
         self._dir = Path(cache_dir) if cache_dir else CACHE / "api"
         self._dir.mkdir(parents=True, exist_ok=True)
-        self.stats = dict(calls=0, ok=0, rate_limited=0, skipped=0, mem_hits=0, disk_hits=0, ws_hits=0, ws_fallback=0)
+        self.stats = dict(calls=0, ok=0, rate_limited=0, skipped=0, mem_hits=0, disk_hits=0, ws_hits=0, ws_fallback=0, deadline_skips=0)
+        # 4-Nov-2026 (P0): time budget. The loop kills a scan with `timeout`; a killed alerts scan saved NO state and sent
+        # NO alerts (12:35-15:10 IST on 4-Nov, every scan exit 124). After ANGEL_DEADLINE (epoch seconds) every API call is
+        # skipped at once (returns None, counted), so the scan finishes with the data it has and its state is saved.
+        try:
+            self.deadline = float(os.getenv("ANGEL_DEADLINE", "0")) or None
+        except ValueError:
+            self.deadline = None
         self._ws_note = {}
         import atexit
         atexit.register(self.report)
+
+    def over_budget(self):
+        """True once the scan's time budget (ANGEL_DEADLINE) is used up."""
+        return bool(getattr(self, "deadline", None)) and time.time() >= self.deadline
+
+    def _left(self):
+        d = getattr(self, "deadline", None)
+        return float("inf") if not d else max(0.0, d - time.time())
 
     def _wait(self, gap=0.4):
         d = time.time() - self._last
@@ -117,7 +132,7 @@ class Angel:
         instead of skipping the data. Returns True when the block is over."""
         until, streak = self._breaker()
         remaining = until - time.time()
-        if remaining > max_s:
+        if remaining > max_s or remaining > self._left():
             return False
         if remaining > 0:
             print(f"[angel] priority fetch: waiting {remaining:.0f}s for the rate-limit pause to end")
@@ -134,7 +149,7 @@ class Angel:
         remaining = until - time.time()
         if remaining <= 0:
             return True
-        if streak >= self.FAILFAST_AFTER:
+        if streak >= self.FAILFAST_AFTER or remaining > self._left():
             return False
         time.sleep(min(remaining, max(self.COOL_STEPS)))
         return True
@@ -163,7 +178,7 @@ class Angel:
             pass
         s = self.stats
         print(f"[angel-stats] API requests={s['calls']} ok={s['ok']} rate-limited={s['rate_limited']} skipped(blocked)={s['skipped']} "
-              f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | requests by all engines of this job in the last 60 min={hour} "
+              f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | skipped after time budget={s['deadline_skips']} | requests by all engines of this job in the last 60 min={hour} "
               f"(community-reported Angel cap for candles: ~5000/h)")
         st = WB.status(self._ws_dir)
         if st:
@@ -178,6 +193,9 @@ class Angel:
             self.stats["mem_hits"] += 1
             return self._cache[key]
         for i in range(retries):
+            if self.over_budget():                   # time budget used up: finish the scan with what we have
+                self.stats["skipped"] += 1; self.stats["deadline_skips"] += 1
+                return None
             if not self._gate():                     # API is blocked: don't pile more requests on it (not cached: a later call may work)
                 self.stats["skipped"] += 1
                 return None
@@ -408,6 +426,9 @@ class Angel:
             toks = [str(t) for t in toks]
             for i in range(0, len(toks), 50):
                 for attempt in range(3):
+                    if self.over_budget():
+                        self.stats["skipped"] += 1; self.stats["deadline_skips"] += 1
+                        break
                     if not self._gate("quote"):
                         self.stats["skipped"] += 1
                         break

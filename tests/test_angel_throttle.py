@@ -157,6 +157,27 @@ def test_quotes_and_stats():
         check("end-of-run summary line printed", "[angel-stats]" in out and "API requests=2" in out and "rate-limited=1" in out and "last 60 min=2" in out)
 
 
+def test_time_budget():
+    """4-Nov P0: after ANGEL_DEADLINE every call is skipped at once (no sleeping on cool-downs), so a scan always finishes."""
+    with tempfile.TemporaryDirectory() as tmp:
+        smart = FakeSmart(["ok"])
+        a = make(tmp, smart)
+        a.deadline = time.time() + 60
+        check("before the deadline calls go out", a._call(smart.getCandleData, {"x": 1}) is not None and smart.n == 1)
+        a.deadline = time.time() - 1
+        t0 = time.time()
+        r = a._call(smart.getCandleData, {"x": 2})
+        q = a.quotes({"NFO": ["1"]})
+        check("after the deadline: no request, None / empty, no wait", r is None and q == {} and smart.n == 1 and time.time() - t0 < 1)
+        check("deadline skips are counted", a.stats["deadline_skips"] == 2)
+        a.deadline = time.time() + 5
+        (Path(tmp) / "api" / "breaker.json").parent.mkdir(parents=True, exist_ok=True)
+        a._bfile("hist").write_text(json.dumps({"until": time.time() + 30, "streak": 1}))
+        t0 = time.time()
+        check("a cool-down longer than the remaining budget is not waited out", a._gate() is False and time.time() - t0 < 1)
+        check("priority wait_clear refuses a pause longer than the budget", a.wait_clear() is False)
+
+
 def test_detection():
     check("'exceeding access rate' text detected", A.Angel._is_rate(RATE_MSG))
     check("AB1021 detected", A.Angel._is_rate("AB1021 Too many requests"))
@@ -164,6 +185,6 @@ def test_detection():
 
 
 if __name__ == "__main__":
-    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_priority_wait_clear, test_quotes_and_stats, test_detection):
+    for t in (test_normal_and_caches, test_failures_not_cached, test_cooldown_then_retry, test_failfast_and_probe, test_priority_wait_clear, test_quotes_and_stats, test_time_budget, test_detection):
         t()
     print("all angel throttle tests passed")
