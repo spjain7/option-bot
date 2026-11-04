@@ -218,3 +218,8 @@ OPTION_IDEAS_ENABLED = False
 INTEL_SHADOW         = True
 INTEL_IN_MESSAGE     = False
 INTEL_BLOCK          = False
+
+# 4-Nov-2026: E_BUY_v1 (compression breakout BUY, MCX 1h) runs PAPER ONLY – recorded in state["paper"], never sent.
+# Rules frozen in alerts/paper.py / docs/strategies/E_BUY_v1.md. There is no switch that sends it: promotion needs a new
+# reviewed change after the prospective paper test (VAL-EBUY-001) passes.
+PAPER_EBUY           = True

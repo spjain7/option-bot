@@ -22,6 +22,9 @@ OUTBOX, LAST, LOG = SD / "outbox.json", SD / "last_run.json", SD / "scan_log.jso
 
 def telegram(text):
     """Send plain text. Returns (ok, detail). Never prints the token."""
+    import paperguard
+    if paperguard.blocked(text):
+        return False, "blocked: PAPER_ONLY"
     tok, chat = os.getenv("TELEGRAM_TOKEN", ""), os.getenv("TELEGRAM_CHAT_ID", "")
     if not tok or not chat:
         return False, "TELEGRAM_TOKEN / TELEGRAM_CHAT_ID not set"

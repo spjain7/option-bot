@@ -544,6 +544,17 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                                        RP.mult_for(name, ex, c.get("lot")))
         except Exception as e_:
             print(f"[4h] {name} skipped: {type(e_).__name__}: {e_}")
+    if ex == "MCX" and _cfg("PAPER_EBUY", True):                     # 4-Nov: E_BUY_v1 PAPER ONLY (never sent, alerts/paper.py)
+        try:
+            from alerts import paper as PP
+            gf = {}
+            if _cfg("INTEL_SHADOW", True):
+                from alerts import intel as IN
+                gf = IN.shadow_fields("BUY", "breakout", h1full, daily=dd, intraday=c15, plan=None, tag=f"{name} 1h paper")
+            info["paper_ebuy"] = PP.on_candles(state, name, ex, c.get("symbol"), h1full if sw_day is None or
+                                               pd.Timestamp(h1full["time"].iloc[-1]).normalize() != sw_day else None, now, grade_fields=gf)
+        except Exception as e_:
+            print(f"[paper] {name} skipped: {type(e_).__name__}: {e_}")
     if ex == "MCX":                                                  # 29-Oct (approved, live): candle-setup calls
         try:
             lv_ = (q or {}).get("ltp")

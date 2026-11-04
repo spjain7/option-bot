@@ -55,6 +55,9 @@ def resend_pending():
 
 
 def send(text, csv_df=None, fname="signals.csv"):
+    import paperguard
+    if paperguard.blocked(text):
+        return
     print("\n" + text + "\n")
     if TG_TOKEN and TG_CHAT:
         base = f"https://api.telegram.org/bot{TG_TOKEN}"
