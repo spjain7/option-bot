@@ -100,9 +100,17 @@ def quote_check(q, now, require=True):
         return None, f"live quote timestamp malformed ({str(raw)[:30]!r})"
     if now is None:
         return t, None
-    age = (to_ist(now) - t).total_seconds()
+    # 4-Nov P1: compare with the time the quote was RECEIVED (stamped by angel.quotes), not the scan start – a 15-min scan
+    # made fresh quotes look "641 s in the future". Without a receipt stamp the caller's `now` is used (as before).
+    try:
+        ref = to_ist(pd.Timestamp(q["_recv_ist"])) if q.get("_recv_ist") else None
+    except (ValueError, TypeError):
+        ref = None
+    age = ((ref if ref is not None else to_ist(now)) - t).total_seconds()          # skew: vs receipt time
     if age < -MAX_CLOCK_SKEW_SEC:
         return t, f"live quote timestamp {-age:.0f}s in the future (max skew {MAX_CLOCK_SKEW_SEC:.0f}s)"
+    if ref is not None:                                   # staleness: vs the LATER of receipt and decision time
+        age = (max(ref, to_ist(now)) - t).total_seconds()
     if age / 60 > MAX_QUOTE_AGE_MIN:
         return t, f"live quote stale ({age / 60:.0f} min old)"
     return t, None
