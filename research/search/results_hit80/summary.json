@@ -1,0 +1,9 @@
+{
+ "combos_tried": 3670,
+ "eligible_n100_n30": 1688,
+ "train_ge80": 0,
+ "train_and_test_ge80": 0,
+ "test_ge80_any": 3,
+ "test_ge80_and_q10": 0,
+ "both_list": []
+}
