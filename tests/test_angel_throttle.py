@@ -205,6 +205,9 @@ def test_failed_after_retries():
         check("all retries refused -> None, counted as failed", a._call(sm.getCandleData, {"x": 1}) is None and a.stats["failed"] == 1)
         sm2 = FakeSmart(["nodata"]); b = make(tmp, sm2)
         check("a real 'no data' reply is not counted as failed", b._call(sm2.getCandleData, {"x": 2}) is None and b.stats["failed"] == 0)
+        be = a.stats["by_endpoint"]["getCandleData"]
+        check("refusals are counted per endpoint with the gap before them", be["refused"] == 3 and be["ok"] == 0
+              and len(be["refused_gap_s"]) == 2)
 
 
 def test_detection():
