@@ -24,7 +24,10 @@
     "RSI 62 (strong momentum)",
     "Last 1 hour: price +0.14%, OI +0.1%"
    ],
-   "exit_by": "04 Nov 15:15"
+   "exit_by": "04 Nov 15:15",
+   "hi": 32.0,
+   "lo": 25.9,
+   "last": 32.0
   }
  ],
  "closed": [
