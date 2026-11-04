@@ -211,3 +211,10 @@ RSI_SHOW_HISTORY     = True      # add past statistics after similar RSI extreme
 # code and history kept (branch obuy-state, alerts ledger). Set True to bring back.
 OBUY_ENABLED         = False
 OPTION_IDEAS_ENABLED = False
+
+# 4-Nov-2026 P2/P3: market intelligence + setup grade (alerts/intel.py). SHADOW first: grade, regime and reasons are stored on
+# every futures call in the ledger and the run log; messages change only with INTEL_IN_MESSAGE, calls are rejected only with
+# INTEL_BLOCK. Turn those on after the live grade-vs-outcome check (EXPERIMENTS.md INTEL-001).
+INTEL_SHADOW         = True
+INTEL_IN_MESSAGE     = False
+INTEL_BLOCK          = False

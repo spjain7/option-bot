@@ -613,9 +613,15 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             info[f"bo_{tf}"] += " · 3h SELL logged only (not sent – STRATEGY-PROGRAM-001)"
             print(f"[shadow] {name} {tf} SELL logged only: entry {plan['entry']} SL {plan['sl']} target {plan['target']}")
             continue
+        gi = _intel_grade(name, tf, sig, fr, dd, c15, plan, oi)          # P2/P3 4-Nov: shadow grade (never blocks unless INTEL_BLOCK)
+        if gi and gi["grade"] == "NO TRADE" and _cfg("INTEL_BLOCK", False):
+            info[f"bo_{tf}"] += " · rejected by grade: " + "; ".join(gi["reasons_against"][:3]); continue
         opt = BO.option_idea(master, name, ex, plan["entry"], sig["side"], tf, now) if master is not None else None
         msgs.append(BO.call_msg(name, ex, c, tf, sig, lv, plan=plan))
         reason = BO.reason_msg(name, tf, sig, lv, oi, q, htf=htf)
+        if gi and _cfg("INTEL_IN_MESSAGE", False):
+            reason = reason.replace("Not investment advice.", f"• Grade   : {gi['grade']} (rule-based quality, not a probability) – "
+                                    + "; ".join((gi["reasons_for"] + gi["reasons_against"])[:4]) + "\nNot investment advice.")
         if plan.get("warn"):
             reason = reason.replace("Not investment advice.", f"• Note    : {plan['warn']}\nNot investment advice.")
         if tf == "3h" and sig["side"] == "BUY":            # 28-Oct approval: high-accuracy variant HA-1, log only
@@ -635,7 +641,10 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         seg = "MCX" if ex == "MCX" else "NSE"
         RP.add(state, key=key, mark_key=c["token"], seg=seg, cat="FUTURES", name=name, symbol=c["symbol"], type=RP.CALL_TYPE[tf],
                side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],
-               lot=c.get("lot"), mult=plan["mult"], time=str(now))
+               lot=c.get("lot"), mult=plan["mult"], time=str(now),
+               **({} if not gi else dict(grade=gi["grade"], grade_v=_intel_version(), grade_pts=gi["points"],
+                                         regime=gi["context"]["regime"]["primary"], family="breakout",
+                                         why_for=gi["reasons_for"][:5], why_against=gi["reasons_against"][:5])))
         if opt and api is not None:
             ok, prem, onotes, oskip = OF.check(api, ex, name, opt, plan["entry"], dd, now)
             oplan = TP.option_plan(premium=prem, sl_pct=BO.OPT_SL_TG.get(tf, (0.35, 0.8))[0], tg_pct=BO.OPT_SL_TG.get(tf, (0.35, 0.8))[1],
@@ -650,6 +659,35 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                        lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
         msgs.append(reason)
         state["day"]["alerts"] += 1
+
+
+def _cfg(key, default):
+    try:
+        import config as C_
+        return getattr(C_, key, default)
+    except Exception:
+        return default
+
+
+def _intel_version():
+    from alerts import intel as IN
+    return IN.GRADE_VERSION
+
+
+def _intel_grade(name, tf, sig, fr, dd, c15, plan, oi):
+    """Shadow grade of a futures setup (alerts/intel.py). Any error -> None (never blocks a call)."""
+    if not _cfg("INTEL_SHADOW", True):
+        return None
+    try:
+        from alerts import intel as IN
+        g = IN.grade(sig["side"], "breakout", fr, daily=dd, intraday=c15, plan=dict(plan, atr=sig.get("atr")),
+                     oi_label=(oi or {}).get("label"))
+        print(f"[intel] {name} {tf} {sig['side']}: grade {g['grade']} ({g['points']} pts) · {g['context']['regime']['primary']} · "
+              f"for: {'; '.join(g['reasons_for']) or '-'} · against: {'; '.join(g['reasons_against']) or '-'}")
+        return g
+    except Exception as e:
+        print(f"[intel] {name} {tf} grade skipped: {type(e).__name__}: {e}")
+        return None
 
 
 def _just_closed(ex, now):

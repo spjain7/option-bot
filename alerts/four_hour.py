@@ -159,9 +159,21 @@ def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=
     st["open"].append(dict(name=name, ex=ex, token=str(c["token"]), contract=c["symbol"], expiry=c["expiry"], side=sig["side"],
                            entry=plan["entry"], stop=plan["sl"], target=plan["target"], risk=plan["risk_unit"], tick=t, mult=mult,
                            opened=str(now), days=[str(now.date())], key=key, max_days=rule["max_days"]))
+    gf = {}
+    try:                                                  # 4-Nov: shadow grade (alerts/intel.py) – stored only, never blocks
+        import config as C_
+        if getattr(C_, "INTEL_SHADOW", True):
+            from alerts import intel as IN, breakout as BO_
+            dd_ = BO_.daily_candles(h1, None)
+            if dd_ is not None and len(dd_):
+                dd_ = dd_[dd_["time"].dt.normalize() < pd.Timestamp(now).normalize()]
+            gf = IN.shadow_fields(sig["side"], "breakout", fr.drop(columns=["end"], errors="ignore"), daily=dd_, intraday=None,
+                                  plan=dict(plan, atr=sig["atr"]), oi_label=oi.get("label"), tag=f"{name} 4h")
+    except Exception as e_:
+        print(f"[intel] {name} 4h grade skipped: {type(e_).__name__}: {e_}")
     RP.add(state, key=key, mark_key=str(c["token"]), seg="MCX" if ex == "MCX" else "NSE", cat="FUTURES", name=name, symbol=c["symbol"],
            type="Swing (4-hour)", side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=t,
-           lot=c.get("lot"), mult=mult, time=str(now))
+           lot=c.get("lot"), mult=mult, time=str(now), **gf)
     state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
     if OPTION_HOOK is not None and ex == "NFO":           # 1-Nov: option idea, in-the-money strike near delta 0.75 (DELTA-001)
         try:

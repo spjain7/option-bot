@@ -662,9 +662,18 @@ def scan(api, master, now, state, msgs, rep, engine):
                                  stop=plan["sl"], risk=plan["risk_unit"], target=plan["target"], tick=plan["tick"], atr=float(sig["atr"]),
                                  max_days=sig.get("max_days", CFG["max_days"]), pending=True, lot=c["lot"],
                                  best=plan["entry"], trailed=False, n=0, last_candle=last, key=key))
+        gf = {}
+        try:                                              # 4-Nov: shadow grade (alerts/intel.py) – stored only, never blocks
+            import config as C_
+            if getattr(C_, "INTEL_SHADOW", True):
+                from alerts import intel as IN
+                gf = IN.shadow_fields(sig["side"], "reversal" if sig.get("pattern") else "breakout", d, daily=d, intraday=None,
+                                      plan=dict(plan, atr=sig.get("atr")), oi_label=None, tag=f"{name} 1d stock")
+        except Exception as e_:
+            print(f"[intel] {name} grade skipped: {type(e_).__name__}: {e_}")
         RP.add(state, key=key, mark_key=c["token"], seg="NSE", cat="FUTURES", name=name, symbol=c["symbol"], type="Positional",
                side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=plan["tick"],
-               lot=c["lot"], mult=c["lot"], time=str(now))
+               lot=c["lot"], mult=c["lot"], time=str(now), **gf)
         if sig["side"] == "BUY" and not sig.get("pattern"):  # shadow log – the +2–4 % label never changes this call
             DQ.shadow_add(st, key=key, name=name, sig=sig, plan=plan, lot=c["lot"], now=now, oi_flags=d["oi_flags"].iloc[-1] or "")
         opt = BO.option_idea(master, name, "NFO", plan["entry"], sig["side"], "1d", now)
