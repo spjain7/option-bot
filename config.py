@@ -59,13 +59,13 @@ PREMOVE_MAX_PER_MSG   = 5
 PREMOVE_MIN_SAMPLE    = 20       # show the measured hit rate in alerts only after this many tracked alerts
 
 # ═════════════ WHEN IS A CALL "CONFIDENT"? ═════════════
-CALL_MODE             = "ACTIVE" # "ACTIVE" = scan every run (~15 min), faster confirmation, buildups become calls
+CALL_MODE             = "STRICT" # 4-Nov owner ("all calls third class"): ACTIVE 60-score calls were coin-flip (10/20 sells won, −₹43.6k/lot) → "ACTIVE" = scan every run (~15 min), faster confirmation, buildups become calls
                                  # "STRICT" = hourly scans, 2-hour confirmation, fewer but slower calls
 MIN_CONFIDENCE        = 60 if CALL_MODE == "ACTIVE" else 70      # 0-100 score; below this -> no call
 CONFIRM_CHECKS        = 2        # intraday: same direction on this many scans in a row
 CONFIRM_WINDOW_MIN    = 45 if CALL_MODE == "ACTIVE" else 150     # ...and the previous scan must be this recent
 FLOW_FAST_TRACK       = CALL_MODE == "ACTIVE"  # ⚡ buildup (price + OI + volume agree) counts as confirmation
-MAX_CALLS_PER_NAME_DAY = 2       # max intraday calls on the same script per day
+MAX_CALLS_PER_NAME_DAY = 1       # 4-Nov: was 2 – stops same-day PE-then-CE flip-flops (SILVER 30-Oct / 3-Nov SLs)
 MIN_PREMIUM_RS_PER_LOT = 1000 if CALL_MODE == "ACTIVE" else 1500  # skip if premium per lot is below this
 MIN_RR                = 1.0      # reward must be >= risk (target profit >= stop-loss loss)
 SCAN_SUMMARY          = True     # hourly "🔎 why no call" message (set False to silence)

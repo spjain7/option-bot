@@ -206,6 +206,7 @@ def main():
 
     print("\n=== NAKED single-leg sells: confirmation, confidence, clear SL/target ===")
     C.SELL_STYLE, C.CONFIRM_CHECKS, C.GAMMA_BLOCK = "NAKED", 2, "HIGH"
+    C.CALL_MODE, C.CONFIRM_WINDOW_MIN, C.MIN_CONFIDENCE, C.FLOW_FAST_TRACK = "ACTIVE", 45, 60, True   # scenario uses 15-min ACTIVE timing
     st.s["positions"].clear(); st.s["bias_hist"] = {}
     n0 = len(SENT)
     bot.notes = []
