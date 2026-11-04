@@ -884,13 +884,14 @@ def main():
                     bot.fast_track(getattr(bot, "flow_events", []))
                 except Exception as e:
                     traceback.print_exc(); print("flow error", e)
-        if nse_on and now <= at("15:31"):
+        if nse_on and now <= at("15:31") and C.OPTION_ENGINE_ENABLED:
             bot.intraday_scan()
             bot.positional_scan()
-        if mcx_on:
+        if mcx_on and C.OPTION_ENGINE_ENABLED:
             bot.mcx_intraday_scan()
             bot.mcx_positional_scan()
-        bot.send_scan_summary()
+        if C.OPTION_ENGINE_ENABLED:
+            bot.send_scan_summary()
         if nse_on:
             bot.report()
     except Exception as e:

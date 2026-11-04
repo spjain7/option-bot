@@ -168,6 +168,9 @@ OPT_MIN_DAYS = {"3h": 2, "1d": 2, "1w": 20, "1m": 10}      # nearest option expi
 
 def option_idea(master, name, ex, px, side, tf, now):
     """ATM option to BUY for this futures call (CE for BUY, PE for SELL), nearest expiry ≥ OPT_MIN_DAYS away. None if not found."""
+    import config as _C
+    if not getattr(_C, "OPTION_IDEAS_ENABLED", True):
+        return None                                   # 4-Nov-2026: futures calls only
     try:
         typ = "CE" if side == "BUY" else "PE"
         types = ["OPTFUT", "OPTCOM"] if ex == "MCX" else ["OPTIDX", "OPTSTK"]

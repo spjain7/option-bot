@@ -9,6 +9,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from alerts import signals as S, engine as E  # noqa: E402
 from crude.tests import fake as F  # noqa: E402
+import config as _CFG  # noqa: E402
+_CFG.OPTION_IDEAS_ENABLED = True   # live config has option ideas OFF (4-Nov); the tests still cover the code
 
 OK = []
 

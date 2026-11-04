@@ -134,6 +134,7 @@ def main():
     positions.STATE_FILE = ROOT / "tests" / "_sim_state.json"
     positions.STATE_FILE.unlink(missing_ok=True)
     C.MONTHLY_STOCKS = ["RELIANCE", "HDFCBANK"]
+    C.OPTION_ENGINE_ENABLED = True   # engine is OFF in live config (4-Nov); the simulation still tests it
     C.SELL_STYLE, C.CONFIRM_CHECKS, C.INTRADAY_STOCKS, C.GAMMA_BLOCK = "HEDGED", 1, [], "EXTREME"   # part 1: hedged engine
     C.INTRADAY_UNDERLYINGS, C.WEEKLY_UNDERLYINGS = ["NIFTY", "BANKNIFTY"], ["NIFTY"]
     # this simulation tests the order / exit MECHANICS end to end; the 28-Oct selection rules (DTE window, S/R buffer,

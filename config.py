@@ -1,8 +1,8 @@
 """OPTION-SELLING BOT + RSI ALERTS - all settings. Edit here only."""
 
 # ═════════════ MASTER SWITCHES (kill switch) ═════════════
-OPTION_ENGINE_ENABLED = True     # Engine A: option-selling calls + trade management
-RSI_SELL_ENABLED      = True     # option SELL: hourly RSI > 80 / < 25 + OI positioning (short covering / long unwinding) – runner.rsi_exhaustion
+OPTION_ENGINE_ENABLED = False    # OFF 4-Nov-2026 (owner: focus on FUTURES calls; option sell kept in history). Open sells are still managed to exit. Engine A: option-selling calls + trade management
+RSI_SELL_ENABLED      = False    # OFF 4-Nov-2026 with the option engine. option SELL: hourly RSI > 80 / < 25 + OI positioning (short covering / long unwinding) – runner.rsi_exhaustion
 RSI_SELL_HIGH         = 80
 RSI_SELL_LOW          = 25
 RSI_ENGINE_ENABLED    = False    # Engine B: OFF 27-Oct-2026 – RSI-extreme / candle-reversal calls lost money in backtests (alerts/EXPERIMENTS.md); duplicate futures calls; saves Angel API quota
@@ -206,3 +206,8 @@ RSI_NSE              = ["NIFTY", "BANKNIFTY", "FINNIFTY", "SENSEX"]             
 RSI_MCX              = ["GOLD", "SILVER", "COPPER", "CRUDEOIL",
                         "NATURALGAS", "ALUMINIUM", "ZINC"]         # near-month futures (mega lots only)
 RSI_SHOW_HISTORY     = True      # add past statistics after similar RSI extremes (info only)
+
+# 4-Nov-2026 owner: futures calls only. Option-BUY engine (obuy/) and the option-buy idea attached to futures calls are OFF;
+# code and history kept (branch obuy-state, alerts ledger). Set True to bring back.
+OBUY_ENABLED         = False
+OPTION_IDEAS_ENABLED = False

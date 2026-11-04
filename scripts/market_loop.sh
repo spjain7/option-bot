@@ -70,7 +70,8 @@ save_shallow() {   # $1 branch  $2 subdir  file – add one file on top of the b
 }
 
 obuy() {
-  # ---- option-BUY alerts (test phase; NSE hours only) ----
+  # ---- option-BUY alerts – OFF 4-Nov-2026 (config.OBUY_ENABLED); history stays on branch obuy-state ----
+  python -c "import config,sys; sys.exit(0 if getattr(config,'OBUY_ENABLED',True) else 1)" 2>/dev/null || { echo "option-buy engine off (config.OBUY_ENABLED)"; return; }
   if n=$(restore obuy-state obuy); then
     export OBUY_NEW_STATE=$n
     # run the latest code (fresh worktree made by options()), state stays in this job's state/obuy
