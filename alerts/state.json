@@ -692,27 +692,12 @@
   ]
  },
  "day": {
-  "date": "2026-11-04",
-  "alerts": 2,
+  "date": "2026-11-05",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
+  "startup_sent": false,
   "eod_sent": false,
-  "outcomes": [
-   {
-    "name": "GOLD",
-    "tf": "3h",
-    "side": "SELL",
-    "result": "stop-loss hit -1.00R"
-   },
-   {
-    "name": "GOLD",
-    "tf": "1d",
-    "side": "SELL",
-    "result": "stop-loss hit -1.00R"
-   }
-  ],
-  "watch1h_sum_NFO": true,
-  "rep_nse": true
+  "outcomes": []
  },
  "history": [],
  "oi": {
@@ -2424,21 +2409,22 @@
    "treasurysecretarybessentsaystheworldcanlivewithoutiranianoilastrumpweighsfurther",
    "omansmdoawards600millionmazooncoppercontractminingcomau",
    "copperreboundsfrom3monthlowastightnessoffsetstariffaifearsbusinessrecorder",
-   "oilnewscrudeoilfuturesfallasiranpeacetalkspressurewarpremiumfxempire"
+   "oilnewscrudeoilfuturesfallasiranpeacetalkspressurewarpremiumfxempire",
+   "usoilpricescrashbelow90asjdvanceblamesiranwarforgopelectionlosswtifallsto8892bre"
   ],
-  "day": "2026-11-04",
-  "n": 4
+  "day": "2026-11-05",
+  "n": 1
  },
  "scan": {
-  "seq": 33,
-  "started": "2026-11-04 23:47:02.110098",
-  "finished": "2026-11-04 23:47:35.179036",
-  "seconds": 33,
+  "seq": 34,
+  "started": "2026-11-05 00:02:01.962082",
+  "finished": "2026-11-05 00:02:11.905025",
+  "seconds": 9,
   "status": "SUCCESS",
-  "note": "api requests 16 ok 16 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
   "api": {
-   "calls": 16,
-   "ok": 16,
+   "calls": 0,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -2447,7 +2433,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 2
  },
  "paper": {
   "E_BUY_v1": {
