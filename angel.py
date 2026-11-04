@@ -408,6 +408,7 @@ class Angel:
             return hit[2][hit[2]["time"] >= frm].reset_index(drop=True)
         ws = self._ws_series(exch, token, interval, frm, to, "candles")   # 29-Oct: today from the WebSocket bars
         if ws is not None:
+            ws = self._checked(ws, exch, token, interval)   # WebSocket bars pass the same validator as REST bars
             self._cc[key] = (frm, to, ws)
             return ws
         dh = self._disk_get(key, frm, to)                # fetched a moment ago by another engine process of this job
@@ -417,9 +418,24 @@ class Angel:
             return dh[dh["time"] >= frm].reset_index(drop=True)
         df = self._candles(exch, token, interval, frm, to)
         if df is not None:
+            df = self._checked(df, exch, token, interval)
             self._cc[key] = (frm, to, df)
             self._disk_put(key, frm, to, df)
         return df
+
+    def _checked(self, df, exch, token, interval):
+        """4-Nov P1: every REST candle series passes the shared validator (candlecheck.py) before any engine sees it."""
+        import candlecheck as CC
+        try:
+            clean, rep = CC.validate(df, now=self._now(), interval_min=WB.MINUTES.get(interval), label=f"{exch}:{token}:{interval}")
+        except Exception as e:                       # the validator must never take data away by crashing
+            print(f"[dq] {exch}:{token} validator error {type(e).__name__}: {e}")
+            return df
+        line = CC.summary(rep)
+        if line:
+            print(line)
+            self.stats["dq_removed"] = self.stats.get("dq_removed", 0) + sum(rep["removed"].values())
+        return clean
 
     def _candles(self, exch, token, interval, frm, to):
         d = self._call(self.api.getCandleData, {
@@ -465,11 +481,14 @@ class Angel:
                     self._wait(self.pace("quote"))
                     self._count()
                     try:
+                        t_req = self._now()
                         r = self.api.getMarketData("FULL", {ex: toks[i:i + 50]})
                         if r and self._is_rate(f"{r.get('message', '')} {r.get('errorcode', '')}"):
                             self._trip("quote")
                             continue
+                        t_done = self._now()
                         for q in (r.get("data") or {}).get("fetched", []):
+                            q["_req_start"], q["_recv_ist"] = str(t_req), str(t_done)   # reference times for age / skew
                             out[str(q["symbolToken"])] = q
                         self.stats["ok"] += 1
                         self._reset("quote")
