@@ -21,7 +21,7 @@ WALL_EM_RANGE         = 1.5      # look for OI support/resistance within 1.5 exp
 WALL_MIN_SHARE        = 0.6      # a strike counts as a wall if its OI >= 60% of the biggest nearby OI
 
 # ═════════════ ⚡ OI / VOLUME ACTIVITY ALERTS (futures) ═════════════
-FLOW_ENABLED          = True      # keeps collecting OI/volume snapshots (used by the option-selling engine)
+FLOW_ENABLED          = OPTION_ENGINE_ENABLED   # 4-Nov P0: OI/volume snapshots + option chains only feed the option-selling engine (now OFF) – saves Angel quote/candle calls
 FLOW_ALERTS_SEND      = False     # 27-Oct: no info-only "OI / volume activity" messages – buy/sell calls only
 FLOW_VOL_SPIKE_X      = 2.0      # last-hour volume >= 2x the day's normal hourly pace
 FLOW_MIN_OI_CHG       = {"index": 1.0, "stock": 2.0, "mcx": 1.5}   # % OI change in ~1 hour
