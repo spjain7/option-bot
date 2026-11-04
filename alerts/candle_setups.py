@@ -3,7 +3,8 @@ Research: branch exp/strategy-program-001, research/program/REPORT.md (DCP-001, 
 
   MCX_HAMMER   MCX daily hammer -> BUY above the hammer's high (stop-buy, valid 3 sessions). Stop 0.05 ATR below the
                hammer's low, target 2R from the entry, exit after 20 sessions. Backtest 2022-26 after costs: +0.36R per
-               trade, 52 % wins, 333 trades, every year and all 7 commodities positive (with downtrend: +0.31R, 102).
+               trade, 52 % wins, 333 trades on raw vendor data. DATA-AUDIT-001 (4-Nov) re-test on VERIFIED bhavcopy data:
+               +0.20R, 41 %, 413 trades; 2024-26 positive, 2022-23 negative, SILVER/NATURALGAS negative (research/data_quality).
   STK_HANGMAN  Stock futures daily hanging man in an uptrend (EMA20 > EMA50) -> SELL below its low (stop-sell, valid
                3 sessions). Stop 0.05 ATR above its high, target 2R, 20 sessions. Backtest +0.18R, 44 % wins, 1,217 trades.
                Follow-ups are sent after the 15:30 close (daily candles), so place the stop-loss and target as orders.
@@ -34,7 +35,8 @@ P = dict(entry_window=3, stop_buf_atr=0.05, target_r=2.0, max_days=20, max_stop_
 EMA = dict(fast=13, slow=48, adx_min=20.0, adx_lookback=3, stop_atr=3.0, max_candles=120)
 WARN = "Alert only – no auto trade. Not investment advice."
 STATS = {
-    "MCX_HAMMER": "Backtest 2022-26 after costs: +0.36R per trade, 52% wins, 333 trades; every year and all 7 commodities positive.",
+    "MCX_HAMMER": "Re-tested 4-Nov on VERIFIED MCX bhavcopy data (exact rolls) 2022-26 after costs: +0.20R per trade, 41% wins, "
+                  "413 trades; positive 2024-26, negative 2022-23 and on SILVER / NATURALGAS (earlier +0.36R used raw vendor data).",
     "STK_HANGMAN": "Backtest 2022-26 after costs: +0.18R per trade, 44% wins, 1,217 trades (flat in 2023 and 2025).",
     "STK_SWEEP3H": "Backtest 2022-26 at 1:1 after costs (sweep + volume + previous-day OI not long buildup): 58% wins, +0.15R per trade, "
                    "387 trades, every year positive. The extra 'OI not rising on the sweep candle' check is new (15-min evidence only).",
