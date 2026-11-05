@@ -707,24 +707,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 21:02:01.361259",
-   "oi": 876500.0,
-   "ltp": 8533.0
+   "time": "2026-11-05 21:17:02.025208",
+   "oi": 874000.0,
+   "ltp": 8525.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 21:02:01.361259",
-   "oi": 67863750.0,
-   "ltp": 280.1
+   "time": "2026-11-05 21:17:02.025208",
+   "oi": 68040000.0,
+   "ltp": 280.7
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 21:02:01.361259",
-   "oi": 15957.0,
-   "ltp": 144125.0
+   "time": "2026-11-05 21:17:02.025208",
+   "oi": 15919.0,
+   "ltp": 144155.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 21:02:01.361259",
-   "oi": 510000.0,
-   "ltp": 186630.0
+   "time": "2026-11-05 21:17:02.025208",
+   "oi": 509550.0,
+   "ltp": 186500.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -762,19 +762,19 @@
    "ltp": 57830.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 21:02:01.361259",
-   "oi": 17080000.0,
-   "ltp": 1356.0
+   "time": "2026-11-05 21:17:02.025208",
+   "oi": 17195000.0,
+   "ltp": 1353.4
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 21:02:01.361259",
-   "oi": 8000.0,
-   "ltp": 413.95
+   "time": "2026-11-05 21:17:02.025208",
+   "oi": 7945.0,
+   "ltp": 413.25
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 21:02:01.361259",
-   "oi": 20250.0,
-   "ltp": 330.2
+   "time": "2026-11-05 21:17:02.025208",
+   "oi": 20245.0,
+   "ltp": 329.5
   }
  },
  "bo_active": [
@@ -1723,14 +1723,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 280.0,
-   "uat": "2026-11-05 21:02:01.361259",
+   "ulast": 280.8,
+   "uat": "2026-11-05 21:17:02.025208",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 20:45:00",
+   "excursion_upd": "2026-11-05 21:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1941,12 +1941,12 @@
    "mfe_R": 0.092,
    "mae_R": -0.338,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 20:45:00",
+   "excursion_upd": "2026-11-05 21:00:00",
    "stop_touched": false,
    "uhi": 144959.0,
    "ulo": 144125.0,
-   "ulast": 144125.0,
-   "uat": "2026-11-05 21:02:01.361259"
+   "ulast": 144155.0,
+   "uat": "2026-11-05 21:17:02.025208"
   }
  ],
  "candle_setups": {
@@ -1975,10 +1975,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 20:45:00",
+    "last_bar": "2026-11-05 21:00:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 280.8,
+    "last_px": 281.0,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2255,14 +2255,14 @@
     ],
     "sr": "\u2022 Resistance : nearest 147,520.00 (swing low) at 0.8R",
     "oi_note": "16,028 (-0.18% in 15 min, price -172.00) \u2192 flat \u2013 no clear buildup",
-    "last_px": 144107.0,
+    "last_px": 144307.0,
     "stop": 141545.918,
     "entry": 144959.0,
     "entry_time": "2026-11-05 18:00:00",
     "risk": 3413.082,
     "oi_entry": "15,957 (-0.01% in 15 min, price -253.00) \u2192 flat \u2013 no clear buildup",
     "n": 1,
-    "last_bar": "2026-11-05 20:45:00"
+    "last_bar": "2026-11-05 21:00:00"
    }
   ],
   "closed": [
@@ -2813,15 +2813,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 81,
-  "started": "2026-11-05 21:02:01.361259",
-  "finished": "2026-11-05 21:02:09.136004",
-  "seconds": 7,
+  "seq": 82,
+  "started": "2026-11-05 21:17:02.025208",
+  "finished": "2026-11-05 21:17:08.860873",
+  "seconds": 6,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 2 ok 2 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 2,
+   "ok": 2,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -2830,7 +2830,7 @@
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
