@@ -703,24 +703,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 856400.0,
-   "ltp": 8216.0
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 853600.0,
+   "ltp": 8218.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 66907500.0,
-   "ltp": 279.4
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 67046250.0,
+   "ltp": 279.3
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 15985.0,
-   "ltp": 145180.0
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 16021.0,
+   "ltp": 144985.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 504510.0,
-   "ltp": 188743.0
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 505230.0,
+   "ltp": 188876.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -748,29 +748,29 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 13023985.0,
-   "ltp": 24457.0
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 13014300.0,
+   "ltp": 24475.0
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 2249910.0,
-   "ltp": 57413.2
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 2257500.0,
+   "ltp": 57440.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 16640000.0,
-   "ltp": 1366.5
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 16730000.0,
+   "ltp": 1366.4
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 8100.0,
-   "ltp": 417.3
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 8040.0,
+   "ltp": 417.4
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 12:02:01.241955",
-   "oi": 19830.0,
-   "ltp": 329.45
+   "time": "2026-11-05 12:17:02.282028",
+   "oi": 19790.0,
+   "ltp": 329.75
   }
  },
  "bo_active": [],
@@ -817,7 +817,7 @@
     "key": "TITAN|1dSTK|2026-11-04 09:15:00"
    }
   ],
-  "last_block": "2026-11-04 15:30:00",
+  "last_block": "2026-11-05 12:15:00",
   "rescan_v": 2,
   "dq_holds": {},
   "shadow": [
@@ -1650,7 +1650,7 @@
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 11:45:00",
+   "excursion_upd": "2026-11-05 12:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1753,10 +1753,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 11:45:00",
+    "last_bar": "2026-11-05 12:00:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 279.1,
+    "last_px": 279.5,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2457,24 +2457,24 @@
   "n": 4
  },
  "scan": {
-  "seq": 48,
-  "started": "2026-11-05 12:02:01.241955",
-  "finished": "2026-11-05 12:13:45.934594",
-  "seconds": 704,
-  "status": "RATE_LIMITED",
-  "note": "api requests 60 ok 28 rate-limited 32 skipped 1 (budget 0) failed 4 \u00b7 errors 0 \u00b7 messages 2",
+  "seq": 49,
+  "started": "2026-11-05 12:17:02.282028",
+  "finished": "2026-11-05 12:34:14.386686",
+  "seconds": 1032,
+  "status": "BUDGET_EXHAUSTED",
+  "note": "api requests 46 ok 17 rate-limited 29 skipped 225 (budget 216) failed 4 \u00b7 errors 3 \u00b7 messages 0",
   "api": {
-   "calls": 60,
-   "ok": 28,
-   "rate_limited": 32,
-   "skipped": 1,
-   "deadline_skips": 0,
+   "calls": 46,
+   "ok": 17,
+   "rate_limited": 29,
+   "skipped": 225,
+   "deadline_skips": 216,
    "failed": 4,
    "mem_hits": 0,
    "disk_hits": 0
   },
-  "errors": 0,
-  "messages": 2
+  "errors": 3,
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
