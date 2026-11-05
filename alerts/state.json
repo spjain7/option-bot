@@ -2811,12 +2811,12 @@
   "n": 0
  },
  "scan": {
-  "seq": 93,
-  "started": "2026-11-06 00:02:02.084565",
-  "finished": "2026-11-06 00:02:12.291995",
-  "seconds": 10,
+  "seq": 94,
+  "started": "2026-11-06 00:17:02.413150",
+  "finished": "2026-11-06 00:17:08.647475",
+  "seconds": 6,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -2828,7 +2828,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
