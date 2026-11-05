@@ -707,24 +707,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 16:02:01.691947",
-   "oi": 854100.0,
-   "ltp": 8370.0
+   "time": "2026-11-05 16:32:01.943071",
+   "oi": 860300.0,
+   "ltp": 8374.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 16:02:01.691947",
-   "oi": 68893750.0,
-   "ltp": 279.4
+   "time": "2026-11-05 16:32:01.943071",
+   "oi": 69290000.0,
+   "ltp": 278.0
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 16:02:01.691947",
-   "oi": 15874.0,
-   "ltp": 144950.0
+   "time": "2026-11-05 16:32:01.943071",
+   "oi": 15970.0,
+   "ltp": 145200.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 16:02:01.691947",
-   "oi": 508830.0,
-   "ltp": 188854.0
+   "time": "2026-11-05 16:32:01.943071",
+   "oi": 510270.0,
+   "ltp": 189064.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -762,19 +762,19 @@
    "ltp": 57830.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 16:02:01.691947",
+   "time": "2026-11-05 16:32:01.943071",
    "oi": 16820000.0,
-   "ltp": 1367.35
+   "ltp": 1366.95
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 16:02:01.691947",
-   "oi": 8055.0,
-   "ltp": 417.5
+   "time": "2026-11-05 16:32:01.943071",
+   "oi": 8010.0,
+   "ltp": 417.15
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 16:02:01.691947",
-   "oi": 19770.0,
-   "ltp": 332.15
+   "time": "2026-11-05 16:32:01.943071",
+   "oi": 19810.0,
+   "ltp": 332.0
   }
  },
  "bo_active": [
@@ -1723,14 +1723,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 278.5,
-   "uat": "2026-11-05 16:02:01.691947",
+   "ulast": 278.2,
+   "uat": "2026-11-05 16:32:01.943071",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 15:45:00",
+   "excursion_upd": "2026-11-05 16:15:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1932,10 +1932,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 15:45:00",
+    "last_bar": "2026-11-05 16:15:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 279.4,
+    "last_px": 278.1,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2719,7 +2719,25 @@
     "HYUNDAI",
     "KARURVYSYA",
     "HINDZINC",
-    "FORCEMOT"
+    "FORCEMOT",
+    "EICHERMOT",
+    "BOSCHLTD",
+    "BHARATFORG",
+    "BAJAJFINSV",
+    "ADANIENSOL",
+    "ALKEM",
+    "AMBUJACEM",
+    "BDL",
+    "BIOCON",
+    "CDSL",
+    "CONCOR",
+    "CUMMINSIND",
+    "DLF",
+    "HDFCBANK",
+    "HDFCLIFE",
+    "PFC",
+    "RELIANCE",
+    "SBICARD"
    ],
    "sent": 0
   }
@@ -2740,24 +2758,24 @@
   "n": 4
  },
  "scan": {
-  "seq": 61,
-  "started": "2026-11-05 16:02:01.691947",
-  "finished": "2026-11-05 16:18:59.232717",
-  "seconds": 1017,
+  "seq": 62,
+  "started": "2026-11-05 16:32:01.943071",
+  "finished": "2026-11-05 16:38:35.549694",
+  "seconds": 393,
   "status": "RATE_LIMITED",
-  "note": "api requests 119 ok 78 rate-limited 41 skipped 265 (budget 0) failed 6 \u00b7 errors 0 \u00b7 messages 3",
+  "note": "api requests 32 ok 17 rate-limited 15 skipped 0 (budget 0) failed 3 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 119,
-   "ok": 78,
-   "rate_limited": 41,
-   "skipped": 265,
+   "calls": 32,
+   "ok": 17,
+   "rate_limited": 15,
+   "skipped": 0,
    "deadline_skips": 0,
-   "failed": 6,
+   "failed": 3,
    "mem_hits": 0,
-   "disk_hits": 13
+   "disk_hits": 14
   },
   "errors": 0,
-  "messages": 3
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
