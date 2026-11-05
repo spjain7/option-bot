@@ -676,6 +676,20 @@
     5.499999999999943,
     "measured"
    ]
+  ],
+  "NIFTY23NOV26FUT|2026-11-05": [
+   [
+    "2026-10-28 09:15:00",
+    -79.5,
+    "measured"
+   ]
+  ],
+  "BANKNIFTY23NOV26FUT|2026-11-05": [
+   [
+    "2026-10-28 09:15:00",
+    -452.8000000000029,
+    "measured"
+   ]
   ]
  },
  "day": {
@@ -689,24 +703,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 09:02:02.123850",
-   "oi": 1014900.0,
-   "ltp": 8212.0
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 977700.0,
+   "ltp": 8195.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 09:02:02.123850",
-   "oi": 64863750.0,
-   "ltp": 278.9
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 65498750.0,
+   "ltp": 279.0
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 09:02:02.123850",
-   "oi": 16055.0,
-   "ltp": 145480.0
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 16050.0,
+   "ltp": 145543.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 09:02:02.123850",
-   "oi": 514770.0,
-   "ltp": 190675.0
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 515370.0,
+   "ltp": 190347.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -734,54 +748,34 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-04 15:32:01.454931",
-   "oi": 13822510.0,
-   "ltp": 23970.0
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 13522990.0,
+   "ltp": 24363.1
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-04 15:32:01.454931",
-   "oi": 2247510.0,
-   "ltp": 56017.2
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 2182410.0,
+   "ltp": 56895.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 09:02:02.123850",
-   "oi": 16020000.0,
-   "ltp": 1372.75
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 15955000.0,
+   "ltp": 1372.8
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 09:02:02.123850",
-   "oi": 7905.0,
-   "ltp": 417.75
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 8150.0,
+   "ltp": 418.7
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 09:02:02.123850",
-   "oi": 20105.0,
-   "ltp": 330.6
+   "time": "2026-11-05 09:17:02.062933",
+   "oi": 19995.0,
+   "ltp": 330.7
   }
  },
  "bo_active": [],
  "stk": {
   "active": [
-   {
-    "name": "ZYDUSLIFE",
-    "token": "61751",
-    "expiry": "2026-11-23",
-    "side": "BUY",
-    "entry": 1244.3,
-    "stop": 1177.7,
-    "risk": 66.6,
-    "target": null,
-    "tick": 0.1,
-    "atr": 33.28028881021942,
-    "max_days": 40,
-    "pending": true,
-    "lot": 450,
-    "best": 1252.6,
-    "trailed": false,
-    "n": 2,
-    "last_candle": "2026-11-03 09:15:00",
-    "key": "ZYDUSLIFE|1dSTK|2026-10-30 09:15:00"
-   },
    {
     "name": "GLENMARK",
     "token": "61570",
@@ -794,7 +788,7 @@
     "tick": 0.1,
     "atr": 71.60764903811065,
     "max_days": 40,
-    "pending": true,
+    "pending": false,
     "lot": 375,
     "best": 2508.7,
     "trailed": false,
@@ -814,7 +808,7 @@
     "tick": 0.1,
     "atr": 101.73962862382066,
     "max_days": 40,
-    "pending": true,
+    "pending": false,
     "lot": 175,
     "best": 4744.0,
     "trailed": false,
@@ -870,8 +864,18 @@
     "risk": 66.6,
     "lot": 450,
     "cost_est": 1.176,
-    "status": "pending",
-    "flags": []
+    "status": "cancelled",
+    "flags": [],
+    "cancel_price": 1182.7,
+    "cancel_time": "2026-11-05 09:17:02.062933",
+    "events": [
+     {
+      "time": "2026-11-05 09:17:02.062933",
+      "status": "cancelled",
+      "cancel_price": 1182.7,
+      "cancel_time": "2026-11-05 09:17:02.062933"
+     }
+    ]
    },
    {
     "key": "PETRONET|1dSTK|2026-11-02 09:15:00",
@@ -916,8 +920,22 @@
     "risk": 143.3,
     "lot": 375,
     "cost_est": 2.2854,
-    "status": "pending",
-    "flags": []
+    "status": "active",
+    "flags": [],
+    "entry_fill": 2510.0,
+    "entry_time": "2026-11-05 09:17:02.062933",
+    "entry_quote_time": "2026-11-05 09:26:53",
+    "entry_basis": "first scan LTP after the open \u2013 not a broker fill",
+    "events": [
+     {
+      "time": "2026-11-05 09:17:02.062933",
+      "status": "active",
+      "entry_fill": 2510.0,
+      "entry_time": "2026-11-05 09:17:02.062933",
+      "entry_quote_time": "2026-11-05 09:26:53",
+      "entry_basis": "first scan LTP after the open \u2013 not a broker fill"
+     }
+    ]
    },
    {
     "key": "TITAN|1dSTK|2026-11-04 09:15:00",
@@ -934,8 +952,22 @@
     "risk": 203.5,
     "lot": 175,
     "cost_est": 4.3535,
-    "status": "pending",
-    "flags": []
+    "status": "active",
+    "flags": [],
+    "entry_fill": 4783.1,
+    "entry_time": "2026-11-05 09:17:02.062933",
+    "entry_quote_time": "2026-11-05 09:26:53",
+    "entry_basis": "first scan LTP after the open \u2013 not a broker fill",
+    "events": [
+     {
+      "time": "2026-11-05 09:17:02.062933",
+      "status": "active",
+      "entry_fill": 4783.1,
+      "entry_time": "2026-11-05 09:17:02.062933",
+      "entry_quote_time": "2026-11-05 09:26:53",
+      "entry_basis": "first scan LTP after the open \u2013 not a broker fill"
+     }
+    ]
    }
   ]
  },
@@ -1445,12 +1477,15 @@
    "lot": 450,
    "mult": 450,
    "time": "2026-10-30 16:17:02.135970",
-   "status": "OPEN",
+   "status": "CLOSED",
    "date": "2026-10-30",
    "uhi": 1272.8,
    "ulo": 1191.1,
    "ulast": 1201.6,
-   "uat": "2026-11-04 12:17:02.151787"
+   "uat": "2026-11-04 12:17:02.151787",
+   "exit": 1244.3,
+   "note": "cancelled \u2013 gap",
+   "closed": "2026-11-05 09:17:02.062933"
   },
   {
    "key": "ZYDUSLIFE|1dSTK|2026-10-30 09:15:00|OPT",
@@ -1470,12 +1505,15 @@
    "time": "2026-10-30 16:17:02.135970",
    "und_entry": 1244.3,
    "und_side": "BUY",
-   "status": "OPEN",
+   "status": "CLOSED",
    "date": "2026-10-30",
    "uhi": 1272.8,
    "ulo": 1191.1,
    "ulast": 1201.6,
-   "uat": "2026-11-04 12:17:02.151787"
+   "uat": "2026-11-04 12:17:02.151787",
+   "exit": 44.35,
+   "note": "cancelled \u2013 gap",
+   "closed": "2026-11-05 09:17:02.062933"
   },
   {
    "key": "GOLD|3h|2026-10-30 09:00:00",
@@ -1605,14 +1643,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 279.0,
-   "uat": "2026-11-05 09:02:02.123850",
+   "ulast": 278.8,
+   "uat": "2026-11-05 09:17:02.062933",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 08:45:00",
+   "excursion_upd": "2026-11-05 09:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1659,7 +1697,11 @@
    "mult": 375,
    "time": "2026-11-04 15:32:01.454931",
    "status": "OPEN",
-   "date": "2026-11-04"
+   "date": "2026-11-04",
+   "uhi": 2555.4,
+   "ulo": 2473.5,
+   "ulast": 2509.9,
+   "uat": "2026-11-05 09:17:02.062933"
   },
   {
    "key": "TITAN|1dSTK|2026-11-04 09:15:00",
@@ -1678,7 +1720,11 @@
    "mult": 175,
    "time": "2026-11-04 15:32:01.454931",
    "status": "OPEN",
-   "date": "2026-11-04"
+   "date": "2026-11-04",
+   "uhi": 4838.5,
+   "ulo": 4744.0,
+   "ulast": 4783.1,
+   "uat": "2026-11-05 09:17:02.062933"
   }
  ],
  "candle_setups": {
@@ -1707,10 +1753,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 08:45:00",
+    "last_bar": "2026-11-05 09:00:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 282.3,
+    "last_px": 279.1,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2406,24 +2452,24 @@
   "n": 4
  },
  "scan": {
-  "seq": 39,
-  "started": "2026-11-05 09:02:02.123850",
-  "finished": "2026-11-05 09:03:01.095159",
-  "seconds": 58,
-  "status": "SUCCESS",
-  "note": "api requests 25 ok 23 rate-limited 2 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "seq": 40,
+  "started": "2026-11-05 09:17:02.062933",
+  "finished": "2026-11-05 09:27:00.152387",
+  "seconds": 598,
+  "status": "RATE_LIMITED",
+  "note": "api requests 65 ok 30 rate-limited 34 skipped 0 (budget 0) failed 5 \u00b7 errors 0 \u00b7 messages 3",
   "api": {
-   "calls": 25,
-   "ok": 23,
-   "rate_limited": 2,
+   "calls": 65,
+   "ok": 30,
+   "rate_limited": 34,
    "skipped": 0,
    "deadline_skips": 0,
-   "failed": 0,
-   "mem_hits": 0,
+   "failed": 5,
+   "mem_hits": 1,
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 1
+  "messages": 3
  },
  "paper": {
   "E_BUY_v1": {
