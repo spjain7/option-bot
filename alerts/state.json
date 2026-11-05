@@ -707,24 +707,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 17:02:01.763731",
-   "oi": 875400.0,
-   "ltp": 8409.0
+   "time": "2026-11-05 17:17:02.502811",
+   "oi": 863200.0,
+   "ltp": 8407.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 17:02:01.763731",
-   "oi": 68898750.0,
-   "ltp": 278.9
+   "time": "2026-11-05 17:17:02.502811",
+   "oi": 68931250.0,
+   "ltp": 279.0
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 17:02:01.763731",
-   "oi": 15994.0,
-   "ltp": 145281.0
+   "time": "2026-11-05 17:17:02.502811",
+   "oi": 16043.0,
+   "ltp": 145426.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 17:02:01.763731",
-   "oi": 512010.0,
-   "ltp": 189100.0
+   "time": "2026-11-05 17:17:02.502811",
+   "oi": 513960.0,
+   "ltp": 189401.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -762,19 +762,19 @@
    "ltp": 57830.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 17:02:01.763731",
-   "oi": 16805000.0,
-   "ltp": 1367.0
+   "time": "2026-11-05 17:17:02.502811",
+   "oi": 16777500.0,
+   "ltp": 1369.0
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 17:02:01.763731",
-   "oi": 8005.0,
-   "ltp": 417.15
+   "time": "2026-11-05 17:17:02.502811",
+   "oi": 8035.0,
+   "ltp": 417.3
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 17:02:01.763731",
+   "time": "2026-11-05 17:17:02.502811",
    "oi": 19790.0,
-   "ltp": 332.2
+   "ltp": 332.0
   }
  },
  "bo_active": [
@@ -1723,14 +1723,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 279.2,
-   "uat": "2026-11-05 17:02:01.763731",
+   "ulast": 279.0,
+   "uat": "2026-11-05 17:17:02.502811",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 16:45:00",
+   "excursion_upd": "2026-11-05 17:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1932,10 +1932,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 16:45:00",
+    "last_bar": "2026-11-05 17:00:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 278.9,
+    "last_px": 279.3,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2819,7 +2819,77 @@
     "JINDALSTEL",
     "JSWENERGY",
     "KAYNES",
-    "MCX"
+    "MCX",
+    "ANGELONE",
+    "ENRIN",
+    "NESTLEIND",
+    "ETERNAL",
+    "DABUR",
+    "ASTRAL",
+    "COCHINSHIP",
+    "BPCL",
+    "AXISBANK",
+    "AMBER",
+    "ABB",
+    "NATIONALUM",
+    "NTPC",
+    "OBEROIRLTY",
+    "OFSS",
+    "ONGC",
+    "POLYCAB",
+    "POWERINDIA",
+    "RECLTD",
+    "SBIN",
+    "SRF",
+    "DMART",
+    "FEDERALBNK",
+    "DATAPATTNS",
+    "GODREJCP",
+    "INDIANB",
+    "INDUSINDBK",
+    "ITC",
+    "JSWSTEEL",
+    "PETRONET",
+    "POWERGRID",
+    "RVNL",
+    "SBILIFE",
+    "ICICIBANK",
+    "SUPREMEIND",
+    "TORNTPHARM",
+    "VEDL",
+    "MFSL",
+    "MARUTI",
+    "LTM",
+    "LT",
+    "JIOFIN",
+    "HAVELLS",
+    "TECHM",
+    "360ONE",
+    "HDFCAMC",
+    "BHEL",
+    "ADANIGREEN",
+    "AUROPHARMA",
+    "HEROMOTOCO",
+    "HINDPETRO",
+    "HINDUNILVR",
+    "INFY",
+    "ADANIPORTS",
+    "LODHA",
+    "POLICYBZR",
+    "SOLARINDS",
+    "SONACOMS",
+    "TATAELXSI",
+    "TMPV",
+    "UNOMINDA",
+    "KOTAKBANK",
+    "ASIANPAINT",
+    "GRASIM",
+    "TVSMOTOR",
+    "COALINDIA",
+    "DIVISLAB",
+    "BHARTIARTL",
+    "COROMANDEL",
+    "SWIGGY"
    ],
    "sent": 0
   }
@@ -2840,19 +2910,19 @@
   "n": 4
  },
  "scan": {
-  "seq": 64,
-  "started": "2026-11-05 17:02:01.763731",
-  "finished": "2026-11-05 17:07:15.191906",
-  "seconds": 313,
-  "status": "RATE_LIMITED",
-  "note": "api requests 54 ok 39 rate-limited 15 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
+  "seq": 65,
+  "started": "2026-11-05 17:17:02.502811",
+  "finished": "2026-11-05 17:22:22.172257",
+  "seconds": 319,
+  "status": "SUCCESS",
+  "note": "api requests 82 ok 72 rate-limited 10 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 54,
-   "ok": 39,
-   "rate_limited": 15,
+   "calls": 82,
+   "ok": 72,
+   "rate_limited": 10,
    "skipped": 0,
    "deadline_skips": 0,
-   "failed": 1,
+   "failed": 0,
    "mem_hits": 0,
    "disk_hits": 14
   },
