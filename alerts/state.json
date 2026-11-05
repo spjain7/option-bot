@@ -703,24 +703,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 902600.0,
-   "ltp": 8226.0
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 892700.0,
+   "ltp": 8210.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 65855000.0,
-   "ltp": 278.3
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 66033750.0,
+   "ltp": 278.5
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 16096.0,
-   "ltp": 145670.0
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 16079.0,
+   "ltp": 145932.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 511020.0,
-   "ltp": 190220.0
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 509250.0,
+   "ltp": 190490.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -748,29 +748,29 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 13275730.0,
-   "ltp": 24427.1
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 13180700.0,
+   "ltp": 24422.3
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 2223600.0,
-   "ltp": 57119.0
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 2235750.0,
+   "ltp": 57140.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 16195000.0,
-   "ltp": 1368.9
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 16207500.0,
+   "ltp": 1372.55
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 8000.0,
-   "ltp": 417.25
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 7985.0,
+   "ltp": 418.2
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 10:02:01.977770",
-   "oi": 19970.0,
-   "ltp": 329.9
+   "time": "2026-11-05 10:17:01.945484",
+   "oi": 19940.0,
+   "ltp": 330.55
   }
  },
  "bo_active": [],
@@ -1643,14 +1643,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 278.6,
-   "uat": "2026-11-05 10:02:01.977770",
+   "ulast": 278.4,
+   "uat": "2026-11-05 10:17:01.945484",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 09:45:00",
+   "excursion_upd": "2026-11-05 10:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1700,8 +1700,8 @@
    "date": "2026-11-04",
    "uhi": 2555.4,
    "ulo": 2473.5,
-   "ulast": 2541.4,
-   "uat": "2026-11-05 10:02:01.977770"
+   "ulast": 2526.9,
+   "uat": "2026-11-05 10:17:01.945484"
   },
   {
    "key": "TITAN|1dSTK|2026-11-04 09:15:00",
@@ -1723,8 +1723,8 @@
    "date": "2026-11-04",
    "uhi": 4865.1,
    "ulo": 4744.0,
-   "ulast": 4835.5,
-   "uat": "2026-11-05 10:02:01.977770"
+   "ulast": 4850.0,
+   "uat": "2026-11-05 10:17:01.945484"
   }
  ],
  "candle_setups": {
@@ -1753,10 +1753,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 09:45:00",
+    "last_bar": "2026-11-05 10:00:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 278.6,
+    "last_px": 278.5,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2454,24 +2454,24 @@
   "n": 4
  },
  "scan": {
-  "seq": 43,
-  "started": "2026-11-05 10:02:01.977770",
-  "finished": "2026-11-05 10:08:04.700809",
-  "seconds": 362,
+  "seq": 44,
+  "started": "2026-11-05 10:17:01.945484",
+  "finished": "2026-11-05 10:31:55.835539",
+  "seconds": 893,
   "status": "RATE_LIMITED",
-  "note": "api requests 49 ok 28 rate-limited 21 skipped 0 (budget 0) failed 2 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 62 ok 26 rate-limited 36 skipped 1 (budget 0) failed 9 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 49,
-   "ok": 28,
-   "rate_limited": 21,
-   "skipped": 0,
+   "calls": 62,
+   "ok": 26,
+   "rate_limited": 36,
+   "skipped": 1,
    "deadline_skips": 0,
-   "failed": 2,
+   "failed": 9,
    "mem_hits": 0,
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
