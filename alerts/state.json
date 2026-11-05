@@ -707,24 +707,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 18:47:01.888599",
-   "oi": 894100.0,
-   "ltp": 8503.0
+   "time": "2026-11-05 19:02:02.372458",
+   "oi": 879000.0,
+   "ltp": 8482.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 18:47:01.888599",
-   "oi": 69691250.0,
-   "ltp": 279.2
+   "time": "2026-11-05 19:02:02.372458",
+   "oi": 68588750.0,
+   "ltp": 280.0
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 18:47:01.888599",
-   "oi": 16041.0,
-   "ltp": 144820.0
+   "time": "2026-11-05 19:02:02.372458",
+   "oi": 16024.0,
+   "ltp": 144505.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 18:47:01.888599",
-   "oi": 514650.0,
-   "ltp": 188242.0
+   "time": "2026-11-05 19:02:02.372458",
+   "oi": 513360.0,
+   "ltp": 188137.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -762,19 +762,19 @@
    "ltp": 57830.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 18:47:01.888599",
-   "oi": 16827500.0,
-   "ltp": 1367.5
+   "time": "2026-11-05 19:02:02.372458",
+   "oi": 16752500.0,
+   "ltp": 1368.3
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 18:47:01.888599",
+   "time": "2026-11-05 19:02:02.372458",
    "oi": 8085.0,
    "ltp": 417.65
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 18:47:01.888599",
-   "oi": 19775.0,
-   "ltp": 332.75
+   "time": "2026-11-05 19:02:02.372458",
+   "oi": 19740.0,
+   "ltp": 332.2
   }
  },
  "bo_active": [
@@ -1723,14 +1723,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 279.2,
-   "uat": "2026-11-05 18:47:01.888599",
+   "ulast": 279.9,
+   "uat": "2026-11-05 19:02:02.372458",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 18:30:00",
+   "excursion_upd": "2026-11-05 18:45:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1932,10 +1932,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 18:30:00",
+    "last_bar": "2026-11-05 18:45:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 278.6,
+    "last_px": 280.1,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2212,7 +2212,7 @@
     ],
     "sr": "\u2022 Resistance : nearest 147,520.00 (swing low) at 0.8R",
     "oi_note": "16,028 (-0.18% in 15 min, price -172.00) \u2192 flat \u2013 no clear buildup",
-    "last_px": 144876.0
+    "last_px": 144670.0
    }
   ],
   "closed": [
@@ -2746,7 +2746,9 @@
   "stk_block": "2026-11-05 15:30"
  },
  "news": {
-  "sent_ev": [],
+  "sent_ev": [
+   "NG_STORAGE|2026-11-05 21:00"
+  ],
   "seen": [
    "treasurysecretarybessentsaystheworldcanlivewithoutiranianoilastrumpweighsfurther",
    "omansmdoawards600millionmazooncoppercontractminingcomau",
@@ -2761,15 +2763,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 71,
-  "started": "2026-11-05 18:47:01.888599",
-  "finished": "2026-11-05 18:47:10.515641",
-  "seconds": 8,
+  "seq": 72,
+  "started": "2026-11-05 19:02:02.372458",
+  "finished": "2026-11-05 19:02:13.901267",
+  "seconds": 11,
   "status": "SUCCESS",
-  "note": "api requests 2 ok 2 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 2,
-   "ok": 2,
+   "calls": 3,
+   "ok": 3,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -2778,7 +2780,7 @@
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
