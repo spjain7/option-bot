@@ -707,24 +707,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 16:47:01.628933",
-   "oi": 864000.0,
-   "ltp": 8395.0
+   "time": "2026-11-05 17:02:01.763731",
+   "oi": 875400.0,
+   "ltp": 8409.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 16:47:01.628933",
-   "oi": 68881250.0,
-   "ltp": 279.1
+   "time": "2026-11-05 17:02:01.763731",
+   "oi": 68898750.0,
+   "ltp": 278.9
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 16:47:01.628933",
-   "oi": 15988.0,
-   "ltp": 145247.0
+   "time": "2026-11-05 17:02:01.763731",
+   "oi": 15994.0,
+   "ltp": 145281.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 16:47:01.628933",
-   "oi": 510000.0,
-   "ltp": 189040.0
+   "time": "2026-11-05 17:02:01.763731",
+   "oi": 512010.0,
+   "ltp": 189100.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -762,19 +762,19 @@
    "ltp": 57830.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 16:47:01.628933",
-   "oi": 16825000.0,
-   "ltp": 1366.9
+   "time": "2026-11-05 17:02:01.763731",
+   "oi": 16805000.0,
+   "ltp": 1367.0
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 16:47:01.628933",
-   "oi": 8010.0,
-   "ltp": 417.0
+   "time": "2026-11-05 17:02:01.763731",
+   "oi": 8005.0,
+   "ltp": 417.15
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 16:47:01.628933",
-   "oi": 19735.0,
-   "ltp": 332.5
+   "time": "2026-11-05 17:02:01.763731",
+   "oi": 19790.0,
+   "ltp": 332.2
   }
  },
  "bo_active": [
@@ -1723,14 +1723,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 278.7,
-   "uat": "2026-11-05 16:47:01.628933",
+   "ulast": 279.2,
+   "uat": "2026-11-05 17:02:01.763731",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 16:30:00",
+   "excursion_upd": "2026-11-05 16:45:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1932,10 +1932,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 16:30:00",
+    "last_bar": "2026-11-05 16:45:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 279.4,
+    "last_px": 278.9,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2698,14 +2698,15 @@
   "open": [],
   "closed": [],
   "last": {
-   "CRUDEOIL|MCX": "2026-11-05 09:00:00",
-   "NATURALGAS|MCX": "2026-11-05 09:00:00",
-   "GOLD|MCX": "2026-11-05 09:00:00",
-   "SILVER|MCX": "2026-11-05 09:00:00",
-   "COPPER|MCX": "2026-11-05 09:00:00",
-   "ZINC|MCX": "2026-11-05 09:00:00",
-   "ALUMINIUM|MCX": "2026-11-05 09:00:00",
-   "CUMMINSIND|NFO": "2026-11-05 09:15:00"
+   "CRUDEOIL|MCX": "2026-11-05 13:00:00",
+   "NATURALGAS|MCX": "2026-11-05 13:00:00",
+   "GOLD|MCX": "2026-11-05 13:00:00",
+   "SILVER|MCX": "2026-11-05 13:00:00",
+   "COPPER|MCX": "2026-11-05 13:00:00",
+   "ZINC|MCX": "2026-11-05 13:00:00",
+   "ALUMINIUM|MCX": "2026-11-05 13:00:00",
+   "CUMMINSIND|NFO": "2026-11-05 09:15:00",
+   "PIIND|NFO": "2026-11-05 13:15:00"
   },
   "stk_block": "2026-11-05 13:15",
   "stk_progress": {
@@ -2783,7 +2784,42 @@
     "DELHIVERY",
     "NAVINFLUOR",
     "CHOLAFIN",
-    "CAMS"
+    "CAMS",
+    "BRITANNIA",
+    "BEL",
+    "AUBANK",
+    "ATHERENERG",
+    "APOLLOHOSP",
+    "ADANIENT",
+    "VOLTAS",
+    "GODFRYPHLP",
+    "SYRMA",
+    "SHREECEM",
+    "MPHASIS",
+    "PAGEIND",
+    "PHOENIXLTD",
+    "PIDILITIND",
+    "PIIND",
+    "PNBHOUSING",
+    "PREMIERENE",
+    "SHRIRAMFIN",
+    "TRENT",
+    "UNITDSPR",
+    "TIINDIA",
+    "TCS",
+    "PATANJALI",
+    "TATAPOWER",
+    "BAJAJ-AUTO",
+    "BLUESTARCO",
+    "COLPAL",
+    "FORTIS",
+    "GLENMARK",
+    "GODREJPROP",
+    "HINDALCO",
+    "JINDALSTEL",
+    "JSWENERGY",
+    "KAYNES",
+    "MCX"
    ],
    "sent": 0
   }
@@ -2804,19 +2840,19 @@
   "n": 4
  },
  "scan": {
-  "seq": 63,
-  "started": "2026-11-05 16:47:01.628933",
-  "finished": "2026-11-05 16:52:11.483339",
-  "seconds": 309,
-  "status": "SUCCESS",
-  "note": "api requests 62 ok 48 rate-limited 14 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "seq": 64,
+  "started": "2026-11-05 17:02:01.763731",
+  "finished": "2026-11-05 17:07:15.191906",
+  "seconds": 313,
+  "status": "RATE_LIMITED",
+  "note": "api requests 54 ok 39 rate-limited 15 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 62,
-   "ok": 48,
-   "rate_limited": 14,
+   "calls": 54,
+   "ok": 39,
+   "rate_limited": 15,
    "skipped": 0,
    "deadline_skips": 0,
-   "failed": 0,
+   "failed": 1,
    "mem_hits": 0,
    "disk_hits": 14
   },
