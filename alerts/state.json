@@ -2412,15 +2412,16 @@
    "oilnewscrudeoilfuturesfallasiranpeacetalkspressurewarpremiumfxempire",
    "usoilpricescrashbelow90asjdvanceblamesiranwarforgopelectionlosswtifallsto8892bre",
    "naturalgaswtioilbrentoilforecastsoildives10asschumersaysdemocratswouldendthewari",
-   "oilfallsastradersparseiranwaroutlookaftermidtermsbloombergcom"
+   "oilfallsastradersparseiranwaroutlookaftermidtermsbloombergcom",
+   "oilpricesfallbelow94astrumpsmidtermsetbackraiseshopesofiranwardeescalationnews18"
   ],
   "day": "2026-11-05",
-  "n": 3
+  "n": 4
  },
  "scan": {
-  "seq": 36,
-  "started": "2026-11-05 00:19:29.884176",
-  "finished": "2026-11-05 00:19:39.473346",
+  "seq": 37,
+  "started": "2026-11-05 08:42:13.270460",
+  "finished": "2026-11-05 08:42:22.409313",
   "seconds": 9,
   "status": "SUCCESS",
   "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
