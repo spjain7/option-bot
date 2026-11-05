@@ -705,24 +705,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
-   "oi": 850200.0,
-   "ltp": 8307.0
+   "time": "2026-11-05 13:32:02.567538",
+   "oi": 845500.0,
+   "ltp": 8318.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
-   "oi": 67286250.0,
-   "ltp": 279.9
+   "time": "2026-11-05 13:32:02.567538",
+   "oi": 67402500.0,
+   "ltp": 280.2
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
-   "oi": 15954.0,
-   "ltp": 144794.0
+   "time": "2026-11-05 13:32:02.567538",
+   "oi": 15944.0,
+   "ltp": 144845.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
-   "oi": 505080.0,
-   "ltp": 187871.0
+   "time": "2026-11-05 13:32:02.567538",
+   "oi": 505260.0,
+   "ltp": 188010.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -750,29 +750,29 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
-   "oi": 13028080.0,
-   "ltp": 24523.0
+   "time": "2026-11-05 13:32:02.567538",
+   "oi": 12986220.0,
+   "ltp": 24540.0
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
-   "oi": 2316510.0,
-   "ltp": 57534.2
+   "time": "2026-11-05 13:32:02.567538",
+   "oi": 2293050.0,
+   "ltp": 57679.6
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
+   "time": "2026-11-05 13:32:02.567538",
    "oi": 16655000.0,
-   "ltp": 1363.95
+   "ltp": 1361.15
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
-   "oi": 8045.0,
-   "ltp": 416.8
+   "time": "2026-11-05 13:32:02.567538",
+   "oi": 8040.0,
+   "ltp": 416.4
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-05 13:17:02.210255",
+   "time": "2026-11-05 13:32:02.567538",
    "oi": 19795.0,
-   "ltp": 329.15
+   "ltp": 329.1
   }
  },
  "bo_active": [
@@ -789,7 +789,7 @@
    "n": 0,
    "last_candle": "2026-11-05 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-05 12:47:01.924162",
+   "checked": "2026-11-05 13:15:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|3h|2026-11-05 09:15:00",
    "token": "61471"
@@ -807,7 +807,7 @@
    "n": 0,
    "last_candle": "2026-11-05 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-05 12:47:01.924162",
+   "checked": "2026-11-05 13:15:00",
    "contract": "BANKNIFTY23NOV26FUT",
    "key": "BANKNIFTY|3h|2026-11-05 09:15:00",
    "token": "61466"
@@ -1682,14 +1682,14 @@
    "date": "2026-11-02",
    "uhi": 283.6,
    "ulo": 271.2,
-   "ulast": 280.2,
-   "uat": "2026-11-05 13:17:02.210255",
+   "ulast": 280.4,
+   "uat": "2026-11-05 13:32:02.567538",
    "best_px": 283.7,
    "worst_px": 271.2,
    "mfe_R": 0.378,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 13:00:00",
+   "excursion_upd": "2026-11-05 13:15:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1739,8 +1739,8 @@
    "date": "2026-11-04",
    "uhi": 2555.4,
    "ulo": 2470.7,
-   "ulast": 2510.6,
-   "uat": "2026-11-05 13:17:02.210255"
+   "ulast": 2531.1,
+   "uat": "2026-11-05 13:32:02.567538"
   },
   {
    "key": "TITAN|1dSTK|2026-11-04 09:15:00",
@@ -1762,8 +1762,8 @@
    "date": "2026-11-04",
    "uhi": 4865.1,
    "ulo": 4744.0,
-   "ulast": 4820.5,
-   "uat": "2026-11-05 13:17:02.210255"
+   "ulast": 4829.0,
+   "uat": "2026-11-05 13:32:02.567538"
   },
   {
    "key": "NIFTY|3h|2026-11-05 09:15:00",
@@ -1798,10 +1798,18 @@
    ],
    "status": "OPEN",
    "date": "2026-11-05",
-   "uhi": 24536.8,
+   "uhi": 24592.9,
    "ulo": 24478.7,
-   "ulast": 24536.8,
-   "uat": "2026-11-05 13:17:02.210255"
+   "ulast": 24592.9,
+   "uat": "2026-11-05 13:32:02.567538",
+   "best_px": 24538.8,
+   "worst_px": 24491.0,
+   "mfe_R": 0.124,
+   "mae_R": 0.025,
+   "excursion_measure": "15-min candle highs/lows",
+   "excursion_upd": "2026-11-05 13:15:00",
+   "t1_hit": false,
+   "stop_touched": false
   },
   {
    "key": "BANKNIFTY|3h|2026-11-05 09:15:00",
@@ -1836,10 +1844,18 @@
    ],
    "status": "OPEN",
    "date": "2026-11-05",
-   "uhi": 57708.4,
+   "uhi": 57900.0,
    "ulo": 57451.6,
-   "ulast": 57708.4,
-   "uat": "2026-11-05 13:17:02.210255"
+   "ulast": 57900.0,
+   "uat": "2026-11-05 13:32:02.567538",
+   "best_px": 57734.2,
+   "worst_px": 57416.6,
+   "mfe_R": 0.254,
+   "mae_R": -0.031,
+   "excursion_measure": "15-min candle highs/lows",
+   "excursion_upd": "2026-11-05 13:15:00",
+   "t1_hit": false,
+   "stop_touched": false
   }
  ],
  "candle_setups": {
@@ -1868,10 +1884,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-05 13:00:00",
+    "last_bar": "2026-11-05 13:15:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 280.0,
+    "last_px": 280.2,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2552,12 +2568,21 @@
    "SILVER|MCX": "2026-11-05 09:00:00",
    "COPPER|MCX": "2026-11-05 09:00:00",
    "ZINC|MCX": "2026-11-05 09:00:00",
-   "ALUMINIUM|MCX": "2026-11-05 08:00:00"
+   "ALUMINIUM|MCX": "2026-11-05 09:00:00"
   },
   "stk_block": "2026-11-04 15:30",
   "stk_progress": {
    "blk": "2026-11-05 13:15",
-   "done": [],
+   "done": [
+    "ZYDUSLIFE",
+    "MARICO",
+    "KPITTECH",
+    "KALYANKJIL",
+    "INDIGO",
+    "HYUNDAI",
+    "KARURVYSYA",
+    "HINDZINC"
+   ],
    "sent": 0
   }
  },
@@ -2577,23 +2602,23 @@
   "n": 4
  },
  "scan": {
-  "seq": 52,
-  "started": "2026-11-05 13:17:02.210255",
-  "finished": "2026-11-05 13:25:09.954507",
-  "seconds": 487,
+  "seq": 53,
+  "started": "2026-11-05 13:32:02.567538",
+  "finished": "2026-11-05 13:42:15.444510",
+  "seconds": 612,
   "status": "RATE_LIMITED",
-  "note": "api requests 45 ok 20 rate-limited 25 skipped 5 (budget 0) failed 5 \u00b7 errors 5 \u00b7 messages 0",
+  "note": "api requests 59 ok 33 rate-limited 26 skipped 2 (budget 0) failed 2 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 45,
-   "ok": 20,
-   "rate_limited": 25,
-   "skipped": 5,
+   "calls": 59,
+   "ok": 33,
+   "rate_limited": 26,
+   "skipped": 2,
    "deadline_skips": 0,
-   "failed": 5,
+   "failed": 2,
    "mem_hits": 0,
    "disk_hits": 0
   },
-  "errors": 5,
+  "errors": 0,
   "messages": 0
  },
  "paper": {
