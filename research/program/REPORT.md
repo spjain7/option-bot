@@ -646,3 +646,11 @@ STOCKS SELL in a daily downtrend (17): 3h BO N5 vol ≥ 2x 1.5ATR/2R 1,335 trade
 pull-back SELL 3,101 +0.11R. NSE index daily N5 breakdown in downtrend SELL 98 trades +0.29R (q 0.098).
 Not robust anywhere: MCX SELL, stock BUY (stock daily BO BUY −0.07…+0.04R), RSI2, Bollinger squeeze, liquidity trendline, stop-hunt.
 Caveat: 2022-26 was a metals bull market – MCX BUY results partly reflect it.
+
+## WKMO-001 (6-Nov-2026) – weekly and monthly breakouts on 20 years (MCX 2006-26, NIFTY/BANKNIFTY futures 2011-26)
+Script `research/program/wkmo.py`, `results/wkmo_summary.csv`. 2x costs; periods 2006-12 / 2013-19 / 2020-26.
+MCX weekly 20-week BUY, 2 ATR / 3R: 146 trades (7.6 a year, all 7 commodities), 49 % win, +0.64R (+0.70 / +0.24 / +0.85).
+MCX monthly (close above last month's high) BUY 2 ATR / 3R: 104 trades, 62 %, +0.68R, 7/7 commodities positive.
+MCX weekly 52-week BUY 2 ATR / 3R: 106 trades, 55 %, +0.75R. Live weekly rule (20-week, 3 ATR / 2R): BUY 137, 59 %, +0.52R ✓;
+SELL 92, 35 %, −0.23R ✗. Index: monthly BUY 2ATR/3R 29 trades +0.45R; weekly 4/10-week BUY +0.38…+0.45R; live-style monthly-level
+BUY (daily close above last month's high) 175 trades +0.37R. Every SELL version loses over 20 years (MCX and index).
