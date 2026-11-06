@@ -74,7 +74,7 @@ def test_mcx_daily_logged_only_prepared():
     assert not ST_.is_live("BO_1d_BUY_MCX")
     assert ("1d", "BUY") not in ST_.shadow_bo() and ST_.is_live("BO_1d_BUY")
     src = (Path(__file__).resolve().parents[1] / "engine.py").read_text()
-    assert 'ex == "MCX" and tf == "1d" and sig["side"] == "BUY" and not ST.is_live("BO_1d_BUY_MCX")' in src
+    assert 'mcx_d1 and not ST.is_live("BO_1d_BUY_MCX")' in src          # behaviour covered by test_mcx_daily_logged.py
     print("✅ MCX daily 20-day + ADX routed to logged-only; index daily BUY unchanged")
 
 
