@@ -66,3 +66,17 @@ check("no timeframe given -> old rule (blocked)", ST.conflict(_st, "GOLD", "BUY"
 check("timeframe read from keys", ST.tf_of(dict(key="RB|RB_MCX_2h_MOMO_BUY|GOLD|x")) == "2h" and ST.tf_of(dict(key="TITAN|1dSTK|x")) == "1d"
       and ST.tf_of(dict(key="GOLD|3h|x")) == "3h" and ST.tf_of(dict(key="MCX_HAMMER|NG|x")) == "1d")
 print("conflict-by-timeframe checks passed")
+
+
+def test_mcx_daily_logged_only_prepared():
+    """prep/bo1d-mcx-logged-only: MCX daily 20-day + ADX is logged only; index daily BUY stays live."""
+    from alerts import strategies as ST_
+    assert not ST_.is_live("BO_1d_BUY_MCX")
+    assert ("1d", "BUY") not in ST_.shadow_bo() and ST_.is_live("BO_1d_BUY")
+    src = (Path(__file__).resolve().parents[1] / "engine.py").read_text()
+    assert 'mcx_d1 and not ST.is_live("BO_1d_BUY_MCX")' in src          # behaviour covered by test_mcx_daily_logged.py
+    print("✅ MCX daily 20-day + ADX routed to logged-only; index daily BUY unchanged")
+
+
+if __name__ == "__main__":
+    test_mcx_daily_logged_only_prepared()

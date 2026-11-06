@@ -647,6 +647,9 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                and not p.get("shadow") for p in state["bo_active"]) and tf in ("1d", "1m", "1w", "1M"):
             info[f"bo_{tf}"] += " · already in an open daily/monthly call"; continue
         shadow_only = (tf, sig["side"]) in SHADOW_ONLY
+        mcx_d1 = ex == "MCX" and tf == "1d" and sig["side"] == "BUY" and not sig.get("pattern")
+        if mcx_d1 and not ST.is_live("BO_1d_BUY_MCX"):
+            shadow_only = True                                   # ROLLCHECK-001 (owner approved 6-Nov): MCX daily 20-day + ADX -> logged only
         if any(p["name"] == name and p["tf"] == tf and bool(p.get("shadow")) == shadow_only for p in state["bo_active"]):
             info[f"bo_{tf}"] += " · already in an open breakout alert" + (" (log-only)" if shadow_only else ""); continue
         sid = f"{k}|{last}|{sig['side']}" + (f"|{sig['pattern']}" if sig.get("pattern") else "")
@@ -680,7 +683,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             continue
         if shadow_only:                                   # 28-Oct approval: 3h SELL lost money in every test -> log only
             state["bo_active"].append(_shadow_rec(name, tf, sig["side"], plan, last, now, c, key, f"{tf} {sig['side']} (registry SHADOW, not sent)"))
-            info[f"bo_{tf}"] += f" · {tf} {sig['side']} logged only (registry SHADOW: {ST.S[ST.bo_id(tf, sig['side'])][7]})"
+            _sid = "BO_1d_BUY_MCX" if (ex == "MCX" and tf == "1d" and sig["side"] == "BUY" and not sig.get("pattern")) else ST.bo_id(tf, sig["side"])
+            info[f"bo_{tf}"] += f" · {tf} {sig['side']} logged only (registry SHADOW: {ST.S[_sid][7]})"
             print(f"[shadow] {name} {tf} {sig['side']} logged only: entry {plan['entry']} SL {plan['sl']} target {plan['target']}")
             continue
         gi = _intel_grade(name, tf, sig, fr, dd, c15, plan, oi)          # P2/P3 4-Nov: shadow grade (never blocks unless INTEL_BLOCK)
