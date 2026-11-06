@@ -34,3 +34,7 @@ research/program/results/eqfut_trades.csv.gz
 research/program/results/orb_m5_trades.csv.gz
 research/program/results/eq_trades.csv.gz
 research/program/results/orb_eq_trades.csv.gz
+research/program/results/intra_m5_trades.csv.gz
+research/program/results/intra_eq_trades.csv.gz
+research/program/results/eqbhav_trades.csv.gz
+research/data/nse_cm/

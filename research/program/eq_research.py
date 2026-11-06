@@ -16,7 +16,7 @@ Pre-registered (before seeing results):
   Costs: delivery round trip (eq_data.cost_frac) incl. 0.05 % slippage per side; gaps through the stop fill at the open.
   Validation: 4 chronological blocks; PASS = positive in every block, BH q < 0.10 over all combinations, n >= 300,
   >= 55 % of stocks with trades positive. Universe point-in-time by trailing turnover (eq_data.universe_mask).
-python research/program/eq_research.py [eq|fut]   (fut = smoke test on the 2022-26 stock-futures daily data)"""
+python research/program/eq_research.py [bhav|eq|fut]   (bhav = NSE cash bhavcopy 2005-26, the final source)   (fut = smoke test on the 2022-26 stock-futures daily data)"""
 import sys
 import time
 from itertools import product
@@ -39,6 +39,19 @@ ENTRIES = ("OPEN", "STOP"); STOPS = ("ATR2", "STRUCT"); EXITS = {"2R": 2, "3R": 
 def load_all(source="eq"):
     """-> dict sym -> daily frame (adjusted), industry map, NIFTY frame, split log"""
     log, D = [], {}
+    if source == "bhav":                          # NSE cash bhavcopy: exact corporate actions, point-in-time incl. delisted
+        from research.program import eq_bhav as EB
+        P = EB.panel(); A = EB.adjusted(P)
+        rep = EB.verify(P, A); print("data check:", rep)
+        uf = ED.EQ / "universe.csv"
+        imap = dict(zip(*pd.read_csv(uf)[["symbol", "industry"]].fillna("").values.T)) if uf.exists() else {}
+        D = {}
+        for k, d in A.items():
+            sym = d.symbol.iat[-1]
+            D[sym] = d[["time", "open", "high", "low", "close", "volume"]].copy()
+        ind = {s: imap.get(s, "") for s in D}
+        nifty = ED.load("NIFTY") if (ED.EQ / "NIFTY_ONE_DAY.csv.gz").exists() else EB.market(A)
+        return D, ind, nifty, log
     if source == "eq":
         u = pd.read_csv(ED.EQ / "universe.csv")
         ind = dict(zip(u.symbol, u.industry.fillna("")))
@@ -114,14 +127,15 @@ def setups(d, cs):
     rng10 = pd.Series(h).rolling(10).max().shift(1).values - pd.Series(l).rolling(10).min().shift(1).values
     out["E_MOMO"] = (np.nan_to_num(rs) >= 0.8) & (c > e50) & (c > e200) & (rng10 <= 3 * a) & (c > hh10) & (vx >= 1.5) & (pos >= 0.75)
     out["F_REV"] = (pd.Series(rsi7).rolling(3).min().values <= 30) & (c > o) & (pos >= 0.5) & (c > e200)
-    out["G_RS"] = (np.nan_to_num(rs) >= 0.9) & (np.nan_to_num(ip) >= 0.7) & (c > hh20) & (vx >= 1.2)
+    ipc = np.where(np.isnan(ip), 1.0, ip)                       # sector unknown (no map / delisted) -> RS condition only
+    out["G_RS"] = (np.nan_to_num(rs) >= 0.9) & (ipc >= 0.7) & (c > hh20) & (vx >= 1.2)
     el = ED.universe_mask(d)
     return {k: np.nan_to_num(m.astype(float)).astype(bool) & el for k, m in out.items()}, a
 
 
 @njit(cache=True)
 def sim(o, h, l, c, atr, idx, entry, win, stop, exitc, maxh, costf):
-    n = len(c); oi = np.empty(len(idx), np.int64); orr = np.empty(len(idx)); k = 0; busy = -1
+    n = len(c); oi = np.empty(len(idx), np.int64); ox = np.empty(len(idx), np.int64); orr = np.empty(len(idx)); k = 0; busy = -1
     for q in range(len(idx)):
         i = idx[q]
         if i <= busy or i + 2 >= n or not atr[i] > 0:
@@ -159,14 +173,15 @@ def sim(o, h, l, c, atr, idx, entry, win, stop, exitc, maxh, costf):
             t += 1
         if not got:
             px = c[n - 1]; t = n - 1
-        oi[k] = i; orr[k] = (px - e - costf * e) / R; k += 1
+        oi[k] = i; ox[k] = t; orr[k] = (px - e - costf * e) / R; k += 1
         busy = t
-    return oi[:k], orr[:k]
+    return oi[:k], orr[:k], ox[:k]
 
 
 def blocks(t, src):
-    cuts = ([np.datetime64("2013-01-01"), np.datetime64("2018-01-01"), np.datetime64("2022-01-01")] if src == "eq"
-            else [np.datetime64("2023-07-01"), np.datetime64("2024-07-01"), np.datetime64("2025-07-01")])
+    cuts = {"eq": [np.datetime64("2013-01-01"), np.datetime64("2018-01-01"), np.datetime64("2022-01-01")],
+            "bhav": [np.datetime64("2011-01-01"), np.datetime64("2016-01-01"), np.datetime64("2021-01-01")]}.get(
+        src, [np.datetime64("2023-07-01"), np.datetime64("2024-07-01"), np.datetime64("2025-07-01")])
     return np.searchsorted(np.array(cuts), t, side="right")
 
 
@@ -180,6 +195,10 @@ def run(src="eq"):
     for s, d in D.items():
         d = d.reset_index(drop=True)
         M, a = setups(d, CS[s])
+        rsv = CS[s].reindex(d.time.values).rs_pct.values
+        vv = d.volume.values.astype(float); vxx = vv / pd.Series(vv).rolling(20).mean().shift(1).values
+        to60 = (d.close * d.volume).rolling(60, min_periods=20).median().shift(1).values
+        ret = d.close.pct_change().values
         o, h, l, c = (d[x].values.astype(np.float64) for x in ("open", "high", "low", "close"))
         a = np.nan_to_num(a).astype(np.float64)
         t = d.time.values
@@ -192,7 +211,7 @@ def run(src="eq"):
                 if len(idx) < 3:
                     continue
                 for en, sp, ex in product(range(2), range(2), EXITS):
-                    oi, rr = sim(o, h, l, c, a, idx, en, 1 if st_ == "A1_PDH" else 3, sp, EXITS[ex], 20, cf)
+                    oi, rr, xx = sim(o, h, l, c, a, idx, en, 1 if st_ == "A1_PDH" else 3, sp, EXITS[ex], 20, cf)
                     if not len(oi):
                         continue
                     b = blocks(t[oi], src)
@@ -200,11 +219,12 @@ def run(src="eq"):
                         x = rr[b == k]
                         if len(x):
                             rows.append((s, st_, rf, ENTRIES[en], STOPS[sp], ex, k, len(x), x.sum(), (x ** 2).sum(), (x > 0).sum(), x[x > 0].sum(), -x[x <= 0].sum()))
-                    if rf == "all" or True:
-                        trades += [(s, st_, rf, ENTRIES[en], STOPS[sp], ex, tt, r) for tt, r in zip(t[oi], rr)]
+                    if rf == "all":                     # regime filters are re-applied by date in eq_top5.py
+                        trades += [(s, st_, rf, ENTRIES[en], STOPS[sp], ex, t[i], t[x_], r, rsv[i], vxx[i], to60[i], a[i] / c[i])
+                                   for i, r, x_ in zip(oi, rr, xx)]
     A = pd.DataFrame(rows, columns=["sym", "strat", "regime", "entry", "stop", "exit", "block", "n", "s", "ss", "w", "gw", "gl"])
-    T = pd.DataFrame(trades, columns=["sym", "strat", "regime", "entry", "stop", "exit", "time", "R"])
-    tag = "eq" if src == "eq" else "eqfut"
+    T = pd.DataFrame(trades, columns=["sym", "strat", "regime", "entry", "stop", "exit", "time", "exit_time", "R", "rs", "volx", "turnover", "atr_pct"])
+    tag = {"eq": "eq", "bhav": "eqbhav"}.get(src, "eqfut")
     T.to_parquet(OUT / f"{tag}_trades.parquet") if False else T.to_csv(OUT / f"{tag}_trades.csv.gz", index=False)
     S = summarise(A)
     S.to_csv(OUT / f"{tag}_summary.csv", index=False)
