@@ -30,3 +30,7 @@ research/program/results/rsix2_agg.csv.gz
 research/program/results/rsix2_by_name.csv.gz
 research/program/results/rsix2_pooled.csv
 research/program/results/structx_agg.csv.gz
+research/program/results/eqfut_trades.csv.gz
+research/program/results/orb_m5_trades.csv.gz
+research/program/results/eq_trades.csv.gz
+research/program/results/orb_eq_trades.csv.gz
