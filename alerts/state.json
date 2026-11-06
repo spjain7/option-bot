@@ -26,7 +26,9 @@
   "BO|COPPER|3h|2026-11-03 12:00:00|SELL",
   "BO|CRUDEOIL|3h|2026-11-04 21:00:00|SELL",
   "BO|NIFTY|3h|2026-11-05 09:15:00|BUY",
-  "BO|BANKNIFTY|3h|2026-11-05 09:15:00|BUY"
+  "BO|BANKNIFTY|3h|2026-11-05 09:15:00|BUY",
+  "BO|NIFTY|1d|2026-11-05 09:15:00|BUY",
+  "BO|BANKNIFTY|1d|2026-11-05 09:15:00|BUY"
  ],
  "active": [],
  "last_eval": {
@@ -69,10 +71,10 @@
   "BO|ZINC|1d": "2026-11-05 09:00:00",
   "BO|ALUMINIUM|3h": "2026-11-05 21:00:00",
   "BO|ALUMINIUM|1d": "2026-11-05 09:00:00",
-  "BO|NIFTY|3h": "2026-11-05 09:15:00",
-  "BO|NIFTY|1d": "2026-11-04 09:15:00",
-  "BO|BANKNIFTY|3h": "2026-11-05 09:15:00",
-  "BO|BANKNIFTY|1d": "2026-11-04 09:15:00",
+  "BO|NIFTY|3h": "2026-11-05 12:15:00",
+  "BO|NIFTY|1d": "2026-11-05 09:15:00",
+  "BO|BANKNIFTY|3h": "2026-11-05 12:15:00",
+  "BO|BANKNIFTY|1d": "2026-11-05 09:15:00",
   "BO|CRUDEOIL|1d": "2026-11-05 09:00:00",
   "BO|GOLD|1d": "2026-11-05 09:00:00",
   "STK|DRREDDY|3h": "2026-10-22 12:15:00",
@@ -625,8 +627,8 @@
   "BO|ZINC|1m": "2026-11-05 09:00:00",
   "BO|ALUMINIUM|1m": "2026-11-05 09:00:00",
   "BO|NIFTY|1w": "2026-10-19 09:15:00",
-  "BO|NIFTY|1m": "2026-11-04 09:15:00",
-  "BO|BANKNIFTY|1m": "2026-11-04 09:15:00",
+  "BO|NIFTY|1m": "2026-11-05 09:15:00",
+  "BO|BANKNIFTY|1m": "2026-11-05 09:15:00",
   "STKOI|ABCAPITAL": "2026-11-05 09:15:00"
  },
  "switches": {
@@ -678,7 +680,15 @@
     5.499999999999943,
     "measured"
    ]
-  ]
+  ],
+  "NIFTY23NOV26FUT|2026-11-06": [
+   [
+    "2026-10-28 09:15:00",
+    -79.5,
+    "measured"
+   ]
+  ],
+  "BANKNIFTY23NOV26FUT|2026-11-06": []
  },
  "day": {
   "date": "2026-11-06",
@@ -691,24 +701,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-06 09:02:01.708338",
-   "oi": 742600.0,
-   "ltp": 8687.0
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 745700.0,
+   "ltp": 8712.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-06 09:02:01.708338",
-   "oi": 66636250.0,
-   "ltp": 283.0
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 66648750.0,
+   "ltp": 283.2
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-06 09:02:01.708338",
-   "oi": 15689.0,
-   "ltp": 142329.0
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 15789.0,
+   "ltp": 142245.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-06 09:02:01.708338",
-   "oi": 500850.0,
-   "ltp": 184600.0
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 502980.0,
+   "ltp": 184165.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -736,29 +746,29 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-05 15:32:02.308046",
-   "oi": 12851930.0,
-   "ltp": 24579.2
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 12679550.0,
+   "ltp": 24450.0
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-05 15:32:02.308046",
-   "oi": 2342010.0,
-   "ltp": 57830.0
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 2278770.0,
+   "ltp": 57585.2
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-06 09:02:01.708338",
-   "oi": 18282500.0,
-   "ltp": 1345.5
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 18510000.0,
+   "ltp": 1345.15
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-06 09:02:01.708338",
-   "oi": 7720.0,
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 7785.0,
    "ltp": 412.4
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-06 09:02:01.708338",
-   "oi": 19850.0,
-   "ltp": 329.0
+   "time": "2026-11-06 09:17:02.015144",
+   "oi": 19905.0,
+   "ltp": 328.7
   }
  },
  "bo_active": [
@@ -770,12 +780,12 @@
    "stop": 23992.9,
    "target": 25450.2,
    "risk": 485.8,
-   "best": 24478.7,
+   "best": 24585.0,
    "trailed": false,
-   "n": 0,
-   "last_candle": "2026-11-05 09:15:00",
+   "n": 1,
+   "last_candle": "2026-11-05 12:15:00",
    "tick": 0.1,
-   "checked": "2026-11-05 15:00:00",
+   "checked": "2026-11-06 09:00:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|3h|2026-11-05 09:15:00",
    "token": "61471"
@@ -788,15 +798,55 @@
    "stop": 56339.8,
    "target": 59675.0,
    "risk": 1111.8,
-   "best": 57451.6,
+   "best": 57757.0,
+   "trailed": false,
+   "n": 1,
+   "last_candle": "2026-11-05 12:15:00",
+   "tick": 0.2,
+   "checked": "2026-11-06 09:00:00",
+   "contract": "BANKNIFTY23NOV26FUT",
+   "key": "BANKNIFTY|3h|2026-11-05 09:15:00",
+   "token": "61466"
+  },
+  {
+   "name": "NIFTY",
+   "tf": "1d",
+   "side": "BUY",
+   "entry": 24450.0,
+   "stop": 23954.2,
+   "target": 25937.2,
+   "risk": 495.8,
+   "best": 24450.0,
+   "trailed": false,
+   "n": 0,
+   "last_candle": "2026-11-05 09:15:00",
+   "tick": 0.1,
+   "checked": "2026-11-06 09:17:02.015144",
+   "contract": "NIFTY23NOV26FUT",
+   "key": "NIFTY|1d|2026-11-05 09:15:00|CONFLICT",
+   "token": "61471",
+   "shadow": "conflict (duplicate of the open BUY call (Positional, 2026-11-05 12:47))",
+   "opened": "2026-11-06 09:17:02.015144"
+  },
+  {
+   "name": "BANKNIFTY",
+   "tf": "1d",
+   "side": "BUY",
+   "entry": 57585.2,
+   "stop": 56419.0,
+   "target": 61083.2,
+   "risk": 1166.2,
+   "best": 57585.2,
    "trailed": false,
    "n": 0,
    "last_candle": "2026-11-05 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-05 15:00:00",
+   "checked": "2026-11-06 09:17:02.015144",
    "contract": "BANKNIFTY23NOV26FUT",
-   "key": "BANKNIFTY|3h|2026-11-05 09:15:00",
-   "token": "61466"
+   "key": "BANKNIFTY|1d|2026-11-05 09:15:00|CONFLICT",
+   "token": "61466",
+   "shadow": "conflict (duplicate of the open BUY call (Positional, 2026-11-05 12:47))",
+   "opened": "2026-11-06 09:17:02.015144"
   }
  ],
  "stk": {
@@ -840,27 +890,6 @@
     "n": 1,
     "last_candle": "2026-11-05 09:15:00",
     "key": "TITAN|1dSTK|2026-11-04 09:15:00"
-   },
-   {
-    "name": "BAJFINANCE",
-    "token": "61507",
-    "expiry": "2026-11-23",
-    "side": "BUY",
-    "entry": 1067.0,
-    "stop": 1007.9,
-    "risk": 59.1,
-    "target": null,
-    "tick": 0.05,
-    "atr": 29.536406071928454,
-    "max_days": 40,
-    "pending": true,
-    "lot": 750,
-    "best": 1067.0,
-    "trailed": false,
-    "n": 0,
-    "last_candle": "2026-11-05 09:15:00",
-    "key": "BAJFINANCE|1dSTK|2026-11-05 09:15:00",
-    "shadow": "STK_OI_BUY"
    }
   ],
   "last_block": "2026-11-05 15:30:00",
@@ -1030,8 +1059,18 @@
     "risk": 59.1,
     "lot": 750,
     "cost_est": 0.9814,
-    "status": "pending",
-    "flags": []
+    "status": "cancelled",
+    "flags": [],
+    "cancel_price": 1047.2,
+    "cancel_time": "2026-11-06 09:17:02.015144",
+    "events": [
+     {
+      "time": "2026-11-06 09:17:02.015144",
+      "status": "cancelled",
+      "cancel_price": 1047.2,
+      "cancel_time": "2026-11-06 09:17:02.015144"
+     }
+    ]
    }
   ]
  },
@@ -1235,39 +1274,39 @@
    "result": "no 20-week breakout"
   },
   "NIFTY|1m": {
-   "candle": "2026-11-04 09:15:00",
-   "close": 23969.9,
+   "candle": "2026-11-05 09:15:00",
+   "close": 24585.0,
    "buy_above": 23261.5,
    "sell_below": 22348.4,
-   "ema200": 24066.67,
-   "vol_x": 1.15,
+   "ema200": 24073.36,
+   "vol_x": 1.55,
    "result": "no monthly breakout with weekly + monthly trend"
   },
   "NIFTY|3h": {
-   "candle": "2026-11-05 09:15:00",
-   "close": 24464.5,
-   "buy_above": 23988.0,
+   "candle": "2026-11-05 12:15:00",
+   "close": 24585.0,
+   "buy_above": 24472.0,
    "sell_below": 22514.5,
-   "ema200": 23650.84,
-   "vol_x": 1.54,
-   "result": "BUY"
+   "ema200": 23660.05,
+   "vol_x": 1.2,
+   "result": "breakout without enough volume"
   },
   "BANKNIFTY|3h": {
-   "candle": "2026-11-05 09:15:00",
-   "close": 57419.0,
-   "buy_above": 56060.4,
-   "sell_below": 53960.0,
-   "ema200": 56651.14,
-   "vol_x": 2.33,
+   "candle": "2026-11-05 12:15:00",
+   "close": 57757.0,
+   "buy_above": 57440.0,
+   "sell_below": 53931.6,
+   "ema200": 56269.17,
+   "vol_x": 1.53,
    "result": "BUY"
   },
   "BANKNIFTY|1m": {
-   "candle": "2026-11-04 09:15:00",
-   "close": 56017.0,
-   "buy_above": 56638.8,
-   "sell_below": 53960.0,
-   "ema200": 56999.58,
-   "vol_x": 1.13,
+   "candle": "2026-11-05 09:15:00",
+   "close": 57757.0,
+   "buy_above": 56186.0,
+   "sell_below": 53931.6,
+   "ema200": 56598.14,
+   "vol_x": 2.18,
    "result": "no monthly breakout with weekly + monthly trend"
   },
   "NATURALGAS|1d": {
@@ -1280,22 +1319,22 @@
    "result": "no breakout (BUY 5-candle high / SELL 20-candle low)"
   },
   "NIFTY|1d": {
-   "candle": "2026-11-04 09:15:00",
-   "close": 23969.9,
-   "buy_above": 23799.8,
+   "candle": "2026-11-05 09:15:00",
+   "close": 24585.0,
+   "buy_above": 23988.0,
    "sell_below": 22348.4,
-   "ema200": 24066.67,
-   "vol_x": 1.15,
-   "result": "breakout without enough volume"
+   "ema200": 24073.36,
+   "vol_x": 1.55,
+   "result": "BUY"
   },
   "BANKNIFTY|1d": {
-   "candle": "2026-11-04 09:15:00",
-   "close": 56017.0,
-   "buy_above": 56638.8,
-   "sell_below": 53960.0,
-   "ema200": 56999.58,
-   "vol_x": 1.13,
-   "result": "no 20-candle breakout"
+   "candle": "2026-11-05 09:15:00",
+   "close": 57757.0,
+   "buy_above": 56186.0,
+   "sell_below": 53931.6,
+   "ema200": 56598.14,
+   "vol_x": 2.18,
+   "result": "BUY"
   },
   "COPPER|1m": {
    "candle": "2026-11-05 09:00:00",
@@ -1707,14 +1746,14 @@
    "date": "2026-11-02",
    "uhi": 284.0,
    "ulo": 271.2,
-   "ulast": 283.1,
-   "uat": "2026-11-06 09:02:01.708338",
-   "best_px": 283.9,
+   "ulast": 282.7,
+   "uat": "2026-11-06 09:17:02.015144",
+   "best_px": 284.0,
    "worst_px": 271.2,
-   "mfe_R": 0.398,
+   "mfe_R": 0.408,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-06 08:45:00",
+   "excursion_upd": "2026-11-06 09:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1763,9 +1802,9 @@
    "status": "OPEN",
    "date": "2026-11-04",
    "uhi": 2555.4,
-   "ulo": 2470.7,
-   "ulast": 2481.1,
-   "uat": "2026-11-05 15:17:03.546780"
+   "ulo": 2390.0,
+   "ulast": 2456.8,
+   "uat": "2026-11-06 09:17:02.015144"
   },
   {
    "key": "TITAN|1dSTK|2026-11-04 09:15:00",
@@ -1785,10 +1824,10 @@
    "time": "2026-11-04 15:32:01.454931",
    "status": "OPEN",
    "date": "2026-11-04",
-   "uhi": 4868.9,
-   "ulo": 4744.0,
-   "ulast": 4853.4,
-   "uat": "2026-11-05 15:17:03.546780",
+   "uhi": 4928.5,
+   "ulo": 4700.0,
+   "ulast": 4910.0,
+   "uat": "2026-11-06 09:17:02.015144",
    "best_px": 4868.9,
    "worst_px": 4750.0,
    "mfe_R": 0.614,
@@ -1831,15 +1870,15 @@
    "status": "OPEN",
    "date": "2026-11-05",
    "uhi": 24621.0,
-   "ulo": 24478.7,
-   "ulast": 24588.6,
-   "uat": "2026-11-05 15:17:03.546780",
+   "ulo": 24380.0,
+   "ulast": 24510.9,
+   "uat": "2026-11-06 09:17:02.015144",
    "best_px": 24641.6,
-   "worst_px": 24491.0,
+   "worst_px": 24450.0,
    "mfe_R": 0.335,
-   "mae_R": 0.025,
+   "mae_R": -0.059,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 15:00:00",
+   "excursion_upd": "2026-11-06 09:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1877,15 +1916,15 @@
    "status": "OPEN",
    "date": "2026-11-05",
    "uhi": 57900.0,
-   "ulo": 57451.6,
-   "ulast": 57879.2,
-   "uat": "2026-11-05 15:17:03.546780",
+   "ulo": 57325.0,
+   "ulast": 57506.6,
+   "uat": "2026-11-06 09:17:02.015144",
    "best_px": 57961.6,
    "worst_px": 57416.6,
    "mfe_R": 0.459,
    "mae_R": -0.031,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-05 15:00:00",
+   "excursion_upd": "2026-11-06 09:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1921,16 +1960,16 @@
    "status": "OPEN",
    "date": "2026-11-05",
    "best_px": 145274.0,
-   "worst_px": 143350.0,
+   "worst_px": 142101.0,
    "mfe_R": 0.092,
-   "mae_R": -0.471,
+   "mae_R": -0.837,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-06 08:45:00",
+   "excursion_upd": "2026-11-06 09:00:00",
    "stop_touched": false,
    "uhi": 144959.0,
    "ulo": 142101.0,
-   "ulast": 142350.0,
-   "uat": "2026-11-06 09:02:01.708338"
+   "ulast": 142160.0,
+   "uat": "2026-11-06 09:17:02.015144"
   }
  ],
  "candle_setups": {
@@ -1959,10 +1998,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-06 08:45:00",
+    "last_bar": "2026-11-06 09:00:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 282.1,
+    "last_px": 283.3,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -2165,7 +2204,8 @@
     ],
     "why_against": [
      "daily bias bullish (against)"
-    ]
+    ],
+    "live": {}
    },
    {
     "setup": "STK_HANGMAN",
@@ -2205,7 +2245,8 @@
     "why_against": [
      "against the bullish trending regime",
      "daily bias bullish (against)"
-    ]
+    ],
+    "live": {}
    },
    {
     "setup": "MCX_EMA1348",
@@ -2239,14 +2280,14 @@
     ],
     "sr": "\u2022 Resistance : nearest 147,520.00 (swing low) at 0.8R",
     "oi_note": "16,028 (-0.18% in 15 min, price -172.00) \u2192 flat \u2013 no clear buildup",
-    "last_px": 144095.0,
+    "last_px": 142155.0,
     "stop": 141545.918,
     "entry": 144959.0,
     "entry_time": "2026-11-05 18:00:00",
     "risk": 3413.082,
     "oi_entry": "15,957 (-0.01% in 15 min, price -253.00) \u2192 flat \u2013 no clear buildup",
     "n": 2,
-    "last_bar": "2026-11-06 08:45:00"
+    "last_bar": "2026-11-06 09:00:00"
    }
   ],
   "closed": [
@@ -2793,26 +2834,27 @@
    "oilfallsastradersparseiranwaroutlookaftermidtermsbloombergcom",
    "oilpricesfallbelow94astrumpsmidtermsetbackraiseshopesofiranwardeescalationnews18",
    "oilpricetodaynovember6crudeoilnears100againasfreshattacksdentpeacetalkhopeswhata",
-   "goldpricehikesinbhubaneswartodaynovember62026check22k24kratesinmajorcitieskaling"
+   "goldpricehikesinbhubaneswartodaynovember62026check22k24kratesinmajorcitieskaling",
+   "crudeoilpricesreboundasbrentmovesbacktowards100urbanacresin"
   ],
   "day": "2026-11-06",
-  "n": 2
+  "n": 3
  },
  "scan": {
-  "seq": 98,
-  "started": "2026-11-06 09:02:01.708338",
-  "finished": "2026-11-06 09:03:21.520386",
-  "seconds": 79,
-  "status": "SUCCESS",
-  "note": "api requests 26 ok 23 rate-limited 3 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "seq": 99,
+  "started": "2026-11-06 09:17:02.015144",
+  "finished": "2026-11-06 09:29:08.076734",
+  "seconds": 726,
+  "status": "RATE_LIMITED",
+  "note": "api requests 54 ok 29 rate-limited 25 skipped 2 (budget 0) failed 2 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 26,
-   "ok": 23,
-   "rate_limited": 3,
-   "skipped": 0,
+   "calls": 54,
+   "ok": 29,
+   "rate_limited": 25,
+   "skipped": 2,
    "deadline_skips": 0,
-   "failed": 0,
-   "mem_hits": 0,
+   "failed": 2,
+   "mem_hits": 2,
    "disk_hits": 0
   },
   "errors": 0,
@@ -2834,6 +2876,10 @@
   {
    "time": "2026-11-05 15:32:02.308046",
    "text": "\ud83d\udccc WHY \u2013 BAJFINANCE BUY\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u2022 Chart   : Daily candle closed 1,067\n\u2022 Setup   : BREAKOUT above 20-day high 996.00\n\u2022 Volume  : 2.5\u00d7 average \u2705\n\u2022 OI      : Long buildup (OI +6.7%, price +7.4%) \u2705\n\u2022 Trend   : above 200-day EMA 993.35 \u2705\n\u2022 RSI/ADX : 69 / 23\n\u2022 Next resistance: 1,074\n\u2022 Exit    : trailing SL updates \u00b7 exit before expiry\n\u2022 Entry   : next open must be within 0.5 ATR of 1,067.00 \u2013 otherwise the call is cancelled at 09:17\nNot investment advice."
+  },
+  {
+   "time": "2026-11-06 09:17:02.015144",
+   "text": "\ud83d\udeab CANCELLED \u2013 BAJFINANCE FUT BUY (entry 1,067.00): opened 0.67 ATR against the entry (price 1,047.20). Do not take this call."
   }
  ]
 }
