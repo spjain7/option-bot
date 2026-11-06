@@ -222,9 +222,9 @@ def summarise(A):
     S["sd"] = np.sqrt(np.maximum(g["ss"] / g["n"] - S["R"] ** 2, 1e-12) * g["n"] / np.maximum(g["n"] - 1, 1))
     sp = A.groupby(K + ["split"])[["n", "s"]].sum(); S = S.join((sp["s"] / sp["n"]).unstack("split"))
     rg = A.assign(tr=A["reg"].str.split("-").str[0]).groupby(K + ["tr"])[["n", "s"]].sum()
-    S = S.join((rg["s"] / rg["n"]).unstack("tr").add_prefix("R_"))
+    S = S.join((rg["s"] / rg["n"]).unstack("tr").add_prefix("R_").drop(columns=["R_na"], errors="ignore"))
     vg = A.assign(v=A["reg"].str.split("-").str[-1]).groupby(K + ["v"])[["n", "s"]].sum()
-    S = S.join((vg["s"] / vg["n"]).unstack("v").add_prefix("R_"))
+    S = S.join((vg["s"] / vg["n"]).unstack("v").add_prefix("V_").drop(columns=["V_na"], errors="ignore"))
     pn = A.groupby(K + ["name"])[["n", "s"]].sum()
     pn = (pn["s"] > 0).groupby(level=list(range(len(K)))).agg(["mean", "size"])
     S["names_pos"], S["names"] = pn["mean"], pn["size"]
@@ -256,7 +256,7 @@ def main():
     pd.set_option("display.width", 260); pd.set_option("display.max_rows", 400)
     print(f"\ncombinations {len(S):,} · trades {int(S.n.sum()):,} · robust {len(R)} · {(time.time() - t0) / 60:.0f} min")
     cols = ["mkt", "tf", "fam", "par", "filt", "side", "exit", "n", "win", "R", "p1", "p2", "p3", "R_up", "R_down", "R_flat",
-            "R_hiV", "R_loV", "names_pos", "q"]
+            "V_hiV", "V_loV", "names_pos", "q"]
     for (mk, tf), g in R.groupby(["mkt", "tf"]):
         print(f"\n=== {mk} {tf}: {len(g)} robust – top 8")
         print(g.head(8)[[c for c in cols if c in g]].round(3).to_string(index=False))

@@ -654,3 +654,14 @@ MCX monthly (close above last month's high) BUY 2 ATR / 3R: 104 trades, 62 %, +0
 MCX weekly 52-week BUY 2 ATR / 3R: 106 trades, 55 %, +0.75R. Live weekly rule (20-week, 3 ATR / 2R): BUY 137, 59 %, +0.52R ✓;
 SELL 92, 35 %, −0.23R ✗. Index: monthly BUY 2ATR/3R 29 trades +0.45R; weekly 4/10-week BUY +0.38…+0.45R; live-style monthly-level
 BUY (daily close above last month's high) 175 trades +0.37R. Every SELL version loses over 20 years (MCX and index).
+
+## SEARCH-V2 (6-Nov-2026) – 14 new families × 15m-1d × regime split (5,292 combinations, 4.28 M trades, BH-FDR)
+Script `research/program/search_v2.py`; `results/search_v2_summary.csv` / `_robust.csv` (64 robust). Robust only on:
+MCX BUY with the daily trend (1h, 2h, 3h, 4h, 1d), stock SELL with the daily trend (2h, 3h, 4h) and stock daily RSI>80 BUY.
+Nothing robust: MCX 15m / 30m (costs ≥ edge), index futures (too few trades per rule), every RSI-reversal threshold
+(30/70 … 15/85), RSI divergence, pin bar, failed breakout, ORB, Supertrend.
+Promoted to the live rulebook (alerts/rulebook.py, parity with this code 24/24):
+MCX 4h EMA13/48 (112, 52 %, +0.62R) · 4h MACD zero (163, 53 %, +0.44R) · 2h momentum candle (309, 42 %, +0.36R) · 2h EMA9/21
+(357, 45 %, +0.31R) · daily breakout retest (121, 55 %, +0.47R) · 1h MACD signal (742, 42 %, +0.21R) · stock 3h MACD zero SELL
+(1,036, 49 %, +0.17R) · stock 3h EMA9/21 SELL (1,274, 49 %, +0.15R) · stock daily RSI>80 BUY (234, 55 %, +0.27R).
+Stock 2h/4h rules not promoted: research candles were not day-anchored, live candles would differ.
