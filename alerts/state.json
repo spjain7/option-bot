@@ -709,14 +709,12 @@
   "BANKNIFTY23NOV26FUT|2026-11-06": []
  },
  "day": {
-  "date": "2026-11-06",
-  "alerts": 3,
+  "date": "2026-11-07",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
+  "startup_sent": false,
   "eod_sent": false,
-  "outcomes": [],
-  "watch1h_sum_NFO": true,
-  "rep_nse": true
+  "outcomes": []
  },
  "history": [],
  "oi": {
@@ -3232,30 +3230,31 @@
    "oilpricetodaynovember6crudeoilnears100againasfreshattacksdentpeacetalkhopeswhata",
    "goldpricehikesinbhubaneswartodaynovember62026check22k24kratesinmajorcitieskaling",
    "crudeoilpricesreboundasbrentmovesbacktowards100urbanacresin",
-   "crudeoilpricesreboundasbrentmovesbacktowards100urbanacres"
+   "crudeoilpricesreboundasbrentmovesbacktowards100urbanacres",
+   "iranwarfuelslouisianalnginterestcomplicateswoodsidedealmakingnaturalgasintellige"
   ],
-  "day": "2026-11-06",
-  "n": 4
+  "day": "2026-11-07",
+  "n": 1
  },
  "scan": {
-  "seq": 151,
-  "started": "2026-11-06 23:47:01.956599",
-  "finished": "2026-11-06 23:47:09.875178",
-  "seconds": 7,
+  "seq": 152,
+  "started": "2026-11-07 00:02:02.433227",
+  "finished": "2026-11-07 00:02:12.845184",
+  "seconds": 10,
   "status": "SUCCESS",
-  "note": "api requests 2 ok 2 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
   "api": {
-   "calls": 2,
-   "ok": 2,
+   "calls": 0,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 14
+   "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 2
  },
  "paper": {
   "E_BUY_v1": {
