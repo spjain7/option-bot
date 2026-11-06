@@ -997,3 +997,15 @@ a usable filter.
 **7 Decision: REJECTED.** The +1.10R is one lucky stream out of 60 (adjusted p 0.34), carried by 3 trades, and the same frozen
 rule earned ≈ 0 over 2½ independent years and loses at 2 × costs. Not eligible for shadow. No production or Telegram change.
 If wanted, it can be re-checked passively in a year from logged data – no new code in the bot.
+
+## OPS-RATE – Angel rate limits on 6-Nov-2026 (market-loop run 42154958592, 03:11–18:47 UTC)
+Per-endpoint counters from `[angel-endpoints]` (added 4-Nov): **getCandleData ok 714 / refused 626 (47 %)**, getOIData
+ok 87 / refused 0. All 626 refusals were candle calls, all between 09:00 and 17:00 IST (03–11 UTC); zero refusals after the
+NSE close, at similar request rates. Our own volume was low – 80 to 330 requests per hour (far below the ~5000/h figure)
+– and the median gap since our previous request at a refusal was 8.8 s, with pacing already at its 4 s maximum. No other
+Angel consumer ran in that window (research-data run was sleeping). So the refusals are **not caused by our burst rate**:
+Angel throttles historical candles for this account during NSE hours regardless of pace. Slowing down further will not fix it.
+WebSocket bars served 870 requests vs 1,530 REST fallbacks (MCX bars often flagged MISMATCH vs REST and REST used).
+Proposed fix (needs owner approval – production change): during NSE hours, take intraday bars from the WebSocket
+collector by default and pre-fetch candle history before 09:00 IST, using REST only for gaps; separately investigate the
+MCX WebSocket mismatch. Not implemented.
