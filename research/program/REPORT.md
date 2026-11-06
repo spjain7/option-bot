@@ -807,3 +807,15 @@ excluded (ISIN INF…); point-in-time liquid universe (60-day median turnover �
 | **H-A monthly relative-strength portfolio** (12-1 month return / 126-day vol, top 10, market filter) | chosen on 2006-15: CAGR 11.0 % vs 5.6 % EW; **2016-26 OOS: CAGR 16.9 %, Sharpe 0.91, maxDD −31 %** vs EW 12.5 % / −44 % and Nifty ~11.8 % incl. dividends / −38 %; 7 of 12 filtered variants beat EW OOS; bad years 2008 −35 %, 2018 −30 % | **implemented** (main `cashstock/`, live-monitoring candidate) |
 | Intraday cash (57 sessions of 5-min, ORB 5/15/30, retest, pull-back, VWAP, RVOL, PDH, trend, failed-breakout) | all negative; ORB gross +0.04R vs cost 0.16R, 67 % false breaks | rejected on this sample; 2-year 5-min data downloading |
 Production/research parity of the ranking: 10/10 names identical in 6 of 7 test months (the 7th differs only by a company rename).
+
+### EQ-MOM-002 robustness of the monthly relative-strength portfolio (rules fixed on 2006-15, nothing re-tuned)
+| check (2016-26 OOS unless noted) | CAGR | Sharpe | maxDD | note |
+|---|---|---|---|---|
+| base | 16.9 % | 0.91 | −31 % | beta 0.41, alpha +12.2 %/yr vs EW universe (11.5 %, DD −44 %) |
+| 2006-15 | 11.0 % | 0.62 | −37 % | EW 5.6 % (DD −72 %), alpha +9.1 %/yr |
+| costs ×2 / ×3 | 15.2 % / 13.6 % | 0.84 / 0.76 | −32 / −34 % | still above EW |
+| rebalance day 5 / day 10 | 19.0 % / 16.3 % | 0.95 / 0.76 | −41 / −42 % | return robust to timing, drawdown not |
+| ≤ 2 names per correlation cluster | 17.7 % | 0.95 | −31 % | holdings' avg correlation 0.24 → concentration not a problem |
+Regimes (month start): bull +2.33 %/month vs EW +1.04 %; bear −0.03 % vs +0.98 %; sideways −0.13 % vs +0.80 % – the edge
+is a bull-market edge; the market filter avoids crashes but misses rebounds. Beat EW in 12 / 21 years. Turnover 3.8 names
+per month, cost drag ≈ 1.3 %/yr. Sector-index filter pending the NSE industry map (Angel equity job tonight).

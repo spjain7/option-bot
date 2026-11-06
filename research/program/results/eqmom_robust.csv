@@ -1,0 +1,12 @@
+test,period,CAGR,sharpe,sortino,maxDD,beta,alpha_pa,EW_CAGR,EW_maxDD
+base vs EW universe,2006-15,11.0,0.62,0.59,-36.8,0.33,9.1,5.599999904632568,-72.0999984741211
+base vs EW universe,2016-26 OOS,16.9,0.91,0.97,-31.1,0.41,12.2,11.5,-44.20000076293945
+base vs EW universe,all,14.0,0.76,0.77,-36.8,0.35,10.9,8.699999809265137,-72.0999984741211
+costs x2,2016-26 OOS,15.2,0.84,0.87,-32.3,,,,
+costs x3,2016-26 OOS,13.6,0.76,0.78,-33.5,,,,
+rebalance on trading day 10 of month,2016-26 OOS,16.3,0.76,0.63,-42.2,,,,
+rebalance on trading day 10 of month,2006-15,9.8,0.5,0.39,-44.8,,,,
+rebalance on trading day 5 of month,2016-26 OOS,19.0,0.95,0.88,-41.0,,,,
+rebalance on trading day 5 of month,2006-15,9.6,0.48,0.36,-42.6,,,,
+cluster cap 2 per correlation cluster,2006-15,10.4,0.58,0.54,-38.8,,,,
+cluster cap 2 per correlation cluster,2016-26 OOS,17.7,0.95,0.99,-31.1,,,,
