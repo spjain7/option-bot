@@ -922,3 +922,30 @@ Trade-level candidates vs matched RANDOM entries (`mcx_engine_trades.py`, `resul
     / −0.07; 4/4 years.
   GOLD sweep+BOS / structure-break BUY: do not beat matched random entries consistently → dropped.
 Status: research candidates (next: shadow implementation + parity, BUY-bias check vs silver drift is the matched-random column).
+
+---
+## MCXE-002 – corrected MCX intraday engine, walk-forward + matched controls (6-Nov-2026)
+**Corrections vs MCXE-001 (now PROVISIONAL):** stable seed 20261106 + per-commodity dataset fingerprint (results/mcxe2_run.json);
+independent random family removed – replaced by MATCHED controls (mcx_controls.py); one position at a time per strategy stream;
+stop-entry with trigger and invalidation in the same 5-min bar = no trade (v1 assumed a fill); new detectors: sweep + CHoCH
+(reversal against the prevailing structure), channel breaks (parallel line through the extreme between two swings); combination
+filters at the signal (60m-trend aligned, structure aligned, volume ≥ 1.5x, structure + volume).
+**Audit / regression tests** (research/program/tests/test_mcx_engine.py, 14 checks, all pass): next-bar market entry, stop-and-target
+in one bar → stop, gap through the stop → open fill, no target on the entry bar, cost in R, session-close square-off, no
+overlapping positions, conservative stop-entry ambiguity, cancel on invalidation, no chase > 0.5 ATR, fill at the trigger,
+**no look-ahead** (setups on a data prefix identical to the full run), all detector families active, deterministic fingerprint.
+**Run:** 7 commodities × 15/30/60m × 25 setup types × BUY/SELL × 5 filters × 16 executions = 51,740 experiments, 699,944
+quarter rows (results/mcxe2_quarters.csv.gz), 6.4 min.
+**Walk-forward** (mcx_wf.py): per stream (commodity, tf, family, side) the filter + execution is re-chosen every quarter from the
+previous 4 quarters (≥ 20 trades, positive), tested 2024Q3 … 2026Q2; untouched OOS 2026Q3 + Oct/Nov with the choice made at
+2026-06-30. Family WF means: channel breakdown +0.12R (67 % of streams positive), sweep + BOS +0.05R (61 %), trendline retest
++0.05R; all other families ≈ 0 or negative (TL rejection −0.16, plain sweep reversals −0.01 … −0.24, pin bars −0.09).
+60 / 840 streams WF-positive (≥ 60 trades, net and 2x stress > 0, ≥ 60 % quarters positive). **Untouched OOS of those 60: 30
+positive / 30 negative, pooled +0.02R over 1,095 trades = no out-of-sample edge.** All 840 streams pooled OOS −0.05R (11,420
+trades). By commodity (WF survivors' OOS): Crude +0.44R (5 streams), Silver +0.02 (30), Copper +0.01, Gold −0.00, Natural Gas −0.23.
+**MCXE-001 candidates re-checked:** Silver 15m flag BUY WF +0.21R (82 trades) but only 5 OOS trades; Silver trendline break BUY
+15m WF +0.50R → OOS −0.23R. Not supported.
+**Matched controls for the shadow strategy (MCXD-005, mcx_dtc_controls.py, 500 permutations, same checkpoint on random days of
+the same quarter + block shifts):** all 542 trades +0.18R (95 % CI +0.08 … +0.28) vs controls +0.03 (95th pct +0.09) → rank
+100 %; HIST 100 %, DEV 76 %, untouched VALID 93 % (+0.26R, CI −0.01 … +0.54). Gold strong (HIST 99.8 %, VALID 87 %), Silver
+weaker (DEV 50 %). This is the only MCX intraday strategy that survives every correction so far.
