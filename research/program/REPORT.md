@@ -850,3 +850,32 @@ Failure mechanism: intraday ranges on 5-30 min are too small relative to MCX cos
 Release hours are larger (median post-release hour 4.5 vs 3.6 ATR crude, 5.1 vs 3.3 ATR natural gas), but the break of the
 60-minute pre-release range loses in HIST for every side / stop / exit (−0.2 … −1.5R; control days −0.35 … −0.45R).
 DEV positives rest on 3-6 trades. Mechanism: release spikes whipsaw through both sides of the range. Rejected.
+
+---
+## MCX intraday research reset (6-Nov-2026): audit → MCXD-001 discovery engine → MCXD-002 Gold/Silver day-trend continuation
+
+**Audit of MCXI-001 (from the artifacts):** (1) the ~7k combinations were parameter variants of 3 breakout families;
+(2) no trend-pull-back, reversal, exhaustion, mean-reversion, volatility-transition or time-of-day families were tested;
+(3) stops were 5-30-minute ranges → median cost 0.43-1.06R per trade; (4) the cost model charged 2 × (fees + 2-20 ticks
+slippage per side) = 2.4-4.5 × a realistic round trip (Silver 20 ticks/side, Copper 6, Gold 5); (5) the day's typical move
+from 10:00 to the close is 9-66 × the realistic cost (Silver 66, Gold 30, Crude 22, Copper 18, NG 12, Zinc/Aluminium ~9);
+(6) sessions, rolls (switch days skipped) and execution were correct; BUY/SELL and commodities were evaluated separately.
+Realistic cost now = statutory fees + 1.5 ticks per side; 2 × that is the stress test a strategy must survive.
+
+**MCXD-001 (7 families × 7 commodities × 2 sides × 3 exits = 294 experiments, results/mcxd_ledger.csv with verdicts):**
+too few trades 153 · gross edge eaten by costs 42 · positive only at realistic cost 39 · no gross edge 24 · development
+only 17 · recent regime only 17 · PASS 2 (Silver trend pull-back BUY, EOD / trailing). Family averages (net, realistic):
+day-trend continuation +0.11 / +0.04 / −0.01 (dev / valid / hist) – the only family positive before costs in all periods;
+VWAP mean reversion and momentum exhaustion negative; failed-breakout and US-open momentum negative after costs.
+Silver trend pull-back BUY: +0.57 / +0.72 / +0.11R but win 27 %, edge in the top 2 % of trades, 2024 negative → research only.
+
+**MCXD-002 – Gold + Silver day-trend continuation (13:00 / 17:00 checkpoint, 60m trend + beyond VWAP + ≥ 0.3 daily ATR
+from the open, stop 0.5 daily ATR, hold to 23:00):** 542 trades 2023-26, +0.18R (+0.15R at 2 × cost), DEV +0.13 /
+VALID +0.26 / HIST +0.19, every year positive (2023-26), 54 / 54 neighbouring parameter sets positive in HIST (76 % in all
+three periods). Does not transfer to CRUDEOIL / COPPER (−0.02R). Caveat: pooling Gold + Silver was decided after seeing
+per-commodity tables – mitigated by the parameter-neighbourhood and year-by-year stability. Implemented on main in SHADOW
+mode (alerts/mcx_dtc.py, LIVE = False, logged + tracked, never sent); production/research parity 99.5 % of 2,765 decisions.
+
+**Intraday OI capability:** the live stream records 1-minute OI for all 7 MCX contracts (≈ 320 bars/day, OI changes
+105-314 times/day) on the ws-bars branch; MCX volume in today's export was 0 (job started on the pre-fix code; to be
+verified on 7-Nov). Intraday-OI hypotheses can be tested once several months have accumulated.
