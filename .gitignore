@@ -26,4 +26,6 @@ research/program/results/search_v2_agg.csv.gz
 research/program/results/portfolio_trades*.csv.gz
 research/program/results/rsix_agg.csv.gz
 research/program/results/rsix_by_name.csv
-research/program/results/rsix2_*
+research/program/results/rsix2_agg.csv.gz
+research/program/results/rsix2_by_name.csv.gz
+research/program/results/rsix2_pooled.csv
