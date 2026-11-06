@@ -1,0 +1,49 @@
+name: Cash stock – positional BUY (NSE bhavcopy, no Angel calls)
+
+# NSE cash-stock BUY-only engine (cashstock/), separate from MCX / options / stock-futures alerts. Runs every weekday
+# evening after NSE publishes the cash bhavcopy; sends the monthly relative-strength portfolio at month-end (CONFIRMED
+# SETUP / HOLD / EXIT), an EARLY WARNING 3 sessions before, and the actual opening fills the session after.
+# Status: live-monitoring candidate (research EQ-MOM-001). Alerts only – never places orders.
+on:
+  schedule:
+    - cron: "21 15 * * 1-5"          # 20:51 IST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: { group: cash-stock, cancel-in-progress: false }
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CASHSTOCK_TELEGRAM: "1"
+      TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install requests pandas numpy
+      - name: Restore cash bhavcopy history (last 3 years) and state
+        run: |
+          git fetch -q --depth 1 origin research-nse-cm
+          y=$(date -u +%Y); git archive FETCH_HEAD research/data/nse_cm/$((y-2)).csv.gz research/data/nse_cm/$((y-1)).csv.gz research/data/nse_cm/$y.csv.gz | tar -x -C .
+          mkdir -p state/cashstock
+          if git ls-remote --exit-code --heads origin cash-state > /dev/null 2>&1; then
+            git fetch -q --depth 1 origin cash-state && git show FETCH_HEAD:cashstock/state.json > state/cashstock/state.json || true
+          fi
+      - run: python -m cashstock.run
+      - name: Save state to cash-state
+        run: |
+          git config user.name "option-bot"; git config user.email "bot@users.noreply.github.com"
+          cp state/cashstock/state.json /tmp/cs.json
+          if git ls-remote --exit-code --heads origin cash-state > /dev/null 2>&1; then
+            git fetch -q --depth 1 origin cash-state && git switch -q -f -C cash-state FETCH_HEAD
+          else
+            git switch -q -f --orphan cash-state && git rm -rqf --cached . > /dev/null 2>&1 || true
+          fi
+          mkdir -p cashstock && cp /tmp/cs.json cashstock/state.json
+          git add -f cashstock/state.json && (git diff --cached --quiet || git commit -qm "cash state $(date -u +%F)") && git push -q origin HEAD:cash-state
