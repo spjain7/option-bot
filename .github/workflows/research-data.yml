@@ -42,7 +42,7 @@ jobs:
       - name: Wait until the live loop's day is over (00:25 IST) – never compete with live alerts for the Angel quota
         run: |
           m=$(( 10#$(TZ=Asia/Kolkata date +%H) * 60 + 10#$(TZ=Asia/Kolkata date +%M) ))
-          if [ "$m" -ge 500 ]; then s=$(( (1440 - m + 25) * 60 )); echo "waiting $((s/60)) min"; sleep "$s"; elif [ "$m" -lt 25 ]; then sleep $(( (25 - m) * 60 )); fi
+          if [ "$m" -ge 500 ]; then s=$(( (1440 - m + 25) * 60 )); if [ "$s" -gt 14400 ]; then echo "::error::would wait $((s/60)) min – longer than the job limit. Start this run between 00:25 and 08:20 IST (or after ~20:25 IST)."; exit 1; fi; echo "waiting $((s/60)) min"; sleep "$s"; elif [ "$m" -lt 25 ]; then sleep $(( (25 - m) * 60 )); fi
       - name: Fetch Angel history (research only)
         run: |
           if [ "${{ github.event.inputs.dataset }}" = "nse_eq" ]; then python -m research.adapters.angel_eq; else python -m research.adapters.angel_hist; fi
@@ -53,7 +53,8 @@ jobs:
           ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
           RESEARCH_NAMES:    ${{ github.event.inputs.names }}
           RESEARCH_INTERVALS: ${{ github.event.inputs.intervals || 'ONE_DAY,ONE_HOUR' }}
-      - name: Push to research-data branch
+      - name: Push to research-data branch (also after a timeout, so partial downloads are kept – fetcher is resumable)
+        if: always() && hashFiles('research/data/angel/**') != ''
         run: |
           mkdir -p /tmp/out && cp -r research/data/angel /tmp/out/
           git config user.name "option-bot research"
