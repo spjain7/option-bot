@@ -11,6 +11,9 @@ on:
       names:
         description: "Only these instruments, comma separated (empty = all)"
         default: ""
+      dataset:
+        description: "futures (MCX + index futures) or nse_eq (NSE cash equities: Nifty 500 daily + liquid stocks 5-min)"
+        default: "futures"
       intervals:
         description: "Candle intervals, comma separated (ONE_DAY, ONE_HOUR, FIFTEEN_MINUTE, FIVE_MINUTE, THREE_MINUTE, ONE_MINUTE)"
         default: "ONE_DAY,ONE_HOUR"
@@ -41,7 +44,8 @@ jobs:
           m=$(( 10#$(TZ=Asia/Kolkata date +%H) * 60 + 10#$(TZ=Asia/Kolkata date +%M) ))
           if [ "$m" -ge 500 ]; then s=$(( (1440 - m + 25) * 60 )); echo "waiting $((s/60)) min"; sleep "$s"; elif [ "$m" -lt 25 ]; then sleep $(( (25 - m) * 60 )); fi
       - name: Fetch Angel history (research only)
-        run: python -m research.adapters.angel_hist
+        run: |
+          if [ "${{ github.event.inputs.dataset }}" = "nse_eq" ]; then python -m research.adapters.angel_eq; else python -m research.adapters.angel_hist; fi
         env:
           ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
           ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
