@@ -69,6 +69,37 @@ def universe(master, now):
     return out
 
 
+PREFETCH_SEC = 150
+
+
+def prefetch_oi_daily(api, uni, now, budget=PREFETCH_SEC):
+    """6-Nov rate-limit fix: before the NSE open (08:40-09:14 IST, when the Angel quota is idle) cache every stock future's
+    daily OI history up to yesterday, so the 15:31 daily scan needs ~1 quote batch instead of ~180 getOIData calls.
+    Resumable across the early scans; returns how many tokens are cached."""
+    if not hasattr(api, "oi_daily"):
+        return 0
+    t0, n = time.monotonic(), 0
+    for name, c in uni.items():
+        if api.oi_daily("NFO", c["token"], now, fetch=False) is not None:
+            n += 1; continue
+        if time.monotonic() - t0 > budget or (hasattr(api, "failfast") and api.failfast()):
+            break
+        if api.oi_daily("NFO", c["token"], now) is not None:
+            n += 1
+    return n
+
+
+def _oi_daily(api, c, now, qoi):
+    """daily OI for the 15:31 scan: cached history + today's quote OI; falls back to the old REST call."""
+    if hasattr(api, "oi_daily"):
+        live = qoi.get(str(c["token"])) if qoi else None
+        if live is not None:
+            d = api.oi_daily("NFO", c["token"], now, live_oi=live)
+            if d is not None and len(d):
+                return d
+    return api.oi_history("NFO", c["token"], "ONE_DAY", now - pd.Timedelta(days=60), now) if hasattr(api, "oi_history") else None
+
+
 def last_block_end(now):
     if now.weekday() >= 5:
         return None
@@ -545,6 +576,12 @@ def scan(api, master, now, state, msgs, rep, engine):
         scan4h(api, now, state, msgs, uni, engine, rep)
     except Exception as e_:
         print(f"[4h] stock scan skipped: {type(e_).__name__}: {e_}")
+    hm = now.hour * 60 + now.minute
+    if 520 <= hm < 554 and now.weekday() < 5:                  # 08:40-09:13 IST: cache daily OI history (rate-limit fix)
+        try:
+            rep["stocks"]["oi_prefetch"] = prefetch_oi_daily(api, uni, now)
+        except Exception as e_:
+            print(f"[stocks] OI prefetch skipped: {type(e_).__name__}: {e_}")
     blk = last_block_end(now)
     if blk is None or st["last_block"] == blk:
         rep["stocks"]["scan"] = "stock scans run after 12:15 (3h) and after the 15:30 close (3h + daily)"
@@ -576,8 +613,7 @@ def scan(api, master, now, state, msgs, rep, engine):
         def _fetch(_c=c):
             try:
                 h_ = api.candles("NFO", _c["token"], "ONE_HOUR", now - pd.Timedelta(days=400 if daily_block else 200), now)
-                oi_ = (api.oi_history("NFO", _c["token"], "ONE_DAY", now - pd.Timedelta(days=60), now)
-                       if daily_block and hasattr(api, "oi_history") else None)
+                oi_ = _oi_daily(api, _c, now, qoi) if daily_block else None
             except Exception:
                 h_, oi_ = None, None
             return h_, oi_

@@ -476,6 +476,37 @@ class Angel:
             return None
         return self._oi_rest(exch, token, interval, frm, to)
 
+    def oi_daily(self, exch, token, now, days=60, live_oi=None, fetch=True):
+        """6-Nov (rate-limit fix): daily OI history UP TO YESTERDAY is identical in every scan of a day, so it is fetched once
+        per day (normally in the quiet pre-NSE window, see alerts/stocks.prefetch_oi_daily) and cached on disk; today's row
+        comes from the live quote's open interest (the value getOIData would report for today at that moment).
+        Returns the same frame shape as oi_history (time, oi) or None. fetch=False -> cache only."""
+        day0 = pd.Timestamp(now).normalize()
+        f = self._dir / f"oid_{exch}_{token}_{day0:%Y%m%d}.pkl"
+        hist = None
+        try:
+            hist = pd.read_pickle(f)
+            self.stats["disk_hits"] += 1
+        except Exception:
+            if not fetch:
+                return None
+            hist = self._oi_rest(exch, token, "ONE_DAY", day0 - pd.Timedelta(days=days), day0 - pd.Timedelta(minutes=1))
+            if hist is None:
+                return None
+            hist = hist[hist["time"] < day0]
+            try:
+                hist.to_pickle(f)
+            except Exception:
+                pass
+        if live_oi is None:
+            return hist.reset_index(drop=True)
+        try:
+            v = float(live_oi)
+        except (TypeError, ValueError):
+            return hist.reset_index(drop=True)
+        today = pd.DataFrame({"time": [day0], "oi": [v]})
+        return pd.concat([hist[["time", "oi"]], today], ignore_index=True)
+
     def _oi_rest(self, exch, token, interval, frm, to):
         d = self._call(self.api.getOIData, {
             "exchange": exch, "symboltoken": str(token), "interval": interval,
