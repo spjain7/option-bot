@@ -830,3 +830,18 @@ per month, cost drag ≈ 1.3 %/yr. Sector-index filter pending the NSE industry 
 | breadth ≥ 50 % | 19.1 / 0.92 / −35.5 | 18.5 / 0.98 / −31 |
 Neighbourhood MA60…150: 2016-26 CAGR 18.4–23.9 %, DD −21…−27 %; MA80-150 all beat MA200 in both periods. Implemented in
 production as cash-mom-1.2 (main), filter state parity 30/30 month-ends.
+
+---
+## MCXI-001 – MCX intraday range breakout/breakdown + volume + OI buildup (6-Nov-2026, owner priority 1-3)
+Data: Angel front-month 5-min (7 commodities) 2023-01 … 2026-11-03; daily contract OI from the MCX bhavcopy (2022-07 …
+2026-11-05). Historical intraday MCX OI does not exist in our sources (Angel AB1012; stream only since ~30-Oct-2026) → OI
+tested as the previous session's buildup class. LEAD / NICKEL: no intraday data.
+Periods: DEV 2025-11-06…2026-06-30, VALID 2026-07-01…2026-11-03, HIST 2023-01…2025-11-05 (never used for selection).
+Grid: 3 timeframes × 3 ranges (opening 60 min, 2-hour consolidation ≤ 3 ATR, previous day H/L) × BUY/SELL × volume × OI
+(any / buildup / OI rising) × entry (close-confirmed / stop / retest) × stop (structure / 1.5 ATR) × exit (2R / EOD);
+ledger: results/mcxi_ledger.csv (6,940 commodity-level combinations).
+**Result: 0 / 576 pooled and 0 / 1,418 per-commodity combinations positive in DEV + VALID + HIST; best DEV q = 1.0.**
+Gross edge (before costs) +0.01…+0.17R vs random entries +0.00R (DEV +0.04 / HIST +0.004 / VALID −0.08) – breakouts are
+only ~0.05-0.1R better than random; costs 0.3-1.3R per trade at these timeframes (stops are small). Net at 1× costs negative
+in every range × timeframe × period. OI buildup and volume expansion did not improve results (slightly worse on average).
+Failure mechanism: intraday ranges on 5-30 min are too small relative to MCX costs; the information in breakouts is tiny.
