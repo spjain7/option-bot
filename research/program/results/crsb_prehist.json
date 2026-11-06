@@ -1,0 +1,124 @@
+{
+ "validation_real5m": {
+  "n": 311,
+  "win": 40.5,
+  "mean": 0.458,
+  "median": -1.061,
+  "PF": 1.68,
+  "total": 142.42,
+  "maxDD": 21.07,
+  "max_losing_streak": 13,
+  "top3_share_of_net": 0.38,
+  "mean_without_top3": 0.286
+ },
+ "validation_pseudo5m": {
+  "n": 298,
+  "win": 40.3,
+  "mean": 0.505,
+  "median": -1.048,
+  "PF": 1.77,
+  "total": 150.63,
+  "maxDD": 17.67,
+  "max_losing_streak": 12,
+  "top3_share_of_net": 0.35,
+  "mean_without_top3": 0.33
+ },
+ "validation_matched_signals": {
+  "n": 295,
+  "corr": 0.994,
+  "mean_real": 0.542,
+  "mean_pseudo": 0.523
+ },
+ "prehist_2021_to_2023-09": {
+  "all": {
+   "n": 313,
+   "win": 34.8,
+   "mean": 0.023,
+   "median": -1.116,
+   "PF": 1.03,
+   "total": 7.31,
+   "maxDD": 53.24,
+   "max_losing_streak": 9,
+   "top3_share_of_net": 4.41,
+   "mean_without_top3": -0.08
+  },
+  "ci": [
+   -0.2092811237945948,
+   0.2646296206133691
+  ],
+  "stress_costs_x2": {
+   "n": 313,
+   "win": 32.9,
+   "mean": -0.174,
+   "median": -1.233,
+   "PF": 0.8,
+   "total": -54.33,
+   "maxDD": 91.89,
+   "max_losing_streak": 12,
+   "top3_share_of_net": NaN,
+   "mean_without_top3": -0.276
+  },
+  "by_year": {
+   "2021": {
+    "n": 153,
+    "win": 30.7,
+    "mean": -0.282,
+    "median": -1.163,
+    "PF": 0.66,
+    "total": -43.15,
+    "maxDD": 51.72,
+    "max_losing_streak": 9,
+    "top3_share_of_net": NaN,
+    "mean_without_top3": -0.494
+   },
+   "2022": {
+    "n": 61,
+    "win": 36.1,
+    "mean": 0.368,
+    "median": -1.074,
+    "PF": 1.55,
+    "total": 22.44,
+    "maxDD": 12.96,
+    "max_losing_streak": 5,
+    "top3_share_of_net": 0.92,
+    "mean_without_top3": 0.032
+   },
+   "2023": {
+    "n": 99,
+    "win": 40.4,
+    "mean": 0.283,
+    "median": -1.095,
+    "PF": 1.42,
+    "total": 28.01,
+    "maxDD": 10.25,
+    "max_losing_streak": 7,
+    "top3_share_of_net": 0.74,
+    "mean_without_top3": 0.075
+   }
+  },
+  "within_5_sessions_after_roll": {
+   "n": 79,
+   "win": 36.7,
+   "mean": 0.034,
+   "median": -1.125,
+   "PF": 1.05,
+   "total": 2.7,
+   "maxDD": 21.68,
+   "max_losing_streak": 6,
+   "top3_share_of_net": 8.16,
+   "mean_without_top3": -0.254
+  },
+  "other": {
+   "n": 234,
+   "win": 34.2,
+   "mean": 0.02,
+   "median": -1.104,
+   "PF": 1.03,
+   "total": 4.61,
+   "maxDD": 36.33,
+   "max_losing_streak": 11,
+   "top3_share_of_net": 6.42,
+   "mean_without_top3": -0.108
+  }
+ }
+}
