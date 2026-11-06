@@ -349,6 +349,15 @@ def scan(api, master, now, state, only=None):
         oi = oi_reading(state, c["symbol"], q, now)
         info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
         _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d), master=master, api=api)
+        if ex == "MCX" and name in ("GOLD", "SILVER"):          # 6-Nov MCXD-002: intraday day-trend continuation – SHADOW only
+            try:
+                from alerts import mcx_dtc as DTC
+                dd_ = BO.daily_candles(full_1h, None)
+                dd_ = dd_[dd_["time"].dt.normalize() < now.normalize()] if dd_ is not None else None
+                DTC.track(state, name, q, now)
+                info["dtc"] = DTC.run(state, msgs, name, c, cl.get("15m"), full_1h, dd_, q, now).get("why")
+            except Exception as e_:
+                print(f"[mcx-dtc] {name} skipped: {type(e_).__name__}: {e_}")
         try:                                               # 4-Nov: MFE / MAE of open calls on this contract (live ledger)
             RP.track_excursions(state, c["token"], cl.get("15m"), "15-min candle highs/lows")
         except Exception as e_:
