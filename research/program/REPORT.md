@@ -665,3 +665,16 @@ MCX 4h EMA13/48 (112, 52 %, +0.62R) · 4h MACD zero (163, 53 %, +0.44R) · 2h mo
 (357, 45 %, +0.31R) · daily breakout retest (121, 55 %, +0.47R) · 1h MACD signal (742, 42 %, +0.21R) · stock 3h MACD zero SELL
 (1,036, 49 %, +0.17R) · stock 3h EMA9/21 SELL (1,274, 49 %, +0.15R) · stock daily RSI>80 BUY (234, 55 %, +0.27R).
 Stock 2h/4h rules not promoted: research candles were not day-anchored, live candles would differ.
+
+## PORTFOLIO-001 + LONG20-001 (6-Nov-2026)
+PORTFOLIO-001 (`portfolio.py`): 13 live rules with research code re-simulated trade by trade 2022-26 (2x costs).
+| Overlap policy | calls/day | exp R | PF | total R | max DD R | losing streak |
+|---|---|---|---|---|---|---|
+| one call per instrument + side (was live) | 3.3 | +0.149 | 1.30 | +497 | 90.5 | 20 |
+| one per instrument + side + timeframe (now live) | 4.6 | +0.217 | 1.42 | +1,013 | 89.7 | 23 |
+| every rule independent | 6.4 | +0.220 | 1.44 | +1,430 | 119.4 | 32 |
+Years (now-live policy): 2022 +0.18 · 2023 +0.05 · 2024 +0.28 · 2025 +0.26 · 2026 +0.24R.
+LONG20-001 (`long20.py`): 1,604 combinations on 20 years of daily candles. MCX BUY: 60 robust incl. the 2013-19 bear years ->
+the BUY edge is not only the 2022-26 bull market. MCX SELL: none robust, none positive in 2013-19 beyond +0.26R (n 95). Index
+(2011-26): 8 robust BUY (EMA 20/50 cross, RSI>70, 5/10/20-day breakouts); no SELL. Live MCX daily 20-day+ADX rule: 20 years
+only +0.15R (2006-12 −0.02, 2013-19 +0.02) -> tier B; 55-day vol 2x breakout +0.49R in every era -> promoted.
