@@ -819,3 +819,14 @@ Production/research parity of the ranking: 10/10 names identical in 6 of 7 test 
 Regimes (month start): bull +2.33 %/month vs EW +1.04 %; bear −0.03 % vs +0.98 %; sideways −0.13 % vs +0.80 % – the edge
 is a bull-market edge; the market filter avoids crashes but misses rebounds. Beat EW in 12 / 21 years. Turnover 3.8 names
 per month, cost drag ≈ 1.3 %/yr. Sector-index filter pending the NSE industry map (Angel equity job tonight).
+
+### EQ-MOM-003 market-regime filter (5 pre-registered variants, chosen on 2006-15 by Sharpe)
+| filter | 2006-15 CAGR / Sharpe / DD | 2016-26 OOS CAGR / Sharpe / DD |
+|---|---|---|
+| none | 12.2 % / 0.56 / −76 % | 25.6 % / 1.00 / −31 % |
+| MA200 (v1.1) | 11.0 / 0.62 / −37 | 16.9 / 0.91 / −31 |
+| **MA100 (chosen)** | **17.9 / 0.95 / −22.5** | **23.9 / 1.24 / −20.6** |
+| MA200 or rebound | 12.9 / 0.66 / −54 | 19.6 / 0.96 / −32 |
+| breadth ≥ 50 % | 19.1 / 0.92 / −35.5 | 18.5 / 0.98 / −31 |
+Neighbourhood MA60…150: 2016-26 CAGR 18.4–23.9 %, DD −21…−27 %; MA80-150 all beat MA200 in both periods. Implemented in
+production as cash-mom-1.2 (main), filter state parity 30/30 month-ends.
