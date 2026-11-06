@@ -2,8 +2,10 @@
 
 Validated in research (exp/strategy-program-001, research/program/eq_momentum.py, EQ-MOM-001) on official NSE cash
 bhavcopies 2005-2026 (point-in-time universe incl. delisted stocks, exact corporate-action adjustment, delivery costs):
-chosen on 2006-15 only, untouched 2016-26: CAGR 15.5 % vs Nifty ~11.8 % (incl. dividends) and 12.5 % for the equal-weight
-liquid universe; max drawdown −31 % vs −38 % / −44 %. Weak spots: 2008-15 CAGR 2.0 % (Nifty ~4.6 %), years like 2018 −30 %.
+chosen on 2006-15 only (CAGR 11.0 % vs 5.6 % equal-weight liquid universe), untouched 2016-26: CAGR 16.9 %, Sharpe 0.91,
+max drawdown −31 % vs Nifty ~11.8 % (incl. dividends, DD −38 %) and 12.5 % for the equal-weight universe (DD −44 %).
+Re-run 6-Nov after removing ETF / fund units and fixing the pre-2011 ISIN break (EQ-MOM-001b). 7 of 12 market-filtered
+variants beat the equal-weight universe out of sample. Weak spots: 2008 −35 %, 2018 −30 %, 2016-18 CAGR 2.5 %.
 STATUS: live-monitoring candidate (not production-approved).
 
 Rules (identical to the research code – see tests/test_cashstock_parity in research):
@@ -16,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 MIN_TURNOVER, MIN_PRICE, L, SKIP, VOLN, TOP = 25e7, 50.0, 252, 21, 126, 10
-VERSION = "cash-mom-1.0 (EQ-MOM-001)"
+VERSION = "cash-mom-1.1 (EQ-MOM-001b)"
 
 
 def adjusted(P):
@@ -105,6 +107,6 @@ def messages(res, prev_holdings, nchase=0.03):
     if not (new or keep or drop):
         L_.append("No positions and no BUY this month.")
     L_ += ["Exit rule: monthly re-ranking (no fixed target). Holding period ~1-3 months on average.",
-           "Evidence (research, after delivery costs): 2016-26 out of sample CAGR 15.5 % vs Nifty ~11.8 %, max drawdown −31 %; "
-           "2008-15 only 2.0 %. Backtest, not a guarantee. Alert only – not investment advice."]
+           "Evidence (research on NSE bhavcopies 2005-26, after delivery costs): 2016-26 out of sample CAGR 16.9 % vs Nifty ~11.8 %, "
+           "max drawdown −31 %; bad years 2008 −35 %, 2018 −30 %. Backtest, not a guarantee. Alert only – not investment advice."]
     return "\n".join(L_), [p["symbol"] for p in res["picks"]]

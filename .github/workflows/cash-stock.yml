@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 30
     env:
       CASHSTOCK_TELEGRAM: "1"
-      CASHSTOCK_ALERTS: "0"            # 6-Nov: paused until the evidence is re-validated without ETFs (see research EQ-MOM-001b)
+      CASHSTOCK_ALERTS: "1"            # 6-Nov: resumed after re-validation without ETFs (research EQ-MOM-001b)
       CASHSTOCK_NOTE:   ${{ github.event.inputs.note }}
       TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
