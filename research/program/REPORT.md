@@ -788,3 +788,22 @@ rsix.daily_long now flags rolls (and > 25 % glitches) for all research that uses
 
 **Production (main 64d267b):** signal lifecycle – EARLY WARNING (info only) → CONFIRMED SETUP (pending stop) → ACTIONABLE
 (triggered) → INVALIDATED; funnel statistics split trend BUY / reversal BUY / SELL / early / setup / actionable.
+
+---
+## EQ – NSE cash equity (6-Nov-2026). BUY only. Source: official NSE cash bhavcopies 2005-26 (no futures, no OI)
+
+**Data (eq_data_check.json):** 5,393 sessions, 2005-01-03 … 2026-11-05; 306 weekdays without a file = exchange holidays
+(10-19/yr); no duplicates / non-positive prices; corporate actions via NSE's adjusted PREVCLOSE (35,010 factors) + fix for
+the UDiFF format (from Jul-2024 PREVCLOSE is unadjusted: bonuses/splits/demergers detected by >40 % open gaps – price bands
+cap normal moves at 20 %); ISIN carried back before mid-2011 (one continuous history per company); 539 ETF / fund units
+excluded (ISIN INF…); point-in-time liquid universe (60-day median turnover ≥ ₹25 cr, price ≥ ₹50, ≥ 250 sessions);
+3,029 securities that later stopped trading are included → no survivorship bias. Costs: Angel One schedule (delivery
+0.393 % round trip incl. 0.05 %/side slippage; intraday 0.163 %).
+
+| family | result (after costs) | verdict |
+|---|---|---|
+| Delivery swing ≤ 20 sessions (A–G: PDH, 20/55-day breakout, retest, EMA pull-back, momentum consolidation, RSI reversal, RS+sector), 288 combinations | gross ≈ 0 (−0.01…+0.05R), costs ≈ 0.07R → 0/288 pass | rejected: moves too small vs costs |
+| H-B 26/52-week closing-high breakout, EMA50 trend exit | per trade +0.22R, PF 1.49, t 6.7, all 4 blocks positive; edge in the top 2 % of trades (96 stocks, 15 years, half in 2020/2023); daily mark-to-market portfolio 2016-26 only 4.5-8.5 % CAGR, DD −37…−50 % | rejected as a portfolio (worse than the equal-weight universe) |
+| **H-A monthly relative-strength portfolio** (12-1 month return / 126-day vol, top 10, market filter) | chosen on 2006-15: CAGR 11.0 % vs 5.6 % EW; **2016-26 OOS: CAGR 16.9 %, Sharpe 0.91, maxDD −31 %** vs EW 12.5 % / −44 % and Nifty ~11.8 % incl. dividends / −38 %; 7 of 12 filtered variants beat EW OOS; bad years 2008 −35 %, 2018 −30 % | **implemented** (main `cashstock/`, live-monitoring candidate) |
+| Intraday cash (57 sessions of 5-min, ORB 5/15/30, retest, pull-back, VWAP, RVOL, PDH, trend, failed-breakout) | all negative; ORB gross +0.04R vs cost 0.16R, 67 % false breaks | rejected on this sample; 2-year 5-min data downloading |
+Production/research parity of the ranking: 10/10 names identical in 6 of 7 test months (the 7th differs only by a company rename).
