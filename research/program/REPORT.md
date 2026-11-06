@@ -898,3 +898,27 @@ Robustness: costs ×4 +0.09R; entry delayed 15 min +0.16R. Improvements (choose 
 (DEV +0.16 vs +0.13, VALID / HIST unchanged – not adopted, within noise); VWAP-failure / half-at-1R / 2-4 h time exits worse;
 30m trend, daily-trend agreement, ADX ≥ 20, anti-chase: no out-of-sample gain; one position per commodity per day WORSE
 (+0.10R) → risk caps instead (2 per commodity / 4 total per day) – implemented in shadow (main).
+
+---
+## MCXE-001 – MCX intraday strategy ENGINE (6-Nov-2026): one framework, 8 detector families, random-entry control
+Inventory first (sent to owner): sweeps (sweep.py/sweep15.py, never written up), S/R (SR-001 daily failed; sdzone.py not
+written up), breakouts (live 1h+; intraday MCXI-001 failed), trendline (only the LIQTL indicator port), market structure (one
+MSS form failed), candles (daily live), chart patterns (3h, OFF after the exit-bug fix), trend continuation (DTC shadow).
+Engine `mcx_engine.py`: detectors (swings ±3, confirmed 3 bars later) → setups (side, trigger, invalidation) → one numba
+simulator on 5-min execution, entry {next open, stop order}, stop {structure, 1.5 ATR}, exit {2R, 3R, close, 2-ATR trail},
+filters {any, with/against 60m trend, volume ≥ 1.5x}, realistic + 2x costs, DEV / VALID / HIST. Families: SWEEP (REV at
+prev-day / swing / equal highs-lows; sweep + BOS), SR zones (break / retest / rejection), TL (break / retest / rejection), MS
+(BOS / CHoCH / break), CDL (engulfing / pin at levels), CMP (flag / triangle), plus a RANDOM-entry control through the same
+pipeline. 40,320 experiments, ledger `results/mcxe_ledger.csv.gz`.
+PASS rate (all periods positive incl. 2x costs) vs RANDOM 0.64 %: FLAG 7.7 % · MS-BOS 4.3 % · TRI 2.8 % · SWEEP+BOS 2.4 % ·
+ENGULF 2.1 % · TL-BRK 2.0 % · SR-BRK 1.2 % · plain sweep reversal 0.06-0.45 % · SR rejection 0.45 % · PIN 0.44 %.
+Edge over RANDOM with identical execution, positive in all 3 periods: SWEEP+BOS, FLAG, TRI, MS BOS/BRK/CHoCH. Not:
+plain sweep reversals, S/R rejection, pin bars, trendline rejection/retest (failure mechanism: reversal setups without a
+structure break have no information beyond chance; costs then make them negative).
+Trade-level candidates vs matched RANDOM entries (`mcx_engine_trades.py`, `results/mcxe_candidates.csv`):
+  SILVER 15m FLAG BUY  next open / structure stop / close: DEV +0.47 · VALID +0.66 · HIST +0.34R (328) vs random +0.16 / −0.27 /
+    −0.07; 4/4 years; tail-dependent (drop best 5 % → −0.16). Stop-order / 2R version: +0.14 / +0.37 / +0.10R, drop5 +0.03.
+  SILVER 60m TRENDLINE BREAK BUY  next open / structure stop / 2-ATR trail: +0.52 / +0.49 / +0.14R (211) vs random +0.09 / −0.31
+    / −0.07; 4/4 years.
+  GOLD sweep+BOS / structure-break BUY: do not beat matched random entries consistently → dropped.
+Status: research candidates (next: shadow implementation + parity, BUY-bias check vs silver drift is the matched-random column).
