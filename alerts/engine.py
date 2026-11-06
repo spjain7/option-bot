@@ -647,6 +647,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                and not p.get("shadow") for p in state["bo_active"]) and tf in ("1d", "1m", "1w", "1M"):
             info[f"bo_{tf}"] += " · already in an open daily/monthly call"; continue
         shadow_only = (tf, sig["side"]) in SHADOW_ONLY
+        if ex == "MCX" and tf == "1d" and sig["side"] == "BUY" and not ST.is_live("BO_1d_BUY_MCX"):
+            shadow_only = True                                   # ROLLCHECK-001: MCX daily 20-day + ADX -> logged only
         if any(p["name"] == name and p["tf"] == tf and bool(p.get("shadow")) == shadow_only for p in state["bo_active"]):
             info[f"bo_{tf}"] += " · already in an open breakout alert" + (" (log-only)" if shadow_only else ""); continue
         sid = f"{k}|{last}|{sig['side']}" + (f"|{sig['pattern']}" if sig.get("pattern") else "")
