@@ -1,0 +1,15 @@
+{
+ "first": "2005-01-03",
+ "last": "2026-11-05",
+ "trading_days": 5393,
+ "weekdays_without_file": 306,
+ "securities": 5742,
+ "symbol_rows": 8561426,
+ "duplicates_removed": 0,
+ "nonpositive_prices": 0,
+ "corporate_action_adjustments": 35010,
+ "of_which_split_bonus_like": 2456,
+ "unexplained_gaps_over_40pct": 29,
+ "securities_stopped_trading": 3029,
+ "survivorship": "none in the data itself: every security that traded on a day is in that day's file; stocks that stopped trading (delisted / suspended / merged) remain in the history"
+}

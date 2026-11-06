@@ -35,7 +35,7 @@ def panel(years=None):
 def adjusted(P):
     """-> dict key (isin or symbol) -> daily frame time/open/high/low/close/volume/value/symbol/factor"""
     P = P.copy()
-    P["key"] = P.isin.where(P.isin.astype(str).str.len() > 5, P.symbol)
+    P["key"] = P["isin"].where(P["isin"].astype(str).str.len() > 5, P["symbol"])
     out = {}
     for k, g in P.groupby("key", sort=False):
         g = g.sort_values("date")
@@ -45,6 +45,12 @@ def adjusted(P):
         f = np.ones(len(g))
         f[1:] = np.where((c[:-1] > 0) & (pc[1:] > 0), pc[1:] / c[:-1], 1.0)
         f = np.where(np.abs(f - 1) < 0.002, 1.0, f)                         # rounding noise
+        # UDiFF files (from Jul-2024) report an UNADJUSTED previous close: an overnight gap beyond -40 % / +60 % (NSE price
+        # bands cap most stocks at 20 %) with no factor is a bonus / split / demerger -> use open / previous close
+        o_ = g.open.values.astype(float)
+        r = np.ones(len(g)); r[1:] = np.where(c[:-1] > 0, o_[1:] / c[:-1], 1.0)
+        miss = (f == 1.0) & ((r < 0.6) | (r > 1.6))
+        f = np.where(miss, r, f)
         cum = np.r_[np.cumprod(f[::-1])[::-1][1:], 1.0]
         d = pd.DataFrame(dict(time=g.date.values, open=g.open.values * cum, high=g.high.values * cum, low=g.low.values * cum,
                               close=c * cum, volume=g.volume.values / cum, value=g.value.values, symbol=g.symbol.values,
