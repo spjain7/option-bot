@@ -46,6 +46,16 @@ RULES = {
                                "MACD zero-line cross"),
     "RB_STK_3h_EMA921_SELL": _r("STOCKS", "3h", "EMAX", "9/21", "DT", "SELL", 2.0, 3.0, 40, 1274, 49, 0.15, "+0.08/+0.09/+0.21", "B",
                                 "EMA 9/21 cross"),
+    # LONG20-001 (6-Nov, 20 years of daily candles: MCX 2006-26, NIFTY / BANKNIFTY futures 2011-26, 2x costs, periods
+    # 2006-12 / 2013-19 / 2020-26 incl. the 2013-19 metals bear market, BH-FDR across 1,604 combinations):
+    "RB_MCX_1d_BO55_BUY": _r("MCX", "1d", "BO", "N55 vol2", "none", "BUY", 2.0, 3.0, 20, 124, 50, 0.49, "+0.38/+0.39/+0.62 (20 y)", "A",
+                             "55-day breakout, volume 2x"),
+    "RB_IDX_1d_EMA2050_BUY": _r("INDEX", "1d", "EMAX", "20/50", "none", "BUY", 1.5, 2.0, 20, 67, 55, 0.50, "+0.50/+0.85/+0.21 (15 y)", "B",
+                                "EMA 20/50 cross"),
+    "RB_IDX_1d_RSI70_BUY": _r("INDEX", "1d", "RSICONT", "70/30", "none", "BUY", 1.5, 2.0, 20, 107, 51, 0.36, "+0.91/+0.25/+0.22 (15 y)", "B",
+                              "RSI momentum above 70"),
+    "RB_IDX_1d_BO10_BUY": _r("INDEX", "1d", "BO", "N10 vol0", "none", "BUY", 1.5, 2.0, 20, 339, 45, 0.23, "+0.13/+0.24/+0.27 (15 y)", "A",
+                             "10-day breakout"),
     "RB_STK_1d_RSI80_BUY": _r("STOCKS", "1d", "RSICONT", "80/20", "DT", "BUY", 2.0, 3.0, 20, 234, 55, 0.27, "+0.33/+0.19/+0.19", "B",
                               "RSI momentum above 80"),
 }

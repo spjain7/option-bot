@@ -15,8 +15,8 @@ S = {
     # id: (status, tier, label, trades, win %, avg R after costs, PF, note)
     "BO_3h_BUY":     ("LIVE",   "A", "3-hour breakout BUY", 345, 48, 0.28, 1.51, "train/valid/test +0.32/+0.11/+0.36"),
     "BO_3h_SELL":    ("SHADOW", "-", "3-hour breakout SELL", 212, 38, -0.08, 0.88, "negative in train and validation, 15-loss streak"),
-    "BO_1d_BUY":     ("LIVE",   "A", "daily breakout BUY", 83, 58, 0.56, None,
-                      "6-Nov MCX rule 20-day high + ADX>=25, 2R: +0.80/+0.02/+0.63 (SEARCH-ALL-001); index 2011-26 +0.55"),
+    "BO_1d_BUY":     ("LIVE",   "B", "daily breakout BUY", 83, 58, 0.56, None,
+                      "MCX 20-day + ADX>=25, 2R: 2022-26 +0.56R but 20 years only +0.15R (LONG20-001); index 2011-26 +0.55"),
     "BO_1d_SELL":    ("SHADOW", "-", "daily breakout SELL", 23, 48, -0.07, 0.88, "fewer than 30 trades"),
     "BO_1m_BUY":     ("LIVE",   "B", "monthly breakout BUY", 116, 49, 0.28, 1.62, "valid +0.07, test +0.34"),
     "BO_1m_SELL":    ("SHADOW", "-", "monthly breakout SELL", 24, 54, 0.09, 1.20, "fewer than 30 trades"),
