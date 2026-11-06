@@ -637,3 +637,12 @@ MCX BUY breakouts work: 1d BUY 61 trades 59 % +0.94R; 3h BUY 383, 48 %, +0.22R (
 MCX SELL breakouts lose: 3h SELL 182 trades 37 % −0.15R (with the daily downtrend −0.40R); 1d SELL 8 trades −0.27R. No filter fixes it.
 GOLD: BUY 99 trades +0.66R, SELL 29 trades −0.07R. Live GOLD SELLs on 30-Oct came after a −2.8 % day (RSI 28.7) and reversed;
 the 5-Nov 3h EMA BUY was against the daily downtrend (EMA20 < EMA50) after a +4.5 % bounce.
+
+## SEARCH-ALL-001 (6-Nov-2026) – 6,108 combinations, 5.1 M trades, walk-forward + BH-FDR (q < 0.10)
+Script `research/program/search_all.py`; `results/search_all_summary.csv`, `results/search_all_robust.csv`. 118 robust, all one-sided:
+MCX BUY (100): best daily BO N20/N55 + ADX ≥ 25, 1.5 ATR / 2R: 83 / 72 trades, 58-60 % win, +0.56 / +0.60R, 6-7 of 7 commodities
+positive; 4h BO N10 vol ≥ 1.5x + daily trend, 2 ATR / 3R: 259 trades, 44 %, +0.42R, 7/7; 3h/4h EMA20 pull-back in daily uptrend +0.27R.
+STOCKS SELL in a daily downtrend (17): 3h BO N5 vol ≥ 2x 1.5ATR/2R 1,335 trades +0.13R; 4h NR7 breakdown 2,341 +0.125R; 4h EMA20/50
+pull-back SELL 3,101 +0.11R. NSE index daily N5 breakdown in downtrend SELL 98 trades +0.29R (q 0.098).
+Not robust anywhere: MCX SELL, stock BUY (stock daily BO BUY −0.07…+0.04R), RSI2, Bollinger squeeze, liquidity trendline, stop-hunt.
+Caveat: 2022-26 was a metals bull market – MCX BUY results partly reflect it.
