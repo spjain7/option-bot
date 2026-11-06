@@ -2,8 +2,9 @@
 
 Validated in research (exp/strategy-program-001, research/program/eq_momentum.py, EQ-MOM-001) on official NSE cash
 bhavcopies 2005-2026 (point-in-time universe incl. delisted stocks, exact corporate-action adjustment, delivery costs):
-chosen on 2006-15 only (CAGR 11.0 % vs 5.6 % equal-weight liquid universe), untouched 2016-26: CAGR 16.9 %, Sharpe 0.91,
-max drawdown −31 % vs Nifty ~11.8 % (incl. dividends, DD −38 %) and 12.5 % for the equal-weight universe (DD −44 %).
+with the MA100 market filter: 2006-15 CAGR 17.9 %, Sharpe 0.95, DD −22.5 % (equal-weight liquid universe 5.6 %, DD −72 %);
+untouched 2016-26: CAGR 23.9 %, Sharpe 1.24, max drawdown −20.6 % vs Nifty ~11.8 % incl. dividends (DD −38 %) and 11.5 %
+for the equal-weight universe (DD −44 %). (v1.1 with the MA200 filter: 16.9 % / −31 %.)
 Re-run 6-Nov after removing ETF / fund units and fixing the pre-2011 ISIN break (EQ-MOM-001b). 7 of 12 market-filtered
 variants beat the equal-weight universe out of sample. Weak spots: 2008 −35 %, 2018 −30 %, 2016-18 CAGR 2.5 %.
 STATUS: live-monitoring candidate (not production-approved).
@@ -11,14 +12,15 @@ STATUS: live-monitoring candidate (not production-approved).
 Rules (identical to the research code – see tests/test_cashstock_parity in research):
   * month-end session t; eligible = 60-session median turnover >= ₹25 cr, close >= ₹50, >= 250 sessions of history
   * score = (close[t-21] / close[t-252] - 1) / stdev(daily log return, 126 sessions)
-  * market filter: equal-weight index of the 100 most-traded stocks closes above its 200-session average, else hold cash
+  * market filter: equal-weight index of the 100 most-traded stocks closes above its 100-session average, else hold cash
+    (EQ-MOM-003, 6-Nov: chosen on 2006-15 among 5 pre-registered filters; MA80-150 all beat MA200 in both periods)
   * BUY the top 10 at the next session's open (equal weight); hold until the next month-end; names that drop out are sold
 """
 import numpy as np
 import pandas as pd
 
-MIN_TURNOVER, MIN_PRICE, L, SKIP, VOLN, TOP = 25e7, 50.0, 252, 21, 126, 10
-VERSION = "cash-mom-1.1 (EQ-MOM-001b)"
+MIN_TURNOVER, MIN_PRICE, L, SKIP, VOLN, TOP, MA = 25e7, 50.0, 252, 21, 126, 10, 100
+VERSION = "cash-mom-1.2 (EQ-MOM-003, MA100 market filter)"
 
 
 def adjusted(P):
@@ -70,7 +72,7 @@ def rank(C, T, asof=None):
     days = C.index
     ia = len(days) - 1 if asof is None else days.get_loc(pd.Timestamp(asof))
     mk = market_index(C, T)
-    on = bool(mk.iloc[ia] > mk.rolling(200).mean().iloc[ia])
+    on = bool(mk.iloc[ia] > mk.rolling(MA).mean().iloc[ia])
     hist = C.notna().cumsum()
     el = (T.iloc[ia] >= MIN_TURNOVER) & (C.iloc[ia] >= MIN_PRICE) & (hist.iloc[ia] >= 250) & C.iloc[ia - L].notna()
     r12 = C.iloc[ia - SKIP] / C.iloc[ia - L] - 1
@@ -79,7 +81,7 @@ def rank(C, T, asof=None):
     picks = [dict(symbol=s.split("#")[0], score=float(sc[s]), close=float(C[s].iloc[ia]), ret12_1=float(r12[s]), vol=float(vol[s]))
              for s in sc.index[:TOP]] if on else []
     return dict(asof=str(days[ia].date()), market_on=on, picks=picks, eligible=int(el.sum()),
-                market=float(mk.iloc[ia]), market_ma200=float(mk.rolling(200).mean().iloc[ia]))
+                market=float(mk.iloc[ia]), market_ma200=float(mk.rolling(MA).mean().iloc[ia]))
 
 
 def is_month_end(day, next_trading_day):
@@ -94,7 +96,7 @@ def messages(res, prev_holdings, nchase=0.03):
     L_ = [f"📈 CASH POSITIONAL – monthly relative-strength portfolio · {res['asof']} close",
           f"Status: live-monitoring candidate ({VERSION}) · BUY only · alerts only",
           f"Market filter: {'ON – invested' if res['market_on'] else 'OFF – hold cash, no new BUY'} "
-          f"(top-100 equal-weight index {res['market']:.0f} vs 200-day avg {res['market_ma200']:.0f})"]
+          f"(top-100 equal-weight index {res['market']:.0f} vs {MA}-day avg {res['market_ma200']:.0f})"]
     if new:
         L_.append("🟡 CONFIRMED SETUP – BUY at the next session's open (equal weight, 1/10 of capital each):")
         for p in new:
@@ -107,6 +109,6 @@ def messages(res, prev_holdings, nchase=0.03):
     if not (new or keep or drop):
         L_.append("No positions and no BUY this month.")
     L_ += ["Exit rule: monthly re-ranking (no fixed target). Holding period ~1-3 months on average.",
-           "Evidence (research on NSE bhavcopies 2005-26, after delivery costs): 2016-26 out of sample CAGR 16.9 % vs Nifty ~11.8 %, "
-           "max drawdown −31 %; bad years 2008 −35 %, 2018 −30 %. Backtest, not a guarantee. Alert only – not investment advice."]
+           "Evidence (research on NSE bhavcopies 2005-26, after delivery costs): 2016-26 out of sample CAGR 23.9 % vs Nifty ~11.8 %, "
+           "max drawdown −21 %; worst year −23 % (2008). Backtest, not a guarantee. Alert only – not investment advice."]
     return "\n".join(L_), [p["symbol"] for p in res["picks"]]
