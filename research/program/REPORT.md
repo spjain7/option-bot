@@ -724,3 +724,31 @@ Implemented on main 8a75fb6 as `RB_MCX_1d_RSIX_BUY` (pending stop-entry call, ac
 four_hour.track). Parity: live mask == research mask on all 7 commodities (20-year daily).
 Files: rsix.py, rsix_select.py, rsix_final.py, results/rsix_pooled.csv, rsix_selected.csv, rsix_per_commodity.csv,
 rsix2_breadth.csv, rsix2_top500.csv, rsix_final_trades.csv.
+
+---
+## MISSED-001 — big MCX moves the engine called / missed (6-Nov-2026)
+
+Big move = daily zig-zag swing ≥ 6 ATR(14), 2022-08 … 2026-10, 7 commodities → 89 moves (44 UP avg +50 %, 45 DOWN avg −22 %).
+Live rules evaluated with the production rulebook code; "caught" = signal before half the move was done.
+| | moves | caught early | why missed |
+|---|---|---|---|
+| UP | 44 | 31 (70 %) | 13 — all started with the daily trend NOT up (V-reversals; trend-filtered rules wait) |
+| DOWN | 45 | 0 | no live MCX SELL rule |
+First rule to catch: 4h EMA13/48 (12 moves, +0.38R realistic trade), 2h MOMO (5, +1.75R), 4h MACD0 (4, −0.46R),
+**1d RSIX (4, +0.88R — the new rule catches part of the reversal blind spot)**.
+
+**Blind spot 1 — down moves.** Every SELL family signalled 80–98 % of the down moves early, but on ALL their signals
+each one loses (−0.03 … −0.69R after 2× costs). Catching the down moves this way would add net-losing calls → not fixed.
+**Blind spot 2 — V-reversal up moves.** Daily RSI cross-back above 30 looked excellent in 2022-26 (+0.82R, 62 % win)
+but over 20 years it is −0.02R (−0.21 / −0.04 / +0.33 by period) — a 2020-26 commodity-bull artefact. Only the RSIX form
+(reversal candle + ADX < 20 + stop above the candle high) holds in all three 20-year periods.
+Files: missed.py, results/missed_moves.csv, results/missed_alternatives.csv.
+
+## RSIX-001 NSE transfer (finalist unchanged)
+| market | side | n | R (3R exit) | periods | verdict |
+|---|---|---|---|---|---|
+| NIFTY 2011-26 | BUY | 30 | −0.11 | −0.34 / +0.16 / −0.11 | no |
+| BANKNIFTY 2011-26 | SELL | 33 | +0.26 | +0.63 / +0.28 / +0.07 | too few trades |
+| Stocks 2022-26 | BUY | 910 | −0.05 | +0.27 / +0.17 / −0.24 | unstable, no |
+| Stocks 2022-26 | SELL | 1,103 | +0.05 | −0.33 / −0.01 / +0.31 | unstable, no |
+RSIX stays MCX-daily-BUY only. File: rsix_nse.py.
