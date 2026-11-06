@@ -21,6 +21,7 @@ CHECKPOINTS = (13 * 60, 17 * 60)
 K_OPEN, M_STOP = 0.3, 0.5
 SQUARE_OFF = 23 * 60
 LIVE = False                       # shadow only
+MAX_PER_COMMODITY, MAX_TOTAL = 2, 4  # MCXD-004: the 17:00 add-on helps (blocking it cut +0.18R to +0.10R) -> cap, don't block
 VERSION = "mcx-dtc-0.1 (MCXD-002, shadow)"
 
 
@@ -101,9 +102,21 @@ def run(state, msgs, name, c, c15, h1, dd, q, now):
         FN.note(state, "MCX_DTC (shadow)", "rejected", "no live price", key=key, now=now)
         return dict(sig, note="no live price")
     s = 1 if sig["side"] == "BUY" else -1
+    same = [r for r in st["open"] if r["name"] == name and r["day"] == str(pd.Timestamp(now).date())]
+    if len(same) >= MAX_PER_COMMODITY or len([r for r in st["open"] if r["day"] == str(pd.Timestamp(now).date())]) >= MAX_TOTAL:
+        FN.note(state, "MCX_DTC (shadow)", "rejected", "risk cap (2 per commodity / 4 total per day)", key=key, now=now)
+        return dict(sig, note="risk cap")
+    if any(r["name"] == name and r["side"] != sig["side"] for r in same):
+        FN.note(state, "MCX_DTC (shadow)", "rejected", "contradicts an open position", key=key, now=now)
+        return dict(sig, note="contradictory")
+    cp_min = int(sig["checkpoint"].split(":")[0]) * 60 + int(sig["checkpoint"].split(":")[1])
+    delay = now.hour * 60 + now.minute - cp_min
     st["open"].append(dict(name=name, token=str(c["token"]), side=sig["side"], entry=ltp, stop=ltp - s * sig["stop_dist"],
                            risk=sig["stop_dist"], opened=str(now), day=str(pd.Timestamp(now).date()), key=key, why=sig["why"],
-                           version=VERSION))
+                           version=VERSION, checkpoint=sig["checkpoint"], signal_close=sig["close"], vwap=sig["vwap"],
+                           day_open=sig["day_open"], atr_d=sig["atr_d"], slip_vs_signal=round(s * (ltp - sig["close"]), 2),
+                           entry_delay_min=delay, executable=delay <= 15, assumed_cost="fees + 1.5 ticks/side",
+                           mfe=0.0, mae=0.0))
     FN.note(state, "MCX_DTC (shadow)", "shadow", key=key, now=now)
     print(f"[mcx-dtc] {name} {sig['side']} logged only (shadow): entry {ltp} stop {ltp - s * sig['stop_dist']:.1f} · {sig['why']}")
     return dict(sig, note="shadow recorded")
@@ -118,6 +131,9 @@ def track(state, name, q, now):
         if r["name"] != name:
             keep.append(r); continue
         s = 1 if r["side"] == "BUY" else -1
+        if ltp:
+            r["mfe"] = round(max(r.get("mfe", 0.0), s * (ltp - r["entry"]) / r["risk"]), 3)
+            r["mae"] = round(min(r.get("mae", 0.0), s * (ltp - r["entry"]) / r["risk"]), 3)
         hm = now.hour * 60 + now.minute
         why = px = None
         if ltp and s * (ltp - r["stop"]) <= 0:
@@ -130,3 +146,18 @@ def track(state, name, q, now):
         else:
             keep.append(r)
     st["open"] = keep
+
+
+def summary(state):
+    """Shadow scoreboard by commodity / side / checkpoint (for the daily funnel message and reviews)."""
+    cl = store(state)["closed"]
+    if not cl:
+        return None
+    x = pd.DataFrame(cl)
+    x["R"] = x["result_R"].astype(float)
+    parts = []
+    for col in ("name", "side", "checkpoint"):
+        if col in x:
+            g = x.groupby(col)["R"].agg(["size", "mean"])
+            parts.append(" · ".join(f"{k} {int(v['size'])} trades {v['mean']:+.2f}R" for k, v in g.iterrows()))
+    return f"MCX day-trend (shadow, not sent): {len(x)} closed, {x.R.mean():+.2f}R avg, win {100 * (x.R > 0).mean():.0f}% | " + " | ".join(parts)

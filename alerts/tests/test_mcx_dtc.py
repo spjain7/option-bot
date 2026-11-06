@@ -47,4 +47,22 @@ D.run(st2, [], "SILVER", {"token": "8"}, c15, h1, dd, {"ltp": 110620.0}, now)
 D.track(st2, "SILVER", {"ltp": 110100.0}, day + pd.Timedelta(hours=15))
 check(st2["mcxdtc"]["closed"][-1]["exit_reason"] == "stop" and st2["mcxdtc"]["closed"][-1]["result_R"] == -1.0, "stop hit -> -1R")
 check(D.LIVE is False, "strategy is SHADOW only (LIVE = False)")
+rec = st["mcxdtc"]["closed"][0]
+check(all(k in rec for k in ("checkpoint", "slip_vs_signal", "entry_delay_min", "executable", "mfe", "mae", "exit_reason")) and rec["mfe"] >= 1.0,
+      "shadow record has checkpoint, slippage vs signal, delay, executable flag, MFE / MAE, exit reason")
+st3 = {"day": {"date": str(day.date())}}
+D.run(st3, [], "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110620.0}, now)
+from unittest import mock
+fake = dict(side="SELL", checkpoint="17:00", close=110000.0, vwap=110300.0, day_open=110500.0, atr_d=1000.0, stop_dist=500.0, why="test")
+with mock.patch.object(D, "evaluate", return_value=fake):
+    r3 = D.run(st3, [], "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110000.0}, now + pd.Timedelta(hours=4))
+check(r3.get("note") == "contradictory" and len(st3["mcxdtc"]["open"]) == 1, "no contradictory SELL while a BUY is open")
+st4 = {"day": {"date": str(day.date())}}
+D.run(st4, [], "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110620.0}, now)
+with mock.patch.object(D, "evaluate", return_value=dict(fake, side="BUY", checkpoint="17:00")):
+    D.run(st4, [], "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110900.0}, now + pd.Timedelta(hours=4))
+with mock.patch.object(D, "evaluate", return_value=dict(fake, side="BUY", checkpoint="18:00")):
+    r4 = D.run(st4, [], "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110950.0}, now + pd.Timedelta(hours=5))
+check(len(st4["mcxdtc"]["open"]) == 2 and r4.get("note") == "risk cap", "17:00 add-on allowed; a 3rd position blocked by the 2-per-commodity cap")
+check("shadow" in (D.summary(st) or ""), "shadow scoreboard summary available")
 print(f"\n{ok} checks passed")
