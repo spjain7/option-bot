@@ -60,6 +60,10 @@ def load_all(source="eq"):
             if d is not None and len(d) > 300:
                 D[s] = ED.adjust_splits(d, log, s)
         nifty = ED.load("NIFTY")
+        if nifty is None:                         # index not in the Angel EQ download -> stored NSE index history
+            from research.program import harness as H
+            nifty = ED.clean(H.nseidx("NIFTY")[["time", "open", "high", "low", "close", "volume"]].copy())
+            print("NIFTY from harness.nseidx, last", nifty.time.max())
     else:
         from research.program import emax as EX, search_all as SA, harness as H
         ED.MIN_TURNOVER = 0.0                     # futures volume is in contracts – turnover filter not meaningful here

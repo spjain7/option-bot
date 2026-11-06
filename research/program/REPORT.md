@@ -1009,3 +1009,16 @@ WebSocket bars served 870 requests vs 1,530 REST fallbacks (MCX bars often flagg
 Proposed fix (needs owner approval – production change): during NSE hours, take intraday bars from the WebSocket
 collector by default and pre-fetch candle history before 09:00 IST, using REST only for gaps; separately investigate the
 MCX WebSocket mismatch. Not implemented.
+
+## EQ-001/002 — NSE cash-stock daily, ORB and top-5 portfolio (Angel data, 472 stocks, 2007 – 4 Nov 2026) — REJECTED
+
+Data: research-data run 42297526571 (496 daily, 218 five-minute files). NIFTY index taken from stored NSE index history (to 19 Oct 2026) because the Angel download has no index file.
+Caveat: the universe is today's stock list, so delisted names are missing (survivorship bias flatters BUY results).
+
+| Test | Combos | PASS | Best |
+|---|---|---|---|
+| Daily setups (`eq_research.py eq`) | 288 | 0 | Pullback D_PB, bull regime, open entry, 2×ATR stop, 3R: +0.053R, n 10,245, all 4 blocks positive, q 0.011 — fails only on stocks positive 54.9 % (bar 55 %) |
+| Opening-range breakout (`eq_orb.py eq`, 500 days) | 432 | 0 | Best +0.015R (a SELL; BUY side is negative in every opening-range length) |
+| Daily top-5 by relative strength, ≤ 2 per industry (`eq_top5.py`) | 96 | 0 | D_PB top-5 +0.027R vs random-5 +0.026R and all signals +0.043R; one block negative |
+
+Conclusion: nothing passes the pre-registered bar. The pullback edge is small (≈ +0.05R before survivorship correction) and ranking by relative strength adds nothing over random picks. Nothing implemented; no shadow or Telegram change.
