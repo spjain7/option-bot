@@ -113,7 +113,22 @@ def minutes(token, day, d=None):
         return df
     df["time"] = pd.to_datetime(df["time"])
     df = df[df["time"].dt.normalize() == pd.Timestamp(day).normalize()]
-    return df.drop_duplicates("time", keep="last").sort_values("time").reset_index(drop=True)
+    return merge_minutes(df)
+
+
+def merge_minutes(df):
+    """6-Nov-2026 FIX: one minute can be written in several rows – the collector's 15-second flush closes a minute while
+    ticks stamped with that (lagging) exchange minute are still arriving; every row holds only the volume added since the
+    previous row. Merge them: open first, high max, low min, close last, volume SUM, OI last. (Was: keep the last row ->
+    WebSocket bars showed ~0 volume – MCX 0 %, NFO futures 11 % of minutes – so the hourly REST check failed on 'volume
+    ratio 0.0', every engine fell back to REST and the day scans were rate-limited.)"""
+    if df is None or df.empty:
+        return df
+    d = df.sort_values("time", kind="stable")
+    g = d.groupby("time", sort=True)
+    out = g.agg(open=("open", "first"), high=("high", "max"), low=("low", "min"), close=("close", "last"),
+                volume=("volume", "sum"), oi=("oi", "last")).reset_index()
+    return out[[c for c in COLS if c in out.columns]].reset_index(drop=True)
 
 
 def bucket_start(t, interval, exch):
@@ -199,7 +214,7 @@ def export(out, step="FIVE_MINUTE", d=None):
             continue
         ex = info.at[tok, "exch"] if tok in info.index else "NFO"
         for day, g in m.groupby(m["time"].dt.normalize()):
-            b = aggregate(g.drop_duplicates("time", keep="last"), step, ex if ex in OPEN else "NFO")
+            b = aggregate(merge_minutes(g), step, ex if ex in OPEN else "NFO")
             b.insert(0, "token", tok)
             for c in ("exch", "name", "symbol", "expiry"):
                 b[c] = info.at[tok, c] if tok in info.index and c in info.columns else ""
