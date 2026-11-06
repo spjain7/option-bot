@@ -24,9 +24,9 @@ CANDLES_PER_DAY = {"MCX": {"15m": 58, "30m": 29, "1h": 15, "2h": 8, "3h": 5, "4h
 # Evidence: research/program/results/search_v2_summary.csv (SEARCH-V2, 6-Nov-2026): positive in all three periods,
 # Benjamini-Hochberg q < 0.10 across 5,292 combinations, >= 55 % of instruments positive. Stock 2h / 4h rules are NOT used:
 # their research candles were not day-anchored, so live candles would differ from the test.
-def _r(mkt, tf, fam, par, filt, side, k, r, maxh, n, win, R, periods, tier, label, status="LIVE"):
+def _r(mkt, tf, fam, par, filt, side, k, r, maxh, n, win, R, periods, tier, label, status="LIVE", mode="next_open"):
     return dict(mkt=mkt, tf=tf, fam=fam, par=par, filt=filt, side=side, k=k, r=r, maxh=maxh, n=n, win=win, R=R, periods=periods,
-                tier=tier, label=label, status=status)
+                tier=tier, label=label, status=status, mode=mode)
 
 
 RULES = {
@@ -61,6 +61,11 @@ RULES = {
                              "Bollinger squeeze breakdown"),
     "RB_STK_4h_MACD0_SELL": _r("STOCKS", "4h", "MACD", "zero", "DT", "SELL", 1.5, 2.0, 40, 1034, 49, 0.19, "+0.11/+0.24/+0.20", "A",
                                "MACD zero-line cross"),
+    # RSIX-001 (6-Nov-2026, owner request "RSI extreme + reversal candle high breakout"): of 216k RSI-reversal variants this is
+    # the one family positive in all three 20-year periods and on 7 / 7 commodities. Entry = BUY-STOP above the reversal
+    # candle's high (next 3 sessions; cancelled if its low breaks first). Close-confirmed entries lost the edge (+0.07R).
+    "RB_MCX_1d_RSIX_BUY": _r("MCX", "1d", "RSIX", "7/30", "none", "BUY", 1.5, 3.0, 20, 264, 46, 0.19, "+0.19/+0.12/+0.26 (20 y)", "B",
+                             "RSI(7) oversold reversal · buy above candle high", mode="stop"),
     "RB_STK_1d_RSI80_BUY": _r("STOCKS", "1d", "RSICONT", "80/20", "DT", "BUY", 2.0, 3.0, 20, 234, 55, 0.27, "+0.33/+0.19/+0.19", "B",
                               "RSI momentum above 80"),
 }
@@ -216,6 +221,13 @@ def raw(f, fam, par):
         lu = pd.Series(np.where(c > hh20, hh20, np.nan)).ffill().values
         ld = pd.Series(np.where(c < ll20, ll20, np.nan)).ffill().values
         return bu & (l <= lu + 0.3 * atr) & (c > lu), bd & (h >= ld - 0.3 * atr) & (c < ld)
+    if fam == "RSIX":                                      # research/program/rsix.py E1 + bull/bear candle + ADX(14) < 20
+        n_, L = (int(x) for x in par.split("/"))
+        r7 = I.rsi(cs, n_)
+        rng = np.where(h - l > 0, h - l, np.nan); pos = (c - l) / rng
+        lowadx = np.nan_to_num(adx, nan=99) < 20
+        return ((r7.rolling(3).min().values <= L) & (c > o) & (pos >= 0.5) & lowadx,
+                (r7.rolling(3).max().values >= 100 - L) & (c < o) & (pos <= 0.5) & lowadx)
     if fam == "SQZ":                                       # Bollinger (20, 2) squeeze: width near its 100-candle low, then a close outside
         mid = cs.rolling(20).mean(); sd = cs.rolling(20).std()
         up, dn = (mid + 2 * sd).values, (mid - 2 * sd).values
@@ -252,7 +264,7 @@ def evaluate(f, rule, dtr):
             return dict(rejected=f"daily trend not {'up' if side > 0 else 'down'}")
     if "VOL" in flt and not float(f["volx"].iloc[i]) >= 1.5:
         return dict(rejected="volume < 1.5x")
-    return dict(candle=str(f["time"].iloc[i]), close=c, atr=float(f["atr"].iloc[i]), adx=float(f["adx"].iloc[i]),
+    return dict(candle=str(f["time"].iloc[i]), close=c, high=float(f["high"].iloc[i]), low=float(f["low"].iloc[i]), atr=float(f["atr"].iloc[i]), adx=float(f["adx"].iloc[i]),
                 rsi=float(f["rsi"].iloc[i]), vol_x=float(f["volx"].iloc[i]) if f["volx"].iloc[i] == f["volx"].iloc[i] else None)
 
 
@@ -263,7 +275,8 @@ def describe(rule):
            "RSIDIV": "RSI divergence at a 10-candle extreme", "MACD": f"MACD {par} cross", "ST": "Supertrend (10, 3) flip",
            "EMAX": f"EMA {par} cross", "INSIDE": "inside-bar breakout", "PIN": "pin bar at a 20-candle extreme",
            "MOMO": "momentum candle (body ≥ 1.5 ATR)", "FAIL": "failed 20-candle breakout – reversal",
-           "RETEST": "breakout retest of the 20-candle level", "SQZ": "Bollinger squeeze (20, 2) break"}.get(fam, fam)
+           "RETEST": "breakout retest of the 20-candle level", "SQZ": "Bollinger squeeze (20, 2) break",
+           "RSIX": f"RSI({par.split('/')[0]}) touched {par.split('/')[1]} / {100 - int(par.split('/')[1])} + reversal candle, ADX < 20"}.get(fam, fam)
     flt = {"none": "", "DT": " · with the daily trend", "EMA200": " · EMA200 side", "ADX25": " · ADX ≥ 25"}.get(rule["filt"], " · " + rule["filt"])
     return txt + flt
 
@@ -303,6 +316,9 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
             FN.note(state, rid, "rejected", clash, key=fk, now=now); out[rid] = clash; continue
         if any(r["name"] == name and r.get("rule") == rid for r in st["open"]):
             FN.note(state, rid, "rejected", "already open", key=fk, now=now); out[rid] = "already open"; continue
+        if rule.get("mode") == "stop":
+            out[rid] = _stop_entry(state, msgs, st, rid, rule, sig, name, ex, c, q, api, now, mult, shadow, fk, last, after_close)
+            continue
         if q is None and not after_close and api is not None and hasattr(api, "quotes"):
             try:                                          # quote only when a signal actually fires (saves the Angel quota)
                 q = (api.quotes({ex: [str(c["token"])]}) or {}).get(str(c["token"]))
@@ -358,3 +374,74 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
         out[rid] = "SENT"
         print(f"[rulebook] {name} {rid} SENT entry {plan['entry']} SL {plan['sl']} T {plan['target']}")
     return out
+
+
+STOP_VALID_SESSIONS = 3          # research: trigger window = the 3 candles after the setup candle
+
+
+def _stop_entry(state, msgs, st, rid, rule, sig, name, ex, c, q, api, now, mult, shadow, fk, last, after_close):
+    """RSIX-style call: BUY-STOP above the setup candle's high (SELL-STOP below its low). Stored as a PENDING record;
+    four_hour.track() activates it when the live price crosses the trigger, cancels it if the setup candle's other
+    extreme breaks first, and expires it after STOP_VALID_SESSIONS sessions. Entry/SL/targets are fixed from the trigger."""
+    from alerts import funnel as FN
+    s_ = 1 if rule["side"] == "BUY" else -1
+    t = float(c.get("tick") or 0.05)
+    trig = TP.tick_round(sig["high"] if s_ > 0 else sig["low"], t)
+    inv = sig["low"] if s_ > 0 else sig["high"]
+    risk = rule["k"] * sig["atr"]
+    if not risk > 0:
+        FN.note(state, rid, "rejected", "ATR missing", key=fk, now=now); return "ATR missing"
+    if q is None and not after_close and api is not None and hasattr(api, "quotes"):
+        try:
+            q = (api.quotes({ex: [str(c["token"])]}) or {}).get(str(c["token"]))
+        except Exception:
+            q = None
+    ltp = float((q or {}).get("ltp") or 0)
+    entry, pending = trig, True
+    if ltp > 0 and s_ * (ltp - trig) > 0:                       # already through the trigger at the first look
+        if s_ * (ltp - trig) > 0.5 * sig["atr"]:
+            FN.note(state, rid, "rejected", "already ran > 0.5 ATR past the trigger", key=fk, now=now)
+            return "already ran past the trigger"
+        entry, pending = TP.tick_round(ltp, t), False
+    if ltp > 0 and s_ * (ltp - inv) < 0:
+        FN.note(state, rid, "rejected", "setup candle broken the other way", key=fk, now=now); return "setup broken"
+    sl = TP.tick_round(entry - s_ * risk, t)
+    tgt = TP.tick_round(entry + s_ * rule["r"] * risk, t)
+    t1 = TP.tick_round(entry + s_ * risk, t)
+    rec = dict(name=name, ex=ex, token=str(c["token"]), contract=c["symbol"], expiry=c["expiry"], side=rule["side"],
+               entry=entry, stop=sl, target=tgt, risk=risk, tick=t, mult=mult, opened=str(now), days=[str(now.date())],
+               key=f"RB|{rid}|{name}|{last}", max_days=int(rule["maxh"]), tfl=TF_TXT[rule["tf"]], rule=rid,
+               trigger=trig, invalid=inv, pending=pending, pending_days=[str(now.date())],
+               **({"shadow": True} if shadow else {}))
+    st["open"].append(rec)
+    if shadow:
+        FN.note(state, rid, "shadow", key=fk, now=now); return "shadow"
+    lot = c.get("lot")
+    risk_lot = risk * float(mult or 1)
+    word = ("BUY ABOVE" if s_ > 0 else "SELL BELOW") if pending else ("BUY NOW" if s_ > 0 else "SELL NOW")
+    msgs.append("\n".join([
+        f"{'🟢' if s_ > 0 else '🔴'} {word} {TP.fmt(trig, t)}  ·  {name} FUT  ·  DAILY · {rule.get('label', rid)}",
+        "━━━━━━━━━━━━━━",
+        f"Trigger : {TP.fmt(trig, t)} (reversal candle {'high' if s_ > 0 else 'low'}) – stop order, enter only if traded through",
+        f"SL      : {TP.fmt(sl, t)}  (1.5 ATR)",
+        f"T1      : {TP.fmt(t1, t)}  (1R)",
+        f"T2      : {TP.fmt(tgt, t)}  ({rule['r']:g}R – exit here)",
+        f"R:R     : 1:{rule['r']:g} · risk ₹{risk_lot:,.0f} per lot",
+        f"Lot     : {lot or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  MCX",
+        f"Valid   : {STOP_VALID_SESSIONS} sessions · cancel if price trades {'below' if s_ > 0 else 'above'} {TP.fmt(inv, t)} first"
+        + ("" if pending else " · ALREADY TRIGGERED")]))
+    msgs.append("\n".join([
+        f"📌 WHY – {name} {rule['side']} (daily)",
+        f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b} candle – {describe(rule)}",
+        f"• Numbers : close {TP.fmt(sig['close'], t)} · ATR {TP.fmt(sig['atr'], t)} · ADX {sig['adx']:.0f}",
+        f"• Exit    : SL or T2 · time exit after {rule['maxh']} sessions · exit 1 session before expiry",
+        f"• Strength: tier {rule.get('tier', 'B')} – {rule['n']} backtest trades (2006-26, 7 commodities), {rule['win']:.0f}% won, "
+        f"{rule['R']:+.2f}R avg after 2× costs, periods {rule['periods']} (backtest, not a guarantee)",
+        WARN]))
+    if not pending:
+        RP.add(state, key=rec["key"], mark_key=str(c["token"]), seg="MCX", cat="FUTURES", name=name, symbol=c["symbol"],
+               type="Daily RSIX", side=rule["side"], entry=entry, sl=sl, target=tgt, tick=t, lot=lot, mult=mult, time=str(now))
+        state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
+    FN.note(state, rid, "sent", key=fk, now=now)
+    print(f"[rulebook] {name} {rid} SENT {'pending trigger' if pending else 'entry'} {entry} SL {sl} T {tgt}")
+    return "SENT (pending trigger)" if pending else "SENT"

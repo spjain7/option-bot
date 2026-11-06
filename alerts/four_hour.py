@@ -261,6 +261,30 @@ def track(state, msgs, api, now, is_open):
         if d not in r["days"]:
             r["days"].append(d)
         ltp = float((qq.get(r["token"]) or {}).get("ltp") or 0)
+        if r.get("pending"):                                  # 6-Nov RSIX: stop-entry call waiting for its trigger
+            if d not in r["pending_days"]:
+                r["pending_days"].append(d)
+            if ltp > 0 and s_ * (ltp - r["invalid"]) < 0:
+                note = "cancelled – setup candle broken the other way before the trigger"
+            elif ltp > 0 and s_ * (ltp - r["trigger"]) >= 0:
+                r["pending"] = False; r["days"] = [d]; r["opened"] = str(now)
+                if not r.get("shadow"):
+                    msgs.append(f"⚡ TRIGGERED – {r['name']} FUT {r['side']} ({r.get('tfl', 'daily')}) through {TP.fmt(r['trigger'], r['tick'])} "
+                                f"(live {TP.fmt(ltp, r['tick'])}) · SL {TP.fmt(r['stop'], r['tick'])} · T2 {TP.fmt(r['target'], r['tick'])}")
+                    RP.add(state, key=r["key"], mark_key=r["token"], seg="MCX" if r["ex"] == "MCX" else "NSE", cat="FUTURES",
+                           name=r["name"], symbol=r["contract"], type=f"{r.get('tfl', 'daily').capitalize()} RSIX", side=r["side"],
+                           entry=r["entry"], sl=r["stop"], target=r["target"], tick=r["tick"], lot=None, mult=r["mult"], time=str(now))
+                    state.setdefault("day", {})["alerts"] = state.get("day", {}).get("alerts", 0) + 1
+                keep.append(r); continue
+            elif len(r["pending_days"]) > r.get("pending_max", 3):
+                note = "expired – trigger not reached in 3 sessions"
+            else:
+                keep.append(r); continue
+            if not r.get("shadow"):
+                msgs.append(f"➖ {r['name']} FUT {r['side']} ({r.get('tfl', 'daily')}) trigger {TP.fmt(r['trigger'], r['tick'])}: {note} · no trade")
+            r.update(exit=None, exit_reason=note, closed=str(now), result_R=None)
+            st["closed"] = (st["closed"] + [r])[-200:]
+            continue
         why = px = None
         if ltp > 0 and s_ * (ltp - r["stop"]) <= 0:
             why, px = "stop-loss", r["stop"]
