@@ -967,3 +967,33 @@ shift, 0 / 60 with a CI above zero; median permutation rank 0.56 (= chance).** O
 rank 1.00 / 0.97, CI −0.02 … +2.43) → the only lead for follow-up research; the others regress to chance (e.g. GOLD 15m
 sweep-reversal SELL WF +0.33R → OOS −0.92R, rank 0.00). Matched-control verdict: apart from the day-trend strategy (MCXD-005,
 rank 100 %), no MCX intraday price-action strategy is validated.
+
+## CRSB – validation of the frozen CRUDEOIL 30m S/R-zone breakout BUY (6-Nov-2026) – DECISION: REJECTED
+Code: crude_srbrk.py (freeze, audit, max-stat), crsb_robust.py, crsb_prehist.py. Results: results/crsb_*.
+**1 Freeze.** 30m, SR BRK, BUY, filter trend (60m), stop-order entry, structure stop, hold to 23:00, S/R lookback 100 /
+tolerance 0.25 ATR / ≥ 2 pivots, pivot ±3, fees + 1.5 ticks/side, chosen at 2026-06-30. Spec fingerprint e1e67650438d5895,
+data fingerprint a5f6e0d0f1d0fbc2 (5m 2023-09-27 … 2026-11-03).
+**2 Audit.** Reproduced exactly: 38 OOS trades, +1.10R mean, +41.8R total, median −0.57R, win 42 %, PF 2.93, max DD 3.5R,
+longest losing run 3, 19 stops / 19 square-offs, no duplicates or look-ahead entries. **Top 3 trades = 83 % of the profit;
+without them +0.20R.** Bootstrap 95 % CI +0.03 … +2.39R.
+**3 Selection-aware test (10,000 permutations, matched same-session time controls, max-z over all 60 walk-forward
+survivors = the set it was picked from).** Raw p 0.004 (z 3.0), but the best of 60 random streams reaches z ≥ 3.0 in 34 % of
+permutations → **adjusted p = 0.34. Not significant.** (Widening to all 840 streams can only raise this, so it was not run.)
+**4 Robustness (frozen, nothing tuned).** OOS survives 2–3 × costs (+0.99 / +0.88R), +1/+2 bar delay (+1.12 / +1.13R) and
++2/+5 tick stop slippage (+1.07 / +1.02R), but every CI then touches zero. Before OOS (the selection period, not independent):
++0.37R, falls to +0.16R at 2 × costs and −0.05R at 3 ×. By year: 2023 +0.21, 2024 +0.07 (118 trades), 2025 +0.51, 2026 +1.05.
+Regimes: works in mid/high ATR, weak in low ATR (+0.11R, 143 trades) and ADX > 30 (+0.13R). Exploratory nearby S/R settings
+(labelled, not a replacement): all OOS +0.79 … +1.18R – the level definition is not fragile, but they share the same 38-ish
+days so add no independent evidence.
+**5 Independent history.** Crude 15m stitched front month exists from 2020-10 (never used in any selection). Pseudo-5m bars
+built from 15m were validated on 2023-26 (295 matched signals, correlation 0.994, +0.52 vs +0.54R). **2021 – Sep 2023: 313
+trades, +0.02R (CI −0.21 … +0.26), −0.17R at 2 × costs; 2021 −0.28R, 2022 +0.37R, 2023 +0.28R.** Roll handling: stitched,
+not back-adjusted, roll days excluded; trades within 5 sessions after a roll +0.03R vs others +0.02R – no roll artefact.
+**6 vs day-trend.** DTC rule on Crude: +0.22R OOS (28 trades) but −0.02R overall – does not transfer (as before). Breakout
+with day-trend agreement: OOS −0.40R (6 trades), all +0.12R – combining does not help. Breakout and DTC-BUY share 57 of 233
+breakout days, daily-R correlation 0.45; the breakout's profit sits on those shared up-trend days (+1.73R vs +0.08R other days)
+– i.e. it is mostly a "Crude trended up that day" effect, and that split uses information from later in the day, so it is not
+a usable filter.
+**7 Decision: REJECTED.** The +1.10R is one lucky stream out of 60 (adjusted p 0.34), carried by 3 trades, and the same frozen
+rule earned ≈ 0 over 2½ independent years and loses at 2 × costs. Not eligible for shadow. No production or Telegram change.
+If wanted, it can be re-checked passively in a year from logged data – no new code in the bot.
