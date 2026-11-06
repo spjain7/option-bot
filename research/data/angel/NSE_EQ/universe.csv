@@ -1,0 +1,497 @@
+symbol,industry,company,fno,token,source,asof
+360ONE,Financial Services,360 ONE WAM Ltd.,True,13061,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ABB,Capital Goods,ABB India Ltd.,True,13,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ACC,Construction Materials,ACC Ltd.,False,22,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ACMESOLAR,Power,ACME Solar Holdings Ltd.,False,27061,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AIAENG,Capital Goods,AIA Engineering Ltd.,False,13086,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+APLAPOLLO,Capital Goods,APL Apollo Tubes Ltd.,True,25780,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AUBANK,Financial Services,AU Small Finance Bank Ltd.,True,21238,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AWL,Fast Moving Consumer Goods,AWL Agri Business Ltd.,False,8110,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AADHARHFC,Financial Services,Aadhar Housing Finance Ltd.,False,23729,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AARTIIND,Chemicals,Aarti Industries Ltd.,False,7,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AAVAS,Financial Services,Aavas Financiers Ltd.,False,5385,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ABBOTINDIA,Healthcare,Abbott India Ltd.,False,17903,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ACE,Capital Goods,Action Construction Equipment Ltd.,False,13587,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ACUTAAS,Healthcare,Acutaas Chemicals Ltd.,False,5578,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ADANIENSOL,Power,Adani Energy Solutions Ltd.,True,10217,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ADANIENT,Metals & Mining,Adani Enterprises Ltd.,True,25,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ADANIGREEN,Power,Adani Green Energy Ltd.,True,3563,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ADANIPORTS,Services,Adani Ports and Special Economic Zone Ltd.,True,15083,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ADANIPOWER,Power,Adani Power Ltd.,True,17388,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ATGL,Oil Gas & Consumable Fuels,Adani Total Gas Ltd.,False,6066,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ABCAPITAL,Financial Services,Aditya Birla Capital Ltd.,True,21614,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ABREL,Realty,Aditya Birla Real Estate Ltd.,False,625,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ABSLAMC,Financial Services,Aditya Birla Sun Life AMC Ltd.,False,6018,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CPPLUS,Capital Goods,Aditya Infotech Ltd.,False,758858,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AEGISLOG,Oil Gas & Consumable Fuels,Aegis Logistics Ltd.,False,40,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AEGISVOPAK,Oil Gas & Consumable Fuels,Aegis Vopak Terminals Ltd.,False,757336,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AETHER,Chemicals,Aether Industries Ltd.,False,9810,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AFCONS,Construction,Afcons Infrastructure Ltd.,False,25977,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AFFLE,Information Technology,Affle 3i Ltd.,False,11343,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AJANTPHARM,Healthcare,Ajanta Pharmaceuticals Ltd.,False,8124,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ALKEM,Healthcare,Alkem Laboratories Ltd.,True,11703,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ABDL,Fast Moving Consumer Goods,Allied Blenders and Distillers Ltd.,False,24308,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ARE&M,Automobile and Auto Components,Amara Raja Energy & Mobility Ltd.,False,100,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AMBER,Consumer Durables,Amber Enterprises India Ltd.,True,1185,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AMBUJACEM,Construction Materials,Ambuja Cements Ltd.,True,1270,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ANANDRATHI,Financial Services,Anand Rathi Wealth Ltd.,True,7145,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ANANTRAJ,Realty,Anant Raj Ltd.,False,13620,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ANGELONE,Financial Services,Angel One Ltd.,True,324,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ANTHEM,Healthcare,Anthem Biosciences Ltd.,False,757885,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ANURAS,Chemicals,Anupam Rasayan India Ltd.,False,2829,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+APARINDS,Capital Goods,Apar Industries Ltd.,False,11491,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+APOLLOHOSP,Healthcare,Apollo Hospitals Enterprise Ltd.,True,157,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+APOLLOTYRE,Automobile and Auto Components,Apollo Tyres Ltd.,False,163,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+APTUS,Financial Services,Aptus Value Housing Finance India Ltd.,False,5435,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ASAHIINDIA,Automobile and Auto Components,Asahi India Glass Ltd.,False,5378,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ASHOKLEY,Capital Goods,Ashok Leyland Ltd.,True,212,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ASIANPAINT,Consumer Durables,Asian Paints Ltd.,True,236,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ASTERDM,Healthcare,Aster DM Quality Care Ltd.,False,1508,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ASTRAL,Capital Goods,Astral Ltd.,True,14418,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ATHERENERG,Automobile and Auto Components,Ather Energy Ltd.,True,757645,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ATUL,Chemicals,Atul Ltd.,False,263,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AUROPHARMA,Healthcare,Aurobindo Pharma Ltd.,True,275,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AIIL,Financial Services,Authum Investment & Infrastructure Ltd.,False,23553,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AVANTIFEED,Fast Moving Consumer Goods,Avanti Feeds Ltd.,False,7936,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DMART,Consumer Services,Avenue Supermarts Ltd.,True,19913,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AXISBANK,Financial Services,Axis Bank Ltd.,True,5900,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+AZAD,Capital Goods,Azad Engineering Ltd.,False,20905,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BEML,Capital Goods,BEML Ltd.,False,395,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BLS,Consumer Services,BLS International Services Ltd.,False,17279,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BSE,Financial Services,BSE Ltd.,True,19585,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BAJAJ-AUTO,Automobile and Auto Components,Bajaj Auto Ltd.,True,16669,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BAJFINANCE,Financial Services,Bajaj Finance Ltd.,True,317,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BAJAJFINSV,Financial Services,Bajaj Finserv Ltd.,True,16675,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BAJAJHLDNG,Financial Services,Bajaj Holdings & Investment Ltd.,False,305,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BAJAJHFL,Financial Services,Bajaj Housing Finance Ltd.,False,25270,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BALKRISIND,Automobile and Auto Components,Balkrishna Industries Ltd.,False,335,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BALRAMCHIN,Fast Moving Consumer Goods,Balrampur Chini Mills Ltd.,False,341,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BANDHANBNK,Financial Services,Bandhan Bank Ltd.,True,2263,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BANKBARODA,Financial Services,Bank of Baroda,True,4668,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BANKINDIA,Financial Services,Bank of India,True,4745,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MAHABANK,Financial Services,Bank of Maharashtra,True,11377,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BATAINDIA,Consumer Durables,Bata India Ltd.,False,371,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BELRISE,Automobile and Auto Components,Belrise Industries Ltd.,False,757102,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BERGEPAINT,Consumer Durables,Berger Paints India Ltd.,False,404,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BHARATCOAL,Oil Gas & Consumable Fuels,Bharat Coking Coal Ltd.,False,760726,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BDL,Capital Goods,Bharat Dynamics Ltd.,True,2144,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BEL,Capital Goods,Bharat Electronics Ltd.,True,383,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BHARATFORG,Automobile and Auto Components,Bharat Forge Ltd.,True,422,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BHEL,Capital Goods,Bharat Heavy Electricals Ltd.,True,438,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BPCL,Oil Gas & Consumable Fuels,Bharat Petroleum Corporation Ltd.,True,526,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BHARTIARTL,Telecommunication,Bharti Airtel Ltd.,True,10604,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BHARTIHEXA,Telecommunication,Bharti Hexacom Ltd.,False,23489,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GROWW,Financial Services,Billionbrains Garage Ventures Ltd.,False,759806,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BIOCON,Healthcare,Biocon Ltd.,True,11373,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BSOFT,Information Technology,Birlasoft Ltd.,False,6994,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BBOX,Information Technology,Black Box Ltd.,False,3435,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BLUESTARCO,Consumer Durables,Blue Star Ltd.,True,8311,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BOSCHLTD,Automobile and Auto Components,Bosch Ltd.,True,2181,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FIRSTCRY,Consumer Services,Brainbees Solutions Ltd.,False,24814,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BRIGADE,Realty,Brigade Enterprises Ltd.,False,15184,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+BRITANNIA,Fast Moving Consumer Goods,Britannia Industries Ltd.,True,547,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CCL,Fast Moving Consumer Goods,CCL Products (I) Ltd.,False,11452,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CESC,Power,CESC Ltd.,False,628,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CGPOWER,Capital Goods,CG Power and Industrial Solutions Ltd.,True,760,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CIEINDIA,Automobile and Auto Components,CIE Automotive India Ltd.,False,14937,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CRISIL,Financial Services,CRISIL Ltd.,False,757,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CANFINHOME,Financial Services,Can Fin Homes Ltd.,False,583,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CANBK,Financial Services,Canara Bank,True,10794,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CANHLIFE,Financial Services,Canara HSBC Life Insurance Company Ltd.,False,759477,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CAPLIPOINT,Healthcare,Caplin Point Laboratories Ltd.,False,3906,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CGCL,Financial Services,Capri Global Capital Ltd.,False,20329,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CARBORUNIV,Capital Goods,Carborundum Universal Ltd.,False,595,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CARTRADE,Consumer Services,Cartrade Tech Ltd.,False,5407,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CASTROLIND,Oil Gas & Consumable Fuels,Castrol India Ltd.,False,1250,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CEATLTD,Automobile and Auto Components,Ceat Ltd.,False,15254,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CEMPRO,Construction,Cemindia Projects Ltd.,False,5622,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CENTRALBK,Financial Services,Central Bank of India,False,14894,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CDSL,Financial Services,Central Depository Services (India) Ltd.,True,21174,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CMPDI,Services,Central Mine Planning & Design Institute Ltd.,False,761581,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CHAMBLFERT,Chemicals,Chambal Fertilizers & Chemicals Ltd.,False,637,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CHENNPETRO,Oil Gas & Consumable Fuels,Chennai Petroleum Corporation Ltd.,False,2049,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CHOICEIN,Financial Services,Choice International Ltd.,False,8866,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CHOLAHLDNG,Financial Services,Cholamandalam Financial Holdings Ltd.,False,21740,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CHOLAFIN,Financial Services,Cholamandalam Investment and Finance Company Ltd.,True,685,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CIPLA,Healthcare,Cipla Ltd.,True,694,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CUB,Financial Services,City Union Bank Ltd.,True,5701,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CLEANMAX,Power,Clean Max Enviro Energy Solutions Ltd.,False,760183,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CLEAN,Chemicals,Clean Science and Technology Ltd.,False,5049,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+COALINDIA,Oil Gas & Consumable Fuels,Coal India Ltd.,True,20374,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+COCHINSHIP,Capital Goods,Cochin Shipyard Ltd.,True,21508,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+COFORGE,Information Technology,Coforge Ltd.,True,11543,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+COHANCE,Healthcare,Cohance Lifesciences Ltd.,False,17945,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+COLPAL,Fast Moving Consumer Goods,Colgate Palmolive (India) Ltd.,True,15141,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CAMS,Financial Services,Computer Age Management Services Ltd.,True,342,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CONCORDBIO,Healthcare,Concord Biotech Ltd.,False,18060,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CONCOR,Services,Container Corporation of India Ltd.,True,4749,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+COROMANDEL,Chemicals,Coromandel International Ltd.,True,739,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CRAFTSMAN,Automobile and Auto Components,Craftsman Automation Ltd.,False,2854,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CREDITACC,Financial Services,CreditAccess Grameen Ltd.,False,4421,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CROMPTON,Consumer Durables,Crompton Greaves Consumer Electricals Ltd.,True,17094,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CUMMINSIND,Capital Goods,Cummins India Ltd.,True,1901,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CUPID,Fast Moving Consumer Goods,Cupid Ltd.,False,18520,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+CYIENT,Information Technology,Cyient Ltd.,False,5748,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DLF,Realty,DLF Ltd.,True,14732,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DOMS,Fast Moving Consumer Goods,DOMS Industries Ltd.,False,20551,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DABUR,Fast Moving Consumer Goods,Dabur India Ltd.,True,772,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DALBHARAT,Construction Materials,Dalmia Bharat Ltd.,False,8075,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DATAPATTNS,Capital Goods,Data Patterns (India) Ltd.,True,7358,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DEEPAKFERT,Chemicals,Deepak Fertilisers & Petrochemicals Corp. Ltd.,False,827,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DEEPAKNTR,Chemicals,Deepak Nitrite Ltd.,False,19943,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DELHIVERY,Services,Delhivery Ltd.,True,9599,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DEVYANI,Consumer Services,Devyani International Ltd.,False,5373,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DIVISLAB,Healthcare,Divi's Laboratories Ltd.,True,10940,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DIXON,Consumer Durables,Dixon Technologies (India) Ltd.,True,21690,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LALPATHLAB,Healthcare,Dr. Lal Path Labs Ltd.,False,11654,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+DRREDDY,Healthcare,Dr. Reddy's Laboratories Ltd.,True,881,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+EIDPARRY,Fast Moving Consumer Goods,E.I.D. Parry (India) Ltd.,False,916,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+EIHOTEL,Consumer Services,EIH Ltd.,False,919,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+EICHERMOT,Automobile and Auto Components,Eicher Motors Ltd.,True,910,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ELECON,Capital Goods,Elecon Engineering Co. Ltd.,False,13643,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ELGIEQUIP,Capital Goods,Elgi Equipments Ltd.,False,937,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+EMAMILTD,Fast Moving Consumer Goods,Emami Ltd.,False,13517,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+EMCURE,Healthcare,Emcure Pharmaceuticals Ltd.,False,24398,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+EMMVEE,Capital Goods,Emmvee Photovoltaic Power Ltd.,False,759728,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ENDURANCE,Automobile and Auto Components,Endurance Technologies Ltd.,False,18822,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ENGINERSIN,Construction,Engineers India Ltd.,False,4907,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ESCORTS,Capital Goods,Escorts Kubota Ltd.,False,958,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ETERNAL,Consumer Services,Eternal Ltd.,True,5097,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+EXIDEIND,Automobile and Auto Components,Exide Industries Ltd.,False,676,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NYKAA,Consumer Services,FSN E-Commerce Ventures Ltd.,True,6545,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FEDERALBNK,Financial Services,Federal Bank Ltd.,True,1023,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FACT,Chemicals,Fertilisers and Chemicals Travancore Ltd.,False,1008,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FINCABLES,Capital Goods,Finolex Cables Ltd.,False,1038,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FSL,Services,Firstsource Solutions Ltd.,False,14304,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FIVESTAR,Financial Services,Five-Star Business Finance Ltd.,False,12032,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FORCEMOT,Automobile and Auto Components,Force Motors Ltd.,True,11573,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FORTIS,Healthcare,Fortis Healthcare Ltd.,True,14592,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FRACTAL,Information Technology,Fractal Analytics Ltd.,False,760961,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GAIL,Oil Gas & Consumable Fuels,GAIL (India) Ltd.,True,4717,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GVT&D,Capital Goods,GE Vernova T&D India Ltd.,True,16783,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GMRAIRPORT,Services,GMR Airports Ltd.,True,13528,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GABRIEL,Automobile and Auto Components,Gabriel India Ltd.,False,1085,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GALLANTT,Capital Goods,Gallantt Ispat Ltd.,False,13337,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GRSE,Capital Goods,Garden Reach Shipbuilders & Engineers Ltd.,False,5475,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GICRE,Financial Services,General Insurance Corporation of India,False,277,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GILLETTE,Fast Moving Consumer Goods,Gillette India Ltd.,False,1576,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GLAND,Healthcare,Gland Pharma Ltd.,False,1186,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GLAXO,Healthcare,Glaxosmithkline Pharmaceuticals Ltd.,False,1153,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GLENMARK,Healthcare,Glenmark Pharmaceuticals Ltd.,True,7406,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MEDANTA,Healthcare,Global Health Ltd.,False,11956,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GPIL,Capital Goods,Godawari Power & Ispat Ltd.,False,13409,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GODFRYPHLP,Fast Moving Consumer Goods,Godfrey Phillips India Ltd.,True,1181,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GODREJCP,Fast Moving Consumer Goods,Godrej Consumer Products Ltd.,True,10099,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GODREJIND,Diversified,Godrej Industries Ltd.,False,10925,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GODREJPROP,Realty,Godrej Properties Ltd.,True,17875,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GRANULES,Healthcare,Granules India Ltd.,False,11872,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GRAPHITE,Capital Goods,Graphite India Ltd.,False,592,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GRASIM,Construction Materials,Grasim Industries Ltd.,True,1232,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GRAVITA,Metals & Mining,Gravita India Ltd.,False,20534,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GESHIP,Services,Great Eastern Shipping Co. Ltd.,False,13776,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+FLUOROCHEM,Chemicals,Gujarat Fluorochemicals Ltd.,False,13750,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+GMDCLTD,Metals & Mining,Gujarat Mineral Development Corporation Ltd.,False,5204,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HBLENGINE,Capital Goods,HBL Engineering Ltd.,False,13966,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HCLTECH,Information Technology,HCL Technologies Ltd.,True,7229,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HDBFS,Financial Services,HDB Financial Services Ltd.,False,757772,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HDFCAMC,Financial Services,HDFC Asset Management Company Ltd.,True,4244,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HDFCBANK,Financial Services,HDFC Bank Ltd.,True,1333,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HDFCLIFE,Financial Services,HDFC Life Insurance Company Ltd.,True,467,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HEGAM,Capital Goods,HEG Advanced Materials Ltd.,False,1336,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HAVELLS,Consumer Durables,Havells India Ltd.,True,9819,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HEROMOTOCO,Automobile and Auto Components,Hero MotoCorp Ltd.,True,1348,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HEXT,Information Technology,Hexaware Technologies Ltd.,False,29666,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HSCL,Chemicals,Himadri Speciality Chemical Ltd.,False,14334,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HINDALCO,Metals & Mining,Hindalco Industries Ltd.,True,1363,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HAL,Capital Goods,Hindustan Aeronautics Ltd.,True,2303,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HINDCOPPER,Metals & Mining,Hindustan Copper Ltd.,False,17939,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HINDPETRO,Oil Gas & Consumable Fuels,Hindustan Petroleum Corporation Ltd.,True,1406,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HINDUNILVR,Fast Moving Consumer Goods,Hindustan Unilever Ltd.,True,1394,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HINDZINC,Metals & Mining,Hindustan Zinc Ltd.,True,1424,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+POWERINDIA,Capital Goods,Hitachi Energy India Ltd.,True,18457,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HOMEFIRST,Financial Services,Home First Finance Company India Ltd.,False,2056,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HONASA,Fast Moving Consumer Goods,Honasa Consumer Ltd.,False,19813,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HONAUT,Capital Goods,Honeywell Automation India Ltd.,False,3417,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HUDCO,Financial Services,Housing & Urban Development Corporation Ltd.,False,20825,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+HYUNDAI,Automobile and Auto Components,Hyundai Motor India Ltd.,True,25844,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ICICIBANK,Financial Services,ICICI Bank Ltd.,True,4963,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ICICILIFE,Financial Services,ICICI Life Insurance Ltd.,True,18652,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ICICIGI,Financial Services,ICICI Lombard General Insurance Company Ltd.,True,21770,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ICICIAMC,Financial Services,ICICI Prudential Asset Management Company Ltd.,False,760407,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IDBI,Financial Services,IDBI Bank Ltd.,False,1476,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IDFCFIRSTB,Financial Services,IDFC First Bank Ltd.,True,11184,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IFCI,Financial Services,IFCI Ltd.,False,1491,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IIFL,Financial Services,IIFL Finance Ltd.,False,11809,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INOXINDIA,Capital Goods,INOX India Ltd.,False,20607,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IRB,Construction,IRB Infrastructure Developers Ltd.,False,15313,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IRCON,Construction,IRCON International Ltd.,False,4986,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ITCHOTELS,Consumer Services,ITC Hotels Ltd.,False,29251,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ITC,Fast Moving Consumer Goods,ITC Ltd.,True,1660,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ITI,Telecommunication,ITI Ltd.,False,1675,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INDIACEM,Construction Materials,India Cements Ltd.,False,1515,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INDIAMART,Consumer Services,Indiamart Intermesh Ltd.,False,10726,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INDIANB,Financial Services,Indian Bank,True,14309,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IEX,Financial Services,Indian Energy Exchange Ltd.,True,220,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INDHOTEL,Consumer Services,Indian Hotels Co. Ltd.,True,1512,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IOC,Oil Gas & Consumable Fuels,Indian Oil Corporation Ltd.,True,1624,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IOB,Financial Services,Indian Overseas Bank,False,9348,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IRCTC,Consumer Services,Indian Railway Catering And Tourism Corporation Ltd.,False,13611,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IRFC,Financial Services,Indian Railway Finance Corporation Ltd.,True,2029,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IREDA,Financial Services,Indian Renewable Energy Development Agency Ltd.,True,20261,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IGL,Oil Gas & Consumable Fuels,Indraprastha Gas Ltd.,False,11262,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INDUSTOWER,Telecommunication,Indus Towers Ltd.,True,29135,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INDUSINDBK,Financial Services,IndusInd Bank Ltd.,True,5258,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NAUKRI,Consumer Services,Info Edge (India) Ltd.,True,13751,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INFY,Information Technology,Infosys Ltd.,True,1594,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INOXWIND,Capital Goods,Inox Wind Ltd.,True,7852,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INTELLECT,Information Technology,Intellect Design Arena Ltd.,False,5926,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+INDIGO,Services,InterGlobe Aviation Ltd.,True,11195,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IGIL,Services,International Gemological Institute Ltd.,False,28378,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IKS,Information Technology,Inventurus Knowledge Solutions Ltd.,False,28125,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IPCALAB,Healthcare,Ipca Laboratories Ltd.,False,1633,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JKCEMENT,Construction Materials,J.K. Cement Ltd.,False,13270,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JBMA,Automobile and Auto Components,JBM Auto Ltd.,False,11655,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JKTYRE,Automobile and Auto Components,JK Tyre & Industries Ltd.,False,14435,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JMFINANCIL,Financial Services,JM Financial Ltd.,False,13637,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JSWCEMENT,Construction Materials,JSW Cement Ltd.,False,758460,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JSWENERGY,Power,JSW Energy Ltd.,True,17869,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JSWINFRA,Services,JSW Infrastructure Ltd.,False,19020,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JSWSTEEL,Metals & Mining,JSW Steel Ltd.,True,11723,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JAINREC,Metals & Mining,Jain Resource Recycling Ltd.,False,759244,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JPPOWER,Power,Jaiprakash Power Ventures Ltd.,False,11763,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+J&KBANK,Financial Services,Jammu & Kashmir Bank Ltd.,False,5633,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JINDALSAW,Capital Goods,Jindal Saw Ltd.,False,3024,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JSL,Metals & Mining,Jindal Stainless Ltd.,False,11236,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JINDALSTEL,Metals & Mining,Jindal Steel Ltd.,True,6733,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JIOFIN,Financial Services,Jio Financial Services Ltd.,True,18143,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JUBLFOOD,Consumer Services,Jubilant Foodworks Ltd.,True,18096,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JUBLINGREA,Chemicals,Jubilant Ingrevia Ltd.,False,2783,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JWL,Capital Goods,Jupiter Wagons Ltd.,False,20224,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+JYOTICNC,Capital Goods,Jyoti CNC Automation Ltd.,False,21334,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KPRMILL,Textiles,K.P.R. Mill Ltd.,False,14912,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KEI,Capital Goods,KEI Industries Ltd.,True,13310,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KPITTECH,Information Technology,KPIT Technologies Ltd.,True,9683,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KSB,Capital Goods,KSB Ltd.,False,1949,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KAJARIACER,Consumer Durables,Kajaria Ceramics Ltd.,False,1808,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KPIL,Construction,Kalpataru Projects International Ltd.,False,1814,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KALYANKJIL,Consumer Durables,Kalyan Jewellers India Ltd.,True,2955,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KARURVYSYA,Financial Services,Karur Vysya Bank Ltd.,True,1838,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KAYNES,Capital Goods,Kaynes Technology India Ltd.,True,12092,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KEC,Construction,Kec International Ltd.,False,13260,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KFINTECH,Financial Services,Kfin Technologies Ltd.,True,13359,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KIRLOSBROS,Capital Goods,Kirloskar Brothers Ltd.,False,18581,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KIRLOSENG,Capital Goods,Kirloskar Oil Eng Ltd.,False,20936,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KOTAKBANK,Financial Services,Kotak Mahindra Bank Ltd.,True,1922,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+KIMS,Healthcare,Krishna Institute of Medical Sciences Ltd.,False,4847,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LTF,Financial Services,L&T Finance Ltd.,True,24948,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LTTS,Information Technology,L&T Technology Services Ltd.,False,18564,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LGEINDIA,Consumer Durables,LG Electronics India Ltd.,False,760213,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LICHSGFIN,Financial Services,LIC Housing Finance Ltd.,True,1997,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LTFOODS,Fast Moving Consumer Goods,LT Foods Ltd.,False,13816,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LTM,Information Technology,LTM Ltd.,True,17818,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LT,Construction,Larsen & Toubro Ltd.,True,11483,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LAURUSLABS,Healthcare,Laurus Labs Ltd.,True,19234,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LEMONTREE,Consumer Services,Lemon Tree Hotels Ltd.,False,2606,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LENSKART,Consumer Services,Lenskart Solutions Ltd.,False,759605,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LICI,Financial Services,Life Insurance Corporation of India,True,9480,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LINDEINDIA,Chemicals,Linde India Ltd.,False,1627,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LLOYDSME,Metals & Mining,Lloyds Metals And Energy Ltd.,False,17313,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LODHA,Realty,Lodha Developers Ltd.,True,3220,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+LUPIN,Healthcare,Lupin Ltd.,True,10440,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MMTC,Services,MMTC Ltd.,False,17957,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MRF,Automobile and Auto Components,MRF Ltd.,False,2277,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MTARTECH,Capital Goods,MTAR Technologies Ltd.,False,2709,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MGL,Oil Gas & Consumable Fuels,Mahanagar Gas Ltd.,False,17534,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+M&MFIN,Financial Services,Mahindra & Mahindra Financial Services Ltd.,False,13285,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+M&M,Automobile and Auto Components,Mahindra & Mahindra Ltd.,True,2031,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MANAPPURAM,Financial Services,Manappuram Finance Ltd.,True,19061,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MRPL,Oil Gas & Consumable Fuels,Mangalore Refinery & Petrochemicals Ltd.,False,2283,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MANKIND,Healthcare,Mankind Pharma Ltd.,True,15380,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MARICO,Fast Moving Consumer Goods,Marico Ltd.,True,4067,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MARUTI,Automobile and Auto Components,Maruti Suzuki India Ltd.,True,10999,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MFSL,Financial Services,Max Financial Services Ltd.,True,2142,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MAXHEALTH,Healthcare,Max Healthcare Institute Ltd.,True,22377,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MAZDOCK,Capital Goods,Mazagoan Dock Shipbuilders Ltd.,True,509,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MEESHO,Consumer Services,Meesho Ltd.,False,760229,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MINDACORP,Automobile and Auto Components,Minda Corporation Ltd.,False,25897,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MSUMI,Automobile and Auto Components,Motherson Sumi Wiring India Ltd.,False,8596,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MOTILALOFS,Financial Services,Motilal Oswal Financial Services Ltd.,True,14947,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MPHASIS,Information Technology,MphasiS Ltd.,True,4503,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MCX,Financial Services,Multi Commodity Exchange of India Ltd.,True,31181,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MUTHOOTFIN,Financial Services,Muthoot Finance Ltd.,True,23650,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NATCOPHARM,Healthcare,NATCO Pharma Ltd.,False,3918,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NBCC,Construction,NBCC (India) Ltd.,True,31415,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NCC,Construction,NCC Ltd.,False,2319,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NHPC,Power,NHPC Ltd.,True,17400,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NLCINDIA,Power,NLC India Ltd.,False,8585,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NMDC,Metals & Mining,NMDC Ltd.,True,15332,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NSLNISP,Metals & Mining,NMDC Steel Ltd.,False,14180,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NTPCGREEN,Power,NTPC Green Energy Ltd.,False,27176,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NTPC,Power,NTPC Ltd.,True,11630,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NH,Healthcare,Narayana Hrudayalaya Ltd.,False,11840,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NATIONALUM,Metals & Mining,National Aluminium Co. Ltd.,True,6364,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NAVA,Power,Nava Ltd.,False,4014,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NAVINFLUOR,Chemicals,Navin Fluorine International Ltd.,True,14672,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NESTLEIND,Fast Moving Consumer Goods,Nestle India Ltd.,True,17963,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NETWEB,Information Technology,Netweb Technologies India Ltd.,False,17433,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NEULANDLAB,Healthcare,Neuland Laboratories Ltd.,False,2406,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NAM-INDIA,Financial Services,Nippon Life India Asset Management Ltd.,True,357,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NUVAMA,Financial Services,Nuvama Wealth Management Ltd.,False,18721,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NUVOCO,Construction Materials,Nuvoco Vistas Corporation Ltd.,False,5426,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+OBEROIRLTY,Realty,Oberoi Realty Ltd.,True,20242,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ONGC,Oil Gas & Consumable Fuels,Oil & Natural Gas Corporation Ltd.,True,2475,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+OIL,Oil Gas & Consumable Fuels,Oil India Ltd.,True,17438,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+OLAELEC,Automobile and Auto Components,Ola Electric Mobility Ltd.,False,24777,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+OLECTRA,Automobile and Auto Components,Olectra Greentech Ltd.,False,10637,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PAYTM,Financial Services,One 97 Communications Ltd.,True,6705,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ONESOURCE,Healthcare,Onesource Specialty Pharma Ltd.,False,29224,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+OFSS,Information Technology,Oracle Financial Services Software Ltd.,True,10738,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+POLICYBZR,Financial Services,PB Fintech Ltd.,True,6656,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PCBL,Chemicals,PCBL Chemical Ltd.,False,2649,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PGEL,Consumer Durables,PG Electroplast Ltd.,True,25358,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PIIND,Chemicals,PI Industries Ltd.,True,24184,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PNBHOUSING,Financial Services,PNB Housing Finance Ltd.,True,18908,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PTCIL,Capital Goods,PTC Industries Ltd.,False,16682,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PVRINOX,Media Entertainment & Publication,PVR INOX Ltd.,False,13147,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PAGEIND,Textiles,Page Industries Ltd.,True,14413,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PARADEEP,Chemicals,Paradeep Phosphates Ltd.,False,9741,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PATANJALI,Fast Moving Consumer Goods,Patanjali Foods Ltd.,True,17029,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PERSISTENT,Information Technology,Persistent Systems Ltd.,True,18365,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PETRONET,Oil Gas & Consumable Fuels,Petronet LNG Ltd.,True,11351,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PHOENIXLTD,Realty,Phoenix Mills Ltd.,True,14552,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PWL,Consumer Services,Physicswallah Ltd.,False,759723,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PIDILITIND,Chemicals,Pidilite Industries Ltd.,True,2664,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PINELABS,Financial Services,Pine Labs Ltd.,False,759820,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PIRAMALFIN,Financial Services,Piramal Finance Ltd.,False,759551,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PPLPHARMA,Healthcare,Piramal Pharma Ltd.,False,11571,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+POLYMED,Healthcare,Poly Medicure Ltd.,False,25718,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+POLYCAB,Capital Goods,Polycab India Ltd.,True,9590,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+POONAWALLA,Financial Services,Poonawalla Fincorp Ltd.,False,11403,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PFC,Financial Services,Power Finance Corporation Ltd.,True,14299,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+POWERGRID,Power,Power Grid Corporation of India Ltd.,True,14977,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PREMIERENE,Capital Goods,Premier Energies Ltd.,True,25049,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PRESTIGE,Realty,Prestige Estates Projects Ltd.,True,20302,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PFOCUS,Media Entertainment & Publication,Prime Focus Ltd.,False,13496,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PRIVISCL,Chemicals,Privi Speciality Chemicals Ltd.,False,8825,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+PNB,Financial Services,Punjab National Bank,True,10666,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RRKABEL,Capital Goods,R R Kabel Ltd.,False,18566,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RBLBANK,Financial Services,RBL Bank Ltd.,True,18391,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RECLTD,Financial Services,REC Ltd.,True,15355,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RHIM,Capital Goods,RHI MAGNESITA INDIA LTD.,False,31163,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RITES,Construction,RITES Ltd.,False,3761,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RADICO,Fast Moving Consumer Goods,Radico Khaitan Ltd,True,10990,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RVNL,Construction,Rail Vikas Nigam Ltd.,True,9552,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RAILTEL,Telecommunication,Railtel Corporation Of India Ltd.,False,2431,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RAINBOW,Healthcare,Rainbow Childrens Medicare Ltd.,False,9408,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RKFORGE,Automobile and Auto Components,Ramkrishna Forgings Ltd.,False,11411,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+REDINGTON,Services,Redington Ltd.,False,14255,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RELIANCE,Oil Gas & Consumable Fuels,Reliance Industries Ltd.,True,2885,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RPOWER,Power,Reliance Power Ltd.,False,15259,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RUBICON,Healthcare,Rubicon Research Ltd.,False,759316,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SBICARD,Financial Services,SBI Cards and Payment Services Ltd.,True,17971,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SBILIFE,Financial Services,SBI Life Insurance Company Ltd.,True,21808,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SJVN,Power,SJVN Ltd.,False,18883,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SHRIPISTON,Automobile and Auto Components,SPR Auto Technologies Ltd.,False,17186,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SRF,Chemicals,SRF Ltd.,True,3273,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SAGILITY,Information Technology,Sagility Ltd.,True,27052,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SAILIFE,Healthcare,Sai Life Sciences Ltd.,False,27839,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SAMMAANCAP,Financial Services,Sammaan Capital Ltd.,False,30125,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+MOTHERSON,Automobile and Auto Components,Samvardhana Motherson International Ltd.,True,4204,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SANSERA,Automobile and Auto Components,Sansera Engineering Ltd.,False,5751,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SARDAEN,Metals & Mining,Sarda Energy and Minerals Ltd.,False,17758,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SCHAEFFLER,Automobile and Auto Components,Schaeffler India Ltd.,False,1011,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SCHNEIDER,Capital Goods,Schneider Electric Infrastructure Ltd.,False,31234,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SCI,Services,Shipping Corporation of India Ltd.,False,3048,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SHREECEM,Construction Materials,Shree Cement Ltd.,True,3103,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SHRIRAMFIN,Financial Services,Shriram Finance Ltd.,True,4306,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SHYAMMETL,Capital Goods,Shyam Metalics and Energy Ltd.,False,4693,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ENRIN,Capital Goods,Siemens Energy India Ltd.,True,756871,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SIEMENS,Capital Goods,Siemens Ltd.,True,3150,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SIGNATURE,Realty,Signatureglobal (India) Ltd.,False,18743,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SOBHA,Realty,Sobha Ltd.,False,13826,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SOLARINDS,Chemicals,Solar Industries India Ltd.,True,13332,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SONACOMS,Automobile and Auto Components,Sona BLW Precision Forgings Ltd.,True,4684,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+STARHEALTH,Financial Services,Star Health and Allied Insurance Company Ltd.,False,7083,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SBIN,Financial Services,State Bank of India,True,3045,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SAIL,Metals & Mining,Steel Authority of India Ltd.,True,2963,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SUMICHEM,Chemicals,Sumitomo Chemical India Ltd.,False,17105,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SUNPHARMA,Healthcare,Sun Pharmaceutical Industries Ltd.,True,3351,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SUNTV,Media Entertainment & Publication,Sun TV Network Ltd.,False,13404,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SUNDARMFIN,Financial Services,Sundaram Finance Ltd.,False,3339,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SUPREMEIND,Capital Goods,Supreme Industries Ltd.,True,3363,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SUZLON,Capital Goods,Suzlon Energy Ltd.,True,12018,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SWANCORP,Chemicals,Swan Corp Ltd.,False,27095,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SWIGGY,Consumer Services,Swiggy Ltd.,True,27066,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SYNGENE,Healthcare,Syngene International Ltd.,False,10243,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+SYRMA,Capital Goods,Syrma SGS Technology Ltd.,True,10793,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TBOTEK,Consumer Services,TBO Tek Ltd.,False,23740,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TDPOWERSYS,Capital Goods,TD Power Systems Ltd.,False,25178,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TVSMOTOR,Automobile and Auto Components,TVS Motor Company Ltd.,True,8479,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATACAP,Financial Services,Tata Capital Ltd.,False,759265,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATACHEM,Chemicals,Tata Chemicals Ltd.,False,3405,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATACOMM,Telecommunication,Tata Communications Ltd.,False,3721,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TCS,Information Technology,Tata Consultancy Services Ltd.,True,11536,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATACONSUM,Fast Moving Consumer Goods,Tata Consumer Products Ltd.,True,3432,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATAELXSI,Information Technology,Tata Elxsi Ltd.,True,3411,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATAINVEST,Financial Services,Tata Investment Corporation Ltd.,False,1621,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TMCV,Capital Goods,Tata Motors Ltd.,False,759782,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TMPV,Automobile and Auto Components,Tata Motors Passenger Vehicles Ltd.,True,3456,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATAPOWER,Power,Tata Power Co. Ltd.,True,3426,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATASTEEL,Metals & Mining,Tata Steel Ltd.,True,3499,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TATATECH,Information Technology,Tata Technologies Ltd.,False,20293,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TTML,Telecommunication,Tata Teleservices (Maharashtra) Ltd.,False,8954,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TECHM,Information Technology,Tech Mahindra Ltd.,True,13538,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TECHNOE,Construction,Techno Electric & Engineering Company Ltd.,False,6445,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TEGA,Capital Goods,Tega Industries Ltd.,False,7105,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TEJASNET,Telecommunication,Tejas Networks Ltd.,False,21131,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TENNIND,Automobile and Auto Components,Tenneco Clean Air India Ltd.,False,759880,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+THANGAMAYL,Consumer Durables,Thangamayil Jewellery Ltd.,False,18118,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+NIACL,Financial Services,The New India Assurance Company Ltd.,False,399,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+RAMCOCEM,Construction Materials,The Ramco Cements Ltd.,False,2043,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+THERMAX,Capital Goods,Thermax Ltd.,False,3475,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TIMKEN,Capital Goods,Timken India Ltd.,False,14198,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TITAGARH,Capital Goods,Titagarh Rail Systems Ltd.,False,15414,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TITAN,Consumer Durables,Titan Company Ltd.,True,3506,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TORNTPHARM,Healthcare,Torrent Pharmaceuticals Ltd.,True,3518,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TORNTPOWER,Power,Torrent Power Ltd.,False,13786,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TARIL,Capital Goods,Transformers And Rectifiers (India) Ltd.,False,15174,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TRENT,Consumer Services,Trent Ltd.,True,1964,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TRIDENT,Textiles,Trident Ltd.,False,9685,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TRITURBINE,Capital Goods,Triveni Turbine Ltd.,False,25584,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+TIINDIA,Automobile and Auto Components,Tube Investments of India Ltd.,True,312,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UCOBANK,Financial Services,UCO Bank,False,11223,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UNOMINDA,Automobile and Auto Components,UNO Minda Ltd.,True,14154,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UPL,Chemicals,UPL Ltd.,True,11287,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UTIAMC,Financial Services,UTI Asset Management Company Ltd.,False,527,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ULTRACEMCO,Construction Materials,UltraTech Cement Ltd.,True,11532,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UNIONBANK,Financial Services,Union Bank of India,True,10753,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UBL,Fast Moving Consumer Goods,United Breweries Ltd.,False,16713,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UNITDSPR,Fast Moving Consumer Goods,United Spirits Ltd.,True,10447,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+URBANCO,Consumer Services,Urban Company Ltd.,False,759084,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+USHAMART,Capital Goods,Usha Martin Ltd.,False,8840,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VTL,Textiles,Vardhman Textiles Ltd.,False,2073,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VBL,Fast Moving Consumer Goods,Varun Beverages Ltd.,True,18921,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VAML,Metals & Mining,Vedanta Aluminium Metal Ltd.,False,750174,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VISL,Metals & Mining,Vedanta Iron and Steel Ltd.,False,750290,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VEDL,Metals & Mining,Vedanta Ltd.,True,3063,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VOGL,Oil Gas & Consumable Fuels,Vedanta Oil and Gas Ltd.,False,750368,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VEDPOWER,Power,Vedanta Power Ltd.,False,750518,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VIJAYA,Healthcare,Vijaya Diagnostic Centre Ltd.,False,5585,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VMM,Consumer Services,Vishal Mega Mart Ltd.,True,27969,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+IDEA,Telecommunication,Vodafone Idea Ltd.,True,14366,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+VOLTAS,Consumer Durables,Voltas Ltd.,True,3718,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+WAAREEENER,Capital Goods,Waaree Energies Ltd.,True,25907,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+WELCORP,Capital Goods,Welspun Corp Ltd.,False,11821,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+WELSPUNLIV,Textiles,Welspun Living Ltd.,False,11253,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+WHIRLPOOL,Consumer Durables,Whirlpool of India Ltd.,False,18011,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+WIPRO,Information Technology,Wipro Ltd.,True,3787,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+WOCKPHARMA,Healthcare,Wockhardt Ltd.,False,7506,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+YESBANK,Financial Services,Yes Bank Ltd.,True,11915,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ZFCVINDIA,Automobile and Auto Components,ZF Commercial Vehicle Control Systems India Ltd.,False,16915,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ZEEL,Media Entertainment & Publication,Zee Entertainment Enterprises Ltd.,False,3812,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ZENTEC,Capital Goods,Zen Technologies Ltd.,False,7508,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ZENSARTECH,Information Technology,Zensar Technolgies Ltd.,False,1076,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ZYDUSLIFE,Healthcare,Zydus Lifesciences Ltd.,True,7929,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ZYDUSWELL,Fast Moving Consumer Goods,Zydus Wellness Ltd.,False,17635,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+ECLERX,Services,eClerx Services Ltd.,False,15179,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
+UJJIVANSFB,,,True,15228,https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv,2026-11-06
