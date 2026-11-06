@@ -845,3 +845,8 @@ Gross edge (before costs) +0.01…+0.17R vs random entries +0.00R (DEV +0.04 / H
 only ~0.05-0.1R better than random; costs 0.3-1.3R per trade at these timeframes (stops are small). Net at 1× costs negative
 in every range × timeframe × period. OI buildup and volume expansion did not improve results (slightly worse on average).
 Failure mechanism: intraday ranges on 5-30 min are too small relative to MCX costs; the information in breakouts is tiny.
+
+## MCXI-002 – EIA release breakouts (CRUDEOIL Wed, NATURALGAS Thu), 5-min, 2023-2026
+Release hours are larger (median post-release hour 4.5 vs 3.6 ATR crude, 5.1 vs 3.3 ATR natural gas), but the break of the
+60-minute pre-release range loses in HIST for every side / stop / exit (−0.2 … −1.5R; control days −0.35 … −0.45R).
+DEV positives rest on 3-6 trades. Mechanism: release spikes whipsaw through both sides of the range. Rejected.
