@@ -62,9 +62,10 @@ RULES = {
     "RB_STK_4h_MACD0_SELL": _r("STOCKS", "4h", "MACD", "zero", "DT", "SELL", 1.5, 2.0, 40, 1034, 49, 0.19, "+0.11/+0.24/+0.20", "A",
                                "MACD zero-line cross"),
     # RSIX-001 (6-Nov-2026, owner request "RSI extreme + reversal candle high breakout"): of 216k RSI-reversal variants this is
-    # the one family positive in all three 20-year periods and on 7 / 7 commodities. Entry = BUY-STOP above the reversal
-    # candle's high (next 3 sessions; cancelled if its low breaks first). Close-confirmed entries lost the edge (+0.07R).
-    "RB_MCX_1d_RSIX_BUY": _r("MCX", "1d", "RSIX", "7/30", "none", "BUY", 1.5, 3.0, 20, 264, 46, 0.19, "+0.19/+0.12/+0.26 (20 y)", "B",
+    # the one family positive in all three 20-year periods. Entry = BUY-STOP above the reversal candle's high (next 3 sessions;
+    # cancelled if its low breaks first). Close-confirmed entries lost the edge. ROLLCHECK-001: evidence re-stated on the
+    # roll-adjusted daily series (the first numbers, +0.19R, held trades through contract-roll gaps).
+    "RB_MCX_1d_RSIX_BUY": _r("MCX", "1d", "RSIX", "7/30", "none", "BUY", 1.5, 3.0, 20, 250, 45, 0.16, "+0.08/+0.05/+0.36 (20 y, roll-adjusted)", "B",
                              "RSI(7) oversold reversal · buy above candle high", mode="stop"),
     "RB_STK_1d_RSI80_BUY": _r("STOCKS", "1d", "RSICONT", "80/20", "DT", "BUY", 2.0, 3.0, 20, 234, 55, 0.27, "+0.33/+0.19/+0.19", "B",
                               "RSI momentum above 80"),
@@ -305,6 +306,8 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
             feats[rule["tf"]] = features(fr)
         sig = evaluate(feats[rule["tf"]], rule, dtr)
         if sig is None:
+            if rule.get("mode") == "stop" and rule["status"] == "LIVE":
+                _early_warning(state, msgs, rid, rule, feats[rule["tf"]], name, last, now)
             continue
         fk = f"{name}|{last}"
         FN.note(state, rid, "signal", key=fk, now=now)
@@ -419,7 +422,9 @@ def _stop_entry(state, msgs, st, rid, rule, sig, name, ex, c, q, api, now, mult,
     lot = c.get("lot")
     risk_lot = risk * float(mult or 1)
     word = ("BUY ABOVE" if s_ > 0 else "SELL BELOW") if pending else ("BUY NOW" if s_ > 0 else "SELL NOW")
+    stage = "🟡 CONFIRMED SETUP – not a trade until triggered" if pending else "⚡ ACTIONABLE CALL – trigger already traded"
     msgs.append("\n".join([
+        stage,
         f"{'🟢' if s_ > 0 else '🔴'} {word} {TP.fmt(trig, t)}  ·  {name} FUT  ·  DAILY · {rule.get('label', rid)}",
         "━━━━━━━━━━━━━━",
         f"Trigger : {TP.fmt(trig, t)} (reversal candle {'high' if s_ > 0 else 'low'}) – stop order, enter only if traded through",
@@ -442,6 +447,29 @@ def _stop_entry(state, msgs, st, rid, rule, sig, name, ex, c, q, api, now, mult,
         RP.add(state, key=rec["key"], mark_key=str(c["token"]), seg="MCX", cat="FUTURES", name=name, symbol=c["symbol"],
                type="Daily RSIX", side=rule["side"], entry=entry, sl=sl, target=tgt, tick=t, lot=lot, mult=mult, time=str(now))
         state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
-    FN.note(state, rid, "sent", key=fk, now=now)
+    FN.note(state, rid, "sent" if not pending else "setup", key=fk, now=now)
+    if not pending:
+        FN.note(state, rid, "triggered", key=fk, now=now)
     print(f"[rulebook] {name} {rid} SENT {'pending trigger' if pending else 'entry'} {entry} SL {sl} T {tgt}")
     return "SENT (pending trigger)" if pending else "SENT"
+
+
+def _early_warning(state, msgs, rid, rule, f, name, last, now):
+    """EARLY WARNING (owner lifecycle, 6-Nov): the RSIX condition is forming (RSI touched the extreme, ADX < 20) but the
+    reversal candle has not printed. Information only – never a trade, never in the ledger, max one per instrument+candle."""
+    from alerts import funnel as FN
+    n_, L = (int(x) for x in rule["par"].split("/"))
+    r = I.rsi(f["close"].astype(float), n_)
+    s_ = 1 if rule["side"] == "BUY" else -1
+    ext = r.iloc[-3:].min() <= L if s_ > 0 else r.iloc[-3:].max() >= 100 - L
+    if not (ext and float(f["adx"].iloc[-1]) < 20):
+        return
+    FN.note(state, rid, "early", key=f"{name}|{last}", now=now)
+    seen = state.setdefault("early_seen", [])
+    k = f"{rid}|{name}|{last}"
+    if k in seen:
+        return
+    state["early_seen"] = (seen + [k])[-500:]
+    msgs.append(f"👀 EARLY WARNING (info only – NOT a trade) · {name} daily: RSI({n_}) {r.iloc[-1]:.0f} after touching "
+                f"{L if s_ > 0 else 100 - L}, ADX {float(f['adx'].iloc[-1]):.0f}. A {'BUY' if s_ > 0 else 'SELL'} setup needs a "
+                f"{'bullish' if s_ > 0 else 'bearish'} reversal candle next; the call (with trigger/SL/target) follows only then.")

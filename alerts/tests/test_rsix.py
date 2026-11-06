@@ -82,5 +82,20 @@ check(not st3["fourh"]["open"] and "expired" in m7[0], "trigger not reached in 3
 st4, m8 = {"day": {"date": str(NOW.date())}}, []
 o4 = RB.run(st4, m8, None, "ZINC", "MCX", C, {"1d": fr}, fr, {"ltp": H + 2 * A}, NOW, 5000, "MCX")
 check(not m8 and "ran" in o4["RB_MCX_1d_RSIX_BUY"], "already > 0.5 ATR past the trigger -> no chase")
+check("CONFIRMED SETUP" in m[0] and "ACTIONABLE CALL" in m2[0] and "INVALIDATED" in m5[0], "lifecycle: confirmed setup -> actionable -> invalidated")
+fn = st["funnel"][str(NOW.date())]["RB_MCX_1d_RSIX_BUY"]
+check(fn["setup"] == 1 and fn["triggered"] == 1 and fn["sent"] == 0, "funnel: setup and actionable counted separately")
+from alerts import funnel as FN  # noqa: E402
+check("[reversal BUY]" in FN.summary(st), "daily summary separates reversal BUY statistics")
+# early warning: RSI extreme + ADX<20 but no bullish candle -> info message only
+ffw = RB.features(d); b7, _ = RB.raw(ffw, "RSIX", "7/30")
+r7s = I.rsi(d["close"], 7); adxv = ffw["adx"].values
+cand = [k for k in range(240, len(d)) if r7s.iloc[k - 2:k + 1].min() <= 30 and adxv[k] < 20 and not b7[k]]
+if cand:
+    fe = d.iloc[:cand[-1] + 1].reset_index(drop=True)
+    st5, m9 = {"day": {"date": str(NOW.date())}}, []
+    RB.run(st5, m9, None, "ZINC", "MCX", C, {"1d": fe}, fe, q, NOW, 5000, "MCX")
+    check(len(m9) == 1 and "EARLY WARNING" in m9[0] and "NOT a trade" in m9[0] and not st5.get("ledger")
+          and not st5.get("fourh", {}).get("open"), "early warning: info line only, no record, no ledger")
 RB.RULES = keep
 print(f"\n{ok} checks passed")

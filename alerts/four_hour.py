@@ -269,7 +269,12 @@ def track(state, msgs, api, now, is_open):
             elif ltp > 0 and s_ * (ltp - r["trigger"]) >= 0:
                 r["pending"] = False; r["days"] = [d]; r["opened"] = str(now)
                 if not r.get("shadow"):
-                    msgs.append(f"⚡ TRIGGERED – {r['name']} FUT {r['side']} ({r.get('tfl', 'daily')}) through {TP.fmt(r['trigger'], r['tick'])} "
+                    try:
+                        from alerts import funnel as FN_
+                        FN_.triggered(state, r.get("rule", "?"), r["key"], now)
+                    except Exception:
+                        pass
+                    msgs.append(f"⚡ ACTIONABLE CALL – TRIGGERED – {r['name']} FUT {r['side']} ({r.get('tfl', 'daily')}) through {TP.fmt(r['trigger'], r['tick'])} "
                                 f"(live {TP.fmt(ltp, r['tick'])}) · SL {TP.fmt(r['stop'], r['tick'])} · T2 {TP.fmt(r['target'], r['tick'])}")
                     RP.add(state, key=r["key"], mark_key=r["token"], seg="MCX" if r["ex"] == "MCX" else "NSE", cat="FUTURES",
                            name=r["name"], symbol=r["contract"], type=f"{r.get('tfl', 'daily').capitalize()} RSIX", side=r["side"],
@@ -281,7 +286,7 @@ def track(state, msgs, api, now, is_open):
             else:
                 keep.append(r); continue
             if not r.get("shadow"):
-                msgs.append(f"➖ {r['name']} FUT {r['side']} ({r.get('tfl', 'daily')}) trigger {TP.fmt(r['trigger'], r['tick'])}: {note} · no trade")
+                msgs.append(f"⛔ INVALIDATED – {r['name']} FUT {r['side']} ({r.get('tfl', 'daily')}) trigger {TP.fmt(r['trigger'], r['tick'])}: {note} · no trade")
             r.update(exit=None, exit_reason=note, closed=str(now), result_R=None)
             st["closed"] = (st["closed"] + [r])[-200:]
             continue

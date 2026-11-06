@@ -21,7 +21,7 @@ def _day(state, now=None):
 def note(state, rule, stage, reason=None, key=None, now=None):
     """stage: 'signal' | 'rejected' | 'shadow' | 'sent' | 'data'. key (instrument|candle) de-duplicates repeated checks."""
     day = _day(state, now)
-    r = day.setdefault(rule, dict(signal=0, rejected={}, shadow=0, sent=0, data=0, keys=[]))
+    r = day.setdefault(rule, dict(signal=0, rejected={}, shadow=0, sent=0, data=0, early=0, setup=0, triggered=0, keys=[]))
     if key is not None:
         kk = f"{stage}|{key}"
         if kk in r["keys"]:
@@ -30,8 +30,8 @@ def note(state, rule, stage, reason=None, key=None, now=None):
     if stage == "rejected":
         why = (reason or "unknown")[:60]
         r["rejected"][why] = r["rejected"].get(why, 0) + 1
-    elif stage in r:
-        r[stage] += 1
+    else:
+        r[stage] = r.get(stage, 0) + 1
 
 
 def classify(text):
@@ -45,6 +45,18 @@ def classify(text):
     if "already" in t:
         return "rejected", "already in an open call"
     return None, None
+
+
+def category(rule):
+    """trend BUY / reversal BUY / SELL – for separate statistics."""
+    u = rule.upper()
+    if "RSIX" in u or "REV" in u or "SWEEP" in u:
+        return "reversal " + ("SELL" if "SELL" in u else "BUY")
+    return "SELL" if "SELL" in u else "trend BUY"
+
+
+def triggered(state, rule, key, now=None):
+    note(state, rule, "triggered", key=key, now=now)
 
 
 def summary(state, date=None):
@@ -76,6 +88,17 @@ def summary(state, date=None):
             L.append(f"• Telegram: {dv['sent']} delivered · {dv['failed']} failed (retried next run) · {dv['stale_dropped']} stale calls dropped")
     except Exception:
         pass
+    cat = {}                                              # owner 6-Nov: separate statistics per call category
+    for rule, r in day.items():
+        k = category(rule)
+        c_ = cat.setdefault(k, dict(early=0, setup=0, actionable=0, logged=0))
+        c_["early"] += r.get("early", 0); c_["setup"] += r.get("setup", 0)
+        c_["actionable"] += r.get("sent", 0) + r.get("triggered", 0); c_["logged"] += r.get("shadow", 0)
+    for k in sorted(cat):
+        c_ = cat[k]
+        if any(c_.values()):
+            L.append(f"• [{k}] early warnings {c_['early']} · confirmed setups {c_['setup']} · actionable {c_['actionable']}"
+                     f" · logged-only {c_['logged']}")
     L.insert(2, f"TOTAL: {tot['signal']} signals → {tot['sent']} sent · {tot['shadow']} logged only · {tot['rej']} rejected"
                 + (f" · {tot['data']} data failures" if tot["data"] else ""))
     return "\n".join(L)
