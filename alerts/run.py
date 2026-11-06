@@ -3,7 +3,7 @@
   python -m alerts.run scan     # fetch, evaluate, write state + outbox (no Telegram here)
   python -m alerts.run flush    # send the outbox AFTER the state was pushed (SAVE_OK=success|failure)
 """
-import json, os, sys, traceback
+import json, os, sys, time, traceback
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -150,8 +150,17 @@ def flush():
     msgs = json.loads(OUTBOX.read_text())["messages"]
     import paperguard
     msgs = [m for m in msgs if not paperguard.blocked(m)]          # hard guard, also for pending / hand-edited outboxes
+    stale = 0
     if PENDING.exists():                                   # messages that could not be delivered last time
-        msgs = json.loads(PENDING.read_text()) + msgs
+        old, nowt = json.loads(PENDING.read_text()), time.time()
+        keep = []
+        for x in old:                                      # 6-Nov: never deliver a stale CALL (> 30 min after it was made)
+            m_, t_ = (x.get("m"), x.get("t", nowt)) if isinstance(x, dict) else (x, nowt)
+            if nowt - t_ > STALE_SEC and _is_call(m_):
+                stale += 1; continue
+            keep.append(m_)
+        msgs = keep + msgs + ([f"⚠️ {stale} call alert(s) could not be delivered in time and were dropped (stale – do not act on old levels)."]
+                              if stale else [])
         PENDING.unlink()
     if os.getenv("SAVE_OK", "success") != "success":
         msgs = ["⚠️ ALERTS – state could not be saved this run; alerts below may repeat next run.\n"] + msgs
@@ -173,9 +182,36 @@ def flush():
         if k + 1 < len(msgs) and os.getenv("ALERTS_TELEGRAM", "1") == "1":
             time.sleep(GAP_SEC)
     if failed:                                             # keep them for the next run instead of losing them
-        PENDING.write_text(json.dumps(failed))
+        PENDING.write_text(json.dumps([dict(m=m, t=time.time()) for m in failed]))
         print(f"::warning::{len(failed)} message(s) kept for the next run")
+    _delivery_note(len(msgs) - len(failed), len(failed), stale)
     return 1 if failed else 0
+
+
+STALE_SEC = 30 * 60
+
+
+def _is_call(m):
+    t = str(m)
+    return ("Entry   :" in t or "Entry  :" in t) and ("SL      :" in t or "Stop-loss" in t)
+
+
+def _delivery_note(sent, failed, stale):
+    """Per-day Telegram delivery counts (read by the signal-funnel summary): sent / failed / stale calls dropped."""
+    p = PENDING.parent / "delivery.json"
+    try:
+        d = json.loads(p.read_text())
+    except Exception:
+        d = {}
+    day = time.strftime("%Y-%m-%d", time.gmtime(time.time() + 19800))
+    e = d.setdefault(day, dict(sent=0, failed=0, stale_dropped=0))
+    e["sent"] += sent; e["failed"] += failed; e["stale_dropped"] += stale
+    for k in sorted(d)[:-10]:
+        d.pop(k, None)
+    try:
+        p.write_text(json.dumps(d))
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":

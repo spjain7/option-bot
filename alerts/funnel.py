@@ -67,6 +67,15 @@ def summary(state, date=None):
         L.append(f"• {rule}: {r['signal']} → {r['sent']} sent / {r['shadow']} logged / {rej} rejected"
                  + (f" ({'; '.join(f'{k} ×{v}' for k, v in top)})" if top else "")
                  + (f" · ⚠️ {r['data']} data failures" if r["data"] else ""))
+    try:                                                  # Telegram delivery (alerts/run.py flush)
+        import json as _j
+        import os as _o
+        from pathlib import Path as _P
+        dv = _j.loads((_P(_o.getenv("ALERTS_STATE_DIR", "state/alerts")) / "delivery.json").read_text()).get(d)
+        if dv:
+            L.append(f"• Telegram: {dv['sent']} delivered · {dv['failed']} failed (retried next run) · {dv['stale_dropped']} stale calls dropped")
+    except Exception:
+        pass
     L.insert(2, f"TOTAL: {tot['signal']} signals → {tot['sent']} sent · {tot['shadow']} logged only · {tot['rej']} rejected"
                 + (f" · {tot['data']} data failures" if tot["data"] else ""))
     return "\n".join(L)

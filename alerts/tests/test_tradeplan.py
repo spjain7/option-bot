@@ -229,7 +229,7 @@ def test_telegram_failure_queues():
     finally:
         CR.telegram = orig
     check("Telegram failure -> messages kept in pending.json for the next run (not lost)",
-          json.loads(R.PENDING.read_text()) == ["m1", "m2"])
+          [x["m"] if isinstance(x, dict) else x for x in json.loads(R.PENDING.read_text())] == ["m1", "m2"])
     import notify
     notify.PENDING = tmp / "tg_pending.json"
     notify._queue("sell call")

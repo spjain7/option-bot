@@ -394,7 +394,7 @@ def test_telegram_delivery():
         (d / "outbox.json").write_text(json.dumps(dict(messages=["m1", "m2"])))
         with mock.patch("crude.run.telegram", side_effect=[(True, "ok"), (False, "HTTP 429")]):
             RUN.flush()
-        check("undelivered message is kept for the next run, not lost", json.loads((d / "pending.json").read_text()) == ["m2"])
+        check("undelivered message is kept for the next run, not lost", [x["m"] if isinstance(x, dict) else x for x in json.loads((d / "pending.json").read_text())] == ["m2"])
         sent = []
         (d / "outbox.json").write_text(json.dumps(dict(messages=["m3"])))
         with mock.patch("crude.run.telegram", side_effect=lambda t: (sent.append(t) or (True, "ok"))):

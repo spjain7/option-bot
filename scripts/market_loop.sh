@@ -118,7 +118,7 @@ iteration() {
     echo "alerts outcome: $outcome · seq $seq1 · save $SAVE_OK"
     [ -n "${GITHUB_STEP_SUMMARY:-}" ] && echo "- $(TZ=Asia/Kolkata date +%H:%M) IST alerts: $outcome · save $SAVE_OK" >> "$GITHUB_STEP_SUMMARY"
     [ -f state/alerts/outbox.json ] && SAVE_OK=$SAVE_OK python -m alerts.run flush
-    save alerts-state alerts state.json pending.json || echo "::warning::could not save the undelivered-message queue"
+    save alerts-state alerts state.json pending.json delivery.json || echo "::warning::could not save the undelivered-message queue"
     echo "alerts scan exit $rc, save $SAVE_OK"
   else
     echo "::error::alerts state restore failed"
