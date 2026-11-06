@@ -678,3 +678,8 @@ LONG20-001 (`long20.py`): 1,604 combinations on 20 years of daily candles. MCX B
 the BUY edge is not only the 2022-26 bull market. MCX SELL: none robust, none positive in 2013-19 beyond +0.26R (n 95). Index
 (2011-26): 8 robust BUY (EMA 20/50 cross, RSI>70, 5/10/20-day breakouts); no SELL. Live MCX daily 20-day+ADX rule: 20 years
 only +0.15R (2006-12 −0.02, 2013-19 +0.02) -> tier B; 55-day vol 2x breakout +0.49R in every era -> promoted.
+
+## STK-ANCHOR-001 (6-Nov-2026) – stock 2h / 4h on day-anchored candles (live-reproducible)
+`stk_anchor.py`, `results/stk_anchor_summary.csv`. 1,712 combinations, 24 robust – all SELL in a daily downtrend.
+Best: 2h Bollinger squeeze breakdown 2ATR/3R 1,014 trades +0.27R (+0.23/+0.31/+0.28); 4h MACD zero 1.5ATR/2R 1,034 +0.19R;
+4h EMA9/21 +0.16R; 2h EMA20/50 +0.19R. No stock BUY passed on 2h / 4h. Promoted: 2h SQZ SELL, 4h MACD-zero SELL (parity 8/8).
