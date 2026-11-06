@@ -56,6 +56,11 @@ RULES = {
                               "RSI momentum above 70"),
     "RB_IDX_1d_BO10_BUY": _r("INDEX", "1d", "BO", "N10 vol0", "none", "BUY", 1.5, 2.0, 20, 339, 45, 0.23, "+0.13/+0.24/+0.27 (15 y)", "A",
                              "10-day breakout"),
+    # STK-ANCHOR-001 (6-Nov): stock 2h / 4h on DAY-ANCHORED candles (= live candles), 181 stocks 2022-26, 2x costs, FDR
+    "RB_STK_2h_SQZ_SELL": _r("STOCKS", "2h", "SQZ", "BB20", "DT", "SELL", 2.0, 3.0, 50, 1014, 46, 0.27, "+0.23/+0.31/+0.28", "A",
+                             "Bollinger squeeze breakdown"),
+    "RB_STK_4h_MACD0_SELL": _r("STOCKS", "4h", "MACD", "zero", "DT", "SELL", 1.5, 2.0, 40, 1034, 49, 0.19, "+0.11/+0.24/+0.20", "A",
+                               "MACD zero-line cross"),
     "RB_STK_1d_RSI80_BUY": _r("STOCKS", "1d", "RSICONT", "80/20", "DT", "BUY", 2.0, 3.0, 20, 234, 55, 0.27, "+0.33/+0.19/+0.19", "B",
                               "RSI momentum above 80"),
 }
@@ -211,6 +216,12 @@ def raw(f, fam, par):
         lu = pd.Series(np.where(c > hh20, hh20, np.nan)).ffill().values
         ld = pd.Series(np.where(c < ll20, ll20, np.nan)).ffill().values
         return bu & (l <= lu + 0.3 * atr) & (c > lu), bd & (h >= ld - 0.3 * atr) & (c < ld)
+    if fam == "SQZ":                                       # Bollinger (20, 2) squeeze: width near its 100-candle low, then a close outside
+        mid = cs.rolling(20).mean(); sd = cs.rolling(20).std()
+        up, dn = (mid + 2 * sd).values, (mid - 2 * sd).values
+        w = (up - dn) / mid.values
+        sq = pd.Series(w <= pd.Series(w).rolling(100).min().values * 1.1).rolling(5).max().fillna(0).values.astype(bool)
+        return sq & (c > up), sq & (c < dn)
     raise ValueError(f"unknown family {fam}")
 
 
@@ -252,7 +263,7 @@ def describe(rule):
            "RSIDIV": "RSI divergence at a 10-candle extreme", "MACD": f"MACD {par} cross", "ST": "Supertrend (10, 3) flip",
            "EMAX": f"EMA {par} cross", "INSIDE": "inside-bar breakout", "PIN": "pin bar at a 20-candle extreme",
            "MOMO": "momentum candle (body ≥ 1.5 ATR)", "FAIL": "failed 20-candle breakout – reversal",
-           "RETEST": "breakout retest of the 20-candle level"}.get(fam, fam)
+           "RETEST": "breakout retest of the 20-candle level", "SQZ": "Bollinger squeeze (20, 2) break"}.get(fam, fam)
     flt = {"none": "", "DT": " · with the daily trend", "EMA200": " · EMA200 side", "ADX25": " · ADX ≥ 25"}.get(rule["filt"], " · " + rule["filt"])
     return txt + flt
 

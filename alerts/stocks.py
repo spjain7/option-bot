@@ -354,6 +354,13 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
         prog["done"].append(name)
         h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
         fr = FH.four_hour(h, "NFO", now)
+        try:                                                   # 6-Nov STK-ANCHOR-001: rulebook 2h / 4h stock rules (day-anchored)
+            from alerts import rulebook as RB
+            f2 = RB.complete(RB.blocks(h, "NFO", 2), "2h", "NFO", now)
+            RB.run(state, msgs, api, name, "NFO", c, {"2h": f2, "4h": fr.drop(columns=["end"]) if fr is not None else None},
+                   BO.daily_candles(h, None), None, now, int(c.get("lot") or 1), "STOCKS", after_close=after_close)
+        except Exception as e_:
+            print(f"[rulebook] {name} 2h/4h skipped: {type(e_).__name__}: {e_}")
         if fr is None or len(fr) < 210 or not FH.evaluate(fr, FH.RULES["NFO"])["side"]:
             continue
         q = None
