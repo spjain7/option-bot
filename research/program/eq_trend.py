@@ -57,7 +57,7 @@ def sim(o, h, l, c, atr, e50, idx, mode, maxh, cf):
 
 
 def run():
-    P = EB.panel(); A = EB.adjusted(P)
+    A = EB.adjusted_cached()
     mk = EB.market(A).set_index("time").close
     mfilt = (mk > mk.rolling(200).mean()).shift(1)
     # RS percentile (63-day return) across the liquid universe

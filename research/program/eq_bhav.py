@@ -24,7 +24,10 @@ def panel(years=None):
     fs = sorted(CM.glob("*.csv.gz"))
     if years:
         fs = [f for f in fs if int(f.name[:4]) in years]
-    P = pd.concat([pd.read_csv(f, parse_dates=["date"]) for f in fs], ignore_index=True)
+    dt = {"symbol": "category", "series": "category", "isin": "string", "open": "float32", "high": "float32", "low": "float32",
+          "close": "float32", "prevclose": "float32", "volume": "float64", "value": "float64"}
+    P = pd.concat([pd.read_csv(f, parse_dates=["date"], usecols=list(dt) + ["date"], dtype=dt) for f in fs], ignore_index=True)
+    P["symbol"] = P.symbol.astype(str); P["series"] = P.series.astype(str)
     P = P.sort_values(["date", "symbol", "series"])                        # 'BE' < 'EQ' -> keep last = EQ
     dup = int(P.duplicated(["date", "symbol"]).sum())
     P = P.drop_duplicates(["date", "symbol"], keep="last")
@@ -32,9 +35,37 @@ def panel(years=None):
     return P.reset_index(drop=True)
 
 
+def adjusted_cached():
+    """adjusted() of the full panel, cached as a pickle next to the data (rebuilt when the data files change)."""
+    import pickle
+    f = CM / "_adjusted.pkl"
+    stamp = max(p.stat().st_mtime for p in CM.glob("*.csv.gz"))
+    if f.exists() and f.stat().st_mtime > stamp:
+        return pickle.loads(f.read_bytes())
+    A = adjusted(panel())
+    f.write_bytes(pickle.dumps(A))
+    return A
+
+
+FUND_PAT = r"(BEES|ETF|LIQUID|GOLD|SILVER|NIFTY|SENSEX|GILT|IETF|NETF|^CPSE|MON100|MAFANG|HNGSNGBEES)"
+
+
+def securities(P):
+    """6-Nov fix: ISIN is missing in the files before mid-2011 -> carry each symbol's first known ISIN backwards (one
+    continuous history per company); drop ETFs / mutual-fund units (ISIN INF..., or no ISIN and an ETF-like name)."""
+    P = P.copy()
+    P["isin"] = P["isin"].astype("string").fillna("")
+    first = P[P["isin"].str.len() > 5].sort_values("date").drop_duplicates("symbol")[["symbol", "isin"]].set_index("symbol")["isin"]
+    miss = P["isin"].str.len() <= 5
+    P.loc[miss, "isin"] = P.loc[miss, "symbol"].map(first).fillna("")
+    fund = P["isin"].str.startswith("INF") | ((P["isin"].str.len() <= 5) & P["symbol"].str.contains(FUND_PAT, regex=True))
+    P.attrs["funds_removed"] = int(P.loc[fund, "symbol"].nunique())
+    return P[~fund]
+
+
 def adjusted(P):
     """-> dict key (isin or symbol) -> daily frame time/open/high/low/close/volume/value/symbol/factor"""
-    P = P.copy()
+    P = securities(P)
     P["key"] = P["isin"].where(P["isin"].astype(str).str.len() > 5, P["symbol"])
     out = {}
     for k, g in P.groupby("key", sort=False):

@@ -25,53 +25,60 @@ CF = ED.cost_frac("delivery")
 
 
 def panels():
-    P = EB.panel(); A = EB.adjusted(P)
+    A = EB.adjusted_cached()
     C, O, T = {}, {}, {}
     for k, d in A.items():
         s = d.symbol.iat[-1] + ("" if d.symbol.iat[-1] not in C else f"#{k[-4:]}")
         C[s] = pd.Series(d.close.values, d.time.values); O[s] = pd.Series(d.open.values, d.time.values)
         T[s] = pd.Series((d.close * d.volume).rolling(60, min_periods=40).median().values, d.time.values)
-    C, O, T = (pd.concat(x, axis=1).sort_index() for x in (C, O, T))
+    C, O, T = (pd.concat(x, axis=1).sort_index().astype("float32") for x in (C, O, T))
     mkt = EB.market(A).set_index("time").close.reindex(C.index).ffill()
     return C, O, T, mkt
 
 
-def backtest(C, O, T, mkt, L=252, N=10, voladj=False, filt=True, start="2006-01-01"):
-    days = C.index
-    hist = C.notna().cumsum()
-    me = pd.Series(days, index=days).groupby(days.to_period("M")).last().values      # month-end sessions
-    me = [d for d in me if d >= pd.Timestamp(start)]
-    ma200 = mkt.rolling(200).mean()
-    ret_daily = C.pct_change(fill_method=None)
-    held, rows, picks = [], [], []
-    for a, b in zip(me[:-1], me[1:]):
-        ia = days.get_loc(a); ib = days.get_loc(b)
-        if ia + 1 >= len(days) or ib + 1 >= len(days):
+class Data:
+    def __init__(self, C, O, T, mkt):
+        self.days = C.index; self.syms = np.array(C.columns)
+        self.c = C.values; self.o = O.values; self.t = T.values
+        self.cf = C.ffill().values                                    # last traded close (for stocks that stop trading)
+        self.hist = np.cumsum(~np.isnan(self.c), axis=0)
+        self.mkt = mkt.values; self.ma = mkt.rolling(200).mean().values
+        lr = np.log(C / C.shift(1)).values
+        self.vol = pd.DataFrame(lr).rolling(126, min_periods=60).std().values
+        m = pd.Series(self.days, index=self.days).groupby(self.days.to_period("M")).last().values
+        self.me = np.array([self.days.get_loc(x) for x in m])
+
+
+def backtest(D, L=252, N=10, voladj=False, filt=True, start="2006-01-01"):
+    s0 = np.searchsorted(D.days.values, np.datetime64(start))
+    me = [i for i in D.me if i >= s0]
+    held = np.array([], int); rows, picks = [], []
+    for ia, ib in zip(me[:-1], me[1:]):
+        if ib + 1 >= len(D.days):
             break
-        d_in, d_out = days[ia + 1], days[ib + 1]
-        el = (T.loc[a] >= ED.MIN_TURNOVER) & (C.loc[a] >= ED.MIN_PRICE) & (hist.loc[a] >= 250) & C.loc[d_in].notna() & O.loc[d_in].notna()
-        on = (not filt) or (mkt.loc[a] > ma200.loc[a])
-        new = []
+        i_in, i_out = ia + 1, ib + 1
+        on = (not filt) or (D.mkt[ia] > D.ma[ia])
+        new = np.array([], int)
         if on and ia >= L:
-            sc = C.iloc[ia - 21] / C.iloc[ia - L] - 1
+            el = (D.t[ia] >= ED.MIN_TURNOVER) & (D.c[ia] >= ED.MIN_PRICE) & (D.hist[ia] >= 250) & ~np.isnan(D.o[i_in]) & ~np.isnan(D.c[ia - L])
+            sc = D.c[ia - 21] / D.c[ia - L] - 1
             if voladj:
-                sc = sc / ret_daily.iloc[ia - 126:ia].std()
-            sc = sc[el].dropna().sort_values(ascending=False)
-            new = list(sc.index[:N])
-        # period return: open(d_in) -> open(d_out) per name; a name that stops trading exits at its last close
-        r = []
-        for s in new:
-            seg = C[s].loc[d_in:d_out]
-            last = seg.dropna()
-            if last.empty:
-                continue
-            px_out = O[s].loc[d_out] if pd.notna(O[s].get(d_out)) else last.iloc[-1]
-            r.append(px_out / O[s].loc[d_in] - 1)
+                sc = sc / D.vol[ia]
+            sc = np.where(el & np.isfinite(sc), sc, -np.inf)
+            k = min(N, int(np.isfinite(sc).sum()))
+            if k > 0:
+                new = np.argpartition(-sc, k - 1)[:k]
+        if len(new):
+            px_in = D.o[i_in, new]
+            px_out = np.where(np.isnan(D.o[i_out, new]), D.cf[i_out, new], D.o[i_out, new])
+            r = px_out / px_in - 1
+        else:
+            r = np.array([])
         turn = len(set(new) - set(held)) + len(set(held) - set(new))
-        cost = CF / 2 * turn / max(len(new), 1) if new else (CF / 2 * len(held) / max(len(held), 1) if held else 0)
-        pr = (np.mean(r) if r else 0.0) - (cost if (new or held) else 0.0)
-        rows.append(dict(start=d_in, end=d_out, ret=pr, n=len(new), invested=bool(new)))
-        picks += [dict(month=d_in, sym=s, ret=x) for s, x in zip(new, r)]
+        base = max(len(new), len(held), 1)
+        pr = (np.nanmean(r) if len(r) else 0.0) - CF / 2 * turn / base
+        rows.append(dict(start=D.days[i_in], end=D.days[i_out], ret=pr, n=len(new), invested=bool(len(new))))
+        picks += [dict(month=D.days[i_in], sym=D.syms[j], ret=x) for j, x in zip(new, r)]
         held = new
     return pd.DataFrame(rows), pd.DataFrame(picks)
 
@@ -87,17 +94,17 @@ def metrics(R, lab):
                 months_pos=round(100 * (r > 0).mean(), 0), invested=round(100 * R.invested.mean(), 0))
 
 
-def bench(C, O, T, mkt, start, end):
-    R, _ = backtest(C, O, T, mkt, L=252, N=10_000, filt=False, start=start)          # equal-weight eligible universe
+def bench(D, start, end):
+    R, _ = backtest(D, L=252, N=10_000, filt=False, start=start)          # equal-weight eligible universe
     return R[(R.start >= start) & (R.start < end)]
 
 
 def main():
-    C, O, T, mkt = panels()
+    D = Data(*panels())
     grid = list(product((126, 252), (5, 10, 20), (False, True), (False, True)))
     res = []
     for L, N, va, fl in grid:
-        R, P = backtest(C, O, T, mkt, L, N, va, fl)
+        R, P = backtest(D, L, N, va, fl)
         tr, te = R[R.start < "2016-01-01"], R[R.start >= "2016-01-01"]
         res.append(dict(L=L, N=N, voladj=va, filt=fl, **{f"train_{k}": v for k, v in metrics(tr, "").items() if k != "set"},
                         **{f"test_{k}": v for k, v in metrics(te, "").items() if k != "set"}))
@@ -107,11 +114,11 @@ def main():
     print(G.to_string(index=False))
     b = G.iloc[0]
     print(f"\nchosen on 2005-15 only: L={b.L} N={b.N} voladj={b.voladj} filter={b.filt}")
-    R, P = backtest(C, O, T, mkt, int(b.L), int(b.N), bool(b.voladj), bool(b.filt))
+    R, P = backtest(D, int(b.L), int(b.N), bool(b.voladj), bool(b.filt))
     R.to_csv(OUT / "eqmom_best_months.csv", index=False); P.to_csv(OUT / "eqmom_best_picks.csv", index=False)
     out = [metrics(R[R.start < "2016"], "momentum 2006-15 (train)"), metrics(R[R.start >= "2016"], "momentum 2016-26 (OUT OF SAMPLE)"),
-           metrics(bench(C, O, T, mkt, "2006-01-01", "2016-01-01"), "EW liquid universe 2006-15"),
-           metrics(bench(C, O, T, mkt, "2016-01-01", "2030-01-01"), "EW liquid universe 2016-26")]
+           metrics(bench(D, "2006-01-01", "2016-01-01"), "EW liquid universe 2006-15"),
+           metrics(bench(D, "2016-01-01", "2030-01-01"), "EW liquid universe 2016-26")]
     for y0, y1 in (("2016", "2019"), ("2019", "2022"), ("2022", "2027")):
         out.append(metrics(R[(R.start >= y0) & (R.start < y1)], f"momentum {y0}-{int(y1) - 1}"))
     print(pd.DataFrame(out).to_string(index=False))
