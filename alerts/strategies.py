@@ -17,6 +17,8 @@ S = {
     "BO_3h_SELL":    ("SHADOW", "-", "3-hour breakout SELL", 212, 38, -0.08, 0.88, "negative in train and validation, 15-loss streak"),
     "BO_1d_BUY":     ("LIVE",   "B", "daily breakout BUY", 83, 58, 0.56, None,
                       "MCX 20-day + ADX>=25, 2R: 2022-26 +0.56R but 20 years only +0.15R (LONG20-001); index 2011-26 +0.55"),
+    "BO_1d_BUY_MCX": ("SHADOW", "-", "MCX daily 20-day breakout + ADX BUY", 541, 43, 0.02, 1.03,
+                      "ROLLCHECK-001 (roll-adjusted 20 y): +0.02R, 2006-12 -0.09 / 2013-19 -0.10 / 2020-26 +0.25 -> logged only"),
     "BO_1d_SELL":    ("SHADOW", "-", "daily breakout SELL", 23, 48, -0.07, 0.88, "fewer than 30 trades"),
     "BO_1m_BUY":     ("LIVE",   "B", "monthly breakout BUY", 116, 49, 0.28, 1.62, "valid +0.07, test +0.34"),
     "BO_1m_SELL":    ("SHADOW", "-", "monthly breakout SELL", 24, 54, 0.09, 1.20, "fewer than 30 trades"),
@@ -70,7 +72,7 @@ def shadow_bo():
     """(tf, side) pairs of breakout calls that are logged only."""
     out = set()
     for sid, v in S.items():
-        if sid.startswith("BO_") and v[0] != "LIVE":
+        if sid.startswith("BO_") and v[0] != "LIVE" and sid.count("_") == 2:
             _, tf, side = sid.split("_")
             out.add((tf, side))
     return out
