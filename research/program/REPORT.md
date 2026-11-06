@@ -900,7 +900,7 @@ Robustness: costs ×4 +0.09R; entry delayed 15 min +0.16R. Improvements (choose 
 (+0.10R) → risk caps instead (2 per commodity / 4 total per day) – implemented in shadow (main).
 
 ---
-## MCXE-001 – MCX intraday strategy ENGINE (6-Nov-2026): one framework, 8 detector families, random-entry control
+## MCXE-001 – MCX intraday strategy ENGINE (6-Nov-2026) – ⚠️ PROVISIONAL, SUPERSEDED BY MCXE-002 (non-reproducible random seed, independent instead of matched random control, overlapping positions counted, stop-entry same-bar ambiguity resolved optimistically). Files renamed results/mcxe_v1_PROVISIONAL_*. Conclusions below must not be used until re-run.
 Inventory first (sent to owner): sweeps (sweep.py/sweep15.py, never written up), S/R (SR-001 daily failed; sdzone.py not
 written up), breakouts (live 1h+; intraday MCXI-001 failed), trendline (only the LIQTL indicator port), market structure (one
 MSS form failed), candles (daily live), chart patterns (3h, OFF after the exit-bug fix), trend continuation (DTC shadow).
