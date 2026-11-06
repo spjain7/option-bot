@@ -723,7 +723,7 @@ def scan(api, master, now, state, msgs, rep, engine):
             rep.setdefault("stock_skips", []).append(f"{name}: {plan['reason']}"); continue
         lv = S.levels(d, h, sig["close"], sig["atr"])
         sid = "STK_ENGULF_SELL" if sig.get("pattern") else f"STK_OI_{sig['side']}"
-        clash = ST.conflict(state, name, sig["side"])
+        clash = ST.conflict(state, name, sig["side"], "1d")
         shadow = (not ST.is_live(sid)) or bool(clash)      # 4-Nov: registry SHADOW or a contradicting / duplicate call
         if shadow:
             why_s = clash or f"registry SHADOW – {ST.S[sid][7]}"

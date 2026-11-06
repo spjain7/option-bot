@@ -277,7 +277,7 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
         if sig.get("rejected"):
             FN.note(state, rid, "rejected", sig["rejected"], key=fk, now=now); out[rid] = sig["rejected"]; continue
         shadow = rule["status"] != "LIVE"
-        clash = None if shadow else ST.conflict(state, name, rule["side"])
+        clash = None if shadow else ST.conflict(state, name, rule["side"], rule["tf"])
         if clash:
             FN.note(state, rid, "rejected", clash, key=fk, now=now); out[rid] = clash; continue
         if any(r["name"] == name and r.get("rule") == rid for r in st["open"]):

@@ -448,7 +448,7 @@ def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
              last_bar=str(df["time"].iloc[i]), logged=str(now), key=f"{setup}|{name}|{str(df['time'].iloc[i])[:10]}")
     _grade(r, df.iloc[:i + 1], df.iloc[:i + 1], "reversal", P["target_r"])
     from alerts import strategies as ST_
-    clash = ST_.conflict(state, name, side)                    # 4-Nov: no contradictory / duplicate live calls
+    clash = ST_.conflict(state, name, side, ST_.tf_of(dict(key=r["key"])))  # 4-Nov: no contradictory / duplicate live calls
     if clash:
         print(f"[setup] {setup} {name} {side} not sent: {clash}"); return
     s["open"].append(r)
@@ -477,7 +477,7 @@ def _new_ema(state, msgs, s, name, c, f3, now, mult, live):
     _grade(r, f3.iloc[:i + 1], None, "breakout", None)
     r.pop("stop", None)
     from alerts import strategies as ST_
-    clash = ST_.conflict(state, name, "BUY")
+    clash = ST_.conflict(state, name, "BUY", "3h")
     if clash:
         print(f"[setup] MCX_EMA1348 {name} BUY not sent: {clash}"); return
     s["open"].append(r)
@@ -637,7 +637,7 @@ def on_stock_3h(state, msgs, name, c, f3, now, prev_oi_label, sweep_oi_change):
         print(f"[setup] STK_SWEEP3H {name}: stop too far – not sent"); return
     _grade(r, f3.iloc[:i + 1], None, "reversal", SW["target_r"])
     from alerts import strategies as ST_
-    clash = ST_.conflict(state, name, "SELL")
+    clash = ST_.conflict(state, name, "SELL", "3h")
     if clash:
         print(f"[setup] STK_SWEEP3H {name} SELL not sent: {clash}"); return
     s["open"].append(r)

@@ -176,7 +176,7 @@ def _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close
         print(f"[4h] {name} {sig['side']} skipped: {what} {opp[0][0]} ({opp[0][1]}) within {NEAR_R}R")
         return f"skipped: {what} {opp[0][0]:,.2f} within {NEAR_R}R"
     from alerts import strategies as ST_
-    clash = ST_.conflict(state, name, sig["side"])            # 4-Nov: no contradictory / duplicate live calls
+    clash = ST_.conflict(state, name, sig["side"], rule.get("tf", "4h"))  # 4-Nov: no contradictory / duplicate live calls
     if clash:
         print(f"[4h] {name} {sig['side']} not sent: {clash}")
         return f"not sent: {clash}"

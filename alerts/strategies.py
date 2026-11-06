@@ -76,13 +76,39 @@ def shadow_bo():
     return out
 
 
-def conflict(state, name, side):
+def tf_of(row):
+    """Timeframe of a ledger row from its key (None when unknown -> treated as the same timeframe, conservative)."""
+    k = str(row.get("key") or "")
+    p = k.split("|")
+    if k.startswith("RB|") and len(p) > 1:
+        for tf in ("15m", "30m", "1h", "2h", "3h", "4h", "1d"):
+            if f"_{tf}_" in p[1]:
+                return tf
+    if k.startswith("4H|"):
+        return "4h"
+    if k.startswith("3H|"):
+        return "3h"
+    if len(p) > 1 and p[1] in ("3h", "1d", "1w", "1m", "1M"):
+        return p[1]
+    if len(p) > 1 and p[1] == "1dSTK":
+        return "1d"
+    return {"MCX_HAMMER": "1d", "STK_HANGMAN": "1d", "STK_ENGULF": "1d", "MCX_EMA1348": "3h", "STK_SWEEP3H": "3h",
+            "STK_SWEEP15": "15m"}.get(p[0])
+
+
+def conflict(state, name, side, tf=None):
     """Reason string if a new call on `name` would contradict or duplicate an OPEN live futures call, else None.
-    Opposite side open -> contradictory; same side open -> redundant (one live call per instrument and direction)."""
+    Opposite side open -> contradictory (always blocked).
+    Same side open -> duplicate only on the SAME timeframe (6-Nov, PORTFOLIO-001: one call per instrument + direction +
+    timeframe: 4.6 calls/day, +0.22R, PF 1.42, max DD 90R vs one per instrument + direction: 3.3/day, +0.15R, PF 1.30, 90R).
+    tf=None keeps the old rule (any open same-side call blocks)."""
     for r in state.get("ledger", []):
         if r.get("status") == "OPEN" and r.get("cat") == "FUTURES" and r.get("name") == name:
             if r.get("side") != side:
                 return f"contradicts the open {r.get('side')} call ({r.get('type')}, {str(r.get('time'))[:16]})"
+            rtf = tf_of(r)
+            if tf is not None and rtf is not None and rtf != tf:
+                continue                                  # independent opportunity on another timeframe
             return f"duplicate of the open {side} call ({r.get('type')}, {str(r.get('time'))[:16]})"
     return None
 

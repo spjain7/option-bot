@@ -55,3 +55,14 @@ check("strategy ids from ledger keys", SC.strategy_of(dict(key="MCX_HAMMER|GOLD|
       and SC.strategy_of(dict(key="4H|GOLD|t", seg="MCX", side="BUY")) == "FH_MCX_BUY")
 check("scorecard text labels small samples", "not yet evidence" in SC.text(dict(ledger=led)))
 print("ALL STRATEGY / SCORECARD CHECKS PASSED")
+
+# 6-Nov PORTFOLIO-001: one call per instrument + direction + timeframe
+_st = {"ledger": [dict(status="OPEN", cat="FUTURES", name="GOLD", side="BUY", type="Swing (4-hour)", time="2026-11-06 10:00",
+                       key="4H|GOLD|2026-11-06 09:00:00")]}
+check("same side, same timeframe -> duplicate", ST.conflict(_st, "GOLD", "BUY", "4h") is not None)
+check("same side, other timeframe -> independent call allowed", ST.conflict(_st, "GOLD", "BUY", "2h") is None)
+check("opposite side on any timeframe -> contradiction blocked", ST.conflict(_st, "GOLD", "SELL", "1d") is not None)
+check("no timeframe given -> old rule (blocked)", ST.conflict(_st, "GOLD", "BUY") is not None)
+check("timeframe read from keys", ST.tf_of(dict(key="RB|RB_MCX_2h_MOMO_BUY|GOLD|x")) == "2h" and ST.tf_of(dict(key="TITAN|1dSTK|x")) == "1d"
+      and ST.tf_of(dict(key="GOLD|3h|x")) == "3h" and ST.tf_of(dict(key="MCX_HAMMER|NG|x")) == "1d")
+print("conflict-by-timeframe checks passed")
