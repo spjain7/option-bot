@@ -715,24 +715,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 733300.0,
-   "ltp": 8620.0
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 733500.0,
+   "ltp": 8563.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 65870000.0,
-   "ltp": 285.3
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 65803750.0,
+   "ltp": 285.2
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 15726.0,
-   "ltp": 141764.0
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 15730.0,
+   "ltp": 141858.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 502800.0,
-   "ltp": 183310.0
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 503820.0,
+   "ltp": 183706.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -760,29 +760,29 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 12945335.0,
-   "ltp": 24783.7
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 12837760.0,
+   "ltp": 24771.5
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 2331000.0,
-   "ltp": 58380.8
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 2341290.0,
+   "ltp": 58333.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 19145000.0,
-   "ltp": 1334.3
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 19215000.0,
+   "ltp": 1332.9
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 8180.0,
-   "ltp": 410.0
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 8190.0,
+   "ltp": 410.95
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-06 13:17:01.722589",
-   "oi": 19430.0,
-   "ltp": 328.2
+   "time": "2026-11-06 13:32:02.317179",
+   "oi": 19100.0,
+   "ltp": 327.9
   }
  },
  "bo_active": [
@@ -799,7 +799,7 @@
    "n": 2,
    "last_candle": "2026-11-06 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-06 13:00:00",
+   "checked": "2026-11-06 13:15:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|3h|2026-11-05 09:15:00",
    "token": "61471"
@@ -817,7 +817,7 @@
    "n": 2,
    "last_candle": "2026-11-06 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-06 13:00:00",
+   "checked": "2026-11-06 13:15:00",
    "contract": "BANKNIFTY23NOV26FUT",
    "key": "BANKNIFTY|3h|2026-11-05 09:15:00",
    "token": "61466"
@@ -835,7 +835,7 @@
    "n": 0,
    "last_candle": "2026-11-05 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-06 13:00:00",
+   "checked": "2026-11-06 13:15:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1d|2026-11-05 09:15:00|CONFLICT",
    "token": "61471",
@@ -855,7 +855,7 @@
    "n": 0,
    "last_candle": "2026-11-05 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-06 13:00:00",
+   "checked": "2026-11-06 13:15:00",
    "contract": "BANKNIFTY23NOV26FUT",
    "key": "BANKNIFTY|1d|2026-11-05 09:15:00|CONFLICT",
    "token": "61466",
@@ -1899,16 +1899,16 @@
    "time": "2026-11-02 11:30:00",
    "status": "OPEN",
    "date": "2026-11-02",
-   "uhi": 285.9,
+   "uhi": 286.8,
    "ulo": 271.2,
-   "ulast": 285.3,
-   "uat": "2026-11-06 13:17:01.722589",
+   "ulast": 285.5,
+   "uat": "2026-11-06 13:32:02.317179",
    "best_px": 285.9,
    "worst_px": 271.2,
    "mfe_R": 0.602,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-06 13:00:00",
+   "excursion_upd": "2026-11-06 13:15:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -1958,8 +1958,8 @@
    "date": "2026-11-04",
    "uhi": 2685.3,
    "ulo": 2390.0,
-   "ulast": 2668.2,
-   "uat": "2026-11-06 13:17:01.722589"
+   "ulast": 2638.3,
+   "uat": "2026-11-06 13:32:02.317179"
   },
   {
    "key": "TITAN|1dSTK|2026-11-04 09:15:00",
@@ -1981,8 +1981,8 @@
    "date": "2026-11-04",
    "uhi": 4999.0,
    "ulo": 4700.0,
-   "ulast": 4957.9,
-   "uat": "2026-11-06 13:17:01.722589",
+   "ulast": 4959.4,
+   "uat": "2026-11-06 13:32:02.317179",
    "best_px": 4868.9,
    "worst_px": 4750.0,
    "mfe_R": 0.614,
@@ -2024,16 +2024,16 @@
    ],
    "status": "OPEN",
    "date": "2026-11-05",
-   "uhi": 24796.0,
+   "uhi": 24855.0,
    "ulo": 24380.0,
-   "ulast": 24791.9,
-   "uat": "2026-11-06 13:17:01.722589",
-   "best_px": 24774.0,
+   "ulast": 24855.0,
+   "uat": "2026-11-06 13:32:02.317179",
+   "best_px": 24796.0,
    "worst_px": 24380.0,
-   "mfe_R": 0.608,
+   "mfe_R": 0.653,
    "mae_R": -0.203,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-06 13:00:00",
+   "excursion_upd": "2026-11-06 13:15:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -2070,16 +2070,16 @@
    ],
    "status": "OPEN",
    "date": "2026-11-05",
-   "uhi": 58388.2,
+   "uhi": 58568.2,
    "ulo": 57325.0,
-   "ulast": 58359.6,
-   "uat": "2026-11-06 13:17:01.722589",
-   "best_px": 58376.6,
+   "ulast": 58551.2,
+   "uat": "2026-11-06 13:32:02.317179",
+   "best_px": 58388.2,
    "worst_px": 57325.0,
-   "mfe_R": 0.832,
+   "mfe_R": 0.842,
    "mae_R": -0.114,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-06 13:00:00",
+   "excursion_upd": "2026-11-06 13:15:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -2156,7 +2156,7 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-06 13:00:00",
+    "last_bar": "2026-11-06 13:15:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
     "last_px": 285.1,
@@ -2979,13 +2979,30 @@
    "ZINC|MCX": "2026-11-06 09:00:00",
    "ALUMINIUM|MCX": "2026-11-06 09:00:00",
    "CUMMINSIND|NFO": "2026-11-05 09:15:00",
-   "PIIND|NFO": "2026-11-05 13:15:00"
+   "PIIND|NFO": "2026-11-05 13:15:00",
+   "SUPREMEIND|NFO": "2026-11-06 09:15:00"
   },
   "stk_block": "2026-11-05 15:30",
   "stk_progress": {
    "blk": "2026-11-06 13:15",
    "done": [
-    "ZYDUSLIFE"
+    "ZYDUSLIFE",
+    "HDFCAMC",
+    "ICICIBANK",
+    "INDIANB",
+    "INDUSINDBK",
+    "ITC",
+    "JSWSTEEL",
+    "PETRONET",
+    "POWERGRID",
+    "RVNL",
+    "SBILIFE",
+    "ETERNAL",
+    "SUPREMEIND",
+    "TORNTPHARM",
+    "VEDL",
+    "JIOFIN",
+    "LT"
    ],
    "sent": 0
   }
@@ -3012,23 +3029,23 @@
   "n": 4
  },
  "scan": {
-  "seq": 112,
-  "started": "2026-11-06 13:17:01.722589",
-  "finished": "2026-11-06 13:27:01.587123",
-  "seconds": 599,
+  "seq": 113,
+  "started": "2026-11-06 13:32:02.317179",
+  "finished": "2026-11-06 13:47:47.127136",
+  "seconds": 944,
   "status": "RATE_LIMITED",
-  "note": "api requests 61 ok 31 rate-limited 30 skipped 1 (budget 0) failed 4 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 78 ok 41 rate-limited 37 skipped 3 (budget 0) failed 4 \u00b7 errors 1 \u00b7 messages 0",
   "api": {
-   "calls": 61,
-   "ok": 31,
-   "rate_limited": 30,
-   "skipped": 1,
+   "calls": 78,
+   "ok": 41,
+   "rate_limited": 37,
+   "skipped": 3,
    "deadline_skips": 0,
    "failed": 4,
    "mem_hits": 0,
    "disk_hits": 0
   },
-  "errors": 0,
+  "errors": 1,
   "messages": 0
  },
  "paper": {
@@ -4689,6 +4706,33 @@
     ]
    ],
    "tried": "2026-11-06 13:17:01.722589"
+  }
+ },
+ "funnel": {
+  "2026-11-06": {
+   "MCX data": {
+    "signal": 0,
+    "rejected": {},
+    "shadow": 0,
+    "sent": 0,
+    "data": 1,
+    "keys": [
+     "data|CRUDEOIL|15m|2026-11-06 13"
+    ]
+   },
+   "STOCK 4h SELL": {
+    "signal": 1,
+    "rejected": {
+     "stop-loss 4.6% away (max 4.0%) \u2013 not tradable for one lot": 1
+    },
+    "shadow": 0,
+    "sent": 0,
+    "data": 0,
+    "keys": [
+     "signal|SUPREMEIND|2026-11-06 09:15:00",
+     "rejected|SUPREMEIND|2026-11-06 09:15:00"
+    ]
+   }
   }
  }
 }
