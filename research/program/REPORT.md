@@ -879,3 +879,11 @@ mode (alerts/mcx_dtc.py, LIVE = False, logged + tracked, never sent); production
 **Intraday OI capability:** the live stream records 1-minute OI for all 7 MCX contracts (≈ 320 bars/day, OI changes
 105-314 times/day) on the ws-bars branch; MCX volume in today's export was 0 (job started on the pre-fix code; to be
 verified on 7-Nov). Intraday-OI hypotheses can be tested once several months have accumulated.
+
+## MCXD-003 – per-commodity trial and error (owner request), 1,107 variants
+Per commodity: 81 day-trend-continuation variants per side (9 checkpoints × 3 thresholds × 3 stops) + trend pull-back exits.
+Picking the best DEV variant per commodity fails the unseen periods in 7 / 7 commodities (e.g. Aluminium +1.13R DEV →
+−0.76R HIST; Crude +0.61 → −0.26) – the "best" trial is mostly luck. Breadth (share of ALL variants positive in HIST)
+separates real edges: Gold 91 % (BUY 91 %, SELL 99 %), Silver 76 % (SELL 85 %, BUY 68 %), Natural Gas SELL 78 % / Copper SELL
+63 % (but VALID 5-10 %), Crude 10 %, Zinc 3 %, Aluminium 3 %. Conclusion: an intraday edge exists in GOLD and SILVER only
+(day-trend continuation, both sides) – consistent with MCXD-002 (now in shadow mode).
