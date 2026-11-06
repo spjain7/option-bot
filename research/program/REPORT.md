@@ -949,3 +949,12 @@ trades). By commodity (WF survivors' OOS): Crude +0.44R (5 streams), Silver +0.0
 the same quarter + block shifts):** all 542 trades +0.18R (95 % CI +0.08 … +0.28) vs controls +0.03 (95th pct +0.09) → rank
 100 %; HIST 100 %, DEV 76 %, untouched VALID 93 % (+0.26R, CI −0.01 … +0.54). Gold strong (HIST 99.8 %, VALID 87 %), Silver
 weaker (DEV 50 %). This is the only MCX intraday strategy that survives every correction so far.
+
+## MCXE-003 – price-action setups inside the established day trend (hypothesis from MCXD-002/005)
+Filter at activation: price beyond session VWAP and ≥ 0.3 × daily ATR beyond the 09:00 open in the setup direction (`day`),
+plus `day+ms` (and structure aligned) and `noday` (control). 617,456 quarter rows (results/mcxe3_*).
+Pooled net R (all families / commodities / executions) – HIST / DEV / VALID: any −0.18 / −0.07 / −0.13 · **day −0.11 / −0.01 /
+−0.06** · day+ms −0.11 / −0.01 / −0.06 · noday −0.19 / −0.08 / −0.14. The day-trend context improves every family in every
+period by ~0.06-0.08R (consistent), but no family becomes positive. Walk-forward survivors 74; untouched OOS 26 / 74 positive,
+pooled −0.05R (1,396 trades). Conclusion: the detectors add no edge beyond the day-trend condition itself; the information is
+in the day trend (MCXD-002), not in the price-action pattern.

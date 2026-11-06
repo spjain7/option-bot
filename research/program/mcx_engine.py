@@ -50,6 +50,7 @@ K = 3                                                     # pivot half-width
 SEED = 20261106
 FILTS = ("any", "vol", "trend", "ms", "ms+vol")
 EXECS = list(product((0, 1), (0, 1), (2.0, 3.0, 0.0, -1.0)))
+TAG = "mcxe2"
 
 
 def fingerprint(d5):
@@ -318,6 +319,14 @@ def setups_for(name, P):
         out.append(D)
     D = pd.concat(out, ignore_index=True).sort_values("act", kind="stable").reset_index(drop=True)
     D["risk_atr"] = (D.trig - D.inv).abs() / D.atr
+    # MCXE-003 day-trend context at activation (last completed 5-min bar): beyond session VWAP and >= 0.3 x daily ATR beyond
+    # the day's 09:00 open in the setup direction (the condition behind the only surviving strategy, MCXD-002)
+    prev = np.maximum(D.act.values - 1, 0)
+    cl, vw = d5.close.values[prev], d5.vwap.values[prev]
+    dopen = d5.groupby("day").open.transform("first").values[prev]
+    datr = D.day.map(dd.atr).values
+    sgn = D.side.values
+    D["dayctx"] = ((sgn * (cl - vw) > 0) & (sgn * (cl - dopen) >= 0.3 * datr)).astype(int)
     return D
 
 
@@ -330,6 +339,12 @@ def apply_filter(D, flt):
         return D[D.ms == D.side]
     if flt == "ms+vol":
         return D[(D.ms == D.side) & (D.volx >= 1.5)]
+    if flt == "day":
+        return D[D.dayctx == 1]
+    if flt == "day+ms":
+        return D[(D.dayctx == 1) & (D.ms == D.side)]
+    if flt == "noday":
+        return D[D.dayctx == 0]
     return D
 
 
@@ -379,11 +394,11 @@ def main():
         rows += r; metas.append(m)
         print(f"[{(time.time() - t0) / 60:.1f} min] {n}: {len(r):,} quarter rows · {m['setups']:,} setups", flush=True)
     Q = pd.DataFrame(rows)
-    Q.to_csv(OUT / "mcxe2_quarters.csv.gz", index=False)
-    run = dict(run="MCXE-002", seed=SEED, created=pd.Timestamp.utcnow().isoformat(), commodities=metas,
+    Q.to_csv(OUT / f"{TAG}_quarters.csv.gz", index=False)
+    run = dict(run=TAG.upper(), filters=list(FILTS), seed=SEED, created=pd.Timestamp.utcnow().isoformat(), commodities=metas,
                experiments=int(Q.drop_duplicates(["name", "tf", "fam", "sub", "side", "filt", "entry", "stop", "exit"]).shape[0]),
                quarter_rows=len(Q), minutes=round((time.time() - t0) / 60, 1))
-    (OUT / "mcxe2_run.json").write_text(json.dumps(run, indent=1, default=str))
+    (OUT / f"{TAG}_run.json").write_text(json.dumps(run, indent=1, default=str))
     print(json.dumps({k: v for k, v in run.items() if k != "commodities"}, indent=1))
 
 

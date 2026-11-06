@@ -99,7 +99,7 @@ def run_stream(stream, choices, cache):
         actual, perm, block = [], np.zeros(N_PERM), np.zeros(N_PERM)
         pn, bn = np.zeros(N_PERM), np.zeros(N_PERM)
         for tq, ch in qs:
-            if not ch:
+            if not isinstance(ch, str) or not ch:          # stream sat out that quarter (no positive choice)
                 continue
             flt, en, sp, ex = ch.split("|")
             enc, spc = ("NXT", "STP").index(en), ("STR", "ATR").index(sp)
@@ -143,6 +143,7 @@ def main(top=None):
         res = run_stream(st, list(zip(ch.test, ch.chosen.where(ch.chosen.notna(), None))), cache)
         for part, v in res.items():
             rows.append(dict(name=r.name, tf=r.tf, fam=r.fam, sub=r.sub, side=r.side, part=part, **v))
+        pd.DataFrame(rows).to_csv(OUT / "mcxe2_controls.csv", index=False)          # incremental save
         print(st, {k: (round(v["actual"], 3), round(v["perm_rank"], 3), round(v["block_rank"], 3), v["n"]) for k, v in res.items()}, flush=True)
     R = pd.DataFrame(rows)
     R.to_csv(OUT / "mcxe2_controls.csv", index=False)

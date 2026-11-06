@@ -18,8 +18,11 @@ TEST_Q = [str(q) for q in pd.period_range("2024Q3", "2026Q2", freq="Q")]
 OOS_Q = ["2026Q3", "2026Q4"]
 
 
+TAG = sys.argv[1] if len(sys.argv) > 1 else "mcxe2"
+
+
 def main():
-    Q = pd.read_csv(OUT / "mcxe2_quarters.csv.gz")
+    Q = pd.read_csv(OUT / f"{TAG}_quarters.csv.gz")
     Q["qp"] = pd.PeriodIndex(Q.q, freq="Q")
     choices = []
     for key, g in Q.groupby(STREAM):
@@ -44,7 +47,7 @@ def main():
                 row[f] = float(piv[f].loc[best, test].sum()) if test else 0.0
             choices.append(row)
     C = pd.DataFrame(choices)
-    C.to_csv(OUT / "mcxe2_wf_quarters.csv", index=False)
+    C.to_csv(OUT / f"{TAG}_wf_quarters.csv", index=False)
     wf = C[C.test != "OOS"]; oos = C[C.test == "OOS"]
     agg = wf.groupby(STREAM).apply(lambda x: pd.Series(dict(
         wf_quarters_traded=int((x.n > 0).sum()), wf_n=int(x.n.sum()), wf_R=x.s.sum() / x.n.sum() if x.n.sum() else np.nan,
@@ -55,7 +58,7 @@ def main():
     o["oos_R"] = o.s / o.oos_n.replace(0, np.nan); o["oos_stress"] = (o.gs - 2 * o.cs) / o.oos_n.replace(0, np.nan)
     A = agg.join(o[["chosen", "oos_n", "oos_R", "oos_stress"]]).reset_index()
     A["wf_t"] = np.nan
-    A.to_csv(OUT / "mcxe2_wf.csv", index=False)
+    A.to_csv(OUT / f"{TAG}_wf.csv", index=False)
     pd.set_option("display.width", 260); pd.set_option("display.max_rows", 200)
     good = A[(A.wf_n >= 60) & (A.wf_R > 0) & (A.wf_stress > 0) & (A.wf_quarters_pos >= 0.6 * A.wf_quarters_traded)]
     print(f"streams {len(A)} · WF-positive (>= 60 OOS trades, net and 2x-stress > 0, >= 60 % quarters positive): {len(good)}")

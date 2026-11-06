@@ -1,0 +1,79 @@
+{
+ "run": "MCXE3",
+ "filters": [
+  "any",
+  "day",
+  "day+ms",
+  "noday"
+ ],
+ "seed": 20261106,
+ "created": "2026-11-06T15:56:32.625142+00:00",
+ "commodities": [
+  {
+   "name": "CRUDEOIL",
+   "fingerprint": "a5f6e0d0f1d0fbc2",
+   "bars": 136000,
+   "first": "2023-09-27 18:45:00",
+   "last": "2026-11-03 23:50:00",
+   "setups": 87889,
+   "unique_signals": 79773
+  },
+  {
+   "name": "NATURALGAS",
+   "fingerprint": "813749f2fc4cac5f",
+   "bars": 136000,
+   "first": "2023-09-29 12:00:00",
+   "last": "2026-11-03 23:50:00",
+   "setups": 89164,
+   "unique_signals": 80421
+  },
+  {
+   "name": "GOLD",
+   "fingerprint": "78eab85ebb556d8e",
+   "bars": 136000,
+   "first": "2023-06-22 16:25:00",
+   "last": "2026-11-03 23:50:00",
+   "setups": 86968,
+   "unique_signals": 78872
+  },
+  {
+   "name": "SILVER",
+   "fingerprint": "16d9bad65e12dac1",
+   "bars": 136000,
+   "first": "2023-07-24 22:10:00",
+   "last": "2026-11-03 23:50:00",
+   "setups": 89816,
+   "unique_signals": 81506
+  },
+  {
+   "name": "COPPER",
+   "fingerprint": "b8a9e4c8b4456962",
+   "bars": 136000,
+   "first": "2023-04-19 12:25:00",
+   "last": "2026-11-03 23:50:00",
+   "setups": 91312,
+   "unique_signals": 82631
+  },
+  {
+   "name": "ZINC",
+   "fingerprint": "8e1f0d6661b1ebc1",
+   "bars": 136000,
+   "first": "2023-02-03 18:25:00",
+   "last": "2026-11-03 23:50:00",
+   "setups": 97487,
+   "unique_signals": 87553
+  },
+  {
+   "name": "ALUMINIUM",
+   "fingerprint": "810e62763f67d89f",
+   "bars": 128334,
+   "first": "2023-01-02 09:00:00",
+   "last": "2026-11-03 23:50:00",
+   "setups": 99275,
+   "unique_signals": 88331
+  }
+ ],
+ "experiments": 46224,
+ "quarter_rows": 617456,
+ "minutes": 5.9
+}
