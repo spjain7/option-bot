@@ -683,3 +683,44 @@ only +0.15R (2006-12 −0.02, 2013-19 +0.02) -> tier B; 55-day vol 2x breakout +
 `stk_anchor.py`, `results/stk_anchor_summary.csv`. 1,712 combinations, 24 robust – all SELL in a daily downtrend.
 Best: 2h Bollinger squeeze breakdown 2ATR/3R 1,014 trades +0.27R (+0.23/+0.31/+0.28); 4h MACD zero 1.5ATR/2R 1,034 +0.19R;
 4h EMA9/21 +0.16R; 2h EMA20/50 +0.19R. No stock BUY passed on 2h / 4h. Promoted: 2h SQZ SELL, 4h MACD-zero SELL (parity 8/8).
+
+---
+## RSIX-001 — RSI extreme reversal + reversal-candle breakout (6-Nov-2026)
+
+**Question (owner):** does "RSI touches 75/25 → reversal candle → break of that candle's high/low" work on MCX?
+
+**Grid.** 7 MCX commodities × 15m/30m/1h/2h/4h/1d. Extremes: touch / cross back / stay 3 candles / divergence;
+levels 20/25/30 (70/75/80); candles none / bull-bear / hammer-star / engulfing / any; entries market next open /
+**buy-stop above candle high (3 candles)** / close-confirmed break / retest; stops candle low / 1.5 ATR; exits 1/2/3R,
+3-ATR trail, half at 1R. Stage 2 added RSI 7/21, daily-trend with/against, ADX<20 / >25, volume ≥1.5×.
+Stage 1: 25,835 pooled combinations; stage 2: 215,988. 2× costs, completed candles, chronological splits
+(intraday 2023-24 / 24-25 / 25-26; daily 2006-12 / 2013-19 / 2020-26).
+
+**Verdict: the RSI extreme reversal does NOT work intraday on MCX.**
+| tf | mean R of all variants | share positive in all 3 periods |
+|---|---|---|
+| 15m | −0.70 … −1.09 | 0 % |
+| 30m | −0.47 … −0.79 | 0 % |
+| 1h | −0.30 … −0.56 | 0 % |
+| 2h | −0.21 … −0.41 | ≤ 1 % |
+| 4h | −0.11 … −0.47 | ≤ 2 % |
+| 1d BUY | −0.04 … −0.26 | 2–7 % |
+Walk-forward (rank on train, keep valid > 0, read test): per-commodity survivors positive in test 19 / 43 = chance.
+SELL side negative on every timeframe (consistent with all earlier MCX SELL work).
+
+**One pocket survives — daily BUY, intrabar trigger:** RSI(7) touched ≤ 30 in the last 3 days, bullish candle
+(close > open, close in upper half), ADX(14) < 20; BUY-STOP at that candle's high for 3 sessions (cancel if its low
+breaks first); SL 1.5 ATR.
+| exit | trades | win % | R | PF | 2006-12 | 2013-19 | 2020-26 | commodities positive |
+|---|---|---|---|---|---|---|---|---|
+| 3-ATR trail | 271 | 42.4 | +0.25 | 1.45 | +0.27 | +0.26 | +0.23 | 7 / 7 |
+| 3R target (implemented) | 264 | 45.8 | +0.19 | 1.33 | +0.19 | +0.12 | +0.26 | — |
+Avg win +1.91R / avg loss −0.97R (trail); max DD 16R over 20 y; ≈ 0.16 calls per commodity per month (~1.1 / month MCX).
+Close-confirmed break (BRKC) of the same setup: +0.07R — **the intrabar break of the candle high is what carries the edge.**
+Caveat: selected from >200k variants; the evidence is stability (3 periods, 7/7 commodities, neighbours L25/L30 and
+bull/any all positive), not significance after full multiple-testing correction. Tier B.
+
+Implemented on main 8a75fb6 as `RB_MCX_1d_RSIX_BUY` (pending stop-entry call, activated/cancelled/expired in
+four_hour.track). Parity: live mask == research mask on all 7 commodities (20-year daily).
+Files: rsix.py, rsix_select.py, rsix_final.py, results/rsix_pooled.csv, rsix_selected.csv, rsix_per_commodity.csv,
+rsix2_breadth.csv, rsix2_top500.csv, rsix_final_trades.csv.
