@@ -629,3 +629,11 @@ SILVER 15-min DT+VOL BUY, 3-ATR trailing stop: 90 trades (2.7/month), 52 % win, 
 periods +0.55 / +0.29 / +1.29R. GOLD same: 97, 39 %, +0.32R (2023-24 −0.09). SELL side: no robust version.
 Baseline without the trendline (daily up + volume + up candle, same exit): −0.10…−0.24R – the trendline adds the edge.
 Not usable: ALUMINIUM, ZINC, NATURALGAS, COPPER (costs 1-6R on intraday ATR). Caveat: 2023-26 was a metals bull market.
+
+## STRETCH-001 (6-Nov-2026) – why the live GOLD calls failed; stretch / RSI / trend filters on the MCX breakout rules
+Script `research/program/stretch.py`. 7 commodities, 4 years, live rules, 2x costs.
+MCX BUY breakouts work: 1d BUY 61 trades 59 % +0.94R; 3h BUY 383, 48 %, +0.22R (+0.28R with the daily trend). Stretched BUYs
+(> 3 ATR above daily EMA20 or RSI > 70) do BEST (+0.58…+1.86R) – momentum, so no stretch filter.
+MCX SELL breakouts lose: 3h SELL 182 trades 37 % −0.15R (with the daily downtrend −0.40R); 1d SELL 8 trades −0.27R. No filter fixes it.
+GOLD: BUY 99 trades +0.66R, SELL 29 trades −0.07R. Live GOLD SELLs on 30-Oct came after a −2.8 % day (RSI 28.7) and reversed;
+the 5-Nov 3h EMA BUY was against the daily downtrend (EMA20 < EMA50) after a +4.5 % bounce.
