@@ -1,0 +1,33 @@
+name: Research - NSE cash bhavcopy history (no alerts)
+
+# Official NSE cash-market end-of-day files (all EQ/BE securities, point-in-time incl. later-delisted stocks) for the
+# cash-equity research. NSE archive only – no Angel calls, so it never competes with the live bot. Saved to the branch
+# "research-nse-cm" as one gzip CSV per year.
+on:
+  workflow_dispatch:
+    inputs:
+      start: { description: "first date (YYYY-MM-DD)", default: "2005-01-01" }
+
+permissions:
+  contents: write
+
+concurrency: { group: research-nse-cm, cancel-in-progress: false }
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install requests pandas
+      - run: python -m research.adapters.nse_cm "${{ github.event.inputs.start || '2005-01-01' }}"
+      - name: Save to research-nse-cm
+        run: |
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          mkdir -p /tmp/cm && cp research/data/nse_cm/*.csv.gz research/data/nse_cm/*.txt /tmp/cm/
+          git switch -q -f --orphan research-nse-cm && git rm -rqf --cached . > /dev/null 2>&1 || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          mkdir -p research/data/nse_cm && cp /tmp/cm/* research/data/nse_cm/
+          git add -f research/data/nse_cm && git commit -qm "NSE cash bhavcopy $(date -u +%F)" && git push -q -f origin HEAD:research-nse-cm
