@@ -302,7 +302,13 @@ def scan(api, master, now, state, only=None):
                 if attempt < 2 and hasattr(api, "api"):
                     import time; time.sleep(2 + 2 * attempt)
             if df is None or df.empty:
-                info[tf] = "NO DATA"; rep["errors"].append(f"{name} {tf}: no candles"); continue
+                info[tf] = "NO DATA"; rep["errors"].append(f"{name} {tf}: no candles")
+                try:
+                    from alerts import funnel as FN_
+                    FN_.note(state, f"{'MCX' if ex == 'MCX' else 'INDEX'} data", "data", key=f"{name}|{tf}|{now:%Y-%m-%d %H}", now=now)
+                except Exception:
+                    pass
+                continue
             frames[tf] = df.sort_values("time").drop_duplicates("time").reset_index(drop=True)
         if not c["is_front"] and c.get("prev_token") and "1h" in frames:   # on next month's contract: join the older history
             try:
@@ -433,6 +439,15 @@ def scan(api, master, now, state, only=None):
             msgs += RP.build(state, seg, now, marks, os.getenv("ALERTS_STATE_DIR", "state/alerts"))
         except Exception as e:
             rep["errors"].append(f"report {seg}: {type(e).__name__}: {str(e)[:80]}")
+    try:                                                   # 6-Nov: signal funnel summary once a day after the MCX close
+        from alerts import funnel as FN
+        if not state["day"].get("funnel_sent") and now.weekday() < 5 and not is_open("MCX", now) and _after_close("MCX", now):
+            state["day"]["funnel_sent"] = True
+            fm = FN.summary(state, d)
+            if fm:
+                msgs.append(fm)
+    except Exception as e_:
+        print(f"[funnel] summary skipped: {type(e_).__name__}: {e_}")
     try:                                                   # 1H BIG MOVE watch: end-of-day summary per exchange
         from alerts import watch1h as W1
         for ex_, segs in (("NFO", ["INDEX"]), ("MCX", ["MCX"])):
@@ -579,6 +594,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             info["setups"] = " · ".join(f"{r['setup']} {r['status']}" for r in state["candle_setups"]["open"] if r["name"] == name) or "none"
         except Exception as e_:
             print(f"[setup] {name} skipped: {type(e_).__name__}: {e_}")
+    from alerts import funnel as FN
+    _fun = []
     for tf, fr in frames.items():
         BO.manage(state, msgs, name, tf, fr, c15, now)
         if fr is None or len(fr) < 30:
@@ -604,9 +621,13 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                 sig = ps
         if not sig["side"]:
             continue
+        _rule = f"{'MCX' if ex == 'MCX' else 'INDEX'} {tf} {sig['side']}" + (" pattern" if sig.get("pattern") else "")
+        FN.note(state, _rule, "signal", key=f"{name}|{last}", now=now)
+        _fun.append((tf, _rule, f"{name}|{last}"))
         if sw_day is not None and pd.Timestamp(sig["candle"]).normalize() == sw_day:
             info[f"bo_{tf}"] += " · skipped: contract-switch day (volume distorted)"; continue
-        if oi and oi.get("label") and oi["label"] not in {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}[sig["side"]]:
+        if tf not in ("1w", "1M") and oi and oi.get("label") and oi["label"] not in {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}[sig["side"]]:
+            # 6-Nov: weekly / monthly calls are not blocked by a one-day OI snapshot (not part of their tested rule)
             info[f"bo_{tf}"] += f" · skipped: OI {oi['label']} does not confirm"; continue
         if any(p["name"] == name and p["tf"] in (tf, "1d", "1m", "1w", "1M") and tf in ("1d", "1m", "1w", "1M") and p["tf"] != "3h"
                and not p.get("shadow") for p in state["bo_active"]) and tf in ("1d", "1m", "1w", "1M"):
@@ -697,6 +718,11 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                        lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
         msgs.append(reason)
         state["day"]["alerts"] += 1
+        FN.note(state, _rule, "sent", key=f"{name}|{last}", now=now)
+    for tf_, rule_, key_ in _fun:                                   # 6-Nov funnel: why each signal was not sent
+        stg, why = FN.classify(info.get(f"bo_{tf_}"))
+        if stg:
+            FN.note(state, rule_, stg, why, key=key_, now=now)
 
 
 def _monthly_hist(state, api, ex, c, name, now):

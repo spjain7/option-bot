@@ -579,6 +579,11 @@ def scan(api, master, now, state, msgs, rep, engine):
         if (h is None or h.empty) and blocked() and hasattr(api, "wait_clear") and api.wait_clear():
             h, oi = _fetch()                                   # 29-Oct: wait out an Angel rate-limit pause once, then retry
         if h is None or h.empty:
+            try:
+                from alerts import funnel as FN_
+                FN_.note(state, "STOCK data", "data", key=f"{name}|{blk}", now=now)
+            except Exception:
+                pass
             if blocked():                                      # still blocked: this stock was NOT scanned -> resume next
                 prog["done"].remove(name)                      # cycle (was: counted as done, the 12:15 scan of 29-Oct
                 complete = False                               # skipped all 207 stocks and reported "done")
@@ -684,6 +689,14 @@ def scan(api, master, now, state, msgs, rep, engine):
             be = evaluate_bear_engulf(d)
             if be["side"]:
                 sig = be
+        if sig["side"]:
+            from alerts import funnel as FN
+            _fr = f"STOCK 1d {sig['side']}" + (" engulfing" if sig.get("pattern") else "")
+            FN.note(state, _fr, "signal", key=f"{name}|{sig['candle']}", now=now)
+            if first_session_after_expiry(sig["candle"]):
+                FN.note(state, _fr, "rejected", "first session after expiry", key=f"{name}|{sig['candle']}", now=now)
+            elif any(p["name"] == name for p in st["active"]):
+                FN.note(state, _fr, "rejected", "already in an open call", key=f"{name}|{sig['candle']}", now=now)
         if not sig["side"] or first_session_after_expiry(sig["candle"]) or any(p["name"] == name for p in st["active"]):
             continue
         cc = dict(symbol=c["symbol"], expiry=c["expiry"])
@@ -693,6 +706,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                                tick=c.get("tick"), lot=c["lot"], mult=c["lot"], max_sl_pct=MAX_SL_PCT, live=None, now=now,
                                require_live=False)
         if not plan["valid"]:
+            FN.note(state, _fr, "rejected", plan["reason"], key=f"{name}|{sig['candle']}", now=now)
             rep.setdefault("stock_skips", []).append(f"{name}: {plan['reason']}"); continue
         lv = S.levels(d, h, sig["close"], sig["atr"])
         sid = "STK_ENGULF_SELL" if sig.get("pattern") else f"STK_OI_{sig['side']}"
@@ -702,6 +716,7 @@ def scan(api, master, now, state, msgs, rep, engine):
             why_s = clash or f"registry SHADOW – {ST.S[sid][7]}"
             print(f"[shadow] {name} {sid} logged only: {why_s}")
             rep.setdefault("stock_skips", []).append(f"{name}: {sid} logged only – {why_s}")
+        FN.note(state, _fr, "shadow" if shadow else "sent", key=f"{name}|{sig['candle']}", now=now)
         msgs.append(ST.mark(BO.call_msg(name, "NFO", cc, "1d", sig, lv, lot=c["lot"], plan=plan), shadow))
         key = f"{name}|1dSTK|{last}"
         # entry = today's close; the call becomes ACTIVE only if tomorrow's opening price is still inside the entry zone

@@ -106,6 +106,30 @@ def evaluate(fr, rule):
 
 
 def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=False, rule_key=None, dtrend=None):
+    """Funnel wrapper (6-Nov): counts every fired signal once per candle and why it was not sent."""
+    global LAST_SIG
+    LAST_SIG = None
+    res = _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close, rule_key, dtrend)
+    if LAST_SIG:
+        try:
+            from alerts import funnel as FN
+            rk = rule_key or ex
+            rule = f"{'MCX' if ex == 'MCX' else 'STOCK'} {RULES[rk].get('tf', '4h')} {LAST_SIG[0]}"
+            key = f"{name}|{LAST_SIG[1]}"
+            FN.note(state, rule, "signal", key=key, now=now)
+            if res == "SENT":
+                FN.note(state, rule, "sent", key=key, now=now)
+            else:
+                FN.note(state, rule, "rejected", str(res).replace("skipped: ", "").replace("not sent: ", ""), key=key, now=now)
+        except Exception as e_:
+            print(f"[funnel] {name} skipped: {type(e_).__name__}: {e_}")
+    return res
+
+
+LAST_SIG = None
+
+
+def _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=False, rule_key=None, dtrend=None):
     """Called with the instrument's completed candles (fr: 4h, or 3h for rule NFO3H). Sends at most one new call per candle.
     dtrend: +1 / -1 / 0 daily trend of the last completed day (rules with 'dtrend' require it to agree)."""
     st = store(state)
@@ -122,6 +146,8 @@ def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=
     sig = evaluate(fr, rule)
     if not sig["side"]:
         return sig["why"]
+    global LAST_SIG
+    LAST_SIG = (sig["side"], sig["candle"])
     if rule.get("dtrend") and dtrend != rule["dtrend"]:
         print(f"[{rule.get('tf', '4h')}] {name} {sig['side']} skipped: daily trend not {'up' if rule['dtrend'] > 0 else 'down'}")
         return f"skipped: daily trend not {'up' if rule['dtrend'] > 0 else 'down'}"
