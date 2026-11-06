@@ -22,22 +22,26 @@ CFG = dict(N=20, vol_x=1.5, stop_atr=2.0, trail_atr=3.0, max_candles=40, ema=200
 #  1m : MONTHLY breakout/breakdown (SR-001): first daily close beyond last month's high/low, with the weekly AND monthly
 #       trend agreeing; stop 1.5 ATR(daily), target 2R, max 20 sessions. ₹6,030 / ₹24,459 per lot (2× costs), win 50% / 46%,
 #       profitable in both periods but only 5 of 9 instruments positive – a near-pass, labelled as such.
-STOP_ATR = {"3h": 2.0, "1d": 1.5, "1w": 3.0, "1m": 1.5}
-TARGET_R = {"3h": 2.0, "1d": 3.0, "1w": 2.0, "1m": 2.0}
-TRAIL = {"3h": False, "1d": False, "1w": False, "1m": False}
+# 6-Nov (owner approved, WKMO-001 – 20 years MCX 2006-26 / index 2011-26): weekly BUY stop 2 ATR, target 3R (+0.64R vs +0.52R for
+#  3 ATR / 2R); NEW monthly-candle BUY "1M" (monthly close above last month's high, 2 monthly ATR, 3R: 104 trades, 62 %, +0.68R,
+#  all 7 commodities positive). Weekly / monthly SELL lose over 20 years -> registry SHADOW.
+STOP_ATR = {"3h": 2.0, "1d": 1.5, "1w": 2.0, "1m": 1.5, "1M": 2.0}
+TARGET_R = {"3h": 2.0, "1d": 3.0, "1w": 3.0, "1m": 2.0, "1M": 3.0}
+TRAIL = {"3h": False, "1d": False, "1w": False, "1m": False, "1M": False}
 TREND_EXIT_EMA = {}
-TREND_WARN_EMA = {"3h": 20, "1d": 20, "1w": 20, "1m": 20}
-MAX_CANDLES = {"3h": 40, "1d": 40, "1w": 26, "1m": 20}
+TREND_WARN_EMA = {"3h": 20, "1d": 20, "1w": 20, "1m": 20, "1M": 10}
+MAX_CANDLES = {"3h": 40, "1d": 40, "1w": 26, "1m": 20, "1M": 12}
 # 28-Oct sanity rule: a call whose stop-loss is too far from entry is not tradable for one lot -> no call.
 # (weekly SILVER SELL had its SL 28% away; daily SILVER 1.5 ATR ≈ 7%.)
-MAX_SL_PCT = {"3h": 2.5, "1d": 4.0, "1w": 0.0, "1m": 4.0}
+MAX_SL_PCT = {"3h": 2.5, "1d": 4.0, "1w": 0.0, "1m": 4.0, "1M": 0.0}
 # option-buy calls: SL / target as % of the premium (same as the intraday option-buy engine), not from the futures move
 OPT_SL_TG = {"3h": (0.30, 0.60), "1d": (0.35, 0.80), "1m": (0.35, 0.80)}
 
 
 def stop_k(tf):
     return STOP_ATR.get(tf, CFG["stop_atr"])
-TFLABEL = {"3h": "SWING (3-hour candles)", "1d": "POSITIONAL (daily candles)", "1w": "POSITIONAL (weekly candles)", "1m": "POSITIONAL (monthly level)"}
+TFLABEL = {"3h": "SWING (3-hour candles)", "1d": "POSITIONAL (daily candles)", "1w": "POSITIONAL (weekly candles)", "1m": "POSITIONAL (monthly level)",
+           "1M": "POSITIONAL (monthly candles)"}
 
 
 def daily_candles(h1c, session_close):
@@ -53,7 +57,71 @@ def daily_candles(h1c, session_close):
 # 30-Oct (owner approved, MCX-LOOKBACK-001): commodity BUY breakouts use a shorter lookback – daily 5 days, 3-hour 10 candles
 # (daily BUY +0.78R/trade, positive in every period vs the 20-day rule's loss in 2024-25; 3h BUY same average, more trades).
 # SELL and index calls keep 20.
-BUY_LOOKBACK_MCX = {"1d": 5, "3h": 10}
+BUY_LOOKBACK_MCX = {"1d": 20, "3h": 10}
+# 6-Nov (owner approved, SEARCH-ALL-001, 6,108 combinations, walk-forward + FDR): MCX DAILY BUY = close above the 20-day high with
+# daily ADX(14) >= 25 (no volume / EMA200 condition), stop 1.5 ATR, target 2R: 83 trades, 58 % win, +0.56R at 2x costs,
+# +0.80 / +0.02 / +0.63 by period, 6 of 7 commodities positive (the 5-day rule: +0.47R, 5 of 7).
+MCX_DAILY_ADX = 25.0
+MCX_DAILY_TARGET_R = 2.0
+
+
+def target_r(tf, ex, side):
+    """Target in R for a breakout call (MCX daily BUY has its own)."""
+    if ex == "MCX" and tf == "1d" and side == "BUY":
+        return MCX_DAILY_TARGET_R
+    return TARGET_R.get(tf)
+
+
+def daily_trend(daily, now=None):
+    """+1 / -1 / 0: last COMPLETED day's EMA20 vs EMA50 and close vs EMA50 (the 'daily trend' filter of the research)."""
+    if daily is None or len(daily) < 55:
+        return 0
+    d = daily
+    if now is not None:
+        d = d[d["time"].dt.normalize() < pd.Timestamp(now).normalize()]
+    if len(d) < 55:
+        return 0
+    c = d["close"].reset_index(drop=True)
+    e20, e50 = float(I.ema(c, 20).iloc[-1]), float(I.ema(c, 50).iloc[-1]); x = float(c.iloc[-1])
+    return 1 if (e20 > e50 and x > e50) else -1 if (e20 < e50 and x < e50) else 0
+
+
+def evaluate_mcx_daily(df):
+    """MCX daily: BUY = close above the 20-day high and ADX >= 25 (6-Nov rule); SELL as before (logged only, registry SHADOW)."""
+    sig = evaluate(df, n_buy=20)
+    if df is None or len(df) < 60 or "close" not in sig:
+        return sig
+    if sig.get("side") == "SELL":
+        return sig
+    if sig["close"] > sig["hh"] and (sig.get("adx") or 0) >= MCX_DAILY_ADX:
+        return dict(sig, side="BUY", why=None, rule="mcx1d")
+    why = ("no 20-day breakout" if sig["close"] <= sig["hh"] else f"ADX {sig.get('adx') or 0:.1f} < {MCX_DAILY_ADX:g} (choppy)")
+    return dict(sig, side=None, why=why)
+
+
+def monthly_candles(daily, now=None):
+    """Completed monthly candles from daily candles (the current month is excluded)."""
+    if daily is None or daily.empty:
+        return None
+    d = daily.copy(); d["mo"] = d["time"].dt.to_period("M")
+    m = d.groupby("mo").agg(time=("time", "first"), open=("open", "first"), high=("high", "max"), low=("low", "min"),
+                            close=("close", "last"), volume=("volume", "sum")).reset_index(drop=True)
+    if now is not None and len(m) and pd.Timestamp(m["time"].iloc[-1]).to_period("M") == pd.Timestamp(now).to_period("M"):
+        m = m.iloc[:-1]
+    return m.reset_index(drop=True)
+
+
+def evaluate_monthly_candle(mo):
+    """1M: the last COMPLETED month closed above the previous month's high (BUY) / below its low (SELL, logged only)."""
+    if mo is None or len(mo) < 16:
+        return dict(side=None, why=f"needs 16 monthly candles, have {0 if mo is None else len(mo)}")
+    c, h, l = mo["close"], mo["high"], mo["low"]
+    x = mo.iloc[-1]
+    out = dict(candle=str(x.time), close=float(x.close), hh=float(h.iloc[-2]), ll=float(l.iloc[-2]),
+               ema200=float(I.ema(c, 10).iloc[-1]), atr=float(I.atr(mo, 14).iloc[-1]), vol_x=None,
+               adx=float(I.adx(mo).iloc[-1]), rsi=float(I.rsi(c, 14).iloc[-1]), monthly_candle=True)
+    side = "BUY" if x.close > out["hh"] else "SELL" if x.close < out["ll"] else None
+    return dict(out, side=side, why=None if side else "monthly close inside last month's range")
 
 
 def evaluate(df, n_buy=None):
@@ -163,7 +231,7 @@ def _levels(sig, live, k=2.0):
     return s, ref, R
 
 
-OPT_MIN_DAYS = {"3h": 2, "1d": 2, "1w": 20, "1m": 10}      # nearest option expiry with at least 2 days left (user choice 27-Oct)
+OPT_MIN_DAYS = {"3h": 2, "1d": 2, "1w": 20, "1m": 10, "1M": 20}      # nearest option expiry with at least 2 days left (user choice 27-Oct)
 
 
 def option_idea(master, name, ex, px, side, tf, now):
@@ -228,7 +296,7 @@ def details(ex, c, tf, sig, levels, live=None, k=None):
             "━━━━━━━━━━━━━━━━━━", "📌 WHY"]
 
 
-CHART = {"3h": "3-hour", "1d": "Daily", "1w": "Weekly", "1m": "Daily"}
+CHART = {"3h": "3-hour", "1d": "Daily", "1w": "Weekly", "1m": "Daily", "1M": "Monthly"}
 
 
 def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None, htf=None):
@@ -239,8 +307,8 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None, htf=None):
     else:
         lvl = sig["hh"] if s > 0 else sig["ll"]
         nb = sig.get("n_buy") if s > 0 else None
-        what = "last month's" if tf == "1m" else f"{nb or 20}-{'week' if tf == '1w' else 'day' if (nb and tf == '1d') else 'candle'}"
-        setup = f"{'MONTHLY ' if tf == '1m' else 'WEEKLY ' if tf == '1w' else ''}{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} {what} {'high' if s > 0 else 'low'} {_f(lvl)}"
+        what = "last month's" if tf in ("1m", "1M") else f"{nb or 20}-{'week' if tf == '1w' else 'day' if (nb and tf == '1d') else 'candle'}"
+        setup = f"{'MONTHLY ' if tf in ('1m', '1M') else 'WEEKLY ' if tf == '1w' else ''}{'BREAKOUT above' if s > 0 else 'BREAKDOWN below'} {what} {'high' if s > 0 else 'low'} {_f(lvl)}"
     L = [f"📌 WHY – {name} {sig['side']}", "━━━━━━━━━━━━━━",
          f"• Chart   : {CHART.get(tf, tf)} candle closed {_f(sig['close'])}",
          f"• Setup   : {setup}"]
@@ -253,7 +321,9 @@ def reason_msg(name, tf, sig, levels, oi=None, q=None, plan=None, htf=None):
         L.append("• OI      : not available")
     if tf == "1m":
         L.append("• Trend   : weekly and monthly trend agree ✅ (near-pass rule: profitable in both test periods, 5 of 9 instruments)")
-    L.append(f"• Trend   : {'above' if sig['close'] > sig['ema200'] else 'below'} {'20-week' if tf == '1w' else '200'} EMA {_f(sig['ema200'])} "
+    if sig.get("rule") == "mcx1d":
+        L.append(f"• Trend   : daily ADX {sig.get('adx') or 0:.0f} ≥ {MCX_DAILY_ADX:g} – trending, not choppy ✅")
+    L.append(f"• Trend   : {'above' if sig['close'] > sig['ema200'] else 'below'} {'20-week' if tf == '1w' else '10-month' if tf == '1M' else '200'} EMA {_f(sig['ema200'])} "
              f"{'✅' if (sig['close'] > sig['ema200']) == (s > 0) else '⚠️'}")
     L.append(f"• RSI/ADX : {sig.get('rsi') or 0:.0f} / {sig.get('adx') or 0:.0f}")
     nxt = (levels["resistance"] if s > 0 else levels["support"])[:1]

@@ -26,7 +26,8 @@ df.loc[n - 1, ["close", "high", "volume"]] = [c[-1] + 3.0, c[-1] + 3.1, 3000.0]
 a, b = BO.evaluate(df), BO.evaluate(df, n_buy=5)
 check(a["side"] is None and b["side"] == "BUY", "close above the 5-day high but below the 20-day high: BUY only with the 5-day lookback")
 check(b["hh"] < a["hh"] and b["ll"] == a["ll"], "the SELL level (20-candle low) is unchanged")
-check(BO.BUY_LOOKBACK_MCX == {"1d": 5, "3h": 10}, "MCX lookbacks: daily 5, 3-hour 10")
+check(BO.BUY_LOOKBACK_MCX == {"1d": 20, "3h": 10} and BO.target_r("1d", "MCX", "BUY") == 2.0 and BO.target_r("1d", "NFO", "BUY") == 3.0,
+      "6-Nov MCX lookbacks: daily 20 (+ ADX ≥ 25, 2R), 3-hour 10; index daily keeps 3R")
 msg = BO.reason_msg("GOLD", "1d", dict(b, close=float(df.close.iloc[-1])), dict(support=[], resistance=[]))
 check("5-day high" in msg, "WHY message names the 5-day high")
 print(f"\nlookback: {ok} passed, {fail} failed")

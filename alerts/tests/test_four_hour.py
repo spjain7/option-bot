@@ -40,8 +40,9 @@ def series(side, n=260, last_vol=3.0, jump=1.5):
 
 
 b = FH.evaluate(series(1), FH.RULES["MCX"])
-check(b["side"] == "BUY" and b["vol_x"] > 2, "MCX: close above the 10-candle high, volume > 2×, above EMA200 -> BUY")
-check(FH.evaluate(series(1, last_vol=1.5), FH.RULES["MCX"])["side"] is None, "volume 1.5× -> no call")
+check(b["side"] == "BUY" and b["vol_x"] > 2, "MCX: close above the 10-candle high, volume ≥ 1.5× -> BUY (6-Nov rule)")
+check(FH.evaluate(series(1, last_vol=1.6), FH.RULES["MCX"])["side"] == "BUY", "6-Nov: volume 1.6× is enough for MCX")
+check(FH.evaluate(series(1, last_vol=1.2), FH.RULES["MCX"])["side"] is None, "volume 1.2× -> no call")
 check(FH.evaluate(series(-1), FH.RULES["NFO"])["side"] == "SELL", "stocks: close below the 5-candle low, volume > 2×, below EMA200 -> SELL")
 
 
@@ -58,7 +59,7 @@ NOW = pd.Timestamp("2026-03-15 13:02")
 C = dict(symbol="GOLD04DEC26FUT", token="7", expiry="2026-12-04", lot=1, tick=1.0)
 
 
-def run(f, side, oi_up=True, ex="MCX", sr=None):
+def run(f, side, oi_up=True, ex="MCX", sr=None, dtrend=None, rule_key=None):
     st = {"day": {}}
     m = []
     import alerts.signals as S
@@ -67,7 +68,8 @@ def run(f, side, oi_up=True, ex="MCX", sr=None):
         S.levels = lambda *a, **k: sr
     try:
         q = {"ltp": float(f["close"].iloc[-1]), "exchFeedTime": f"{NOW:%d-%b-%Y %H:%M:%S}"}
-        r = FH.on_candles(st, m, Api(oi_up), "GOLD", ex, C, None, f, q, NOW, 100)
+        dt_ = dtrend if dtrend is not None else (1 if ex == "MCX" else 0)
+        r = FH.on_candles(st, m, Api(oi_up), "GOLD", ex, C, None, f, q, NOW, 100, dtrend=dt_, rule_key=rule_key)
     finally:
         S.levels = orig
     return st, m, r
@@ -88,7 +90,7 @@ class NoOI(Api):
     def oi_history(self, *a): return None
 st5 = {"day": {}}
 q = {"ltp": e, "exchFeedTime": f"{NOW:%d-%b-%Y %H:%M:%S}"}
-r5 = FH.on_candles(st5, [], NoOI(), "GOLD", "MCX", C, None, f, q, NOW, 100)
+r5 = FH.on_candles(st5, [], NoOI(), "GOLD", "MCX", C, None, f, q, NOW, 100, dtrend=1)
 check(r5 == "skipped: OI over the candle not available", "OI not available -> no call (never assumed)")
 fs = series(-1)
 _, m6, r6 = run(fs, -1, oi_up=True, ex="NFO", sr=dict(support=[], resistance=[]))
@@ -99,6 +101,13 @@ _, m6c, r6c = run(series(1), 1, oi_up=True, ex="MCX", sr=dict(support=[], resist
 FH.OPTION_HOOK = None
 check(r6b == "SENT" and len(m6b) == 3 and "OPTION IDEA" in m6b[2] and not any("OPTION IDEA" in x for x in m6c),
       "stock 4h SELL call carries the option idea (ITM, delta 0.75); MCX does not")
+
+_, m8, r8 = run(f, 1, sr=dict(support=[], resistance=[]), dtrend=0)
+check(r8.startswith("skipped: daily trend not up") and not m8, "6-Nov: MCX 4h BUY needs the daily trend up")
+_, m9, r9 = run(fs, -1, oi_up=True, ex="NFO", sr=dict(support=[], resistance=[]), dtrend=-1, rule_key="NFO3H")
+check(r9 == "SENT" and "3-hour" in m9[0] and "daily trend DOWN" in m9[1], "6-Nov: stock 3h SELL in a daily downtrend -> call")
+_, m10, r10 = run(fs, -1, oi_up=True, ex="NFO", sr=dict(support=[], resistance=[]), dtrend=1, rule_key="NFO3H")
+check(r10.startswith("skipped: daily trend not down"), "stock 3h SELL against the daily uptrend -> no call")
 
 # tracking
 rec = st["fourh"]["open"][0]

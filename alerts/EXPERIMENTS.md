@@ -145,3 +145,12 @@ same side = duplicate) – logged with its outcome. LIVE WHY messages carry one 
 The end-of-day message carries a measured scorecard (live / shadow / paper separately; T1 hit, profitable %, avg R, PF,
 MFE / MAE). Live ledger 28-Oct → 4-Nov (before this change): 5 closed calls – 3h SELL 2 target / 1 stop, daily SELL 1 stop,
 hammer 1 stop; stock OI BUY 4 of 7 cancelled at the open gap.
+
+## 2026-11-06 – owner-approved rule update (research: SEARCH-ALL-001, WKMO-001, STRETCH-001 on exp/strategy-program-001)
+- MCX daily BUY: 20-day high + daily ADX ≥ 25, stop 1.5 ATR, target 2R (83 trades, 58 %, +0.56R, all periods positive).
+- MCX 4h BUY: volume ≥ 1.5×, daily trend up (replaces EMA200), stop 2 ATR, target 3R (259 trades, 44 %, +0.42R, 7/7 commodities).
+- NEW stock 3h SELL: 5-candle low, volume ≥ 2×, daily trend down, 1.5 ATR / 2R (1,335 trades, 50 %, +0.13R). OI + 0.5R level rules stay.
+- Weekly BUY back on (MCX + index): 20-week high, 2 ATR / 3R (146 trades over 20 years, +0.64R). Weekly SELL logged only.
+- NEW monthly-candle BUY (MCX): month closes above last month's high, 2 monthly ATR / 3R (104 trades, 62 %, +0.68R, 7/7).
+- Commodity 3h / daily / weekly / monthly SELL: logged only (registry SHADOW; SELL breakouts lose over 4 and 20 years).
+- Stock daily OI breakout BUY (GLENMARK / TITAN type) back to LIVE at the owner's request (registry had made it SHADOW on 4-Nov).

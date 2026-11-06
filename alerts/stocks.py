@@ -17,6 +17,7 @@ from crude import data as CD, indicators as I
 from alerts import dataquality as DQ
 from alerts import strategies as ST
 from alerts import candle_setups as CS
+from alerts import four_hour as FH
 
 ENABLED = True
 # the 15:30 scan of ~180 stock futures can take longer than the alerts step's time limit (scripts/market_loop.sh, 1200 s);
@@ -542,7 +543,7 @@ def scan(api, master, now, state, msgs, rep, engine):
         rep["stocks"]["scan"] = "stock scans run after 12:15 (3h) and after the 15:30 close (3h + daily)"
         return
     daily_block = blk.endswith("15:30:00")
-    if not daily_block and not STOCK3H_ENABLED and not CS.ENABLED.get("STK_SWEEP3H"):
+    if not daily_block and not STOCK3H_ENABLED and not CS.ENABLED.get("STK_SWEEP3H") and not ST.is_live("FH_STK3H_SELL"):
         st["last_block"] = blk
         return
     prog = st.get("progress") or {}
@@ -599,6 +600,25 @@ def scan(api, master, now, state, msgs, rep, engine):
                                lambda t0, t1, _c=c: sweep_oi_change(api, _c, t0, t1))
             except Exception as e_:
                 print(f"[setup] STK_SWEEP3H {name} skipped: {type(e_).__name__}: {e_}")
+        if ST.is_live("FH_STK3H_SELL"):                         # 6-Nov (owner approved, SEARCH-ALL-001): 3h SELL, daily downtrend
+            try:
+                f3_ = frame3h(h)
+                f3_["end"] = f3_["time"] + pd.Timedelta(hours=3)
+                if len(f3_) and FH.evaluate(f3_, FH.RULES["NFO3H"])["side"]:
+                    q3 = None
+                    if not daily_block:                          # 12:15 candle: entry now -> current price checked
+                        try:
+                            q3 = (api.quotes({"NFO": [c["token"]]}) or {}).get(str(c["token"]))
+                        except Exception:
+                            q3 = None
+                    r3 = FH.on_candles(state, msgs, api, name, "NFO", c, h, f3_, q3, now, int(c.get("lot") or 1),
+                                       after_close=daily_block, rule_key="NFO3H",
+                                       dtrend=BO.daily_trend(BO.daily_candles(h, None), now))
+                    print(f"[3h] {name} SELL: {r3}")
+                    if r3 == "SENT":
+                        found += 1
+            except Exception as e_:
+                print(f"[3h] stock SELL {name} skipped: {type(e_).__name__}: {e_}")
         if STOCK3H_ENABLED:
             try:
                 found += scan3h(name, c, h, frame3h(h), now, master, st, state, msgs)

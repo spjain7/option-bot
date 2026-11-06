@@ -13,7 +13,9 @@ def check(name, cond):
 
 check("losing / unproven breakout SELLs are shadow", {("3h", "SELL"), ("1d", "SELL"), ("1m", "SELL")} <= E.SHADOW_ONLY)
 check("winning breakout BUYs stay live", not ({("3h", "BUY"), ("1d", "BUY"), ("1m", "BUY")} & E.SHADOW_ONLY))
-check("decaying stock OI BUY is shadow", ST.status("STK_OI_BUY") == "SHADOW" and ST.is_live("STK_OI_SELL"))
+check("owner 6-Nov: stock OI BUY (GLENMARK / TITAN type) stays LIVE; weekly / monthly-candle SELL shadow",
+      ST.is_live("STK_OI_BUY") and ST.is_live("STK_OI_SELL") and {("1w", "SELL"), ("1M", "SELL")} <= E.SHADOW_ONLY
+      and ST.is_live("BO_1w_BUY") and ST.is_live("BO_1M_BUY"))
 check("E_BUY_v1 is paper", ST.status("E_BUY_v1") == "PAPER")
 for sid, v in ST.S.items():
     st, tier, label, n, w, r, pf, note = v

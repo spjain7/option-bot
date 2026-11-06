@@ -49,10 +49,12 @@ def test_sell_sent():
     live = float(h["close"].iloc[-1]) - 3.0
     msgs, info = [], {}
     E._breakouts(st, msgs, info, "NIFTY", "NFO", C_, h, None, NOW, None, {"ltp": live, "exchFeedTime": "28-Oct-2026 12:16:50"})
-    real = [p for p in st["bo_active"] if p["tf"] == "3h" and not p.get("shadow")]
-    check("3h SELL breakout -> Telegram call + tracked + report-ledger row",
-          any("SELL  NIFTY FUT" in m for m in msgs) and len(real) == 1 and real[0]["side"] == "SELL"
-          and any(r["key"] == real[0]["key"] for r in st["ledger"]))
+    sh = [p for p in st["bo_active"] if p["tf"] == "3h" and p.get("shadow")]
+    check("4-Nov registry / owner 6-Nov: 3h SELL breakout is LOGGED ONLY – no message, no ledger row, outcome tracked",
+          not any("SELL  NIFTY FUT" in m for m in msgs) and len(sh) == 1 and sh[0]["side"] == "SELL"
+          and not any(r["key"] == sh[0]["key"] for r in st.get("ledger", [])))
+    real = [dict(sh[0])]
+    real[0].pop("shadow", None)
     st2 = E.new_state(); st2["day"] = day()
     st2["bo_active"] = [dict(real[0], shadow="3h SELL (log only, not sent)", opened="2026-10-28 12:17:00")]
     m3 = []

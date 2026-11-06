@@ -538,7 +538,17 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     wk = BO.weekly_candles(dd)                                      # completed weeks only (current week still forming)
     if wk is not None and len(wk) and pd.Timestamp(wk["time"].iloc[-1]).to_period("W") == now.to_period("W"):
         wk = wk.iloc[:-1]
-    # weekly calls OFF 28-Oct: stop-loss 3 weekly ATR = 13-28% away (GOLD / SILVER) – not tradable
+    # weekly calls OFF 28-Oct (stop 3 weekly ATR = 13-28 % away). 6-Nov (owner approved, WKMO-001, 20 years): weekly BUY back on
+    # with a 2 weekly-ATR stop and a 3R target (+0.64R, 146 trades); weekly SELL is registry SHADOW (−0.23R) – logged only.
+    if wk is not None and len(wk) >= 25:
+        frames["1w"] = wk
+    if ex == "MCX" and api is not None:                             # 6-Nov: monthly-candle BUY (needs > 16 months of history)
+        try:
+            mo = _monthly_hist(state, api, ex, c, name, now)
+            if mo is not None:
+                frames["1M"] = mo
+        except Exception as e_:
+            print(f"[1M] {name} monthly candles skipped: {type(e_).__name__}: {e_}")
     frames["1m"] = dd                                               # monthly breakout is checked on daily closes
     htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
@@ -547,7 +557,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         try:
             from alerts import four_hour as FH
             info["4h"] = FH.on_candles(state, msgs, api, name, ex, c, h1full, FH.four_hour(h1full, ex, now), q, now,
-                                       RP.mult_for(name, ex, c.get("lot")))
+                                       RP.mult_for(name, ex, c.get("lot")), dtrend=BO.daily_trend(dd, now))
         except Exception as e_:
             print(f"[4h] {name} skipped: {type(e_).__name__}: {e_}")
     if ex == "MCX" and _cfg("PAPER_EBUY", True):                     # 4-Nov: E_BUY_v1 PAPER ONLY (never sent, alerts/paper.py)
@@ -579,6 +589,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             continue
         state["last_eval"][k] = last
         sig = (BO.evaluate_weekly(fr) if tf == "1w" else BO.evaluate_monthly(fr) if tf == "1m"
+               else BO.evaluate_monthly_candle(fr) if tf == "1M"
+               else BO.evaluate_mcx_daily(fr) if (tf == "1d" and ex == "MCX")
                else BO.evaluate(fr, n_buy=BO.BUY_LOOKBACK_MCX.get(tf) if ex == "MCX" else None))
         info[f"bo_{tf}"] = f"{sig['side'] or 'none'} · {sig.get('why', '')} · vol {sig.get('vol_x') or 0:.2f}×"
         if sig.get("hh") is not None:
@@ -596,8 +608,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
             info[f"bo_{tf}"] += " · skipped: contract-switch day (volume distorted)"; continue
         if oi and oi.get("label") and oi["label"] not in {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}[sig["side"]]:
             info[f"bo_{tf}"] += f" · skipped: OI {oi['label']} does not confirm"; continue
-        if any(p["name"] == name and p["tf"] in (tf, "1d", "1m") and tf in ("1d", "1m") and p["tf"] != "3h" and not p.get("shadow")
-               for p in state["bo_active"]) and tf in ("1d", "1m"):
+        if any(p["name"] == name and p["tf"] in (tf, "1d", "1m", "1w", "1M") and tf in ("1d", "1m", "1w", "1M") and p["tf"] != "3h"
+               and not p.get("shadow") for p in state["bo_active"]) and tf in ("1d", "1m", "1w", "1M"):
             info[f"bo_{tf}"] += " · already in an open daily/monthly call"; continue
         shadow_only = (tf, sig["side"]) in SHADOW_ONLY
         if any(p["name"] == name and p["tf"] == tf and bool(p.get("shadow")) == shadow_only for p in state["bo_active"]):
@@ -611,7 +623,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         live = float(live) if live not in (None, "", 0) else None
         s_ = 1 if sig["side"] == "BUY" else -1
         plan = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf=tf, side=sig["side"], signal_time=sig["candle"],
-                               signal_close=sig.get("close"), atr=sig.get("atr"), stop_mult=BO.stop_k(tf), target_r=BO.TARGET_R.get(tf),
+                               signal_close=sig.get("close"), atr=sig.get("atr"), stop_mult=BO.stop_k(tf), target_r=BO.target_r(tf, ex, sig["side"]),
                                tick=c.get("tick"), lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")),
                                max_sl_pct=BO.MAX_SL_PCT.get(tf, 4.0), live=live, quote=q, now=now, require_live=is_open(ex, now),
                                levels=lv)
@@ -685,6 +697,34 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                        lot=opt["lot"], mult=opt["lot"], time=str(now), und_entry=plan["entry"], und_side=sig["side"])
         msgs.append(reason)
         state["day"]["alerts"] += 1
+
+
+def _monthly_hist(state, api, ex, c, name, now):
+    """Completed monthly candles (≈ 4.5 years) for the 1M rule. The long daily history is fetched once per new month per
+    instrument (≤ 7 Angel calls a month); the candles are kept in the state between runs."""
+    mc = state.setdefault("mcache", {})
+    cur = str(pd.Timestamp(now).to_period("M"))
+    e = mc.get(name) or {}
+    if e.get("month") != cur:
+        if e.get("tried") and (pd.Timestamp(now) - pd.Timestamp(e["tried"])).total_seconds() < 3600:
+            rows = e.get("rows")
+        else:
+            d = api.candles(ex, c["token"], "ONE_DAY", now - pd.Timedelta(days=1700), now)
+            mo = BO.monthly_candles(d.sort_values("time").drop_duplicates("time").reset_index(drop=True), now) if d is not None and len(d) else None
+            if mo is None or len(mo) < 16:
+                mc[name] = dict(e, tried=str(now))
+                rows = e.get("rows")
+            else:
+                rows = [[str(r.time), float(r.open), float(r.high), float(r.low), float(r.close), float(r.volume)]
+                        for r in mo.tail(40).itertuples()]
+                mc[name] = dict(month=cur, rows=rows, tried=str(now))
+    else:
+        rows = e.get("rows")
+    if not rows:
+        return None
+    m = pd.DataFrame(rows, columns=["time", "open", "high", "low", "close", "volume"])
+    m["time"] = pd.to_datetime(m["time"])
+    return m
 
 
 def _cfg(key, default):

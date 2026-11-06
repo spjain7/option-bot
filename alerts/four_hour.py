@@ -1,8 +1,9 @@
 """4-HOUR futures calls (owner approved 30-Oct-2026; research TFNH-001 / TFLOG-002, research branch exp/strategy-program-001).
 
-  MCX 4h BUY   : 4-hour candles 09-13 / 13-17 / 17-21 / 21-close. Close above the 10-candle high, volume > 2× the 20-candle
-                 average, close above EMA200. Stop 1.5 ATR, target 3R, time exit 40 candles (~10 sessions), stop cap 2.5 %.
-                 Backtest 2022-26 (2× costs): +0.50R/trade, 246 trades (+0.53 / +0.27 / +0.64 by period).
+  MCX 4h BUY   : 4-hour candles 09-13 / 13-17 / 17-21 / 21-close. Close above the 10-candle high, volume ≥ 1.5× the 20-candle
+                 average, daily trend up (6-Nov). Stop 2 ATR, target 3R, time exit 10 sessions, stop cap 2.5 %.
+                 Backtest 2022-26 (2× costs): +0.42R/trade, 259 trades (+0.48 / +0.09 / +0.55 by period).
+  STOCK 3h SELL: 3-hour candles 09:15-12:15 / 12:15-15:15, 5-candle low, volume ≥ 2×, daily trend down, 1.5 ATR / 2R (6-Nov).
   STOCK 4h SELL: NSE 4-hour candles 09:15-13:15 and 13:15-15:30 (fixed day blocks, so live = test). Close below the 5-candle
                  low, volume > 2×, close below EMA200. Stop 2 ATR, target 2R, time exit 40 candles (~20 sessions), cap 4 %.
                  Backtest 2023-26 with these day blocks: +0.12R/trade, 1,452 trades (+0.10 / −0.02 / +0.18) – weaker than BUY.
@@ -18,13 +19,22 @@ import pandas as pd
 from crude import indicators as I
 from alerts import tradeplan as TP, report as RP, signals as S
 
-RULES = {"MCX": dict(side="BUY", N=10, vol=2.0, k=1.5, r=3.0, cap=2.5, max_days=10, label="SWING (4-hour candles)"),
-         "NFO": dict(side="SELL", N=5, vol=2.0, k=2.0, r=2.0, cap=4.0, max_days=20, label="SWING (4-hour candles)")}
+# 6-Nov (owner approved, SEARCH-ALL-001 walk-forward + FDR): MCX 4h BUY = 10-candle high, volume ≥ 1.5×, DAILY TREND UP (previous
+#  day EMA20 > EMA50 and close > EMA50) instead of EMA200, stop 2 ATR, target 3R: 259 trades, 44 %, +0.42R, all 7 commodities positive.
+#  NEW stock 3h SELL ("NFO3H"): 5-candle low, volume ≥ 2×, daily trend DOWN, stop 1.5 ATR, target 2R: 1,335 trades, 50 %, +0.13R.
+#  The owner rules (OI over the candle must support, no opposing level within 0.5R) stay on top of both.
+RULES = {"MCX": dict(side="BUY", N=10, vol=1.5, k=2.0, r=3.0, cap=2.5, max_days=10, ema=False, dtrend=1, tf="4h",
+                     label="SWING (4-hour candles)"),
+         "NFO": dict(side="SELL", N=5, vol=2.0, k=2.0, r=2.0, cap=4.0, max_days=20, tf="4h", label="SWING (4-hour candles)"),
+         "NFO3H": dict(side="SELL", N=5, vol=2.0, k=1.5, r=2.0, cap=4.0, max_days=20, ema=False, dtrend=-1, tf="3h",
+                       label="SWING (3-hour candles)")}
+TFTXT = {"4h": "4-hour", "3h": "3-hour"}
 GOOD = {"BUY": ("Long buildup", "Short covering"), "SELL": ("Short buildup", "Long unwinding")}
 NEAR_R = 0.5
 OPTION_HOOK = None        # set by alerts.stocks.scan4h: (call, 1h candles) -> option-idea message
-STATS = {"MCX": "📚 Backtest 2022-26 (after 2× costs): +0.50R per trade, 246 trades, positive in every period.",
-         "NFO": "📚 Backtest 2023-26 (after 2× costs): +0.12R per trade, 1,452 trades; slightly negative in 2024-25 – smaller size."}
+STATS = {"MCX": "📚 Backtest 2022-26 (after 2× costs): +0.42R per trade, 259 trades, 44% won, positive in every period, 7/7 commodities.",
+         "NFO": "📚 Backtest 2023-26 (after 2× costs): +0.12R per trade, 1,452 trades; slightly negative in 2024-25 – smaller size.",
+         "NFO3H": "📚 Backtest 2022-26 (after 2× costs): +0.13R per trade, 1,335 trades, 50% won, positive in every period."}
 WARN = "Alert only – not investment advice."
 
 
@@ -74,8 +84,9 @@ def candle_oi(api, ex, token, t0, t1, d_price):
 
 def evaluate(fr, rule):
     """Last completed 4h candle -> dict(side or None, why, numbers)."""
-    if fr is None or len(fr) < 210:
-        return dict(side=None, why=f"needs 210 4-hour candles, have {0 if fr is None else len(fr)}")
+    need = 210 if rule.get("ema", True) else 60
+    if fr is None or len(fr) < need:
+        return dict(side=None, why=f"needs {need} candles, have {0 if fr is None else len(fr)}")
     c, h, l, v = fr["close"], fr["high"], fr["low"], fr["volume"].astype(float)
     i = len(fr) - 1
     hh, ll = float(h.shift(1).rolling(rule["N"]).max().iloc[i]), float(l.shift(1).rolling(rule["N"]).min().iloc[i])
@@ -84,31 +95,38 @@ def evaluate(fr, rule):
     e = float(I.ema(c, 200).iloc[i]); a = float(I.atr(fr, 14).iloc[i]); x = float(c.iloc[i])
     out = dict(candle=str(fr["time"].iloc[i]), end=str(fr["end"].iloc[i]), close=x, hh=hh, ll=ll, ema200=e, atr=a, vol_x=round(vx, 2),
                open=float(fr["open"].iloc[i]))
+    use_e = rule.get("ema", True)
     if rule["side"] == "BUY":
-        ok = x > hh and vx > rule["vol"] and x > e
-        why = "no 10-candle breakout" if x <= hh else f"volume {vx:.1f}× (< {rule['vol']:g}×)" if vx <= rule["vol"] else "below EMA200"
+        ok = x > hh and vx >= rule["vol"] and (x > e or not use_e)
+        why = f"no {rule['N']}-candle breakout" if x <= hh else f"volume {vx:.1f}× (< {rule['vol']:g}×)" if vx < rule["vol"] else "below EMA200"
     else:
-        ok = x < ll and vx > rule["vol"] and x < e
-        why = "no 5-candle breakdown" if x >= ll else f"volume {vx:.1f}× (< {rule['vol']:g}×)" if vx <= rule["vol"] else "above EMA200"
+        ok = x < ll and vx >= rule["vol"] and (x < e or not use_e)
+        why = f"no {rule['N']}-candle breakdown" if x >= ll else f"volume {vx:.1f}× (< {rule['vol']:g}×)" if vx < rule["vol"] else "above EMA200"
     return dict(out, side=rule["side"] if ok else None, why="" if ok else why)
 
 
-def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=False):
-    """Called with the instrument's completed 4h candles (fr). Sends at most one new call per completed candle."""
+def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=False, rule_key=None, dtrend=None):
+    """Called with the instrument's completed candles (fr: 4h, or 3h for rule NFO3H). Sends at most one new call per candle.
+    dtrend: +1 / -1 / 0 daily trend of the last completed day (rules with 'dtrend' require it to agree)."""
     st = store(state)
-    rule = RULES[ex]
+    rk = rule_key or ex
+    rule = RULES[rk]
+    tft = TFTXT[rule.get("tf", "4h")]
     if fr is None or not len(fr):
-        return "no 4-hour candles"
+        return f"no {tft} candles"
     last = str(fr["time"].iloc[-1])
-    k = f"{name}|{ex}"
+    k = f"{name}|{ex}" if rk == ex else f"{name}|{rk}"
     if st["last"].get(k) == last:
         return "already checked"
     st["last"][k] = last
     sig = evaluate(fr, rule)
     if not sig["side"]:
         return sig["why"]
+    if rule.get("dtrend") and dtrend != rule["dtrend"]:
+        print(f"[{rule.get('tf', '4h')}] {name} {sig['side']} skipped: daily trend not {'up' if rule['dtrend'] > 0 else 'down'}")
+        return f"skipped: daily trend not {'up' if rule['dtrend'] > 0 else 'down'}"
     if any(r["name"] == name and r["ex"] == ex for r in st["open"]):
-        return "already in an open 4-hour call"
+        return "already in an open swing (4-hour / 3-hour) call"
     s_ = 1 if sig["side"] == "BUY" else -1
     oi = candle_oi(api, ex, c["token"], sig["candle"], sig["end"], sig["close"] - sig["open"])
     if oi is None or oi.get("label") is None:
@@ -119,7 +137,7 @@ def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=
         return f"skipped: OI {oi['label']}"
     live = float((q or {}).get("ltp") or 0) or None
     lv = S.levels(fr.drop(columns=["end"]), h1, sig["close"], sig["atr"])
-    plan = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf="4h", side=sig["side"], signal_time=sig["candle"],
+    plan = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf=rule.get("tf", "4h"), side=sig["side"], signal_time=sig["candle"],
                            signal_close=sig["close"], atr=sig["atr"], stop_mult=rule["k"], target_r=rule["r"], tick=c.get("tick"),
                            lot=c.get("lot"), mult=mult, max_sl_pct=rule["cap"], live=None if after_close else live,
                            quote=None if after_close else q, now=now, require_live=not after_close, levels=lv)
@@ -150,20 +168,21 @@ def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=
         f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}"]
         + (["ENTRY at the next session's open (skip if it opens more than 0.5 ATR past this price)"] if after_close else [])))
     msgs.append("\n".join([
-        f"📌 WHY – {name} {sig['side']} (4-hour)",
+        f"📌 WHY – {name} {sig['side']} ({tft})",
         f"• Candle  : {pd.Timestamp(sig['candle']):%d-%b %H:%M}–{pd.Timestamp(sig['end']):%H:%M} closed {TP.fmt(sig['close'], t)} "
-        f"{'above the 10-candle high' if s_ > 0 else 'below the 5-candle low'} {TP.fmt(sig['hh'] if s_ > 0 else sig['ll'], t)}",
+        f"{'above the ' + str(rule['N']) + '-candle high' if s_ > 0 else 'below the ' + str(rule['N']) + '-candle low'} {TP.fmt(sig['hh'] if s_ > 0 else sig['ll'], t)}",
         f"• Volume  : {sig['vol_x']:.1f}× the 20-candle average ✅",
         f"• OI      : {oi['oi']:,.0f} ({oi['chg_pct']:+.2f}% during the candle) → {oi['label']} ✅",
-        f"• Trend   : {'above' if s_ > 0 else 'below'} EMA200 {TP.fmt(sig['ema200'], t)} ✅",
+        (f"• Trend   : {'above' if s_ > 0 else 'below'} EMA200 {TP.fmt(sig['ema200'], t)} ✅" if rule.get("ema", True) else
+         f"• Trend   : daily trend {'UP' if s_ > 0 else 'DOWN'} (EMA20 {'>' if s_ > 0 else '<'} EMA50, close {'above' if s_ > 0 else 'below'} EMA50) ✅"),
         sr,
         f"• Risk    : {TP.fmt(plan['risk_unit'], t)} pts ({plan['sl_pct']:.2f}%) · ₹{plan['risk_lot']:,.0f} per lot · "
         f"time exit after {rule['max_days']} sessions",
-        STATS[ex], WARN]))
-    key = f"4H|{name}|{last}"
+        STATS[rk], WARN]))
+    key = f"{'4H' if rule.get('tf', '4h') == '4h' else '3H'}|{name}|{last}"
     st["open"].append(dict(name=name, ex=ex, token=str(c["token"]), contract=c["symbol"], expiry=c["expiry"], side=sig["side"],
                            entry=plan["entry"], stop=plan["sl"], target=plan["target"], risk=plan["risk_unit"], tick=t, mult=mult,
-                           opened=str(now), days=[str(now.date())], key=key, max_days=rule["max_days"]))
+                           opened=str(now), days=[str(now.date())], key=key, max_days=rule["max_days"], tfl=tft))
     gf = {}
     try:                                                  # 4-Nov: shadow grade (alerts/intel.py) – stored only, never blocks
         import config as C_
@@ -177,7 +196,7 @@ def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=
     except Exception as e_:
         print(f"[intel] {name} 4h grade skipped: {type(e_).__name__}: {e_}")
     RP.add(state, key=key, mark_key=str(c["token"]), seg="MCX" if ex == "MCX" else "NSE", cat="FUTURES", name=name, symbol=c["symbol"],
-           type="Swing (4-hour)", side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=t,
+           type=f"Swing ({tft})", side=sig["side"], entry=plan["entry"], sl=plan["sl"], target=plan["target"], tick=t,
            lot=c.get("lot"), mult=mult, time=str(now), **gf)
     state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
     if OPTION_HOOK is not None and ex == "NFO":           # 1-Nov: option idea, in-the-money strike near delta 0.75 (DELTA-001)
@@ -229,7 +248,7 @@ def track(state, msgs, api, now, is_open):
             res = s_ * (px - r["entry"]) / r["risk"] if r["risk"] else 0
             rs = s_ * (px - r["entry"]) * float(r["mult"] or 1)
             icon = "✅" if res > 0 else "❌" if res < 0 else "➖"
-            msgs.append(f"{icon} EXIT – {r['name']} FUT {r['side']} (4-hour) at {TP.fmt(px, r['tick'])}: {why} · {res:+.2f}R · "
+            msgs.append(f"{icon} EXIT – {r['name']} FUT {r['side']} ({r.get('tfl', '4-hour')}) at {TP.fmt(px, r['tick'])}: {why} · {res:+.2f}R · "
                         f"{'+' if rs >= 0 else '−'}₹{abs(rs):,.0f} per lot before costs")
             BO.close_ledger(state, r["key"], float(px), why.replace("🎯 ", ""), now)
             r.update(exit=float(px), exit_reason=why, closed=str(now), result_R=round(res, 3))
