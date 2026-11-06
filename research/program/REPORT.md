@@ -887,3 +887,14 @@ Picking the best DEV variant per commodity fails the unseen periods in 7 / 7 com
 separates real edges: Gold 91 % (BUY 91 %, SELL 99 %), Silver 76 % (SELL 85 %, BUY 68 %), Natural Gas SELL 78 % / Copper SELL
 63 % (but VALID 5-10 %), Crude 10 %, Zinc 3 %, Aluminium 3 %. Conclusion: an intraday edge exists in GOLD and SILVER only
 (day-trend continuation, both sides) – consistent with MCXD-002 (now in shadow mode).
+
+## MCXD-004 – independent audit + improvement tests of the Gold/Silver day-trend continuation (identical entries)
+Audit: 542 unique trades on 293 days; causal by construction (live module uses only completed candles / prior-day ATR and
+reproduces 99.5 % of research decisions). Gold +0.24R (t 3.4), Silver +0.13R (t 1.8 – positive, not significant alone);
+BUY +0.15R, SELL +0.24R; 13:00 +0.27R, 17:00 +0.12R; every year positive. Caveats: drop best 5 % → 0.00R (trend-following
+tail); 150 days carry both a 13:00 and a 17:00 trade on the same commodity, so the effective sample is smaller than 542; the
+54 neighbouring variants share days (stability evidence, not independent tests). Max drawdown 10.7R, 10 losses in a row.
+Robustness: costs ×4 +0.09R; entry delayed 15 min +0.16R. Improvements (choose on DEV): trailing 1 × daily ATR +0.19R
+(DEV +0.16 vs +0.13, VALID / HIST unchanged – not adopted, within noise); VWAP-failure / half-at-1R / 2-4 h time exits worse;
+30m trend, daily-trend agreement, ADX ≥ 20, anti-chase: no out-of-sample gain; one position per commodity per day WORSE
+(+0.10R) → risk caps instead (2 per commodity / 4 total per day) – implemented in shadow (main).
