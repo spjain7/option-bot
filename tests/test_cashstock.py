@@ -73,4 +73,16 @@ with mock.patch.object(RUN, "load", return_value=P2), mock.patch("builtins.print
 txt = "\n".join(out)
 check("next day: ACTIONABLE fills at the actual open, gap beyond the no-chase limit INVALIDATED", "ACTIONABLE BUY" in txt and "INVALIDATED" in txt)
 check("no rebalance repeated on the next day", json.loads(tmp.read_text())["last_rebalance"] == "2026-10-30")
+Pf = pd.concat([P, P[P.symbol == "S29"].assign(symbol="LIQUIDBEES", isin="INF000LIQ01", close=lambda x: x.close)])
+check("ETF / fund units (ISIN INF...) are never ranked", all(p["symbol"] != "LIQUIDBEES" for p in M.rank(*M.panels(M.adjusted(Pf)))["picks"]))
+st0 = {"holdings": [], "last_rebalance": "2026-09-30", "pending": None}
+tmp.write_text(json.dumps(st0)); out = []
+early = P[P.date <= "2026-10-05"]
+with mock.patch.object(RUN, "load", return_value=early), mock.patch("builtins.print", side_effect=lambda *a, **k: out.append(" ".join(map(str, a)))):
+    RUN.main(dry=True)
+check("no EARLY WARNING 19 sessions before month-end (6-Nov bug)", "EARLY WARNING" not in "\n".join(out))
+late = P[P.date <= "2026-10-27"]; out = []; tmp.write_text(json.dumps(st0))
+with mock.patch.object(RUN, "load", return_value=late), mock.patch("builtins.print", side_effect=lambda *a, **k: out.append(" ".join(map(str, a)))):
+    RUN.main(dry=True)
+check("EARLY WARNING exactly 3 weekdays before month-end", "EARLY WARNING" in "\n".join(out))
 print("all cash-stock checks passed")

@@ -23,6 +23,10 @@ def adjusted(P):
     """P: bhavcopy rows (date, symbol, series, isin, open, high, low, close, prevclose, volume, value) -> {key: frame}.
     Same adjustment as research/program/eq_bhav.adjusted (PREVCLOSE factor + UDiFF unadjusted-gap fix)."""
     P = P.sort_values(["date", "symbol", "series"]).drop_duplicates(["date", "symbol"], keep="last").copy()
+    isin = P["isin"].astype("string").fillna("")
+    first = P[isin.str.len() > 5].sort_values("date").drop_duplicates("symbol").set_index("symbol")["isin"]
+    P["isin"] = isin.where(isin.str.len() > 5, P["symbol"].map(first)).fillna("")
+    P = P[~P["isin"].astype(str).str.startswith("INF")]               # ETFs / mutual-fund units are not stocks
     P["key"] = P["isin"].where(P["isin"].astype(str).str.len() > 5, P["symbol"])
     out = {}
     for k, g in P.groupby("key", sort=False):

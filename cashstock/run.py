@@ -54,6 +54,8 @@ def main(dry=False):
     last = C.index[-1]
     st = json.loads(STATE.read_text()) if STATE.exists() else dict(holdings=[], last_rebalance=None, pending=None)
     msgs = []
+    if os.getenv("CASHSTOCK_NOTE"):                               # one-off owner notice (workflow_dispatch input)
+        msgs.append(os.getenv("CASHSTOCK_NOTE"))
     # entry confirmation for the previous rebalance (actual open from today's bhavcopy)
     pend = st.get("pending")
     if pend and pd.Timestamp(pend["entry_day"]) <= last:
@@ -70,8 +72,8 @@ def main(dry=False):
                 L_.append(f"⚡ ACTIONABLE BUY filled at the open {b['symbol']} ₹{o:,.2f}")
         msgs.append("\n".join(L_)); st["pending"] = None
     nxt = next_session(last, C.index)
-    days_left = sum(1 for i in range(1, 6) if (pd.Timestamp(last) + pd.Timedelta(days=i)).weekday() < 5
-                    and (pd.Timestamp(last) + pd.Timedelta(days=i)).month == pd.Timestamp(last).month)
+    me = (pd.Timestamp(last) + pd.offsets.MonthEnd(0)).normalize()
+    days_left = len(pd.bdate_range(pd.Timestamp(last) + pd.Timedelta(days=1), me))   # weekdays left in this month
     prev_me = C.index[C.index.to_period("M") < last.to_period("M")]
     catch_up = (len(prev_me) and st.get("last_rebalance") is not None
                 and pd.Timestamp(st["last_rebalance"]).to_period("M") < prev_me[-1].to_period("M"))   # month-end was a holiday
@@ -89,6 +91,8 @@ def main(dry=False):
                     f"Market filter now {'ON' if res['market_on'] else 'OFF'}; current top 10: "
                     + (", ".join(p["symbol"] for p in res["picks"]) or "none (cash)"))
         st["early"] = str(last.date())
+    if os.getenv("CASHSTOCK_ALERTS", "1") == "0":                 # strategy messages paused (owner notices still go out)
+        msgs = [m for m in msgs if m == os.getenv("CASHSTOCK_NOTE")]
     print(f"[cashstock] data to {last.date()} · next session {nxt.date()} · messages {len(msgs)}")
     for m in msgs:
         print(m)
