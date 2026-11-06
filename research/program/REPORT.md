@@ -958,3 +958,12 @@ Pooled net R (all families / commodities / executions) – HIST / DEV / VALID: a
 period by ~0.06-0.08R (consistent), but no family becomes positive. Walk-forward survivors 74; untouched OOS 26 / 74 positive,
 pooled −0.05R (1,396 trades). Conclusion: the detectors add no edge beyond the day-trend condition itself; the information is
 in the day trend (MCXD-002), not in the price-action pattern.
+
+### MCXE-002 matched controls – complete (results/mcxe2_controls.csv, 100 permutations + 100 block shifts per stream, seed 20261106)
+60 walk-forward survivors. Walk-forward quarters: 22 beat the time-permutation control at the 95th percentile, 16 the block
+shift, 12 both, 6 with a bootstrap 95 % CI above zero. **Untouched OOS: 3 / 60 beat the permutation control, 1 / 60 the block
+shift, 0 / 60 with a CI above zero; median permutation rank 0.56 (= chance).** Of the 12 that beat both controls in walk-forward,
+1 does so again out of sample: CRUDEOIL 30m S/R-zone breakout BUY (WF +0.49R / 151 trades, CI +0.10…; OOS +1.10R / 38 trades,
+rank 1.00 / 0.97, CI −0.02 … +2.43) → the only lead for follow-up research; the others regress to chance (e.g. GOLD 15m
+sweep-reversal SELL WF +0.33R → OOS −0.92R, rank 0.00). Matched-control verdict: apart from the day-trend strategy (MCXD-005,
+rank 100 %), no MCX intraday price-action strategy is validated.
