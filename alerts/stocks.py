@@ -624,6 +624,13 @@ def scan(api, master, now, state, msgs, rep, engine):
                         found += 1
             except Exception as e_:
                 print(f"[3h] stock SELL {name} skipped: {type(e_).__name__}: {e_}")
+        try:                                                    # 6-Nov (owner mission): rulebook 3h stock rules
+            from alerts import rulebook as RB
+            f3r = frame3h(h)
+            RB.run(state, msgs, api, name, "NFO", c, {"3h": f3r}, BO.daily_candles(h, None), None, now, int(c.get("lot") or 1),
+                   "STOCKS", after_close=daily_block)
+        except Exception as e_:
+            print(f"[rulebook] {name} 3h skipped: {type(e_).__name__}: {e_}")
         if STOCK3H_ENABLED:
             try:
                 found += scan3h(name, c, h, frame3h(h), now, master, st, state, msgs)
@@ -668,6 +675,12 @@ def scan(api, master, now, state, msgs, rep, engine):
                 DQ.shadow_event(st, p.get("key"), now, status="closed", exit_price=px, exit_time=str(now),
                                 exit_reason="expiry/time exit", exit_basis="daily close")
                 st["active"] = [x for x in st["active"] if x is not p]
+        try:                                                # 6-Nov (owner mission): rulebook daily stock rules (after the close)
+            from alerts import rulebook as RB
+            if not dq["holds"]:
+                RB.run(state, msgs, api, name, "NFO", c, {"1d": d}, d, None, now, int(c.get("lot") or 1), "STOCKS", after_close=True)
+        except Exception as e_:
+            print(f"[rulebook] {name} 1d skipped: {type(e_).__name__}: {e_}")
         try:                                                # 29-Oct (approved, live): daily hanging-man SELL setup
             CS.OI_NOTE = CS.oi_from_daily(d)                # 30-Oct: OI line in the setup / entry messages
             CS.on_stock_daily(state, msgs, name, c, d, now, allow_new=not dq["holds"] and not first_session_after_expiry(d["time"].iloc[-1]))

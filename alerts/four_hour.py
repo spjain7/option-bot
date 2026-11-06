@@ -151,7 +151,7 @@ def _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close
     if rule.get("dtrend") and dtrend != rule["dtrend"]:
         print(f"[{rule.get('tf', '4h')}] {name} {sig['side']} skipped: daily trend not {'up' if rule['dtrend'] > 0 else 'down'}")
         return f"skipped: daily trend not {'up' if rule['dtrend'] > 0 else 'down'}"
-    if any(r["name"] == name and r["ex"] == ex for r in st["open"]):
+    if any(r["name"] == name and r["ex"] == ex and not r.get("rule") for r in st["open"]):
         return "already in an open swing (4-hour / 3-hour) call"
     s_ = 1 if sig["side"] == "BUY" else -1
     oi = candle_oi(api, ex, c["token"], sig["candle"], sig["end"], sig["close"] - sig["open"])
@@ -274,9 +274,10 @@ def track(state, msgs, api, now, is_open):
             res = s_ * (px - r["entry"]) / r["risk"] if r["risk"] else 0
             rs = s_ * (px - r["entry"]) * float(r["mult"] or 1)
             icon = "✅" if res > 0 else "❌" if res < 0 else "➖"
-            msgs.append(f"{icon} EXIT – {r['name']} FUT {r['side']} ({r.get('tfl', '4-hour')}) at {TP.fmt(px, r['tick'])}: {why} · {res:+.2f}R · "
-                        f"{'+' if rs >= 0 else '−'}₹{abs(rs):,.0f} per lot before costs")
-            BO.close_ledger(state, r["key"], float(px), why.replace("🎯 ", ""), now)
+            if not r.get("shadow"):                       # 6-Nov rulebook: logged-only calls are tracked silently
+                msgs.append(f"{icon} EXIT – {r['name']} FUT {r['side']} ({r.get('tfl', '4-hour')}) at {TP.fmt(px, r['tick'])}: {why} · {res:+.2f}R · "
+                            f"{'+' if rs >= 0 else '−'}₹{abs(rs):,.0f} per lot before costs")
+                BO.close_ledger(state, r["key"], float(px), why.replace("🎯 ", ""), now)
             r.update(exit=float(px), exit_reason=why, closed=str(now), result_R=round(res, 3))
             st["closed"] = (st["closed"] + [r])[-200:]
         else:

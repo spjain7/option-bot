@@ -575,6 +575,16 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                                        RP.mult_for(name, ex, c.get("lot")), dtrend=BO.daily_trend(dd, now))
         except Exception as e_:
             print(f"[4h] {name} skipped: {type(e_).__name__}: {e_}")
+    if ex == "MCX":                                                  # 6-Nov (owner mission): rulebook – validated rules on 1h-1d
+        try:
+            from alerts import rulebook as RB, four_hour as FH_
+            f4 = FH_.four_hour(h1full, ex, now)
+            rbf = {"1h": RB.complete(h1full.reset_index(drop=True), "1h", ex, now),
+                   "2h": RB.complete(RB.blocks(h1full, ex, 2), "2h", ex, now),
+                   "4h": f4.drop(columns=["end"]) if f4 is not None else None, "1d": dd}
+            info["rulebook"] = RB.run(state, msgs, api, name, ex, c, rbf, dd, q, now, RP.mult_for(name, ex, c.get("lot")), "MCX")
+        except Exception as e_:
+            print(f"[rulebook] {name} skipped: {type(e_).__name__}: {e_}")
     if ex == "MCX" and _cfg("PAPER_EBUY", True):                     # 4-Nov: E_BUY_v1 PAPER ONLY (never sent, alerts/paper.py)
         try:
             from alerts import paper as PP
