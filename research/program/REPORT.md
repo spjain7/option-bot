@@ -1019,6 +1019,7 @@ Caveat: the universe is today's stock list, so delisted names are missing (survi
 |---|---|---|---|
 | Daily setups (`eq_research.py eq`) | 288 | 0 | Pullback D_PB, bull regime, open entry, 2×ATR stop, 3R: +0.053R, n 10,245, all 4 blocks positive, q 0.011 — fails only on stocks positive 54.9 % (bar 55 %) |
 | Opening-range breakout (`eq_orb.py eq`, 500 days) | 432 | 0 | Best +0.015R (a SELL; BUY side is negative in every opening-range length) |
-| Daily top-5 by relative strength, ≤ 2 per industry (`eq_top5.py`) | 96 | 0 | D_PB top-5 +0.027R vs random-5 +0.026R and all signals +0.043R; one block negative |
+| Daily top-5 portfolio, full simulation (`eq_top5.py eq`: prior-expectancy + RS score, max 5/day, ≤ 2 per sector, corr ≤ 0.7) | 8 strategies (none validated) | — | All strategies top-5: +0.010R/trade, 15,599 trades, max DD 443R, 8/20 years positive, 2011–15 block −0.019R. D_PB top-5 +0.012R vs every D_PB signal +0.033R |
+| Simple cross-check (`eq_top5_simple.py`: RS rank vs random-5) | 96 | 0 | D_PB top-5 +0.027R vs random-5 +0.026R; one block negative |
 
-Conclusion: nothing passes the pre-registered bar. The pullback edge is small (≈ +0.05R before survivorship correction) and ranking by relative strength adds nothing over random picks. Nothing implemented; no shadow or Telegram change.
+Conclusion: nothing passes the pre-registered bar. The pullback edge is small (≈ +0.05R before survivorship correction) and the top-5 shortlist does worse than taking every pullback signal and no better than random picks. Nothing implemented; no shadow or Telegram change.
