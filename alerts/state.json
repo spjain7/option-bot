@@ -3237,12 +3237,12 @@
   "n": 1
  },
  "scan": {
-  "seq": 152,
-  "started": "2026-11-07 00:02:02.433227",
-  "finished": "2026-11-07 00:02:12.845184",
-  "seconds": 10,
+  "seq": 153,
+  "started": "2026-11-07 00:17:02.616296",
+  "finished": "2026-11-07 00:17:09.086159",
+  "seconds": 6,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -3254,7 +3254,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 2
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
