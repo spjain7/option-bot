@@ -1,0 +1,100 @@
+{
+ "spec": {
+  "name": "CRUDEOIL",
+  "tf": "30m",
+  "fam": "SR",
+  "sub": "BRK",
+  "side": 1,
+  "filt": "trend",
+  "entry": 1,
+  "stop": 0,
+  "exitc": 0.0,
+  "sr": {
+   "lookback": 100,
+   "tol_atr": 0.25,
+   "min_pivots": 2
+  },
+  "pivot_k": 3,
+  "cost": "fees + 1.5 ticks/side",
+  "selected_at": "2026-06-30",
+  "oos": [
+   "2026-07-01",
+   "2026-11-03"
+  ]
+ },
+ "data_fingerprint": "a5f6e0d0f1d0fbc2",
+ "data_first": "2023-09-27 18:45:00",
+ "data_last": "2026-11-03 23:50:00",
+ "code_sha": "7e04485cd3c3d91e",
+ "spec_fingerprint": "e1e67650438d5895",
+ "oos": {
+  "n": 38,
+  "win": 42.1,
+  "mean": 1.099,
+  "median": -0.565,
+  "PF": 2.93,
+  "total": 41.76,
+  "maxDD": 3.5,
+  "max_losing_streak": 3,
+  "top3_share_of_net": 0.83,
+  "mean_without_top3": 0.204
+ },
+ "oos_ci": [
+  0.017730903441838506,
+  2.4359946064681606
+ ],
+ "oos_unique_entries": 38,
+ "oos_duplicates": 0,
+ "oos_switch_days": 0,
+ "oos_entry_before_signal_end": 0,
+ "oos_entry_after_2200": 1,
+ "oos_exit_after_2300": 0,
+ "oos_monthly": {
+  "2026-07": {
+   "size": 10,
+   "mean": 1.604,
+   "sum": 16.044
+  },
+  "2026-08": {
+   "size": 5,
+   "mean": -0.119,
+   "sum": -0.597
+  },
+  "2026-09": {
+   "size": 8,
+   "mean": 2.074,
+   "sum": 16.59
+  },
+  "2026-10": {
+   "size": 15,
+   "mean": 0.648,
+   "sum": 9.72
+  }
+ },
+ "all_years": {
+  "2023": {
+   "size": 20,
+   "mean": 0.211,
+   "sum": 4.23
+  },
+  "2024": {
+   "size": 118,
+   "mean": 0.067,
+   "sum": 7.905
+  },
+  "2025": {
+   "size": 95,
+   "mean": 0.512,
+   "sum": 48.621
+  },
+  "2026": {
+   "size": 78,
+   "mean": 1.047,
+   "sum": 81.665
+  }
+ },
+ "exit_reasons_oos": {
+  "stop": 19,
+  "close": 19
+ }
+}

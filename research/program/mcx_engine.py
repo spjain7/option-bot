@@ -47,6 +47,7 @@ from crude import indicators as I  # noqa: E402
 OUT = ROOT / "research/program/results"
 TFS = {"15m": 15, "30m": 30, "60m": 60}
 K = 3                                                     # pivot half-width
+SR_LB, SR_TOL, SR_MIN = 100, 0.25, 2                      # S/R zone: lookback candles, pivot tolerance (ATR), min pivots
 SEED = 20261106
 FILTS = ("any", "vol", "trend", "ms", "ms+vol")
 EXECS = list(product((0, 1), (0, 1), (2.0, 3.0, 0.0, -1.0)))
@@ -137,13 +138,13 @@ def detect(f, tf, dd, sw_days):
             keep.append((s, b, ext, ms0))
         sweep_wait = keep[-6:]
         # ---------- SR zones ----------
-        piv = [p for p in sh if i - p[0] <= 100] + [p for p in sl if i - p[0] <= 100]
+        piv = [p for p in sh if i - p[0] <= SR_LB] + [p for p in sl if i - p[0] <= SR_LB]
         zones = []
         for x in range(len(piv)):
-            cl = [p for p in piv if abs(p[1] - piv[x][1]) <= 0.25 * A]
-            if len(cl) >= 2:
+            cl = [p for p in piv if abs(p[1] - piv[x][1]) <= SR_TOL * A]
+            if len(cl) >= SR_MIN:
                 zones.append(np.mean([p[1] for p in cl]))
-        zones = sorted(set(round(z / (0.25 * A)) * 0.25 * A for z in zones)) if zones else []
+        zones = sorted(set(round(z / (SR_TOL * A)) * SR_TOL * A for z in zones)) if zones else []
         for z in zones:
             if c[i - 1] <= z < c[i]:
                 add("SR", "BRK", 1, i, h[i], z - 0.25 * A); sr_broken.append((z, 1, i))
