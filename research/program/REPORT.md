@@ -752,3 +752,39 @@ Files: missed.py, results/missed_moves.csv, results/missed_alternatives.csv.
 | Stocks 2022-26 | BUY | 910 | −0.05 | +0.27 / +0.17 / −0.24 | unstable, no |
 | Stocks 2022-26 | SELL | 1,103 | +0.05 | −0.33 / −0.01 / +0.31 | unstable, no |
 RSIX stays MCX-daily-BUY only. File: rsix_nse.py.
+
+---
+## STRUCTX-001 / ROLLCHECK-001 / MISSED-002 (6-Nov-2026, owner directive "Stop endless testing")
+
+Pre-registered hypotheses and promotion bar are in the header of `structx.py` (BH q < 0.10 over all 1,920 combinations,
+positive in all 3 periods, n ≥ 60, ≥ 4/7 commodities, 2× costs, never chase > 0.5 ATR past a trigger).
+**Result: 0 / 1,920 pass.**
+
+| hypothesis | result | failure mechanism |
+|---|---|---|
+| H1 stop-entry above the signal candle vs next open (same signals) | +0.09R better in 80 % of matched cells, but only +0.01R in the latest period. On the 4 LIVE 2h/4h rules with exact parameters: next open 1,016 trades +0.35R, stop-entry 779 trades +0.34R (worse on both 4h rules) | the stop mainly filters out signals that never follow through; the live rules are already filtered by the daily trend, so little is left to remove. **Production entries unchanged.** |
+| H2 V-reversal = market-structure shift (break of the last lower high after a ≥ 4 ATR fall) | 2h/4h/1d mean −0.15…−0.01R; caught 2 / 13 missed V-moves | the "higher low" forms again and again inside down-legs (13 failed MSS setups in the 45 days before the 13 V-moves) |
+| H3–H6 MCX SELL (failed recovery, support retest, momentum breakdown, pull-back continuation) | every setup × tf negative on average (−0.35…+0.05R); best 2h momentum breakdown q = 0.89 | see MISSED-002 below |
+
+**MISSED-002 (45 missed down moves, 4h).** At least one structure SELL gave an early entry on 40/45 moves, and on those moves
+it looks great (pull-back continuation +0.97R on 38 moves). On ALL its 711 signals it is −0.17R: 98 identical setups failed
+in the 45 days before those moves. Down moves are visible in hindsight; at the time they are indistinguishable from the
+many failed sell setups in a market with upward drift. Same for the 13 V-reversals: 4h EMA9/21 without trend filter fires
+early on 13/13 (+1.23R on those) but counter-trend 2h/4h BUY variants average −0.05…−0.28R.
+
+**ROLLCHECK-001 — data integrity finding.** The 20-year daily MCX file is an *unadjusted* front-month stitch with no contract
+labels (verified: equals the 1h front-month closes; gaps on roll days are 2–6× normal). Earlier daily/weekly/monthly
+validations held trades through roll gaps. Roll calendar inferred per commodity from the flagged 1h data; every live rule
+re-validated (results/rollcheck.csv):
+| rule | before | roll-adjusted (realistic) | periods 06-12/13-19/20-26 | verdict |
+|---|---|---|---|---|
+| 1M monthly close > prev high | +0.61 | **+0.89** (n 93) | +0.82/+0.39/+1.32 | keep |
+| 1w 20-week breakout | +0.40 | +0.29 (n 218) | +0.35/+0.04/+0.43 | keep |
+| 1d BO55 vol 2× | +0.47 | +0.32 (n 145) | +0.24/+0.49/+0.35 | keep |
+| 1d RETEST | +0.27 | +0.23 (n 672) | +0.14/+0.12/+0.40 | keep |
+| 1d RSIX (3R) | +0.20 | +0.16 (n 250) | +0.08/+0.05/+0.36 | keep, evidence re-stated (trailing exit +0.19, +0.21/+0.18/+0.17) |
+| 1d BO 20d + ADX ≥ 25 (engine) | +0.16 | **+0.02** (n 541) | −0.09/−0.10/+0.25 | **fails – recommend demote to logged-only** |
+rsix.daily_long now flags rolls (and > 25 % glitches) for all research that uses it.
+
+**Production (main 64d267b):** signal lifecycle – EARLY WARNING (info only) → CONFIRMED SETUP (pending stop) → ACTIONABLE
+(triggered) → INVALIDATED; funnel statistics split trend BUY / reversal BUY / SELL / early / setup / actionable.

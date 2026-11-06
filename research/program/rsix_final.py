@@ -11,13 +11,13 @@ from research import instruments as INS  # noqa: E402
 from crude import indicators as I  # noqa: E402
 
 def trades(name, L, cand="bull", filt="ADXL", stop=1, exitc=0, n_rsi=7):
-    d = RX.daily_long(name); d["switch"] = False
+    d = RX.daily_long(name)
     o, h, l, c = (d[x].values.astype(np.float64) for x in ("open", "high", "low", "close"))
     atr = I.atr(d, 14).values.astype(np.float64)
     m = RX.setup_masks(d, n_rsi)[(1, "E1", L, cand)] & RX.filter_masks(d, "1d", name, 1)[filt]
     idx = (np.flatnonzero(m[200:]) + 200).astype(np.int64)
     cost = np.array([INS.cost_points(name, p, 1.0) for p in c])
-    ii, jj, rr, gg = RX.sim(o, h, l, c, atr, np.zeros(len(d), np.bool_), idx, 1, 1, stop, exitc, 20, cost)
+    ii, jj, rr, gg = RX.sim(o, h, l, c, atr, d.switch.values.astype(np.bool_), idx, 1, 1, stop, exitc, 20, cost)
     return pd.DataFrame(dict(name=name, time=d.time.values[ii], R=rr))
 
 def report(L):

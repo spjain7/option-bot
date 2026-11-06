@@ -64,8 +64,7 @@ def frames(name):
             g = f1.groupby(pd.factorize(key)[0], sort=True)
             out.append((tf, g.agg(time=("time", "first"), open=("open", "first"), high=("high", "max"), low=("low", "min"),
                                   close=("close", "last"), volume=("volume", "sum"), switch=("switch", "max")).reset_index(drop=True)))
-    d = daily_long(name); d["switch"] = False
-    out.append(("1d", d))
+    out.append(("1d", daily_long(name)))
     return out
 
 
@@ -74,10 +73,40 @@ def daily_long(name):
     D = ROOT / "research/data/angel"
     man = pd.read_csv(D / "manifest.csv")
     m = man[(man.exch == "MCX") & (man.name == name) & (man.interval == "ONE_DAY") & (man.front_stitched.astype(str) == "True")]
-    d = pd.read_csv(D / "MCX" / f"{m.symbol.iat[0]}_ONE_DAY.csv", parse_dates=["time"])[["time", "open", "high", "low", "close", "volume"]]
+    d = pd.read_csv(D / "MCX" / f"{m.symbol.iat[0]}_ONE_DAY.csv", parse_dates=["time"])[["time", "open", "high", "low", "close", "volume", "symbol"]]
     d = d.sort_values("time").drop_duplicates("time").reset_index(drop=True)
     d["volume"] = d["volume"].clip(lower=0)
-    return d
+    # 6-Nov fix: unadjusted front-month stitch -> flag contract rolls (and > 25 % open gaps = data glitches) so the
+    # simulators never enter on, or hold through, a roll (exit at the previous close)
+    gap = (d.open / d.close.shift(1) - 1).abs()
+    d["switch"] = roll_days(name, d.time) | (gap > 0.25)
+    return d.drop(columns="symbol")
+
+
+_ROLL = {}
+
+
+def roll_days(name, times):
+    """The stitched daily file carries no contract labels. Roll calendar learned from the flagged 1h data (2022-26):
+    the months in which this commodity rolls and the usual day of month; a historical day is a roll day if it is the first
+    trading day on/after that day in such a month. Verified against the 1h switch days (see the 6-Nov REPORT note)."""
+    if name not in _ROLL:
+        fr = {s_.split()[-1]: f for s_, f, o, c in EX.frames(("mi", name, "MCX")) if s_.startswith("MCX")}
+        h = fr["1h"]
+        sd = pd.to_datetime(h.time[h.switch.fillna(False)]).dt.normalize().drop_duplicates()
+        months = sorted(set(sd.dt.month)); day = int(np.median(sd.dt.day))
+        _ROLL[name] = (months, day, set(sd))
+    months, day, known = _ROLL[name]
+    t = pd.to_datetime(times).dt.normalize()
+    ym = t.dt.year * 100 + t.dt.month
+    cand = t.dt.month.isin(months) & (t.dt.day >= day)
+    first = cand & ~(cand & (ym == ym.shift(1)) & cand.shift(1, fill_value=False))
+    flag = first.values.copy()
+    kmin = min(known) if known else None
+    if kmin is not None:                                    # exact days where the 1h data knows them
+        late = (t >= kmin).values
+        flag[late] = t[late].isin(known).values
+    return pd.Series(flag, index=times.index)
 
 
 # ── setups ──────────────────────────────────────────────────────────────────────────────────────────────────────────
