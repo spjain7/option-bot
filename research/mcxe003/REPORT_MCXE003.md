@@ -28,7 +28,7 @@ Related documents: [RESEARCH_AUDIT.md](RESEARCH_AUDIT.md) · [DATA_AUDIT.md](DAT
 
 ## 2. Headline result
 **No new pattern strategy passed, in any market or horizon. Nothing is recommended for shadow or production.**
-- 16.4 million causal pattern events were tested: 9.9 M NSE cash intraday, 3.2 M MCX intraday, 3.1 M NSE futures
+- 18.3 million causal pattern events were tested: 9.9 M NSE cash intraday, 3.2 M MCX intraday, 3.1 M NSE futures
   intraday, and 2.1 M on daily bars.
 - **Intraday (3 markets):** 0 of 37,073 testable cells passed stage 1. No family survives the selection-aware
   max-statistic.
@@ -44,7 +44,7 @@ DEV/VALID/OOS = development / validation / untouched out-of-sample periods. "Fam
 |---|---|---|---|---|
 | **MCX futures** (7 commodities; LEAD/NICKEL: no intraday data, illiquid) | 15/30/60 min, 2023-26 · 3.2 M events · 7,194 testable cells · **0 pass** · best family max-stat p 0.10 | daily 2005-26, roll-adjusted · 548 cells · **0 pass** · best p 0.08 | same run, SELL side · included above · **0 pass** | 490 cells · **1 pass at stage 1** (COPPER 20-day breakout BUY) → **failed stage 2** |
 | **NSE stock futures** | 1 h, 2022-26 (today's list: survivorship noted) · 3.1 M events · 9,493 cells · **0 pass** · best p 0.18 | point-in-time F&O bhavcopy 2018-26 · 2,428 cells · **0 pass** · best p 0.15 | same run, SELL side · **0 pass** | 1,296 cells · **1 pass at stage 1** (ZEEL NR7 breakdown SELL) → **failed stage 2** (no OOS trades, VALID −0.14R) |
-| **NSE cash** | 15/60 min, Oct-2024 → Nov-2026, 218 liquid stocks · 9.9 M events · 20,386 cells · **0 pass** · best p 0.36 | point-in-time bhavcopy 2005-26, liquid universe, BUY · 3,876 cells · **0 pass** — trendline-break BUY has **real but tiny** information (family max-stat p 0.005, +0.02 ATR) that is 6× smaller than the 0.12 ATR delivery cost | **Blocked:** no overnight cash short for retail (intraday-only shorts; SLB not modelled) | BUY · 3,817 cells · **0 pass** · best p 0.71 |
+| **NSE cash** | 15/60 min, Oct-2024 → Nov-2026, 218 liquid stocks · 9.9 M events · 20,386 cells · **0 pass** · best p 0.36 | point-in-time bhavcopy 2005-26, liquid universe, BUY · 3,876 cells · **0 pass** — trendline-break BUY has **real but tiny** information (family max-stat p 0.005, +0.02 ATR) that is about 5× smaller than the 0.12 ATR delivery cost | **Blocked:** no overnight cash short for retail (intraday-only shorts; SLB not modelled) | BUY · 3,817 cells · **0 pass** · best p 0.71 |
 
 Cells marked TOO_FEW (fewer than 40 DEV days for one instrument) are not tested individually. They count in the
 family-level tests, which pool instruments.
