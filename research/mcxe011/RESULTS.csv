@@ -1,0 +1,11 @@
+market,rule,N,side,exit,DEV_n,DEV_dates,DEV_win,DEV_exp2,DEV_pf,DEV_cost,VALID_n,VALID_dates,VALID_win,VALID_exp2,VALID_pf,VALID_cost,DV_ci_lo,DV_ci_hi,DV_wo_top5,max_inst_share,top_inst,max_month_share,eligible
+MCX_15m,Donchian-20 close breakout BUY,20,BUY,"2ATR stop, 4ATR trail",630,127,34.0,0.1642,1.397,0.112,325,65,25.5,-0.1918,0.897,0.115,-0.043,0.367,-0.0302,1.574,SILVER,1.728,False
+MCX_15m,Donchian-20 close breakdown SELL,20,SELL,"2ATR stop, 4ATR trail",641,124,26.1,-0.2174,0.872,0.112,333,66,29.1,0.1657,1.37,0.108,-0.171,0.244,-0.1627,,,,False
+MCX_15m,Donchian-40 close breakout BUY,40,BUY,"2ATR stop, 4ATR trail",485,123,34.6,0.2293,1.495,0.112,241,62,24.5,-0.1713,0.922,0.112,-0.026,0.446,-0.0027,0.787,SILVER,0.769,False
+MCX_15m,Donchian-40 close breakdown SELL,40,SELL,"2ATR stop, 4ATR trail",418,115,26.6,-0.1854,0.903,0.107,228,61,33.3,0.259,1.525,0.097,-0.175,0.33,-0.1404,,,,False
+MCX_15m,Donchian-80 close breakout BUY,80,BUY,"2ATR stop, 4ATR trail",349,112,35.5,0.3098,1.631,0.109,166,53,29.5,-0.0642,1.063,0.109,0.024,0.581,0.0454,0.427,GOLD,0.451,False
+MCX_15m,Donchian-80 close breakdown SELL,80,SELL,"2ATR stop, 4ATR trail",252,96,27.8,-0.0972,1.001,0.098,168,51,33.9,0.1896,1.403,0.094,-0.16,0.436,-0.1404,4.066,COPPER,7.79,False
+STK_1h,Donchian-20 close breakout BUY,20,BUY,"2ATR stop, 4ATR trail",1799,116,25.6,-0.2306,0.822,0.091,1012,61,26.5,-0.3131,0.698,0.085,-0.381,0.066,-0.2842,,,,False
+STK_1h,Donchian-20 close breakdown SELL,20,SELL,"2ATR stop, 4ATR trail",1975,116,26.4,-0.2477,0.793,0.093,1092,61,25.2,-0.3751,0.602,0.084,-0.371,-0.022,-0.3123,,,,False
+STK_1h,Donchian-40 close breakout BUY,40,BUY,"2ATR stop, 4ATR trail",1166,111,30.1,-0.0942,0.995,0.091,727,62,24.8,-0.3406,0.663,0.084,-0.305,0.108,-0.2212,,,,False
+STK_1h,Donchian-40 close breakdown SELL,40,SELL,"2ATR stop, 4ATR trail",1342,105,26.2,-0.2542,0.783,0.09,746,60,23.7,-0.4294,0.537,0.082,-0.412,-0.033,-0.3416,,,,False
