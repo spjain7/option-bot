@@ -33,3 +33,16 @@
 - **OI** flipped hard: VALID −0.28R.
 - **All four together** cut trades to 24 in VALID and lost (−0.76R): over-filtering.
 - **MCX 15m and stock 1h:** no filter changed the sign. Both stay failed.
+- **All filters at once (owner request), compared with no filter, VALID at 2×:**
+
+  | Market / side | No filter | All four filters | Vol + VWAP + ADX (no OI) |
+  |---|---|---|---|
+  | MCX 1h BUY | +0.25R | −0.76R | +0.14R |
+  | MCX 1h SELL | +0.34R | −0.18R | +0.43R (DEV −0.31R) |
+  | MCX 15m BUY | −0.06R | −0.34R | −0.09R |
+  | MCX 15m SELL | +0.19R | +0.15R | +0.26R (DEV −0.10R) |
+  | Stock 1h BUY | −0.31R | −0.33R | −0.29R |
+  | Stock 1h SELL | −0.37R | −0.39R | −0.37R |
+
+  - Nothing qualifies.
+  - Stacking filters cuts trades 50–85 % and does not improve the rules. On MCX 1h BUY it makes them worse.
