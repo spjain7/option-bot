@@ -1,0 +1,15 @@
+H1.11
+  DEV: n=90 MFE med 1.00 | losers MFE med 0.27 (share losers that reached +1R: 24%) | winners MAE med 0.27 | hold med 10 | cost/R 0.023
+  OOS: n=53 MFE med 1.01 | losers MFE med 0.58 (share losers that reached +1R: 31%) | winners MAE med 0.36 | hold med 11 | cost/R 0.026
+  VALID: n=45 MFE med 1.34 | losers MFE med 0.35 (share losers that reached +1R: 26%) | winners MAE med 0.40 | hold med 17 | cost/R 0.022
+  OOS exit mix: {'stop': 27, 'time': 14, 'trail': 10, 'gap': 2}
+H1.12L
+  DEV: n=157 MFE med 1.15 | losers MFE med 0.53 (share losers that reached +1R: 29%) | winners MAE med 0.30 | hold med 15 | cost/R 0.051
+  OOS: n=79 MFE med 1.66 | losers MFE med 0.52 (share losers that reached +1R: 26%) | winners MAE med 0.37 | hold med 18 | cost/R 0.053
+  VALID: n=70 MFE med 1.37 | losers MFE med 0.74 (share losers that reached +1R: 33%) | winners MAE med 0.26 | hold med 20 | cost/R 0.054
+  OOS exit mix: {'trail': 36, 'stop': 30, 'gap': 7, 'time': 6}
+H5.2L
+  DEV: n=73 MFE med 1.65 | losers MFE med 0.53 (share losers that reached +1R: 34%) | winners MAE med 0.28 | hold med 13 | cost/R 0.050
+  OOS: n=31 MFE med 1.05 | losers MFE med 0.50 (share losers that reached +1R: 25%) | winners MAE med 0.56 | hold med 11 | cost/R 0.058
+  VALID: n=27 MFE med 1.70 | losers MFE med 0.44 (share losers that reached +1R: 31%) | winners MAE med 0.64 | hold med 26 | cost/R 0.051
+  OOS exit mix: {'stop': 15, 'trail': 12, 'time': 2, 'gap': 2}

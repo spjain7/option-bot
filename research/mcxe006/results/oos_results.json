@@ -1,0 +1,397 @@
+{
+ "H1.11": {
+  "status": "REJECTED",
+  "reason": "OOS 95% CI lower bound -0.43 not > 0",
+  "oos_1x": {
+   "trades": 53,
+   "wins": 18,
+   "losses": 35,
+   "win_rate": 34.0,
+   "avg_win": 2.1,
+   "avg_loss": -0.871,
+   "expectancy_R": 0.138,
+   "profit_factor": 1.24,
+   "net_R": 7.31,
+   "max_drawdown_R": 12.29,
+   "unique_dates": 34,
+   "ci95": [
+    -0.43,
+    0.747
+   ]
+  },
+  "oos_2x": {
+   "trades": 53,
+   "wins": 18,
+   "losses": 35,
+   "win_rate": 34.0,
+   "avg_win": 2.078,
+   "avg_loss": -0.898,
+   "expectancy_R": 0.1125,
+   "profit_factor": 1.19,
+   "net_R": 5.96,
+   "max_drawdown_R": 12.64,
+   "unique_dates": 34,
+   "ci95": [
+    -0.456,
+    0.721
+   ]
+  },
+  "control_random_entry_mean": 0.3681,
+  "control_random_entry_p95": 0.8262,
+  "p_day_clustered": 0.3219,
+  "by_inst": {
+   "ALUMINIUM": {
+    "size": 6,
+    "mean": -0.241
+   },
+   "COPPER": {
+    "size": 10,
+    "mean": -0.607
+   },
+   "CRUDEOIL": {
+    "size": 9,
+    "mean": 0.306
+   },
+   "GOLD": {
+    "size": 6,
+    "mean": 1.437
+   },
+   "NATURALGAS": {
+    "size": 8,
+    "mean": -0.26
+   },
+   "SILVER": {
+    "size": 7,
+    "mean": 0.646
+   },
+   "ZINC": {
+    "size": 7,
+    "mean": 0.144
+   }
+  },
+  "by_side": {
+   "-1": {
+    "size": 23,
+    "mean": 0.315
+   },
+   "1": {
+    "size": 30,
+    "mean": 0.003
+   }
+  },
+  "by_month": {
+   "2026-08": {
+    "size": 17,
+    "mean": 0.017,
+    "sum": 0.284
+   },
+   "2026-09": {
+    "size": 20,
+    "mean": 0.084,
+    "sum": 1.679
+   },
+   "2026-10": {
+    "size": 13,
+    "mean": 0.361,
+    "sum": 4.699
+   },
+   "2026-11": {
+    "size": 3,
+    "mean": 0.217,
+    "sum": 0.65
+   }
+  },
+  "by_regime": {
+   "down": {
+    "size": 8,
+    "mean": -0.675
+   },
+   "range": {
+    "size": 32,
+    "mean": 0.324
+   },
+   "up": {
+    "size": 13,
+    "mean": 0.181
+   }
+  },
+  "by_exit": {
+   "gap": {
+    "size": 2,
+    "mean": 1.156
+   },
+   "stop": {
+    "size": 27,
+    "mean": -1.027
+   },
+   "time": {
+    "size": 14,
+    "mean": 2.006
+   },
+   "trail": {
+    "size": 10,
+    "mean": 0.463
+   }
+  },
+  "without_best5": -0.3695,
+  "stop_pct": 54.7,
+  "median_hold": 11.0,
+  "bh_q": 0.3219
+ },
+ "H1.12L": {
+  "status": "REJECTED",
+  "reason": "OOS 95% CI lower bound -0.116 not > 0",
+  "oos_1x": {
+   "trades": 79,
+   "wins": 33,
+   "losses": 46,
+   "win_rate": 41.8,
+   "avg_win": 2.187,
+   "avg_loss": -0.953,
+   "expectancy_R": 0.3586,
+   "profit_factor": 1.646,
+   "net_R": 28.33,
+   "max_drawdown_R": 12.97,
+   "unique_dates": 47,
+   "ci95": [
+    -0.116,
+    0.856
+   ]
+  },
+  "oos_2x": {
+   "trades": 79,
+   "wins": 33,
+   "losses": 46,
+   "win_rate": 41.8,
+   "avg_win": 2.127,
+   "avg_loss": -1.001,
+   "expectancy_R": 0.3057,
+   "profit_factor": 1.525,
+   "net_R": 24.15,
+   "max_drawdown_R": 14.12,
+   "unique_dates": 47,
+   "ci95": [
+    -0.169,
+    0.801
+   ]
+  },
+  "control_random_entry_mean": 0.0904,
+  "control_random_entry_p95": 0.497,
+  "p_day_clustered": 0.0731,
+  "by_inst": {
+   "ALUMINIUM": {
+    "size": 11,
+    "mean": -0.281
+   },
+   "COPPER": {
+    "size": 9,
+    "mean": 0.844
+   },
+   "CRUDEOIL": {
+    "size": 18,
+    "mean": -0.033
+   },
+   "GOLD": {
+    "size": 10,
+    "mean": 0.465
+   },
+   "NATURALGAS": {
+    "size": 12,
+    "mean": -0.045
+   },
+   "SILVER": {
+    "size": 7,
+    "mean": 0.303
+   },
+   "ZINC": {
+    "size": 12,
+    "mean": 1.515
+   }
+  },
+  "by_side": {
+   "1": {
+    "size": 79,
+    "mean": 0.359
+   }
+  },
+  "by_month": {
+   "2026-08": {
+    "size": 25,
+    "mean": 1.302,
+    "sum": 32.54
+   },
+   "2026-09": {
+    "size": 27,
+    "mean": 0.025,
+    "sum": 0.672
+   },
+   "2026-10": {
+    "size": 27,
+    "mean": -0.181,
+    "sum": -4.886
+   }
+  },
+  "by_regime": {
+   "down": {
+    "size": 2,
+    "mean": 0.057
+   },
+   "range": {
+    "size": 36,
+    "mean": -0.094
+   },
+   "up": {
+    "size": 41,
+    "mean": 0.771
+   }
+  },
+  "by_exit": {
+   "gap": {
+    "size": 7,
+    "mean": -0.272
+   },
+   "stop": {
+    "size": 30,
+    "mean": -1.046
+   },
+   "time": {
+    "size": 6,
+    "mean": 1.769
+   },
+   "trail": {
+    "size": 36,
+    "mean": 1.416
+   }
+  },
+  "without_best5": -0.037,
+  "stop_pct": 46.8,
+  "median_hold": 18.0,
+  "bh_q": 0.2192
+ },
+ "H5.2L": {
+  "status": "REJECTED",
+  "reason": "OOS 95% CI lower bound -0.465 not > 0",
+  "oos_1x": {
+   "trades": 31,
+   "wins": 11,
+   "losses": 20,
+   "win_rate": 35.5,
+   "avg_win": 2.263,
+   "avg_loss": -0.899,
+   "expectancy_R": 0.223,
+   "profit_factor": 1.384,
+   "net_R": 6.91,
+   "max_drawdown_R": 9.11,
+   "unique_dates": 22,
+   "ci95": [
+    -0.465,
+    1.011
+   ]
+  },
+  "oos_2x": {
+   "trades": 31,
+   "wins": 11,
+   "losses": 20,
+   "win_rate": 35.5,
+   "avg_win": 2.217,
+   "avg_loss": -0.965,
+   "expectancy_R": 0.1645,
+   "profit_factor": 1.264,
+   "net_R": 5.1,
+   "max_drawdown_R": 10.16,
+   "unique_dates": 22,
+   "ci95": [
+    -0.526,
+    0.955
+   ]
+  },
+  "control_random_entry_mean": 0.2169,
+  "control_random_entry_p95": 0.7788,
+  "p_day_clustered": 0.268,
+  "by_inst": {
+   "ALUMINIUM": {
+    "size": 3,
+    "mean": -1.092
+   },
+   "COPPER": {
+    "size": 3,
+    "mean": 1.513
+   },
+   "CRUDEOIL": {
+    "size": 5,
+    "mean": -0.301
+   },
+   "GOLD": {
+    "size": 3,
+    "mean": 2.779
+   },
+   "NATURALGAS": {
+    "size": 5,
+    "mean": -0.524
+   },
+   "SILVER": {
+    "size": 2,
+    "mean": 1.504
+   },
+   "ZINC": {
+    "size": 10,
+    "mean": -0.157
+   }
+  },
+  "by_side": {
+   "1": {
+    "size": 31,
+    "mean": 0.223
+   }
+  },
+  "by_month": {
+   "2026-08": {
+    "size": 14,
+    "mean": 1.071,
+    "sum": 14.987
+   },
+   "2026-09": {
+    "size": 11,
+    "mean": -0.246,
+    "sum": -2.703
+   },
+   "2026-10": {
+    "size": 6,
+    "mean": -0.895,
+    "sum": -5.372
+   }
+  },
+  "by_regime": {
+   "range": {
+    "size": 1,
+    "mean": 0.852
+   },
+   "up": {
+    "size": 30,
+    "mean": 0.202
+   }
+  },
+  "by_exit": {
+   "gap": {
+    "size": 2,
+    "mean": -0.687
+   },
+   "stop": {
+    "size": 15,
+    "mean": -1.068
+   },
+   "time": {
+    "size": 2,
+    "mean": 2.157
+   },
+   "trail": {
+    "size": 12,
+    "mean": 1.666
+   }
+  },
+  "without_best5": -0.4459,
+  "stop_pct": 54.8,
+  "median_hold": 11.0,
+  "bh_q": 0.3219
+ }
+}
