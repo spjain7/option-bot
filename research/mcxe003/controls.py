@@ -6,8 +6,11 @@ For every bar i (as if it were a BUY signal):
   fe_eod = close[dlast] - open[i+1] in ATR ;  mfe / mae over 12 bars after entry (same session)
 Bars whose next bar is in another session have no entry (NaN). Horizons never cross a session -> never cross a roll.
 Control expectation of each measure = the mean over ALL signal-eligible bars of the same instrument with the same bar
-start time (minute of day) and the same calendar quarter ("time-of-day x quarter matched control"). For a SELL the
-control is the negative of that mean. excess = side * (measure - control).
+start time (minute of day) inside the same research PERIOD (DEV / VALID / OOS) ("time-of-day x period matched random
+entry"). For a SELL the control is the negative of that mean. excess = side * (measure - control).
+(7-Nov, Addendum C: the first version matched on the calendar QUARTER. A quarter's realised drift is regime information
+from after the event and correlates with the pattern's own trend context (e.g. falling channels form in falling quarters),
+which inflated counter-trend patterns and penalised trend patterns. The period-level mean is a long-run benchmark.)
 """
 import numpy as np
 import pandas as pd
@@ -41,8 +44,9 @@ def forward(f):
     return F
 
 
-def control_means(f, F):
-    q = f.time.dt.to_period("Q").astype(str).values
+def control_means(f, F, edges):
+    v0, o0 = pd.Timestamp(edges[0]), pd.Timestamp(edges[1])
+    q = np.where(f.day < v0, "DEV", np.where(f.day < o0, "VALID", "OOS"))
     key = pd.Series(q).str.cat(f.m.astype(str).values, sep="|")
     elig = f.sig_ok.values & F.fe1.notna().values
     G = F[elig].groupby(key[elig].values).mean()

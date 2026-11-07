@@ -63,3 +63,14 @@ which changes the quantity being estimated. A trader who takes every signal earn
 - **Example:** MCX 30-minute 20-bar breakout BUY earned +0.05 ATR per event, but its mean of daily means was −0.29.
 - **Fix:** use the event-weighted mean with a day-clustered (cluster-robust) standard error. Effective n is still the number of days.
 - All stage-1 tables were recomputed with this estimator.
+
+## Addendum C (7-Nov-2026): control fix, before any stage-2 decision and without reading OOS
+The first matched control used a calendar-quarter window: the same minute of day within the same quarter, and for MCX daily
+the same quarter. A quarter's realised drift comes partly from bars **after** the event, and it is correlated with the
+pattern's own context: falling channels form in falling quarters. That inflated counter-trend patterns.
+- **Example:** the MCX daily "channel exhaustion BUY" showed +0.28 ATR excess at 5 sessions, but its raw move was only
+  +0.05, because the quarter control was −0.23 there.
+- **Fix:** match the control over the whole research period instead (DEV, VALID or OOS separately). Intraday uses
+  minute of day × period; MCX daily uses commodity × period.
+- **Unchanged:** NSE daily keeps the cross-sectional same-day control, which has no time-series drift problem.
+- All events and stage-1 tables were recomputed with the fixed control.

@@ -6,7 +6,7 @@ Nothing here can produce an accepted candidate (selection was made on DEV t acro
 For each (market, fam, name, side, tf): pooled over instruments and swing methods of that row.
   execution menu: entry {next open, stop at trigger (3 bars)} x stop {invalidation +-0.1 ATR clamped 0.3-3 ATR, 1.5 ATR}
                   x exit {2R, session end, 2-ATR trail}  (12 executions); costs 1x and 2x
-  control: for every event, one random bar of the same instrument, same bar time-of-day, same quarter, same side,
+  control: for every event, one random bar of the same instrument, same bar time-of-day, same period, same side,
            market entry, stop at the event's stop distance (ATR) – same exit rule
 Output: results/stage2_diag_<market>.csv (net R per period for every execution and its control).
 python research/mcxe003/stage2_diag.py mcx|nse_fut|nse_eq [top]
@@ -43,7 +43,8 @@ def run_rows(market, rows, insts, seed=20261107):
             E = E[f.sig_ok.values[E.i.values]]
             o, h, l, c, a = (f[x].values.astype(np.float64) for x in ("open", "high", "low", "close", "atr"))
             dl = f.dlast.values.astype(np.int64)
-            q = f.time.dt.to_period("Q").astype(str).values
+            v0_, o0_ = RD.PERIODS[market]
+            q = np.where(f.day < pd.Timestamp(v0_), "DEV", np.where(f.day < pd.Timestamp(o0_), "VALID", "OOS"))
             key = pd.Series(q).str.cat(f.m.astype(str).values, sep="|").values
             pool = pd.Series(np.arange(len(f))[f.sig_ok.values]).groupby(key[f.sig_ok.values]).apply(np.array).to_dict()
             day = f.day.values
@@ -55,14 +56,14 @@ def run_rows(market, rows, insts, seed=20261107):
                     continue
                 I_ = x.i.values.astype(np.int64); S = x.side.values.astype(np.int64)
                 A = a[I_]; px = c[I_]
-                cost = np.array([CM.cost_points(market, inst, p) for p in px]) if market == "MCX" else CM.cost_points(market, inst, px)
-                inv = x.inv.values; trig = x.level.values
+                cost = np.asarray(np.array([CM.cost_points(market, inst, p) for p in px]) if market == "MCX" else CM.cost_points(market, inst, px), np.float64)
+                inv = x.inv.values.astype(np.float64); trig = x.level.values.astype(np.float64)
                 dist_inv = np.clip(np.abs(px - inv) + 0.1 * A, 0.3 * A, 3 * A)
                 # control bars
                 ci = np.array([rng.choice(pool[key[i]]) if key[i] in pool else i for i in I_], np.int64)
                 ci = np.sort(ci)
                 pxc = c[ci]
-                costc = np.array([CM.cost_points(market, inst, p) for p in pxc]) if market == "MCX" else CM.cost_points(market, inst, pxc)
+                costc = np.asarray(np.array([CM.cost_points(market, inst, p) for p in pxc]) if market == "MCX" else CM.cost_points(market, inst, pxc), np.float64)
                 per = np.where(day[I_] < np.datetime64(v0), "DEV", np.where(day[I_] < np.datetime64(o0), "VALID", "OOS"))
                 perc = np.where(day[ci] < np.datetime64(v0), "DEV", np.where(day[ci] < np.datetime64(o0), "VALID", "OOS"))
                 for em, sm, xm in EXECS:

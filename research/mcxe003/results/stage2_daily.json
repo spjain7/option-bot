@@ -1,0 +1,112 @@
+{
+ "MCX COPPER NBAR_BRK BUY": {
+  "frozen_choice": {
+   "entry": "next open",
+   "stop": "atr",
+   "exit": "time",
+   "DV_net_R_2x": 0.347,
+   "DV_n": 134
+  },
+  "OOS": [
+   {
+    "cost": 1.0,
+    "n": 18,
+    "R": 0.253,
+    "n_ctl": 22,
+    "R_ctl": 0.126
+   },
+   {
+    "cost": 2.0,
+    "n": 18,
+    "R": 0.235,
+    "n_ctl": 22,
+    "R_ctl": -0.091
+   }
+  ],
+  "OOS_ci95_1x": [
+   -0.372,
+   1.05
+  ],
+  "all_periods": [
+   {
+    "period": "DEV",
+    "n": 123,
+    "R": 0.341,
+    "R_ctl": 0.092
+   },
+   {
+    "period": "VALID",
+    "n": 11,
+    "R": 0.636,
+    "R_ctl": 0.081
+   },
+   {
+    "period": "OOS",
+    "n": 18,
+    "R": 0.253,
+    "R_ctl": 0.126
+   },
+   {
+    "period": "DV",
+    "n": 134,
+    "R": 0.365,
+    "R_ctl": 0.091
+   }
+  ]
+ },
+ "NSE_FUT ZEEL NR7_BRK SELL": {
+  "frozen_choice": {
+   "entry": "stop at trigger",
+   "stop": "inv",
+   "exit": "time",
+   "DV_net_R_2x": 0.444,
+   "DV_n": 69
+  },
+  "OOS": [
+   {
+    "cost": 1.0,
+    "n": 0,
+    "R": NaN,
+    "n_ctl": 0,
+    "R_ctl": NaN
+   },
+   {
+    "cost": 2.0,
+    "n": 0,
+    "R": NaN,
+    "n_ctl": 0,
+    "R_ctl": NaN
+   }
+  ],
+  "OOS_ci95_1x": [
+   NaN,
+   NaN
+  ],
+  "all_periods": [
+   {
+    "period": "DEV",
+    "n": 52,
+    "R": 0.687,
+    "R_ctl": 0.283
+   },
+   {
+    "period": "VALID",
+    "n": 17,
+    "R": -0.14,
+    "R_ctl": 0.246
+   },
+   {
+    "period": "OOS",
+    "n": 0,
+    "R": NaN,
+    "R_ctl": NaN
+   },
+   {
+    "period": "DV",
+    "n": 69,
+    "R": 0.483,
+    "R_ctl": 0.275
+   }
+  ]
+ }
+}

@@ -75,7 +75,7 @@ def _run_one(job):
     E = all_events(f, methods)
     E = E[f.sig_ok.values[E.i.values]].reset_index(drop=True)
     F = CT.forward(f)
-    key, G = CT.control_means(f, F)
+    key, G = CT.control_means(f, F, PERIODS[market])
     M = CT.event_measures(f, E, F, key, G)
     X = PC.bar_context(f, intraday=True)
     Cx = PC.tag(E, X)

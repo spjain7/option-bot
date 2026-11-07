@@ -110,7 +110,7 @@ def test_forward_and_controls():
         assert np.isclose(F.fe6.iat[i], (f.close.iat[i + 6] - f.open.iat[i + 1]) / f.atr.iat[i])
     last = np.where(f.dlast.values == np.arange(len(f)))[0]
     assert F.fe1.iloc[last].isna().all()                          # no entry from the session's last bar
-    key, G = CT.control_means(f, F)
+    key, G = CT.control_means(f, F, ("2025-04-01", "2026-01-01"))
     assert key.str.contains(r"\|").all()
 
 

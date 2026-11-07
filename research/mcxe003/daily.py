@@ -4,10 +4,12 @@ Markets / data (DATA_AUDIT.md):
   NSE_EQ   official cash bhavcopy 2005-26, POINT-IN-TIME, corporate-action adjusted (eq_bhav.adjusted_cached); events only
            on days the stock is in the liquid universe (60-day median traded value >= ₹25 cr, price >= ₹50, >= 250
            sessions). BUY only (cash STBT / overnight cash shorts are not executable -> blocked).
-  NSE_FUT  official F&O bhavcopy 2018-26, POINT-IN-TIME (nse_fut_pit), continuous front month built per symbol:
-           nearest expiry, rolled to the next expiry 2 sessions before expiry; every roll starts a new segment (no level,
-           swing or holding period crosses it). Both sides.
-  MCX      Angel daily front-month stitch 2005-26, roll ('switch') days start a new segment. Both sides.
+  NSE_FUT  official F&O bhavcopy 2018-26, POINT-IN-TIME (nse_fut_pit), continuous front month per symbol: nearest
+           expiry, rolled 2 sessions before expiry, RATIO BACK-ADJUSTED (fut_frames); no holding period crosses a roll.
+  MCX      Angel daily front-month stitch 2005-26, ratio back-adjusted at switch days (mcx_frames); no signal on a switch
+           day, no holding period across one. Both sides.
+  (7-Nov fix, before any daily result was used: the first version reset every pattern at each monthly roll, which left
+   ~20-bar segments in which no daily swing / S-R / 20-bar pattern could form.)
 Measures per event (ATR(14) daily units, side-signed):
   btst     close[i] -> close[i+1]     (entry in the pre-close minutes at ~ the close, exit next session) PRIMARY overnight
   gap      close[i] -> open[i+1]      (exit at the next open)
@@ -15,7 +17,7 @@ Measures per event (ATR(14) daily units, side-signed):
   mfe/mae  10 sessions from open[i+1]
   Measures are NaN if the horizon leaves the segment, or (cash) an adjustment factor != 1 occurs inside it.
 Control: NSE_EQ / NSE_FUT = cross-sectional mean of the same measure over all eligible instruments that day (market-day
-matched); MCX = same commodity, same calendar quarter mean (drift). excess = side * (measure - control).
+matched); MCX = same commodity, same research period mean (long-run drift; Addendum C). excess = side * (measure - control).
 Costs (round trip, ATR units): NSE_EQ delivery 0.393 %; NSE_FUT fees + 0.05 %/side; MCX fees + 1.5 ticks/side.
 Periods: DEV < 2023-01-01 <= VALID < 2025-01-01 <= OOS.
 python research/mcxe003/daily.py nse_eq|nse_fut|mcx
@@ -88,6 +90,7 @@ def finish(f):
 
 # ── per-market frame builders ───────────────────────────────────────────────────────────────────────────────────────
 def eq_frames():
+    """-> list of (key, frame[time open high low close volume seg], eligible mask, bad mask = adjustment day)"""
     from research.program import eq_bhav as EB, eq_data as ED
     A = EB.adjusted_cached()
     out = []
@@ -99,67 +102,82 @@ def eq_frames():
         liq = ((med >= ED.MIN_TURNOVER) & (pd.Series(d.close.values).shift(1) >= ED.MIN_PRICE) & (np.arange(len(d)) >= 250)).values
         if not liq.any():
             continue
-        out.append((k, d, liq))
+        f = d[["time", "open", "high", "low", "close", "volume"]].copy(); f["seg"] = 0
+        out.append((k, f, liq, d.factor.values != 1.0))
     return out
 
 
+def _back_adjust(f, ratio_at):
+    """ratio_at[k] = new/old price ratio applied at roll day k (1 elsewhere): all bars BEFORE k are multiplied by the
+    product of later ratios, so returns inside each contract are unchanged and the roll basis is removed."""
+    r = np.asarray(ratio_at, float)
+    cum = np.r_[np.cumprod(r[::-1])[::-1][1:], 1.0]
+    for c in ("open", "high", "low", "close"):
+        f[c] = f[c].values * cum
+    return f
+
+
 def fut_frames():
+    """continuous front month per symbol from the point-in-time F&O bhavcopy; nearest expiry, rolled to the next expiry
+    when <= 2 sessions remain; ratio back-adjusted with both contracts' closes on the day BEFORE the switch (fallback:
+    the switch-day open / previous close); roll days flagged (no holding period may cross them). A > 20 % unexplained gap
+    (stock split: futures are not adjusted) starts a new segment."""
     from research.adapters import nse_stkfut_pit as NF
     D = NF.load(kinds=("STK",))
     D = D[(D.contracts > 0) & (D.close > 0)]
     out = []
     for sym, g in D.groupby("symbol"):
-        g = g.sort_values(["date", "expiry"])
         days = np.sort(g.date.unique())
         if len(days) < 120:
             continue
-        pos = {d: i for i, d in enumerate(days)}
-        exps = np.sort(g.expiry.unique())
+        px = g.set_index(["date", "expiry"]).close
         rows = []
-        cur = None
         for d, gd in g.groupby("date"):
-            ex = gd.expiry.values
-            # front = nearest expiry >= d ; roll to the next when <= 2 sessions remain (expiry day index - today index <= 2)
-            cand = np.sort(ex[ex >= d])
-            if not len(cand):
+            ex = np.sort(gd.expiry.values[gd.expiry.values >= d])
+            if not len(ex):
                 continue
-            e0 = cand[0]
-            di = pos[d]
+            e0 = ex[0]
             later = days[(days > d) & (days <= e0)]
-            if len(later) <= 2 and len(cand) > 1:
-                e0 = cand[1]
+            if len(later) <= 2 and len(ex) > 1:
+                e0 = ex[1]
             r = gd[gd.expiry == e0].iloc[0]
             rows.append((d, e0, r.open, r.high, r.low, r.close, r.contracts))
         f = pd.DataFrame(rows, columns=["time", "expiry", "open", "high", "low", "close", "volume"])
         if len(f) < 120:
             continue
-        gap = f.open / f.close.shift(1)
-        f["seg"] = ((f.expiry != f.expiry.shift(1)) | (gap < 0.8) | (gap > 1.25)).cumsum()
-        out.append((sym, f, np.ones(len(f), bool)))
+        roll = np.array(f.expiry != f.expiry.shift(1), dtype=bool); roll[0] = False
+        ratio = np.ones(len(f))
+        for k in np.where(roll)[0]:
+            dp, eo, en = f.time.iat[k - 1], f.expiry.iat[k - 1], f.expiry.iat[k]
+            a, b = px.get((dp, en)), px.get((dp, eo))
+            ratio[k] = (a / b) if (a is not None and b is not None and b > 0) else f.open.iat[k] / f.close.iat[k - 1]
+        f = _back_adjust(f, ratio)
+        gap = (f.open / f.close.shift(1)).values
+        split = ((gap < 0.8) | (gap > 1.25)) & ~roll
+        f["seg"] = np.cumsum(split)
+        out.append((sym, f[["time", "open", "high", "low", "close", "volume", "seg"]], ~roll, roll | split))
     return out
 
 
 def mcx_frames():
+    """Angel daily front-month stitch, ratio back-adjusted at each switch day using the switch-day open / previous close
+    (only one contract price exists per day in this file, so the switch day's own overnight gap is removed with the roll
+    basis – one day per month, documented); switch days are flagged: no signal on them, no holding period across them."""
     from research.program import liqtl_mcx5 as LM
     out = []
     for nm in ["GOLD", "SILVER", "CRUDEOIL", "NATURALGAS", "COPPER", "ZINC", "ALUMINIUM"]:
         d = LM.load(nm, "ONE_DAY")
-        d["seg"] = d.switch.fillna(False).astype(bool).cumsum()
-        out.append((nm, d, ~d.switch.fillna(False).astype(bool).values))
+        sw = d.switch.fillna(False).astype(bool).values
+        ratio = np.where(sw, d.open.values / d.close.shift(1).values, 1.0); ratio[0] = 1.0
+        f = _back_adjust(d[["time", "open", "high", "low", "close", "volume"]].copy(), np.nan_to_num(ratio, nan=1.0))
+        f["seg"] = 0
+        out.append((nm, f, ~sw, sw))
     return out
 
 
 def run_one(args):
-    market, key, d, elig = args
-    f = finish(d[["time", "open", "high", "low", "close", "volume", "seg"]].copy()) if "seg" in d else None
-    if f is None:
-        f = d[["time", "open", "high", "low", "close", "volume"]].copy()
-        fac = d.factor.values
-        f["seg"] = 0
-        f = finish(f)
-        bad = fac != 1.0
-    else:
-        bad = None
+    market, key, d, elig, bad = args
+    f = finish(d.copy())
     f.attrs.update(market=market, name=key)
     M = measures(f, bad)
     E = events(f)
@@ -177,7 +195,6 @@ def run_one(args):
     E["cost_atr"] = cost / f.atr.values[E.i.values]
     E["day"] = f.time.values[E.i.values]
     E["inst"] = key
-    # bar-level sums for the control (eligible bars only)
     Mb = M[elig].assign(day=f.time.values[elig])
     S = Mb.groupby("day")[MEAS].agg(["sum", "count"])
     E = E.drop(columns=["i"])
@@ -193,7 +210,7 @@ def main(which):
     print(market, "instruments", len(frames), f"{time.time() - t0:.0f}s", flush=True)
     parts, sums = [], None
     with Pool(2) as P:
-        for k, (E, S) in enumerate(P.imap_unordered(run_one, [(market, k_, d, e) for k_, d, e in frames], chunksize=4), 1):
+        for k, (E, S) in enumerate(P.imap_unordered(run_one, [(market, k_, d, e, b) for k_, d, e, b in frames], chunksize=4), 1):
             parts.append(E)
             sums = S if sums is None else sums.add(S, fill_value=0)
             if k % 200 == 0:
@@ -201,12 +218,13 @@ def main(which):
     E = pd.concat(parts, ignore_index=True)
     E["side"] = E.side.astype(np.int64)
     if market == "MCX":
-        q = pd.PeriodIndex(E.day, freq="Q").astype(str)
+        q = np.where(E.day < V0, "DEV", np.where(E.day < O0, "VALID", "OOS"))
         # MCX control: same commodity & quarter mean over ALL non-roll bars (not only event bars)
         ctl = {}
-        for nm, d, elig in frames:
-            f = finish(d[["time", "open", "high", "low", "close", "volume", "seg"]].copy())
-            Mb = measures(f)[elig].assign(q=pd.PeriodIndex(f.time[elig], freq="Q").astype(str).values)
+        for nm, d, elig, bad in frames:
+            f = finish(d.copy())
+            tt = f.time[elig]
+            Mb = measures(f, bad)[elig].assign(q=np.where(tt < V0, "DEV", np.where(tt < O0, "VALID", "OOS")))
             ctl[nm] = Mb.groupby("q")[MEAS].mean()
         for m in MEAS:
             E["ctl_" + m] = [ctl[i].at[qq, m] if qq in ctl[i].index else np.nan for i, qq in zip(E.inst, q)]

@@ -1,0 +1,415 @@
+{
+ "mcx": {
+  "label": "MCX intraday",
+  "cells": 14352,
+  "testable": 7194,
+  "labels": {
+   "TOO_FEW": 7158,
+   "NO_INFO": 5802,
+   "NOT_SIGNIFICANT": 1227,
+   "WRONG_SIGN": 165
+  },
+  "share_t_ge1": 0.171,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.023,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 0,
+  "family_rows": 591,
+  "family_dev_valid_both_pos": 0.404,
+  "family_maxstat_p_min": 0.1,
+  "maxstat95": 3.67,
+  "cost_atr_median": 0.203,
+  "raw_abs_median": 0.054,
+  "excess_abs_median": 0.053,
+  "spent_median": -0.017,
+  "mfe_median": 1.36,
+  "mae_median": -1.32,
+  "best_family": {
+   "name": "H EMA_PB SELL tf60",
+   "nd": 354,
+   "x_DEV": 0.238,
+   "t_DEV": 3.59,
+   "x_VALID": 0.018,
+   "maxstat_p": 0.1,
+   "raw_DEV": 0.274,
+   "cost": 0.142
+  },
+  "by_tf": {
+   "15": {
+    "cost": 0.301,
+    "raw_abs": 0.048,
+    "x_abs": 0.041
+   },
+   "30": {
+    "cost": 0.203,
+    "raw_abs": 0.051,
+    "x_abs": 0.053
+   },
+   "60": {
+    "cost": 0.137,
+    "raw_abs": 0.064,
+    "x_abs": 0.062
+   }
+  }
+ },
+ "nse_fut": {
+  "label": "NSE stock futures intraday (1h)",
+  "cells": 49758,
+  "testable": 9493,
+  "labels": {
+   "TOO_FEW": 40265,
+   "NO_INFO": 7592,
+   "NOT_SIGNIFICANT": 1714,
+   "WRONG_SIGN": 187
+  },
+  "share_t_ge1": 0.181,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.02,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 0,
+  "family_rows": 194,
+  "family_dev_valid_both_pos": 0.515,
+  "family_maxstat_p_min": 0.181,
+  "maxstat95": 3.25,
+  "cost_atr_median": 0.205,
+  "raw_abs_median": 0.036,
+  "excess_abs_median": 0.032,
+  "spent_median": -0.0,
+  "mfe_median": 0.64,
+  "mae_median": -0.64,
+  "best_family": {
+   "name": "J FIRSTHOUR BUY tf60",
+   "nd": 467,
+   "x_DEV": 0.089,
+   "t_DEV": 2.86,
+   "x_VALID": 0.07,
+   "maxstat_p": 0.181,
+   "raw_DEV": 0.117,
+   "cost": 0.188
+  },
+  "by_tf": {
+   "60": {
+    "cost": 0.205,
+    "raw_abs": 0.036,
+    "x_abs": 0.032
+   }
+  }
+ },
+ "nse_eq": {
+  "label": "NSE cash intraday",
+  "cells": 125848,
+  "testable": 20386,
+  "labels": {
+   "TOO_FEW": 105462,
+   "NO_INFO": 16763,
+   "NOT_SIGNIFICANT": 3197,
+   "WRONG_SIGN": 426
+  },
+  "share_t_ge1": 0.157,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.021,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 0,
+  "family_rows": 393,
+  "family_dev_valid_both_pos": 0.499,
+  "family_maxstat_p_min": 0.357,
+  "maxstat95": 3.32,
+  "cost_atr_median": 0.261,
+  "raw_abs_median": 0.041,
+  "excess_abs_median": 0.038,
+  "spent_median": -0.001,
+  "mfe_median": 0.87,
+  "mae_median": -0.92,
+  "best_family": {
+   "name": "B COMPRESS_BRK BUY tf15",
+   "nd": 175,
+   "x_DEV": 0.098,
+   "t_DEV": 2.91,
+   "x_VALID": 0.021,
+   "maxstat_p": 0.357,
+   "raw_DEV": 0.085,
+   "cost": 0.317
+  },
+  "by_tf": {
+   "15": {
+    "cost": 0.313,
+    "raw_abs": 0.046,
+    "x_abs": 0.043
+   },
+   "60": {
+    "cost": 0.159,
+    "raw_abs": 0.036,
+    "x_abs": 0.034
+   }
+  }
+ },
+ "daily_MCX_btst": {
+  "label": "MCX overnight (BTST/STBT)",
+  "cells": 1735,
+  "testable": 548,
+  "labels": {
+   "TOO_FEW": 1187,
+   "NO_INFO": 455,
+   "NOT_SIGNIFICANT": 74,
+   "WRONG_SIGN": 13,
+   "INFO_SPENT_BEFORE_ENTRY": 6
+  },
+  "share_t_ge1": 0.135,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.024,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 0,
+  "family_rows": 143,
+  "family_dev_valid_both_pos": 0.343,
+  "family_maxstat_p_min": 0.079,
+  "maxstat95": 3.29,
+  "cost_atr_median": 0.026,
+  "raw_abs_median": 0.031,
+  "excess_abs_median": 0.036,
+  "spent_median": -0.014,
+  "mfe_median": 1.43,
+  "mae_median": -1.33,
+  "best_family": {
+   "name": "G FAIL_WEDGE_FALL SELL tf1440",
+   "nd": 102,
+   "x_DEV": 0.211,
+   "t_DEV": 3.32,
+   "x_VALID": -0.062,
+   "maxstat_p": 0.079,
+   "raw_DEV": 0.196,
+   "cost": 0.023
+  },
+  "by_tf": {
+   "1440": {
+    "cost": 0.026,
+    "raw_abs": 0.031,
+    "x_abs": 0.036
+   }
+  }
+ },
+ "daily_MCX_pos5": {
+  "label": "MCX positional (5 sessions)",
+  "cells": 1735,
+  "testable": 490,
+  "labels": {
+   "TOO_FEW": 1245,
+   "NO_INFO": 361,
+   "NOT_SIGNIFICANT": 98,
+   "WRONG_SIGN": 22,
+   "INFO_SPENT_BEFORE_ENTRY": 5,
+   "UNSTABLE": 3,
+   "PASS_STAGE1": 1
+  },
+  "share_t_ge1": 0.208,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.045,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 1,
+  "family_rows": 137,
+  "family_dev_valid_both_pos": 0.423,
+  "family_maxstat_p_min": 0.03,
+  "maxstat95": 3.28,
+  "cost_atr_median": 0.026,
+  "raw_abs_median": 0.114,
+  "excess_abs_median": 0.102,
+  "spent_median": -0.032,
+  "mfe_median": 1.43,
+  "mae_median": -1.33,
+  "best_family": {
+   "name": "I NBAR_BRK SELL tf1440",
+   "nd": 941,
+   "x_DEV": 0.177,
+   "t_DEV": 3.41,
+   "x_VALID": -0.047,
+   "maxstat_p": 0.03,
+   "raw_DEV": 0.118,
+   "cost": 0.023
+  },
+  "by_tf": {
+   "1440": {
+    "cost": 0.026,
+    "raw_abs": 0.114,
+    "x_abs": 0.102
+   }
+  }
+ },
+ "daily_NSE_FUT_btst": {
+  "label": "NSE stock futures overnight (BTST/STBT)",
+  "cells": 64771,
+  "testable": 2428,
+  "labels": {
+   "TOO_FEW": 62343,
+   "NO_INFO": 1896,
+   "NOT_SIGNIFICANT": 312,
+   "INFO_SPENT_BEFORE_ENTRY": 126,
+   "WRONG_SIGN": 94
+  },
+  "share_t_ge1": 0.129,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.039,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 0,
+  "family_rows": 171,
+  "family_dev_valid_both_pos": 0.292,
+  "family_maxstat_p_min": 0.15,
+  "maxstat95": 3.35,
+  "cost_atr_median": 0.049,
+  "raw_abs_median": 0.025,
+  "excess_abs_median": 0.014,
+  "spent_median": 0.003,
+  "mfe_median": 1.32,
+  "mae_median": -1.26,
+  "best_family": {
+   "name": "G FAIL_RANGE2TREND SELL tf1440",
+   "nd": 95,
+   "x_DEV": 0.148,
+   "t_DEV": 3.3,
+   "x_VALID": 0.153,
+   "maxstat_p": 0.15,
+   "raw_DEV": 0.1,
+   "cost": 0.05
+  },
+  "by_tf": {
+   "1440": {
+    "cost": 0.049,
+    "raw_abs": 0.025,
+    "x_abs": 0.014
+   }
+  }
+ },
+ "daily_NSE_FUT_pos5": {
+  "label": "NSE stock futures positional",
+  "cells": 64771,
+  "testable": 1296,
+  "labels": {
+   "TOO_FEW": 63475,
+   "NO_INFO": 977,
+   "NOT_SIGNIFICANT": 221,
+   "WRONG_SIGN": 88,
+   "INFO_SPENT_BEFORE_ENTRY": 8,
+   "UNSTABLE": 1,
+   "PASS_STAGE1": 1
+  },
+  "share_t_ge1": 0.172,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.068,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 1,
+  "family_rows": 168,
+  "family_dev_valid_both_pos": 0.256,
+  "family_maxstat_p_min": 0.025,
+  "maxstat95": 3.37,
+  "cost_atr_median": 0.049,
+  "raw_abs_median": 0.053,
+  "excess_abs_median": 0.034,
+  "spent_median": 0.001,
+  "mfe_median": 1.32,
+  "mae_median": -1.26,
+  "best_family": {
+   "name": "G FAIL_RANGE2TREND SELL tf1440",
+   "nd": 69,
+   "x_DEV": 0.446,
+   "t_DEV": 3.93,
+   "x_VALID": 0.191,
+   "maxstat_p": 0.025,
+   "raw_DEV": 0.358,
+   "cost": 0.05
+  },
+  "by_tf": {
+   "1440": {
+    "cost": 0.049,
+    "raw_abs": 0.053,
+    "x_abs": 0.034
+   }
+  }
+ },
+ "daily_NSE_EQ_btst": {
+  "label": "NSE cash BTST (BUY)",
+  "cells": 71528,
+  "testable": 3876,
+  "labels": {
+   "TOO_FEW": 67652,
+   "NO_INFO": 2817,
+   "NOT_SIGNIFICANT": 630,
+   "INFO_SPENT_BEFORE_ENTRY": 265,
+   "WRONG_SIGN": 164
+  },
+  "share_t_ge1": 0.163,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.042,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 0,
+  "family_rows": 86,
+  "family_dev_valid_both_pos": 0.267,
+  "family_maxstat_p_min": 0.005,
+  "maxstat95": 3.18,
+  "cost_atr_median": 0.118,
+  "raw_abs_median": 0.044,
+  "excess_abs_median": 0.009,
+  "spent_median": 0.007,
+  "mfe_median": 1.3,
+  "mae_median": -1.29,
+  "best_family": {
+   "name": "A TL_BRK_t2 BUY tf1440",
+   "nd": 3396,
+   "x_DEV": 0.022,
+   "t_DEV": 3.76,
+   "x_VALID": 0.012,
+   "maxstat_p": 0.005,
+   "raw_DEV": 0.068,
+   "cost": 0.119
+  },
+  "by_tf": {
+   "1440": {
+    "cost": 0.118,
+    "raw_abs": 0.044,
+    "x_abs": 0.009
+   }
+  }
+ },
+ "daily_NSE_EQ_pos5": {
+  "label": "NSE cash positional (BUY)",
+  "cells": 71528,
+  "testable": 3817,
+  "labels": {
+   "TOO_FEW": 67711,
+   "NO_INFO": 2907,
+   "NOT_SIGNIFICANT": 609,
+   "WRONG_SIGN": 249,
+   "INFO_SPENT_BEFORE_ENTRY": 51,
+   "UNSTABLE": 1
+  },
+  "share_t_ge1": 0.16,
+  "chance_t_ge1": 0.159,
+  "share_t_le_m2": 0.065,
+  "chance_t_le_m2": 0.023,
+  "pass_stage1": 0,
+  "family_rows": 86,
+  "family_dev_valid_both_pos": 0.128,
+  "family_maxstat_p_min": 0.71,
+  "maxstat95": 3.22,
+  "cost_atr_median": 0.118,
+  "raw_abs_median": 0.026,
+  "excess_abs_median": 0.029,
+  "spent_median": 0.024,
+  "mfe_median": 1.3,
+  "mae_median": -1.29,
+  "best_family": {
+   "name": "G FAIL_TRI_ASC BUY tf1440",
+   "nd": 568,
+   "x_DEV": 0.117,
+   "t_DEV": 2.15,
+   "x_VALID": -0.039,
+   "maxstat_p": 0.71,
+   "raw_DEV": 0.057,
+   "cost": 0.12
+  },
+  "by_tf": {
+   "1440": {
+    "cost": 0.118,
+    "raw_abs": 0.026,
+    "x_abs": 0.029
+   }
+  }
+ }
+}
