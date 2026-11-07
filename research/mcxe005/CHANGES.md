@@ -15,7 +15,7 @@
 | cb10010 | Research copy of S4, recorded PETRONET/GLENMARK/TITAN fixtures, 6 preservation tests |
 | 1304d4a | Engine (frames, signals, run), S4 study, DEV/VALID selection, 4 survivors frozen before OOS |
 | 6de0161 | OOS evaluated once: all 4 REJECTED |
-| see final commit below | Reports: EXISTING_STRATEGY_ANALYSIS, ACCURACY_COMPARISON, WINNING_STRATEGIES, FAILED_STRATEGIES, DATA_QUALITY_AUDIT, REGRESSION_TESTS, NEXT_RESEARCH_PRIORITIES, RUN_STATUS, register `oos_status` column, summarise.py |
+| dcdff66 | Reports: EXISTING_STRATEGY_ANALYSIS, ACCURACY_COMPARISON, WINNING_STRATEGIES, FAILED_STRATEGIES, DATA_QUALITY_AUDIT, REGRESSION_TESTS, NEXT_RESEARCH_PRIORITIES, RUN_STATUS, register `oos_status` column, summarise.py |
 
 **Rollback:** every change is in `research/mcxe005/` plus appended records in `research/mcxe004/register/executions.jsonl`. Reverting these commits on the research branch removes all of it. Production is unaffected either way.
 
