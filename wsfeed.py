@@ -67,7 +67,8 @@ def option_tokens(master, now, px, names, have, room):
         for r in x[x["K"].isin(pick)].itertuples():
             t = str(r.token)
             if t not in have and len(out) < room:
-                out.append(dict(token=t, exch="NFO", name=nm, symbol=r.symbol, expiry=pd.Timestamp(r.expiry_dt).strftime("%Y-%m-%d")))
+                out.append(dict(token=t, exch="NFO", name=nm, symbol=r.symbol, expiry=pd.Timestamp(r.expiry_dt).strftime("%Y-%m-%d"),
+                                lot=getattr(r, "lotsize", "")))
     return out
 
 
@@ -87,7 +88,8 @@ def main():
     toks = tokens(master, now)
     try:                                                  # token -> symbol map, kept with the exported bars
         mm = master[master["token"].astype(str).isin([t for v in toks.values() for t in v])]
-        mm.assign(exch=mm["exch_seg"], expiry=mm["expiry_dt"].dt.strftime("%Y-%m-%d"))[["token", "exch", "name", "symbol", "expiry"]] \
+        mm.assign(exch=mm["exch_seg"], expiry=mm["expiry_dt"].dt.strftime("%Y-%m-%d"), lot=mm["lotsize"])[  # lot: NFO volume units (7-Nov)
+            ["token", "exch", "name", "symbol", "expiry", "lot"]] \
             .to_csv(WB._dir() / "tokens.csv", index=False)
     except Exception as e:
         print("[ws] token map not written:", e)

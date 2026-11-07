@@ -116,6 +116,32 @@ def minutes(token, day, d=None):
     return merge_minutes(df)
 
 
+def lot(token, d=None):
+    """Contract lot size from the collector's token map (written by wsfeed.py since 7-Nov), or None."""
+    try:
+        t = pd.read_csv(_dir(d) / "tokens.csv", dtype=str)
+        v = pd.to_numeric(t.loc[t["token"] == str(token), "lot"], errors="coerce").dropna()
+        return float(v.iloc[-1]) if len(v) and v.iloc[-1] > 0 else None
+    except Exception:
+        return None
+
+
+def rest_units(df, token, exch, d=None):
+    """7-Nov-2026 FIX: WebSocket volume -> the units of Angel's REST candles. Measured on 6-Nov after the merge fix: for NFO
+    futures the WebSocket/REST volume ratio equalled the lot size (NIFTY 64.99 vs lot 65, BPCL 1977.7 vs 1975, KPITTECH
+    789 vs 775) – the WebSocket counts shares, getCandleData counts lots; MCX matched (CRUDEOIL ratio 1.0). Unconverted, the
+    hourly check failed for NFO all day (REST fallback -> rate limits) and, had it passed, today's bars would carry ~lot x the
+    volume of the REST history they are joined to. NFO without a known lot -> None (caller uses REST; units never mixed)."""
+    if df is None or exch != "NFO" or df.empty:
+        return df
+    n = lot(token, d)
+    if n is None:
+        return None
+    out = df.copy()
+    out["volume"] = out["volume"] / n
+    return out
+
+
 def merge_minutes(df):
     """6-Nov-2026 FIX: one minute can be written in several rows – the collector's 15-second flush closes a minute while
     ticks stamped with that (lagging) exchange minute are still arriving; every row holds only the volume added since the

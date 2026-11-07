@@ -65,6 +65,9 @@ def make(cache, wsd, rest, now=NOW):
 
 def verified(wsd, now=NOW):
     (Path(wsd) / "verify.json").write_text(json.dumps({"NFO": dict(hour=f"{now:%Y%m%d%H}", ok=True, note="OK (test)")}))
+    # 7-Nov: NFO WebSocket bars are used only when the lot (volume units) is known; lot 1 keeps these volumes as they are
+    pd.DataFrame([dict(token=t, exch="NFO", name="X", symbol="X", expiry="2026-12-31", lot=1) for t in ("5", "77")]) \
+        .to_csv(Path(wsd) / "tokens.csv", index=False)
 
 
 def feed(wsd, token, start, end, px=200.0, vol_step=10, oi=7000):

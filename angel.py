@@ -357,8 +357,16 @@ class Angel:
         b1 = WB.bucket_start(now, "FIFTEEN_MINUTE", exch)
         if b1 - b0 < pd.Timedelta(minutes=30):
             return True                                   # not enough WebSocket history yet to compare
+        if exch == "NFO" and WB.lot(token, self._ws_dir) is None:   # 7-Nov: WebSocket volume units unknown -> REST
+            v[exch] = dict(hour=f"{now:%Y%m%d%H}", ok=False, note="MISMATCH – REST used: lot size unknown (volume units)", token=str(token))
+            try:
+                vf.write_text(json.dumps(v))
+            except Exception:
+                pass
+            self._ws_note[exch] = v[exch]["note"]
+            return False
         rest = self._candles(exch, token, "FIFTEEN_MINUTE", b0, now)
-        wsb = WB.aggregate(WB.minutes(token, now, self._ws_dir), "FIFTEEN_MINUTE", exch)
+        wsb = WB.rest_units(WB.aggregate(WB.minutes(token, now, self._ws_dir), "FIFTEEN_MINUTE", exch), token, exch, self._ws_dir)
         if rest is None:
             return True                                   # REST blocked – keep the WebSocket bars, check again next call
         cut = lambda d: d[(d["time"] >= b0) & (d["time"] < b1)]
@@ -409,6 +417,10 @@ class Angel:
             m1 = m1[m1["time"] >= ws_start.floor("min")]
         wsb = WB.aggregate(m1, interval, exch)
         if kind == "candles":
+            wsb = WB.rest_units(wsb, token, exch, self._ws_dir)     # 7-Nov: same volume units as the REST history
+            if wsb is None:
+                self.stats["ws_fallback"] += 1
+                return None
             df = WB.combine(hist, pre, wsb.drop(columns=["oi"]), boundary)
         else:
             parts = [x for x in (hist, pre[pre["time"] <= boundary] if pre is not None and boundary is not None else pre,
