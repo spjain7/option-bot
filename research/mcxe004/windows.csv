@@ -1,0 +1,8 @@
+market,dataset,timeframe,reference,start,valid_from,oos_from,instruments,instruments_behind,DEV_sessions,DEV_bars,DEV_instruments,VALID_sessions,VALID_bars,VALID_instruments,OOS_sessions,OOS_bars,OOS_instruments,behind_examples
+MCX,Angel front-month FIVE_MINUTE,"5m (-> 15/30/60m, daily)",2026-11-03,2025-11-04,2026-05-04,2026-08-04,7,0,127,138605,7,66,73299,7,65,72184,7,{}
+MCX,Angel front-month ONE_HOUR,1h,2026-10-21,2025-10-22,2026-04-22,2026-07-22,7,0,128,12521,7,65,6479,7,65,6520,7,{}
+MCX,Angel front-month ONE_DAY,1d,2026-10-21,2025-10-22,2026-04-22,2026-07-22,7,0,128,893,7,65,455,7,65,455,7,{}
+NSE_EQ,Angel 5-min (today's 218 liquid names),5m,2026-11-06,2025-11-07,2026-05-07,2026-08-07,218,0,121,1978329,218,64,1044743,218,63,1000837,218,{}
+NSE_EQ,official cash bhavcopy (point-in-time),1d,2026-11-05,2025-11-06,2026-05-06,2026-08-06,3090,0,120,120,1,64,64,1,63,63,1,{}
+NSE_FUT,official F&O bhavcopy (point-in-time),1d,2026-11-06,2025-11-07,2026-05-07,2026-08-07,237,0,120,120,1,64,64,1,63,63,1,{}
+NSE_FUT,Angel 1-hour (today's list),1h,2026-10-22,2025-10-23,2026-04-23,2026-07-23,181,0,122,143829,176,62,76925,178,63,78981,181,{}
