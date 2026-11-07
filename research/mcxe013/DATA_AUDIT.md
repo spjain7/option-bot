@@ -25,3 +25,15 @@ REST overload caused by the WebSocket bars being rejected, not by Angel alone.
 ## Next
 Merge `fix/ws-nfo-volume-units` after review; on the first trading day check `[ws] verify NFO … OK` and the
 `[angel-stats]` refused count; move manual research workflows outside market hours.
+
+## Update 7-Nov (evening)
+- PR #54 merged (5609246) after checks: only angel.py / wsbars.py / wsfeed.py + tests; MCX and OI paths unchanged; unknown lot -> REST;
+  dry run on the real scrip master: 240/240 NFO + 7/7 MCX tokens get a lot; 39 tests pass (test_share.py fails on main too);
+  `git revert e707dc1` restores main exactly. Live result: NOT yet confirmed (first trading day 9-Nov).
+- 3-Nov gap: GitHub never fired the morning market-loop crons (first scheduled run created 10:45 UTC = 16:15 IST; same on 2-Nov).
+  Fixed 3-Nov evening by standby.yml chain (d6d523a); 4/5/6-Nov started 08:41 IST by dispatch. Monday depends on the Sunday cron.
+- MCX >8 % jumps: GENUINE. MCX bhavcopy (exchange data, 1,118 days since Jul-2022) front-month closes >8 %: NATURALGAS 49,
+  CRUDEOIL 12, SILVER 7 – matches the [dq] counts; crude 1h jumps (13-Jun-25, 9-Mar-26, 8-Apr-26 −17 %) confirmed in bhavcopy.
+- MCX historical OI: Angel getOIData returns AB1012 for MCX (probe 21-Oct, crude/data.py). Sources in use: daily OI from MCX
+  bhavcopy (branch research-mcx-bhav, oi_lots) and 1-min OI from WebSocket bars (since 30-Oct). Nothing is substituted silently.
+- research-data.yml: PR #55 merged – quiet-hours guard on the 7 manual Angel research workflows.
