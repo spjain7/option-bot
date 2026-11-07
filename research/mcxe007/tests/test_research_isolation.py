@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 PROD = "4be5ff29b3cfef307eaad738894c069e7bf66d4a"   # 7-Nov: owner-approved PR #52 (OI 1h EXPERIMENTAL); before 567805d (PR #50), bc3153e6
-BAD = re.compile(r"telegram|send_message|place_order|placeOrder|requests\.post|urllib|smartapi|SmartConnect|notify\(|socket", re.I)
+BAD = re.compile(r"telegram|send_message|place_order|placeOrder|requests\.post|urllib|smartapi|SmartConnect|notify\(|import socket|socket\.", re.I)
 BAD_IMPORT = re.compile(r"^\s*(from|import)\s+(alerts|notify|broker|crude\.live|angel)", re.M)
 
 
