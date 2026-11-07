@@ -182,9 +182,9 @@ def oos():
                              oos_trades=m1["trades"], oos_dates=m1["unique_dates"], oos_win=m1["win_rate"], oos_exp1=m1["expectancy_R"],
                              oos_exp2=m2["expectancy_R"], oos_pf=m1["profit_factor"], oos_maxdd=m1["max_drawdown_R"], oos_ci=m1["ci95"],
                              control_exp1=round(ctl, 4) if ctl == ctl else None, control_n=int(len(C)),
-                             dev=json.dumps(per["DEV"]), valid=json.dumps(per["VALID"]), oos=json.dumps(per["OOS"]),
-                             by_inst_oos=json.dumps(O.groupby("inst").r1.agg(["size", "mean"]).round(3).reset_index().values.tolist()),
-                             by_regime_oos=json.dumps(O.groupby("regime").r1.agg(["size", "mean"]).round(3).reset_index().values.tolist())))
+                             dev=json.dumps(per["DEV"], default=float), valid=json.dumps(per["VALID"], default=float), oos=json.dumps(per["OOS"], default=float),
+                             by_inst_oos=json.dumps(O.groupby("inst").r1.agg(["size", "mean"]).round(3).reset_index().values.tolist(), default=float),
+                             by_regime_oos=json.dumps(O.groupby("regime").r1.agg(["size", "mean"]).round(3).reset_index().values.tolist(), default=float)))
             with RG.Execution(script_id="MCXE005-select_eval-oos", strategy_name=f"{r.fam} {'BUY' if r.side > 0 else 'SELL'} {r.filt} {r.exit}",
                               market=LABEL.get(cell, cell), instrument=f"{O.inst.nunique()} instruments", timeframe=str(r.tf)) as ex:
                 ex.finish("INSUFFICIENT_DATA" if st == "INSUFFICIENT_DATA" else "COMPLETED", executed_backtest_trades=m1["trades"],
