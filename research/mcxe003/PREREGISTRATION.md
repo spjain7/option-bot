@@ -56,3 +56,10 @@ Nothing that passes goes beyond shadow / log-only. No production change, no Tele
   breakout / EMA / MACD families, so those families are marked contaminated.
 - **Swing methods:** MCX uses f2, f3, f5, z15 and z3. NSE uses f3 and z3, for compute reasons. A cell includes its swing
   method, so every method counts in the BH-FDR denominator.
+
+## Addendum B (7-Nov-2026): estimator fix, made before any stage-2 decision and without reading OOS
+The first stage-1 run averaged per-day means. That gives a day with one event the same weight as a day with 30 events,
+which changes the quantity being estimated. A trader who takes every signal earns the event-weighted mean.
+- **Example:** MCX 30-minute 20-bar breakout BUY earned +0.05 ATR per event, but its mean of daily means was −0.29.
+- **Fix:** use the event-weighted mean with a day-clustered (cluster-robust) standard error. Effective n is still the number of days.
+- All stage-1 tables were recomputed with this estimator.

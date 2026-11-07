@@ -44,11 +44,22 @@ def all_events(f, methods):
         x = EV.fails(g, f); x["sw"] = sw_; G.append(x)
     if G:
         E = pd.concat([E] + G, ignore_index=True)
+    E["i"] = E["i"].astype(np.int64)
+    E["side"] = E["side"].astype(np.int64)
     return E
 
 
 def run_one(job):
+    try:
+        return _run_one(job)
+    except Exception as e:                                      # noqa: BLE001
+        return None, f"{job[0]} {job[1]} {job[2]}: ERROR {type(e).__name__} {e}"
+
+
+def _run_one(job):
     market, name, tf, methods = job
+    if (OUT / "events" / market / f"{name}_{tf}.parquet").exists():
+        return 0, f"{market} {name} {tf}: cached"
     t0 = time.time()
     try:
         if market == "MCX":
