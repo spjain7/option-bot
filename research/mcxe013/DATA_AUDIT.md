@@ -15,7 +15,7 @@ REST overload caused by the WebSocket bars being rejected, not by Angel alone.
 ## Other findings
 | # | Finding | Status |
 |---|---|---|
-| 3 | research-data.yml uses concurrency group `option-bot` (old bot), not `market-loop`; its comment claims it never overlaps the live bot — false; overlapped 6-Nov 16:13→00:19 IST on the same API key | confirmed config bug, impact on refusals suspected |
+| 3 | research-data.yml uses concurrency group `option-bot` (old bot), not `market-loop`; its comment claims it never overlaps the live bot — false; overlapped the live loop on 6-Nov 15:15–20:16 IST on the same API key | confirmed config bug, impact on refusals suspected |
 | 4 | Any refused/blocked call returns None → series dropped for that scan (funnel "data" note only) | confirmed behaviour; mitigated by fixes 1–2 |
 | 5 | 3-Nov: no daytime loop (ws exports start 15:15) | confirmed gap, cause unknown |
 | 6 | [dq] daily jumps >8 % on NATURALGAS (72), CRUDEOIL (12), SILVER (8) — daily bars are built from 1h history of the current contract (BO.daily_candles(full_1h)); thin early-life contract prints suspected | suspected |
