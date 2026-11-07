@@ -1,0 +1,9 @@
+{
+ "prod_doi": {
+  "PETRONET": 0.024214613483939385,
+  "GLENMARK": 0.035336963184653625,
+  "TITAN": 0.05487782268530528
+ },
+ "source": "point-in-time F&O bhavcopy, nearest expiry, 2025-09-01..signal day; last-row OI change replaced by the value production logged (Angel OI) in alerts-state stk.shadow",
+ "production_commit": "bc3153e6b30bb8477a3d81042b96a5f93c5f8444"
+}
