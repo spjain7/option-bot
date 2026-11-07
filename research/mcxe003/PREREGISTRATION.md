@@ -49,3 +49,10 @@
   - adjusted for selection with a max-statistic over all stage-2 survivors.
 
 Nothing that passes goes beyond shadow / log-only. No production change, no Telegram, no orders.
+
+## Addendum A (7-Nov-2026, before any result)
+- **NSE stock-futures 1-hour periods:** the Angel 1-hour data runs 2022-07 → 2026-10 for most names, so the periods are
+  DEV < 2024-07-01 ≤ VALID < 2025-07-01 ≤ OOS. This matches the earlier Angel splits. Earlier work used this data for
+  breakout / EMA / MACD families, so those families are marked contaminated.
+- **Swing methods:** MCX uses f2, f3, f5, z15 and z3. NSE uses f3 and z3, for compute reasons. A cell includes its swing
+  method, so every method counts in the BH-FDR denominator.
