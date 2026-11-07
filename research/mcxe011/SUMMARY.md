@@ -18,3 +18,18 @@
 **The only 1h breakout that held up is H1.12L** (MCX 1h, BUY only), which is already live as EXPERIMENTAL.
 
 **Run:** `python research/mcxe011/intraday_bo.py`
+
+## MCXE-011b: volume / OI / ADX / VWAP confirmation filters (`filtered_bo.py`, `FILTERED_RESULTS.csv`; exploratory)
+- **Filters** (all known at the signal close):
+  - volume ≥ 1.5× its 20-bar average;
+  - close beyond the session VWAP;
+  - ADX(14) ≥ 20 with the DI aligned to the side;
+  - the previous session's exchange OI build-up in the trade direction. Intraday OI history does not exist, so this uses the last known daily OI.
+- **Tested on:** MCX 1h (BUY = the live H1.12L entry), MCX 15m Donchian-80 and stock futures 1h, each side separately.
+- **Only ADX ≥ 20 + DI alignment improved MCX 1h BUY in both periods:** DEV +0.49 → +0.53R, VALID +0.25 → +0.38R (2×), VALID win rate 36.8 → 42.6 %, with 22 % fewer trades.
+  - Like the unfiltered rule, it does **not** beat the 95th percentile of random MCX long entries with the same exits (2025-26 metals uptrend).
+  - It is a forward hypothesis, not a validated improvement.
+- **Volume and VWAP** raised DEV but lowered VALID.
+- **OI** flipped hard: VALID −0.28R.
+- **All four together** cut trades to 24 in VALID and lost (−0.76R): over-filtering.
+- **MCX 15m and stock 1h:** no filter changed the sign. Both stay failed.
