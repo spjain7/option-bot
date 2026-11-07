@@ -5,7 +5,7 @@ import re
 import subprocess
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
-PROD = "bc3153e6b30bb8477a3d81042b96a5f93c5f8444"
+PROD = "567805da52b895cad756d9c407cb857d12860ce0"   # 7-Nov: owner-approved merge of PR #50 (H1.12L EXPERIMENTAL); before: bc3153e6
 BAD = re.compile(r"telegram|send_message|place_order|placeOrder|requests\.post|urllib|smartapi|SmartConnect|notify\(|socket", re.I)
 BAD_IMPORT = re.compile(r"^\s*(from|import)\s+(alerts|notify|broker|crude\.live|angel)", re.M)
 

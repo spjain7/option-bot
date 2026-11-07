@@ -56,3 +56,9 @@
 - The rule is labelled 🧪 EXPERIMENTAL / NOT VALIDATED in every message.
 - S4 files are untouched. Existing rules and breakout signals are verified identical to bc3153e6.
 - Experimental calls use their own ledger category, so they never block existing calls and stay out of the scorecard.
+- **7-Nov, owner: "Do active". PR #50 merged into `main` as 567805d.** H1.12L EXPERIMENTAL alerts are live from the next market-loop run (Mon 9-Nov).
+- Checks on the merged `main`, all passing:
+  - the 11 H1.12L checks;
+  - the 71 alert and 71 trade-plan checks;
+  - the rulebook tests;
+  - the 6 S4 preservation tests (PETRONET / GLENMARK / TITAN files byte-identical).
