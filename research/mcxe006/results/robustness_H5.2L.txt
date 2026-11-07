@@ -1,0 +1,28 @@
+# H5.2L  (DEV + VALID only)
+
+           size         mean       
+period      DEV VALID    DEV  VALID
+inst                               
+ALUMINIUM    10     3 -0.119  1.078
+COPPER        9     3  1.356  2.794
+CRUDEOIL     12     5  0.671  0.219
+GOLD          9     4  2.143 -0.908
+NATURALGAS    9     5  1.302 -0.945
+SILVER       12     4  2.363  0.061
+ZINC         12     3 -0.195  2.842
+
+monthly net R (2x): 2025-11:+9.1(8.0), 2025-12:+15.5(18.0), 2026-01:+39.3(17.0), 2026-02:-3.1(7.0), 2026-03:+10.8(11.0), 2026-04:+6.3(10.0), 2026-05:+11.2(14.0), 2026-06:-3.2(3.0), 2026-07:+3.3(12.0)
+positive months: 7 / 9
+exp 2x all +0.892 | without best 5 +0.367 | without best 10 -0.025 | 3x cost +0.842
+share of net R from best 5 trades: 61%
+       size         mean       
+period  DEV VALID    DEV  VALID
+side                           
+1        73    27  1.042  0.486
+regime  range      up
+size    3.000  97.000
+mean    1.128   0.885
+etype    gap    stop   time   trail
+size   8.000  38.000  5.000  49.000
+mean  -0.794  -1.103  0.241   2.781
+median hold bars 14.0, median MFE 1.68R, median MAE 0.60R
