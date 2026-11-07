@@ -1,15 +1,15 @@
 [
  {
-  "experiment_id": "MCXE004-E1-2a75177a",
+  "experiment_id": "MCXE004-E1-5459c02d",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_MCX_4h_EMA1348_BUY",
   "market": "MCX",
   "instrument": "ALUMINIUM,COPPER,CRUDEOIL,GOLD,NATURALGAS,SILVER,ZINC",
   "timeframe": "4h",
   "data_start_date": "2025-11-04",
-  "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:47Z",
-  "execution_end": "2026-11-07T04:26:48Z",
+  "data_end_date": "2026-10-21",
+  "execution_start": "2026-11-07T04:30:30Z",
+  "execution_end": "2026-11-07T04:30:31Z",
   "status": "INSUFFICIENT_DATA",
   "progress_stage": "metrics",
   "total_signals": 35,
@@ -54,7 +54,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -187,16 +187,16 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-73faa042",
+  "experiment_id": "MCXE004-E1-fa0b949a",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_MCX_4h_MACD0_BUY",
   "market": "MCX",
   "instrument": "ALUMINIUM,COPPER,CRUDEOIL,GOLD,NATURALGAS,SILVER,ZINC",
   "timeframe": "4h",
   "data_start_date": "2025-11-04",
-  "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:48Z",
-  "execution_end": "2026-11-07T04:26:48Z",
+  "data_end_date": "2026-10-21",
+  "execution_start": "2026-11-07T04:30:31Z",
+  "execution_end": "2026-11-07T04:30:31Z",
   "status": "INSUFFICIENT_DATA",
   "progress_stage": "metrics",
   "total_signals": 48,
@@ -241,7 +241,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -374,16 +374,16 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-ec139b74",
+  "experiment_id": "MCXE004-E1-3ff1e184",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_MCX_2h_MOMO_BUY",
   "market": "MCX",
   "instrument": "ALUMINIUM,COPPER,CRUDEOIL,GOLD,NATURALGAS,SILVER,ZINC",
   "timeframe": "2h",
   "data_start_date": "2025-11-04",
-  "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:48Z",
-  "execution_end": "2026-11-07T04:26:48Z",
+  "data_end_date": "2026-10-21",
+  "execution_start": "2026-11-07T04:30:31Z",
+  "execution_end": "2026-11-07T04:30:31Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 77,
@@ -428,7 +428,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -561,16 +561,16 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-3983eb45",
+  "experiment_id": "MCXE004-E1-b4d67e62",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_MCX_2h_EMA921_BUY",
   "market": "MCX",
   "instrument": "ALUMINIUM,COPPER,CRUDEOIL,GOLD,NATURALGAS,SILVER,ZINC",
   "timeframe": "2h",
   "data_start_date": "2025-11-04",
-  "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:48Z",
-  "execution_end": "2026-11-07T04:26:48Z",
+  "data_end_date": "2026-10-21",
+  "execution_start": "2026-11-07T04:30:31Z",
+  "execution_end": "2026-11-07T04:30:31Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 133,
@@ -615,7 +615,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -748,7 +748,7 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-0b32052f",
+  "experiment_id": "MCXE004-E1-6d27725e",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_MCX_1d_RETEST_BUY",
   "market": "MCX",
@@ -756,8 +756,8 @@
   "timeframe": "1d",
   "data_start_date": "2025-11-04",
   "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:48Z",
-  "execution_end": "2026-11-07T04:26:48Z",
+  "execution_start": "2026-11-07T04:30:31Z",
+  "execution_end": "2026-11-07T04:30:31Z",
   "status": "INSUFFICIENT_DATA",
   "progress_stage": "metrics",
   "total_signals": 0,
@@ -796,7 +796,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -908,16 +908,16 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-185d8b41",
+  "experiment_id": "MCXE004-E1-0315c17f",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_MCX_1h_MACD_BUY",
   "market": "MCX",
   "instrument": "ALUMINIUM,COPPER,CRUDEOIL,GOLD,NATURALGAS,SILVER,ZINC",
   "timeframe": "1h",
   "data_start_date": "2025-11-04",
-  "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:48Z",
-  "execution_end": "2026-11-07T04:26:48Z",
+  "data_end_date": "2026-10-21",
+  "execution_start": "2026-11-07T04:30:31Z",
+  "execution_end": "2026-11-07T04:30:31Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 302,
@@ -962,7 +962,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -1095,7 +1095,7 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-d8a825da",
+  "experiment_id": "MCXE004-E1-a855a0e4",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_STK_3h_MACD0_SELL",
   "market": "NSE_FUT",
@@ -1103,8 +1103,8 @@
   "timeframe": "3h",
   "data_start_date": "2025-10-23",
   "data_end_date": "2026-10-22",
-  "execution_start": "2026-11-07T04:26:48Z",
-  "execution_end": "2026-11-07T04:26:49Z",
+  "execution_start": "2026-11-07T04:30:31Z",
+  "execution_end": "2026-11-07T04:30:32Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 296,
@@ -1149,7 +1149,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -1282,7 +1282,7 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-e4840260",
+  "experiment_id": "MCXE004-E1-e2f7a468",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_STK_3h_EMA921_SELL",
   "market": "NSE_FUT",
@@ -1290,8 +1290,8 @@
   "timeframe": "3h",
   "data_start_date": "2025-10-23",
   "data_end_date": "2026-10-22",
-  "execution_start": "2026-11-07T04:26:49Z",
-  "execution_end": "2026-11-07T04:26:49Z",
+  "execution_start": "2026-11-07T04:30:32Z",
+  "execution_end": "2026-11-07T04:30:32Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 379,
@@ -1336,7 +1336,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -1403,7 +1403,7 @@
      "expectancy_R": -0.2212,
      "profit_factor": 0.573,
      "net_R": -31.85,
-     "max_drawdown_R": 37.02,
+     "max_drawdown_R": 37.07,
      "unique_dates": 44,
      "ci95": [
       -0.45,
@@ -1469,7 +1469,7 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-ff8894c6",
+  "experiment_id": "MCXE004-E1-34bb2964",
   "script_id": "MCXE004-E1",
   "strategy_name": "RB_STK_1d_RSI80_BUY",
   "market": "NSE_FUT",
@@ -1477,8 +1477,8 @@
   "timeframe": "1d",
   "data_start_date": "2025-10-23",
   "data_end_date": "2026-10-22",
-  "execution_start": "2026-11-07T04:26:49Z",
-  "execution_end": "2026-11-07T04:26:49Z",
+  "execution_start": "2026-11-07T04:30:32Z",
+  "execution_end": "2026-11-07T04:30:32Z",
   "status": "INSUFFICIENT_DATA",
   "progress_stage": "metrics",
   "total_signals": 0,
@@ -1517,7 +1517,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -1629,16 +1629,16 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-e0f2c4b8",
+  "experiment_id": "MCXE004-E1-ff685670",
   "script_id": "MCXE004-E1",
   "strategy_name": "BO_MCX_3h_BUY",
   "market": "MCX",
   "instrument": "ALUMINIUM,COPPER,CRUDEOIL,GOLD,NATURALGAS,SILVER,ZINC",
   "timeframe": "3h",
   "data_start_date": "2025-11-04",
-  "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:49Z",
-  "execution_end": "2026-11-07T04:26:49Z",
+  "data_end_date": "2026-10-21",
+  "execution_start": "2026-11-07T04:30:32Z",
+  "execution_end": "2026-11-07T04:30:32Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 243,
@@ -1683,7 +1683,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -1816,16 +1816,16 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-5310c3df",
+  "experiment_id": "MCXE004-E1-5696ff18",
   "script_id": "MCXE004-E1",
   "strategy_name": "FH_MCX_4h_BUY",
   "market": "MCX",
   "instrument": "ALUMINIUM,COPPER,CRUDEOIL,GOLD,NATURALGAS,SILVER,ZINC",
   "timeframe": "4h",
   "data_start_date": "2025-11-04",
-  "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:49Z",
-  "execution_end": "2026-11-07T04:26:49Z",
+  "data_end_date": "2026-10-21",
+  "execution_start": "2026-11-07T04:30:32Z",
+  "execution_end": "2026-11-07T04:30:32Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 145,
@@ -1870,7 +1870,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -2003,7 +2003,7 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-9338e754",
+  "experiment_id": "MCXE004-E1-736e40ff",
   "script_id": "MCXE004-E1",
   "strategy_name": "BO_MCX_1d_BUY",
   "market": "MCX",
@@ -2011,8 +2011,8 @@
   "timeframe": "1d",
   "data_start_date": "2025-11-04",
   "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:49Z",
-  "execution_end": "2026-11-07T04:26:49Z",
+  "execution_start": "2026-11-07T04:30:32Z",
+  "execution_end": "2026-11-07T04:30:32Z",
   "status": "INSUFFICIENT_DATA",
   "progress_stage": "metrics",
   "total_signals": 0,
@@ -2051,7 +2051,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -2163,7 +2163,7 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-073b27c3",
+  "experiment_id": "MCXE004-E1-7b988eb1",
   "script_id": "MCXE004-E1",
   "strategy_name": "FH_STK_3h_SELL",
   "market": "NSE_FUT",
@@ -2171,8 +2171,8 @@
   "timeframe": "3h",
   "data_start_date": "2025-10-23",
   "data_end_date": "2026-10-22",
-  "execution_start": "2026-11-07T04:26:49Z",
-  "execution_end": "2026-11-07T04:26:50Z",
+  "execution_start": "2026-11-07T04:30:32Z",
+  "execution_end": "2026-11-07T04:30:32Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 586,
@@ -2192,7 +2192,7 @@
    "all_window_net_R_1x": 51.79
   },
   "max_drawdown": {
-   "OOS_R": 5.51,
+   "OOS_R": 5.55,
    "all_window_R": 10.36
   },
   "costs": {
@@ -2217,7 +2217,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {
@@ -2303,7 +2303,7 @@
      "expectancy_R": 0.2504,
      "profit_factor": 1.851,
      "net_R": 63.35,
-     "max_drawdown_R": 5.51,
+     "max_drawdown_R": 5.55,
      "unique_dates": 47,
      "ci95": [
       -0.126,
@@ -2320,7 +2320,7 @@
      "expectancy_R": 0.2102,
      "profit_factor": 1.67,
      "net_R": 53.18,
-     "max_drawdown_R": 5.79,
+     "max_drawdown_R": 6.01,
      "unique_dates": 47,
      "ci95": [
       -0.166,
@@ -2339,7 +2339,7 @@
    "expectancy_R": 0.2504,
    "profit_factor": 1.851,
    "net_R": 63.35,
-   "max_drawdown_R": 5.51,
+   "max_drawdown_R": 5.55,
    "unique_dates": 47,
    "ci95": [
     -0.126,
@@ -2350,7 +2350,7 @@
   "selection_overlaps_window": true
  },
  {
-  "experiment_id": "MCXE004-E1-d38fed20",
+  "experiment_id": "MCXE004-E1-b12d4167",
   "script_id": "MCXE004-E1",
   "strategy_name": "SHADOW_MCX_DTC_GOLD_SILVER",
   "market": "MCX",
@@ -2358,8 +2358,8 @@
   "timeframe": "15m checkpoints 13:00/17:00",
   "data_start_date": "2025-11-04",
   "data_end_date": "2026-11-03",
-  "execution_start": "2026-11-07T04:26:50Z",
-  "execution_end": "2026-11-07T04:26:50Z",
+  "execution_start": "2026-11-07T04:30:32Z",
+  "execution_end": "2026-11-07T04:30:33Z",
   "status": "COMPLETED",
   "progress_stage": "metrics",
   "total_signals": 158,
@@ -2401,7 +2401,7 @@
    "research/mcxe004/results/e1_trades.csv.gz",
    "research/mcxe004/results/e1_signals.csv"
   ],
-  "code_commit": "bb036bb",
+  "code_commit": "147f71c",
   "error_details": null,
   "periods": {
    "DEV": {

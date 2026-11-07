@@ -1,6 +1,6 @@
 # Scripts not executed, failing or blocked
 
-## Not executed (no committed output, schedule or log evidence) – 59
+## Not executed (no committed output, schedule or log evidence) – 61
 
 Some may have been run locally; this is not claimed.
 
@@ -13,8 +13,10 @@ Some may have been run locally; this is not claimed.
 | R-research.audit_v2 | research/audit_v2.py | 2026-10-21 | Phase 1 audit of the v1 MCX_DAILY_REAL results (C and G). Does not modify v1 outputs. python -m rese |
 | R-research.mcxe003.daily | research/mcxe003/daily.py | 2026-11-07 | MCXE-003 – daily-bar horizons: BTST / STBT (overnight) and positional, three markets, same detectors |
 | R-research.mcxe003.run_discovery | research/mcxe003/run_discovery.py | 2026-11-07 | MCXE-003 stage 1 – event study over all families, intraday markets (pre-registered in PREREGISTRATIO |
-| R-research.mcxe004.eval_live_rules | research/mcxe004/eval_live_rules.py | — | MCXE-004 E1 – the LIVE / SHADOW rules that have research code, re-simulated ONLY inside the approved |
-| R-research.mcxe004.inventory | research/mcxe004/inventory.py | — | MCXE-004 script inventory (automatic, evidence-based). For every Python file under research/ (resear |
+| R-research.mcxe004.alert_examples | research/mcxe004/alert_examples.py | 2026-11-07 | Transparent alert cards (register.alert_card) for REAL signals the live bot sent on 5/6-Nov-2026 (al |
+| R-research.mcxe004.blocked_cells | research/mcxe004/blocked_cells.py | 2026-11-07 | MCXE-004 – register every live / shadow strategy and every requested market cell that could NOT be e |
+| R-research.mcxe004.inventory | research/mcxe004/inventory.py | 2026-11-07 | MCXE-004 script inventory (automatic, evidence-based). For every Python file under research/ (resear |
+| R-research.mcxe004.report | research/mcxe004/report.py | 2026-11-07 | MCXE-004 report generator – every table is computed from the actual result files (register, e1_trade |
 | R-research.mcxe004.windows | research/mcxe004/windows.py | 2026-11-07 | MCXE-004 – strict rolling 1-YEAR data windows (owner rule, 7-Nov-2026). Read-only. For every market  |
 | R-research.program.bigmove_straddle | research/program/bigmove_straddle.py | 2026-10-29 |  |
 | R-research.program.crude_v1 | research/program/crude_v1.py | 2026-11-03 | CRUDE-V1 (1-Nov-2026, owner: ChatGPT's "Crude Oil Research Model V1" – CVD/order flow, realized semi |

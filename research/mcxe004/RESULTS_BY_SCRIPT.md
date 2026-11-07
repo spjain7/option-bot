@@ -1,6 +1,6 @@
 # MCXE-004 script-wise results – E1: live / shadow rules inside the 1-year window
 
-- Script `eval_live_rules.py` (`MCXE004-E1`), run at code commit bb036bb.
+- Script `eval_live_rules.py` (`MCXE004-E1`), run at code commit 147f71c.
 - Trades: `results/e1_trades.csv.gz`. Signals and rejection reasons: `results/e1_signals.csv`.
 - **Units:** net R per trade after realistic costs (1×). The 2× stress value is shown separately. Rupee P&L is
   not modelled, because lot sizing is not part of the rules.
@@ -8,6 +8,8 @@
   2026-10-21 (Angel 1-hour). Stocks are 2025-10-23 → 2026-10-22.
 - **Contamination:** every one of these rules was **selected on 2022-26 data that includes this window**. So the
   window is not independent evidence for them; their best possible status is PAPER_ONLY.
+- **Warm-up:** the research simulator starts signals at bar 210 of the window-clipped frame. That consumes most of
+  DEV for 3h stock rules (DEV only 5–14 trades) and all bars for daily rules.
 
 ## RB_MCX_4h_EMA1348_BUY — INSUFFICIENT_DATA
 
@@ -302,7 +304,7 @@ signals 379 · executed trades 290 · rejected 89 · reasons: {"skipped: positio
 | DEV | 1× | 13 | 8 | 5 | 61.500 | 0.682 | -1.127 | -0.014 | 0.968 | -0.180 | 2.560 | 7 | [-1.07, 1.042] |
 | DEV | 2× | 13 | 8 | 5 | 61.500 | 0.662 | -1.146 | -0.034 | 0.924 | -0.440 | 2.590 | 7 | [-1.089, 1.022] |
 | VALID | 1× | 144 | 55 | 89 | 38.200 | 0.805 | -0.812 | -0.195 | 0.612 | -28.000 | 33.870 | 44 | [-0.424, 0.075] |
-| VALID | 2× | 144 | 53 | 91 | 36.800 | 0.808 | -0.820 | -0.221 | 0.573 | -31.850 | 37.020 | 44 | [-0.45, 0.047] |
+| VALID | 2× | 144 | 53 | 91 | 36.800 | 0.808 | -0.820 | -0.221 | 0.573 | -31.850 | 37.070 | 44 | [-0.45, 0.047] |
 | OOS | 1× | 133 | 75 | 58 | 56.400 | 1.038 | -0.713 | 0.274 | 1.883 | 36.500 | 4.280 | 51 | [0.07, 0.523] |
 | OOS | 2× | 133 | 72 | 61 | 54.100 | 1.050 | -0.708 | 0.244 | 1.751 | 32.430 | 4.510 | 51 | [0.04, 0.493] |
 
@@ -530,8 +532,8 @@ signals 586 · executed trades 380 · rejected 206 · reasons: {"skipped: positi
 | DEV | 2× | 14 | 12 | 2 | 85.700 | 1.120 | -1.049 | 0.810 | 6.405 | 11.340 | 1.060 | 9 | [0.056, 1.413] |
 | VALID | 1× | 113 | 50 | 63 | 44.200 | 0.663 | -0.896 | -0.206 | 0.588 | -23.270 | 30.190 | 28 | [-0.516, 0.049] |
 | VALID | 2× | 113 | 45 | 68 | 39.800 | 0.699 | -0.861 | -0.239 | 0.538 | -27.060 | 33.660 | 28 | [-0.547, 0.014] |
-| OOS | 1× | 253 | 131 | 122 | 51.800 | 1.052 | -0.611 | 0.250 | 1.851 | 63.350 | 5.510 | 47 | [-0.126, 0.695] |
-| OOS | 2× | 253 | 125 | 128 | 49.400 | 1.060 | -0.620 | 0.210 | 1.670 | 53.180 | 5.790 | 47 | [-0.166, 0.653] |
+| OOS | 1× | 253 | 131 | 122 | 51.800 | 1.052 | -0.611 | 0.250 | 1.851 | 63.350 | 5.550 | 47 | [-0.126, 0.695] |
+| OOS | 2× | 253 | 125 | 128 | 49.400 | 1.060 | -0.620 | 0.210 | 1.670 | 53.180 | 6.010 | 47 | [-0.166, 0.653] |
 
 By instrument (net R 1×; n / mean):
 

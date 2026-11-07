@@ -118,7 +118,9 @@ def results_md():
              "- **Periods:** DEV, VALID and OOS of the approved window. MCX is 2025-11-04 → 2026-11-03, but its frames end on",
              "  2026-10-21 (Angel 1-hour). Stocks are 2025-10-23 → 2026-10-22.",
              "- **Contamination:** every one of these rules was **selected on 2022-26 data that includes this window**. So the",
-             "  window is not independent evidence for them; their best possible status is PAPER_ONLY.", ""]
+             "  window is not independent evidence for them; their best possible status is PAPER_ONLY.",
+             "- **Warm-up:** the research simulator starts signals at bar 210 of the window-clipped frame. That consumes most of",
+             "  DEV for 3h stock rules (DEV only 5–14 trades) and all bars for daily rules.", ""]
     for r in recs:
         rid = r["strategy_name"]; x = T[T.rule == rid]
         lines += [f"## {rid} — {r['validation_status']}", "", f"{r['conclusion']}", ""]

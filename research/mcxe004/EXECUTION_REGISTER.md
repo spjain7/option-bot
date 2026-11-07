@@ -13,31 +13,31 @@
 
 | experiment_id | script_id | strategy_name | market | timeframe | data_start_date | data_end_date | status | validation_status | total_signals | executed_backtest_trades | rejected_signals | win_rate | net_expectancy_R | profit_factor | code_commit |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| MCXE004-E1-2a75177a | MCXE004-E1 | RB_MCX_4h_EMA1348_BUY | MCX | 4h | 2025-11-04 | 2026-11-03 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 35.000 | 24.000 | 11.000 | 44.400 | 0.842 | 3.012 | bb036bb |
-| MCXE004-E1-73faa042 | MCXE004-E1 | RB_MCX_4h_MACD0_BUY | MCX | 4h | 2025-11-04 | 2026-11-03 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 48.000 | 44.000 | 4.000 | 42.900 | 0.148 | 1.267 | bb036bb |
-| MCXE004-E1-ec139b74 | MCXE004-E1 | RB_MCX_2h_MOMO_BUY | MCX | 2h | 2025-11-04 | 2026-11-03 | COMPLETED | REJECTED | 77.000 | 60.000 | 17.000 | 50.000 | 0.452 | 1.819 | bb036bb |
-| MCXE004-E1-3983eb45 | MCXE004-E1 | RB_MCX_2h_EMA921_BUY | MCX | 2h | 2025-11-04 | 2026-11-03 | COMPLETED | REJECTED | 133.000 | 79.000 | 54.000 | 36.400 | -0.041 | 0.932 | bb036bb |
-| MCXE004-E1-0b32052f | MCXE004-E1 | RB_MCX_1d_RETEST_BUY | MCX | 1d | 2025-11-04 | 2026-11-03 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 0.000 | 0.000 | 0.000 | — | — | — | bb036bb |
-| MCXE004-E1-185d8b41 | MCXE004-E1 | RB_MCX_1h_MACD_BUY | MCX | 1h | 2025-11-04 | 2026-11-03 | COMPLETED | REJECTED | 302.000 | 154.000 | 148.000 | 41.900 | 0.117 | 1.192 | bb036bb |
-| MCXE004-E1-d8a825da | MCXE004-E1 | RB_STK_3h_MACD0_SELL | NSE_FUT | 3h | 2025-10-23 | 2026-10-22 | COMPLETED | PAPER_ONLY | 296.000 | 242.000 | 54.000 | 51.900 | 0.292 | 1.726 | bb036bb |
-| MCXE004-E1-e4840260 | MCXE004-E1 | RB_STK_3h_EMA921_SELL | NSE_FUT | 3h | 2025-10-23 | 2026-10-22 | COMPLETED | PAPER_ONLY | 379.000 | 290.000 | 89.000 | 56.400 | 0.274 | 1.883 | bb036bb |
-| MCXE004-E1-ff8894c6 | MCXE004-E1 | RB_STK_1d_RSI80_BUY | NSE_FUT | 1d | 2025-10-23 | 2026-10-22 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 0.000 | 0.000 | 0.000 | — | — | — | bb036bb |
-| MCXE004-E1-e0f2c4b8 | MCXE004-E1 | BO_MCX_3h_BUY | MCX | 3h | 2025-11-04 | 2026-11-03 | COMPLETED | REJECTED | 243.000 | 102.000 | 141.000 | 40.000 | 0.092 | 1.153 | bb036bb |
-| MCXE004-E1-5310c3df | MCXE004-E1 | FH_MCX_4h_BUY | MCX | 4h | 2025-11-04 | 2026-11-03 | COMPLETED | REJECTED | 145.000 | 56.000 | 89.000 | 40.000 | 0.125 | 1.228 | bb036bb |
-| MCXE004-E1-9338e754 | MCXE004-E1 | BO_MCX_1d_BUY | MCX | 1d | 2025-11-04 | 2026-11-03 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 0.000 | 0.000 | 0.000 | — | — | — | bb036bb |
-| MCXE004-E1-073b27c3 | MCXE004-E1 | FH_STK_3h_SELL | NSE_FUT | 3h | 2025-10-23 | 2026-10-22 | COMPLETED | REJECTED | 586.000 | 380.000 | 206.000 | 51.800 | 0.250 | 1.851 | bb036bb |
-| MCXE004-E1-d38fed20 | MCXE004-E1 | SHADOW_MCX_DTC_GOLD_SILVER | MCX | 15m checkpoints 13:00/17:00 | 2025-11-04 | 2026-11-03 | COMPLETED | REJECTED | 158.000 | 158.000 | 0.000 | 50.000 | 0.297 | 2.176 | bb036bb |
-| M-cashstock.run-4299b6eb | M-cashstock.run | cash-mom-1.2 monthly relative-strength portfolio (LIVE, BUY-only) | NSE_EQ | monthly | 2025-11-06 | 2026-11-05 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| M-alerts.stocks-3dd148bd | M-alerts.stocks | S4 stock-futures OI breakout BUY / SELL (LIVE) | NSE_FUT | 1d | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| M-alerts.stocks-36005762 | M-alerts.stocks | S5 stock-futures bearish engulfing SELL (LIVE) | NSE_FUT | 1d | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| M-alerts.candle_setups-6ebb458e | M-alerts.candle_setups | candle setups: MCX daily hammer BUY / stock daily hanging-man SELL (LIVE) | MCX+NSE_FUT | 1d | 2025-11-04 | 2026-11-03 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| M-alerts.four_hour-bde8b3e3 | M-alerts.four_hour | stock 4h SELL (Bollinger squeeze / MACD-zero, LIVE) | NSE_FUT | 4h | 2025-10-23 | 2026-10-22 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| M-alerts.engine-92475fb2 | M-alerts.engine | index futures rules (NIFTY / BANKNIFTY daily, 3h; LIVE) | INDEX | 3h/1d | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| M-runner-b4c6f15c | M-runner | option selling engine (LIVE) | OPTIONS | intraday/positional | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| M-obuy.run-7e653516 | M-obuy.run | option buying engine (OFF since 4-Nov via config.OBUY_ENABLED) | OPTIONS | intraday | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| R-mcxe004-52760ca9 | R-mcxe004 | NSE cash intraday – any live strategy | NSE_EQ | 5m-60m | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| R-mcxe004-06ebb853 | R-mcxe004 | NSE futures BTST / STBT – any live strategy | NSE_FUT | overnight | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
-| R-mcxe004-1672253d | R-mcxe004 | NSE cash BTST – any live strategy | NSE_EQ | overnight | 2025-11-06 | 2026-11-05 | BLOCKED | BLOCKED | — | — | — | — | — | — | bb036bb |
+| MCXE004-E1-5459c02d | MCXE004-E1 | RB_MCX_4h_EMA1348_BUY | MCX | 4h | 2025-11-04 | 2026-10-21 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 35.000 | 24.000 | 11.000 | 44.400 | 0.842 | 3.012 | 147f71c |
+| MCXE004-E1-fa0b949a | MCXE004-E1 | RB_MCX_4h_MACD0_BUY | MCX | 4h | 2025-11-04 | 2026-10-21 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 48.000 | 44.000 | 4.000 | 42.900 | 0.148 | 1.267 | 147f71c |
+| MCXE004-E1-3ff1e184 | MCXE004-E1 | RB_MCX_2h_MOMO_BUY | MCX | 2h | 2025-11-04 | 2026-10-21 | COMPLETED | REJECTED | 77.000 | 60.000 | 17.000 | 50.000 | 0.452 | 1.819 | 147f71c |
+| MCXE004-E1-b4d67e62 | MCXE004-E1 | RB_MCX_2h_EMA921_BUY | MCX | 2h | 2025-11-04 | 2026-10-21 | COMPLETED | REJECTED | 133.000 | 79.000 | 54.000 | 36.400 | -0.041 | 0.932 | 147f71c |
+| MCXE004-E1-6d27725e | MCXE004-E1 | RB_MCX_1d_RETEST_BUY | MCX | 1d | 2025-11-04 | 2026-11-03 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 0.000 | 0.000 | 0.000 | — | — | — | 147f71c |
+| MCXE004-E1-0315c17f | MCXE004-E1 | RB_MCX_1h_MACD_BUY | MCX | 1h | 2025-11-04 | 2026-10-21 | COMPLETED | REJECTED | 302.000 | 154.000 | 148.000 | 41.900 | 0.117 | 1.192 | 147f71c |
+| MCXE004-E1-a855a0e4 | MCXE004-E1 | RB_STK_3h_MACD0_SELL | NSE_FUT | 3h | 2025-10-23 | 2026-10-22 | COMPLETED | PAPER_ONLY | 296.000 | 242.000 | 54.000 | 51.900 | 0.292 | 1.726 | 147f71c |
+| MCXE004-E1-e2f7a468 | MCXE004-E1 | RB_STK_3h_EMA921_SELL | NSE_FUT | 3h | 2025-10-23 | 2026-10-22 | COMPLETED | PAPER_ONLY | 379.000 | 290.000 | 89.000 | 56.400 | 0.274 | 1.883 | 147f71c |
+| MCXE004-E1-34bb2964 | MCXE004-E1 | RB_STK_1d_RSI80_BUY | NSE_FUT | 1d | 2025-10-23 | 2026-10-22 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 0.000 | 0.000 | 0.000 | — | — | — | 147f71c |
+| MCXE004-E1-ff685670 | MCXE004-E1 | BO_MCX_3h_BUY | MCX | 3h | 2025-11-04 | 2026-10-21 | COMPLETED | REJECTED | 243.000 | 102.000 | 141.000 | 40.000 | 0.092 | 1.153 | 147f71c |
+| MCXE004-E1-5696ff18 | MCXE004-E1 | FH_MCX_4h_BUY | MCX | 4h | 2025-11-04 | 2026-10-21 | COMPLETED | REJECTED | 145.000 | 56.000 | 89.000 | 40.000 | 0.125 | 1.228 | 147f71c |
+| MCXE004-E1-736e40ff | MCXE004-E1 | BO_MCX_1d_BUY | MCX | 1d | 2025-11-04 | 2026-11-03 | INSUFFICIENT_DATA | INSUFFICIENT_DATA | 0.000 | 0.000 | 0.000 | — | — | — | 147f71c |
+| MCXE004-E1-7b988eb1 | MCXE004-E1 | FH_STK_3h_SELL | NSE_FUT | 3h | 2025-10-23 | 2026-10-22 | COMPLETED | REJECTED | 586.000 | 380.000 | 206.000 | 51.800 | 0.250 | 1.851 | 147f71c |
+| MCXE004-E1-b12d4167 | MCXE004-E1 | SHADOW_MCX_DTC_GOLD_SILVER | MCX | 15m checkpoints 13:00/17:00 | 2025-11-04 | 2026-11-03 | COMPLETED | REJECTED | 158.000 | 158.000 | 0.000 | 50.000 | 0.297 | 2.176 | 147f71c |
+| M-cashstock.run-b0c7359e | M-cashstock.run | cash-mom-1.2 monthly relative-strength portfolio (LIVE, BUY-only) | NSE_EQ | monthly | 2025-11-06 | 2026-11-05 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| M-alerts.stocks-053d3a0a | M-alerts.stocks | S4 stock-futures OI breakout BUY / SELL (LIVE) | NSE_FUT | 1d | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| M-alerts.stocks-858da15d | M-alerts.stocks | S5 stock-futures bearish engulfing SELL (LIVE) | NSE_FUT | 1d | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| M-alerts.candle_setups-fc66cff4 | M-alerts.candle_setups | candle setups: MCX daily hammer BUY / stock daily hanging-man SELL (LIVE) | MCX+NSE_FUT | 1d | 2025-11-04 | 2026-11-03 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| M-alerts.four_hour-118340d0 | M-alerts.four_hour | stock 4h SELL (Bollinger squeeze / MACD-zero, LIVE) | NSE_FUT | 4h | 2025-10-23 | 2026-10-22 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| M-alerts.engine-8326d3b4 | M-alerts.engine | index futures rules (NIFTY / BANKNIFTY daily, 3h; LIVE) | INDEX | 3h/1d | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| M-runner-04a7c06c | M-runner | option selling engine (LIVE) | OPTIONS | intraday/positional | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| M-obuy.run-0f780536 | M-obuy.run | option buying engine (OFF since 4-Nov via config.OBUY_ENABLED) | OPTIONS | intraday | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| R-mcxe004-28e0b73b | R-mcxe004 | NSE cash intraday – any live strategy | NSE_EQ | 5m-60m | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| R-mcxe004-64f952f2 | R-mcxe004 | NSE futures BTST / STBT – any live strategy | NSE_FUT | overnight | 2025-11-07 | 2026-11-06 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
+| R-mcxe004-8c6c8892 | R-mcxe004 | NSE cash BTST – any live strategy | NSE_EQ | overnight | 2025-11-06 | 2026-11-05 | BLOCKED | BLOCKED | — | — | — | — | — | — | 147f71c |
 
 ## Conclusions / reasons (latest record per strategy)
 
