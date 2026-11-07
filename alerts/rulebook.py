@@ -71,6 +71,16 @@ RULES = {
                               "RSI momentum above 80"),
 }
 
+# 7-Nov-2026 (owner: "start H1.12L live", answered "Live Telegram alerts, labelled EXPERIMENTAL"): research MCXE-006 H1.12L,
+# research branch exp/strategy-program-001 research/mcxe006/TOP_CANDIDATES.md. NOT validated: OOS 79 trades, 41.8 % won,
+# +0.31R after 2x costs, 95 % CI [-0.17, +0.80] includes 0, profit concentrated in Aug-2026. No fixed target: 4-ATR trailing
+# stop on 1-hour closes (trail ATR = the signal candle's ATR), initial stop 2 ATR, time exit 240 candles. Every message says so.
+RULES["RB_MCX_1h_BO20X_BUY_EXP"] = dict(
+    _r("MCX", "1h", "BO", "N20 vol0 x", "none", "BUY", 2.0, 0.0, 240, 79, 42, 0.31,
+       "DEV +0.58 / VALID +0.40 / OOS +0.31 (1-year windows; OOS CI includes 0)", "EXP",
+       "🧪 EXPERIMENTAL – 1-hour 20-candle breakout (H1.12L)"), trail=4.0, experimental=True)
+
+
 
 # ── candles ──────────────────────────────────────────────────────────────────────────────────────────────────────────
 def blocks(h1, ex, hours):
@@ -160,9 +170,12 @@ def raw(f, fam, par):
     ema200, adx, volx, atr, rsi = (f[x].values for x in ("ema200", "adx", "volx", "atr", "rsi"))
     n = len(c)
     if fam == "BO":
-        N = int(par.split()[0][1:]); vx = float(par.split("vol")[1]) if "vol" in par else 0.0
+        N = int(par.split()[0][1:]); vx = float(par.split("vol")[1].split()[0]) if "vol" in par else 0.0
         hh, ll = hs.shift(1).rolling(N).max().values, ls.shift(1).rolling(N).min().values
         vb = volx >= vx if vx else np.ones(n, bool)
+        if "x" in par.split():                             # 7-Nov H1.12L: first close beyond the level only (research donchian)
+            pc, phh, pll = np.r_[np.nan, c[:-1]], np.r_[np.nan, hh[:-1]], np.r_[np.nan, ll[:-1]]
+            return (c > hh) & ~(pc > phh) & vb, (c < ll) & ~(pc < pll) & vb
         return (c > hh) & vb, (c < ll) & vb
     if fam == "PB":
         a, b = (int(x) for x in par.replace("EMA", "").split("/"))
@@ -290,6 +303,7 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
     st = FH.store(state)
     seen = state.setdefault("rulebook_seen", [])
     dtr = daily_trend_map(daily)
+    _trail_update(state, msgs, st, name, frames)
     feats = {}
     for rid, rule in RULES.items():
         if rule["mkt"] != mkt or rule["tf"] not in frames:
@@ -329,8 +343,8 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
                 q = None
         live = None if after_close else (float((q or {}).get("ltp") or 0) or None)
         plan = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf=rule["tf"], side=rule["side"], signal_time=sig["candle"],
-                               signal_close=sig["close"], atr=sig["atr"], stop_mult=rule["k"], target_r=rule["r"], tick=c.get("tick"),
-                               lot=c.get("lot"), mult=mult, max_sl_pct=rule.get("cap", 0.0), live=live,
+                               signal_close=sig["close"], atr=sig["atr"], stop_mult=rule["k"], target_r=None if rule.get("trail") else rule["r"],
+                               tick=c.get("tick"), lot=c.get("lot"), mult=mult, max_sl_pct=rule.get("cap", 0.0), live=live,
                                quote=None if after_close else q, now=now, require_live=not after_close and not shadow)
         if not plan["valid"]:
             FN.note(state, rid, "rejected", plan["reason"], key=fk, now=now); out[rid] = plan["reason"]; continue
@@ -344,34 +358,43 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
                    entry=plan["entry"], stop=plan["sl"], target=plan["target"], risk=plan["risk_unit"], tick=t, mult=mult,
                    opened=str(now), days=[str(now.date())], key=f"RB|{rid}|{name}|{last}", max_days=max_days,
                    tfl=TF_TXT[rule["tf"]], rule=rid, **({"shadow": True} if shadow else {}))
+        if rule.get("trail"):                                 # 7-Nov H1.12L: trailing stop on candle closes, no fixed target
+            rec.update(trail_atr=float(rule["trail"]), atr=float(sig["atr"]), best=float(plan["entry"]), trailed=False,
+                       trail_tf=rule["tf"], trail_from=last, trail_noted=float(plan["sl"]))
         st["open"].append(rec)
         if shadow:
             FN.note(state, rid, "shadow", key=fk, now=now); out[rid] = "shadow"
             print(f"[rulebook] {name} {rid} logged only: entry {plan['entry']} SL {plan['sl']} T {plan['target']}")
             continue
         rr = rule["r"]
-        msgs.append("\n".join([
-            f"{'🟢 BUY' if s_ > 0 else '🔴 SELL'}  {name} FUT  ·  {TF_TXT[rule['tf']].upper()} · {rule.get('label', rid)}",
-            "━━━━━━━━━━━━━━",
-            f"Entry   : {TP.fmt(plan['entry'], t)}  (no chase beyond {TP.fmt(plan['entry'] + s_ * 0.5 * sig['atr'], t)})",
-            f"SL      : {TP.fmt(plan['sl'], t)}",
-            f"T1      : {TP.fmt(t1, t)}  (1R)",
-            f"T2      : {TP.fmt(plan['target'], t)}  ({rr:g}R – exit here)",
-            f"R:R     : 1:{rr:g} · risk ₹{plan['risk_lot']:,.0f} per lot",
-            f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
-            f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")]))
-        msgs.append("\n".join([
-            f"📌 WHY – {name} {rule['side']} ({TF_TXT[rule['tf']]})",
-            f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b %H:%M} candle – {describe(rule)}",
-            f"• Numbers : close {TP.fmt(sig['close'], t)} · ATR {TP.fmt(sig['atr'], t)} · RSI {sig['rsi']:.0f} · ADX {sig['adx']:.0f}"
-            + (f" · volume {sig['vol_x']:.1f}×" if sig.get("vol_x") else ""),
-            f"• Exit    : SL or T2 · time exit after {rule['maxh']} candles (~{max_days} sessions) · exit 1 session before expiry",
-            f"• Strength: tier {rule.get('tier', 'B')} – {rule['n']} backtest trades, {rule['win']:.0f}% won, {rule['R']:+.2f}R avg after "
-            f"2× costs, periods {rule['periods']} (backtest, not a guarantee)",
-            WARN]))
+        if rule.get("trail"):
+            msgs.extend(_trail_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_close, max_days))
+        else:
+          msgs.append("\n".join([
+              f"{'🟢 BUY' if s_ > 0 else '🔴 SELL'}  {name} FUT  ·  {TF_TXT[rule['tf']].upper()} · {rule.get('label', rid)}",
+              "━━━━━━━━━━━━━━",
+              f"Entry   : {TP.fmt(plan['entry'], t)}  (no chase beyond {TP.fmt(plan['entry'] + s_ * 0.5 * sig['atr'], t)})",
+              f"SL      : {TP.fmt(plan['sl'], t)}",
+              f"T1      : {TP.fmt(t1, t)}  (1R)",
+              f"T2      : {TP.fmt(plan['target'], t)}  ({rr:g}R – exit here)",
+              f"R:R     : 1:{rr:g} · risk ₹{plan['risk_lot']:,.0f} per lot",
+              f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
+              f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")]))
+          msgs.append("\n".join([
+              f"📌 WHY – {name} {rule['side']} ({TF_TXT[rule['tf']]})",
+              f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b %H:%M} candle – {describe(rule)}",
+              f"• Numbers : close {TP.fmt(sig['close'], t)} · ATR {TP.fmt(sig['atr'], t)} · RSI {sig['rsi']:.0f} · ADX {sig['adx']:.0f}"
+              + (f" · volume {sig['vol_x']:.1f}×" if sig.get("vol_x") else ""),
+              f"• Exit    : SL or T2 · time exit after {rule['maxh']} candles (~{max_days} sessions) · exit 1 session before expiry",
+              f"• Strength: tier {rule.get('tier', 'B')} – {rule['n']} backtest trades, {rule['win']:.0f}% won, {rule['R']:+.2f}R avg after "
+              f"2× costs, periods {rule['periods']} (backtest, not a guarantee)",
+              WARN]))
         RP.add(state, key=rec["key"], mark_key=str(c["token"]), seg="MCX" if ex == "MCX" else "NSE", cat="FUTURES", name=name,
                symbol=c["symbol"], type=f"{TF_TXT[rule['tf']].capitalize()} {rule['fam']}", side=rule["side"], entry=plan["entry"],
                sl=plan["sl"], target=plan["target"], tick=t, lot=c.get("lot"), mult=mult, time=str(now))
+        if rule.get("experimental") and state.get("ledger"):   # own category: strategies.conflict and the scorecard only read cat == FUTURES
+            state["ledger"][-1].update(type=f"{TF_TXT[rule['tf']].capitalize()} BO (EXPERIMENTAL)", cat="FUTURES (EXPERIMENTAL)",
+                                       experimental=True)
         state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
         FN.note(state, rid, "sent", key=fk, now=now)
         out[rid] = "SENT"
@@ -473,3 +496,55 @@ def _early_warning(state, msgs, rid, rule, f, name, last, now):
     msgs.append(f"👀 EARLY WARNING (info only – NOT a trade) · {name} daily: RSI({n_}) {r.iloc[-1]:.0f} after touching "
                 f"{L if s_ > 0 else 100 - L}, ADX {float(f['adx'].iloc[-1]):.0f}. A {'BUY' if s_ > 0 else 'SELL'} setup needs a "
                 f"{'bullish' if s_ > 0 else 'bearish'} reversal candle next; the call (with trigger/SL/target) follows only then.")
+
+
+# ─────────────── 7-Nov-2026: trailing-stop rules (H1.12L, EXPERIMENTAL) ───────────────
+def _trail_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_close, max_days):
+    """Call + WHY for a rule with a trailing stop and no fixed target. Clearly labelled experimental / unvalidated."""
+    tr = rule["trail"]
+    call = "\n".join([
+        f"{'🟢 BUY' if s_ > 0 else '🔴 SELL'}  {name} FUT  ·  {TF_TXT[rule['tf']].upper()} · {rule.get('label', rid)}",
+        "━━━━━━━━━━━━━━",
+        "🧪 EXPERIMENTAL – NOT VALIDATED. Research candidate only; trade small or just observe.",
+        f"Entry   : {TP.fmt(plan['entry'], t)}  (no chase beyond {TP.fmt(plan['entry'] + s_ * 0.5 * sig['atr'], t)})",
+        f"SL      : {TP.fmt(plan['sl'], t)}  ({rule['k']:g} ATR) – then trails {tr:g} ATR behind the best {TF_TXT[rule['tf']]} close",
+        "Target  : none – exit on the trailing stop (SL UPDATE messages follow)",
+        f"Risk    : ₹{plan['risk_lot']:,.0f} per lot",
+        f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  MCX",
+        f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")])
+    why = "\n".join([
+        f"📌 WHY – {name} {rule['side']} ({TF_TXT[rule['tf']]}) · EXPERIMENTAL",
+        f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b %H:%M} candle – first close above the 20-candle high",
+        f"• Numbers : close {TP.fmt(sig['close'], t)} · ATR {TP.fmt(sig['atr'], t)} · RSI {sig['rsi']:.0f} · ADX {sig['adx']:.0f}",
+        f"• Exit    : trailing stop ({tr:g} ATR on {TP.fmt(sig['atr'], t)} ATR) · time exit after {rule['maxh']} candles (~{max_days} sessions)"
+        " · exit 1 session before expiry",
+        f"• Evidence: research only – final test {rule['n']} trades, {rule['win']:.0f}% won, {rule['R']:+.2f}R avg after 2× costs, "
+        f"{rule['periods']}. Wins only ~40 % of the time; profit depends on a few large trends. NOT validated.",
+        WARN])
+    return [call, why]
+
+
+def _trail_update(state, msgs, st, name, frames):
+    """On each completed candle: raise (BUY) / lower (SELL) the stop of open trailing-rule calls of this instrument to
+    best close -/+ trail_atr x ATR (ATR of the signal candle, as in the research). Never loosens a stop. A message is sent
+    when the stop has moved by >= 0.5 ATR since the last message (non-shadow calls only)."""
+    for r in st.get("open", []):
+        if r.get("name") != name or not r.get("trail_atr") or r.get("pending"):
+            continue
+        fr = frames.get(r.get("trail_tf"))
+        if fr is None or not len(fr):
+            continue
+        new = fr[fr["time"] > pd.Timestamp(r["trail_from"])]
+        if not len(new):
+            continue
+        s_ = 1 if r["side"] == "BUY" else -1
+        closes = new["close"].astype(float)
+        r["best"] = max(r["best"], float(closes.max())) if s_ > 0 else min(r["best"], float(closes.min()))
+        ns = r["best"] - s_ * r["trail_atr"] * r["atr"]
+        if s_ * (ns - r["stop"]) > 0:
+            r["stop"] = round(ns, 2); r["trailed"] = True
+            if not r.get("shadow") and s_ * (r["stop"] - r.get("trail_noted", r["stop"])) >= 0.5 * r["atr"]:
+                msgs.append(f"🔁 SL UPDATE – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) · EXPERIMENTAL: trailing stop now "
+                            f"{TP.fmt(r['stop'], r.get('tick'))} (best close {TP.fmt(r['best'], r.get('tick'))})")
+                r["trail_noted"] = r["stop"]
+        r["trail_from"] = str(new["time"].iloc[-1])
