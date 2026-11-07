@@ -50,3 +50,9 @@
 - The one robust-looking result (MCX 1h BUY score) duplicates H1.12L. It merits forward validation only **alongside H1.12L**, as a variant, once fresh MCX data arrives. It is not a separate candidate.
 
 **Reproduce:** `python research/mcxe009/weighted.py && python research/mcxe009/controls9.py`
+
+## Owner decision, 7-Nov: H1.12L as EXPERIMENTAL live alerts
+- Implemented on branch `feat/h112l-experimental` (commit d7267bd) and opened as **PR #50** for owner review. **Not merged**, so production is unchanged.
+- The rule is labelled 🧪 EXPERIMENTAL / NOT VALIDATED in every message.
+- S4 files are untouched. Existing rules and breakout signals are verified identical to bc3153e6.
+- Experimental calls use their own ledger category, so they never block existing calls and stay out of the scorecard.
