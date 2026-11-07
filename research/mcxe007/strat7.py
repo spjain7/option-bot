@@ -137,4 +137,17 @@ def failed(f, side, n=20, within=3, filt=(), extra=None):
     return dict(sig=x, level=L.values, warm=n + 15, entry="open")
 
 
-REG = {"dc": dc, "compress_brk": compress_brk, "retest": retest, "failed": failed}
+def gap_brk(f, side, n=20, gap=0.25, filt=(), extra=None):
+    """breakaway gap (MCXE-008 N3): the session opens beyond the prior n-bar extreme by >= gap x ATR and closes beyond
+    its own open (the gap holds) -> entry next open."""
+    o, h, l, c, v = _px(f)
+    a = f.atr.shift(1)
+    if side > 0:
+        lvl = h.shift(1).rolling(n).max(); x = (o >= lvl + gap * a) & (c > o)
+    else:
+        lvl = l.shift(1).rolling(n).min(); x = (o <= lvl - gap * a) & (c < o)
+    sig = x.fillna(False).values.copy() & filters(f, side, filt, extra)
+    return dict(sig=sig, level=lvl.values, warm=n + 15, entry="open")
+
+
+REG = {"gap_brk": gap_brk, "dc": dc, "compress_brk": compress_brk, "retest": retest, "failed": failed}
