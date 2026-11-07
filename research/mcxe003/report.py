@@ -53,6 +53,17 @@ def main():
         if r:
             res[tag] = dict(label=lab, **r)
             print(f"\n## {lab} [{tag}]\n" + json.dumps(r, indent=1, default=str))
+    # Addendum D: corrected stage 2 + validation outputs
+    for k, fn in (("stage2_daily_v1_superseded", "stage2_daily.json"), ("stage2_daily_v2", "stage2_daily_v2.json"),
+                  ("data_audit_nse_fut_pit", "data_audit_nse_fut_pit.json"), ("validation_misc", "validation_misc.json")):
+        if (OUT / fn).exists():
+            res[k] = json.loads((OUT / fn).read_text())
+    for k, fn in (("validation_coverage", "validation_coverage.csv"), ("validation_reproduce", "validation_reproduce.csv")):
+        if (OUT / fn).exists():
+            res[k] = pd.read_csv(OUT / fn).to_dict("records")
+    res["event_counting_note"] = ("'events' = detector rows; the same bar / side / pattern found by several swing methods is one "
+                                  "row per method. Unique pattern events and unique signal bars are in validation_coverage. "
+                                  "No event count is a trade count; trades exist only in stage 2.")
     (OUT / "summary.json").write_text(json.dumps(res, indent=1, default=str))
 
 

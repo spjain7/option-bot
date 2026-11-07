@@ -3,7 +3,14 @@
 Research only. No production, Telegram, broker or risk setting was touched. Backtests are not promises of future profit.
 
 Related documents: [RESEARCH_AUDIT.md](RESEARCH_AUDIT.md) · [DATA_AUDIT.md](DATA_AUDIT.md) ·
-[PREREGISTRATION.md](PREREGISTRATION.md) (written before any result; addenda A–C record every later methodology change).
+[PREREGISTRATION.md](PREREGISTRATION.md) (written before any result; addenda A–D record every later methodology change).
+
+> **Validated 7-Nov-2026 – see [INDEPENDENT_VALIDATION.md](INDEPENDENT_VALIDATION.md).**
+> - Stage 2 was recomputed with the promised day-block bootstrap, a fixed control set and raw-price MCX costs; all
+>   verdicts are unchanged.
+> - Several general statements below were overstated; they are corrected in place and marked **[corrected]**.
+> - All quoted numbers reproduce from the committed files (29/29).
+> - The question "does a pattern improve an existing strategy?" was never tested. It is **untested**, not failed.
 
 ## 1. What was done
 1. **Audit** of all earlier research (60+ studies) and of every dataset.
@@ -28,15 +35,24 @@ Related documents: [RESEARCH_AUDIT.md](RESEARCH_AUDIT.md) · [DATA_AUDIT.md](DAT
 
 ## 2. Headline result
 **No new pattern strategy passed, in any market or horizon. Nothing is recommended for shadow or production.**
-- 18.3 million causal pattern events were tested: 9.9 M NSE cash intraday, 3.2 M MCX intraday, 3.1 M NSE futures
-  intraday, and 2.1 M on daily bars.
+- **[corrected]** 18.35 M detector rows were tested. Removing the copies of the same bar/pattern found by several swing
+  methods leaves **15.36 M unique pattern events** = **5.22 M unique signal bars**. None of these are trades; trades
+  exist only in stage 2.
 - **Intraday (3 markets):** 0 of 37,073 testable cells passed stage 1. No family survives the selection-aware
   max-statistic.
 - **Daily (overnight / positional):** 2 single-instrument cells passed stage 1. Both failed the pre-registered stage 2.
-- The number of "good-looking" cells is what chance alone would produce: 16–18 % of cells with t ≥ 1 (chance 15.9 %).
-  Earlier "winners" were this noise.
+- **[corrected]** On MCX intraday the share of "good-looking" cells is close to chance: 17 % with t ≥ 1 vs 15.9 %.
+  Cells are correlated, so this is descriptive, not a test.
+- On NSE futures (end-of-day horizon 32.5 %) and NSE cash (BTST trendline breaks, max-stat p 0.005) there is **small
+  real information that is below costs**.
 
-## 3. Coverage matrix (every market × horizon cell)
+## 3. Coverage matrix (every market × horizon cell was visited; coverage is **partial** – [corrected], see validation §C–D)
+Not tested in MCXE-003:
+- gap-up / gap-down / gap-fill; triple tops; cup and handle;
+- RSI / MACD filters; OI, breadth and sector context;
+- MCX timeframes below 15 minutes; NSE futures intraday below 1 hour;
+- 10 / 20-day positional horizons (descriptive only).
+Intraday NSE universes are today's lists (survivorship).
 DEV/VALID/OOS = development / validation / untouched out-of-sample periods. "Families" = the 10 families A–J
 (intraday: all 10; daily: J excluded).
 
@@ -52,19 +68,19 @@ family-level tests, which pool instruments.
 ## 4. Why the patterns fail (measured, not assumed)
 | Question | Evidence | Answer |
 |---|---|---|
-| Is there any information? | Share of cells with t ≥ 1 is 15.6–18.1 % vs 15.9 % by chance; t ≤ −2 is 2.0–2.3 % vs 2.3 %. Excess over random time-matched entries: median \|0.03–0.06\| ATR at 6 bars | **Essentially none.** Pattern events are statistically indistinguishable from random entries at the same time of day. |
-| Are costs destroying a real edge? | Round-trip cost (ATR of the signal timeframe): MCX 0.30 (15m) / 0.20 (30m) / 0.14 (60m); NSE cash 0.31 / 0.16; NSE futures 1h 0.21. Typical gross move after a pattern: 0.04–0.06 ATR | Costs are **3–6× larger** than any gross move. Where real information exists (NSE futures 1h strongest families, NSE cash BTST trendline breaks), it is smaller than costs. The futures 1h families beat random entries in 98 % of executions out of sample, but **0 %** are profitable after costs. |
+| Is there any information? | Share of cells with t ≥ 1 is 15.6–18.1 % vs 15.9 % by chance; t ≤ −2 is 2.0–2.3 % vs 2.3 %. Excess over random time-matched entries: median \|0.03–0.06\| ATR at 6 bars | **[corrected]** MCX intraday: none detectable. NSE futures 1h and NSE cash: small real information in several families (+0.02 to +0.10 ATR), below costs. |
+| Are costs destroying a real edge? | Round-trip cost (ATR of the signal timeframe): MCX 0.30 (15m) / 0.20 (30m) / 0.14 (60m); NSE cash 0.31 / 0.16; NSE futures 1h 0.21. Typical gross move after a pattern: 0.04–0.06 ATR | **[corrected]** At 6 bars the **median** family's cost is 4–8× its gross move (MCX 4.2×, NSE futures 7.5×, NSE cash 6.4×). 6 % of MCX families clear cost before selection, very few clear 2×. At end of day MCX's median is 2.3×. On daily horizons cost is small and lack of information is the binding problem. The NSE futures 1h strongest families beat matched controls out of sample (48 correlated executions on 4 families), but none is profitable after costs. |
 | Are entries too late? | Information from the signal close vs from the next open (x_fd − x_fe): median −0.02 … +0.02 ATR | **No.** Nothing is lost between the signal and the executable entry. |
-| Are stops / exits unsuitable? | 12-bar MFE vs MAE medians are symmetric: MCX +1.36 / −1.32 ATR, NSE cash +0.87 / −0.92, futures 1h +0.64 / −0.64, daily +1.3 / −1.3. The diagnostic run of 12 entry × stop × exit combinations on the strongest families gives out-of-sample mean ≈ 0 (MCX +0.01R) | **No.** With symmetric excursions, no stop/target design can create expectancy. |
-| Wrong timeframe? | Gross excess grows only slightly with timeframe (MCX \|x\| 0.04 → 0.05 → 0.06 ATR at 15 → 30 → 60 min) while cost falls from 0.30 to 0.14 ATR. Daily bars: cost 0.02–0.12 ATR, information still ≈ 0 | Higher timeframes reduce the cost problem but do not add information. |
-| Wrong context? | Pooled over families, the excess is +0.04 to +0.07 ATR higher when the trade agrees with: the day-trend condition (MCX +0.065 vs +0.007; NSE cash +0.051 vs +0.002; futures +0.042 vs +0.005), the EMA stack, momentum and VWAP side | **Context matters more than the pattern.** Trend / day-trend agreement is the only consistent signal, the same mechanism as the existing Gold/Silver day-trend shadow strategy. It is still below costs when attached to a pattern. |
+| Are stops / exits unsuitable? | 12-bar MFE vs MAE medians are symmetric: MCX +1.36 / −1.32 ATR, NSE cash +0.87 / −0.92, futures 1h +0.64 / −0.64, daily +1.3 / −1.3. The diagnostic run of 12 entry × stop × exit combinations on the strongest families gives out-of-sample mean ≈ 0 (MCX +0.01R) | **[corrected]** Not the cause for the tested designs. With near-zero drift after the event, exit rules cannot create expectancy in theory (optional stopping). Excursion tails are symmetric too, and the 12 tested designs confirm it. Other exit designs were not tested. |
+| Wrong timeframe? | Gross excess grows only slightly with timeframe (MCX \|x\| 0.04 → 0.05 → 0.06 ATR at 15 → 30 → 60 min) while cost falls from 0.30 to 0.14 ATR. Daily bars: cost 0.015–0.12 ATR (MCX recomputed at raw prices), information still ≈ 0 | Higher timeframes reduce the cost problem but do not add information. |
+| Wrong context? | Pooled over families, the excess is +0.04 to +0.07 ATR higher when the trade agrees with: the day-trend condition (MCX +0.065 vs +0.007; NSE cash +0.051 vs +0.002; futures +0.042 vs +0.005), the EMA stack, momentum and VWAP side | **Context matters more than the pattern** (supported but uncertain: consistent direction in all 3 markets; the difference was not formally tested). Trend / day-trend agreement is the only consistent signal, the same mechanism as the existing Gold/Silver day-trend shadow strategy. Whether patterns improve that strategy is **untested** (validation §E). |
 | Commodity / side specific? | MCX: no commodity has any significant cell; share of cells positive in both DEV and VALID is 22–34 % per commodity (≈ chance); BUY and SELL alike | **No hidden pocket.** |
 | Earlier tests contaminated? | Two methodology faults were found and fixed **during** this programme, before any stage-2 decision (Addenda B and C): averaging daily means (changes the estimand), and a quarter-level control that leaked the regime's later drift. Earlier studies picked best variants from tens of thousands without a family-level max-statistic | Earlier apparent winners were selection noise. CRSB was already shown to be (adjusted p 0.34). |
 
 ## 5. Stage-2 results (pre-registered, survivors only)
 | Survivor | Frozen choice (DEV+VALID, 2× cost) | DEV / VALID net R | **OOS net R 1× (2×)** | OOS control | OOS 95 % CI | Verdict |
 |---|---|---|---|---|---|---|
-| MCX COPPER 20-day breakout BUY, 5-session hold | next open · 1.5 ATR stop · 12-session time exit | +0.34 (123) / +0.64 (11) | **+0.25 (+0.24), 18 trades** | +0.13 | −0.37 … +1.05 | **Rejected:** CI includes 0, only 18 trades. It is a variant of the already-live MCX daily breakout BUY family, so it adds no new strategy. |
+| MCX COPPER 20-day breakout BUY, 5-session hold | next open · 1.5 ATR stop · 12-session time exit | +0.34 (123) / +0.64 (11) | **+0.25 (+0.24), 18 trades, 18 dates** | +0.11 (v2 fixed controls) | **[corrected]** day-block + t: −0.55 … +1.09 (v1 IID: −0.37 … +1.05) | **Rejected:** CI includes 0, only 18 trades. It is a variant of the already-live MCX daily breakout BUY family, so it adds no new strategy. |
 | NSE_FUT ZEEL NR7 breakdown SELL, 5-session hold | stop at trigger · pattern stop · time exit | +0.69 (52) / −0.14 (17) | **no OOS trades** (ZEEL left F&O) | — | — | **Rejected:** VALID negative, untestable OOS; 1 of 1,296 cells (false-discovery level). |
 
 ## 6. Diagnostic execution test (labelled, cannot produce a candidate)
@@ -74,6 +90,8 @@ For the 6 strongest MCX and 4 strongest NSE-futures intraday families (ranked by
   results are > 0 and the mean is +0.01R. This is chance.
 - **NSE futures 1h:** OOS is better than matched controls in 98 % of executions (+0.05 to +0.10R). Every one is still
   negative after costs (−0.08 … −0.17R).
+- **[corrected]** These are 48 correlated executions on the same 4 families' trades, not independent results.
+  The diagnostic controls were drawn with replacement.
 - Files: `results/stage2_diag_mcx.csv`, `results/stage2_diag_nse_fut.csv`.
 
 ## 7. What this means for the programme

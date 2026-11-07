@@ -1,0 +1,67 @@
+{
+ "swing_duplicates": {
+  "MCX": {
+   "swing_family_rows": 2392574,
+   "unique": 1208851,
+   "share_rows_duplicated": 0.495,
+   "mean_copies": 1.98
+  },
+  "NSE_FUT": {
+   "swing_family_rows": 1726227,
+   "unique": 1312622,
+   "share_rows_duplicated": 0.24,
+   "mean_copies": 1.32
+  }
+ },
+ "mcx_daily_cost": [
+  {
+   "inst": "ALUMINIUM",
+   "cost_atr_v1": 0.0791,
+   "cost_atr_raw": 0.0888,
+   "worst_ratio": 1.2604,
+   "best_ratio": 0.8268
+  },
+  {
+   "inst": "COPPER",
+   "cost_atr_v1": 0.0249,
+   "cost_atr_raw": 0.0328,
+   "worst_ratio": 1.5667,
+   "best_ratio": 1.0
+  },
+  {
+   "inst": "CRUDEOIL",
+   "cost_atr_v1": 0.0208,
+   "cost_atr_raw": 0.0399,
+   "worst_ratio": 4.2609,
+   "best_ratio": 0.7444
+  },
+  {
+   "inst": "GOLD",
+   "cost_atr_v1": 0.0241,
+   "cost_atr_raw": 0.0268,
+   "worst_ratio": 1.3871,
+   "best_ratio": 1.0
+  },
+  {
+   "inst": "NATURALGAS",
+   "cost_atr_v1": 0.0141,
+   "cost_atr_raw": 0.0385,
+   "worst_ratio": 5.3407,
+   "best_ratio": 0.6097
+  },
+  {
+   "inst": "SILVER",
+   "cost_atr_v1": 0.0117,
+   "cost_atr_raw": 0.0146,
+   "worst_ratio": 2.0078,
+   "best_ratio": 1.0
+  },
+  {
+   "inst": "ZINC",
+   "cost_atr_v1": 0.0678,
+   "cost_atr_raw": 0.0591,
+   "worst_ratio": 1.0,
+   "best_ratio": 0.7444
+  }
+ ]
+}

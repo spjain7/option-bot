@@ -411,5 +411,1696 @@
     "x_abs": 0.029
    }
   }
- }
+ },
+ "stage2_daily_v1_superseded": {
+  "MCX COPPER NBAR_BRK BUY": {
+   "frozen_choice": {
+    "entry": "next open",
+    "stop": "atr",
+    "exit": "time",
+    "DV_net_R_2x": 0.347,
+    "DV_n": 134
+   },
+   "OOS": [
+    {
+     "cost": 1.0,
+     "n": 18,
+     "R": 0.253,
+     "n_ctl": 22,
+     "R_ctl": 0.126
+    },
+    {
+     "cost": 2.0,
+     "n": 18,
+     "R": 0.235,
+     "n_ctl": 22,
+     "R_ctl": -0.091
+    }
+   ],
+   "OOS_ci95_1x": [
+    -0.372,
+    1.05
+   ],
+   "all_periods": [
+    {
+     "period": "DEV",
+     "n": 123,
+     "R": 0.341,
+     "R_ctl": 0.092
+    },
+    {
+     "period": "VALID",
+     "n": 11,
+     "R": 0.636,
+     "R_ctl": 0.081
+    },
+    {
+     "period": "OOS",
+     "n": 18,
+     "R": 0.253,
+     "R_ctl": 0.126
+    },
+    {
+     "period": "DV",
+     "n": 134,
+     "R": 0.365,
+     "R_ctl": 0.091
+    }
+   ]
+  },
+  "NSE_FUT ZEEL NR7_BRK SELL": {
+   "frozen_choice": {
+    "entry": "stop at trigger",
+    "stop": "inv",
+    "exit": "time",
+    "DV_net_R_2x": 0.444,
+    "DV_n": 69
+   },
+   "OOS": [
+    {
+     "cost": 1.0,
+     "n": 0,
+     "R": NaN,
+     "n_ctl": 0,
+     "R_ctl": NaN
+    },
+    {
+     "cost": 2.0,
+     "n": 0,
+     "R": NaN,
+     "n_ctl": 0,
+     "R_ctl": NaN
+    }
+   ],
+   "OOS_ci95_1x": [
+    NaN,
+    NaN
+   ],
+   "all_periods": [
+    {
+     "period": "DEV",
+     "n": 52,
+     "R": 0.687,
+     "R_ctl": 0.283
+    },
+    {
+     "period": "VALID",
+     "n": 17,
+     "R": -0.14,
+     "R_ctl": 0.246
+    },
+    {
+     "period": "OOS",
+     "n": 0,
+     "R": NaN,
+     "R_ctl": NaN
+    },
+    {
+     "period": "DV",
+     "n": 69,
+     "R": 0.483,
+     "R_ctl": 0.275
+    }
+   ]
+  }
+ },
+ "stage2_daily_v2": {
+  "MCX COPPER NBAR_BRK BUY": {
+   "events": {
+    "raw": 430,
+    "eligible_days": 411,
+    "unique_signal_bars": 411
+   },
+   "control": {
+    "n": 411,
+    "reused_dates": 0,
+    "pool_size": 4793
+   },
+   "frozen_choice": {
+    "entry": "next open",
+    "stop": "atr",
+    "exit": "time",
+    "DV_net_R_2x": 0.335,
+    "DV_n": 134,
+    "same_as_v1": true
+   },
+   "skipped_events": {
+    "1x": {
+     "no_fill_or_overlap": 259
+    },
+    "2x": {
+     "no_fill_or_overlap": 259
+    }
+   },
+   "by_period": {
+    "DEV": {
+     "1x": {
+      "event": {
+       "n": 123,
+       "n_dates": 123,
+       "mean": 0.3346,
+       "L": 5,
+       "ci95": [
+        0.084,
+        0.605
+       ],
+       "se_boot": 0.1322,
+       "n_eff": 123.0,
+       "se_cluster": 0.1497,
+       "t_ci95": [
+        0.038,
+        0.631
+       ],
+       "p_one_sided_t": 0.0136,
+       "ci_by_L": {
+        "1": [
+         0.053,
+         0.638
+        ],
+        "2": [
+         0.06,
+         0.64
+        ],
+        "3": [
+         0.067,
+         0.621
+        ],
+        "5": [
+         0.083,
+         0.602
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        0.038,
+        0.64
+       ]
+      },
+      "control": {
+       "n": 219,
+       "n_dates": 219,
+       "mean": 0.1444,
+       "L": 6,
+       "ci95": [
+        -0.041,
+        0.346
+       ],
+       "se_boot": 0.0981,
+       "n_eff": 158.1,
+       "se_cluster": 0.09,
+       "t_ci95": [
+        -0.033,
+        0.322
+       ],
+       "p_one_sided_t": 0.0553,
+       "ci_by_L": {
+        "1": [
+         -0.028,
+         0.323
+        ],
+        "2": [
+         -0.031,
+         0.328
+        ],
+        "3": [
+         -0.031,
+         0.338
+        ],
+        "5": [
+         -0.037,
+         0.341
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        -0.041,
+        0.346
+       ]
+      },
+      "event_minus_control": 0.19,
+      "iid_trade_bootstrap_v1_method": [
+       0.053,
+       0.637
+      ]
+     },
+     "2x": {
+      "event": {
+       "n": 123,
+       "n_dates": 123,
+       "mean": 0.3105,
+       "L": 5,
+       "ci95": [
+        0.06,
+        0.581
+       ],
+       "se_boot": 0.1322,
+       "n_eff": 123.0,
+       "se_cluster": 0.1496,
+       "t_ci95": [
+        0.014,
+        0.607
+       ],
+       "p_one_sided_t": 0.02,
+       "ci_by_L": {
+        "1": [
+         0.03,
+         0.614
+        ],
+        "2": [
+         0.036,
+         0.616
+        ],
+        "3": [
+         0.042,
+         0.597
+        ],
+        "5": [
+         0.059,
+         0.578
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        0.014,
+        0.616
+       ]
+      },
+      "control": {
+       "n": 219,
+       "n_dates": 219,
+       "mean": 0.1212,
+       "L": 6,
+       "ci95": [
+        -0.064,
+        0.322
+       ],
+       "se_boot": 0.0979,
+       "n_eff": 158.5,
+       "se_cluster": 0.0899,
+       "t_ci95": [
+        -0.056,
+        0.299
+       ],
+       "p_one_sided_t": 0.0896,
+       "ci_by_L": {
+        "1": [
+         -0.051,
+         0.3
+        ],
+        "2": [
+         -0.055,
+         0.305
+        ],
+        "3": [
+         -0.054,
+         0.314
+        ],
+        "5": [
+         -0.06,
+         0.317
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        -0.064,
+        0.322
+       ]
+      },
+      "event_minus_control": 0.189,
+      "iid_trade_bootstrap_v1_method": [
+       0.029,
+       0.613
+      ]
+     }
+    },
+    "VALID": {
+     "1x": {
+      "event": {
+       "n": 11,
+       "n_dates": 11,
+       "mean": 0.6352,
+       "L": 2,
+       "ci95": [
+        -0.059,
+        1.46
+       ],
+       "se_boot": 0.395,
+       "n_eff": 11.0,
+       "se_cluster": 0.481,
+       "t_ci95": [
+        -0.437,
+        1.707
+       ],
+       "p_one_sided_t": 0.108,
+       "ci_by_L": {
+        "1": [
+         -0.241,
+         1.566
+        ],
+        "2": [
+         -0.054,
+         1.444
+        ],
+        "3": [
+         -0.084,
+         1.456
+        ],
+        "5": [
+         0.005,
+         1.265
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.437,
+        1.707
+       ]
+      },
+      "control": {
+       "n": 22,
+       "n_dates": 22,
+       "mean": -0.394,
+       "L": 3,
+       "ci95": [
+        -0.671,
+        -0.029
+       ],
+       "se_boot": 0.1644,
+       "n_eff": 22.0,
+       "se_cluster": 0.184,
+       "t_ci95": [
+        -0.777,
+        -0.011
+       ],
+       "p_one_sided_t": 0.9779,
+       "ci_by_L": {
+        "1": [
+         -0.715,
+         -0.016
+        ],
+        "2": [
+         -0.703,
+         -0.04
+        ],
+        "3": [
+         -0.673,
+         -0.033
+        ],
+        "5": [
+         -0.647,
+         -0.1
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.777,
+        -0.011
+       ]
+      },
+      "event_minus_control": 1.029,
+      "iid_trade_bootstrap_v1_method": [
+       -0.207,
+       1.53
+      ]
+     },
+     "2x": {
+      "event": {
+       "n": 11,
+       "n_dates": 11,
+       "mean": 0.6148,
+       "L": 2,
+       "ci95": [
+        -0.079,
+        1.437
+       ],
+       "se_boot": 0.3949,
+       "n_eff": 11.0,
+       "se_cluster": 0.481,
+       "t_ci95": [
+        -0.457,
+        1.686
+       ],
+       "p_one_sided_t": 0.115,
+       "ci_by_L": {
+        "1": [
+         -0.261,
+         1.545
+        ],
+        "2": [
+         -0.078,
+         1.423
+        ],
+        "3": [
+         -0.105,
+         1.434
+        ],
+        "5": [
+         -0.016,
+         1.247
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.457,
+        1.686
+       ]
+      },
+      "control": {
+       "n": 22,
+       "n_dates": 22,
+       "mean": -0.4123,
+       "L": 3,
+       "ci95": [
+        -0.69,
+        -0.046
+       ],
+       "se_boot": 0.1646,
+       "n_eff": 22.0,
+       "se_cluster": 0.1841,
+       "t_ci95": [
+        -0.795,
+        -0.029
+       ],
+       "p_one_sided_t": 0.9819,
+       "ci_by_L": {
+        "1": [
+         -0.733,
+         -0.033
+        ],
+        "2": [
+         -0.721,
+         -0.058
+        ],
+        "3": [
+         -0.691,
+         -0.053
+        ],
+        "5": [
+         -0.665,
+         -0.116
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.795,
+        -0.029
+       ]
+      },
+      "event_minus_control": 1.027,
+      "iid_trade_bootstrap_v1_method": [
+       -0.229,
+       1.509
+      ]
+     }
+    },
+    "OOS": {
+     "1x": {
+      "event": {
+       "n": 18,
+       "n_dates": 18,
+       "mean": 0.2524,
+       "L": 3,
+       "ci95": [
+        -0.437,
+        1.064
+       ],
+       "se_boot": 0.3867,
+       "n_eff": 18.0,
+       "se_cluster": 0.3822,
+       "t_ci95": [
+        -0.554,
+        1.059
+       ],
+       "p_one_sided_t": 0.259,
+       "ci_by_L": {
+        "1": [
+         -0.389,
+         1.063
+        ],
+        "2": [
+         -0.399,
+         1.09
+        ],
+        "3": [
+         -0.426,
+         1.074
+        ],
+        "5": [
+         -0.376,
+         1.035
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.554,
+        1.09
+       ]
+      },
+      "control": {
+       "n": 24,
+       "n_dates": 24,
+       "mean": 0.1127,
+       "L": 3,
+       "ci95": [
+        -0.327,
+        0.67
+       ],
+       "se_boot": 0.2622,
+       "n_eff": 24.0,
+       "se_cluster": 0.2723,
+       "t_ci95": [
+        -0.451,
+        0.676
+       ],
+       "p_one_sided_t": 0.3415,
+       "ci_by_L": {
+        "1": [
+         -0.339,
+         0.681
+        ],
+        "2": [
+         -0.355,
+         0.722
+        ],
+        "3": [
+         -0.34,
+         0.684
+        ],
+        "5": [
+         -0.271,
+         0.578
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.451,
+        0.722
+       ]
+      },
+      "event_minus_control": 0.14,
+      "iid_trade_bootstrap_v1_method": [
+       -0.373,
+       1.049
+      ]
+     },
+     "2x": {
+      "event": {
+       "n": 18,
+       "n_dates": 18,
+       "mean": 0.2346,
+       "L": 3,
+       "ci95": [
+        -0.455,
+        1.049
+       ],
+       "se_boot": 0.3877,
+       "n_eff": 18.0,
+       "se_cluster": 0.3825,
+       "t_ci95": [
+        -0.572,
+        1.042
+       ],
+       "p_one_sided_t": 0.2739,
+       "ci_by_L": {
+        "1": [
+         -0.408,
+         1.044
+        ],
+        "2": [
+         -0.417,
+         1.073
+        ],
+        "3": [
+         -0.446,
+         1.059
+        ],
+        "5": [
+         -0.395,
+         1.019
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.572,
+        1.073
+       ]
+      },
+      "control": {
+       "n": 24,
+       "n_dates": 24,
+       "mean": 0.0975,
+       "L": 3,
+       "ci95": [
+        -0.34,
+        0.656
+       ],
+       "se_boot": 0.262,
+       "n_eff": 24.0,
+       "se_cluster": 0.2721,
+       "t_ci95": [
+        -0.466,
+        0.66
+       ],
+       "p_one_sided_t": 0.3618,
+       "ci_by_L": {
+        "1": [
+         -0.354,
+         0.666
+        ],
+        "2": [
+         -0.371,
+         0.707
+        ],
+        "3": [
+         -0.354,
+         0.668
+        ],
+        "5": [
+         -0.286,
+         0.563
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.466,
+        0.707
+       ]
+      },
+      "event_minus_control": 0.137,
+      "iid_trade_bootstrap_v1_method": [
+       -0.392,
+       1.031
+      ]
+     }
+    }
+   },
+   "cost_check": {
+    "median_cost_points_v2": 0.3769,
+    "median_cost_points_v1": 0.2864
+   },
+   "verdict": "REJECT (pre-registered acceptance not met)"
+  },
+  "NSE_FUT ZEEL NR7_BRK SELL": {
+   "events": {
+    "raw": 125,
+    "eligible_days": 120,
+    "unique_signal_bars": 108
+   },
+   "control": {
+    "n": 108,
+    "reused_dates": 0,
+    "pool_size": 1328
+   },
+   "frozen_choice": {
+    "entry": "stop at trigger",
+    "stop": "inv",
+    "exit": "time",
+    "DV_net_R_2x": 0.444,
+    "DV_n": 69,
+    "same_as_v1": true
+   },
+   "skipped_events": {
+    "1x": {
+     "no_fill_or_overlap": 39
+    },
+    "2x": {
+     "no_fill_or_overlap": 39
+    }
+   },
+   "by_period": {
+    "DEV": {
+     "1x": {
+      "event": {
+       "n": 52,
+       "n_dates": 52,
+       "mean": 0.687,
+       "L": 4,
+       "ci95": [
+        0.283,
+        1.113
+       ],
+       "se_boot": 0.2116,
+       "n_eff": 52.0,
+       "se_cluster": 0.2353,
+       "t_ci95": [
+        0.215,
+        1.159
+       ],
+       "p_one_sided_t": 0.0026,
+       "ci_by_L": {
+        "1": [
+         0.245,
+         1.158
+        ],
+        "2": [
+         0.259,
+         1.129
+        ],
+        "3": [
+         0.274,
+         1.12
+        ],
+        "5": [
+         0.29,
+         1.125
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        0.215,
+        1.159
+       ]
+      },
+      "control": {
+       "n": 53,
+       "n_dates": 53,
+       "mean": 0.3007,
+       "L": 4,
+       "ci95": [
+        -0.02,
+        0.617
+       ],
+       "se_boot": 0.1631,
+       "n_eff": 53.0,
+       "se_cluster": 0.2127,
+       "t_ci95": [
+        -0.126,
+        0.727
+       ],
+       "p_one_sided_t": 0.0817,
+       "ci_by_L": {
+        "1": [
+         -0.098,
+         0.724
+        ],
+        "2": [
+         -0.057,
+         0.685
+        ],
+        "3": [
+         -0.037,
+         0.656
+        ],
+        "5": [
+         -0.014,
+         0.608
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        -0.126,
+        0.727
+       ]
+      },
+      "event_minus_control": 0.386,
+      "iid_trade_bootstrap_v1_method": [
+       0.256,
+       1.154
+      ]
+     },
+     "2x": {
+      "event": {
+       "n": 52,
+       "n_dates": 52,
+       "mean": 0.6501,
+       "L": 4,
+       "ci95": [
+        0.245,
+        1.078
+       ],
+       "se_boot": 0.2121,
+       "n_eff": 52.0,
+       "se_cluster": 0.2348,
+       "t_ci95": [
+        0.179,
+        1.121
+       ],
+       "p_one_sided_t": 0.0039,
+       "ci_by_L": {
+        "1": [
+         0.209,
+         1.118
+        ],
+        "2": [
+         0.222,
+         1.093
+        ],
+        "3": [
+         0.237,
+         1.082
+        ],
+        "5": [
+         0.253,
+         1.09
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        0.179,
+        1.121
+       ]
+      },
+      "control": {
+       "n": 53,
+       "n_dates": 53,
+       "mean": 0.258,
+       "L": 4,
+       "ci95": [
+        -0.066,
+        0.575
+       ],
+       "se_boot": 0.1639,
+       "n_eff": 53.0,
+       "se_cluster": 0.2127,
+       "t_ci95": [
+        -0.169,
+        0.685
+       ],
+       "p_one_sided_t": 0.1153,
+       "ci_by_L": {
+        "1": [
+         -0.14,
+         0.682
+        ],
+        "2": [
+         -0.101,
+         0.642
+        ],
+        "3": [
+         -0.08,
+         0.614
+        ],
+        "5": [
+         -0.059,
+         0.568
+        ]
+       },
+       "small_sample": false,
+       "note": "",
+       "ci95_conservative": [
+        -0.169,
+        0.685
+       ]
+      },
+      "event_minus_control": 0.392,
+      "iid_trade_bootstrap_v1_method": [
+       0.22,
+       1.114
+      ]
+     }
+    },
+    "VALID": {
+     "1x": {
+      "event": {
+       "n": 17,
+       "n_dates": 17,
+       "mean": -0.1403,
+       "L": 3,
+       "ci95": [
+        -0.539,
+        0.219
+       ],
+       "se_boot": 0.1953,
+       "n_eff": 17.0,
+       "se_cluster": 0.2345,
+       "t_ci95": [
+        -0.637,
+        0.357
+       ],
+       "p_one_sided_t": 0.721,
+       "ci_by_L": {
+        "1": [
+         -0.574,
+         0.312
+        ],
+        "2": [
+         -0.568,
+         0.276
+        ],
+        "3": [
+         -0.529,
+         0.226
+        ],
+        "5": [
+         -0.485,
+         0.198
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.637,
+        0.357
+       ]
+      },
+      "control": {
+       "n": 19,
+       "n_dates": 19,
+       "mean": 0.2802,
+       "L": 3,
+       "ci95": [
+        -0.324,
+        1.001
+       ],
+       "se_boot": 0.337,
+       "n_eff": 19.0,
+       "se_cluster": 0.4108,
+       "t_ci95": [
+        -0.583,
+        1.143
+       ],
+       "p_one_sided_t": 0.2519,
+       "ci_by_L": {
+        "1": [
+         -0.438,
+         1.109
+        ],
+        "2": [
+         -0.397,
+         1.0
+        ],
+        "3": [
+         -0.317,
+         1.017
+        ],
+        "5": [
+         -0.211,
+         0.904
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.583,
+        1.143
+       ]
+      },
+      "event_minus_control": -0.421,
+      "iid_trade_bootstrap_v1_method": [
+       -0.558,
+       0.316
+      ]
+     },
+     "2x": {
+      "event": {
+       "n": 17,
+       "n_dates": 17,
+       "mean": -0.1846,
+       "L": 3,
+       "ci95": [
+        -0.587,
+        0.177
+       ],
+       "se_boot": 0.1969,
+       "n_eff": 17.0,
+       "se_cluster": 0.235,
+       "t_ci95": [
+        -0.683,
+        0.313
+       ],
+       "p_one_sided_t": 0.7782,
+       "ci_by_L": {
+        "1": [
+         -0.618,
+         0.268
+        ],
+        "2": [
+         -0.611,
+         0.231
+        ],
+        "3": [
+         -0.578,
+         0.184
+        ],
+        "5": [
+         -0.532,
+         0.157
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.683,
+        0.313
+       ]
+      },
+      "control": {
+       "n": 19,
+       "n_dates": 19,
+       "mean": 0.2384,
+       "L": 3,
+       "ci95": [
+        -0.362,
+        0.959
+       ],
+       "se_boot": 0.3358,
+       "n_eff": 19.0,
+       "se_cluster": 0.4102,
+       "t_ci95": [
+        -0.623,
+        1.1
+       ],
+       "p_one_sided_t": 0.2842,
+       "ci_by_L": {
+        "1": [
+         -0.48,
+         1.066
+        ],
+        "2": [
+         -0.438,
+         0.956
+        ],
+        "3": [
+         -0.359,
+         0.973
+        ],
+        "5": [
+         -0.251,
+         0.859
+        ]
+       },
+       "small_sample": true,
+       "note": "fewer than 30 dates: percentile bootstrap intervals are too narrow in small samples; decisions use ci95_conservative = the widest of the block-bootstrap (all L) and t intervals",
+       "ci95_conservative": [
+        -0.623,
+        1.1
+       ]
+      },
+      "event_minus_control": -0.423,
+      "iid_trade_bootstrap_v1_method": [
+       -0.605,
+       0.271
+      ]
+     }
+    },
+    "OOS": {
+     "1x": {
+      "event": {
+       "n": 0,
+       "n_dates": 0,
+       "mean": null,
+       "ci95": null,
+       "note": "no trades"
+      },
+      "control": {
+       "n": 0,
+       "n_dates": 0,
+       "mean": null,
+       "ci95": null,
+       "note": "no trades"
+      },
+      "event_minus_control": null,
+      "iid_trade_bootstrap_v1_method": null
+     },
+     "2x": {
+      "event": {
+       "n": 0,
+       "n_dates": 0,
+       "mean": null,
+       "ci95": null,
+       "note": "no trades"
+      },
+      "control": {
+       "n": 0,
+       "n_dates": 0,
+       "mean": null,
+       "ci95": null,
+       "note": "no trades"
+      },
+      "event_minus_control": null,
+      "iid_trade_bootstrap_v1_method": null
+     }
+    }
+   },
+   "cost_check": {
+    "median_cost_points_v2": 0.4483,
+    "median_cost_points_v1": 0.4483
+   },
+   "verdict": "REJECT (pre-registered acceptance not met)"
+  }
+ },
+ "data_audit_nse_fut_pit": {
+  "rows": 1241620,
+  "days": 2183,
+  "first": "2018-01-01",
+  "last": "2026-11-06",
+  "dup_rows": 0,
+  "bad_ohlc": 2828,
+  "nonpos_traded": 927,
+  "zero_contract_rows_pct": 7.82,
+  "stk_symbols_per_day": {
+   "min": 136,
+   "median": 192,
+   "max": 227
+  },
+  "stk_symbols_ever": 362,
+  "stk_symbols_ended_before_last_30d": 142,
+  "weekdays_without_file": 127,
+  "expiries_per_symbol_day": {
+   "1": 3093,
+   "2": 3336,
+   "3": 399998
+  },
+  "close_settle_diff_gt5pct": 1393
+ },
+ "validation_misc": {
+  "swing_duplicates": {
+   "MCX": {
+    "swing_family_rows": 2392574,
+    "unique": 1208851,
+    "share_rows_duplicated": 0.495,
+    "mean_copies": 1.98
+   },
+   "NSE_FUT": {
+    "swing_family_rows": 1726227,
+    "unique": 1312622,
+    "share_rows_duplicated": 0.24,
+    "mean_copies": 1.32
+   }
+  },
+  "mcx_daily_cost": [
+   {
+    "inst": "ALUMINIUM",
+    "cost_atr_v1": 0.0791,
+    "cost_atr_raw": 0.0888,
+    "worst_ratio": 1.2604,
+    "best_ratio": 0.8268
+   },
+   {
+    "inst": "COPPER",
+    "cost_atr_v1": 0.0249,
+    "cost_atr_raw": 0.0328,
+    "worst_ratio": 1.5667,
+    "best_ratio": 1.0
+   },
+   {
+    "inst": "CRUDEOIL",
+    "cost_atr_v1": 0.0208,
+    "cost_atr_raw": 0.0399,
+    "worst_ratio": 4.2609,
+    "best_ratio": 0.7444
+   },
+   {
+    "inst": "GOLD",
+    "cost_atr_v1": 0.0241,
+    "cost_atr_raw": 0.0268,
+    "worst_ratio": 1.3871,
+    "best_ratio": 1.0
+   },
+   {
+    "inst": "NATURALGAS",
+    "cost_atr_v1": 0.0141,
+    "cost_atr_raw": 0.0385,
+    "worst_ratio": 5.3407,
+    "best_ratio": 0.6097
+   },
+   {
+    "inst": "SILVER",
+    "cost_atr_v1": 0.0117,
+    "cost_atr_raw": 0.0146,
+    "worst_ratio": 2.0078,
+    "best_ratio": 1.0
+   },
+   {
+    "inst": "ZINC",
+    "cost_atr_v1": 0.0678,
+    "cost_atr_raw": 0.0591,
+    "worst_ratio": 1.0,
+    "best_ratio": 0.7444
+   }
+  ]
+ },
+ "validation_coverage": [
+  {
+   "market": "MCX",
+   "horizon": "intraday",
+   "rows": 3207886,
+   "unique_pattern_events": 1979435,
+   "unique_signal_bars": 565452,
+   "swing_dup_factor": 1.62,
+   "unique_dates": 1021,
+   "instruments": 7,
+   "timeframes": "15,30,60",
+   "families": "A,B,C,D,E,F,G,H,I,J",
+   "patterns": 111,
+   "first": "2022-11-04",
+   "last": "2026-11-03",
+   "oos_unique_dates": 217,
+   "dev_unique_dates": 611
+  },
+  {
+   "market": "NSE_FUT",
+   "horizon": "intraday",
+   "rows": 3091604,
+   "unique_pattern_events": 2628635,
+   "unique_signal_bars": 789979,
+   "swing_dup_factor": 1.18,
+   "unique_dates": 1052,
+   "instruments": 178,
+   "timeframes": "60",
+   "families": "A,B,C,D,E,F,G,H,I,J",
+   "patterns": 108,
+   "first": "2022-07-20",
+   "last": "2026-10-22",
+   "oos_unique_dates": 325,
+   "dev_unique_dates": 479
+  },
+  {
+   "market": "NSE_EQ",
+   "horizon": "intraday",
+   "rows": 9925643,
+   "unique_pattern_events": 8751448,
+   "unique_signal_bars": 3069832,
+   "swing_dup_factor": 1.13,
+   "unique_dates": 512,
+   "instruments": 218,
+   "timeframes": "15,60",
+   "families": "A,B,C,D,E,F,G,H,I,J",
+   "patterns": 110,
+   "first": "2024-10-14",
+   "last": "2026-11-06",
+   "oos_unique_dates": 210,
+   "dev_unique_dates": 176
+  },
+  {
+   "market": "MCX",
+   "horizon": "overnight (btst) BUY",
+   "rows": 44712,
+   "unique_pattern_events": 42314,
+   "unique_signal_bars": 16624,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 5277,
+   "instruments": 7,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2006-01-16",
+   "last": "2026-10-20",
+   "oos_unique_dates": 443,
+   "dev_unique_dates": 4350
+  },
+  {
+   "market": "MCX",
+   "horizon": "overnight (btst) SELL",
+   "rows": 44288,
+   "unique_pattern_events": 41926,
+   "unique_signal_bars": 16135,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 5219,
+   "instruments": 7,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2006-01-17",
+   "last": "2026-10-20",
+   "oos_unique_dates": 440,
+   "dev_unique_dates": 4295
+  },
+  {
+   "market": "MCX",
+   "horizon": "positional (pos5) BUY",
+   "rows": 37910,
+   "unique_pattern_events": 35892,
+   "unique_signal_bars": 14117,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 5108,
+   "instruments": 7,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2006-01-16",
+   "last": "2026-10-14",
+   "oos_unique_dates": 427,
+   "dev_unique_dates": 4216
+  },
+  {
+   "market": "MCX",
+   "horizon": "positional (pos5) SELL",
+   "rows": 37676,
+   "unique_pattern_events": 35682,
+   "unique_signal_bars": 13739,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 5023,
+   "instruments": 7,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2006-01-17",
+   "last": "2026-10-14",
+   "oos_unique_dates": 415,
+   "dev_unique_dates": 4138
+  },
+  {
+   "market": "NSE_FUT",
+   "horizon": "overnight (btst) BUY",
+   "rows": 460834,
+   "unique_pattern_events": 436120,
+   "unique_signal_bars": 172682,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 2024,
+   "instruments": 346,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2018-01-18",
+   "last": "2026-11-05",
+   "oos_unique_dates": 438,
+   "dev_unique_dates": 1133
+  },
+  {
+   "market": "NSE_FUT",
+   "horizon": "overnight (btst) SELL",
+   "rows": 475836,
+   "unique_pattern_events": 450079,
+   "unique_signal_bars": 179210,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 2020,
+   "instruments": 346,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2018-01-18",
+   "last": "2026-11-05",
+   "oos_unique_dates": 434,
+   "dev_unique_dates": 1132
+  },
+  {
+   "market": "NSE_FUT",
+   "horizon": "positional (pos5) BUY",
+   "rows": 364208,
+   "unique_pattern_events": 344720,
+   "unique_signal_bars": 136235,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 1610,
+   "instruments": 346,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2018-01-24",
+   "last": "2026-10-29",
+   "oos_unique_dates": 349,
+   "dev_unique_dates": 902
+  },
+  {
+   "market": "NSE_FUT",
+   "horizon": "positional (pos5) SELL",
+   "rows": 366283,
+   "unique_pattern_events": 346410,
+   "unique_signal_bars": 138609,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 1628,
+   "instruments": 346,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2018-01-18",
+   "last": "2026-10-30",
+   "oos_unique_dates": 355,
+   "dev_unique_dates": 910
+  },
+  {
+   "market": "NSE_EQ",
+   "horizon": "overnight (btst) BUY",
+   "rows": 1029129,
+   "unique_pattern_events": 973327,
+   "unique_signal_bars": 383542,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 5142,
+   "instruments": 979,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2006-01-03",
+   "last": "2026-11-04",
+   "oos_unique_dates": 455,
+   "dev_unique_dates": 4196
+  },
+  {
+   "market": "NSE_EQ",
+   "horizon": "positional (pos5) BUY",
+   "rows": 1008852,
+   "unique_pattern_events": 954193,
+   "unique_signal_bars": 376246,
+   "swing_dup_factor": 1.06,
+   "unique_dates": 5136,
+   "instruments": 978,
+   "timeframes": "1440",
+   "families": "A,B,C,D,E,F,G,H,I",
+   "patterns": 86,
+   "first": "2006-01-03",
+   "last": "2026-10-29",
+   "oos_unique_dates": 451,
+   "dev_unique_dates": 4194
+  }
+ ],
+ "validation_reproduce": [
+  {
+   "set": "mcx",
+   "item": "testable",
+   "quoted": "7194",
+   "recomputed": 7194.0,
+   "summary_json": 7194.0,
+   "match": true
+  },
+  {
+   "set": "nse_fut",
+   "item": "testable",
+   "quoted": "9493",
+   "recomputed": 9493.0,
+   "summary_json": 9493.0,
+   "match": true
+  },
+  {
+   "set": "nse_eq",
+   "item": "testable",
+   "quoted": "20386",
+   "recomputed": 20386.0,
+   "summary_json": 20386.0,
+   "match": true
+  },
+  {
+   "set": "mcx",
+   "item": "family_maxstat_p_min",
+   "quoted": "0.1",
+   "recomputed": 0.1004,
+   "summary_json": 0.1,
+   "match": true
+  },
+  {
+   "set": "nse_fut",
+   "item": "family_maxstat_p_min",
+   "quoted": "0.18",
+   "recomputed": 0.181,
+   "summary_json": 0.181,
+   "match": true
+  },
+  {
+   "set": "nse_eq",
+   "item": "family_maxstat_p_min",
+   "quoted": "0.36",
+   "recomputed": 0.3573,
+   "summary_json": 0.357,
+   "match": true
+  },
+  {
+   "set": "daily_MCX_btst",
+   "item": "testable",
+   "quoted": "548",
+   "recomputed": 548.0,
+   "summary_json": 548.0,
+   "match": true
+  },
+  {
+   "set": "daily_MCX_pos5",
+   "item": "testable",
+   "quoted": "490",
+   "recomputed": 490.0,
+   "summary_json": 490.0,
+   "match": true
+  },
+  {
+   "set": "daily_NSE_FUT_btst",
+   "item": "testable",
+   "quoted": "2428",
+   "recomputed": 2428.0,
+   "summary_json": 2428.0,
+   "match": true
+  },
+  {
+   "set": "daily_NSE_FUT_pos5",
+   "item": "testable",
+   "quoted": "1296",
+   "recomputed": 1296.0,
+   "summary_json": 1296.0,
+   "match": true
+  },
+  {
+   "set": "daily_NSE_EQ_btst",
+   "item": "testable",
+   "quoted": "3876",
+   "recomputed": 3876.0,
+   "summary_json": 3876.0,
+   "match": true
+  },
+  {
+   "set": "daily_NSE_EQ_pos5",
+   "item": "testable",
+   "quoted": "3817",
+   "recomputed": 3817.0,
+   "summary_json": 3817.0,
+   "match": true
+  },
+  {
+   "set": "daily_MCX_btst",
+   "item": "family_maxstat_p_min",
+   "quoted": "0.08",
+   "recomputed": 0.0788,
+   "summary_json": 0.079,
+   "match": true
+  },
+  {
+   "set": "daily_NSE_FUT_btst",
+   "item": "family_maxstat_p_min",
+   "quoted": "0.15",
+   "recomputed": 0.15,
+   "summary_json": 0.15,
+   "match": true
+  },
+  {
+   "set": "daily_NSE_EQ_btst",
+   "item": "family_maxstat_p_min",
+   "quoted": "0.005",
+   "recomputed": 0.0052,
+   "summary_json": 0.005,
+   "match": true
+  },
+  {
+   "set": "daily_NSE_EQ_pos5",
+   "item": "family_maxstat_p_min",
+   "quoted": "0.71",
+   "recomputed": 0.7105,
+   "summary_json": 0.71,
+   "match": true
+  },
+  {
+   "set": "mcx",
+   "item": "mfe_median",
+   "quoted": "1.36",
+   "recomputed": 1.3632,
+   "summary_json": 1.36,
+   "match": true
+  },
+  {
+   "set": "mcx",
+   "item": "mae_median",
+   "quoted": "-1.32",
+   "recomputed": -1.3203,
+   "summary_json": -1.32,
+   "match": true
+  },
+  {
+   "set": "nse_eq",
+   "item": "mfe_median",
+   "quoted": "0.87",
+   "recomputed": 0.8666,
+   "summary_json": 0.87,
+   "match": true
+  },
+  {
+   "set": "nse_eq",
+   "item": "mae_median",
+   "quoted": "-0.92",
+   "recomputed": -0.917,
+   "summary_json": -0.92,
+   "match": true
+  },
+  {
+   "set": "nse_fut",
+   "item": "mfe_median",
+   "quoted": "0.64",
+   "recomputed": 0.6436,
+   "summary_json": 0.64,
+   "match": true
+  },
+  {
+   "set": "nse_fut",
+   "item": "mae_median",
+   "quoted": "-0.64",
+   "recomputed": -0.6351,
+   "summary_json": -0.64,
+   "match": true
+  },
+  {
+   "set": "intraday",
+   "item": "testable total",
+   "quoted": "37073",
+   "recomputed": 37073.0,
+   "summary_json": NaN,
+   "match": true
+  },
+  {
+   "set": "mcx",
+   "item": "pass_stage1",
+   "quoted": "0",
+   "recomputed": 0.0,
+   "summary_json": NaN,
+   "match": true
+  },
+  {
+   "set": "mcx",
+   "item": "share t>=1",
+   "quoted": "0.156-0.181",
+   "recomputed": 0.171,
+   "summary_json": NaN,
+   "match": true
+  },
+  {
+   "set": "nse_fut",
+   "item": "pass_stage1",
+   "quoted": "0",
+   "recomputed": 0.0,
+   "summary_json": NaN,
+   "match": true
+  },
+  {
+   "set": "nse_fut",
+   "item": "share t>=1",
+   "quoted": "0.156-0.181",
+   "recomputed": 0.181,
+   "summary_json": NaN,
+   "match": true
+  },
+  {
+   "set": "nse_eq",
+   "item": "pass_stage1",
+   "quoted": "0",
+   "recomputed": 0.0,
+   "summary_json": NaN,
+   "match": true
+  },
+  {
+   "set": "nse_eq",
+   "item": "share t>=1",
+   "quoted": "0.156-0.181",
+   "recomputed": 0.157,
+   "summary_json": NaN,
+   "match": true
+  }
+ ],
+ "event_counting_note": "'events' = detector rows; the same bar / side / pattern found by several swing methods is one row per method. Unique pattern events and unique signal bars are in validation_coverage. No event count is a trade count; trades exist only in stage 2."
 }

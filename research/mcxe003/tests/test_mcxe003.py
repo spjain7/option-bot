@@ -130,6 +130,33 @@ def test_execution_rules():
     assert np.isclose(r[0], -0.5)
 
 
+
+
+def test_block_bootstrap():
+    from research.mcxe003 import bootstrap as BT
+    rng = np.random.default_rng(1)
+    days = pd.bdate_range("2020-01-01", periods=400)
+    # iid: block CI ~ +-1.96/sqrt(n)
+    r = rng.normal(0.1, 1.0, 400)
+    b = BT.block_ci(days, r, B=4000)
+    assert b["n"] == 400 and b["n_dates"] == 400
+    lo, hi = b["ci95_conservative"]
+    assert lo < r.mean() < hi and 0.14 < hi - lo < 0.28
+    # strongly clustered: 10 identical trades per date -> 40 effective clusters -> much wider than an IID trade bootstrap
+    d40 = np.repeat(days[:40], 10); r40 = np.repeat(rng.normal(0.0, 1.0, 40), 10)
+    b = BT.block_ci(d40, r40, B=4000)
+    iid = np.percentile([np.mean(np.random.default_rng(k).choice(r40, 400)) for k in range(2000)], [2.5, 97.5])
+    assert b["n_dates"] == 40 and (b["ci95"][1] - b["ci95"][0]) > 2.5 * (iid[1] - iid[0])
+    # AR(1) serial dependence lowers n_eff
+    x = np.zeros(300)
+    for k in range(1, 300):
+        x[k] = 0.7 * x[k - 1] + rng.normal()
+    assert BT.n_eff(x) < 150
+    # degenerate
+    assert BT.block_ci([], [])["n"] == 0
+    assert BT.block_ci(days[:1], [0.5])["ci95"] is None
+
+
 if __name__ == "__main__":
     for nm, fn in list(globals().items()):
         if nm.startswith("test_"):

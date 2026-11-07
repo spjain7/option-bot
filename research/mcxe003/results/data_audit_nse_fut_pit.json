@@ -1,0 +1,24 @@
+{
+ "rows": 1241620,
+ "days": 2183,
+ "first": "2018-01-01",
+ "last": "2026-11-06",
+ "dup_rows": 0,
+ "bad_ohlc": 2828,
+ "nonpos_traded": 927,
+ "zero_contract_rows_pct": 7.82,
+ "stk_symbols_per_day": {
+  "min": 136,
+  "median": 192,
+  "max": 227
+ },
+ "stk_symbols_ever": 362,
+ "stk_symbols_ended_before_last_30d": 142,
+ "weekdays_without_file": 127,
+ "expiries_per_symbol_day": {
+  "1": 3093,
+  "2": 3336,
+  "3": 399998
+ },
+ "close_settle_diff_gt5pct": 1393
+}

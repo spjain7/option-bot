@@ -74,3 +74,21 @@ pattern's own context: falling channels form in falling quarters. That inflated 
   minute of day × period; MCX daily uses commodity × period.
 - **Unchanged:** NSE daily keeps the cross-sectional same-day control, which has no time-series drift problem.
 - All events and stage-1 tables were recomputed with the fixed control.
+
+## Addendum D (7-Nov-2026, independent validation; the original text above is unchanged)
+1. **Bootstrap.** Stage 2 promised a day-block bootstrap, but `stage2_daily.py` (v1) resampled individual trades IID.
+   `stage2_daily_v2.py` now uses `bootstrap.block_ci`:
+   - trades are grouped into trading-date clusters;
+   - dates are resampled with a circular moving-block bootstrap, block length L = round(n_dates^(1/3)), sensitivity
+     L ∈ {1, 2, 3, 5};
+   - the report gives n, n_dates, n_eff (Geyer) and a cluster-robust t-interval;
+   - **the acceptance decision uses the widest of all these intervals ("ci95_conservative")**, because percentile
+     bootstraps are too narrow with fewer than 30 dates.
+2. **Stage-2 controls.** In v1 the controls were re-drawn inside every execution and cost loop, with replacement. In v2:
+   - one fixed set of control dates per survivor (seed 20261107), drawn without replacement;
+   - the survivor's own signal days are excluded;
+   - the same set is reused for every execution and both cost levels.
+3. **MCX costs in back-adjusted series.** Costs are now computed at the raw contract price and scaled by the
+   back-adjustment ratio. In v1 the fixed tick slippage was mis-scaled.
+4. **Outcome:** v1 results stay in `stage2_daily.json`; corrected results are in `stage2_daily_v2.json`. The frozen
+   execution choices are identical, and both verdicts are unchanged: **REJECT**.

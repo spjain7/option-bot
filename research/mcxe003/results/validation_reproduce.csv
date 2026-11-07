@@ -1,0 +1,30 @@
+set,item,quoted,recomputed,summary_json,match
+mcx,testable,7194,7194.0,7194.0,True
+nse_fut,testable,9493,9493.0,9493.0,True
+nse_eq,testable,20386,20386.0,20386.0,True
+mcx,family_maxstat_p_min,0.1,0.1004,0.1,True
+nse_fut,family_maxstat_p_min,0.18,0.181,0.181,True
+nse_eq,family_maxstat_p_min,0.36,0.3573,0.357,True
+daily_MCX_btst,testable,548,548.0,548.0,True
+daily_MCX_pos5,testable,490,490.0,490.0,True
+daily_NSE_FUT_btst,testable,2428,2428.0,2428.0,True
+daily_NSE_FUT_pos5,testable,1296,1296.0,1296.0,True
+daily_NSE_EQ_btst,testable,3876,3876.0,3876.0,True
+daily_NSE_EQ_pos5,testable,3817,3817.0,3817.0,True
+daily_MCX_btst,family_maxstat_p_min,0.08,0.0788,0.079,True
+daily_NSE_FUT_btst,family_maxstat_p_min,0.15,0.15,0.15,True
+daily_NSE_EQ_btst,family_maxstat_p_min,0.005,0.0052,0.005,True
+daily_NSE_EQ_pos5,family_maxstat_p_min,0.71,0.7105,0.71,True
+mcx,mfe_median,1.36,1.3632,1.36,True
+mcx,mae_median,-1.32,-1.3203,-1.32,True
+nse_eq,mfe_median,0.87,0.8666,0.87,True
+nse_eq,mae_median,-0.92,-0.917,-0.92,True
+nse_fut,mfe_median,0.64,0.6436,0.64,True
+nse_fut,mae_median,-0.64,-0.6351,-0.64,True
+intraday,testable total,37073,37073.0,,True
+mcx,pass_stage1,0,0.0,,True
+mcx,share t>=1,0.156-0.181,0.171,,True
+nse_fut,pass_stage1,0,0.0,,True
+nse_fut,share t>=1,0.156-0.181,0.181,,True
+nse_eq,pass_stage1,0,0.0,,True
+nse_eq,share t>=1,0.156-0.181,0.157,,True
