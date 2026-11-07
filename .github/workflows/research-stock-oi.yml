@@ -14,6 +14,9 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+      - name: Angel quiet-hours guard (shares the live bot's API key – 7-Nov)
+        env: { FORCE: "${{ inputs.force }}" }
+        run: python3 scripts/angel_quiet_hours.py
       - uses: actions/setup-python@v5
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt

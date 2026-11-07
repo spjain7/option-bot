@@ -1,8 +1,8 @@
 name: Research data (manual, no alerts)
 
 # Downloads REAL MCX + NSE index-futures candles from Angel One for backtesting.
-# Manual only. Shares the live bot's concurrency group so it never runs at the same time
-# as the live bot (no competition for the Angel API quota). Sends no Telegram messages.
+# Manual only. NOTE (7-Nov): group 'option-bot' is the OLD bot's, not market-loop's – it CAN overlap the live loop
+# (it did on 6-Nov 15:15-20:16 IST); the quiet-hours guard step now stops it during loop hours. Sends no Telegram messages.
 # Results are pushed to the separate branch "research-data" (main is never touched).
 
 on:
@@ -31,6 +31,9 @@ jobs:
     timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
+      - name: Angel quiet-hours guard (shares the live bot's API key – 7-Nov)
+        env: { FORCE: "${{ inputs.force }}" }
+        run: python3 scripts/angel_quiet_hours.py
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
