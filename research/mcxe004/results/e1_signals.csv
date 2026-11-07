@@ -1,0 +1,788 @@
+rule,inst,tf,bars,first,last,signals,trades,rejected,reasons,note
+RB_MCX_1h_MACD_BUY,GOLD,1h,3527,2025-11-04,2026-10-21,36,22.0,14.0,"{""skipped: position already open / switch day / warm-up edge"": 14}",
+BO_MCX_3h_BUY,GOLD,3h,1171,2025-11-04,2026-10-21,33,14.0,19.0,"{""skipped: position already open / switch day / warm-up edge"": 19}",
+RB_MCX_1d_RETEST_BUY,GOLD,1d,248,,,0,,,,fewer than 260 bars in the window
+BO_MCX_1d_BUY,GOLD,1d,248,,,0,,,,fewer than 260 bars in the window
+RB_MCX_4h_EMA1348_BUY,GOLD,4h,958,2025-11-04,2026-10-21,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_MCX_4h_MACD0_BUY,GOLD,4h,958,2025-11-04,2026-10-21,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_MCX_4h_BUY,GOLD,4h,958,2025-11-04,2026-10-21,19,7.0,12.0,"{""skipped: position already open / switch day / warm-up edge"": 12}",
+RB_MCX_2h_MOMO_BUY,GOLD,2h,1897,2025-11-04,2026-10-21,12,11.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_MCX_2h_EMA921_BUY,GOLD,2h,1897,2025-11-04,2026-10-21,17,7.0,10.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 9}",
+RB_MCX_1h_MACD_BUY,SILVER,1h,3559,2025-11-04,2026-10-21,28,14.0,14.0,"{""skipped: position already open / switch day / warm-up edge"": 14}",
+BO_MCX_3h_BUY,SILVER,3h,1185,2025-11-04,2026-10-21,29,13.0,16.0,"{""skipped: position already open / switch day / warm-up edge"": 16}",
+RB_MCX_1d_RETEST_BUY,SILVER,1d,249,,,0,,,,fewer than 260 bars in the window
+BO_MCX_1d_BUY,SILVER,1d,249,,,0,,,,fewer than 260 bars in the window
+RB_MCX_4h_EMA1348_BUY,SILVER,4h,966,2025-11-04,2026-10-21,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_MCX_4h_MACD0_BUY,SILVER,4h,966,2025-11-04,2026-10-21,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_MCX_4h_BUY,SILVER,4h,966,2025-11-04,2026-10-21,7,5.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_MCX_2h_MOMO_BUY,SILVER,2h,1916,2025-11-04,2026-10-21,7,6.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_MCX_2h_EMA921_BUY,SILVER,2h,1916,2025-11-04,2026-10-21,11,9.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_MCX_1h_MACD_BUY,COPPER,1h,3515,2025-11-04,2026-10-21,46,25.0,21.0,"{""skipped: position already open / switch day / warm-up edge"": 21}",
+BO_MCX_3h_BUY,COPPER,3h,1170,2025-11-04,2026-10-21,50,16.0,34.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 32}",
+RB_MCX_1d_RETEST_BUY,COPPER,1d,249,,,0,,,,fewer than 260 bars in the window
+BO_MCX_1d_BUY,COPPER,1d,249,,,0,,,,fewer than 260 bars in the window
+RB_MCX_4h_EMA1348_BUY,COPPER,4h,946,2025-11-04,2026-10-21,6,4.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_MCX_4h_MACD0_BUY,COPPER,4h,946,2025-11-04,2026-10-21,9,8.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_MCX_4h_BUY,COPPER,4h,946,2025-11-04,2026-10-21,31,9.0,22.0,"{""skipped: position already open / switch day / warm-up edge"": 22}",
+RB_MCX_2h_MOMO_BUY,COPPER,2h,1885,2025-11-04,2026-10-21,8,6.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_MCX_2h_EMA921_BUY,COPPER,2h,1885,2025-11-04,2026-10-21,23,11.0,12.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 10}",
+RB_MCX_1h_MACD_BUY,ZINC,1h,3433,2025-11-04,2026-10-21,77,35.0,42.0,"{""next open beyond the 0.5-ATR entry zone"": 4, ""skipped: position already open / switch day / warm-up edge"": 38}",
+BO_MCX_3h_BUY,ZINC,3h,1141,2025-11-04,2026-10-21,35,15.0,20.0,"{""skipped: position already open / switch day / warm-up edge"": 20}",
+RB_MCX_1d_RETEST_BUY,ZINC,1d,248,,,0,,,,fewer than 260 bars in the window
+BO_MCX_1d_BUY,ZINC,1d,248,,,0,,,,fewer than 260 bars in the window
+RB_MCX_4h_EMA1348_BUY,ZINC,4h,936,2025-11-04,2026-10-21,6,6.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_MCX_4h_MACD0_BUY,ZINC,4h,936,2025-11-04,2026-10-21,10,9.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_MCX_4h_BUY,ZINC,4h,936,2025-11-04,2026-10-21,31,13.0,18.0,"{""skipped: position already open / switch day / warm-up edge"": 18}",
+RB_MCX_2h_MOMO_BUY,ZINC,2h,1853,2025-11-04,2026-10-21,19,11.0,8.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 7}",
+RB_MCX_2h_EMA921_BUY,ZINC,2h,1853,2025-11-04,2026-10-21,29,17.0,12.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 10}",
+RB_MCX_1h_MACD_BUY,CRUDEOIL,1h,3630,2025-11-04,2026-10-21,57,27.0,30.0,"{""skipped: position already open / switch day / warm-up edge"": 30}",
+BO_MCX_3h_BUY,CRUDEOIL,3h,1207,2025-11-04,2026-10-21,45,20.0,25.0,"{""next open beyond the 0.5-ATR entry zone"": 3, ""skipped: position already open / switch day / warm-up edge"": 22}",
+RB_MCX_1d_RETEST_BUY,CRUDEOIL,1d,249,,,0,,,,fewer than 260 bars in the window
+BO_MCX_1d_BUY,CRUDEOIL,1d,249,,,0,,,,fewer than 260 bars in the window
+RB_MCX_4h_EMA1348_BUY,CRUDEOIL,4h,969,2025-11-04,2026-10-21,8,6.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_MCX_4h_MACD0_BUY,CRUDEOIL,4h,969,2025-11-04,2026-10-21,8,7.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_MCX_4h_BUY,CRUDEOIL,4h,969,2025-11-04,2026-10-21,29,13.0,16.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 14}",
+RB_MCX_2h_MOMO_BUY,CRUDEOIL,2h,1938,2025-11-04,2026-10-21,14,12.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_MCX_2h_EMA921_BUY,CRUDEOIL,2h,1938,2025-11-04,2026-10-21,20,15.0,5.0,"{""skipped: position already open / switch day / warm-up edge"": 5}",
+RB_MCX_1h_MACD_BUY,NATURALGAS,1h,3625,2025-11-04,2026-10-21,18,9.0,9.0,"{""skipped: position already open / switch day / warm-up edge"": 9}",
+BO_MCX_3h_BUY,NATURALGAS,3h,1205,2025-11-04,2026-10-21,19,10.0,9.0,"{""skipped: position already open / switch day / warm-up edge"": 9}",
+RB_MCX_1d_RETEST_BUY,NATURALGAS,1d,249,,,0,,,,fewer than 260 bars in the window
+BO_MCX_1d_BUY,NATURALGAS,1d,249,,,0,,,,fewer than 260 bars in the window
+RB_MCX_4h_EMA1348_BUY,NATURALGAS,4h,968,2025-11-04,2026-10-21,3,1.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_MCX_4h_MACD0_BUY,NATURALGAS,4h,968,2025-11-04,2026-10-21,5,5.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_MCX_4h_BUY,NATURALGAS,4h,968,2025-11-04,2026-10-21,11,3.0,8.0,"{""skipped: position already open / switch day / warm-up edge"": 8}",
+RB_MCX_2h_MOMO_BUY,NATURALGAS,2h,1936,2025-11-04,2026-10-21,10,7.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_MCX_2h_EMA921_BUY,NATURALGAS,2h,1936,2025-11-04,2026-10-21,13,7.0,6.0,"{""skipped: position already open / switch day / warm-up edge"": 6}",
+RB_MCX_1h_MACD_BUY,ALUMINIUM,1h,3407,2025-11-04,2026-10-21,40,22.0,18.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 16}",
+BO_MCX_3h_BUY,ALUMINIUM,3h,1133,2025-11-04,2026-10-21,32,14.0,18.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 17}",
+RB_MCX_1d_RETEST_BUY,ALUMINIUM,1d,248,,,0,,,,fewer than 260 bars in the window
+BO_MCX_1d_BUY,ALUMINIUM,1d,248,,,0,,,,fewer than 260 bars in the window
+RB_MCX_4h_EMA1348_BUY,ALUMINIUM,4h,932,2025-11-04,2026-10-21,6,2.0,4.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_MCX_4h_MACD0_BUY,ALUMINIUM,4h,932,2025-11-04,2026-10-21,8,7.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_MCX_4h_BUY,ALUMINIUM,4h,932,2025-11-04,2026-10-21,17,6.0,11.0,"{""skipped: position already open / switch day / warm-up edge"": 11}",
+RB_MCX_2h_MOMO_BUY,ALUMINIUM,2h,1840,2025-11-04,2026-10-21,7,7.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_MCX_2h_EMA921_BUY,ALUMINIUM,2h,1840,2025-11-04,2026-10-21,20,13.0,7.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 6}",
+RB_STK_1d_RSI80_BUY,DRREDDY,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,DRREDDY,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,DRREDDY,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,DRREDDY,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,KFINTECH,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,KFINTECH,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,KFINTECH,3h,494,2025-10-23,2026-10-22,5,5.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,KFINTECH,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,SBILIFE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SBILIFE,3h,494,2025-10-23,2026-10-22,6,5.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,SBILIFE,3h,494,2025-10-23,2026-10-22,7,3.0,4.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,SBILIFE,3h,494,2025-10-23,2026-10-22,6,3.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,BPCL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BPCL,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BPCL,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BPCL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BSE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BSE,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BSE,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BSE,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TATACONSUM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TATACONSUM,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TATACONSUM,3h,494,2025-10-23,2026-10-22,7,3.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+FH_STK_3h_SELL,TATACONSUM,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ULTRACEMCO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ULTRACEMCO,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ULTRACEMCO,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ULTRACEMCO,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,RVNL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,RVNL,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,RVNL,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,RVNL,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,POLICYBZR,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,POLICYBZR,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,POLICYBZR,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,POLICYBZR,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,CONCOR,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CONCOR,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,CONCOR,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,CONCOR,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,SBICARD,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SBICARD,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,SBICARD,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SBICARD,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,NAM-INDIA,1d,139,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,NAM-INDIA,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,NAM-INDIA,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,NAM-INDIA,3h,278,2026-04-01,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,INDUSTOWER,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,INDUSTOWER,3h,494,2025-10-23,2026-10-22,6,6.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,INDUSTOWER,3h,494,2025-10-23,2026-10-22,7,5.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,INDUSTOWER,3h,494,2025-10-23,2026-10-22,9,5.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,MCX,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MCX,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MCX,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,MCX,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,KAYNES,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,KAYNES,3h,493,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,KAYNES,3h,493,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,KAYNES,3h,493,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,KALYANKJIL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,KALYANKJIL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,KALYANKJIL,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,KALYANKJIL,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,JUBLFOOD,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,JUBLFOOD,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,JUBLFOOD,3h,494,2025-10-23,2026-10-22,6,3.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+FH_STK_3h_SELL,JUBLFOOD,3h,494,2025-10-23,2026-10-22,5,5.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ICICIGI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ICICIGI,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,ICICIGI,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ICICIGI,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,HINDALCO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HINDALCO,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HINDALCO,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HINDALCO,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,HDFCLIFE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HDFCLIFE,3h,494,2025-10-23,2026-10-22,7,4.0,3.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,HDFCLIFE,3h,494,2025-10-23,2026-10-22,8,5.0,3.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,HDFCLIFE,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,HDFCAMC,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HDFCAMC,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HDFCAMC,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HDFCAMC,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,DELHIVERY,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,DELHIVERY,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,DELHIVERY,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,DELHIVERY,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,CDSL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CDSL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,CDSL,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,CDSL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,CAMS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CAMS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,CAMS,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,CAMS,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,BHARTIARTL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BHARTIARTL,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BHARTIARTL,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BHARTIARTL,3h,494,2025-10-23,2026-10-22,4,1.0,3.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,KEI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,KEI,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,KEI,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,KEI,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BANKBARODA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BANKBARODA,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BANKBARODA,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BANKBARODA,3h,494,2025-10-23,2026-10-22,7,6.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,GLENMARK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,GLENMARK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,GLENMARK,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,GLENMARK,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,BLUESTARCO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BLUESTARCO,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,BLUESTARCO,3h,494,2025-10-23,2026-10-22,3,1.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,BLUESTARCO,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,LT,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LT,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LT,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,LT,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,LTF,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LTF,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LTF,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,LTF,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ABB,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ABB,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ABB,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ABB,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,MAZDOCK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MAZDOCK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MAZDOCK,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MAZDOCK,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,NESTLEIND,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,NESTLEIND,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,NESTLEIND,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,NESTLEIND,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,AMBER,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,AMBER,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,AMBER,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,AMBER,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,POWERINDIA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,POWERINDIA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,POWERINDIA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,POWERINDIA,3h,494,2025-10-23,2026-10-22,7,3.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,PREMIERENE,1d,200,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PREMIERENE,3h,400,2025-12-31,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PREMIERENE,3h,400,2025-12-31,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PREMIERENE,3h,400,2025-12-31,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,AMBUJACEM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,AMBUJACEM,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,AMBUJACEM,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,AMBUJACEM,3h,494,2025-10-23,2026-10-22,7,5.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,PIDILITIND,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PIDILITIND,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PIDILITIND,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PIDILITIND,3h,494,2025-10-23,2026-10-22,3,1.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,RELIANCE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,RELIANCE,3h,494,2025-10-23,2026-10-22,9,9.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,RELIANCE,3h,494,2025-10-23,2026-10-22,6,6.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,RELIANCE,3h,494,2025-10-23,2026-10-22,7,4.0,3.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,FORTIS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,FORTIS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,FORTIS,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,FORTIS,3h,494,2025-10-23,2026-10-22,6,2.0,4.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,SWIGGY,1d,200,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SWIGGY,3h,400,2025-12-31,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SWIGGY,3h,400,2025-12-31,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SWIGGY,3h,400,2025-12-31,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TATAELXSI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TATAELXSI,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TATAELXSI,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TATAELXSI,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,SHRIRAMFIN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SHRIRAMFIN,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SHRIRAMFIN,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SHRIRAMFIN,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,SONACOMS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SONACOMS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SONACOMS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SONACOMS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TMPV,1d,246,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TMPV,3h,492,2025-10-24,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TMPV,3h,492,2025-10-24,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TMPV,3h,492,2025-10-24,2026-10-22,6,5.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,360ONE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,360ONE,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,360ONE,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,360ONE,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TECHM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TECHM,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TECHM,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TECHM,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TIINDIA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TIINDIA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TIINDIA,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TIINDIA,3h,494,2025-10-23,2026-10-22,9,4.0,5.0,"{""skipped: position already open / switch day / warm-up edge"": 5}",
+RB_STK_1d_RSI80_BUY,ADANIENSOL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ADANIENSOL,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,ADANIENSOL,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,ADANIENSOL,3h,494,2025-10-23,2026-10-22,7,2.0,5.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,ASIANPAINT,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ASIANPAINT,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ASIANPAINT,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ASIANPAINT,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,BAJAJ-AUTO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BAJAJ-AUTO,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BAJAJ-AUTO,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BAJAJ-AUTO,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BAJAJHLDNG,1d,200,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BAJAJHLDNG,3h,400,2025-12-31,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BAJAJHLDNG,3h,400,2025-12-31,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BAJAJHLDNG,3h,400,2025-12-31,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,SOLARINDS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SOLARINDS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SOLARINDS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SOLARINDS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,LICHSGFIN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LICHSGFIN,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LICHSGFIN,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,LICHSGFIN,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,PHOENIXLTD,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PHOENIXLTD,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PHOENIXLTD,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PHOENIXLTD,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,PNBHOUSING,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PNBHOUSING,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PNBHOUSING,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PNBHOUSING,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ASTRAL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ASTRAL,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ASTRAL,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ASTRAL,3h,494,2025-10-23,2026-10-22,7,4.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,VOLTAS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,VOLTAS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,VOLTAS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,VOLTAS,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,PRESTIGE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PRESTIGE,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PRESTIGE,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PRESTIGE,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,RADICO,1d,102,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,RADICO,3h,204,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_EMA921_SELL,RADICO,3h,204,,,0,,,,fewer than 260 bars in the window
+FH_STK_3h_SELL,RADICO,3h,204,,,0,,,,fewer than 260 bars in the window
+RB_STK_1d_RSI80_BUY,VBL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,VBL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,VBL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,VBL,3h,494,2025-10-23,2026-10-22,5,2.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,COFORGE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,COFORGE,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,COFORGE,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,COFORGE,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,CGPOWER,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CGPOWER,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,CGPOWER,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,CGPOWER,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BEL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BEL,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BEL,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BEL,3h,494,2025-10-23,2026-10-22,13,6.0,7.0,"{""skipped: position already open / switch day / warm-up edge"": 7}",
+RB_STK_1d_RSI80_BUY,ADANIENT,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ADANIENT,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ADANIENT,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ADANIENT,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,UPL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,UPL,3h,494,2025-10-23,2026-10-22,6,4.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,UPL,3h,494,2025-10-23,2026-10-22,7,7.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,UPL,3h,494,2025-10-23,2026-10-22,9,5.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,TITAN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TITAN,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TITAN,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TITAN,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,PGEL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PGEL,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PGEL,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PGEL,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,TCS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TCS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TCS,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TCS,3h,494,2025-10-23,2026-10-22,6,4.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,SBIN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SBIN,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SBIN,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SBIN,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,POLYCAB,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,POLYCAB,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,POLYCAB,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,POLYCAB,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,PIIND,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PIIND,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PIIND,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,PIIND,3h,494,2025-10-23,2026-10-22,10,5.0,5.0,"{""skipped: position already open / switch day / warm-up edge"": 5}",
+RB_STK_1d_RSI80_BUY,LODHA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LODHA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LODHA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,LODHA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,KPITTECH,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,KPITTECH,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,KPITTECH,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,KPITTECH,3h,494,2025-10-23,2026-10-22,9,7.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,PETRONET,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PETRONET,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PETRONET,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PETRONET,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,NATIONALUM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,NATIONALUM,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,NATIONALUM,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,NATIONALUM,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,JIOFIN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,JIOFIN,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,JIOFIN,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,JIOFIN,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,ITC,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ITC,3h,494,2025-10-23,2026-10-22,6,5.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,ITC,3h,494,2025-10-23,2026-10-22,7,5.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,ITC,3h,494,2025-10-23,2026-10-22,9,6.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,GODREJPROP,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,GODREJPROP,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,GODREJPROP,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,GODREJPROP,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,GODFRYPHLP,1d,139,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,GODFRYPHLP,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,GODFRYPHLP,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,GODFRYPHLP,3h,278,2026-04-01,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,TATASTEEL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TATASTEEL,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TATASTEEL,3h,494,2025-10-23,2026-10-22,6,5.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TATASTEEL,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,APOLLOHOSP,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,APOLLOHOSP,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,APOLLOHOSP,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,APOLLOHOSP,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,MARICO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MARICO,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MARICO,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MARICO,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,KOTAKBANK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,KOTAKBANK,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,KOTAKBANK,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,KOTAKBANK,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TVSMOTOR,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TVSMOTOR,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TVSMOTOR,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TVSMOTOR,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,SRF,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SRF,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SRF,3h,494,2025-10-23,2026-10-22,6,4.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,SRF,3h,494,2025-10-23,2026-10-22,7,4.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,RECLTD,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,RECLTD,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,RECLTD,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,RECLTD,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,PAYTM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PAYTM,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PAYTM,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PAYTM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,MOTILALOFS,1d,139,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MOTILALOFS,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MOTILALOFS,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MOTILALOFS,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,MFSL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MFSL,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MFSL,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MFSL,3h,494,2025-10-23,2026-10-22,10,6.0,4.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,OIL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,OIL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,OIL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,OIL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,MPHASIS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MPHASIS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MPHASIS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MPHASIS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,LICI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LICI,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LICI,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,LICI,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,LAURUSLABS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LAURUSLABS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LAURUSLABS,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,LAURUSLABS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,JSWENERGY,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,JSWENERGY,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,JSWENERGY,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,JSWENERGY,3h,494,2025-10-23,2026-10-22,4,1.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,LUPIN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LUPIN,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LUPIN,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,LUPIN,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,APLAPOLLO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,APLAPOLLO,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,APLAPOLLO,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,APLAPOLLO,3h,494,2025-10-23,2026-10-22,6,2.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,ADANIGREEN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ADANIGREEN,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ADANIGREEN,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ADANIGREEN,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,HYUNDAI,1d,139,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HYUNDAI,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HYUNDAI,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HYUNDAI,3h,278,2026-04-01,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,GODREJCP,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,GODREJCP,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,GODREJCP,3h,494,2025-10-23,2026-10-22,6,4.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,GODREJCP,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,FEDERALBNK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,FEDERALBNK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,FEDERALBNK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,FEDERALBNK,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,FORCEMOT,1d,139,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,FORCEMOT,3h,278,2026-04-01,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,FORCEMOT,3h,278,2026-04-01,2026-10-22,4,3.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,FORCEMOT,3h,278,2026-04-01,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ADANIPORTS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ADANIPORTS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ADANIPORTS,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ADANIPORTS,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,DLF,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,DLF,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,DLF,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,DLF,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,HAVELLS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HAVELLS,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HAVELLS,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HAVELLS,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,HINDPETRO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HINDPETRO,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,HINDPETRO,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HINDPETRO,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,INDUSINDBK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,INDUSINDBK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,INDUSINDBK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,INDUSINDBK,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,JINDALSTEL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,JINDALSTEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,JINDALSTEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,JINDALSTEL,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,CROMPTON,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CROMPTON,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,CROMPTON,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,CROMPTON,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,PATANJALI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PATANJALI,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PATANJALI,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,PATANJALI,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,HDFCBANK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HDFCBANK,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,HDFCBANK,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,HDFCBANK,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,DIXON,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,DIXON,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,DIXON,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,DIXON,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,ATHERENERG,1d,39,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ATHERENERG,3h,78,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_EMA921_SELL,ATHERENERG,3h,78,,,0,,,,fewer than 260 bars in the window
+FH_STK_3h_SELL,ATHERENERG,3h,78,,,0,,,,fewer than 260 bars in the window
+RB_STK_1d_RSI80_BUY,SIEMENS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SIEMENS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SIEMENS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SIEMENS,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,POWERGRID,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,POWERGRID,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,POWERGRID,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,POWERGRID,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,OBEROIRLTY,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,OBEROIRLTY,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,OBEROIRLTY,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,OBEROIRLTY,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,LTM,1d,159,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,LTM,3h,318,2026-02-27,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,LTM,3h,318,2026-02-27,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,LTM,3h,318,2026-02-27,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,INFY,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,INFY,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,INFY,3h,494,2025-10-23,2026-10-22,6,1.0,5.0,"{""next open beyond the 0.5-ATR entry zone"": 4, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,INFY,3h,494,2025-10-23,2026-10-22,8,6.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,TATAPOWER,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TATAPOWER,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,TATAPOWER,3h,494,2025-10-23,2026-10-22,6,5.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,TATAPOWER,3h,494,2025-10-23,2026-10-22,8,4.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,INDIANB,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,INDIANB,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,INDIANB,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,INDIANB,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ICICIBANK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ICICIBANK,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,ICICIBANK,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ICICIBANK,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,HINDZINC,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HINDZINC,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HINDZINC,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HINDZINC,3h,494,2025-10-23,2026-10-22,7,4.0,3.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,BHARATFORG,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BHARATFORG,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BHARATFORG,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BHARATFORG,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ENRIN,1d,15,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ENRIN,3h,30,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_EMA921_SELL,ENRIN,3h,30,,,0,,,,fewer than 260 bars in the window
+FH_STK_3h_SELL,ENRIN,3h,30,,,0,,,,fewer than 260 bars in the window
+RB_STK_1d_RSI80_BUY,COLPAL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,COLPAL,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,COLPAL,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,COLPAL,3h,494,2025-10-23,2026-10-22,6,4.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,COALINDIA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,COALINDIA,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,COALINDIA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,COALINDIA,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,ICICIPRULI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ICICIPRULI,3h,494,2025-10-23,2026-10-22,7,7.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ICICIPRULI,3h,494,2025-10-23,2026-10-22,7,5.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ICICIPRULI,3h,494,2025-10-23,2026-10-22,10,6.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,BAJFINANCE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BAJFINANCE,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BAJFINANCE,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BAJFINANCE,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TRENT,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TRENT,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TRENT,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TRENT,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,UNITDSPR,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,UNITDSPR,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,UNITDSPR,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,UNITDSPR,3h,494,2025-10-23,2026-10-22,5,2.0,3.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,DIVISLAB,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,DIVISLAB,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,DIVISLAB,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,DIVISLAB,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ETERNAL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ETERNAL,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ETERNAL,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,ETERNAL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BOSCHLTD,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BOSCHLTD,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BOSCHLTD,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BOSCHLTD,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BRITANNIA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BRITANNIA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BRITANNIA,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BRITANNIA,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,UNOMINDA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,UNOMINDA,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,UNOMINDA,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,UNOMINDA,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,M&M,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,M&M,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,M&M,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,M&M,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,HCLTECH,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HCLTECH,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HCLTECH,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HCLTECH,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,JSWSTEEL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,JSWSTEEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,JSWSTEEL,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,JSWSTEEL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,NAUKRI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,NAUKRI,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,NAUKRI,3h,494,2025-10-23,2026-10-22,5,1.0,4.0,"{""next open beyond the 0.5-ATR entry zone"": 3, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,NAUKRI,3h,494,2025-10-23,2026-10-22,3,1.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,OFSS,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,OFSS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,OFSS,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,OFSS,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,PAGEIND,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PAGEIND,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PAGEIND,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PAGEIND,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,VEDL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,VEDL,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,VEDL,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,VEDL,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,PERSISTENT,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PERSISTENT,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PERSISTENT,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PERSISTENT,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,SUNPHARMA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SUNPHARMA,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SUNPHARMA,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SUNPHARMA,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,MUTHOOTFIN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MUTHOOTFIN,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MUTHOOTFIN,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MUTHOOTFIN,3h,494,2025-10-23,2026-10-22,8,6.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,AUBANK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,AUBANK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,AUBANK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,AUBANK,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ALKEM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ALKEM,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ALKEM,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ALKEM,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,ANANDRATHI,1d,15,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ANANDRATHI,3h,30,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_EMA921_SELL,ANANDRATHI,3h,30,,,0,,,,fewer than 260 bars in the window
+FH_STK_3h_SELL,ANANDRATHI,3h,30,,,0,,,,fewer than 260 bars in the window
+RB_STK_1d_RSI80_BUY,GRASIM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,GRASIM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,GRASIM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,GRASIM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,EICHERMOT,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,EICHERMOT,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,EICHERMOT,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,EICHERMOT,3h,494,2025-10-23,2026-10-22,7,4.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,CIPLA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CIPLA,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,CIPLA,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,CIPLA,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,DABUR,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,DABUR,3h,494,2025-10-23,2026-10-22,5,5.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,DABUR,3h,494,2025-10-23,2026-10-22,4,4.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,DABUR,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,GVT&D,1d,102,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,GVT&D,3h,204,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_EMA921_SELL,GVT&D,3h,204,,,0,,,,fewer than 260 bars in the window
+FH_STK_3h_SELL,GVT&D,3h,204,,,0,,,,fewer than 260 bars in the window
+RB_STK_1d_RSI80_BUY,COCHINSHIP,1d,139,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,COCHINSHIP,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,COCHINSHIP,3h,278,2026-04-01,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,COCHINSHIP,3h,278,2026-04-01,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,DMART,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,DMART,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,DMART,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,DMART,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,CUMMINSIND,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CUMMINSIND,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,CUMMINSIND,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,CUMMINSIND,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,HEROMOTOCO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HEROMOTOCO,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,HEROMOTOCO,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HEROMOTOCO,3h,494,2025-10-23,2026-10-22,5,5.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,INDHOTEL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,INDHOTEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,INDHOTEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,INDHOTEL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,CHOLAFIN,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,CHOLAFIN,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,CHOLAFIN,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,CHOLAFIN,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BAJAJFINSV,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BAJAJFINSV,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,BAJAJFINSV,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BAJAJFINSV,3h,494,2025-10-23,2026-10-22,6,3.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,AXISBANK,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,AXISBANK,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,AXISBANK,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,AXISBANK,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,INDIGO,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,INDIGO,3h,494,2025-10-23,2026-10-22,2,0.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,INDIGO,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,INDIGO,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,HAL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HAL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HAL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HAL,3h,494,2025-10-23,2026-10-22,3,1.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,AUROPHARMA,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,AUROPHARMA,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,AUROPHARMA,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,AUROPHARMA,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BIOCON,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BIOCON,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BIOCON,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BIOCON,3h,494,2025-10-23,2026-10-22,6,3.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,BDL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BDL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BDL,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BDL,3h,494,2025-10-23,2026-10-22,6,3.0,3.0,"{""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,ZYDUSLIFE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ZYDUSLIFE,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,ZYDUSLIFE,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ZYDUSLIFE,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,TORNTPHARM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,TORNTPHARM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,TORNTPHARM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,TORNTPHARM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,SUPREMEIND,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SUPREMEIND,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_3h_EMA921_SELL,SUPREMEIND,3h,494,2025-10-23,2026-10-22,5,4.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,SUPREMEIND,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,SHREECEM,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,SHREECEM,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,SHREECEM,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,SHREECEM,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,BHEL,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,BHEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,BHEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,BHEL,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ONGC,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ONGC,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,ONGC,3h,494,2025-10-23,2026-10-22,4,2.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 1}",
+FH_STK_3h_SELL,ONGC,3h,494,2025-10-23,2026-10-22,7,2.0,5.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 3}",
+RB_STK_1d_RSI80_BUY,PFC,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,PFC,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,PFC,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,PFC,3h,494,2025-10-23,2026-10-22,6,4.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,MAXHEALTH,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MAXHEALTH,3h,494,2025-10-23,2026-10-22,1,0.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MAXHEALTH,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MAXHEALTH,3h,494,2025-10-23,2026-10-22,3,1.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+RB_STK_1d_RSI80_BUY,MARUTI,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MARUTI,3h,494,2025-10-23,2026-10-22,4,3.0,1.0,"{""next open beyond the 0.5-ATR entry zone"": 1, ""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MARUTI,3h,494,2025-10-23,2026-10-22,5,3.0,2.0,"{""next open beyond the 0.5-ATR entry zone"": 2, ""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MARUTI,3h,494,2025-10-23,2026-10-22,5,5.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,ANGELONE,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,ANGELONE,3h,494,2025-10-23,2026-10-22,3,2.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,ANGELONE,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,ANGELONE,3h,494,2025-10-23,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_1d_RSI80_BUY,MANKIND,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,MANKIND,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,MANKIND,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,MANKIND,3h,494,2025-10-23,2026-10-22,0,0.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_1d_RSI80_BUY,HINDUNILVR,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,HINDUNILVR,3h,494,2025-10-23,2026-10-22,2,2.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,HINDUNILVR,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,HINDUNILVR,3h,494,2025-10-23,2026-10-22,9,5.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,NTPC,1d,247,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,NTPC,3h,494,2025-10-23,2026-10-22,1,1.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+RB_STK_3h_EMA921_SELL,NTPC,3h,494,2025-10-23,2026-10-22,3,3.0,0.0,"{""skipped: position already open / switch day / warm-up edge"": 0}",
+FH_STK_3h_SELL,NTPC,3h,494,2025-10-23,2026-10-22,8,4.0,4.0,"{""skipped: position already open / switch day / warm-up edge"": 4}",
+RB_STK_1d_RSI80_BUY,WAAREEENER,1d,200,,,0,,,,fewer than 260 bars in the window
+RB_STK_3h_MACD0_SELL,WAAREEENER,3h,400,2025-12-31,2026-10-22,2,1.0,1.0,"{""skipped: position already open / switch day / warm-up edge"": 1}",
+RB_STK_3h_EMA921_SELL,WAAREEENER,3h,400,2025-12-31,2026-10-22,4,2.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",
+FH_STK_3h_SELL,WAAREEENER,3h,400,2025-12-31,2026-10-22,7,5.0,2.0,"{""skipped: position already open / switch day / warm-up edge"": 2}",

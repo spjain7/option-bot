@@ -29,8 +29,11 @@ def clip(df, market, col="time"):
 
 
 def period(ts, market):
-    w = get(market); ts = pd.to_datetime(ts)
-    if (ts < w["start"]).any():
+    """DEV / VALID / OOS label for each timestamp (positional, never index-aligned). Raises on any pre-window date.
+    (7-Nov fix: the first version built a pandas Series and used .mask with the caller's Series, which aligned on the
+    caller's index; with a non-0..n-1 index the labels were wrong. Caught by tests/test_mcxe004.test_window_no_leakage.)"""
+    import numpy as np
+    w = get(market); t = np.asarray(pd.to_datetime(pd.Series(ts)).values)
+    if (t < np.datetime64(w["start"])).any():
         raise ValueError("date before the 1-year window start – forbidden by the MCXE-004 rule")
-    return pd.Series(pd.NA, index=range(len(ts))).mask(ts < w["valid_from"], "DEV") \
-        .mask((ts >= w["valid_from"]) & (ts < w["oos_from"]), "VALID").mask(ts >= w["oos_from"], "OOS").values
+    return np.where(t < np.datetime64(w["valid_from"]), "DEV", np.where(t < np.datetime64(w["oos_from"]), "VALID", "OOS"))
