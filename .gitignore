@@ -49,3 +49,5 @@ research/mcxe003/results/events/
 research/mcxe005/results/trades_*.parquet
 research/mcxe006/cache/
 research/mcxe006/results/trades_*.parquet
+research/mcxe007/cache/
+research/mcxe007/results/trades_*.parquet
