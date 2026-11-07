@@ -46,3 +46,13 @@
 
   - Nothing qualifies.
   - Stacking filters cuts trades 50–85 % and does not improve the rules. On MCX 1h BUY it makes them worse.
+
+## MCXE-011c: RSI crossing its 14-SMA + VWAP (owner idea; `rsi_ma_vwap.py`, `RSI_MA_VWAP_RESULTS.csv`; exploratory)
+- **Tested:** 48 runs = 4 markets (MCX 15m, MCX 1h, stock futures 1h, index futures 1h) × BUY / SELL × 3 filter sets (base / +VWAP / +VWAP + RSI zone) × 2 exits (short 1.5 ATR / 2R / ~1 session; trend 2 ATR + 4 ATR trail).
+- **No candidate is good enough.**
+  - **Short exits:** negative everywhere after costs (−0.01 to −0.50R in VALID).
+  - **Stock and index futures:** negative in both periods.
+- **Best row:** MCX 1h BUY, trend exit, + VWAP + RSI > 50.
+  - DEV +0.70R (171 trades), **VALID only +0.05R** (91 trades, 29.7 % won).
+  - It technically passes the freeze bar and beats the random p95, but its VALID edge is about zero, and it is weaker than H1.12L (VALID +0.25R in the same engine).
+- **VWAP:** it did nudge the RSI-cross rule upwards on MCX (VALID −0.04 → +0.01 → +0.05R), unlike on breakouts, but not enough to matter.
