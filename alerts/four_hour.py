@@ -292,8 +292,8 @@ def track(state, msgs, api, now, is_open):
             continue
         why = px = None
         if ltp > 0 and s_ * (ltp - r["stop"]) <= 0:
-            why, px = "stop-loss", r["stop"]
-        elif ltp > 0 and s_ * (ltp - r["target"]) >= 0:
+            why, px = ("trailing stop" if r.get("trailed") else "stop-loss"), r["stop"]
+        elif ltp > 0 and r.get("target") is not None and s_ * (ltp - r["target"]) >= 0:
             why, px = "🎯 target", r["target"]
         elif ltp > 0 and len(r["days"]) > r["max_days"]:
             why, px = f"time exit ({r['max_days']} sessions)", ltp
