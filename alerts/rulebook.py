@@ -88,8 +88,12 @@ RULES["RB_MCX_1h_BO20X_BUY_EXP"] = dict(
 for _mkt in ("MCX", "INDEX"):
     for _side in ("BUY", "SELL"):
         RULES[f"RB_{'MCX' if _mkt == 'MCX' else 'IDX'}_1h_OIBO_{_side}_EXP"] = dict(
-            _r(_mkt, "1h", "BO", "N20 vol2.5 x", "none", _side, 1.0, 3.0, 40, 0, 0, 0.0, "UNTESTED (owner rule, 7-Nov-2026)", "EXP",
-               "🧪 EXPERIMENTAL (UNTESTED) – 1-hour OI breakout"), oi=True, sr_room=True, wick_max=0.5, experimental=True, untested=True)
+            _r(_mkt, "1h", "BO", "N20 vol2.5 x", "none", _side, 1.5, 2.0, 40, 0, 0, 0.0, "UNTESTED (owner rule, 7-Nov-2026)", "EXP",
+               "🧪 EXPERIMENTAL (UNTESTED) – 1-hour OI breakout"), oi=True, sr_room=True, wick_max=0.5, experimental=True, untested=True,
+            sr_target=True, min_rr=1.2, version="OIBO-v2 (7-Nov: SL 1.5 ATR beyond the breakout level, S/R target capped at 3 ATR)")
+# v2 (7-Nov, owner brief "SL/target from support/resistance"): research/mcxe012 (MCX 1h, DEV/VALID, no OI history):
+# SL 1 ATR stopped 63-73 % of trades; SL 1.5 ATR + S/R-capped 3-ATR target: DEV +0.27 -> +0.34R, VALID -0.08 -> +0.01R,
+# stop-outs 63 -> 47 %; swing-low / breakout-candle stops were worse. Small samples (36 / 13) – still EXPERIMENTAL.
 
 
 
@@ -342,6 +346,10 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
             why_not = _owner_checks(rule, sig, feats[rule["tf"]], daily, c, now, oi)
             if why_not:
                 FN.note(state, rid, "rejected", why_not, key=fk, now=now); out[rid] = why_not; continue
+        if rule.get("experimental") and rule["status"] == "LIVE":                  # 7-Nov: experimental vs experimental
+            why_x = _exp_conflict(state, name, rule["side"])
+            if why_x:
+                FN.note(state, rid, "rejected", why_x, key=fk, now=now); out[rid] = why_x; continue
         shadow = rule["status"] != "LIVE"
         clash = None if shadow else ST.conflict(state, name, rule["side"], rule["tf"])
         if clash:
@@ -365,6 +373,10 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
             FN.note(state, rid, "rejected", plan["reason"], key=fk, now=now); out[rid] = plan["reason"]; continue
         s_ = 1 if rule["side"] == "BUY" else -1
         t = plan["tick"]
+        if rule.get("sr_target"):                                               # 7-Nov: S/R target, SL beyond structure
+            why_sr = _sr_plan(rule, sig, plan, t)
+            if why_sr:
+                FN.note(state, rid, "rejected", why_sr, key=fk, now=now); out[rid] = why_sr; continue
         t1 = plan["entry"] + s_ * plan["risk_unit"]
         cpd = CANDLES_PER_DAY["MCX" if ex == "MCX" else "NFO"][rule["tf"]]
         max_days = max(1, int(np.ceil(rule["maxh"] / cpd)))
@@ -376,6 +388,9 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
         if rule.get("trail"):                                 # 7-Nov H1.12L: trailing stop on candle closes, no fixed target
             rec.update(trail_atr=float(rule["trail"]), atr=float(sig["atr"]), best=float(plan["entry"]), trailed=False,
                        trail_tf=rule["tf"], trail_from=last, trail_noted=float(plan["sl"]))
+        if rule.get("untested"):                              # 7-Nov: forward-tracking fields (strategy, OI, volume, levels)
+            rec.update(version=rule.get("version"), vol_x=sig.get("vol_x"), oi_txt=sig.get("oi_txt"), sr_level=sig.get("sr_level"),
+                       brk_level=sig.get("brk_level"), target_basis=plan.get("target_basis"), quote_time=plan.get("quote_time"))
         st["open"].append(rec)
         if shadow:
             FN.note(state, rid, "shadow", key=fk, now=now); out[rid] = "shadow"
@@ -411,7 +426,9 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
                sl=plan["sl"], target=plan["target"], tick=t, lot=c.get("lot"), mult=mult, time=str(now))
         if rule.get("experimental") and state.get("ledger"):   # own category: strategies.conflict and the scorecard only read cat == FUTURES
             state["ledger"][-1].update(type=f"{TF_TXT[rule['tf']].capitalize()} BO (EXPERIMENTAL)", cat="FUTURES (EXPERIMENTAL)",
-                                       experimental=True)
+                                       experimental=True, strategy=rid, version=rule.get("version"),
+                                       **({k: rec.get(k) for k in ("vol_x", "oi_txt", "sr_level", "brk_level", "target_basis", "quote_time")}
+                                          if rule.get("untested") else {}))
         state["day"]["alerts"] = state["day"].get("alerts", 0) + 1
         FN.note(state, rid, "sent", key=fk, now=now)
         out[rid] = "SENT"
@@ -623,11 +640,44 @@ def _owner_checks(rule, sig, fr, daily, c, now, oi):
         sig["oi_txt"] = f"OI {pct:+.2f}% with price {'up' if s_ > 0 else 'down'} → {'Long' if s_ > 0 else 'Short'} build-up ({src})"
     if rule.get("sr_room"):
         lvl = _levels(fr, daily, s_, sig["close"])
-        need = rule["r"] * rule["k"] * sig["atr"]
-        if lvl is not None and abs(lvl - sig["close"]) < need:
-            return f"{'resistance' if s_ > 0 else 'support'} {lvl:,.2f} within the {rule['r']:g}R target"
-        sig["room_txt"] = ("no swing level ahead" if lvl is None else
-                           f"next {'resistance' if s_ > 0 else 'support'} {lvl:,.2f} is beyond the {rule['r']:g}R target")
+        sig["sr_level"] = lvl
+        h, l = fr["high"].astype(float), fr["low"].astype(float)
+        sig["brk_level"] = float((h.shift(1).rolling(20).max() if s_ > 0 else l.shift(1).rolling(20).min()).iloc[-1])
+        if not rule.get("sr_target"):
+            need = rule["r"] * rule["k"] * sig["atr"]
+            if lvl is not None and abs(lvl - sig["close"]) < need:
+                return f"{'resistance' if s_ > 0 else 'support'} {lvl:,.2f} within the {rule['r']:g}R target"
+        sig["room_txt"] = "no swing level ahead" if lvl is None else f"next {'resistance' if s_ > 0 else 'support'} {lvl:,.2f}"
+    return None
+
+
+def _exp_conflict(state, name, side):
+    """experimental calls never contradict or duplicate each other on one instrument (existing calls already block them
+    through strategies.conflict)."""
+    for r in state.get("ledger", []):
+        if r.get("experimental") and r.get("status") == "OPEN" and r.get("name") == name:
+            return (f"conflicts with open experimental {r.get('type', '')} {r.get('side')}" if r.get("side") != side
+                    else f"duplicate – experimental {r.get('type', '')} {side} already open")
+    return None
+
+
+def _sr_plan(rule, sig, plan, t):
+    """S/R target: the nearest swing level beyond entry (minus 0.1 ATR) when it is closer than the 3-ATR reference target;
+    reject when the room gives reward/risk < min_rr or the SL is not beyond the breakout level. -> reason or None."""
+    s_ = 1 if rule["side"] == "BUY" else -1
+    a = sig["atr"]; e, sl = plan["entry"], plan["sl"]; risk = s_ * (e - sl)
+    if sig.get("brk_level") is not None and s_ * (sl - sig["brk_level"]) >= 0:
+        return f"SL {TP.fmt(sl, t)} not beyond the breakout level {TP.fmt(sig['brk_level'], t)} – chasing"
+    lvl = sig.get("sr_level"); plan["target_basis"] = f"3 ATR reference ({rule['r']:g}R)"
+    if lvl is not None and s_ * (lvl - e) > 0 and s_ * ((lvl - s_ * 0.1 * a) - plan["target"]) < 0:
+        nt = TP.tick_round(lvl - s_ * 0.1 * a, t, "down" if s_ > 0 else "up")
+        rr = s_ * (nt - e) / risk if risk > 0 else 0
+        if rr < rule.get("min_rr", 1.2):
+            return f"{'resistance' if s_ > 0 else 'support'} {TP.fmt(lvl, t)} leaves only {rr:.2f}R of room (min {rule.get('min_rr', 1.2)})"
+        plan["target"] = nt; plan["rr"] = round(rr, 2)
+        plan["target_basis"] = f"{'resistance' if s_ > 0 else 'support'} {TP.fmt(lvl, t)} (before the 3-ATR target)"
+    elif s_ * (lvl - e) <= 0 if lvl is not None else False:
+        return f"price already at / past the {'resistance' if s_ > 0 else 'support'} {TP.fmt(lvl, t)}"
     return None
 
 
@@ -637,10 +687,10 @@ def _untested_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_clo
         "━━━━━━━━━━━━━━",
         "🧪 EXPERIMENTAL – UNTESTED RULE (no backtest). Trade small or just observe.",
         f"Entry   : {TP.fmt(plan['entry'], t)}  (no chase beyond {TP.fmt(plan['entry'] + s_ * 0.5 * sig['atr'], t)})",
-        f"SL      : {TP.fmt(plan['sl'], t)}  ({rule['k']:g} ATR – tight)",
+        f"SL      : {TP.fmt(plan['sl'], t)}  ({rule['k']:g} ATR · beyond the breakout level {TP.fmt(sig.get('brk_level'), t) if sig.get('brk_level') else '-'})",
         f"T1      : {TP.fmt(t1, t)}  (1R)",
-        f"T2      : {TP.fmt(plan['target'], t)}  ({rule['r']:g}R – exit here)",
-        f"R:R     : 1:{rule['r']:g} · risk ₹{plan['risk_lot']:,.0f} per lot",
+        f"T2      : {TP.fmt(plan['target'], t)}  ({plan.get('target_basis', '')} – exit here)",
+        f"R:R     : 1:{plan.get('rr', rule['r']):g} · risk ₹{plan['risk_lot']:,.0f} per lot",
         f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
         f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")])
     why = "\n".join([
@@ -648,7 +698,8 @@ def _untested_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_clo
         f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b %H:%M} candle – first close {'above the 20-candle high' if s_ > 0 else 'below the 20-candle low'}",
         f"• Volume  : {sig['vol_x']:.1f}× the 20-candle average (rule ≥ 2.5×)" if sig.get("vol_x") else "• Volume  : ≥ 2.5× (rule)",
         f"• OI      : {sig.get('oi_txt') or '-'}",
-        f"• Room    : {sig.get('room_txt') or '-'} · no rejection wick",
+        f"• Levels  : {sig.get('room_txt') or '-'} · target basis: {plan.get('target_basis', '-')} · no rejection wick",
+        f"• Version : {rule.get('version', '-')}",
         f"• Exit    : SL or T2 · time exit after {rule['maxh']} candles (~{max_days} sessions) · exit 1 session before expiry",
         "• Evidence: NONE – added without a backtest at the owner's request. Results are logged.",
         WARN])
