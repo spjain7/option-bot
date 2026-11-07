@@ -11,15 +11,17 @@ Output: research/data/angel/<exch>/<SYMBOL>_<interval>.csv and research/data/ang
 Run it through the manual "Research data" workflow (same concurrency group as the live bot, so it
 never competes with live alerts for the API quota).
 """
-import sys, time
+import os, sys, time
 from pathlib import Path
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 OUT = ROOT / "research" / "data" / "angel"
-LIMIT_DAYS = {"ONE_DAY": 1900, "ONE_HOUR": 390, "FIFTEEN_MINUTE": 190}   # Angel per-request window limits (kept under)
-MAX_PAGES = {"ONE_DAY": 4, "ONE_HOUR": 4, "FIFTEEN_MINUTE": 12}       # ~20 y daily / ~4 y hourly / ~6 y 15-min
+LIMIT_DAYS = {"ONE_DAY": 1900, "ONE_HOUR": 390, "FIFTEEN_MINUTE": 190, "FIVE_MINUTE": 95, "THREE_MINUTE": 58,
+              "ONE_MINUTE": 28}                                    # Angel per-request window limits (kept under)
+MAX_PAGES = {"ONE_DAY": 4, "ONE_HOUR": 4, "FIFTEEN_MINUTE": 12,       # ~20 y daily / ~4 y hourly / ~6 y 15-min
+             "FIVE_MINUTE": 17, "THREE_MINUTE": 26, "ONE_MINUTE": 14}  # 3-Nov: ~4.4 y 5-min / ~4.1 y 3-min / ~1 y 1-min
 
 
 def contracts(master, names):
@@ -39,8 +41,20 @@ def fetch_all(api, master, names, intervals=("ONE_DAY", "ONE_HOUR")):
             # Angel serves a vendor-stitched FRONT-MONTH history on the nearest contract's token
             # (verified against NSE bhavcopy: same close as the front contract on 96% of days).
             # Page backwards for that token; other contracts only have their own short life.
+            if iv in ("FIVE_MINUTE", "THREE_MINUTE", "ONE_MINUTE") and str(c["token"]) not in nearest:
+                continue                                  # intraday research: front-month stitched history only
             pages = MAX_PAGES[iv] if str(c["token"]) in nearest else 1
             parts, to = [], now
+            fp = OUT / c["exch_seg"] / f"{c['symbol']}_{iv}.csv"
+            if os.getenv("RESEARCH_INCREMENTAL") == "1" and fp.exists():
+                # MCXE-009 incremental mode (research branch only): fetch from the last stored bar and append –
+                # one request per contract/interval instead of re-downloading the full history
+                prev = pd.read_csv(fp, parse_dates=["time"])
+                part = api.candles(c["exch_seg"], c["token"], iv, prev["time"].max() - pd.Timedelta(days=1), to)
+                pages = 0
+                if part is not None and not part.empty:
+                    parts.append(part)
+                parts.append(prev[["time", "open", "high", "low", "close", "volume"]])
             for _ in range(pages):
                 frm = to - pd.Timedelta(days=LIMIT_DAYS[iv])
                 part = api.candles(c["exch_seg"], c["token"], iv, frm, to)

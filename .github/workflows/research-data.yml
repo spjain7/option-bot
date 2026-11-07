@@ -11,9 +11,15 @@ on:
       names:
         description: "Only these instruments, comma separated (empty = all)"
         default: ""
+      dataset:
+        description: "futures (MCX + index futures) or nse_eq (NSE cash equities: Nifty 500 daily + liquid stocks 5-min)"
+        default: "futures"
       intervals:
-        description: "Candle intervals, comma separated (ONE_DAY, ONE_HOUR, FIFTEEN_MINUTE)"
+        description: "Candle intervals, comma separated (ONE_DAY, ONE_HOUR, FIFTEEN_MINUTE, FIVE_MINUTE, THREE_MINUTE, ONE_MINUTE)"
         default: "ONE_DAY,ONE_HOUR"
+      incremental:
+        description: "1 = only fetch bars after the last stored bar and append (MCXE-009, research branch)"
+        default: "0"
 
 concurrency:
   group: option-bot
@@ -25,7 +31,7 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,8 +42,13 @@ jobs:
       - name: Restore earlier research data (for partial re-fetch)
         run: |
           git fetch -q origin research-data && git archive FETCH_HEAD research/data/angel | tar -x -C . || true
+      - name: Wait until the live loop's day is over (00:25 IST) – never compete with live alerts for the Angel quota
+        run: |
+          m=$(( 10#$(TZ=Asia/Kolkata date +%H) * 60 + 10#$(TZ=Asia/Kolkata date +%M) ))
+          if [ "$m" -ge 500 ]; then s=$(( (1440 - m + 25) * 60 )); if [ "$s" -gt 14400 ]; then echo "::error::would wait $((s/60)) min – longer than the job limit. Start this run between 00:25 and 08:20 IST (or after ~20:25 IST)."; exit 1; fi; echo "waiting $((s/60)) min"; sleep "$s"; elif [ "$m" -lt 25 ]; then sleep $(( (25 - m) * 60 )); fi
       - name: Fetch Angel history (research only)
-        run: python -m research.adapters.angel_hist
+        run: |
+          if [ "${{ github.event.inputs.dataset }}" = "nse_eq" ]; then python -m research.adapters.angel_eq; else python -m research.adapters.angel_hist; fi
         env:
           ANGEL_API_KEY:     ${{ secrets.ANGEL_API_KEY }}
           ANGEL_CLIENT_ID:   ${{ secrets.ANGEL_CLIENT_ID }}
@@ -45,7 +56,9 @@ jobs:
           ANGEL_TOTP_SECRET: ${{ secrets.ANGEL_TOTP_SECRET }}
           RESEARCH_NAMES:    ${{ github.event.inputs.names }}
           RESEARCH_INTERVALS: ${{ github.event.inputs.intervals || 'ONE_DAY,ONE_HOUR' }}
-      - name: Push to research-data branch
+          RESEARCH_INCREMENTAL: ${{ github.event.inputs.incremental || '0' }}
+      - name: Push to research-data branch (also after a timeout, so partial downloads are kept – fetcher is resumable)
+        if: always() && hashFiles('research/data/angel/**') != ''
         run: |
           mkdir -p /tmp/out && cp -r research/data/angel /tmp/out/
           git config user.name "option-bot research"

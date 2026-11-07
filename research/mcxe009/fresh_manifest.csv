@@ -1,0 +1,9 @@
+synced_at,source,branch,timeframe,instrument,expiry,first,last,rows,action
+2026-11-07 16:26 IST,MCX bhavcopy (mcx-bhav.yml),research-mcx-bhav@f5b9825,1D,all MCX contracts,all,20261106,20261106,15903,imported
+2026-11-07 16:26 IST,"Angel candles (research-data.yml, manual)",research-data@5a2258e,5m,CRUDEOIL,2026-11-19 00:00:00,2023-09-27 18:45:00,2026-11-03 23:50:00,136000,up to date (no newer bars on branch)
+2026-11-07 16:26 IST,"Angel candles (research-data.yml, manual)",research-data@5a2258e,5m,NATURALGAS,2026-11-24 00:00:00,2023-09-29 12:00:00,2026-11-03 23:50:00,136000,up to date (no newer bars on branch)
+2026-11-07 16:26 IST,"Angel candles (research-data.yml, manual)",research-data@5a2258e,5m,GOLD,2026-12-04 00:00:00,2023-06-22 16:25:00,2026-11-03 23:50:00,136000,up to date (no newer bars on branch)
+2026-11-07 16:26 IST,"Angel candles (research-data.yml, manual)",research-data@5a2258e,5m,SILVER,2026-12-04 00:00:00,2023-07-24 22:10:00,2026-11-03 23:50:00,136000,up to date (no newer bars on branch)
+2026-11-07 16:26 IST,"Angel candles (research-data.yml, manual)",research-data@5a2258e,5m,COPPER,2026-11-30 00:00:00,2023-04-19 12:25:00,2026-11-03 23:50:00,136000,up to date (no newer bars on branch)
+2026-11-07 16:26 IST,"Angel candles (research-data.yml, manual)",research-data@5a2258e,5m,ZINC,2026-11-30 00:00:00,2023-02-03 18:25:00,2026-11-03 23:50:00,136000,up to date (no newer bars on branch)
+2026-11-07 16:26 IST,"Angel candles (research-data.yml, manual)",research-data@5a2258e,5m,ALUMINIUM,2026-11-30 00:00:00,2022-11-04 14:20:00,2026-11-03 23:50:00,135111,up to date (no newer bars on branch)
