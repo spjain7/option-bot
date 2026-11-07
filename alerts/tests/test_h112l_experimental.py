@@ -26,7 +26,8 @@ try:
     src = subprocess.check_output(["git", "-C", str(ROOT), "show", "bc3153e6:alerts/rulebook.py"], text=True)
     base = types.ModuleType("rb_base"); base.__dict__["__name__"] = "rb_base"
     exec(compile(src, "rb_base", "exec"), base.__dict__)
-    check(set(RB.RULES) - {RID} == set(base.RULES) and all(RB.RULES[k] == base.RULES[k] for k in base.RULES),
+    added = {RID} | {k for k in RB.RULES if "OIBO" in k}            # 7-Nov: owner OI rules added later (own test)
+    check(set(RB.RULES) - added == set(base.RULES) and all(RB.RULES[k] == base.RULES[k] for k in base.RULES),
           "all 16 existing rulebook rules unchanged")
     r = np.random.default_rng(1)
     n = 600; c = 100 + np.cumsum(r.normal(0, 1, n))

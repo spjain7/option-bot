@@ -80,6 +80,17 @@ RULES["RB_MCX_1h_BO20X_BUY_EXP"] = dict(
        "DEV +0.58 / VALID +0.40 / OOS +0.31 (1-year windows; OOS CI includes 0)", "EXP",
        "🧪 EXPERIMENTAL – 1-hour 20-candle breakout (H1.12L)"), trail=4.0, experimental=True)
 
+# 7-Nov-2026 (owner: "Add without any check: 1 hour base, OI based call, volume must 2.5x normal, no nearby resistance /
+# support or reversing from support / resistance, low SL for higher target"). UNTESTED – added without a backtest at the
+# owner's request; every message says so. Rule: first 1h close beyond the 20-candle high/low, that candle's volume >= 2.5x
+# the 20-candle average, OI build-up during the signal hour in the trade direction, no swing / daily level within the 3R
+# target, no rejection wick (> 50 % of the candle range against the trade). SL 1 ATR, target 3R, time exit 40 candles.
+for _mkt in ("MCX", "INDEX"):
+    for _side in ("BUY", "SELL"):
+        RULES[f"RB_{'MCX' if _mkt == 'MCX' else 'IDX'}_1h_OIBO_{_side}_EXP"] = dict(
+            _r(_mkt, "1h", "BO", "N20 vol2.5 x", "none", _side, 1.0, 3.0, 40, 0, 0, 0.0, "UNTESTED (owner rule, 7-Nov-2026)", "EXP",
+               "🧪 EXPERIMENTAL (UNTESTED) – 1-hour OI breakout"), oi=True, sr_room=True, wick_max=0.5, experimental=True, untested=True)
+
 
 
 # ── candles ──────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -278,7 +289,7 @@ def evaluate(f, rule, dtr):
             return dict(rejected=f"daily trend not {'up' if side > 0 else 'down'}")
     if "VOL" in flt and not float(f["volx"].iloc[i]) >= 1.5:
         return dict(rejected="volume < 1.5x")
-    return dict(candle=str(f["time"].iloc[i]), close=c, high=float(f["high"].iloc[i]), low=float(f["low"].iloc[i]), atr=float(f["atr"].iloc[i]), adx=float(f["adx"].iloc[i]),
+    return dict(candle=str(f["time"].iloc[i]), close=c, open=float(f["open"].iloc[i]), high=float(f["high"].iloc[i]), low=float(f["low"].iloc[i]), atr=float(f["atr"].iloc[i]), adx=float(f["adx"].iloc[i]),
                 rsi=float(f["rsi"].iloc[i]), vol_x=float(f["volx"].iloc[i]) if f["volx"].iloc[i] == f["volx"].iloc[i] else None)
 
 
@@ -296,7 +307,7 @@ def describe(rule):
 
 
 # ── live hook ────────────────────────────────────────────────────────────────────────────────────────────────────────
-def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_close=False):
+def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_close=False, oi=None):
     """frames: {tf: completed candles}. Checks every rule of this market. Returns {rule_id: outcome}."""
     from alerts import funnel as FN, four_hour as FH, strategies as ST
     out = {}
@@ -327,6 +338,10 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
         FN.note(state, rid, "signal", key=fk, now=now)
         if sig.get("rejected"):
             FN.note(state, rid, "rejected", sig["rejected"], key=fk, now=now); out[rid] = sig["rejected"]; continue
+        if rule.get("oi") or rule.get("sr_room") or rule.get("wick_max"):     # 7-Nov owner OI-breakout rule (untested)
+            why_not = _owner_checks(rule, sig, feats[rule["tf"]], daily, c, now, oi)
+            if why_not:
+                FN.note(state, rid, "rejected", why_not, key=fk, now=now); out[rid] = why_not; continue
         shadow = rule["status"] != "LIVE"
         clash = None if shadow else ST.conflict(state, name, rule["side"], rule["tf"])
         if clash:
@@ -369,6 +384,8 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
         rr = rule["r"]
         if rule.get("trail"):
             msgs.extend(_trail_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_close, max_days))
+        elif rule.get("untested"):
+            msgs.extend(_untested_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_close, max_days, t1, ex))
         else:
           msgs.append("\n".join([
               f"{'🟢 BUY' if s_ > 0 else '🔴 SELL'}  {name} FUT  ·  {TF_TXT[rule['tf']].upper()} · {rule.get('label', rid)}",
@@ -548,3 +565,91 @@ def _trail_update(state, msgs, st, name, frames):
                             f"{TP.fmt(r['stop'], r.get('tick'))} (best close {TP.fmt(r['best'], r.get('tick'))})")
                 r["trail_noted"] = r["stop"]
         r["trail_from"] = str(new["time"].iloc[-1])
+
+
+# ─────────────── 7-Nov-2026: owner OI-breakout rule (UNTESTED) ───────────────
+def _oi_hour(c, sig, now, oi):
+    """OI change during the signal candle from the live 1-minute WebSocket bars (wsbars); fallback: the engine's quote
+    reading (10-40 min). -> (pct or None, source). Never invented: None when no OI is available."""
+    try:
+        import wsbars as WB
+        t0 = pd.Timestamp(sig["candle"]); t1 = t0 + pd.Timedelta(minutes=60)
+        m = WB.minutes(str(c["token"]), t0.normalize())
+        if m is not None and len(m) and "oi" in m:
+            m = m[pd.to_numeric(m["oi"], errors="coerce") > 0]
+            before, inside = m[m["time"] < t0], m[(m["time"] >= t0) & (m["time"] < t1)]
+            if len(inside) >= 30:
+                a = float(before["oi"].iloc[-1]) if len(before) else float(inside["oi"].iloc[0])
+                b = float(inside["oi"].iloc[-1])
+                if a > 0:
+                    return (b / a - 1) * 100, "live 1-min OI, signal hour"
+    except Exception:
+        pass
+    if oi and oi.get("chg_pct") is not None:
+        return float(oi["chg_pct"]), f"quote OI, last {oi.get('gap_min', 0):.0f} min"
+    return None, None
+
+
+def _levels(fr, daily, side, close):
+    """nearest swing level beyond the price in the trade direction: confirmed 1h pivots (last 200 candles, before the
+    signal candle) and daily swing highs / lows + the previous day's high / low (last 60 completed sessions)."""
+    lv = []
+    f = fr.iloc[-201:-1] if len(fr) > 201 else fr.iloc[:-1]
+    hi, lo = I.pivots(f.reset_index(drop=True), 2)
+    lv += [p for _, p in (hi if side > 0 else lo)]
+    if daily is not None and len(daily) > 3:
+        d = daily.iloc[-61:-1] if len(daily) > 61 else daily.iloc[:-1]
+        dh, dl = I.pivots(d.reset_index(drop=True), 2)
+        lv += [p for _, p in (dh if side > 0 else dl)]
+        lv.append(float(d["high"].iloc[-1]) if side > 0 else float(d["low"].iloc[-1]))
+    beyond = [x for x in lv if side * (x - close) > 0]
+    return (min(beyond) if side > 0 else max(beyond)) if beyond else None
+
+
+def _owner_checks(rule, sig, fr, daily, c, now, oi):
+    """-> rejection reason or None. Order: reversal wick, OI build-up, room to the target."""
+    s_ = 1 if rule["side"] == "BUY" else -1
+    rng = sig["high"] - sig["low"]
+    if rule.get("wick_max") and rng > 0:
+        wick = (sig["high"] - max(sig["open"], sig["close"])) if s_ > 0 else (min(sig["open"], sig["close"]) - sig["low"])
+        if wick > rule["wick_max"] * rng:
+            return f"reversing – rejection wick {wick / rng:.0%} of the candle"
+    if rule.get("oi"):
+        pct, src = _oi_hour(c, sig, now, oi)
+        if pct is None:
+            return "OI not available (no live OI feed / quote reading)"
+        if not (pct > 0 and s_ * (sig["close"] - sig["open"]) > 0):
+            return f"no {'long' if s_ > 0 else 'short'} build-up (OI {pct:+.2f}%, {src})"
+        sig["oi_txt"] = f"OI {pct:+.2f}% with price {'up' if s_ > 0 else 'down'} → {'Long' if s_ > 0 else 'Short'} build-up ({src})"
+    if rule.get("sr_room"):
+        lvl = _levels(fr, daily, s_, sig["close"])
+        need = rule["r"] * rule["k"] * sig["atr"]
+        if lvl is not None and abs(lvl - sig["close"]) < need:
+            return f"{'resistance' if s_ > 0 else 'support'} {lvl:,.2f} within the {rule['r']:g}R target"
+        sig["room_txt"] = ("no swing level ahead" if lvl is None else
+                           f"next {'resistance' if s_ > 0 else 'support'} {lvl:,.2f} is beyond the {rule['r']:g}R target")
+    return None
+
+
+def _untested_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_close, max_days, t1, ex):
+    call = "\n".join([
+        f"{'🟢 BUY' if s_ > 0 else '🔴 SELL'}  {name} FUT  ·  {TF_TXT[rule['tf']].upper()} · {rule.get('label', rid)}",
+        "━━━━━━━━━━━━━━",
+        "🧪 EXPERIMENTAL – UNTESTED RULE (no backtest). Trade small or just observe.",
+        f"Entry   : {TP.fmt(plan['entry'], t)}  (no chase beyond {TP.fmt(plan['entry'] + s_ * 0.5 * sig['atr'], t)})",
+        f"SL      : {TP.fmt(plan['sl'], t)}  ({rule['k']:g} ATR – tight)",
+        f"T1      : {TP.fmt(t1, t)}  (1R)",
+        f"T2      : {TP.fmt(plan['target'], t)}  ({rule['r']:g}R – exit here)",
+        f"R:R     : 1:{rule['r']:g} · risk ₹{plan['risk_lot']:,.0f} per lot",
+        f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
+        f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")])
+    why = "\n".join([
+        f"📌 WHY – {name} {rule['side']} ({TF_TXT[rule['tf']]}) · EXPERIMENTAL / UNTESTED",
+        f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b %H:%M} candle – first close {'above the 20-candle high' if s_ > 0 else 'below the 20-candle low'}",
+        f"• Volume  : {sig['vol_x']:.1f}× the 20-candle average (rule ≥ 2.5×)" if sig.get("vol_x") else "• Volume  : ≥ 2.5× (rule)",
+        f"• OI      : {sig.get('oi_txt') or '-'}",
+        f"• Room    : {sig.get('room_txt') or '-'} · no rejection wick",
+        f"• Exit    : SL or T2 · time exit after {rule['maxh']} candles (~{max_days} sessions) · exit 1 session before expiry",
+        "• Evidence: NONE – added without a backtest at the owner's request. Results are logged.",
+        WARN])
+    return [call, why]
