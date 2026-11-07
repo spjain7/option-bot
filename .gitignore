@@ -46,3 +46,4 @@ research/program/results/mcxev_trades.csv.gz
 research/program/results/mcxd_trades.csv.gz
 research/program/results/mcxe_candidate_trades.csv.gz
 research/mcxe003/results/events/
+research/mcxe005/results/trades_*.parquet
