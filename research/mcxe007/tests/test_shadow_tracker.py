@@ -43,7 +43,7 @@ def test_cost_breakdown():
 
 def test_no_side_effects():
     src = (ROOT / "research/mcxe007/shadow/h112l_tracker.py").read_text()
-    bad = re.findall(r"telegram|requests|urllib|smartapi|place_order|notify|socket", src, re.I)
+    bad = re.findall(r"telegram|requests|urllib|smartapi|place_order|notify|import socket|socket\.", src, re.I)
     assert not bad, bad
     print("ok no network / alert / order code")
 

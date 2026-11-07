@@ -32,8 +32,33 @@ def cost_breakdown(name, p):
     return d, m
 
 
-def frame(name, until=None):
+WS_FROM = pd.Timestamp("2026-11-04 00:00")      # MCXE-010: bars from this time may come from the live WebSocket recordings
+
+
+def ws_bars(name):
+    """5-minute bars of the front (nearest unexpired) MCX contract from the live bot's WebSocket recordings (branch ws-bars;
+    validated vs Angel 5-minute closes in research/mcxe010/ws_validation.csv). Only complete 5-minute bars are used."""
+    from research.mcxe010 import ws_mcx as WS
+    if not hasattr(ws_bars, "B"):
+        ws_bars.B = WS.to5m(WS.load_ws())
+    b = ws_bars.B[(ws_bars.B.name == name) & (ws_bars.B.minutes == 5)].copy()
+    b["exp"] = pd.to_datetime(b.expiry)
+    b = b[b.exp >= b.time.dt.normalize()]
+    b = b.sort_values(["time", "exp"]).drop_duplicates("time", keep="first")
+    return b[["time", "open", "high", "low", "close", "volume", "symbol"]]
+
+
+def frame(name, until=None, ws=False):
     d = LM.load(name, "FIVE_MINUTE")
+    if ws:                                          # MCXE-010: forward bars after the Angel store ends (source tagged)
+        from research.search import strategy_search as SS
+        b = ws_bars(name)
+        b = b[(b.time > d.time.max()) & (b.time >= WS_FROM)]
+        if len(b):
+            d = pd.concat([d.assign(src="angel"), b.drop(columns="symbol").assign(src="ws")], ignore_index=True)
+            sw = SS.switch_days(name, "MCX", d)
+            day = d["time"].dt.normalize()
+            d["switch"] = day.isin(sw) & (day != day.shift(1))
     w = W.get("MCX")
     d = d[d.time >= w["start"]]
     if until is not None:
@@ -62,6 +87,7 @@ def replay(f, contract):
         sd = int(side[i])
         rec = dict(signal_time=t, commodity=name, contract=contract, side="BUY" if sd > 0 else "SELL_LEG_NOT_TRADED",
                    forward=bool(t >= FWD_START), signal_close=c[i],
+                   data_source="ws (live bot WebSocket)" if (USE_WS and t >= WS_FROM) else "angel 5m store",
                    level_20bar_high=float(pd.Series(h).shift(1).rolling(20).max().iat[i]), atr=a[i])
         if not f.sig_ok.iat[i]:
             rec["status"] = "rejected_switch_day"
@@ -134,10 +160,13 @@ def data_issues(name, d, f):
     return iss, m.symbol.iat[0]
 
 
+USE_WS = False
+
+
 def main(until=None):
     allrows, issues = [], []
     for name in FR.MCX7:
-        f, d = frame(name, until)
+        f, d = frame(name, until, ws=USE_WS)
         iss, contract = data_issues(name, d, f)
         issues += iss
         allrows += replay(f, contract)
@@ -145,7 +174,7 @@ def main(until=None):
     L.to_csv(OUT / "ledger_h112l.csv", index=False)
     pd.DataFrame(issues).to_csv(OUT / "data_issues.csv", index=False)
     F = L[(L.forward) & (L.status == "trade")]
-    last_bar = max(frame(n, until)[0].time.max() for n in FR.MCX7[:1])
+    last_bar = max(frame(n, until, ws=USE_WS)[0].time.max() for n in FR.MCX7[:1])
     st = [f"# H1.12L shadow status (generated {pd.Timestamp.now(tz='Asia/Kolkata'):%Y-%m-%d %H:%M} IST)", "",
           f"- Data available to: {last_bar} (first commodity checked); forward period starts {FWD_START}",
           f"- Forward signals logged: {int(L.forward.sum())} · closed forward trades: {len(F)} on {F.signal_time.dt.normalize().nunique() if len(F) else 0} dates"
@@ -160,5 +189,6 @@ def main(until=None):
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("--until"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--until"); ap.add_argument("--ws", action="store_true"); a = ap.parse_args()
+    USE_WS = a.ws
     main(a.until)

@@ -1,0 +1,15 @@
+filter,period,n,dates,win,exp2,pf,ci_lo,ci_hi
+all (baseline H1.12L),DEV,157,84,36.9,0.5777,1.869,0.075,1.09
+all (baseline H1.12L),VALID,70,44,37.1,0.3996,1.652,-0.371,1.321
+daily trend up,DEV,117,69,38.5,0.6926,2.087,0.172,1.229
+daily trend up,VALID,42,29,31.0,0.2775,1.423,-0.711,1.58
+daily trend down,DEV,40,33,32.5,0.2418,1.324,-0.681,1.43
+daily trend down,VALID,28,23,46.4,0.5829,2.06,-0.302,1.534
+equal score >= 0,DEV,157,84,36.9,0.5777,1.869,0.075,1.09
+equal score >= 0,VALID,70,44,37.1,0.3996,1.652,-0.371,1.321
+equal score >= 0.4,DEV,136,77,36.0,0.5952,1.892,0.091,1.207
+equal score >= 0.4,VALID,56,38,37.5,0.5603,1.944,-0.345,1.783
+Indian hours (signal 09-16h),DEV,100,59,33.0,0.4474,1.636,-0.104,1.048
+Indian hours (signal 09-16h),VALID,45,31,44.4,0.5685,2.022,-0.397,1.586
+US hours (signal 17-23h),DEV,57,45,43.9,0.8065,2.352,0.025,1.673
+US hours (signal 17-23h),VALID,25,22,24.0,0.0956,1.133,-1.037,1.384

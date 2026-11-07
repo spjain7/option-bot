@@ -1,3 +1,5 @@
+> **Correction (MCXE-010, 7-Nov):** the live loop DOES save candles. `scripts/market_loop.sh` exports 1-minute WebSocket bars (MCX + NFO, price / volume / OI) to branch `ws-bars` after every job (MCX 30-Oct → 06-Nov). The rows below that say "not persisted" are wrong. See research/mcxe010/AUDIT.md.
+
 # MCXE-009 fresh-data pipeline (evidence as of 2026-11-07 16:30 IST)
 
 ## 1. Existing data sources and storage (verified in the repository)
