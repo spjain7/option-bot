@@ -34,7 +34,7 @@ class Builder:
 
     def __init__(self, d=None):
         self.d = _dir(d)
-        self.cur, self.cum = {}, {}
+        self.cur, self.cum, self.grew = {}, {}, set()
 
     def tick(self, token, t, ltp, cum_vol, oi):
         m = pd.Timestamp(t).floor("min")
@@ -42,12 +42,23 @@ class Builder:
         if b is not None and m > b["time"]:
             self._close(token)
             b = None
+        last = self.cum.get(token)
+        if last and cum_vol and cum_vol < 0.5 * last and token not in self.grew:
+            # 9-Nov FIX: new session. A collector started before the open first sees the PREVIOUS day's total
+            # (e.g. NFO 27,300 at 08:42); today's counter then restarts near 0 and, with max(), every bar stayed 0
+            # until today's total passed yesterday's (NIFTY ~12:20, MCX 100 % of the morning). Restart the baseline –
+            # only while the counter has never grown (a stale value); once it grows, a glitchy low tick is ignored.
+            self.cum[token] = 0
+            if b is not None:
+                b["v0"], b["v"] = 0, cum_vol
         if b is None:
             prev = self.cum.get(token, cum_vol)
             self.cur[token] = b = dict(time=m, open=ltp, high=ltp, low=ltp, close=ltp, v0=prev, v=cum_vol, oi=oi)
         else:
             b["high"], b["low"], b["close"] = max(b["high"], ltp), min(b["low"], ltp), ltp
             b["v"], b["oi"] = max(b["v"], cum_vol), oi if oi else b["oi"]
+        if last is not None and cum_vol > last:
+            self.grew.add(token)
         self.cum[token] = max(self.cum.get(token, 0), cum_vol)
 
     def _close(self, token):
@@ -172,6 +183,11 @@ def aggregate(m1, interval, exch):
     if m1 is None or m1.empty:
         return pd.DataFrame(columns=COLS)
     x = m1.copy()
+    if MINUTES[interval] is not None:   # 9-Nov FIX: drop pre-open minutes (stale previous-day prints, e.g. NIFTY 06:55,
+        h, m = OPEN[exch]               # CRUDEOIL 03:26 / 08:45) – REST has no such bar, they made a phantom candle
+        x = x[pd.to_datetime(x["time"]) >= pd.to_datetime(x["time"]).dt.normalize() + pd.Timedelta(hours=h, minutes=m)]
+        if x.empty:
+            return pd.DataFrame(columns=COLS)
     x["b"] = [bucket_start(t, interval, exch) for t in x["time"]]
     g = x.groupby("b", sort=True)
     out = pd.DataFrame(dict(time=list(g.groups.keys()), open=g["open"].first().values, high=g["high"].max().values,
@@ -218,8 +234,11 @@ def verify_ok(rest, ws, tol_px=0.003, tol_vol=0.35):
     px = ((j["close_w"] - j["close_r"]).abs() / j["close_r"]).max()
     hl = max(((j["high_w"] - j["high_r"]).abs() / j["high_r"]).max(), ((j["low_w"] - j["low_r"]).abs() / j["low_r"]).max())
     vr = (j["volume_w"].sum() / j["volume_r"].sum()) if j["volume_r"].sum() > 0 else None
-    ok = px <= tol_px and hl <= tol_px and (vr is None or abs(vr - 1) <= tol_vol)
-    return ok, f"{len(j)} bars · close diff {px * 100:.2f}% · high/low diff {hl * 100:.2f}% · volume ratio {vr if vr is None else round(vr, 2)}"
+    z = int(((j["volume_r"] > 0) & (j["volume_w"] <= 0)).sum())   # 9-Nov: a day total can pass (0.67) while bars are 0
+    ok = px <= tol_px and hl <= tol_px and (vr is None or abs(vr - 1) <= tol_vol) and z == 0
+    zt = f" · zero-volume bars {z}" if z else ""
+    return ok, (f"{len(j)} bars{zt} · close diff {px * 100:.2f}% · high/low diff {hl * 100:.2f}% · "
+                f"volume ratio {vr if vr is None else round(vr, 2)}")
 
 
 def export(out, step="FIVE_MINUTE", d=None):
