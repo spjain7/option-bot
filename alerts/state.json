@@ -723,24 +723,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-09 16:17:01.753594",
-   "oi": 839200.0,
-   "ltp": 8443.0
+   "time": "2026-11-09 16:32:01.279955",
+   "oi": 833000.0,
+   "ltp": 8401.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-09 16:17:01.753594",
-   "oi": 65771250.0,
+   "time": "2026-11-09 16:32:01.279955",
+   "oi": 65795000.0,
    "ltp": 285.3
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-09 16:17:01.753594",
-   "oi": 16176.0,
-   "ltp": 143455.0
+   "time": "2026-11-09 16:32:01.279955",
+   "oi": 16191.0,
+   "ltp": 143500.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-09 16:17:01.753594",
-   "oi": 511530.0,
-   "ltp": 187200.0
+   "time": "2026-11-09 16:32:01.279955",
+   "oi": 511740.0,
+   "ltp": 187062.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -778,19 +778,19 @@
    "ltp": 59635.6
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-09 16:17:01.753594",
-   "oi": 17657500.0,
-   "ltp": 1349.4
+   "time": "2026-11-09 16:32:01.279955",
+   "oi": 17670000.0,
+   "ltp": 1349.35
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-09 16:17:01.753594",
-   "oi": 7995.0,
-   "ltp": 414.4
+   "time": "2026-11-09 16:32:01.279955",
+   "oi": 7990.0,
+   "ltp": 414.3
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-09 16:17:01.753594",
-   "oi": 18125.0,
-   "ltp": 330.3
+   "time": "2026-11-09 16:32:01.279955",
+   "oi": 18120.0,
+   "ltp": 330.15
   }
  },
  "bo_active": [
@@ -883,7 +883,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 16:00:00",
+   "checked": "2026-11-09 16:15:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -903,7 +903,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 16:00:00",
+   "checked": "2026-11-09 16:15:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -923,7 +923,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 16:00:00",
+   "checked": "2026-11-09 16:15:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -2041,14 +2041,14 @@
    "date": "2026-11-02",
    "uhi": 286.8,
    "ulo": 271.2,
-   "ulast": 285.5,
-   "uat": "2026-11-09 16:17:01.753594",
+   "ulast": 284.9,
+   "uat": "2026-11-09 16:32:01.279955",
    "best_px": 286.8,
    "worst_px": 271.2,
    "mfe_R": 0.694,
    "mae_R": -0.898,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-09 16:00:00",
+   "excursion_upd": "2026-11-09 16:15:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -2487,8 +2487,8 @@
    "version": null,
    "uhi": 415.1,
    "ulo": 413.75,
-   "ulast": 414.4,
-   "uat": "2026-11-09 16:17:01.753594"
+   "ulast": 414.6,
+   "uat": "2026-11-09 16:32:01.279955"
   },
   {
    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|ALUMINIUM|2026-11-09 09:00:00",
@@ -2513,8 +2513,8 @@
    "version": null,
    "uhi": 331.5,
    "ulo": 330.15,
-   "ulast": 330.15,
-   "uat": "2026-11-09 16:17:01.753594"
+   "ulast": 330.65,
+   "uat": "2026-11-09 16:32:01.279955"
   },
   {
    "key": "INDIANB|1dSTK|2026-11-09 09:15:00",
@@ -2574,10 +2574,10 @@
     "vol_x": 1.07,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-09 16:00:00",
+    "last_bar": "2026-11-09 16:15:00",
     "logged": "2026-10-30 23:32:01.717094",
     "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 285.2,
+    "last_px": 285.3,
     "entry": 280.0,
     "entry_time": "2026-11-02 11:30:00",
     "risk": 9.8,
@@ -3903,7 +3903,30 @@
     "MOTILALOFS",
     "LAURUSLABS",
     "JUBLFOOD",
-    "HDFCLIFE"
+    "HDFCLIFE",
+    "HDFCBANK",
+    "DLF",
+    "CUMMINSIND",
+    "CONCOR",
+    "CDSL",
+    "BIOCON",
+    "BDL",
+    "PIDILITIND",
+    "AMBUJACEM",
+    "TIINDIA",
+    "TCS",
+    "TATAPOWER",
+    "TATACONSUM",
+    "PRESTIGE",
+    "PGEL",
+    "PERSISTENT",
+    "ABCAPITAL",
+    "APLAPOLLO",
+    "BAJFINANCE",
+    "BANKBARODA",
+    "BSE",
+    "CIPLA",
+    "ALKEM"
    ],
    "sent": 0
   }
@@ -3936,21 +3959,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 181,
-  "started": "2026-11-09 16:17:01.753594",
-  "finished": "2026-11-09 16:22:13.371749",
-  "seconds": 311,
+  "seq": 182,
+  "started": "2026-11-09 16:32:01.279955",
+  "finished": "2026-11-09 16:37:52.528188",
+  "seconds": 351,
   "status": "RATE_LIMITED",
-  "note": "api requests 51 ok 36 rate-limited 15 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 56 ok 38 rate-limited 18 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 51,
-   "ok": 36,
-   "rate_limited": 15,
+   "calls": 56,
+   "ok": 38,
+   "rate_limited": 18,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 1,
    "mem_hits": 0,
-   "disk_hits": 37
+   "disk_hits": 19
   },
   "errors": 0,
   "messages": 0
@@ -9049,7 +9072,53 @@
   "RB_STK_2h_SQZ_SELL|JUBLFOOD|2026-11-09 15:15:00",
   "RB_STK_4h_MACD0_SELL|JUBLFOOD|2026-11-09 13:15:00",
   "RB_STK_2h_SQZ_SELL|HDFCLIFE|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|HDFCLIFE|2026-11-09 13:15:00"
+  "RB_STK_4h_MACD0_SELL|HDFCLIFE|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|HDFCBANK|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|HDFCBANK|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|DLF|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|DLF|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|CUMMINSIND|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|CUMMINSIND|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|CONCOR|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|CONCOR|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|CDSL|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|CDSL|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|BIOCON|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|BIOCON|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|BDL|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|BDL|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|PIDILITIND|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|PIDILITIND|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|AMBUJACEM|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|AMBUJACEM|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|TIINDIA|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|TIINDIA|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|TCS|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|TCS|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|TATAPOWER|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|TATAPOWER|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|TATACONSUM|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|TATACONSUM|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|PRESTIGE|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|PRESTIGE|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|PGEL|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|PGEL|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|PERSISTENT|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|PERSISTENT|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|ABCAPITAL|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|ABCAPITAL|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|APLAPOLLO|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|APLAPOLLO|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|BAJFINANCE|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|BAJFINANCE|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|BANKBARODA|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|BANKBARODA|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|BSE|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|BSE|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|CIPLA|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|CIPLA|2026-11-09 13:15:00",
+  "RB_STK_2h_SQZ_SELL|ALKEM|2026-11-09 15:15:00",
+  "RB_STK_4h_MACD0_SELL|ALKEM|2026-11-09 13:15:00"
  ],
  "mcxdtc": {
   "open": [],
