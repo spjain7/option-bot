@@ -25,5 +25,5 @@ assert (full["volume"] == 300).all(), f"full-minute volume must be 300, got {ful
 assert m["volume"].sum() == raw["volume"].sum(), "no volume lost or double counted"
 assert (full["high"] - full["low"]).min() > 5, "high/low span the whole minute, not one row"
 agg = WB.aggregate(m, "FIFTEEN_MINUTE", "MCX")
-assert agg["volume"].sum() == m["volume"].sum()
+assert agg["volume"].sum() == m.loc[m["time"] >= real0, "volume"].sum()   # 9-Nov: pre-open (08:58/59) minutes are dropped
 print("✅ split minutes merged: volume 300/minute, OHLC of the whole minute, 15-min aggregate consistent")
