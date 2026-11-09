@@ -723,24 +723,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-09 23:02:02.148525",
-   "oi": 945500.0,
-   "ltp": 8214.0
+   "time": "2026-11-09 23:17:01.939091",
+   "oi": 961000.0,
+   "ltp": 8211.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-09 23:02:02.148525",
-   "oi": 53906250.0,
-   "ltp": 298.9
+   "time": "2026-11-09 23:17:01.939091",
+   "oi": 52961250.0,
+   "ltp": 298.6
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-09 23:02:02.148525",
-   "oi": 16238.0,
-   "ltp": 143252.0
+   "time": "2026-11-09 23:17:01.939091",
+   "oi": 16235.0,
+   "ltp": 143112.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-09 23:02:02.148525",
-   "oi": 512400.0,
-   "ltp": 187252.0
+   "time": "2026-11-09 23:17:01.939091",
+   "oi": 512340.0,
+   "ltp": 187121.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -778,19 +778,19 @@
    "ltp": 59635.6
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-09 23:02:02.148525",
-   "oi": 17835000.0,
-   "ltp": 1351.35
+   "time": "2026-11-09 23:17:01.939091",
+   "oi": 17850000.0,
+   "ltp": 1351.1
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-09 23:02:02.148525",
-   "oi": 7985.0,
-   "ltp": 413.85
+   "time": "2026-11-09 23:17:01.939091",
+   "oi": 7940.0,
+   "ltp": 413.4
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-09 23:02:02.148525",
-   "oi": 18155.0,
-   "ltp": 330.55
+   "time": "2026-11-09 23:17:01.939091",
+   "oi": 18110.0,
+   "ltp": 330.4
   }
  },
  "bo_active": [
@@ -883,7 +883,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 22:45:00",
+   "checked": "2026-11-09 23:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -903,7 +903,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 22:45:00",
+   "checked": "2026-11-09 23:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -923,7 +923,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 22:45:00",
+   "checked": "2026-11-09 23:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -2037,7 +2037,7 @@
    "lot": 1250,
    "mult": 1250,
    "time": "2026-11-02 11:30:00",
-   "status": "OPEN",
+   "status": "CLOSED",
    "date": "2026-11-02",
    "uhi": 299.0,
    "ulo": 271.2,
@@ -2050,7 +2050,10 @@
    "excursion_measure": "15-min candle highs/lows",
    "excursion_upd": "2026-11-09 22:45:00",
    "t1_hit": false,
-   "stop_touched": false
+   "stop_touched": false,
+   "exit": 299.6,
+   "note": "\ud83c\udfaf target 2R",
+   "closed": "2026-11-09 23:17:01.939091"
   },
   {
    "key": "PETRONET|1dSTK|2026-11-02 09:15:00",
@@ -2487,8 +2490,8 @@
    "version": null,
    "uhi": 415.1,
    "ulo": 412.3,
-   "ulast": 413.85,
-   "uat": "2026-11-09 23:02:02.148525"
+   "ulast": 413.4,
+   "uat": "2026-11-09 23:17:01.939091"
   },
   {
    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|ALUMINIUM|2026-11-09 09:00:00",
@@ -2513,8 +2516,8 @@
    "version": null,
    "uhi": 331.5,
    "ulo": 330.1,
-   "ulast": 330.55,
-   "uat": "2026-11-09 23:02:02.148525"
+   "ulast": 330.4,
+   "uat": "2026-11-09 23:17:01.939091"
   },
   {
    "key": "INDIANB|1dSTK|2026-11-09 09:15:00",
@@ -2550,40 +2553,6 @@
  ],
  "candle_setups": {
   "open": [
-   {
-    "setup": "MCX_HAMMER",
-    "name": "NATURALGAS",
-    "contract": "NATURALGAS24NOV26FUT",
-    "token": "574319",
-    "side": "BUY",
-    "status": "open",
-    "pattern_time": "2026-10-30 09:00:00",
-    "pattern": {
-     "open": 279.1,
-     "high": 280.0,
-     "low": 270.9,
-     "close": 276.7
-    },
-    "trigger": 280.0,
-    "stop": 270.2,
-    "atr": 13.317,
-    "tick": 0.1,
-    "mult": 1250,
-    "lot": 1250,
-    "trend_ok": true,
-    "vol_x": 1.07,
-    "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
-    "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
-    "last_bar": "2026-11-09 22:45:00",
-    "logged": "2026-10-30 23:32:01.717094",
-    "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
-    "last_px": 298.3,
-    "entry": 280.0,
-    "entry_time": "2026-11-02 11:30:00",
-    "risk": 9.8,
-    "oi_entry": "71,453,750 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "target": 299.6
-   },
    {
     "setup": "STK_HANGMAN",
     "name": "SONACOMS",
@@ -2909,6 +2878,47 @@
     "why_against": [
      "daily bias bullish (against)",
      "support 773.30 only 0.8R away"
+    ]
+   },
+   {
+    "setup": "MCX_HAMMER",
+    "name": "NATURALGAS",
+    "contract": "NATURALGAS24NOV26FUT",
+    "token": "574319",
+    "side": "BUY",
+    "status": "pending",
+    "pattern_time": "2026-11-08 14:20:00",
+    "pattern": {
+     "open": 285.5,
+     "high": 285.6,
+     "low": 282.8,
+     "close": 285.2
+    },
+    "trigger": 285.6,
+    "stop": 282.2,
+    "atr": 11.6125,
+    "tick": 0.1,
+    "mult": 1250,
+    "lot": 1250,
+    "trend_ok": true,
+    "vol_x": 0.05,
+    "sr": "\u2022 Resistance : 298.70 (swing low) at 3.9R \u2013 beyond the 2R target \u2705",
+    "oi_note": "52,961,250 (-1.75% in 15 min, price -0.30) \u2192 Long unwinding",
+    "last_bar": "2026-11-08 14:20:00",
+    "logged": "2026-11-09 23:17:01.939091",
+    "key": "MCX_HAMMER|NATURALGAS|2026-11-08",
+    "grade": "NO TRADE",
+    "grade_v": "intel-1.0",
+    "grade_pts": -3,
+    "regime": "Bearish trending",
+    "family": "reversal",
+    "why_for": [
+     "reward:risk 2.0"
+    ],
+    "why_against": [
+     "against the bearish trending regime",
+     "daily bias bearish (against)",
+     "stop only 0.3 ATR away (noise risk)"
     ]
    }
   ],
@@ -3590,6 +3600,45 @@
     "exit": null,
     "exit_time": "2026-11-08 14:20:00",
     "exit_reason": "stop level touched before the breakout"
+   },
+   {
+    "setup": "MCX_HAMMER",
+    "name": "NATURALGAS",
+    "contract": "NATURALGAS24NOV26FUT",
+    "token": "574319",
+    "side": "BUY",
+    "status": "closed",
+    "pattern_time": "2026-10-30 09:00:00",
+    "pattern": {
+     "open": 279.1,
+     "high": 280.0,
+     "low": 270.9,
+     "close": 276.7
+    },
+    "trigger": 280.0,
+    "stop": 270.2,
+    "atr": 13.317,
+    "tick": 0.1,
+    "mult": 1250,
+    "lot": 1250,
+    "trend_ok": true,
+    "vol_x": 1.07,
+    "sr": "\u2022 Resistance : \u26a0\ufe0f 292.10 (swing low) at 1.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
+    "oi_note": "70,672,500 (-1.50% in 15 min, price -0.80) \u2192 Long unwinding",
+    "last_bar": "2026-11-09 23:00:00",
+    "logged": "2026-10-30 23:32:01.717094",
+    "key": "MCX_HAMMER|NATURALGAS|2026-10-30",
+    "last_px": 298.6,
+    "entry": 280.0,
+    "entry_time": "2026-11-02 11:30:00",
+    "risk": 9.8,
+    "oi_entry": "71,453,750 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
+    "target": 299.6,
+    "exit": 299.6,
+    "exit_time": "2026-11-09 23:00:00",
+    "exit_reason": "\ud83c\udfaf target 2R",
+    "gross_pts": 19.6,
+    "gross_R": 2.0
    }
   ],
   "seen": [
@@ -3625,7 +3674,8 @@
    "STK_HANGMAN|SHREECEM|2026-11-09 09:15:00",
    "STK_HANGMAN|INDHOTEL|2026-11-09 09:15:00",
    "STK_HANGMAN|COFORGE|2026-11-09 09:15:00",
-   "STK_HANGMAN|HDFCBANK|2026-11-09 09:15:00"
+   "STK_HANGMAN|HDFCBANK|2026-11-09 09:15:00",
+   "MCX_HAMMER|NATURALGAS|2026-11-08 14:20:00"
   ]
  },
  "watch1h": {
@@ -3851,15 +3901,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 209,
-  "started": "2026-11-09 23:02:02.148525",
-  "finished": "2026-11-09 23:02:12.671276",
-  "seconds": 10,
+  "seq": 210,
+  "started": "2026-11-09 23:17:01.939091",
+  "finished": "2026-11-09 23:17:11.563907",
+  "seconds": 9,
   "status": "SUCCESS",
-  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 3",
   "api": {
-   "calls": 4,
-   "ok": 4,
+   "calls": 3,
+   "ok": 3,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -3868,7 +3918,7 @@
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 0
+  "messages": 3
  },
  "paper": {
   "E_BUY_v1": {
