@@ -37,3 +37,13 @@ Merge `fix/ws-nfo-volume-units` after review; on the first trading day check `[w
 - MCX historical OI: Angel getOIData returns AB1012 for MCX (probe 21-Oct, crude/data.py). Sources in use: daily OI from MCX
   bhavcopy (branch research-mcx-bhav, oi_lots) and 1-min OI from WebSocket bars (since 30-Oct). Nothing is substituted silently.
 - research-data.yml: PR #55 merged – quiet-hours guard on the 7 manual Angel research workflows.
+
+## 9-Nov live morning (first day with PR #54)
+- Requests 1,206 · refused 447 (all getCandleData; getOIData 189/0) · blocked 203 · budget 111 · failed 66 (6-Nov: 920/443/438/186/65).
+- NFO check 6/6 MISMATCH (ratio 0.0–0.59), MCX 3 MISMATCH / 3 OK (0.67–0.83); ws hits 216 vs REST 586. PR #54 NOT confirmed.
+- NEW confirmed bug: collector started 08:42 sees the previous day's cumulative volume (NFO sample 27,300); Builder's max() kept
+  every minute at 0 until today's total passed yesterday's (MCX 100 % zero 09h, NIFTY 0 until ~12:20). Pre-open stale prints
+  created phantom minutes (NIFTY 06:55, CRUDEOIL 03:26/08:45). MCX passed the day-ratio check at 0.67 with zero morning bars.
+  Fixed: PR #56 (e3843c8) – reset on stale counter, drop pre-open minutes, zero-volume bars fail the check. Live test: 10-Nov.
+- Refusals at ~320 candle requests/h (all engines of the job) – far below the ~5,000/h community figure; none before 09:15.
+  Suspected: another consumer of the same Angel account/key during NSE hours, or an undocumented per-account candle limit. Open.
