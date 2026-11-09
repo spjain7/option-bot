@@ -185,24 +185,30 @@ def call_msg(name, ex, c, sig, oi=None, q=None):
     warn = ""
     if block and s * (block[0][0] - sig["entry"]) < sig["risk"]:
         warn = f"\n⚠️ {'Resistance' if s > 0 else 'Support'} {_f(block[0][0])} ({block[0][1]}) comes before T1 – consider booking there."
-    L = [f"{'🟢 BUY' if s > 0 else '🔴 SELL'} CALL – {name} FUT | {TFNAME[sig['tf']]}", LINE,
-         f"Contract : {c['symbol']} ({'MCX' if ex == 'MCX' else 'NSE F&O'}) · expiry {pd.Timestamp(c['expiry']):%d-%b-%Y}",
-         f"Entry    : {_f(sig['entry'] - 0.1 * a)} – {_f(sig['entry'] + 0.1 * a)} ({side} zone, signal close {_f(sig['entry'])})",
-         f"Stop loss: {_f(sig['sl'])} ({'below' if s > 0 else 'above'} the reversal candles)",
-         f"Target 1 : {_f(sig['t1'])} (1R) → book 50%, move SL to entry",
-         f"Target 2 : {_f(sig['t2'])} (2R)",
-         f"Risk/Reward: 1 : 2 · risk {_f(sig['risk'])} pts", LINE,
-         f"Resistance : {_lv(lv['resistance'])}",
-         f"Support    : {_lv(lv['support'])}", LINE,
-         _vol_line(sig, q), _oi_line(oi),
-         f"RSI(14): {sig['rsi_min'] if s > 0 else sig['rsi_max']:.1f} ({'oversold < 25' if s > 0 else 'overbought > 75'}) · now {sig['rsi']:.1f}",
-         f"Candle : {', '.join(sig['patterns'])}",
-         f"Trend  : {sig['trend']} (EMA20 {_f(sig['ema20'])} / EMA50 {_f(sig['ema50'])}" + (f", ADX {sig['adx']:.0f})" if sig.get("adx") else ")"),
-         LINE, _why(sig, side, oi, near) + warn,
-         f"Signal candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} (closed). Invalid if a candle closes {'below' if s > 0 else 'above'} {_f(sig['sl'])}."
-         + (" Exit by session close." if sig["tf"] != "3h" else " Max 10 sessions, exit before expiry."),
-         WARN]
-    return "\n".join(L)
+    # 9-Nov (owner): same 2-message layout as every other call – CARD + WHY. Levels and logic unchanged.
+    card = "\n".join([
+        f"{'🟢 BUY' if s > 0 else '🔴 SELL'}  {name} FUT  ·  {TFNAME[sig['tf']]} RSI reversal",
+        "━━━━━━━━━━━━━━",
+        f"Entry   : {_f(sig['entry'] - 0.1 * a)} – {_f(sig['entry'] + 0.1 * a)}  (signal close {_f(sig['entry'])})",
+        f"SL      : {_f(sig['sl'])}  ({'below' if s > 0 else 'above'} the reversal candles)",
+        f"T1      : {_f(sig['t1'])}  (1R – book 50%, move SL to entry)",
+        f"T2      : {_f(sig['t2'])}  (2R)",
+        f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}"])
+    why = "\n".join([
+        f"📌 WHY – {name} {side} ({TFNAME[sig['tf']]})", "━━━━━━━━━━━━━━",
+        f"• Chart   : {sig['tf']} candle {pd.Timestamp(sig['candle']):%d-%b %H:%M} (closed) – {', '.join(sig['patterns'])}",
+        f"• RSI(14) : {sig['rsi_min'] if s > 0 else sig['rsi_max']:.1f} ({'oversold < 25' if s > 0 else 'overbought > 75'}) · now {sig['rsi']:.1f}",
+        "• " + _vol_line(sig, q).replace("Volume :", "Volume  :", 1),
+        "• " + _oi_line(oi).replace("OI     :", "OI      :", 1),
+        f"• Trend   : {sig['trend']} (EMA20 {_f(sig['ema20'])} / EMA50 {_f(sig['ema50'])}" + (f", ADX {sig['adx']:.0f})" if sig.get("adx") else ")"),
+        f"• Resistance: {_lv(lv['resistance'])}",
+        f"• Support : {_lv(lv['support'])}",
+        f"• Risk    : 1 : 2 · {_f(sig['risk'])} pts",
+        f"• Exit    : SL or T2 · invalid if a candle closes {'below' if s > 0 else 'above'} {_f(sig['sl'])}"
+        + (" · exit by session close" if sig["tf"] != "3h" else " · max 10 sessions, exit before expiry"),
+        "• " + _why(sig, side, oi, near) + warn,
+        WARN])
+    return [card, why]
 
 
 def watch_msg(name, ex, c, sig, oi=None, q=None):
@@ -406,7 +412,7 @@ def scan(api, master, now, state, only=None):
                 continue
             if sig["kind"] in ("BUY", "SELL"):
                 # adjusted history never changes the signal candle itself (offset 0 after the last switch)
-                msgs.append(call_msg(name, ex, c, sig, oi, q))
+                msgs.extend(call_msg(name, ex, c, sig, oi, q))
                 state["day"]["alerts"] += 1
                 state["active"].append(dict(id=sid, name=name, ex=ex, tf=tf, side=sig["kind"], entry=sig["entry"], sl=sig["sl"],
                                             t1=sig["t1"], t2=sig["t2"], time=last, t1_hit=False, contract=c["symbol"], expiry=c["expiry"]))

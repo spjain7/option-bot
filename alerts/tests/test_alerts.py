@@ -129,10 +129,10 @@ def test_engine_replay():
         api.now = now
         st, msgs, rep = E.scan(api, F.master(), now, st, only=["CRUDEOIL"])
         sent += msgs
-    calls = [m for m in sent if " CALL – " in m]
+    calls = [m + "\n" + sent[k + 1] for k, m in enumerate(sent) if "RSI reversal" in m and "FUT  ·" in m]   # card + WHY (9-Nov)
     check("replay on real CRUDEOIL candles (6 sessions) runs and produces messages", len(sent) > 0)
     check("every BUY/SELL alert carries reasoning, entry, SL, targets and the no-auto-trade warning",
-          all(all(k in m for k in ("Why this call:", "RSI(14)", "Stop loss", "Target 1", "Target 2", "Entry", "Support", "Resistance",
+          all(all(k in m for k in ("Why this call:", "RSI(14)", "SL ", "T1 ", "T2 ", "Entry", "Support", "Resistance", "📌 WHY",
                                    "Volume", "OI", "Alert only")) for m in calls))
     watches = [m for m in sent if m.startswith("🟡 WATCH")]
     check("watch messages also carry trigger, provisional SL/targets, support/resistance, volume and OI",

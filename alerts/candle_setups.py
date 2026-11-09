@@ -21,6 +21,7 @@ they won 44-48 % against 51-55 % for the rest of the day and caused about two-th
 """
 import itertools
 import numpy as np
+import re
 import pandas as pd
 from crude import indicators as I
 from alerts import tradeplan as TP, report as RP
@@ -132,6 +133,61 @@ def sr_line(df, side, trig, stop, target_r):
         return f"• S/R        : not available ({type(e).__name__})", None
 
 
+# 9-Nov (owner: "set clear format for every call same as INDIANB"): every setup call = 2 messages –
+# a short CARD (side · name · style / Entry / SL / Target / Lot · expiry · exchange) and a WHY with the reasons.
+# Text layout only: triggers, stops, targets and filters are unchanged.
+STYLE = {"MCX_HAMMER": "Daily hammer breakout", "STK_HANGMAN": "Daily hanging-man breakdown", "MCX_EMA1348": "3-hour EMA 13/48 cross",
+         "STK_SWEEP3H": "3-hour liquidity sweep"}
+
+
+def _expiry_txt(r):
+    m = re.search(r"\d{2}([A-Z]{3})\d{2}FUT$", str(r.get("contract") or ""))
+    return f"{m.group(1).capitalize()} expiry" if m else "expiry n/a"
+
+
+def _card(r, side, style, entry, sl, target, exch=None):
+    exch = exch or ("MCX" if r["setup"].startswith("MCX") else "NSE")
+    return "\n".join([f"{'🟢 BUY' if side == 'BUY' else '🔴 SELL'}  {r['name']} FUT  ·  {style}", "━━━━━━━━━━━━━━",
+                      f"Entry   : {entry}", f"SL      : {sl}", f"Target  : {target}",
+                      f"Lot     : {r.get('lot') or '-'}  ·  {_expiry_txt(r)}  ·  {exch}"])
+
+
+def _bullet(line):
+    """'• Support    : x' (old padded S/R / OI lines) -> '• Support : x' (WHY layout)."""
+    k, _, v = str(line).strip().lstrip("•").partition(":")
+    return f"• {k.strip():8s}: {v.strip()}"
+
+
+def _why(r, side, bullets, extra=None):
+    return "\n".join([f"📌 WHY – {r['name']} {side}", "━━━━━━━━━━━━━━"] + [b for b in bullets if b] + (extra or []) + [WARN])
+
+
+def setup_msgs(r):
+    """Daily hammer (MCX) / hanging-man (stock) setup -> [card, why]."""
+    buy = r["side"] == "BUY"
+    risk = abs(r["trigger"] - r["stop"])
+    tgt = r["trigger"] + (2 if buy else -2) * risk
+    p = r["pattern"]
+    card = _card(r, r["side"], STYLE[r["setup"]],
+                 f"{_f(r, r['trigger'])}  ({'BUY above' if buy else 'SELL below'} – stop order, valid next 3 sessions)",
+                 _f(r, r["stop"]), f"{_f(r, tgt)}  (2R)")
+    why = _why(r, r["side"], [
+        f"• Chart   : Daily candle {pd.Timestamp(r['pattern_time']):%d-%b} O {_f(r, p['open'])} H {_f(r, p['high'])} "
+        f"L {_f(r, p['low'])} C {_f(r, p['close'])}",
+        f"• Setup   : {TITLE[r['setup']].lower()} – a trade only if price trades {'above' if buy else 'below'} {_f(r, r['trigger'])}",
+        f"• Volume  : {r.get('vol_x') or 0:.1f}× average",
+        f"• Trend   : " + ((('downtrend (EMA20 < EMA50)' if buy else 'uptrend (EMA20 > EMA50)') + ' ✅') if r.get('trend_ok')
+                           else 'no prior trend (pattern only)'),
+        _bullet(r["sr"]) if r.get("sr") else None,
+        _bullet(_oi_txt(r)),
+        f"• Risk    : {_f(r, risk)} pts ({risk / r['trigger'] * 100:.2f}%) · {_rs(r, risk)} per lot",
+        "• Exit    : SL or target · time exit after 20 sessions · target resets if price gaps past the trigger",
+        f"• Record  : {STATS[r['setup']]}"],
+        ["Follow-ups for stock calls are sent after the 15:30 close – keep the stop-loss and target as orders."]
+        if r["setup"] == "STK_HANGMAN" else None)
+    return [card, why]
+
+
 def setup_msg(r):
     buy = r["side"] == "BUY"
     risk = abs(r["trigger"] - r["stop"])
@@ -151,6 +207,21 @@ def setup_msg(r):
             + ("Follow-ups for stock calls are sent after the 15:30 close – keep the stop-loss and target as orders.\n"
                if r["setup"] == "STK_HANGMAN" else "")
             + WARN)
+
+
+def ema_msgs(r, live=None):
+    px = live or r["cross_close"]
+    card = _card(r, "BUY", STYLE["MCX_EMA1348"], f"~{_f(r, px)}  (at market now; tracked from the next 3-hour open)",
+                 f"~{_f(r, px - EMA['stop_atr'] * r['atr'])}  (3 ATR safety stop; exact level sent at entry)",
+                 "trail – exit on the EMA 13/48 cross-back alert")
+    why = _why(r, "BUY", [
+        f"• Chart   : 3-hour candle {pd.Timestamp(r['pattern_time']):%d-%b %H:%M} closed with EMA13 above EMA48",
+        f"• ADX     : {r['adx']} and rising ✅",
+        _bullet(r["sr"]) if r.get("sr") else None,
+        _bullet(_oi_txt(r)),
+        "• Exit    : when EMA13 closes back below EMA48 (3-hour) – an exit alert follows; no fixed target (winners ~2R)",
+        f"• Record  : {STATS['MCX_EMA1348']}"])
+    return [card, why]
 
 
 def ema_msg(r, live=None):
@@ -452,7 +523,7 @@ def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
     if clash:
         print(f"[setup] {setup} {name} {side} not sent: {clash}"); return
     s["open"].append(r)
-    msgs.append(setup_msg(r))
+    msgs.extend(setup_msgs(r))
     print(f"[setup] {setup} {name} {side} pattern {r['pattern_time']}: trigger {r['trigger']} stop {r['stop']} trend {tr}")
 
 
@@ -484,7 +555,7 @@ def _new_ema(state, msgs, s, name, c, f3, now, mult, live):
     _px = float(f3["close"].iloc[i]); _a = float(I.atr(f3, 14).iloc[i])
     r["sr"] = sr_line(f3.iloc[:i + 1], "BUY", _px, _px - EMA["stop_atr"] * _a, None)[0]
     r["oi_note"] = OI_NOTE
-    msgs.append(ema_msg(r, live))
+    msgs.extend(ema_msgs(r, live))
     print(f"[setup] MCX_EMA1348 {name} BUY cross {r['pattern_time']} ADX {r['adx']}")
 
 
@@ -569,6 +640,23 @@ def _step_bars(state, msgs, r, bars, now):
     return False, None, None, None
 
 
+def sweep_msgs(r):
+    risk = abs(r["stop"] - r["trigger"])
+    card = _card(r, "SELL", STYLE["STK_SWEEP3H"],
+                 f"{_f(r, r['trigger'])}  (SELL below – stop order, valid next 3 three-hour candles)",
+                 _f(r, r["stop"]), f"{_f(r, r['trigger'] - risk)}  (1R)")
+    why = _why(r, "SELL", [
+        f"• Chart   : 3-hour candle {pd.Timestamp(r['pattern_time']):%d-%b %H:%M} – high {_f(r, r['pattern']['high'])} went above "
+        f"equal highs {_f(r, r['level'])}, closed back below at {_f(r, r['pattern']['close'])}",
+        f"• Volume  : {r['vol_x']:.1f}× average ✅",
+        f"• OI      : previous day {r['oi_prev'] or 'n/a'} ✅ · sweep candle {r['oi_sweep_pct']:+.2f}% ✅ (stops run, not fresh buying)",
+        _bullet(r["sr"]) if r.get("sr") else None,
+        f"• Risk    : {_f(r, risk)} pts ({risk / r['trigger'] * 100:.2f}%) · {_rs(r, risk)} per lot",
+        "• Exit    : SL or target · time exit after 20 three-hour candles (~10 sessions)",
+        f"• Record  : {STATS['STK_SWEEP3H']}"])
+    return [card, why]
+
+
 def sweep_msg(r):
     risk = abs(r["stop"] - r["trigger"])
     return (f"🔴 SELL SETUP – {_who(r)} · {TITLE['STK_SWEEP3H']}\n{LINE}\n"
@@ -641,13 +729,31 @@ def on_stock_3h(state, msgs, name, c, f3, now, prev_oi_label, sweep_oi_change):
     if clash:
         print(f"[setup] STK_SWEEP3H {name} SELL not sent: {clash}"); return
     s["open"].append(r)
-    msgs.append(sweep_msg(r))
+    msgs.extend(sweep_msgs(r))
     print(f"[setup] STK_SWEEP3H {name} SELL below {r['trigger']} stop {r['stop']} vol {vx:.1f}x OI prev {lab} sweep {doi:+.2f}%")
 
 
 # ─────────────── 15-minute stock sweep – LOG ONLY ───────────────
 def _s15_who(r):
     return f"{r['name']} FUT (NSE)"
+
+
+def _s15_setup_msgs(r):
+    risk = r["stop"] - r["trigger"]
+    lvl = "previous-day high" if r["level"] == "PD" else "20-candle high"
+    rr = dict(r, setup="STK_S15", contract=r.get("symbol") or r.get("contract"))
+    card = _card(rr, "SELL", "15-min liquidity sweep (test phase)",
+                 f"{r['trigger']:,.2f}  (SELL below – stop order, valid next 3 candles, today only)",
+                 f"{r['stop']:,.2f}", f"{r['trigger'] - risk:,.2f}  (1R)", exch="NSE")
+    why = _why(rr, "SELL", [
+        f"• Chart   : 15-min candle {pd.Timestamp(r['sweep_time']):%d-%b %H:%M} went above the {lvl} and closed back below",
+        f"• Volume  : {r['vol_x']:.1f}× average ✅",
+        f"• OI      : {r['oi_change_pct']:+.2f}% on the sweep candle ✅ (falling – stop run, not fresh buying)",
+        f"• Risk    : {risk:,.2f} pts ({risk / r['trigger'] * 100:.2f}%)" + (f" · ₹{risk * r['lot']:,.0f} per lot" if r.get("lot") else ""),
+        "• Exit    : SL or target · by the day's close",
+        "• Record  : Aug–Oct 2026 only, 48 trades, 75% won, +0.28R after costs – SMALL SAMPLE, test phase; "
+        "BUY-side sweeps lost money and are not sent"])
+    return [card, why]
 
 
 def _s15_setup_msg(r):
@@ -759,7 +865,7 @@ def sweep15_log(obstate, name, symbol, df, now, msgs=None, lot=None):
             rec["send"] = bool(SWEEP15_SEND and side < 0 and rec["V"] and rec["OD"]
                                and (rec["stop"] - rec["trigger"]) / rec["trigger"] * 100 <= P["max_stop_pct"])
             if rec["send"]:
-                msgs.append(_s15_setup_msg(rec))
+                msgs.extend(_s15_setup_msgs(rec))
             print(f"[sweep15-log] {name} {lvname} {'SELL' if side < 0 else 'BUY'} sweep {f['time'].iat[i]:%H:%M} "
                   f"vol {v[i] / va[i] if va[i] > 0 else 0:.1f}x OI {doi if doi is not None else float('nan'):+.2f}% (log only)")
             return

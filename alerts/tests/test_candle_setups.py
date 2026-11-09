@@ -56,7 +56,7 @@ def test_hammer_flow():
     st, msgs = run([d0], pd.Timestamp("2026-10-21 23:40"))
     r = st["candle_setups"]["open"][0]
     check("hammer -> BUY SETUP message with trigger = hammer high, stop below its low",
-          len(msgs) == 1 and "BUY SETUP – GOLD FUT (MCX)" in msgs[0] and r["trigger"] == hi and r["stop"] < lo)
+          len(msgs) == 2 and "🟢 BUY  GOLD FUT  ·  Daily hammer breakout" in msgs[0] and "📌 WHY – GOLD BUY" in msgs[1] and r["trigger"] == hi and r["stop"] < lo)
     R = hi - r["stop"]
     d1 = add(d0, "2026-10-22", hi - 1, hi + 5, hi - 2, hi + 4)              # breaks the high intraday
     d2 = add(d1, "2026-10-23", hi + 4, hi + 2 * R + 10, hi + 3, hi + 2 * R + 5)
@@ -106,7 +106,7 @@ def test_contract_change_and_one_at_a_time():
     st, m = {"day": {}}, []
     CS.on_mcx(st, m, "GOLD", "MCX", C, d0, None, None, pd.Timestamp("2026-10-21 23:40"))
     CS.on_mcx(st, m, "GOLD", "MCX", C, d0, None, None, pd.Timestamp("2026-10-21 23:55"))
-    check("same candle evaluated twice -> one setup only", len(st["candle_setups"]["open"]) == 1 and len(m) == 1)
+    check("same candle evaluated twice -> one setup only", len(st["candle_setups"]["open"]) == 1 and len(m) == 2)
     d1 = add(d0, "2026-10-22", hi - 1, hi + 5, hi - 2, hi + 4)
     CS.on_mcx(st, m, "GOLD", "MCX", C, d1, None, None, pd.Timestamp("2026-10-22 23:40"))
     C2 = dict(C, symbol="GOLD27FEBFUT")
@@ -124,7 +124,7 @@ def test_stock_hanging_man_needs_uptrend():
     CS.on_stock_daily(st, m, "TCS", dict(symbol="TCS26NOVFUT", token="t", tick=0.05, lot=175), d, pd.Timestamp("2026-10-21 15:40"))
     r = st["candle_setups"]["open"][0]
     check("stock hanging man in an uptrend -> SELL SETUP below its low, stop above its high, ₹ risk per lot shown",
-          "SELL SETUP – TCS FUT (NSE)" in m[0] and r["trigger"] == d["low"].iloc[-1] and r["stop"] > d["high"].iloc[-1] and "per lot" in m[0])
+          "🔴 SELL  TCS FUT  ·  Daily hanging-man breakdown" in m[0] and "NSE" in m[0] and r["trigger"] == d["low"].iloc[-1] and r["stop"] > d["high"].iloc[-1] and "per lot" in m[1])
     dn = base(step=-2.0); last = dn["close"].iloc[-1]
     d2 = add(dn, "2026-10-21", last, last + 1, last - 20, last + 0.5)
     st2, m2 = {"day": {}}, []
@@ -143,7 +143,7 @@ def test_ema_cross():
     for i in range(130, n):
         before = len(m)
         CS.on_mcx(st, m, "GOLD", "MCX", C, None, f.iloc[: i + 1], None, t[i] + pd.Timedelta(hours=3))
-        if hit is None and any("EMA 13/48" in x and "BUY –" in x for x in m[before:]):
+        if hit is None and any("EMA 13/48" in x and "🟢 BUY  GOLD FUT" in x for x in m[before:]):
             hit = i
     op = [r for r in st["candle_setups"]["open"] if r["setup"] == "MCX_EMA1348"]
     check("EMA13 crossing above EMA48 with ADX ≥ 20 rising -> BUY alert, entered at the next 3-hour open with a 3-ATR safety stop",
@@ -188,7 +188,7 @@ def test_engine_path():
     c = dict(symbol="GOLD26DECFUT", token="g1", tick=1.0, lot=1, expiry="2026-12-04")
     E._breakouts(st, msgs, info, "GOLD", "MCX", c, h1, None, pd.Timestamp("2026-10-22 08:00"), None, None)
     check("engine path: MCX hammer day -> one BUY SETUP message, setup tracked in the state",
-          sum("BUY SETUP – GOLD FUT (MCX)" in m for m in msgs) == 1 and st["candle_setups"]["open"][0]["setup"] == "MCX_HAMMER")
+          sum("🟢 BUY  GOLD FUT  ·  Daily hammer breakout" in m for m in msgs) == 1 and st["candle_setups"]["open"][0]["setup"] == "MCX_HAMMER")
 
 
 def sweep_frame(vol_last=3000.0):
@@ -214,8 +214,8 @@ def test_sweep3h():
     CS.on_stock_3h(st, m, "TCS", STK, f, pd.Timestamp("2026-10-20 15:40"), lambda d: "SB", lambda a, b: -0.8)
     r = st["candle_setups"]["open"][0] if st["candle_setups"]["open"] else {}
     check("sweep above equal highs + volume 3× + OI support -> SELL SETUP below the candle low, stop above its high, 1:1",
-          len(m) == 1 and "SELL SETUP – TCS FUT (NSE) · 3-HOUR LIQUIDITY SWEEP" in m[0] and r["trigger"] == 107.0 and r["stop"] > 111.0
-          and "Target 1R" in m[0] and "OI" in m[0])
+          len(m) == 2 and "🔴 SELL  TCS FUT  ·  3-hour liquidity sweep" in m[0] and r["trigger"] == 107.0 and r["stop"] > 111.0
+          and "(1R)" in m[0] and "OI" in m[1])
     for lab, why, vol, doi in (("low volume", None, 1200.0, -0.8), ("previous day long buildup", "LB", 3000.0, -0.8),
                                ("OI rising during the sweep", "SB", 3000.0, 0.6), ("OI unavailable", "SB", 3000.0, None)):
         st2, m2 = {"day": {}}, []
@@ -244,8 +244,8 @@ def test_sweep15():
     CS.sweep15_log(ob, "TCS", None, f, pd.Timestamp("2026-10-21 12:20"), m, 175)
     r = ob.get("sweep15", {}).get("open", [])
     check("15-min SELL sweep with volume + OI falling -> logged AND sent as a SELL SETUP (1:1, ₹ per lot)",
-          len(r) == 1 and r[0]["side"] == "SELL" and r[0]["V"] and r[0]["OD"] and r[0]["send"] and len(m) == 1
-          and "15-MIN LIQUIDITY SWEEP" in m[0] and "per lot" in m[0])
+          len(r) == 1 and r[0]["side"] == "SELL" and r[0]["V"] and r[0]["OD"] and r[0]["send"] and len(m) == 2
+          and "15-min liquidity sweep" in m[0] and "per lot" in m[1])
     g = f.copy(); g.loc[len(g) - 1, "oi"] = g["oi"].iloc[-2] * 1.01
     ob2, m2 = {}, []
     CS.sweep15_log(ob2, "TCS", None, g, pd.Timestamp("2026-10-21 12:20"), m2, 175)
