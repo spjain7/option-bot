@@ -3940,21 +3940,22 @@
    "oilpricetodaybrentslumpsbelow98astrumpsaysnewiranattacksunlikelyetnow",
    "goldpriceforecastxauusdreturnabove4000pointshigherbutfacesfedandcpitestfxleaders",
    "mcxgoldpricesrisers140010gsilveruprs4000kgasfallinoileaseratehikebetsbuysellorth",
-   "oilpricesslideover5astrumpsignalsnofreshiranstrikesamidtalksbusinessstandard"
+   "oilpricesslideover5astrumpsignalsnofreshiranstrikesamidtalksbusinessstandard",
+   "oilpricetodaynovember10crudeoilfallsbelow92astrumpsaysiranwariseffectivelyoverwh"
   ],
   "day": "2026-11-10",
-  "n": 1
+  "n": 2
  },
  "scan": {
-  "seq": 215,
-  "started": "2026-11-10 00:19:26.066398",
-  "finished": "2026-11-10 00:19:36.710433",
-  "seconds": 10,
+  "seq": 216,
+  "started": "2026-11-10 08:41:56.725083",
+  "finished": "2026-11-10 08:44:37.587853",
+  "seconds": 160,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 201 ok 189 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 0,
-   "ok": 0,
+   "calls": 201,
+   "ok": 189,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -3963,7 +3964,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
