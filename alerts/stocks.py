@@ -359,6 +359,9 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
     t0, complete = time.monotonic(), True
     after_close = hm >= "15:31"
     try:
+        import config as _cfg
+        if getattr(_cfg, "OPTIONS_PARKED", False) or not getattr(_cfg, "OPTION_IDEAS_ENABLED", True):
+            raise RuntimeError("option ideas parked (config)")     # 10-Nov: no option quotes for stock calls
         from obuy import improve as IMP
         from angel import load_master
 
@@ -634,6 +637,9 @@ def scan(api, master, now, state, msgs, rep, engine):
             continue
         h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
         try:                                                    # 29-Oct: option idea when a proven stock setup triggers
+            import config as _cfg
+            if getattr(_cfg, "OPTIONS_PARKED", False) or not getattr(_cfg, "OPTION_IDEAS_ENABLED", True):
+                raise RuntimeError("option ideas parked")       # 10-Nov
             from obuy import improve as IMP
             CS.OPTION_HOOK = lambda r, _h=h: IMP.option_for_futures_call(
                 api, master, r["name"], 1 if r["side"] == "BUY" else -1, r["entry"], r["stop"], r["target"], now,

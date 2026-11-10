@@ -151,8 +151,16 @@ def main():
     opt_names, last_centre = None, None
     have = set(st["tokens"])
 
+    try:
+        import config as _cfg
+        parked = bool(getattr(_cfg, "OPTIONS_PARKED", False))
+    except Exception:
+        parked = False
+
     def add_options(n):
         nonlocal opt_names
+        if parked:                                       # 10-Nov: option engines parked – futures (price / volume / OI) only
+            return
         if opt_names is None:                            # once: top stocks by traded value so far + the 2 main indices
             stk = [(v, fut_name[t]) for t, v in value.items() if fut_name[t] not in IDX_NAMES and fut_name[t] not in MCX_NAMES]
             opt_names = ["NIFTY", "BANKNIFTY"] + [nm for _, nm in sorted(stk, reverse=True)[:TOP_STOCKS]]
