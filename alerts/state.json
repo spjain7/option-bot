@@ -712,14 +712,12 @@
   ]
  },
  "day": {
-  "date": "2026-11-10",
+  "date": "2026-11-11",
   "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
+  "startup_sent": false,
   "eod_sent": false,
-  "outcomes": [],
-  "watch1h_sum_NFO": true,
-  "rep_nse": true
+  "outcomes": []
  },
  "history": [],
  "oi": {
@@ -4232,30 +4230,32 @@
    "oilpricesslideover5astrumpsignalsnofreshiranstrikesamidtalksbusinessstandard",
    "oilpricetodaynovember10crudeoilfallsbelow92astrumpsaysiranwariseffectivelyoverwh",
    "brentcrudeoilpriceforecastoilplungesnearly6toward90risksdroptoward80tradingkey",
-   "goldpriceriseinbhubaneswartodaynovember102026check22k24kratesinmajorcitieskaling"
+   "goldpriceriseinbhubaneswartodaynovember102026check22k24kratesinmajorcitieskaling",
+   "ukrainianstrikesdisrupt30ofrussiasoilrefiningcapacitycrudeoilpricestodayoilprice",
+   "goldcrashestoward4000ashotusinflationsendstreasuryyieldsabove5fxstreet\u0634\u0628\u0643\u0629\u062a\u0648\u0627\u0635\u0644\u0627"
   ],
-  "day": "2026-11-10",
-  "n": 4
+  "day": "2026-11-11",
+  "n": 2
  },
  "scan": {
-  "seq": 276,
-  "started": "2026-11-10 23:47:02.037613",
-  "finished": "2026-11-10 23:47:09.466085",
-  "seconds": 7,
+  "seq": 277,
+  "started": "2026-11-11 00:02:02.338481",
+  "finished": "2026-11-11 00:02:12.769412",
+  "seconds": 10,
   "status": "SUCCESS",
-  "note": "api requests 1 ok 1 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 3",
   "api": {
-   "calls": 1,
-   "ok": 1,
+   "calls": 0,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 14
+   "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 3
  },
  "paper": {
   "E_BUY_v1": {
