@@ -1,0 +1,320 @@
+{
+ "F1_hi252_rvol1.5": {
+  "by_year": [
+   {
+    "entry_time": 2006,
+    "size": 31,
+    "mean": 1.054
+   },
+   {
+    "entry_time": 2007,
+    "size": 65,
+    "mean": 0.549
+   },
+   {
+    "entry_time": 2008,
+    "size": 9,
+    "mean": -0.73
+   },
+   {
+    "entry_time": 2009,
+    "size": 57,
+    "mean": -0.035
+   },
+   {
+    "entry_time": 2010,
+    "size": 60,
+    "mean": -0.075
+   },
+   {
+    "entry_time": 2011,
+    "size": 12,
+    "mean": -0.388
+   },
+   {
+    "entry_time": 2012,
+    "size": 35,
+    "mean": -0.143
+   },
+   {
+    "entry_time": 2013,
+    "size": 35,
+    "mean": 0.851
+   },
+   {
+    "entry_time": 2014,
+    "size": 100,
+    "mean": 0.482
+   },
+   {
+    "entry_time": 2015,
+    "size": 75,
+    "mean": -0.142
+   },
+   {
+    "entry_time": 2016,
+    "size": 75,
+    "mean": 0.249
+   },
+   {
+    "entry_time": 2017,
+    "size": 178,
+    "mean": 0.34
+   },
+   {
+    "entry_time": 2018,
+    "size": 105,
+    "mean": -0.252
+   },
+   {
+    "entry_time": 2019,
+    "size": 92,
+    "mean": -0.01
+   },
+   {
+    "entry_time": 2020,
+    "size": 121,
+    "mean": 1.543
+   },
+   {
+    "entry_time": 2021,
+    "size": 286,
+    "mean": 0.33
+   },
+   {
+    "entry_time": 2022,
+    "size": 171,
+    "mean": -0.384
+   },
+   {
+    "entry_time": 2023,
+    "size": 349,
+    "mean": 1.206
+   },
+   {
+    "entry_time": 2024,
+    "size": 474,
+    "mean": -0.094
+   },
+   {
+    "entry_time": 2025,
+    "size": 173,
+    "mean": 0.129
+   },
+   {
+    "entry_time": 2026,
+    "size": 282,
+    "mean": 0.063
+   }
+  ],
+  "regime_mkt_on": [
+   {
+    "mkt_on": false,
+    "size": 451,
+    "mean": 0.079
+   },
+   {
+    "mkt_on": true,
+    "size": 2334,
+    "mean": 0.326
+   }
+  ],
+  "vol_regime": [
+   {
+    "vol_hi": false,
+    "size": 1655,
+    "mean": 0.281
+   },
+   {
+    "vol_hi": true,
+    "size": 1130,
+    "mean": 0.293
+   }
+  ],
+  "portfolio_2020_26": {
+   "trades": 418,
+   "CAGR": 19.6,
+   "maxDD": -41.3,
+   "exposure": 88.6
+  },
+  "portfolio_2005_26": {
+   "trades": 901,
+   "CAGR": 13.6,
+   "maxDD": -41.3,
+   "exposure": 64.1
+  },
+  "ew_universe_CAGR_2020_26": 17.7,
+  "ew_universe_maxDD_2020_26": -41.1,
+  "top_symbols": {
+   "ATGL": 35.8,
+   "RECLTD": 32.7,
+   "INDIABULLS": 29.8,
+   "DIXON": 29.0,
+   "BSE": 28.1,
+   "TATAMTRDVR": 25.3,
+   "VAKRANGEE": 25.0,
+   "ADANIENT": 19.2,
+   "DEEPAKNTR": 18.0,
+   "TRENT": 17.7
+  }
+ },
+ "F2_RS0.9_BO50": {
+  "by_year": [
+   {
+    "entry_time": 2006,
+    "size": 30,
+    "mean": 1.323
+   },
+   {
+    "entry_time": 2007,
+    "size": 28,
+    "mean": 0.788
+   },
+   {
+    "entry_time": 2008,
+    "size": 16,
+    "mean": -0.633
+   },
+   {
+    "entry_time": 2009,
+    "size": 41,
+    "mean": 0.549
+   },
+   {
+    "entry_time": 2010,
+    "size": 46,
+    "mean": -0.07
+   },
+   {
+    "entry_time": 2011,
+    "size": 24,
+    "mean": -0.517
+   },
+   {
+    "entry_time": 2012,
+    "size": 41,
+    "mean": -0.088
+   },
+   {
+    "entry_time": 2013,
+    "size": 34,
+    "mean": 0.658
+   },
+   {
+    "entry_time": 2014,
+    "size": 39,
+    "mean": 0.41
+   },
+   {
+    "entry_time": 2015,
+    "size": 52,
+    "mean": -0.221
+   },
+   {
+    "entry_time": 2016,
+    "size": 54,
+    "mean": 0.234
+   },
+   {
+    "entry_time": 2017,
+    "size": 69,
+    "mean": 0.848
+   },
+   {
+    "entry_time": 2018,
+    "size": 64,
+    "mean": -0.315
+   },
+   {
+    "entry_time": 2019,
+    "size": 74,
+    "mean": 0.006
+   },
+   {
+    "entry_time": 2020,
+    "size": 66,
+    "mean": 1.704
+   },
+   {
+    "entry_time": 2021,
+    "size": 107,
+    "mean": 0.158
+   },
+   {
+    "entry_time": 2022,
+    "size": 110,
+    "mean": -0.27
+   },
+   {
+    "entry_time": 2023,
+    "size": 117,
+    "mean": 1.531
+   },
+   {
+    "entry_time": 2024,
+    "size": 208,
+    "mean": -0.42
+   },
+   {
+    "entry_time": 2025,
+    "size": 163,
+    "mean": -0.072
+   },
+   {
+    "entry_time": 2026,
+    "size": 161,
+    "mean": 0.286
+   }
+  ],
+  "regime_mkt_on": [
+   {
+    "mkt_on": false,
+    "size": 407,
+    "mean": 0.072
+   },
+   {
+    "mkt_on": true,
+    "size": 1137,
+    "mean": 0.29
+   }
+  ],
+  "vol_regime": [
+   {
+    "vol_hi": false,
+    "size": 822,
+    "mean": 0.287
+   },
+   {
+    "vol_hi": true,
+    "size": 722,
+    "mean": 0.171
+   }
+  ],
+  "portfolio_2020_26": {
+   "trades": 398,
+   "CAGR": 23.4,
+   "maxDD": -46.8,
+   "exposure": 82.8
+  },
+  "portfolio_2005_26": {
+   "trades": 896,
+   "CAGR": 15.1,
+   "maxDD": -46.8,
+   "exposure": 62.1
+  },
+  "ew_universe_CAGR_2020_26": 17.7,
+  "ew_universe_maxDD_2020_26": -41.1,
+  "top_symbols": {
+   "RECLTD": 37.5,
+   "ATGL": 36.2,
+   "INDIABULLS": 32.6,
+   "TATAELXSI": 25.8,
+   "VAKRANGEE": 22.2,
+   "ADANIENT": 21.2,
+   "AUROPHARMA": 19.0,
+   "CUPID": 15.6,
+   "BSE": 15.3,
+   "JSWENERGY": 13.9
+  }
+ }
+}
