@@ -82,7 +82,7 @@ def is_open(ex, now):
 def main():
     from SmartApi.smartWebSocketV2 import SmartWebSocketV2
     import logzero
-    a = Angel()
+    a = Angel(fresh=True)             # 10-Nov: the collector always starts on a fresh login (and shares it with the engines)
     master = load_master()
     now = now_ist()
     toks = tokens(master, now)

@@ -37,16 +37,69 @@ class Angel:
     STREAK_FORGET = 300                # a block that ended this many seconds ago no longer counts (fresh retries next scan)
     DISK_TTL = 240                     # seconds a candle series may be re-used by another engine process
 
-    def __init__(self):
+    # 10-Nov-2026: ONE login per job instead of one per engine process per scan. Every runner / alerts / option-buy
+    # process logged in again (≈ 8 logins an hour, ≈ 180 a day incl. collector restarts). The session (tokens only) is
+    # kept in the runner's temp dir (NOT .cache – bot.yml saves .cache to the Actions cache of this public repo; never
+    # printed, file mode 600; the runner VM is discarded after the job) and re-used while it is younger than SESSION_MAX_H
+    # and from today; it is checked with one profile call, and an "invalid token" reply forces one fresh login.
+    SESSION_FILE = Path(os.getenv("RUNNER_TEMP") or __import__("tempfile").gettempdir()) / "angel_session.json"
+    SESSION_MAX_H = 5.0
+    TOKEN_ERRORS = ("AG8001", "AG8002", "AG8003", "INVALID TOKEN", "TOKEN EXPIRED")
+
+    def __init__(self, fresh=False):
         from SmartApi import SmartConnect
-        import pyotp
         self.api = SmartConnect(api_key=os.environ["ANGEL_API_KEY"])
+        self.reused = False
+        if fresh or os.getenv("ANGEL_SESSION_REUSE", "1") != "1" or not self._reuse_session():
+            self._login()
+        self._setup()
+
+    def _login(self):
+        import pyotp
         totp = pyotp.TOTP(os.environ["ANGEL_TOTP_SECRET"].replace(" ", "")).now()
         s = self.api.generateSession(os.environ["ANGEL_CLIENT_ID"], os.environ["ANGEL_PIN"], totp)
         if not s or not s.get("status"):
-            raise RuntimeError(f"Angel login failed: {s}")
+            raise RuntimeError(f"Angel login failed: {(s or {}).get('message')} {(s or {}).get('errorcode')}")
         self.jwt, self.feed = (s.get("data") or {}).get("jwtToken"), (s.get("data") or {}).get("feedToken")   # for wsfeed.py
-        self._setup()
+        self.reused = False
+        try:
+            raw = str(self.jwt or "").replace("Bearer ", "", 1)
+            d = dict(day=f"{now_ist():%Y-%m-%d}", t=time.time(), jwt=raw, refresh=getattr(self.api, "refresh_token", None),
+                     feed=self.feed, user=getattr(self.api, "userId", None) or os.environ.get("ANGEL_CLIENT_ID"))
+            tmp = self.SESSION_FILE.with_suffix(f".{os.getpid()}.tmp")
+            tmp.write_text(json.dumps(d))
+            os.chmod(tmp, 0o600)
+            os.replace(tmp, self.SESSION_FILE)
+        except Exception as e:
+            print("[angel] session not saved:", type(e).__name__)
+
+    def _reuse_session(self):
+        try:
+            d = json.loads(self.SESSION_FILE.read_text())
+        except Exception:
+            return False
+        if d.get("day") != f"{now_ist():%Y-%m-%d}" or time.time() - float(d.get("t", 0)) > self.SESSION_MAX_H * 3600 or not d.get("jwt"):
+            return False
+        try:
+            self.api.setAccessToken(d["jwt"]); self.api.setRefreshToken(d.get("refresh")); self.api.setFeedToken(d.get("feed"))
+            self.api.setUserId(d.get("user"))
+            p = self.api.getProfile(d.get("refresh"))
+            if not p or not p.get("status"):
+                return False
+        except Exception:
+            return False
+        self.jwt, self.feed, self.reused = "Bearer " + d["jwt"], d.get("feed"), True
+        return True
+
+    def _relogin(self):
+        """An 'invalid token' reply: one fresh login (rewrites the shared session file)."""
+        if getattr(self, "_relogged", False):
+            return False
+        self._relogged = True
+        try:
+            self._login(); print("[angel] session invalid – logged in again"); return True
+        except Exception as e:
+            print("[angel] re-login failed:", type(e).__name__); return False
 
     def _setup(self, cache_dir=None, ws_dir=None, ws=None):
         """Runtime state (separate from the login so the throttling logic can be tested offline)."""
@@ -268,6 +321,8 @@ class Angel:
                 self._ep(ep, "refused")
                 self._trip()
                 continue
+            if r and any(k in f"{r.get('message', '')} {r.get('errorcode', '')}".upper() for k in self.TOKEN_ERRORS) and self._relogin():
+                continue                             # 10-Nov: shared session no longer valid -> fresh login, retry
             break                                    # real "bad request / no data" -> don't retry
         else:
             self.stats["failed"] += 1                # every retry refused / errored: this data is MISSING for the scan
@@ -550,6 +605,9 @@ class Angel:
                         if r and self._is_rate(f"{r.get('message', '')} {r.get('errorcode', '')}"):
                             self._trip("quote")
                             continue
+                        if r and not r.get("status") and any(k in f"{r.get('message', '')} {r.get('errorcode', '')}".upper()
+                                                             for k in self.TOKEN_ERRORS) and self._relogin():
+                            continue                     # 10-Nov: shared session invalid -> fresh login, retry
                         t_done = self._now()
                         for q in (r.get("data") or {}).get("fetched", []):
                             q["_req_start"], q["_recv_ist"] = str(t_req), str(t_done)   # reference times for age / skew
