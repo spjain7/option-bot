@@ -1,0 +1,35 @@
+# Master instruction (10-Nov-2026) – where each section stands
+
+Received: sections 1–15 (file cut off inside section 15) and section 26. Sections 16–25 were not received.
+Nothing here changes production. Research only, on `exp/cash-equity-engine`.
+
+| § | Topic | Status | Where |
+|---|---|---|---|
+| 2 | Repository | `spjain7/option-bot` (only repo visible) | – |
+| 3 | Coverage | MCX 7 commodities (no 5-min history loaded for LEAD / NICKEL), stock futures, NSE cash 2005–26 incl. delisted; index-only strategies not yet researched separately | `research/program`, `research/cashq/data.py` |
+| 4 | Angel audit | Done for candles, volume, OI, WebSocket, limits. Market depth (5-level / 20-level) NOT yet verified or collected | `research/mcxe013/DATA_AUDIT.md`, `research/cashq/DATA_AUDIT.md` |
+| 5 | Data quality | Live checks in production (WS-vs-REST hourly verify, stale feed, OI jump cap, feed-health notice). No per-instrument quality score; no exchange holiday calendar | `wsbars.py`, `alerts/engine.py` |
+| 6 | Indicators / structure | Tested: candles, chart patterns, trendlines, breakouts, VWAP, EMA, volume (MCX); momentum, breakout score, screeners (cash) | `research/mcxhw`, `research/cashq` |
+| 7 | Divergence | MCX done 10-Nov (12 indicators, regular + hidden, confirmed pivots). Cash done earlier (1 / 388 pass). Stock futures + OI divergence open | `research/mcxhw/rsi_div.py`, `research/cashq/div.py` |
+| 8 | RSI 75 / 25 | MCX done 10-Nov (10 events, reversal and continuation). Stock futures, indices, cash open | `research/mcxhw/rsi_div.py` |
+| 9 | Volume + OI + price | Stock futures daily OI done (0 / 33 pass). MCX has no historical OI from Angel | `research/cashq/oi_run.py` |
+| 10 | Multi-timeframe | Only as a trend filter so far | – |
+| 11 | Experiment registry | Every run writes all variants incl. failures to CSV; no single merged registry yet | `research/*/results/*.csv` |
+| 12–13 | Backtest rules / gates | Costs, next-bar entry, chronological periods, FDR in place | `research/mcxhw`, `research/cashq/validate.py` |
+| 14 | Trade construction | Live card has entry / SL / target / lot / expiry / WHY; no confidence or data-quality score | `alerts/candle_setups.py` |
+| 15 | Regimes | Not built | – |
+| 26 | Per-instrument config | Results are stored per commodity; no config hierarchy or dashboard yet | `rsi_div_by_commodity.csv` |
+
+## MCX-RD result (10-Nov) – RSI 75 / 25 and divergence, 2,325 pooled variants, 14,535 per-commodity
+DEV to 2024 · VALID 2025 · OOS 2026. PASS = profit and PF >= 1.2 in all three.
+- 15 pooled variants pass; none survives the multiple-testing correction (best t = 3.6).
+- RSI 75 / 25 as a REVERSAL signal loses on every timeframe (median −0.15R to −0.31R). Continuation is about flat.
+- Regular divergence (the classic kind): 0 passes, any indicator, any timeframe, either side.
+- All SELL variants: 0 passes. All 15-minute variants: 0 passes.
+- What passes: HIDDEN bullish divergence BUY on 3-hour bars (10) and daily bars (3) – i.e. buy a higher low in an up-move.
+  Best: MACD hidden BUY 3R: DEV +0.32R / VALID +0.25R / OOS +0.56R, 315 trades, 41 % wins, positive in 7 of 7 commodities.
+- Baseline on the same bars, stop and target: buy every 8th bar +0.01R; any pivot low +0.10R; any higher low +0.23R;
+  MACD / OBV hidden divergence +0.36R. So about two thirds of the edge is "buy higher lows in a rising market"
+  (2023–26 was a rising market for metals); the indicator adds roughly +0.13R on top.
+- Per commodity: only 3 of 14,535 pass (SILVER 1h MFI hidden BUY, COPPER 1h MACD hidden BUY, COPPER 1h volume hidden
+  BUY) – no more than chance. There is not enough data per commodity to justify separate tuned parameters yet.
