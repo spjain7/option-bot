@@ -723,24 +723,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-10 17:02:02.100492",
-   "oi": 927100.0,
-   "ltp": 8046.0
+   "time": "2026-11-10 17:17:02.165625",
+   "oi": 954300.0,
+   "ltp": 8008.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-10 17:02:02.100492",
-   "oi": 50465000.0,
-   "ltp": 305.7
+   "time": "2026-11-10 17:17:02.165625",
+   "oi": 50118750.0,
+   "ltp": 307.5
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-10 17:02:02.100492",
-   "oi": 16170.0,
-   "ltp": 141950.0
+   "time": "2026-11-10 17:17:02.165625",
+   "oi": 16157.0,
+   "ltp": 142018.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-10 17:02:02.100492",
-   "oi": 510060.0,
-   "ltp": 185556.0
+   "time": "2026-11-10 17:17:02.165625",
+   "oi": 510210.0,
+   "ltp": 185500.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -778,19 +778,19 @@
    "ltp": 59603.6
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-10 17:02:02.100492",
-   "oi": 17800000.0,
-   "ltp": 1344.15
+   "time": "2026-11-10 17:17:02.165625",
+   "oi": 17817500.0,
+   "ltp": 1345.3
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-10 17:02:02.100492",
-   "oi": 7850.0,
-   "ltp": 412.1
+   "time": "2026-11-10 17:17:02.165625",
+   "oi": 7930.0,
+   "ltp": 410.7
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-10 17:02:02.100492",
-   "oi": 18055.0,
-   "ltp": 325.7
+   "time": "2026-11-10 17:17:02.165625",
+   "oi": 18360.0,
+   "ltp": 326.4
   }
  },
  "bo_active": [
@@ -883,7 +883,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 23:45:00",
+   "checked": "2026-11-10 17:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -903,7 +903,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 23:45:00",
+   "checked": "2026-11-10 17:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -923,7 +923,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-09 23:45:00",
+   "checked": "2026-11-10 17:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -2483,7 +2483,7 @@
    "lot": 5,
    "mult": 5000,
    "time": "2026-11-09 10:17:02.134786",
-   "status": "OPEN",
+   "status": "CLOSED",
    "date": "2026-11-09",
    "experimental": true,
    "strategy": "RB_MCX_1h_BO20X_BUY_EXP",
@@ -2491,7 +2491,12 @@
    "uhi": 416.0,
    "ulo": 412.0,
    "ulast": 412.7,
-   "uat": "2026-11-10 17:02:02.100492"
+   "uat": "2026-11-10 17:02:02.100492",
+   "exit": 411.0,
+   "note": "stop-loss",
+   "closed": "2026-11-10 17:17:02.165625",
+   "hi": 411.0,
+   "lo": 411.0
   },
   {
    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|ALUMINIUM|2026-11-09 09:00:00",
@@ -4067,36 +4072,6 @@
     "rule": "RB_STK_1d_RSI80_BUY"
    },
    {
-    "name": "ZINC",
-    "ex": "MCX",
-    "token": "578638",
-    "contract": "ZINC30NOV26FUT",
-    "expiry": "2026-11-30",
-    "side": "BUY",
-    "entry": 415.0,
-    "stop": 411.0,
-    "target": null,
-    "risk": 4.0,
-    "tick": 0.05,
-    "mult": 5000,
-    "opened": "2026-11-09 10:17:02.134786",
-    "days": [
-     "2026-11-09",
-     "2026-11-10"
-    ],
-    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|ZINC|2026-11-09 09:00:00",
-    "max_days": 16,
-    "tfl": "1-hour",
-    "rule": "RB_MCX_1h_BO20X_BUY_EXP",
-    "trail_atr": 4.0,
-    "atr": 1.9846184730680685,
-    "best": 415.0,
-    "trailed": false,
-    "trail_tf": "1h",
-    "trail_from": "2026-11-09 23:00:00",
-    "trail_noted": 411.0
-   },
-   {
     "name": "AMBER",
     "ex": "NFO",
     "token": "61483",
@@ -4176,6 +4151,40 @@
     "exit_reason": "stop-loss",
     "closed": "2026-11-10 17:02:02.100492",
     "result_R": -1.0
+   },
+   {
+    "name": "ZINC",
+    "ex": "MCX",
+    "token": "578638",
+    "contract": "ZINC30NOV26FUT",
+    "expiry": "2026-11-30",
+    "side": "BUY",
+    "entry": 415.0,
+    "stop": 411.0,
+    "target": null,
+    "risk": 4.0,
+    "tick": 0.05,
+    "mult": 5000,
+    "opened": "2026-11-09 10:17:02.134786",
+    "days": [
+     "2026-11-09",
+     "2026-11-10"
+    ],
+    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|ZINC|2026-11-09 09:00:00",
+    "max_days": 16,
+    "tfl": "1-hour",
+    "rule": "RB_MCX_1h_BO20X_BUY_EXP",
+    "trail_atr": 4.0,
+    "atr": 1.9846184730680685,
+    "best": 415.0,
+    "trailed": false,
+    "trail_tf": "1h",
+    "trail_from": "2026-11-09 23:00:00",
+    "trail_noted": 411.0,
+    "exit": 411.0,
+    "exit_reason": "stop-loss",
+    "closed": "2026-11-10 17:17:02.165625",
+    "result_R": -1.0
    }
   ],
   "last": {
@@ -4227,24 +4236,24 @@
   "n": 4
  },
  "scan": {
-  "seq": 248,
-  "started": "2026-11-10 17:02:02.100492",
-  "finished": "2026-11-10 17:02:49.158891",
-  "seconds": 47,
+  "seq": 249,
+  "started": "2026-11-10 17:17:02.165625",
+  "finished": "2026-11-10 17:17:45.833926",
+  "seconds": 43,
   "status": "SUCCESS",
-  "note": "api requests 38 ok 38 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "note": "api requests 31 ok 31 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 38,
-   "ok": 38,
+   "calls": 31,
+   "ok": 31,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
-   "mem_hits": 14,
+   "mem_hits": 0,
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 2
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
