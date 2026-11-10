@@ -4239,12 +4239,12 @@
   "n": 3
  },
  "scan": {
-  "seq": 278,
-  "started": "2026-11-11 00:17:01.901235",
-  "finished": "2026-11-11 00:17:07.681318",
-  "seconds": 5,
+  "seq": 279,
+  "started": "2026-11-11 00:19:40.112349",
+  "finished": "2026-11-11 00:19:50.357249",
+  "seconds": 10,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -4256,7 +4256,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
