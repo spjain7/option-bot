@@ -91,6 +91,14 @@ def main(dry=False):
                     f"Market filter now {'ON' if res['market_on'] else 'OFF'}; current top 10: "
                     + (", ".join(p["symbol"] for p in res["picks"]) or "none (cash)"))
         st["early"] = str(last.date())
+    if os.getenv("CASHSTOCK_BREAKOUT", "1") == "1":               # 10-Nov: scored 50-day breakout BUY calls (EXPERIMENTAL)
+        try:
+            from cashstock import breakout as B
+            B.step(st.setdefault("breakout", {}), B.features(B.wide(A)), msgs)
+            print(f"[cash-bo] candidates {st['breakout'].get('last_candidates')} · pending {len(st['breakout']['pending'])} · "
+                  f"open {len(st['breakout']['open'])} · closed {len(st['breakout']['closed'])}")
+        except Exception as e_:
+            print(f"::warning::cash breakout skipped: {type(e_).__name__}: {e_}")
     if os.getenv("CASHSTOCK_ALERTS", "1") == "0":                 # strategy messages paused (owner notices still go out)
         msgs = [m for m in msgs if m == os.getenv("CASHSTOCK_NOTE")]
     print(f"[cashstock] data to {last.date()} · next session {nxt.date()} · messages {len(msgs)}")

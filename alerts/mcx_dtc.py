@@ -20,7 +20,8 @@ NAMES = ("GOLD", "SILVER")
 CHECKPOINTS = (13 * 60, 17 * 60)
 K_OPEN, M_STOP = 0.3, 0.5
 SQUARE_OFF = 23 * 60
-LIVE = False                       # shadow only
+LIVE = True                        # 10-Nov-2026 (owner: "we need all calls live first") – sent, labelled EXPERIMENTAL
+WARN = "Alert only – no auto trade. Not investment advice."
 MAX_PER_COMMODITY, MAX_TOTAL = 2, 4  # MCXD-004: the 17:00 add-on helps (blocking it cut +0.18R to +0.10R) -> cap, don't block
 VERSION = "mcx-dtc-0.1 (MCXD-002, shadow)"
 
@@ -124,12 +125,39 @@ def run(state, msgs, name, c, c15, h1, dd, q, now):
                            day_open=sig["day_open"], atr_d=sig["atr_d"], slip_vs_signal=round(s * (ltp - sig["close"]), 2),
                            entry_delay_min=delay, executable=delay <= 15, assumed_cost="fees + 1.5 ticks/side",
                            mfe=0.0, mae=0.0))
-    FN.note(state, "MCX_DTC (shadow)", "shadow", key=key, now=now)
-    print(f"[mcx-dtc] {name} {sig['side']} logged only (shadow): entry {ltp} stop {ltp - s * sig['stop_dist']:.1f} · {sig['why']}")
-    return dict(sig, note="shadow recorded")
+    rec = st["open"][-1]
+    if not LIVE:
+        FN.note(state, "MCX_DTC (shadow)", "shadow", key=key, now=now)
+        print(f"[mcx-dtc] {name} {sig['side']} logged only (shadow): entry {ltp} stop {ltp - s * sig['stop_dist']:.1f} · {sig['why']}")
+        return dict(sig, note="shadow recorded")
+    from alerts import report as RP, tradeplan as TP
+    t = c.get("tick") or 1.0
+    rec["live"] = True
+    msgs.append("\n".join([
+        f"{'🟢 BUY' if s > 0 else '🔴 SELL'}  {name} FUT  ·  INTRADAY · 🧪 EXPERIMENTAL – day-trend continuation",
+        "━━━━━━━━━━━━━━",
+        f"Entry   : {TP.fmt(ltp, t)}  (now; skip if price has moved more than {TP.fmt(0.1 * sig['atr_d'], t)} further)",
+        f"SL      : {TP.fmt(rec['stop'], t)}  (0.5 × daily ATR)",
+        "Target  : none – hold to the 23:00 square-off (exit alert follows)",
+        f"Lot     : {c.get('lot') or '-'}  ·  {(format(pd.Timestamp(c['expiry']), '%b') + ' expiry') if c.get('expiry') else 'expiry n/a'}  ·  MCX"]))
+    msgs.append("\n".join([
+        f"📌 WHY – {name} {sig['side']} (intraday)", "━━━━━━━━━━━━━━",
+        f"• Chart   : {sig['checkpoint']} checkpoint – 15-min close {TP.fmt(sig['close'], t)}",
+        f"• Setup   : {sig['why']}",
+        f"• Levels  : VWAP {TP.fmt(sig['vwap'], t)} · day open {TP.fmt(sig['day_open'], t)} · daily ATR {TP.fmt(sig['atr_d'], t)}",
+        "• Exit    : SL on the live price or square-off at 23:00 · max 2 per commodity / 4 per day",
+        "• Record  : BACKTEST ONLY – 542 trades 2023-26, +0.18R avg after costs (GOLD / SILVER only). "
+        "No live record yet → EXPERIMENTAL, small size.",
+        WARN]))
+    RP.add(state, key="DTC|" + key, mark_key=str(c["token"]), seg="MCX", cat="FUTURES (EXPERIMENTAL)", name=name, symbol=c.get("symbol", name),
+           type="Intraday day-trend (EXPERIMENTAL)", side=sig["side"], entry=ltp, sl=rec["stop"], target=None, tick=t, lot=c.get("lot"),
+           mult=RP.mult_for(name, "MCX", c.get("lot")), time=str(now), experimental=True)
+    FN.note(state, "MCX_DTC (experimental)", "sent", key=key, now=now)
+    print(f"[mcx-dtc] {name} {sig['side']} SENT (experimental): entry {ltp} stop {rec['stop']:.1f} · {sig['why']}")
+    return dict(sig, note="sent")
 
 
-def track(state, name, q, now):
+def track(state, name, q, now, msgs=None):
     """Every scan: stop on the live price, square-off at the first scan at / after 23:00 (or on a later day)."""
     st = store(state)
     ltp = float((q or {}).get("ltp") or 0)
@@ -150,6 +178,14 @@ def track(state, name, q, now):
         if why and px:
             r.update(exit=px, exit_reason=why, closed=str(now), result_R=round(s * (px - r["entry"]) / r["risk"], 3))
             st["closed"] = (st["closed"] + [r])[-300:]
+            if r.get("live"):
+                for L in state.get("ledger", []):
+                    if L.get("key") == "DTC|" + r["key"] and L.get("status") == "OPEN":
+                        L.update(status="CLOSED", exit=round(float(px), 2), note=why, closed=str(now))
+                if msgs is not None:
+                    g = r["result_R"]
+                    msgs.append(f"{'✅' if g > 0 else '❌' if g < 0 else '➖'} EXIT – {name} FUT {r['side']} (intraday day-trend, "
+                                f"EXPERIMENTAL) at {px:,.1f}: {why} · entry {r['entry']:,.1f} · {g:+.2f}R. {WARN}")
         else:
             keep.append(r)
     st["open"] = keep

@@ -418,7 +418,7 @@ def scan(api, master, now, state, only=None):
                 from alerts import mcx_dtc as DTC
                 dd_ = BO.daily_candles(full_1h, None)
                 dd_ = dd_[dd_["time"].dt.normalize() < now.normalize()] if dd_ is not None else None
-                DTC.track(state, name, q, now)
+                DTC.track(state, name, q, now, msgs)
                 info["dtc"] = DTC.run(state, msgs, name, c, cl.get("15m"), full_1h, dd_, q, now).get("why")
             except Exception as e_:
                 print(f"[mcx-dtc] {name} skipped: {type(e_).__name__}: {e_}")

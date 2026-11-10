@@ -34,19 +34,27 @@ weak = c15.copy(); weak["close"] = 110100.0
 check(D.evaluate(weak, h1, dd, now)["side"] is None, "only 0.1 ATR from the open -> nothing")
 st, msgs = {"day": {"date": str(day.date())}}, []
 D.run(st, msgs, "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110620.0}, now)
-check(not msgs and len(st["mcxdtc"]["open"]) == 1 and st["mcxdtc"]["open"][0]["entry"] == 110620.0, "shadow trade recorded, NO message")
+check(len(msgs) == 2 and "EXPERIMENTAL" in msgs[0] and "BACKTEST ONLY" in msgs[1] and len(st["mcxdtc"]["open"]) == 1
+      and st["mcxdtc"]["open"][0]["entry"] == 110620.0 and st["ledger"][0]["cat"] == "FUTURES (EXPERIMENTAL)",
+      "10-Nov LIVE: call + WHY sent, labelled EXPERIMENTAL; ledger row in the experimental category")
 D.run(st, msgs, "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110650.0}, now + pd.Timedelta(minutes=15))
 check(len(st["mcxdtc"]["open"]) == 1, "same checkpoint not recorded twice")
 D.track(st, "GOLD", {"ltp": 111000.0}, day + pd.Timedelta(hours=18))
 check(len(st["mcxdtc"]["open"]) == 1, "price above stop before 23:00 -> still open")
-D.track(st, "GOLD", {"ltp": 111120.0}, day + pd.Timedelta(hours=23, minutes=2))
+xm = []
+D.track(st, "GOLD", {"ltp": 111120.0}, day + pd.Timedelta(hours=23, minutes=2), xm)
 r = st["mcxdtc"]["closed"][-1]
+check(len(xm) == 1 and "EXIT" in xm[0] and "+1.00R" in xm[0] and st["ledger"][0]["status"] == "CLOSED", "exit message sent, ledger row closed")
 check(r["exit_reason"] == "square-off" and abs(r["result_R"] - 1.0) < 1e-6, "23:00 square-off at the live price, +1.0R recorded")
 st2 = {"day": {"date": str(day.date())}}
 D.run(st2, [], "SILVER", {"token": "8"}, c15, h1, dd, {"ltp": 110620.0}, now)
 D.track(st2, "SILVER", {"ltp": 110100.0}, day + pd.Timedelta(hours=15))
 check(st2["mcxdtc"]["closed"][-1]["exit_reason"] == "stop" and st2["mcxdtc"]["closed"][-1]["result_R"] == -1.0, "stop hit -> -1R")
-check(D.LIVE is False, "strategy is SHADOW only (LIVE = False)")
+check(D.LIVE is True, "owner 10-Nov: LIVE, labelled EXPERIMENTAL")
+D.LIVE = False; st9, m9 = {"day": {"date": str(day.date())}}, []
+D.run(st9, m9, "GOLD", {"token": "9"}, c15, h1, dd, {"ltp": 110620.0}, now)
+check(not m9 and len(st9["mcxdtc"]["open"]) == 1 and not st9.get("ledger"), "LIVE = False -> shadow again (no message, no ledger row)")
+D.LIVE = True
 rec = st["mcxdtc"]["closed"][0]
 check(all(k in rec for k in ("checkpoint", "slip_vs_signal", "entry_delay_min", "executable", "mfe", "mae", "exit_reason")) and rec["mfe"] >= 1.0,
       "shadow record has checkpoint, slippage vs signal, delay, executable flag, MFE / MAE, exit reason")
