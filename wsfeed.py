@@ -191,7 +191,10 @@ def main():
         if not th.is_alive():
             print("[ws] connection thread ended – exit for a restart", flush=True); break
         live = [ex for ex in toks if is_open(ex, n)]
-        lt = [pd.Timestamp(st["last_tick"][ex]) for ex in live if st["last_tick"].get(ex)]
+        # 10-Nov FIX: a collector started before the open (08:42) has only pre-open ticks; at 09:00 the stale rule saw
+        # "18 min without ticks" and restarted it at the open. Count silence from the session open, not from pre-open.
+        op = {ex: n.normalize() + pd.Timedelta(hours=WB.OPEN[ex][0], minutes=WB.OPEN[ex][1]) for ex in live}
+        lt = [max(pd.Timestamp(st["last_tick"][ex]), op[ex]) for ex in live if st["last_tick"].get(ex)]
         if live and time.time() - t0 > STALE_SEC and (not lt or (n - max(lt)).total_seconds() > STALE_SEC):
             print(f"[ws] no ticks for {STALE_SEC}s while {live} open – exit for a restart", flush=True); break
         if st["ticks"] // 50000 != last_n:
