@@ -1,5 +1,5 @@
-"""CASHQ-OI – F&O stocks only: EXACT-contract futures OI from the NSE futures bhavcopy (2011-01 … 2026-10, research/data/
-nse_fut/days), traded in CASH (entry next session's open, delivery costs). Never applied to non-F&O stocks.
+"""CASHQ-OI – F&O stocks only: EXACT-contract futures OI from the NSE futures bhavcopy, full point-in-time F&O stock list
+(2018-01 … 2026-11, research/data/nse_fut_pit/days; the older nse_fut/days set holds only ~10 symbols and is not used), traded in CASH (entry next session's open, delivery costs). Never applied to non-F&O stocks.
 Contract: the nearest expiry on day t; OI change = that contract's chg_oi vs its own previous OI; sessions in the last
 5 days before expiry are excluded (OI migrates to the next month = rollover, not positioning). Also aggregate OI over all
 expiries (roll-neutral) as a robustness variant. Classes on day t (cash close vs previous close, OI change > +2 % / < −2 %):
@@ -18,14 +18,16 @@ import pandas as pd
 from . import data as D, ind as I, engine as EN, validate as V
 from .daily_run import summarise, first_in
 
+OI_SPLITS = dict(DEV=("2018-01-01", "2021-12-31"), VALID=("2022-01-01", "2023-12-31"), OOS=("2024-01-01", "2026-12-31"))
+
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(__file__).resolve().parent / "results"
 
 
 def fut_panel():
-    fs = sorted(glob.glob(str(ROOT / "research/data/nse_fut/days/*.csv")))
-    X = pd.concat((pd.read_csv(f, usecols=["date", "symbol", "expiry", "close", "oi", "chg_oi"]) for f in fs), ignore_index=True)
-    X = X[~X["symbol"].isin(["NIFTY", "BANKNIFTY", "FINNIFTY", "MIDCPNIFTY", "NIFTYNXT50", "NIFTYIT", "SENSEX", "BANKEX"])]
+    fs = sorted(glob.glob(str(ROOT / "research/data/nse_fut_pit/days/*.csv.gz")))
+    X = pd.concat((pd.read_csv(f, usecols=["date", "symbol", "kind", "expiry", "close", "oi", "chg_oi"]) for f in fs), ignore_index=True)
+    X = X[X["kind"] == "STK"]
     X["date"], X["expiry"] = pd.to_datetime(X["date"]), pd.to_datetime(X["expiry"])
     X = X[X["expiry"] >= X["date"]]
     near = X.sort_values("expiry").groupby(["date", "symbol"]).head(1).copy()
@@ -75,7 +77,7 @@ def main():
             if not len(T):
                 continue
             T["strategy"], T["R"] = nm, R
-            rows.append(summarise(nm, "OPEN_INTEREST", T, dict(params=f"F&O stocks, near-contract OI (roll week excluded), cash entry next open, target {R:g}R, stop 1.5 ATR, max 20",
+            rows.append(summarise(nm, "OPEN_INTEREST", T, splits=OI_SPLITS, extra=dict(params=f"F&O stocks, near-contract OI (roll week excluded), cash entry next open, target {R:g}R, stop 1.5 ATR, max 20",
                                                                  R=R, hold="swing", side="LONG")))
             led.append(T)
         print(f"  {nm} ({time.time() - t0:.0f}s)", flush=True)

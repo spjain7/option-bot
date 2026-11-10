@@ -11,12 +11,14 @@ COLS = ["exp_id", "status", "n_all", "DEV_n", "DEV_avgR", "VALID_n", "VALID_avgR
 
 def load():
     L = []
-    for f, kind in (("daily_leaderboard.csv", "positional/swing (daily)"), ("intra_leaderboard.csv", "intraday"), ("oi_leaderboard.csv", "F&O OI (daily)"), ("weekly_leaderboard.csv", "positional (weekly)")):
+    for f, kind in (("daily_leaderboard.csv", "positional/swing (daily)"), ("intra_leaderboard.csv", "intraday"), ("oi_leaderboard.csv", "F&O OI (daily)"), ("weekly_leaderboard.csv", "positional (weekly)"),
+                    ("stop2x/intra_leaderboard.csv", "intraday"), ("stop3x/intra_leaderboard.csv", "intraday")):
         p = OUT / f
         if p.exists():
             d = pd.read_csv(p); d["engine"] = kind
             fix = ~d["exp_id"].astype(str).str.endswith("R")
-            d.loc[fix, "exp_id"] = d.loc[fix, "exp_id"] + "-" + d.loc[fix, "R"].map(lambda r: f"{r:g}R")
+            if fix.any():
+                d.loc[fix, "exp_id"] = d.loc[fix, "exp_id"].astype(str) + "-" + d.loc[fix, "R"].map(lambda r: f"{r:g}R").astype(str)
             L.append(d)
     L = pd.concat(L, ignore_index=True)
     L["n_all"] = L[["DEV_n", "VALID_n", "OOS_n"]].fillna(0).sum(axis=1).astype(int)

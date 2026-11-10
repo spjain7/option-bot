@@ -14,7 +14,7 @@ from . import data as D, ind as I, div as DV, engine as EN, validate as V
 OUT = Path(__import__("os").getenv("CQ_OUT") or (Path(__file__).resolve().parent / "results"))
 OUT.mkdir(exist_ok=True)
 TFS = (5, 15, 30, 60)
-EXITS = (0.5, 1.0, 1.5, 2.0, 3.0, 0.0)
+EXITS = tuple(float(x) for x in __import__("os").getenv("CQ_EXITS", "0.5,1,1.5,2,3,0").split(","))
 
 
 def market_since_open(frames):
@@ -106,6 +106,9 @@ def _all(dct):
 
 def rdist(d, f, s):
     a = f["atr"]
+    k = float(__import__("os").getenv("CQ_STOPX", "0"))
+    if k > 0:                                       # CQI-2 follow-up: fixed k x ATR stop (wider stop -> smaller cost in R)
+        return (k * a).values
     r = (d["close"] - d["low"] + 0.1 * a) if s > 0 else (d["high"] - d["close"] + 0.1 * a)
     return r.clip(lower=0.5 * a, upper=2.5 * a).values
 
@@ -136,7 +139,8 @@ def main():
                     T["strategy"], T["tf"], T["side"], T["R"] = nm, tf, s, R
                     fam = ("RSI" if nm[:3] in ("I1_", "I2_", "I3_") else "DIVERGENCE" if nm[:3] in ("I4_", "I5_") else
                            "COMBINED" if nm.startswith("I13") or nm.startswith("I12") else "PRICE_ACTION")
-                    row = dict(exp_id=f"CQI-{tf}m-{'L' if s > 0 else 'S'}-{nm}-{R:g}R", strategy=nm, family=fam, tf=f"{tf}m",
+                    _k = __import__("os").getenv("CQ_STOPX", "")
+                    row = dict(exp_id=f"CQI{'2-' + _k + 'ATR' if _k else ''}-{tf}m-{'L' if s > 0 else 'S'}-{nm}-{R:g}R", strategy=nm, family=fam, tf=f"{tf}m",
                                side="LONG" if s > 0 else "SHORT", R=R, params=f"{tf}-min, {'target ' + format(R, 'g') + 'R' if R else 'square-off only'}, stop signal-bar extreme ±0.1 ATR (0.5-2.5 ATR)")
                     for k_, t_ in V.split(T, V.INTRA_SPLITS).items():
                         for a, b in V.metrics(t_).items():
@@ -147,7 +151,7 @@ def main():
                         tt = dd.mean() / (dd.std(ddof=1) / np.sqrt(len(dd))) if dd.std(ddof=1) > 0 else 0
                         row["OOS_t"], row["OOS_p"] = round(float(tt), 2), float(stats.t.sf(tt, len(dd) - 1))
                     rows.append(row)
-                    if R in (1.0, 2.0, 0.0):
+                    if R in (1.0, 2.0, 0.0) and not _k:
                         ledgers.append(T)
             print(f"  tf {tf} side {s}: {time.time() - t0:.0f}s, rows {len(rows)}", flush=True)
     Lb = pd.DataFrame(rows)
@@ -156,7 +160,8 @@ def main():
     Lb.loc[sel, "OOS_q"] = V.bh(Lb.loc[sel, "OOS_p"].fillna(1).values)
     Lb["status"] = Lb.apply(V.verdict, axis=1)
     Lb.to_csv(OUT / "intra_leaderboard.csv", index=False)
-    pd.concat(ledgers, ignore_index=True).to_csv(OUT / "intra_trades.csv.gz", index=False)
+    if ledgers:
+        pd.concat(ledgers, ignore_index=True).to_csv(OUT / "intra_trades.csv.gz", index=False)
     json.dump(dict(variants=len(Lb), trades_saved=int(sum(len(x) for x in ledgers)), seconds=round(time.time() - t0)), open(OUT / "intra_run.json", "w"))
     print(Lb["status"].value_counts().to_dict(), f"{time.time() - t0:.0f}s")
 

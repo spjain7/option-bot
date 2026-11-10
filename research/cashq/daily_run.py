@@ -162,14 +162,16 @@ def rdist_struct(F, look=5):
     return d.clip(lower=0.75 * a, upper=3.0 * a)
 
 
-def summarise(name, family, T, extra):
+def summarise(name, family, T, extra, splits=None):
     row = dict(exp_id=f"CQD-{family}-{name}-{extra.get('R', 0):g}R", strategy=name, family=family, **extra)
-    parts = V.split(T, V.DAILY_SPLITS)
+    parts = V.split(T, splits or V.DAILY_SPLITS)
+    oos0 = (splits or V.DAILY_SPLITS)["OOS"][0]
     for k, t in parts.items():
         m = V.metrics(t)
         for a, b in m.items():
             row[f"{k}_{a}"] = b
     o = parts["OOS"]
+    row["OOS_t"], row["OOS_p"] = np.nan, 1.0
     if len(o) > 2:
         dd = o.groupby(o["entry_time"].dt.normalize())["netR"].mean()
         tt = dd.mean() / (dd.std(ddof=1) / np.sqrt(len(dd))) if dd.std(ddof=1) > 0 else 0
