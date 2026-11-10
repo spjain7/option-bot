@@ -2,5 +2,74 @@
  "holdings": [],
  "last_rebalance": null,
  "pending": null,
- "early": "2026-11-05"
+ "early": "2026-11-05",
+ "breakout": {
+  "pending": [],
+  "open": [],
+  "closed": [],
+  "seen": [],
+  "last_candidates": [
+   {
+    "symbol": "GLAND",
+    "score": 65,
+    "close": 3302.4,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "UNIONBANK",
+    "score": 52,
+    "close": 197.0,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "LT",
+    "score": 40,
+    "close": 4185.0,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "MANKIND",
+    "score": 40,
+    "close": 2668.3,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "MAHABANK",
+    "score": 31,
+    "close": 87.68,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "HDFCLIFE",
+    "score": 21,
+    "close": 565.4,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "INDIANB",
+    "score": 21,
+    "close": 933.7,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "BANKBARODA",
+    "score": 20,
+    "close": 260.01,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "PATANJALI",
+    "score": 20,
+    "close": 429.45,
+    "day": "2026-11-09"
+   },
+   {
+    "symbol": "IREDA",
+    "score": 11,
+    "close": 119.65,
+    "day": "2026-11-09"
+   }
+  ],
+  "asof": "2026-11-09"
+ }
 }
