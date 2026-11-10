@@ -1,0 +1,3 @@
+signal_time,symbol,score,entry_time,entry,stop,T1,T2,stop_pct,qty_for_10k_risk,status,exit_time,exit,netR,bars,rs126,adx,tight,clv,breadth50,turnover_cr
+2026-11-04,BOSCHLTD,65,2026-11-05,51405.0,47726.06,55083.94,58762.87,7.2,2,OPEN,2026-11-05,,,1,0.866,28.002,1.103,0.794,0.481,128.853
+2026-11-04,GRWRHITECH,56,2026-11-05,7601.0,6565.4,8636.6,9672.2,13.6,9,OPEN,2026-11-05,,,1,0.925,17.846,1.203,0.811,0.481,31.765

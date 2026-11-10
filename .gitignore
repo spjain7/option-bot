@@ -55,3 +55,4 @@ research/mcxe008/results/trades_*.parquet
 research/mcxe009/cand_*.parquet
 research/cashq/results/*_trades.csv.gz
 research/eqbtst/_btst_cache.pkl
+research/cashq/results/buy_events*.csv.gz
