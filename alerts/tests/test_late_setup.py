@@ -55,4 +55,27 @@ later = pd.concat([early, pd.DataFrame(dict(time=[pd.Timestamp("2026-10-22 23:30
 m3 = []
 CS.on_mcx(st, m3, "GOLD", "MCX", C, d0, None, later, pd.Timestamp("2026-10-22 23:47"))
 check(any("TRIGGERED" in x for x in m3) and st["candle_setups"]["open"][0]["status"] == "open", "a break AFTER the alert triggers normally")
+
+# 4. MCX hammer LIVE alerts on the live price (10-Nov: activation / target messages at the time they happen)
+st, m = {"day": {}}, []
+CS.on_mcx(st, m, "GOLD", "MCX", C, d0, None, early, now)
+r = st["candle_setups"]["open"][0]
+
+
+class Api:
+    def __init__(self, px): self.px = px
+    def quotes(self, d): return {k: {"ltp": self.px} for v in d.values() for k in v}
+
+
+C_tok = r["token"] = r.get("token") or "1"
+mA = []
+CS.live_watch(st, mA, Api(r["trigger"] + 1), now, ex="MCX")
+CS.live_watch(st, mA, Api(r["trigger"] + 2), now, ex="MCX")
+check(len(mA) == 1 and "LIVE" in mA[0] and "ACTIVE" in mA[0] and "15-min" in mA[0], "MCX trigger crossed -> one LIVE ACTIVE message (no repeat)")
+mB = []
+CS.live_watch(st, mB, Api(r["trigger"] + 3 * (r["trigger"] - r["stop"])), now, ex="MCX")
+check(len(mB) == 1 and "target" in mB[0], "MCX target reached -> LIVE target message")
+mC = []
+CS.live_watch(st, mC, Api(r["trigger"] + 1), now, ex="NFO")
+check(not mC, "stock live watch does not touch MCX setups")
 print(f"{ok} late-setup checks passed")

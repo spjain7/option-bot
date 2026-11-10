@@ -185,7 +185,7 @@ def rows_for(state, seg, today, marks):
     """Every OPEN call (any day) + every call CLOSED today, with high / low after the call, CMP (or exit) and P&L per lot."""
     out = []
     for r in state.get("ledger", []):
-        if r["seg"] != seg or (r["status"] == "CLOSED" and str(r.get("closed", r["date"]))[:10] != today):
+        if r["seg"] != seg or r["status"] == "VOID" or (r["status"] == "CLOSED" and str(r.get("closed", r["date"]))[:10] != today):
             continue
         mk = _ltp(marks.get(r.get("mark_key"))) if r["status"] == "OPEN" else None
         if mk is None and r["status"] == "OPEN":
