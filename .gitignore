@@ -59,3 +59,4 @@ research/cashq/results/buy_events*.csv.gz
 research/cashq/results/buy_events_div.csv.gz
 research/cashq/results/lonesome_trades.csv.gz
 research/cashq/results/screeners_trades.csv.gz
+research/mcxhw/results/mcxhw_all.csv.gz

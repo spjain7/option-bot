@@ -1,0 +1,19 @@
+{
+ "variants": 32044,
+ "focus_80_any_profit": 4213,
+ "focus_80_profitable": 805,
+ "winners_also_in_check": 6,
+ "seconds": 10,
+ "by_mode": {
+  "INTRADAY": {
+   "variants": 12100,
+   "focus_ok": 127,
+   "winners": 0
+  },
+  "POSITIONAL": {
+   "variants": 19944,
+   "focus_ok": 678,
+   "winners": 6
+  }
+ }
+}
