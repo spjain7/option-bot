@@ -233,6 +233,50 @@ def watch_msg(name, ex, c, sig, oi=None, q=None):
     return "\n".join(L)
 
 
+OI_JUMP_MAX_PCT = 50.0      # a real OI change within 10-40 minutes is a few per cent
+
+
+FEED_GRACE_MIN = 20         # minutes after the scheduled open before "no live data" is reported
+EX_LABEL = {"MCX": "MCX", "NFO": "NSE"}
+
+
+def feed_health(state, msgs, quotes, cmap, names, now):
+    """10-Nov-2026 (Diwali Balipratipada: NSE closed, MCX morning closed, evening open from 17:00 – the engine scanned a
+    frozen feed all day and stayed silent). Per exchange: when the session should be open for FEED_GRACE_MIN minutes and
+    NO quote carries an exchange timestamp from the last 15 minutes, send ONE notice ("no live data – holiday / special
+    session or feed problem; no calls until it resumes"); when live quotes are back, send ONE "resumed" notice.
+    Information only – it never creates, blocks or changes a call."""
+    hs = state.setdefault("feed", {})
+    day = str(now.date())
+    for ex in ("MCX", "NFO"):
+        toks = [str(cmap[n]["token"]) for n, e in names if e == ex and n in cmap]
+        if not toks or not is_open(ex, now) or (now - s_open(ex, now)).total_seconds() < FEED_GRACE_MIN * 60:
+            continue
+        times = [TP.quote_time(quotes.get(t)) for t in toks]
+        times = [t for t in times if t is not None]
+        live = any((now - t).total_seconds() <= 15 * 60 for t in times)
+        h = hs.setdefault(ex, {})
+        if h.get("day") != day:
+            h.clear(); h["day"] = day
+        if not live:
+            h["dead_scans"] = h.get("dead_scans", 0) + 1
+            if h["dead_scans"] >= 2 and not h.get("warned"):
+                h["warned"] = str(now)
+                last = max(times).strftime("%d-%b %H:%M") if times else "none received"
+                msgs.append(f"⚠️ NO LIVE DATA – {EX_LABEL[ex]}\n"
+                            f"No fresh exchange prices since the scheduled open (last exchange time: {last}). "
+                            "Likely an exchange holiday / special session, otherwise a data-feed problem. "
+                            f"No {EX_LABEL[ex]} calls can be made until live data resumes – a message follows when it does.")
+                print(f"[feed] {ex}: no live quotes ({len(times)}/{len(toks)} timestamps, newest {last}) – notice sent")
+        else:
+            if h.get("warned") and not h.get("resumed"):
+                h["resumed"] = str(now)
+                msgs.append(f"✅ LIVE DATA RESUMED – {EX_LABEL[ex]} at {now:%H:%M}. Scanning as normal; the first candles after a "
+                            "late open are shorter than usual.")
+                print(f"[feed] {ex}: live quotes resumed")
+            h["dead_scans"] = 0
+
+
 def oi_reading(state, symbol, q, now):
     """Current OI from the live quote; change only vs this engine's own snapshot 10-40 min earlier (never invented)."""
     if not q or not isinstance(q.get("opnInterest"), (int, float)) or q["opnInterest"] <= 0:
@@ -244,6 +288,12 @@ def oi_reading(state, symbol, q, now):
         gap = (now - pd.Timestamp(prev["time"])).total_seconds() / 60
         if 10 <= gap <= 40 and pd.Timestamp(prev["time"]).normalize() == now.normalize() and prev["oi"] > 0:
             ch = (out["oi"] - prev["oi"]) / prev["oi"] * 100
+            if abs(ch) > OI_JUMP_MAX_PCT:
+                # 10-Nov: CRUDEOIL quote OI 9,336 -> 933,600 (+9,900 %) when the feed resumed after the holiday morning
+                # (stale value in other units). Not a build-up: no change / label from an impossible jump.
+                print(f"[dq] {symbol} quote OI jump {ch:+.0f}% in {gap:.0f} min ignored (stale / unit change)")
+                snaps[symbol] = dict(time=str(now), oi=out["oi"], ltp=q.get("ltp") or 0)
+                return out
             dp = (q.get("ltp") or 0) - prev["ltp"]
             lab = ("Flat OI" if abs(ch) < 0.2 or dp == 0 else
                    ("Long buildup" if ch > 0 else "Short covering") if dp > 0 else ("Short buildup" if ch > 0 else "Long unwinding"))
@@ -286,6 +336,10 @@ def scan(api, master, now, state, only=None):
                 quotes.update(api.quotes({ex: toks}))
             except Exception as e:
                 rep["errors"].append(f"quotes {ex}: {type(e).__name__}")
+    try:
+        feed_health(state, msgs, quotes, cmap, names, now)
+    except Exception as e_:
+        print(f"[feed] health check skipped: {type(e_).__name__}: {e_}")
     for name, ex in names:
         info = rep["instruments"].setdefault(name, {})
         if not is_open(ex, now) and not _just_closed(ex, now):
