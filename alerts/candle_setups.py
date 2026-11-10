@@ -315,16 +315,21 @@ def _enter(state, msgs, r, e0, t, gapped):
 LIVE_SETUPS = ("STK_HANGMAN", "STK_SWEEP3H")
 
 
-def live_watch(state, msgs, api, now):
+LIVE_SETUPS_MCX = ("MCX_HAMMER",)   # 10-Nov (owner: alert at activation / entry / target, not 15-30 min later)
+
+
+def live_watch(state, msgs, api, now, ex="NFO"):
     """30-Oct (owner: "will I be notified when it's active?"): stock setups are confirmed on completed candles after the close,
     so during NSE hours the live price of every waiting / open stock setup is checked each scan (one quote call) and a LIVE
     message is sent once when the trigger, the stop or the target is crossed. The official entry / exit (and the P&L) is
     still confirmed on the completed candle after the close."""
     s = _store(state)
-    rs = [r for r in s["open"] if r["setup"] in LIVE_SETUPS and ENABLED.get(r["setup"]) and r.get("token")]
+    names = LIVE_SETUPS_MCX if ex == "MCX" else LIVE_SETUPS
+    rs = [r for r in s["open"] if r["setup"] in names and ENABLED.get(r["setup"]) and r.get("token")]
     if not rs:
         return
-    q = api.quotes({"NFO": sorted({str(r["token"]) for r in rs})}) or {}
+    conf = "Confirmed on the next completed 15-min candle." if ex == "MCX" else "Confirmed on the completed candle after 15:30."
+    q = api.quotes({ex: sorted({str(r["token"]) for r in rs})}) or {}
     for r in rs:
         ltp = float((q.get(str(r["token"])) or {}).get("ltp") or 0)
         if ltp <= 0:
@@ -337,21 +342,21 @@ def live_watch(state, msgs, api, now):
             tgt = r["trigger"] + sd * r.get("target_r", P["target_r"]) * sd * (r["trigger"] - r["stop"])
             msgs.append(f"🔔 LIVE – {_who(r)} {r['side']} setup is ACTIVE: price {_f(r, ltp)} crossed the trigger {_f(r, r['trigger'])}\n"
                         f"Stop-loss {_f(r, r['stop'])} · target ≈ {_f(r, tgt)} ({r.get('target_r', P['target_r']):g}R from the trigger). "
-                        f"Confirmed on the completed candle after 15:30. {WARN}")
+                        f"{conf} {WARN}")
         elif r["status"] == "pending" and not trig_crossed and not live.get("stop") and sd * (ltp - r["stop"]) <= 0:
             live["stop"] = str(now)
             msgs.append(f"⚠️ LIVE – {_who(r)} {r['side']} setup: price {_f(r, ltp)} reached the stop level {_f(r, r['stop'])} "
-                        f"before the trigger – the setup will be cancelled at the close. {WARN}")
+                        f"before the trigger – the setup will be cancelled{' on the 15-min candle' if ex == 'MCX' else ' at the close'}. {WARN}")
         elif trig_crossed:
             tgt = r.get("target") or (r["trigger"] + r.get("target_r", P["target_r"]) * (r["trigger"] - r["stop"]))
             if not live.get("stop") and sd * (ltp - r["stop"]) <= 0:
                 live["stop"] = str(now)
                 msgs.append(f"❌ LIVE – {_who(r)} {r['side']}: stop-loss {_f(r, r['stop'])} touched (price {_f(r, ltp)}). "
-                            f"Final exit confirmed after the close. {WARN}")
+                            f"Final exit {'on the 15-min candle' if ex == 'MCX' else 'confirmed after the close'}. {WARN}")
             elif not live.get("target") and sd * (ltp - tgt) >= 0:
                 live["target"] = str(now)
                 msgs.append(f"🎯 LIVE – {_who(r)} {r['side']}: target {_f(r, tgt)} reached (price {_f(r, ltp)}). "
-                            f"Final exit confirmed after the close. {WARN}")
+                            f"Final exit {'on the 15-min candle' if ex == 'MCX' else 'confirmed after the close'}. {WARN}")
 
 
 def _sessions_after(daily, t):
@@ -877,6 +882,25 @@ def sweep15_log(obstate, name, symbol, df, now, msgs=None, lot=None):
             print(f"[sweep15-log] {name} {lvname} {'SELL' if side < 0 else 'BUY'} sweep {f['time'].iat[i]:%H:%M} "
                   f"vol {v[i] / va[i] if va[i] > 0 else 0:.1f}x OI {doi if doi is not None else float('nan'):+.2f}% (log only)")
             return
+
+
+# 10-Nov audit: records built from bad data / replayed bars – kept for the record, excluded from results.
+VOID = {"MCX_HAMMER|NATURALGAS|2026-11-08": "VOID – Muhurat (Sun 8-Nov) candle + back-filled 9-Nov bars; call sent at 23:17 "
+                                            "after the move (10-Nov data audit)"}
+
+
+def void_records(state):
+    """Idempotent: mark VOID keys in the setup store and the ledger (status VOID, no result)."""
+    n = 0
+    for r in (state.get("candle_setups") or {}).get("closed", []):
+        if r.get("key") in VOID and not r.get("void"):
+            r.update(void=VOID[r["key"]], gross_R=None); n += 1
+    for r in state.get("ledger", []):
+        if r.get("key") in VOID and r.get("status") != "VOID":
+            r.update(status="VOID", note=VOID[r["key"]]); n += 1
+    if n:
+        print(f"[setup] voided {n} record(s): {', '.join(VOID)}")
+    return n
 
 
 def summary(state):

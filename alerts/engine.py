@@ -260,6 +260,10 @@ def new_state():
 
 def scan(api, master, now, state, only=None):
     msgs, rep = [], dict(time=str(now), instruments={}, errors=[])
+    try:
+        CS.void_records(state)                             # 10-Nov: results built from bad data are excluded
+    except Exception as e_:
+        print(f"[setup] void skipped: {type(e_).__name__}: {e_}")
     d = str(now.date())
     if state.get("day", {}) is None or (state.get("day") or {}).get("date") != d:
         prev = state.get("day")
@@ -428,6 +432,11 @@ def scan(api, master, now, state, only=None):
     if not state["day"]["startup_sent"] and now.hour >= 8 and any(is_open(e, now) for e in ("MCX", "NFO")):
         msgs.insert(0, startup_msg(now, rep))
         state["day"]["startup_sent"] = True
+    if is_open("MCX", now):                                # 10-Nov: LIVE trigger / stop / target messages for MCX hammer setups
+        try:
+            CS.live_watch(state, msgs, api, now, ex="MCX")
+        except Exception as e_:
+            print(f"[setup] MCX live watch skipped: {type(e_).__name__}: {e_}")
     try:                                                   # 30-Oct: 4-hour calls – stop / target / time exits on the live price
         from alerts import four_hour as FH
         FH.track(state, msgs, api, now, is_open)
