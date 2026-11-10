@@ -43,6 +43,9 @@ options() {
   rm -rf /tmp/opt; git worktree prune
   if ! (git fetch -q origin main && git worktree add -q --detach /tmp/opt FETCH_HEAD); then echo "::error::option engine checkout failed"; return; fi
   mkdir -p .cache && ln -sfn "$PWD/.cache" /tmp/opt/.cache
+  # 10-Nov: option engines parked (config.OPTIONS_PARKED) – the worktree above is still made (the alerts scan runs from it)
+  (cd /tmp/opt && python -c "import config,sys; sys.exit(1 if getattr(config,'OPTIONS_PARKED',False) else 0)") 2>/dev/null \
+    || { echo "option engine parked (config.OPTIONS_PARKED)"; return; }
   (cd /tmp/opt && ANGEL_DEADLINE=$(( $(date +%s) + 540 )) timeout 600 python runner.py auto); local rc=$?   # a hung API call can never block the loop
   (cd /tmp/opt && git add state/*.json 2>/dev/null
    if ! git diff --cached --quiet; then
