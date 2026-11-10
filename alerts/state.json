@@ -4232,18 +4232,19 @@
    "brentcrudeoilpriceforecastoilplungesnearly6toward90risksdroptoward80tradingkey",
    "goldpriceriseinbhubaneswartodaynovember102026check22k24kratesinmajorcitieskaling",
    "ukrainianstrikesdisrupt30ofrussiasoilrefiningcapacitycrudeoilpricestodayoilprice",
-   "goldcrashestoward4000ashotusinflationsendstreasuryyieldsabove5fxstreet\u0634\u0628\u0643\u0629\u062a\u0648\u0627\u0635\u0644\u0627"
+   "goldcrashestoward4000ashotusinflationsendstreasuryyieldsabove5fxstreet\u0634\u0628\u0643\u0629\u062a\u0648\u0627\u0635\u0644\u0627",
+   "oilpricesjustfelltotheirlowestsinceaugustastrumpsaystheiranwariseffectivelyover2"
   ],
   "day": "2026-11-11",
-  "n": 2
+  "n": 3
  },
  "scan": {
-  "seq": 277,
-  "started": "2026-11-11 00:02:02.338481",
-  "finished": "2026-11-11 00:02:12.769412",
-  "seconds": 10,
+  "seq": 278,
+  "started": "2026-11-11 00:17:01.901235",
+  "finished": "2026-11-11 00:17:07.681318",
+  "seconds": 5,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 3",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -4255,7 +4256,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 3
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
