@@ -4236,21 +4236,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 259,
-  "started": "2026-11-10 19:47:01.876268",
-  "finished": "2026-11-10 19:47:41.197347",
-  "seconds": 39,
+  "seq": 260,
+  "started": "2026-11-10 19:48:23.851468",
+  "finished": "2026-11-10 19:49:11.592309",
+  "seconds": 47,
   "status": "SUCCESS",
-  "note": "api requests 29 ok 29 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 23 ok 23 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 29,
-   "ok": 29,
+   "calls": 23,
+   "ok": 23,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 14
+   "disk_hits": 0
   },
   "errors": 0,
   "messages": 0
