@@ -482,7 +482,7 @@ def _manage(state, msgs, s, setup, name, contract, bars, daily, now, f3=None):
     s["open"] = keep
 
 
-def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
+def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot, last_px=None):
     if not ENABLED.get(setup) or any(r["setup"] == setup and r["name"] == name for r in s["open"]):
         return
     if df is None or len(df) < 60:
@@ -508,6 +508,12 @@ def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
     if abs(trig - stop) / trig * 100 > P["max_stop_pct"]:
         print(f"[setup] {setup} {name}: stop {abs(trig - stop) / trig * 100:.1f}% away – not sent"); return
     tick = c.get("tick") or 0.05
+    if last_px is not None and sd * (float(last_px) - trig) > 0:
+        # 10-Nov FIX: found late (NATURALGAS 9-Nov 23:17 at 301 vs trigger 285.6) – the trigger already traded before the
+        # alert could be sent: no call (it would be a chase), and no back-filled entry / target.
+        print(f"[setup] {setup} {name} {side} pattern {df['time'].iloc[i]}: trigger {trig} already traded (price {last_px}) "
+              "before the alert – not sent")
+        return
     v = df["volume"].astype(float)
     va = v.rolling(20).mean().shift(1).iloc[i]
     r = dict(setup=setup, name=name, contract=c["symbol"], token=c.get("token"), side=side, status="pending",
@@ -516,7 +522,8 @@ def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot):
              trigger=TP.tick_round(trig, tick), stop=TP.tick_round(stop, tick, "down" if sd > 0 else "up"), atr=round(a, 4), tick=tick, mult=mult, lot=lot,
              trend_ok=tr, vol_x=round(float(v.iloc[i] / va), 2) if va and va > 0 else None,
              sr=sr_line(df.iloc[:i + 1], side, trig, stop, P["target_r"])[0], oi_note=OI_NOTE,
-             last_bar=str(df["time"].iloc[i]), logged=str(now), key=f"{setup}|{name}|{str(df['time'].iloc[i])[:10]}")
+             last_bar=str(max(pd.Timestamp(df["time"].iloc[i]), pd.Timestamp(now) - pd.Timedelta(minutes=1))),  # 10-Nov: only
+             logged=str(now), key=f"{setup}|{name}|{str(df['time'].iloc[i])[:10]}")      # bars after the alert count
     _grade(r, df.iloc[:i + 1], df.iloc[:i + 1], "reversal", P["target_r"])
     from alerts import strategies as ST_
     clash = ST_.conflict(state, name, side, ST_.tf_of(dict(key=r["key"])))  # 4-Nov: no contradictory / duplicate live calls
@@ -569,7 +576,8 @@ def on_mcx(state, msgs, name, ex, c, daily, three_h, c15, now, live=None):
     if daily is not None and len(daily) >= 60:
         bars = c15 if c15 is not None and len(c15) else daily
         _manage(state, msgs, s, "MCX_HAMMER", name, c["symbol"], bars, daily, now)
-        _new_pattern(state, msgs, s, "MCX_HAMMER", name, c, "BUY", daily, now, mult, c.get("lot"))
+        lp = live if live else (float(c15["close"].iloc[-1]) if c15 is not None and len(c15) else None)
+        _new_pattern(state, msgs, s, "MCX_HAMMER", name, c, "BUY", daily, now, mult, c.get("lot"), last_px=lp)
     if three_h is not None and len(three_h) >= 120:
         _manage(state, msgs, s, "MCX_EMA1348", name, c["symbol"], c15, daily, now, f3=three_h)
         _new_ema(state, msgs, s, name, c, three_h, now, mult, live)

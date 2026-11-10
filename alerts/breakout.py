@@ -48,6 +48,11 @@ def daily_candles(h1c, session_close):
     """Completed daily candles from completed 1-hour candles (a day counts once its session has closed)."""
     if h1c is None or h1c.empty:
         return h1c
+    # 10-Nov FIX: a weekend session (Diwali Muhurat 8-Nov-2026 14:20-15:30, exchange mock sessions) is not a daily candle –
+    # its 1-hour bars became a 70-minute "daily" candle and a NATURALGAS hammer (0.05x volume). Weekday sessions only.
+    h1c = h1c[h1c["time"].dt.weekday < 5]
+    if h1c.empty:
+        return h1c
     g = h1c.groupby(h1c["time"].dt.normalize())
     d = g.agg(time=("time", "first"), open=("open", "first"), high=("high", "max"), low=("low", "min"),
               close=("close", "last"), volume=("volume", "sum")).reset_index(drop=True)
