@@ -61,6 +61,13 @@ def evaluate(c15, h1, dd, now):
         return dict(side=None, why="no candles today")
     last_t = pd.Timestamp(today["time"].iloc[-1])
     end_m = last_t.hour * 60 + last_t.minute + 15
+    if end_m not in CHECKPOINTS and len(today) >= 2 and end_m - 15 in CHECKPOINTS:
+        # 10-Nov FIX: on 9-Nov the 12:45 candle was not yet in the data at the 13:02 scan ("not a checkpoint candle") and
+        # the 13:17 scan was one candle past it -> the 13:00 checkpoint was never evaluated. One candle late is accepted:
+        # evaluated on the candles up to the checkpoint only; the record shows the entry delay (run() dedups by key).
+        today = today.iloc[:-1]
+        last_t = pd.Timestamp(today["time"].iloc[-1])
+        end_m -= 15
     if end_m not in CHECKPOINTS:
         return dict(side=None, why="not a checkpoint candle")
     tp = (today["high"] + today["low"] + today["close"]) / 3
