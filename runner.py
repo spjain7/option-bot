@@ -848,6 +848,8 @@ def main():
     now = now_ist()
     if mode == "auto" and (now.weekday() >= 5 or not (at("09:00") <= now <= at("23:59"))):
         print("Outside market hours - nothing to do."); return
+    if mode == "auto" and getattr(config, "OPTIONS_PARKED", False):       # 10-Nov (owner): option engines parked
+        print("Option engine parked (config.OPTIONS_PARKED) - no Angel calls."); return
     store = None
     if mode == "chatid":                  # Telegram check: lists chats that messaged the bot + sends a test
         notify.telegram_check(); return
