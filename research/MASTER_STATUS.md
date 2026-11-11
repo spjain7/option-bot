@@ -38,3 +38,9 @@ DEV to 2024 · VALID 2025 · OOS 2026. PASS = profit and PF >= 1.2 in all three.
 - RSI 75/25 + divergence on stock futures, index futures and cash: `research/rsidiv/README.md`. Two shadow candidates (stock-futures SELL of the first bounce after RSI ≤ 25; cash weekly RSI ≥ 75 BUY in less-liquid stocks). Index futures: nothing.
 - MCX 3-hour hidden divergence stress test: not promoted (`research/mcxhw/hidden_check.py`).
 - Engine defect found by the new tests: RSI returned NaN while a series had no falling bar yet; fixed (it only affected warm-up bars, before any signal date).
+
+## 11-Nov update (2)
+- Shadow test built and scheduled (weekdays 21:47 IST, branch shadow-state): SF-CONT-SELL-v1 (CONTINUATION SELL) and CM-CONT-BUY-v1 (CONTINUATION BUY). Rules verified trade for trade against research (1,019 / 1,019 and 814 / 814). `research/shadow/README.md`.
+- Investigations: SF 2026 weakness is mostly the signal itself (gross ≈ 0), plus the 0.05 % STT; on real futures prices the edge is about 0.085R lower. CM is not liquidity-limited at ₹5 lakh, overlaps the momentum portfolio only 9 %, but depends on the same market condition.
+- RSI REVERSAL vs CONTINUATION study across 4 markets (6,480 cells): reversals do not survive in any market; CONTINUATION BUY is the only mostly profitable label (none passes multiple testing). `research/rsirev/README.md`.
+- Registry: 43,095 rows, every RSI / divergence row labelled REVERSAL / CONTINUATION BUY / SELL.

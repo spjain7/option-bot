@@ -1,5 +1,5 @@
 {
- "rows": 37335,
+ "rows": 43095,
  "missing": [],
  "by_study": [
   {
@@ -31,6 +31,13 @@
    "passed_and_multiple_testing": 0
   },
   {
+   "market": "MCX",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 2160,
+   "passed": 10,
+   "passed_and_multiple_testing": 0
+  },
+  {
    "market": "NSE_CASH",
    "study": "CASHQ cash research engine (Nov-2026)",
    "variants": 2409,
@@ -52,10 +59,24 @@
    "passed_and_multiple_testing": 11
   },
   {
+   "market": "NSE_CASH",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 720,
+   "passed": 6,
+   "passed_and_multiple_testing": 0
+  },
+  {
    "market": "NSE_INDEX_FUT",
    "study": "RSIDIV-IX index futures RSI + divergence + OI (11-Nov)",
    "variants": 5114,
    "passed": 2,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 1440,
+   "passed": 0,
    "passed_and_multiple_testing": 0
   },
   {
@@ -64,6 +85,13 @@
    "variants": 5886,
    "passed": 50,
    "passed_and_multiple_testing": 4
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 1440,
+   "passed": 2,
+   "passed_and_multiple_testing": 0
   }
  ],
  "stress_files": [

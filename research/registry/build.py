@@ -122,6 +122,47 @@ def btst():
     return out
 
 
+def rsirev():
+    parts = []
+    for m in ("mcx", "stockfut", "index", "cash"):
+        f = ROOT / f"research/rsirev/results/{m}_grid.csv"
+        if not f.exists():
+            continue
+        L = pd.read_csv(f)
+        cost = COST["MCX"] if m == "mcx" else (COST["CASH_DEL"] if m == "cash" else COST["FUT"])
+        out = pd.DataFrame(dict(study="RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+                                script="research/rsirev/run.py", market=L.market, timeframe=L.tf, family="RSI_REV_CONT",
+                                rule=L.strategy + " " + L.rule, context="entry " + L.entry + " · stop " + L.stop + " · regime " + L.regime,
+                                side=np.where(L.label.str.endswith("BUY"), "BUY", "SELL"), target=L.target_R.astype(str) + "R", label=L.label))
+        for p_ in ("DEV", "VAL", "OOS"):
+            for k in ("n", "win", "R", "PF"):
+                out[f"{p_}_{k}"] = L.get(f"{p_}_{k}")
+        out["all_n"], out["all_R"], out["t_day"] = L.all_n, L.get("all_R"), L.get("t_day")
+        out["mt_pass"], out["holm5"] = L.FDR10, L.HOLM5
+        out["instruments"], out["instruments_positive"] = L.get("names"), L.get("names_pos")
+        out["cost_model"] = cost; out["result"] = np.where(L.PASS.fillna(False), "PASS", "FAIL"); out["trades_file"] = ""
+        out["periods"] = "MCX DEV to 2021… see research/rsirev/README.md"
+        parts.append(out)
+    return pd.concat(parts, ignore_index=True)
+
+
+def direction_label(R):
+    """REVERSAL / CONTINUATION + BUY / SELL for every RSI or divergence row (owner 11-Nov: keep them apart)."""
+    lab = pd.Series("not an RSI / divergence rule", index=R.index, dtype=object)
+    ev, ctx, side = R.rule.astype(str), R.context.astype(str), R.side.astype(str)
+    m = ev.str.contains(":reversal"); lab[m] = "REVERSAL " + side[m]
+    m = ev.str.contains(":continuation"); lab[m] = "CONTINUATION " + side[m]
+    m = R.family.astype(str).eq("DIV") & ev.str.contains(":regular"); lab[m] = "REVERSAL " + side[m] + " (regular divergence)"
+    m = R.family.astype(str).eq("DIV") & ev.str.contains(":hidden"); lab[m] = "CONTINUATION " + side[m] + " (hidden divergence)"
+    mr = R.study.astype(str).str.startswith("MCX-RD") & R.family.astype(str).eq("RSI")
+    z75, z25 = ctx.str.startswith("75"), ctx.str.startswith("25")
+    lab[mr & z75 & side.eq("SELL")] = "REVERSAL SELL"; lab[mr & z75 & side.eq("BUY")] = "CONTINUATION BUY"
+    lab[mr & z25 & side.eq("BUY")] = "REVERSAL BUY"; lab[mr & z25 & side.eq("SELL")] = "CONTINUATION SELL"
+    if "label" in R:
+        lab = R["label"].where(R["label"].notna(), lab)
+    return lab
+
+
 def main():
     parts, missing = [], []
     SFP = "daily DEV 2018-21 · VALID 2022-23 · OOS 2024-26"
@@ -140,13 +181,14 @@ def main():
             if "per commodity" in st:
                 L = pd.read_csv(ROOT / f); x["instruments"] = L.commodity
             parts.append(x)
-    for fn in (mcx_reversal, mcx_highwin, cashq, btst):
+    for fn in (mcx_reversal, mcx_highwin, cashq, btst, rsirev):
         try:
             parts.append(fn())
         except Exception as e:
             missing.append(dict(study=fn.__name__, error=str(e)))
     R = pd.concat(parts, ignore_index=True)
     R["status"] = "research only"
+    R["direction_label"] = direction_label(R)
     # stress-tested items (separate scripts; their verdicts are written in REGISTRY.md and the JSON files)
     stress = {}
     for f in ("research/mcxhw/results/hidden_check.json", "research/rsidiv/results/sf_check.json"):
@@ -154,22 +196,25 @@ def main():
             stress[f] = json.load(open(ROOT / f))
     CAND = [  # passed its gate + multiple-testing control + a separate stress test -> shadow testing only, never live
         dict(market="NSE_STOCK_FUT", timeframe="1d", family="RSI", rule="break5:continuation", context="zone25", side="SELL", target="3.0R",
-             note="stress test research/rsidiv/results/sf_check.json: placebo 0/300, neighbours positive, but 2019/2020/2023/2026 negative, weaker in falling markets"),
+             status="SHADOW TEST running since 11-Nov-2026 (not promoted)", label="CONTINUATION SELL", version="SF-CONT-SELL-v1",
+             note="stress test research/rsidiv/results/sf_check.json + research/shadow/results/investigate_sf.json: placebo 0/300, neighbours positive, but 2019/2020/2023/2026 negative, weaker in falling markets"),
         dict(market="NSE_CASH", timeframe="1w", family="RSI", rule="cross_in:continuation", context="zone75|liq_bottom", side="BUY", target="1.0R",
-             note="stress test research/rsidiv/results/cash_check.json: placebo 0/300, robust to RSI 70-80 and liquidity cut, survives 0.3 % slippage; loses when the market is below its 40-week EMA")]
+             status="SHADOW TEST running since 11-Nov-2026 (not promoted)", label="CONTINUATION BUY", version="CM-CONT-BUY-v1",
+             note="stress test research/rsidiv/results/cash_check.json + research/shadow/results/investigate_cm.json: placebo 0/300, robust to RSI 70-80 and liquidity cut, survives 0.3 % slippage; loses when the market is below its 40-week EMA")]
     R["stress_note"] = ""
     for c in CAND:
         m = np.ones(len(R), bool)
         for k in ("market", "timeframe", "family", "rule", "context", "side", "target"):
             m &= R[k].astype(str).values == c[k]
-        R.loc[m, "status"] = "candidate for shadow testing"; R.loc[m, "stress_note"] = c["note"]
+        R.loc[m, "status"] = c["status"]; R.loc[m, "stress_note"] = c["note"]; R.loc[m, "direction_label"] = c["label"]
+        R.loc[m, "shadow_version"] = c["version"]
     R.loc[R.study.str.startswith("MCX-RD") & (R.timeframe == "3h") & R.rule.isin(["macd:hidden", "obv:hidden"]) & (R.side == "BUY"), "stress_note"] = \
         "stress test research/mcxhw/results/hidden_check.json: not promoted – below Bonferroni (t 3.3 vs 4.7), fails with pivot K=2, energy ~0R, divergence adds little over any higher low (p 0.04)"
     kf = [c for c in ("study", "timeframe", "family", "rule", "context", "side", "target", "instruments") if c in R]
     dup = R.groupby(kf, dropna=False).cumcount()                     # identical labels (e.g. MCX-HW hold variants) -> ordinal
     R["strategy_id"] = [sid(*v, d) for v, d in zip(R[kf].astype(str).values, dup.values)]
     R["rejection_reason"] = [reason(r, dict(min_n=30, pf=1.2)) if r["result"] != "BENCHMARK" else "" for r in R.to_dict("records")]
-    first = ["strategy_id", "study", "market", "timeframe", "family", "rule", "context", "side", "target", "result", "status", "rejection_reason",
+    first = ["strategy_id", "study", "market", "timeframe", "direction_label", "family", "rule", "context", "side", "target", "result", "status", "rejection_reason",
              "DEV_n", "DEV_win", "DEV_R", "DEV_PF", "VAL_n", "VAL_win", "VAL_R", "VAL_PF", "OOS_n", "OOS_win", "OOS_R", "OOS_PF", "all_n", "all_R",
              "t_day", "mt_pass", "holm5", "instruments", "instruments_positive", "periods", "cost_model", "script", "trades_file"]
     R = R[[c for c in first if c in R] + [c for c in R if c not in first]]
