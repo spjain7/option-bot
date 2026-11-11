@@ -4655,18 +4655,19 @@
    "goldcrashestoward4000ashotusinflationsendstreasuryyieldsabove5fxstreet\u0634\u0628\u0643\u0629\u062a\u0648\u0627\u0635\u0644\u0627",
    "oilpricesjustfelltotheirlowestsinceaugustastrumpsaystheiranwariseffectivelyover2",
    "commoditycorneroilsteadiesaftertwodayslidegoldextendsdeclineonusratehikebetsmone",
-   "governmentshutdowncontinuedoilpricedropcouldpreventdecemberfedratehikemacquaries"
+   "governmentshutdowncontinuedoilpricedropcouldpreventdecemberfedratehikemacquaries",
+   "golddriftsbelow4000ashighusyieldsfueldecemberfedhikeoddsfxstreet"
   ],
   "day": "2026-11-12",
-  "n": 1
+  "n": 2
  },
  "scan": {
-  "seq": 340,
-  "started": "2026-11-12 00:02:02.126230",
-  "finished": "2026-11-12 00:02:12.591666",
-  "seconds": 10,
+  "seq": 341,
+  "started": "2026-11-12 00:17:02.356827",
+  "finished": "2026-11-12 00:17:08.512723",
+  "seconds": 6,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -4678,7 +4679,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 2
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
