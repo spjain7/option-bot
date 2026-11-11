@@ -1,21 +1,129 @@
 {
  "_about": "Research configuration register (owner rule 8, 11-Nov-2026). One entry per market x strategy x timeframe. Parameters are SHARED defaults unless an instrument-level override has evidence; as of 11-Nov-2026 NO instrument-level override has enough evidence, so none is set. Production alert settings are NOT here and are not changed by this file.",
- "hierarchy": ["global (costs, data validation)", "market", "segment / timeframe", "instrument (overrides only with evidence)", "strategy version"],
+ "hierarchy": [
+  "global (costs, data validation)",
+  "market",
+  "segment / timeframe",
+  "instrument (overrides only with evidence)",
+  "strategy version"
+ ],
  "evidence_rule_for_instrument_override": "per-instrument parameters only if the instrument alone passes the period gate (>= 30 trades in each of DEV / VALID / OOS, profit and PF >= 1.2 each) AND beats the shared default in OOS AND survives BH-FDR across all instruments tested. Current status: 3 of 14,535 MCX per-commodity cells passed the gate, 0 passed FDR -> no overrides.",
  "global": {
-  "rsi": {"period": 14, "smoothing": "Wilder"},
-  "atr": {"period": 14},
+  "rsi": {
+   "period": 14,
+   "smoothing": "Wilder"
+  },
+  "atr": {
+   "period": 14
+  },
   "entry": "next bar open after the signal bar closes",
   "stop_check": "stop before target inside a bar; gap through a stop fills at the open",
-  "costs": {"MCX": "real fees + 1.5 ticks slippage per side", "NSE_FUT": "STT sell 0.0125 % (to Sep-2024) / 0.02 % / 0.05 % (from Apr-2026), exchange 0.00173 % x2, stamp, GST, ₹40 brokerage, slippage 0.03 % (stocks) / 0.01 % (index) per side, +1 round trip per roll", "NSE_CASH": "delivery 0.393 % round trip incl. 0.05 % slippage per side"}
+  "costs": {
+   "MCX": "real fees + 1.5 ticks slippage per side",
+   "NSE_FUT": "STT sell 0.0125 % (to Sep-2024) / 0.02 % / 0.05 % (from Apr-2026), exchange 0.00173 % x2, stamp, GST, ₹40 brokerage, slippage 0.03 % (stocks) / 0.01 % (index) per side, +1 round trip per roll",
+   "NSE_CASH": "delivery 0.393 % round trip incl. 0.05 % slippage per side"
+  }
  },
  "strategies": [
-  {"id": "SF-CONT-SELL-v1", "label": "CONTINUATION SELL", "market": "NSE_STOCK_FUT", "tf": "1d", "status": "SHADOW TEST since 11-Nov-2026 (immutable, hash-guarded)", "params_file": "research/shadow/rules.py", "instrument_overrides": "none"},
-  {"id": "CM-CONT-BUY-v1", "label": "CONTINUATION BUY", "market": "NSE_CASH", "tf": "1w", "status": "SHADOW TEST since 11-Nov-2026 (immutable, hash-guarded)", "params_file": "research/shadow/rules.py", "instrument_overrides": "none"},
-  {"id": "SF-CONT-SELL-v2a-5 / v2b-cap4", "label": "CONTINUATION SELL", "market": "NSE_STOCK_FUT", "tf": "1d", "status": "research only (crowding variants of v1; separate versions, v1 unchanged)", "params_file": "research/cycle2/sf_crowd.py", "instrument_overrides": "none"},
-  {"id": "CM-CONT-BUY-v2a", "label": "CONTINUATION BUY", "market": "NSE_CASH", "tf": "1w", "status": "research only (v1 restricted to the momentum MA100 market filter)", "params_file": "research/cycle2/cash_cm.py", "instrument_overrides": "none"},
-  {"id": "CONT-BUY B1/B2 + one filter", "label": "CONTINUATION BUY", "market": "MCX / NSE_STOCK_FUT / NSE_INDEX_FUT / NSE_CASH", "tf": "MCX 1h 3h 1d · stock fut 1d 1w · index 1d 1h · cash 1d 1w", "status": "research only", "params_file": "research/cycle2/cont_buy.py", "instrument_overrides": "none"},
-  {"id": "MCX trend-split CONT BUY / 1h CONT SELL", "label": "CONTINUATION BUY / CONTINUATION SELL", "market": "MCX (metals and energy reported apart)", "tf": "1h 3h 1d", "status": "research only", "params_file": "research/cycle2/mcx_trend.py", "instrument_overrides": "none"},
-  {"id": "RSIREV S1-S10", "label": "REVERSAL BUY / REVERSAL SELL / CONTINUATION BUY / CONTINUATION SELL", "market": "all four", "tf": "per market", "status": "research only", "params_file": "research/rsirev/run.py", "instrument_overrides": "none"}
- ]
+  {
+   "id": "SF-CONT-SELL-v1",
+   "label": "CONTINUATION SELL",
+   "market": "NSE_STOCK_FUT",
+   "tf": "1d",
+   "status": "SHADOW TEST since 11-Nov-2026 (immutable, hash-guarded)",
+   "params_file": "research/shadow/rules.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "CM-CONT-BUY-v1",
+   "label": "CONTINUATION BUY",
+   "market": "NSE_CASH",
+   "tf": "1w",
+   "status": "SHADOW TEST since 11-Nov-2026 (immutable, hash-guarded)",
+   "params_file": "research/shadow/rules.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "SF-CONT-SELL-v2a-5 / v2b-cap4",
+   "label": "CONTINUATION SELL",
+   "market": "NSE_STOCK_FUT",
+   "tf": "1d",
+   "status": "research only (crowding variants of v1; separate versions, v1 unchanged)",
+   "params_file": "research/cycle2/sf_crowd.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "CM-CONT-BUY-v2a",
+   "label": "CONTINUATION BUY",
+   "market": "NSE_CASH",
+   "tf": "1w",
+   "status": "research only (v1 restricted to the momentum MA100 market filter)",
+   "params_file": "research/cycle2/cash_cm.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "CONT-BUY B1/B2 + one filter",
+   "label": "CONTINUATION BUY",
+   "market": "MCX / NSE_STOCK_FUT / NSE_INDEX_FUT / NSE_CASH",
+   "tf": "MCX 1h 3h 1d · stock fut 1d 1w · index 1d 1h · cash 1d 1w",
+   "status": "research only",
+   "params_file": "research/cycle2/cont_buy.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "MCX trend-split CONT BUY / 1h CONT SELL",
+   "label": "CONTINUATION BUY / CONTINUATION SELL",
+   "market": "MCX (metals and energy reported apart)",
+   "tf": "1h 3h 1d",
+   "status": "research only",
+   "params_file": "research/cycle2/mcx_trend.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "RSIREV S1-S10",
+   "label": "REVERSAL BUY / REVERSAL SELL / CONTINUATION BUY / CONTINUATION SELL",
+   "market": "all four",
+   "tf": "per market",
+   "status": "research only",
+   "params_file": "research/rsirev/run.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "CONT-BUY-B1-RVOL2-v1",
+   "label": "CONTINUATION BUY",
+   "market": "MCX / NSE_STOCK_FUT / NSE_INDEX_FUT / NSE_CASH",
+   "tf": "per market",
+   "status": "research only – separate version; helps only on MCX 1h/3h (not significant); no forward ledger yet",
+   "params_file": "research/cycle3/rvol.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "MCX 3h CONT BUY (B1 / S10) by commodity",
+   "label": "CONTINUATION BUY",
+   "market": "MCX",
+   "tf": "3h",
+   "status": "research only – no per-commodity parameters (largest per-commodity sample 42 trades); not better than a plain 20-bar breakout; untouched 2022-23 window negative for metals",
+   "params_file": "research/cycle3/mcx_metals.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "FAMILIES F1-F9",
+   "label": "non-RSI families (ORB, ORB fail, sweep+MSS, VWAP, squeeze, climax, pullback, S/R retest, RS rotation)",
+   "market": "MCX 15m/1h · index 1h · stock fut 1d · cash 1d",
+   "tf": "per market",
+   "status": "research only – 0 of 124 tests pass; RS rotation weaker than the live momentum rule",
+   "params_file": "research/families/run.py",
+   "instrument_overrides": "none"
+  },
+  {
+   "id": "SF-CONT-SELL-v2c (idea, not built)",
+   "label": "CONTINUATION SELL",
+   "market": "NSE_STOCK_FUT",
+   "tf": "1d",
+   "status": "hypothesis only – skip entries when the future trades at a discount <= -0.3 % at the signal close (gap source found in cycle 3); needs its own version and forward test",
+   "params_file": "research/cycle3/sf_gap.py",
+   "instrument_overrides": "none"
+  }
+ ],
+ "_updated": "11-Nov-2026 cycle 3"
 }

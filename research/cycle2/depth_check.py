@@ -66,6 +66,8 @@ def main():
         return np.array(ok)
     bidP = np.where(X.A_is_bid.values[:, None], A, B); askP = np.where(X.A_is_bid.values[:, None], B, A)
     X["bid_mono"] = mono(bidP, True); X["ask_mono"] = mono(askP, False)
+    qa = np.where(X.A_is_bid.values[:, None], Aq, Bq).sum(1); qb = np.where(X.A_is_bid.values[:, None], Bq, Aq).sum(1)
+    X["imb5"] = (qa - qb) / np.maximum(qa + qb, 1)
     X["zero_qty_levels"] = ((A > 0) & (Aq <= 0)).sum(1) + ((B > 0) & (Bq <= 0)).sum(1)
     X["recv_dt"] = pd.to_datetime(X["time"].str[:10] + " " + X["recv"].astype(str), errors="coerce")
     X["lag_s"] = (X.recv_dt - X.t).dt.total_seconds()
@@ -87,8 +89,26 @@ def main():
                       spread_bp_median=round(float(np.nanmedian(g.spread_bp)), 2) if g.spread_bp.notna().any() else None,
                       spread_bp_p90=round(float(np.nanpercentile(g.spread_bp.dropna(), 90)), 2) if g.spread_bp.notna().any() else None)
     out["by_kind"] = rep
-    out["spread_bp_by_symbol_top"] = X.groupby(["kind", "symbol"]).spread_bp.median().dropna().round(2).groupby(level=0).apply(
-        lambda s: s.sort_values().iloc[[0, len(s) // 2, -1]].to_dict() if len(s) else {}).to_dict() if "symbol" in X else {}
+    # data-quality score per token (0-100): coverage of session minutes, both sides present, five levels, not stale,
+    # receive lag <= 5 s, bid/ask ordered and monotonic. Depth analytics: spread by hour, top-5 imbalance distribution.
+    sess = {"MCX future": 14.5 * 60, "NSE stock future": 375, "NSE index future": 375, "NSE cash": 375, "NSE index spot": 375}
+    q = []
+    for (k, tok), g in X.groupby(["kind", "token"]):
+        days_ = g.t.dt.date.nunique()
+        cov = min(1.0, g.t.dt.floor("min").nunique() / (sess.get(k, 375) * max(days_, 1)))
+        parts = dict(coverage=cov, both_sides=g.both.mean(), five_levels=((g.filled_A == 5) & (g.filled_B == 5)).mean(),
+                     not_stale=1 - g.stale.mean(), lag_ok=(g.lag_s.between(-1, 5)).mean(), ordered=(g.bid_mono & g.ask_mono & ~g.locked).mean())
+        q.append(dict(kind=k, token=tok, symbol=g.get("symbol", pd.Series([""])).iloc[0], rows=len(g),
+                      score=round(100 * float(np.mean(list(parts.values()))), 1), **{a: round(float(b), 3) for a, b in parts.items()}))
+    Q = pd.DataFrame(q); Q.to_csv(C.OUT / "depth_quality_by_token.csv", index=False)
+    out["quality_score_by_kind"] = Q.groupby("kind").score.describe()[["count", "mean", "min", "50%"]].round(1).to_dict("index")
+    out["quality_components_by_kind"] = Q.groupby("kind")[["coverage", "both_sides", "five_levels", "not_stale", "lag_ok", "ordered"]].mean().round(3).to_dict("index")
+    X["hour"] = X.t.dt.hour
+    out["spread_bp_median_by_hour"] = {str(k): {str(h): v for h, v in d_.items()} for k, d_ in X.groupby(["kind", "hour"]).spread_bp.median().round(2).unstack(0).to_dict().items()}
+    out["imbalance_top5_quantiles_by_kind"] = {str(k): {str(q_): v for q_, v in d_.items()} for k, d_ in X.groupby("kind").imb5.quantile([0.1, 0.5, 0.9]).round(3).unstack().to_dict("index").items()}
+    if "symbol" in X:
+        sp = X.groupby(["kind", "symbol"]).spread_bp.median().dropna().round(2)
+        out["spread_bp_by_symbol"] = {k: {str(a): float(b) for a, b in g.droplevel(0).sort_values().items()} for k, g in sp.groupby(level=0)}
     json.dump(out, open(C.OUT / "depth_check.json", "w"), indent=1, default=str)
     print(json.dumps(out, indent=1, default=str)[:6000])
 

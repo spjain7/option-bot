@@ -73,7 +73,8 @@ def main():
                 Tb["period"] = E.periods(Tb.entry.values, cuts)
                 res = {}
                 for t in THR:
-                    Tf = P.run((f"B1+rvol{t}", "x", "x", 1), R, hold)
+                    kk = (f"B1+rvol{t}", "x", "x", 1)
+                    Tf = P.run(kk, R, hold) if kk in P.idx else Tb.iloc[0:0].copy()
                     keyset = set(zip(Tf.name, Tf.entry))
                     Tb[f"in{t}"] = [(n_, e_) in keyset for n_, e_ in zip(Tb.name, Tb.entry)]
                     Tf["period"] = E.periods(Tf.entry.values, cuts)

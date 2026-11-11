@@ -1,0 +1,10 @@
+{
+ "pooled_oos_2R": {
+  "trades": 5572,
+  "kept": 2359,
+  "kept_minus_dropped_R": -0.014,
+  "permutation_p": 0.528
+ },
+ "cells_holm_pass": 0,
+ "cells_bh_pass": 0
+}

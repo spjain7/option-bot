@@ -198,6 +198,66 @@ def cycle2():
     return pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
 
 
+def cycle3():
+    parts, C3 = [], ROOT / "research/cycle3/results"
+    f = C3 / "rvol_cells.csv"
+    if f.exists():
+        L = pd.read_csv(f)
+        parts.append(pd.DataFrame(dict(study="CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)", script="research/cycle3/rvol.py", market=L.market, timeframe=L.tf,
+                                       family="RVOL_VERSION", rule="B1 + volume >= 2x (version CONT-BUY-B1-RVOL2-v1)", context="kept share " + L.kept_share.astype(str),
+                                       side="BUY", target=L.target_R.astype(str) + "R", label="CONTINUATION BUY", DEV_R=L.DEV_version_R, VAL_R=L.VAL_version_R,
+                                       OOS_R=L.OOS_version_R, OOS_n=L.OOS_kept_n, all_n=L.base_n, t_day=L.oos_t, mt_pass=L.BH10, holm5=L.HOLM5,
+                                       result="FAIL (no cell passes Holm / BH)", cost_model="per market", trades_file="",
+                                       note="years kept better " + L.years_kept_better + " · instruments " + L.instruments_kept_better + " · dose " + L.dose_response_all_R)))
+    f = C3 / "mcx_metals.csv"
+    if f.exists():
+        L = pd.read_csv(f)
+        parts.append(pd.DataFrame(dict(study="CYCLE3-3 MCX 3h continuation by commodity + benchmarks + untouched Jul-2022 window (11-Nov)", script="research/cycle3/mcx_metals.py",
+                                       market="MCX", timeframe="3h", family="MCX_METALS", rule=L.signal, context="trend " + L.trend + " · " + L.group, side="BUY",
+                                       target=L.target_R.astype(str) + "R", label=np.where(L.signal.isin(["B1", "S10"]), "CONTINUATION BUY", "benchmark"),
+                                       DEV_n=L.DEV_n, DEV_R=L.DEV_R, VAL_n=L.VAL_n, VAL_R=L.VAL_R, OOS_n=L.OOS_n, OOS_R=L.OOS_R, all_n=L.ALL_n, all_R=L.ALL_R,
+                                       untouched_n=L.UNTOUCHED_n, untouched_R=L.UNTOUCHED_R, cost_model=COST["MCX"], trades_file="",
+                                       result=np.where(L.signal.isin(["B1", "S10"]), "research only", "BENCHMARK"))))
+    f = ROOT / "research/families/results/families.csv"
+    if f.exists():
+        L = pd.read_csv(f)
+        o = pd.DataFrame(dict(study="FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)", script="research/families/run.py",
+                              market=L.market, timeframe=L.tf, family=L.family, rule=L.family, context="", side=L.side, target=L.target_R.astype(str) + "R",
+                              label="not an RSI / divergence rule", cost_model="per market", trades_file=""))
+        for p_ in ("DEV", "VAL", "OOS"):
+            for k in ("n", "win", "R", "PF"):
+                o[f"{p_}_{k}"] = L.get(f"{p_}_{k}")
+        o["all_n"], o["all_R"], o["t_day"], o["mt_pass"], o["holm5"] = L.all_n, L.get("all_R"), L.get("t_day"), L.get("FDR10"), L.get("HOLM5")
+        o["result"] = np.where(L.family.str.startswith("BENCH"), "BENCHMARK", np.where(L.PASS.fillna(False), "PASS", "FAIL"))
+        parts.append(o)
+    return pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
+
+
+def forward_shadow():
+    """forward (live) shadow results from branch shadow-state – kept apart from every back-test row."""
+    import subprocess, io
+    rows = []
+    try:
+        subprocess.run(["git", "-C", str(ROOT), "fetch", "-q", "origin", "shadow-state"], check=True, capture_output=True)
+        for sid in ("SF-CONT-SELL-v1", "CM-CONT-BUY-v1"):
+            try:
+                txt = subprocess.run(["git", "-C", str(ROOT), "show", f"FETCH_HEAD:shadow/trades_{sid}.csv"], check=True, capture_output=True, text=True).stdout
+                T = pd.read_csv(io.StringIO(txt))
+            except Exception:
+                T = pd.DataFrame(columns=["status", "exec_R"])
+            done = T[T.status.astype(str).str.startswith(("TARGET", "STOP", "TIME"))] if len(T) else T
+            rows.append(dict(study="FORWARD SHADOW (live, from 11-Nov-2026)", script="research/shadow/run.py", market="NSE_STOCK_FUT" if sid.startswith("SF") else "NSE_CASH",
+                             timeframe="1d" if sid.startswith("SF") else "1w", family="SHADOW", rule=sid, context="forward signals " + str(len(T)),
+                             side="SELL" if sid.startswith("SF") else "BUY", target="3.0R" if sid.startswith("SF") else "1.0R",
+                             label="CONTINUATION SELL" if sid.startswith("SF") else "CONTINUATION BUY", forward_signals=len(T), forward_closed=len(done),
+                             forward_R=round(float(done.exec_R.mean()), 3) if len(done) else np.nan,
+                             forward_not_executable=int(T.status.astype(str).str.startswith("NOT EXEC").sum()) if len(T) else 0,
+                             result="forward evidence accumulating", status="SHADOW TEST running since 11-Nov-2026 (not promoted)", cost_model="real execution", trades_file=f"shadow-state:shadow/trades_{sid}.csv"))
+    except Exception as e:
+        rows.append(dict(study="FORWARD SHADOW", rule="unavailable", note=str(e)[:100]))
+    return pd.DataFrame(rows)
+
+
 def direction_label(R):
     """REVERSAL / CONTINUATION + BUY / SELL for every RSI or divergence row (owner 11-Nov: keep them apart)."""
     lab = pd.Series("not an RSI / divergence rule", index=R.index, dtype=object)
@@ -233,14 +293,17 @@ def main():
             if "per commodity" in st:
                 L = pd.read_csv(ROOT / f); x["instruments"] = L.commodity
             parts.append(x)
-    for fn in (mcx_reversal, mcx_highwin, cashq, btst, rsirev, cycle2):
+    for fn in (mcx_reversal, mcx_highwin, cashq, btst, rsirev, cycle2, cycle3, forward_shadow):
         try:
             parts.append(fn())
         except Exception as e:
             missing.append(dict(study=fn.__name__, error=str(e)))
     R = pd.concat(parts, ignore_index=True)
-    R["status"] = "research only"
+    fwd = R.study.astype(str).str.startswith("FORWARD")
+    R["status"] = np.where(fwd, "SHADOW TEST running since 11-Nov-2026 (not promoted)", "research only")
     R["direction_label"] = direction_label(R)
+    R["evidence_stage"] = np.where(R.study.astype(str).str.startswith("FORWARD"), "FORWARD SHADOW (live)",
+                                   "BACKTEST – DEV/VALID in-sample, OOS = held-out history" + np.where(R.get("untouched_n", pd.Series(np.nan, index=R.index)).notna(), " + untouched window", ""))
     # stress-tested items (separate scripts; their verdicts are written in REGISTRY.md and the JSON files)
     stress = {}
     for f in ("research/mcxhw/results/hidden_check.json", "research/rsidiv/results/sf_check.json"):
@@ -258,7 +321,7 @@ def main():
         m = np.ones(len(R), bool)
         for k in ("market", "timeframe", "family", "rule", "context", "side", "target"):
             m &= R[k].astype(str).values == c[k]
-        R.loc[m, "status"] = c["status"]; R.loc[m, "stress_note"] = c["note"]; R.loc[m, "direction_label"] = c["label"]
+        R.loc[m & ~R.study.astype(str).str.startswith("FORWARD"), "status"] = c["status"]; R.loc[m, "stress_note"] = c["note"]; R.loc[m, "direction_label"] = c["label"]
         R.loc[m, "shadow_version"] = c["version"]
     R.loc[R.study.str.startswith("MCX-RD") & (R.timeframe == "3h") & R.rule.isin(["macd:hidden", "obv:hidden"]) & (R.side == "BUY"), "stress_note"] = \
         "stress test research/mcxhw/results/hidden_check.json: not promoted – below Bonferroni (t 3.3 vs 4.7), fails with pivot K=2, energy ~0R, divergence adds little over any higher low (p 0.04)"
@@ -266,7 +329,7 @@ def main():
     dup = R.groupby(kf, dropna=False).cumcount()                     # identical labels (e.g. MCX-HW hold variants) -> ordinal
     R["strategy_id"] = [sid(*v, d) for v, d in zip(R[kf].astype(str).values, dup.values)]
     R["rejection_reason"] = [reason(r, dict(min_n=30, pf=1.2)) if r["result"] != "BENCHMARK" else "" for r in R.to_dict("records")]
-    first = ["strategy_id", "study", "market", "timeframe", "direction_label", "family", "rule", "context", "side", "target", "result", "status", "rejection_reason",
+    first = ["strategy_id", "evidence_stage", "study", "market", "timeframe", "direction_label", "family", "rule", "context", "side", "target", "result", "status", "rejection_reason",
              "DEV_n", "DEV_win", "DEV_R", "DEV_PF", "VAL_n", "VAL_win", "VAL_R", "VAL_PF", "OOS_n", "OOS_win", "OOS_R", "OOS_PF", "all_n", "all_R",
              "t_day", "mt_pass", "holm5", "instruments", "instruments_positive", "periods", "cost_model", "script", "trades_file"]
     R = R[[c for c in first if c in R] + [c for c in R if c not in first]]

@@ -1,5 +1,5 @@
 {
- "rows": 44134,
+ "rows": 44776,
  "missing": [],
  "by_study": [
   {
@@ -15,6 +15,27 @@
    "variants": 504,
    "passed": 39,
    "passed_and_multiple_testing": 18
+  },
+  {
+   "market": "MCX",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 6,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "CYCLE3-3 MCX 3h continuation by commodity + benchmarks + untouched Jul-2022 window (11-Nov)",
+   "variants": 480,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 64,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
   },
   {
    "market": "MCX",
@@ -74,8 +95,29 @@
   },
   {
    "market": "NSE_CASH",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 4,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
    "study": "EQ-BTST cash buy-today-sell-tomorrow",
    "variants": 56,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 14,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "FORWARD SHADOW (live, from 11-Nov-2026)",
+   "variants": 1,
    "passed": 0,
    "passed_and_multiple_testing": 0
   },
@@ -97,6 +139,20 @@
    "market": "NSE_INDEX_FUT",
    "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
    "variants": 104,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 4,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 36,
    "passed": 0,
    "passed_and_multiple_testing": 0
   },
@@ -125,6 +181,27 @@
    "market": "NSE_STOCK_FUT",
    "study": "CYCLE2-2 stock-futures CONTINUATION SELL crowding versions (11-Nov)",
    "variants": 5,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 4,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 28,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "FORWARD SHADOW (live, from 11-Nov-2026)",
+   "variants": 1,
    "passed": 0,
    "passed_and_multiple_testing": 0
   },
