@@ -305,7 +305,9 @@ def describe(rule):
            "EMAX": f"EMA {par} cross", "INSIDE": "inside-bar breakout", "PIN": "pin bar at a 20-candle extreme",
            "MOMO": "momentum candle (body ≥ 1.5 ATR)", "FAIL": "failed 20-candle breakout – reversal",
            "RETEST": "breakout retest of the 20-candle level", "SQZ": "Bollinger squeeze (20, 2) break",
-           "RSIX": f"RSI({par.split('/')[0]}) touched {par.split('/')[1]} / {100 - int(par.split('/')[1])} + reversal candle, ADX < 20"}.get(fam, fam)
+           "RSIX": None}.get(fam, fam)
+    if fam == "RSIX":                                      # 7-Nov fix: built only for RSIX – it crashed for every par without "/"
+        txt = f"RSI({par.split('/')[0]}) touched {par.split('/')[1]} / {100 - int(par.split('/')[1])} + reversal candle, ADX < 20"
     flt = {"none": "", "DT": " · with the daily trend", "EMA200": " · EMA200 side", "ADX25": " · ADX ≥ 25"}.get(rule["filt"], " · " + rule["filt"])
     return txt + flt
 
