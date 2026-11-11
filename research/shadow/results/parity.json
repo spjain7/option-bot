@@ -1,0 +1,26 @@
+{
+ "SF-CONT-SELL-v1": {
+  "shadow_trades": 1019,
+  "research_trades": 1019,
+  "matched": 1019,
+  "only_shadow": 0,
+  "only_research": 0,
+  "max_abs_R_diff": 0.0,
+  "same_exit_date": 1019,
+  "shadow_mean_R": 0.2847,
+  "research_mean_R": 0.2847,
+  "overlap_signals_not_taken": 443
+ },
+ "CM-CONT-BUY-v1": {
+  "shadow_trades": 814,
+  "research_trades": 814,
+  "matched": 814,
+  "only_shadow": 0,
+  "only_research": 0,
+  "max_abs_R_diff": 0.0,
+  "same_exit_date": 814,
+  "shadow_mean_R": 0.1427,
+  "research_mean_R": 0.1427,
+  "overlap_signals_not_taken": 184
+ }
+}
