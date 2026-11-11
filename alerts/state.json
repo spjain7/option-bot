@@ -4662,12 +4662,12 @@
   "n": 2
  },
  "scan": {
-  "seq": 341,
-  "started": "2026-11-12 00:17:02.356827",
-  "finished": "2026-11-12 00:17:08.512723",
-  "seconds": 6,
+  "seq": 342,
+  "started": "2026-11-12 00:19:38.159760",
+  "finished": "2026-11-12 00:19:48.005526",
+  "seconds": 9,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -4679,7 +4679,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
