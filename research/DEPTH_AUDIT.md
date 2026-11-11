@@ -13,13 +13,21 @@
 - At each job end the file goes to the `ws-depth` branch, with per-exchange diagnostics: packets with depth, filled levels, bid-side check and exchange-time lag.
 - `WS_DEPTH=0` switches it off. 22 offline checks, including a fake-WebSocket run of the collector; full suite 47 / 47.
 
-## Live verification – PENDING (first trading day 11-Nov; check scheduled 15:10 IST)
+## Live verification – 11-Nov-2026 (first trading day, morning job 08:41–14:19 IST)
+The file was saved: `ws-depth/wsdepth/2026-11/depth_20261111_1419.csv.gz` (93,058 snapshots, 5.3 MB). The collector reported 6.49 million ticks with no stale-feed restarts. The futures bars and the hourly WebSocket-vs-REST check were unaffected (all OK, volume ratio 1.0).
 
-| Field | MCX futures | NSE stock futures | NSE index futures | NSE index spot | NSE cash | History |
-|---|---|---|---|---|---|---|
-| Best-5 bid/ask price, qty, orders | expected – to verify | expected – to verify | expected – to verify | expected EMPTY (no order book) – to verify | expected – to verify | none (from 11-Nov only) |
-| 20-level depth | deprecated (Apr-2025) | deprecated | deprecated | – | deprecated | none |
-| Total buy / sell quantity | to verify | to verify | to verify | – | to verify | none |
-| Exchange timestamp lag | to verify | to verify | to verify | to verify | to verify | – |
+| Instrument | Tokens | Snapshots | Both sides | 5 levels both sides | SDK `best_5_buy_data` is the bid | Levels ordered | Spread median / p90 (bp) | Exchange-time age median / p95 | Stale | Session minutes covered | Quality score |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| MCX future | 7 | 2,398 | 99.2 % | 99.2 % | 99.2 % | 99.9 % | 3.22 / 7.27 | 1.0 / 70.0 s | 0.21 % | 37 % | 85.1 (min 84.4) |
+| NSE stock future | 236 | 79,714 | 99.8 % | 97.3 % | 98.4 % | 98.6 % | 7.84 / 15.19 | 0.0 / 74.0 s | 0.43 % | 78 % | 87.9 (min 41.8) |
+| NSE index future | 4 | 1,507 | 99.9 % | 97.3 % | 98.0 % | 98.1 % | 3.41 / 9.95 | 0.0 / 76.0 s | 0.66 % | 84 % | 91.2 (min 89.8) |
+| NSE cash | 19 | 7,471 | 95.3 % | 92.9 % | 92.9 % | 97.6 % | 1.76 / 5.75 | 0.0 / 74.0 s | 0.29 % | 90 % | 91.2 (min 90.5) |
+| NSE index spot | 4 | 1,968 | 0.0 % | 0.0 % | 0.0 % | 100.0 % | None / None | 0.0 / 77.0 s | 0.97 % | 90 % | 57.8 (min 56.1) |
 
-Depth research (imbalance, spread, absorption) can start only after a few weeks of recorded data. Until then no strategy may use depth.
+- **Bid/ask side:** the SDK list named `best_5_buy_data` is the bid in 98–99 % of futures snapshots. The SDK's internal swap therefore leaves the labels correct. The 1–2 % of snapshots that look reversed coincide with fast moves (the bid and ask lists come from different moments); they are counted, not corrected.
+- **Index spot:** there is no order book. All 4 index tokens give empty depth, so index depth exists only on index FUTURES.
+- **Exchange-time "lag":** the median is 0–1 s. The p95 of about 70 s is the age of the last trade for quiet instruments, not feed delay: the packet timestamp is the last trade time.
+- **Coverage:** below 100 % because this file holds only the morning job; the afternoon and evening jobs save their own files. MCX shows 37 % because its session runs to 23:30.
+- **Quality score:** the 236 stock-future tokens have a median of 91.6, but the worst is 41.8 (thin contracts).
+- **Spread versus the cost assumptions:** the stock-future half-spread median is about 3.9 bp (p90 7.6 bp), against the 3 bp per side slippage used in research. That assumption is slightly optimistic for the median and clearly optimistic for thin contracts.
+- **No predictive claim:** one day of snapshots is not evidence. Depth stays research data until several weeks have accumulated.
