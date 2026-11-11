@@ -172,6 +172,12 @@ if [ "${ANGEL_WS:-1}" = "1" ]; then
     if n=$(python -c "import wsbars; print(wsbars.export('state/wsbars/$f', step='ONE_MINUTE'))") && [ "${n:-0}" -gt 0 ]; then
       save_shallow ws-bars wsbars "$f" && echo "[ws] saved $n one-minute bars to ws-bars/$f" || echo "::warning::ws bars not saved"
     fi
+    # 11-Nov: best-5 depth snapshots (1 per token per minute, research only) -> "ws-depth" branch
+    g="depth_$(TZ=Asia/Kolkata date +%Y%m%d_%H%M).csv.gz"; mkdir -p state/wsdepth
+    if n=$(python -c "import wsdepth; print(wsdepth.export('state/wsdepth/$g', '.cache/ws'))") && [ "${n:-0}" -gt 0 ]; then
+      save_shallow ws-depth wsdepth "$g" && echo "[ws] saved $n depth snapshots to ws-depth/$g" || echo "::warning::depth not saved"
+      [ -f "state/wsdepth/${g%.csv.gz}_status.json" ] && echo "[ws] depth status $(cat "state/wsdepth/${g%.csv.gz}_status.json")"
+    fi
   }
   trap ws_end EXIT
   echo "[ws] WebSocket collector started"

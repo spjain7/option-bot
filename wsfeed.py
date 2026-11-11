@@ -16,6 +16,7 @@ import time
 import pandas as pd
 
 import wsbars as WB
+import wsdepth as WD
 from angel import Angel, load_master, now_ist
 
 MCX_NAMES = ["CRUDEOIL", "NATURALGAS", "GOLD", "SILVER", "COPPER", "ZINC", "ALUMINIUM"]
@@ -25,6 +26,13 @@ STALE_SEC = 120
 CAP = 950                     # tokens on the one connection (Angel limit 1,000)
 TOP_STOCKS, WING = 40, 2      # option underlyings by traded value · strikes each side of ATM
 OPT_START, RECENTRE_MIN = "09:30", 30
+# 11-Nov: best-5 depth is recorded from the SNAP_QUOTE packets already received (wsdepth.py, research only; WS_DEPTH=0 off).
+# To check depth for indices and cash too, a few depth-only NSE tokens are added (exchange type 1); they never reach the
+# bar builder, the stale-feed rule or the engines. Index tokens: Angel's published NSE index tokens (verified by the log).
+DEPTH_ON = os.environ.get("WS_DEPTH", "1") == "1"
+DEPTH_IDX = {"99926000": "NIFTY 50", "99926009": "NIFTY BANK", "99926037": "NIFTY FIN SERVICE", "99926074": "NIFTY MID SELECT"}
+DEPTH_CASH = ["RELIANCE", "HDFCBANK", "ICICIBANK", "INFY", "TCS", "SBIN", "BHARTIARTL", "ITC", "LT", "AXISBANK",
+              "TATAMOTORS", "BAJFINANCE", "MARUTI", "SUNPHARMA", "TITAN", "PETRONET", "GLENMARK", "INDIANB", "IDEA", "YESBANK"]
 
 
 def tokens(master, now):
@@ -93,10 +101,20 @@ def main():
             .to_csv(WB._dir() / "tokens.csv", index=False)
     except Exception as e:
         print("[ws] token map not written:", e)
+    depth_tok = {}
+    if DEPTH_ON:
+        try:
+            eq = master[(master["exch_seg"] == "NSE") & master["symbol"].isin([f"{x}-EQ" for x in DEPTH_CASH])]
+            depth_tok = dict(DEPTH_IDX, **{str(t): sym for t, sym in zip(eq["token"], eq["symbol"])})
+            pd.DataFrame([dict(token=t, exch="NSE", name=nm, symbol=nm, expiry="", lot=1) for t, nm in depth_tok.items()]) \
+                .to_csv(WB._dir() / "tokens.csv", mode="a", header=False, index=False)
+        except Exception as e:
+            print("[ws] depth-only tokens skipped:", e)
     os.chdir(WB._dir())                                  # the SDK writes a log folder into the working directory
     B, lock = WB.Builder(), threading.Lock()
     st = dict(start=str(now), last_tick={}, tokens=[t for v in toks.values() for t in v], ticks=0, pid=os.getpid(),
-              counts={ex: len(v) for ex, v in toks.items()})
+              counts={ex: len(v) for ex, v in toks.items()}, depth_tokens=len(depth_tok))
+    R = WD.Recorder(WB._dir()) if DEPTH_ON else None
     WB.write_status(st)
     by_type = {v: k for k, v in EXCH_TYPE.items()}
     ws = SmartWebSocketV2(a.jwt, os.environ["ANGEL_API_KEY"], os.environ["ANGEL_CLIENT_ID"], a.feed, max_retry_attempt=3)
@@ -114,8 +132,21 @@ def main():
     # per exchange (field names + values, no credentials) so the cause can be read from the job log.
     vdiag, vsample = {}, {}
 
+    def depth(msg, ex, t):
+        if R is None:
+            return
+        try:
+            with lock:
+                R.on_msg(msg, ex, t, now_ist())
+        except Exception as e:
+            print("[ws] depth record error", type(e).__name__, e)
+
     def on_data(wsapp, msg):
         try:
+            if msg.get("exchange_type") == 1:            # depth-only NSE tokens (indices, cash): research record only
+                if msg.get("exchange_timestamp"):
+                    depth(msg, "NSE", pd.Timestamp(msg["exchange_timestamp"], unit="ms", tz="UTC").tz_convert("Asia/Kolkata").tz_localize(None))
+                return
             ex = by_type.get(msg.get("exchange_type"))
             if ex is None or not msg.get("last_traded_price"):
                 return
@@ -135,11 +166,15 @@ def main():
                 st["last_tick"][ex] = str(now_ist()); st["ticks"] += 1
         except Exception as e:
             print("[ws] tick error", type(e).__name__, e)
+            return
+        depth(msg, ex, t)
 
     def on_open(wsapp):
         for ex, tl in toks.items():
             for i in range(0, len(tl), 200):
                 ws.subscribe(f"ob{ex}{i}"[:10], ws.SNAP_QUOTE, [{"exchangeType": EXCH_TYPE[ex], "tokens": tl[i:i + 200]}])
+        if depth_tok:
+            ws.subscribe("obNSEdepth", ws.SNAP_QUOTE, [{"exchangeType": 1, "tokens": list(depth_tok)}])
         print(f"[ws] connected – subscribed {st['counts']}", flush=True)
 
     ws.on_data, ws.on_open = on_data, on_open
@@ -187,6 +222,12 @@ def main():
         with lock:
             B.flush(n)
             WB.write_status(st)
+        if R is not None:
+            try:
+                with lock:
+                    dst = R.flush(n)
+            except Exception as e:
+                dst = None; print("[ws] depth flush error", type(e).__name__, e)
         try:                                             # options: from 09:30, re-centred every 30 min (no REST calls)
             if is_open("NFO", n) and f"{n:%H:%M}" >= OPT_START and lastpx and (
                     last_centre is None or (n - last_centre).total_seconds() >= RECENTRE_MIN * 60):
@@ -211,12 +252,19 @@ def main():
             with lock:
                 st["vol_diag"] = dict(vdiag)
             print(f"[ws] futures volume diag {dict(sorted(vdiag.items()))} · sample {vsample}", flush=True)
+            if R is not None:
+                print(f"[ws] depth diag {dst}", flush=True)
     try:
         ws.close_connection()
     except Exception:
         pass
     with lock:
         B.flush(now_ist() + pd.Timedelta(minutes=1))
+        if R is not None:
+            try:
+                print(f"[ws] depth diag {R.flush(now_ist())}", flush=True)
+            except Exception as e:
+                print("[ws] depth flush error", e)
 
 
 if __name__ == "__main__":
