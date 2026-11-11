@@ -1,0 +1,187 @@
+"""One experiment registry for every market (owner 11-Nov priority 6). Rebuilt from the result files each study writes,
+so nothing is typed by hand and nothing silently disappears; a study whose result file is missing is listed as such.
+Columns: strategy_id · study · script · market · timeframe · family · rule · context · side · target · periods ·
+DEV / VALID / OOS n, win %, avg R, PF · all-period n / avg R · day-clustered t · multiple-testing flag · cost model ·
+result (PASS / FAIL by that study's own pre-set gate) · status · rejection reason · trade file.
+Status: research only (default) · experimental-live (sent as EXPERIMENTAL alerts today) · candidate (passed its gate AND
+the multiple-testing control AND a separate stress test) – nothing is "approved for production" by this file.
+python -m research.registry.build  ->  research/registry/registry.csv.gz + REGISTRY.md"""
+import hashlib
+import json
+import sys
+from pathlib import Path
+import numpy as np
+import pandas as pd
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = Path(__file__).resolve().parent
+COST = dict(MCX="real MCX fees + 1.5 ticks slippage per side",
+            FUT="futures: STT sell 0.0125/0.02/0.05 % by date, exch 0.00173 % x2, stamp, GST, ₹40 brokerage, slippage 0.03 % (stocks) / 0.01 % (index) per side, +1 round trip per roll",
+            CASH_DEL="delivery 0.393 % round trip incl. 0.05 % slippage per side", CASH_INT="intraday 0.163 % round trip incl. slippage")
+LIVE = {}      # filled from the production code facts below (status experimental-live)
+
+
+def sid(*parts):
+    return "S-" + hashlib.sha1("|".join(map(str, parts)).encode()).hexdigest()[:10]
+
+
+def reason(r, gate):
+    if r.get("result") == "PASS":
+        if r.get("mt_pass") is False:
+            return "passed the period gate but not the multiple-testing control"
+        return ""
+    bits = []
+    for p in ("DEV", "VAL", "OOS"):
+        n, R, pf = r.get(f"{p}_n"), r.get(f"{p}_R"), r.get(f"{p}_PF")
+        if n is None or (isinstance(n, float) and np.isnan(n)):
+            continue
+        if n < gate.get("min_n", 30):
+            bits.append(f"{p} too few trades ({int(n)})")
+        elif R is not None and R <= 0:
+            bits.append(f"{p} loses ({R:+.2f}R)")
+        elif pf is not None and pf < gate.get("pf", 1.2):
+            bits.append(f"{p} PF {pf:.2f} < {gate.get('pf', 1.2)}")
+    return "; ".join(bits) or "failed the study's gate"
+
+
+def std(df, **fix):
+    for k, v in fix.items():
+        df[k] = v
+    return df
+
+
+def rsidiv(file, study, script, market, cost, periods, trades):
+    p = ROOT / file
+    if not p.exists():
+        return None, dict(study=study, missing=file)
+    L = pd.read_csv(p)
+    out = pd.DataFrame(dict(study=study, script=script, market=market, timeframe=L.tf, family=L.family, rule=L.event,
+                            context=L.context if "context" in L else L.zone_or_context, side=L.side, target=L.target_R.astype(str) + "R",
+                            periods=periods))
+    for p_ in ("DEV", "VAL", "OOS"):
+        for k in ("n", "win", "R", "PF"):
+            out[f"{p_}_{k}"] = L.get(f"{p_}_{k}")
+    out["all_n"] = L.get("all_n", L.get("n")); out["all_R"] = L.get("all_R", L.get("R"))
+    out["t_day"] = L.get("t_day", L.get("t")); out["mt_pass"] = L.get("FDR10")
+    out["holm5"] = L.get("HOLM5"); out["instruments"] = L.get("names"); out["instruments_positive"] = L.get("names_pos")
+    out["cost_model"] = cost; out["result"] = np.where(L.PASS.fillna(False), "PASS", "FAIL"); out["trades_file"] = trades
+    out.loc[out.family == "BASE", "result"] = "BENCHMARK"
+    return out, None
+
+
+def mcx_reversal():
+    L = pd.read_csv(ROOT / "research/mcxhw/results/reversal_pooled.csv")
+    out = pd.DataFrame(dict(study="MCX-REV reversal candles (10-Nov)", script="research/mcxhw/reversal.py", market="MCX", timeframe=L.tf,
+                            family="REVERSAL_CANDLE", rule=L.candle + " / " + L.entry, context=L.context, side=L.side, target=L.target_R.astype(str) + "R",
+                            periods="DEV=CHECK 2023…Jan-2026 · OOS=FOCUS Feb…Nov-2026",
+                            DEV_n=L.C_n, DEV_win=L.C_win, DEV_R=L.C_R, DEV_PF=L.C_PF, OOS_n=L.F_n, OOS_win=L.F_win, OOS_R=L.F_R, OOS_PF=L.F_PF))
+    out["all_n"] = L.C_n + L.F_n; out["all_R"] = (L.C_R * L.C_n + L.F_R * L.F_n) / out.all_n
+    out["cost_model"] = COST["MCX"]; out["result"] = np.where(L.GOOD | L.get("GOOD_small", False), "PASS", "FAIL")
+    out["mt_pass"] = False; out["trades_file"] = ""
+    return out
+
+
+def mcx_highwin():
+    L = pd.read_csv(ROOT / "research/mcxhw/results/mcxhw_focus_candidates.csv")
+    out = pd.DataFrame(dict(study="MCX-HW 80-90 % win search (10-Nov)", script="research/mcxhw/search.py", market="MCX", timeframe=L["mode"],
+                            family="HIGH_WIN", rule=L.pattern, context="trend " + L.trend.astype(str) + " · " + L.commodity.astype(str), side=L.side,
+                            target=L.target_atr.astype(str) + " ATR / stop " + L.stop_atr.astype(str) + " ATR",
+                            periods="DEV=CHECK 2023…Jan-2026 · OOS=FOCUS Feb…Nov-2026",
+                            DEV_n=L.C_n, DEV_win=L.C_win, DEV_R=L.C_net_atr, DEV_PF=L.C_PF, OOS_n=L.F_n, OOS_win=L.F_win, OOS_R=L.F_net_atr, OOS_PF=L.F_PF))
+    out["all_n"] = L.C_n + L.F_n; out["cost_model"] = COST["MCX"]; out["mt_pass"] = False; out["trades_file"] = ""
+    out["result"] = np.where(L.winner.fillna(False), "PASS", "FAIL")
+    out["note"] = "R columns are net ATR, not R. Only the 805 of 32,044 variants that passed the FOCUS test were saved; the other 31,239 failed it (win < 80 % or net <= 0 or < 40 trades) and are counted in REGISTRY.md, not listed row by row."
+    return out
+
+
+def cashq():
+    L = pd.read_csv(ROOT / "research/cashq/results/LEADERBOARD.csv")
+    extra = [pd.read_csv(ROOT / f"research/cashq/results/{f}.csv") for f in ("lonesome_leaderboard", "screeners_leaderboard")]
+    for x in extra:
+        L = pd.concat([L, x[~x.exp_id.isin(L.exp_id)]], ignore_index=True)
+    tf = L.get("tf").fillna("1d") if "tf" in L else "1d"
+    out = pd.DataFrame(dict(study="CASHQ cash research engine (Nov-2026)", script="research/cashq/*.py", market="NSE_CASH", timeframe=tf,
+                            family=L.family, rule=L.strategy, context=L.params.astype(str), side=L.side, target=L.R.astype(str) + "R",
+                            periods="daily DEV 2005-14 · VALID 2015-19 · OOS 2020-26; intraday DEV Oct-24…Sep-25 · VALID Oct-25…Mar-26 · OOS Apr-26…"))
+    for p_, q in (("DEV", "DEV"), ("VAL", "VALID"), ("OOS", "OOS")):
+        out[f"{p_}_n"], out[f"{p_}_win"], out[f"{p_}_R"], out[f"{p_}_PF"] = L.get(f"{q}_n"), L.get(f"{q}_win"), L.get(f"{q}_avgR"), L.get(f"{q}_PF")
+    out["all_n"] = L.get("n_all"); out["t_day"] = L.get("OOS_t"); out["mt_pass"] = L.get("OOS_q") < 0.10
+    out["cost_model"] = np.where(out.timeframe.astype(str).str.contains("m"), COST["CASH_INT"], COST["CASH_DEL"])
+    out["result"] = np.where(L.status.astype(str).str.upper().str.startswith("PASS"), "PASS", "FAIL"); out["study_status"] = L.status
+    out["trades_file"] = ""
+    return out
+
+
+def btst():
+    L = pd.read_csv(ROOT / "research/eqbtst/RESULTS_btst.csv")
+    out = pd.DataFrame(dict(study="EQ-BTST cash buy-today-sell-tomorrow", script="research/eqbtst/btst.py", market="NSE_CASH", timeframe="1d",
+                            family="BTST", rule=L.setup, context="market " + L.mkt.astype(str), side="BUY", target=L.exit.astype(str), periods="DEV / OOS",
+                            DEV_n=L.DEV_n, DEV_win=L.DEV_win, DEV_R=L.DEV_net, OOS_n=L.OOS_n, OOS_win=L.OOS_win, OOS_R=L.OOS_net))
+    out["t_day"] = L.OOS_t; out["mt_pass"] = L.OOS_q < 0.10; out["cost_model"] = COST["CASH_DEL"]
+    out["result"] = np.where(L.PASS.fillna(False), "PASS", "FAIL"); out["note"] = "R columns are net % per trade"; out["trades_file"] = ""
+    return out
+
+
+def main():
+    parts, missing = [], []
+    SFP = "daily DEV 2018-21 · VALID 2022-23 · OOS 2024-26"
+    specs = [
+        ("research/mcxhw/results/rsi_div_pooled.csv", "MCX-RD RSI 75/25 + divergence, pooled (10-Nov)", "research/mcxhw/rsi_div.py", "MCX", COST["MCX"], "DEV to 2024 · VALID 2025 · OOS 2026", ""),
+        ("research/mcxhw/results/rsi_div_by_commodity.csv", "MCX-RD RSI 75/25 + divergence, per commodity (10-Nov)", "research/mcxhw/rsi_div.py", "MCX", COST["MCX"], "DEV to 2024 · VALID 2025 · OOS 2026", ""),
+        ("research/rsidiv/results/stockfut_variants.csv", "RSIDIV-SF stock futures RSI + divergence + OI + basis (11-Nov)", "research/rsidiv/stockfut.py", "NSE_STOCK_FUT", COST["FUT"], SFP, "research/rsidiv/results/stockfut_trades.csv.gz"),
+        ("research/rsidiv/results/index_variants.csv", "RSIDIV-IX index futures RSI + divergence + OI (11-Nov)", "research/rsidiv/index.py", "NSE_INDEX_FUT", COST["FUT"], SFP + "; hourly DEV Jul-22…Jun-24 · VALID Jul-24…Jun-25 · OOS Jul-25…Oct-26", "research/rsidiv/results/index_trades.csv.gz"),
+        ("research/rsidiv/results/cash_variants.csv", "RSIDIV-CM cash RSI + divergence + liquidity / RS / sector (11-Nov)", "research/rsidiv/cash.py", "NSE_CASH", COST["CASH_DEL"], "DEV 2005-14 · VALID 2015-19 · OOS 2020-26", "research/rsidiv/results/cash_trades.csv.gz"),
+    ]
+    for f, st, sc, mk, co, pe, tr in specs:
+        x, miss = rsidiv(f, st, sc, mk, co, pe, tr)
+        if x is None:
+            missing.append(miss)
+        else:
+            if "per commodity" in st:
+                L = pd.read_csv(ROOT / f); x["instruments"] = L.commodity
+            parts.append(x)
+    for fn in (mcx_reversal, mcx_highwin, cashq, btst):
+        try:
+            parts.append(fn())
+        except Exception as e:
+            missing.append(dict(study=fn.__name__, error=str(e)))
+    R = pd.concat(parts, ignore_index=True)
+    R["status"] = "research only"
+    # stress-tested items (separate scripts; their verdicts are written in REGISTRY.md and the JSON files)
+    stress = {}
+    for f in ("research/mcxhw/results/hidden_check.json", "research/rsidiv/results/sf_check.json"):
+        if (ROOT / f).exists():
+            stress[f] = json.load(open(ROOT / f))
+    CAND = [  # passed its gate + multiple-testing control + a separate stress test -> shadow testing only, never live
+        dict(market="NSE_STOCK_FUT", timeframe="1d", family="RSI", rule="break5:continuation", context="zone25", side="SELL", target="3.0R",
+             note="stress test research/rsidiv/results/sf_check.json: placebo 0/300, neighbours positive, but 2019/2020/2023/2026 negative, weaker in falling markets"),
+        dict(market="NSE_CASH", timeframe="1w", family="RSI", rule="cross_in:continuation", context="zone75|liq_bottom", side="BUY", target="1.0R",
+             note="stress test research/rsidiv/results/cash_check.json: placebo 0/300, robust to RSI 70-80 and liquidity cut, survives 0.3 % slippage; loses when the market is below its 40-week EMA")]
+    R["stress_note"] = ""
+    for c in CAND:
+        m = np.ones(len(R), bool)
+        for k in ("market", "timeframe", "family", "rule", "context", "side", "target"):
+            m &= R[k].astype(str).values == c[k]
+        R.loc[m, "status"] = "candidate for shadow testing"; R.loc[m, "stress_note"] = c["note"]
+    R.loc[R.study.str.startswith("MCX-RD") & (R.timeframe == "3h") & R.rule.isin(["macd:hidden", "obv:hidden"]) & (R.side == "BUY"), "stress_note"] = \
+        "stress test research/mcxhw/results/hidden_check.json: not promoted – below Bonferroni (t 3.3 vs 4.7), fails with pivot K=2, energy ~0R, divergence adds little over any higher low (p 0.04)"
+    kf = [c for c in ("study", "timeframe", "family", "rule", "context", "side", "target", "instruments") if c in R]
+    dup = R.groupby(kf, dropna=False).cumcount()                     # identical labels (e.g. MCX-HW hold variants) -> ordinal
+    R["strategy_id"] = [sid(*v, d) for v, d in zip(R[kf].astype(str).values, dup.values)]
+    R["rejection_reason"] = [reason(r, dict(min_n=30, pf=1.2)) if r["result"] != "BENCHMARK" else "" for r in R.to_dict("records")]
+    first = ["strategy_id", "study", "market", "timeframe", "family", "rule", "context", "side", "target", "result", "status", "rejection_reason",
+             "DEV_n", "DEV_win", "DEV_R", "DEV_PF", "VAL_n", "VAL_win", "VAL_R", "VAL_PF", "OOS_n", "OOS_win", "OOS_R", "OOS_PF", "all_n", "all_R",
+             "t_day", "mt_pass", "holm5", "instruments", "instruments_positive", "periods", "cost_model", "script", "trades_file"]
+    R = R[[c for c in first if c in R] + [c for c in R if c not in first]]
+    assert R.strategy_id.is_unique
+    R.to_csv(OUT / "registry.csv.gz", index=False, compression="gzip")
+    R["pass_and_mt"] = (R.result == "PASS") & R.mt_pass.fillna(False).astype(bool)
+    s = R.groupby(["market", "study"]).agg(variants=("result", "size"), passed=("result", lambda x: int((x == "PASS").sum())),
+                                           passed_and_multiple_testing=("pass_and_mt", "sum")).reset_index()
+    json.dump(dict(rows=len(R), missing=missing, by_study=s.to_dict("records"), stress_files=list(stress)), open(OUT / "registry_summary.json", "w"), indent=1, default=str)
+    print(s.to_string(index=False)); print("rows", len(R), "missing", missing)
+    return R, s
+
+
+if __name__ == "__main__":
+    main()

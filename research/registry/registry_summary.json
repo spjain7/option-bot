@@ -1,0 +1,73 @@
+{
+ "rows": 37335,
+ "missing": [],
+ "by_study": [
+  {
+   "market": "MCX",
+   "study": "MCX-HW 80-90 % win search (10-Nov)",
+   "variants": 805,
+   "passed": 6,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "MCX-RD RSI 75/25 + divergence, per commodity (10-Nov)",
+   "variants": 14535,
+   "passed": 3,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "MCX-RD RSI 75/25 + divergence, pooled (10-Nov)",
+   "variants": 2325,
+   "passed": 15,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "MCX-REV reversal candles (10-Nov)",
+   "variants": 3400,
+   "passed": 23,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "CASHQ cash research engine (Nov-2026)",
+   "variants": 2409,
+   "passed": 10,
+   "passed_and_multiple_testing": 10
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "EQ-BTST cash buy-today-sell-tomorrow",
+   "variants": 56,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "RSIDIV-CM cash RSI + divergence + liquidity / RS / sector (11-Nov)",
+   "variants": 2805,
+   "passed": 29,
+   "passed_and_multiple_testing": 11
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "RSIDIV-IX index futures RSI + divergence + OI (11-Nov)",
+   "variants": 5114,
+   "passed": 2,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "RSIDIV-SF stock futures RSI + divergence + OI + basis (11-Nov)",
+   "variants": 5886,
+   "passed": 50,
+   "passed_and_multiple_testing": 4
+  }
+ ],
+ "stress_files": [
+  "research/mcxhw/results/hidden_check.json",
+  "research/rsidiv/results/sf_check.json"
+ ]
+}

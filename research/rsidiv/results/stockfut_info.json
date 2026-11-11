@@ -1,0 +1,14 @@
+{
+ "1d": {
+  "stocks": 351,
+  "basis_median_pct": 0.218,
+  "basis_p1": -1.56,
+  "basis_p99": 0.83
+ },
+ "1w": {
+  "stocks": 279,
+  "basis_median_pct": 0.237,
+  "basis_p1": -1.7,
+  "basis_p99": 0.88
+ }
+}

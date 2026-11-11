@@ -1,20 +1,20 @@
 # Master instruction (10-Nov-2026) – where each section stands
 
-Received: sections 1–15 (file cut off inside section 15) and section 26. Sections 16–25 were not received.
+Received: sections 1–26 (16–25 on 11-Nov).
 Nothing here changes production. Research only, on `exp/cash-equity-engine`.
 
 | § | Topic | Status | Where |
 |---|---|---|---|
 | 2 | Repository | `spjain7/option-bot` (only repo visible) | – |
 | 3 | Coverage | MCX 7 commodities (no 5-min history loaded for LEAD / NICKEL), stock futures, NSE cash 2005–26 incl. delisted; index-only strategies not yet researched separately | `research/program`, `research/cashq/data.py` |
-| 4 | Angel audit | Done for candles, volume, OI, WebSocket, limits. Market depth (5-level / 20-level) NOT yet verified or collected | `research/mcxe013/DATA_AUDIT.md`, `research/cashq/DATA_AUDIT.md` |
+| 4 | Angel audit | Candles, volume, OI, WebSocket, limits done. Depth: 20-level deprecated by Angel (Apr-2025); best-5 recorded live from 11-Nov (PR #68), live verification pending | `research/DEPTH_AUDIT.md`, `research/mcxe013/DATA_AUDIT.md` |
 | 5 | Data quality | Live checks in production (WS-vs-REST hourly verify, stale feed, OI jump cap, feed-health notice). No per-instrument quality score; no exchange holiday calendar | `wsbars.py`, `alerts/engine.py` |
 | 6 | Indicators / structure | Tested: candles, chart patterns, trendlines, breakouts, VWAP, EMA, volume (MCX); momentum, breakout score, screeners (cash) | `research/mcxhw`, `research/cashq` |
-| 7 | Divergence | MCX done 10-Nov (12 indicators, regular + hidden, confirmed pivots). Cash done earlier (1 / 388 pass). Stock futures + OI divergence open | `research/mcxhw/rsi_div.py`, `research/cashq/div.py` |
-| 8 | RSI 75 / 25 | MCX done 10-Nov (10 events, reversal and continuation). Stock futures, indices, cash open | `research/mcxhw/rsi_div.py` |
+| 7 | Divergence | MCX, stock futures (incl. OI divergence), index futures, cash done (10-11 Nov) | `research/mcxhw/rsi_div.py`, `research/rsidiv/` |
+| 8 | RSI 75 / 25 | all four markets done (10 events, reversal and continuation, BUY / SELL apart) | `research/rsidiv/README.md` |
 | 9 | Volume + OI + price | Stock futures daily OI done (0 / 33 pass). MCX has no historical OI from Angel | `research/cashq/oi_run.py` |
 | 10 | Multi-timeframe | Only as a trend filter so far | – |
-| 11 | Experiment registry | Every run writes all variants incl. failures to CSV; no single merged registry yet | `research/*/results/*.csv` |
+| 11 | Experiment registry | One registry for all markets, 37,335 rows incl. failures, rebuilt from result files | `research/registry/REGISTRY.md` |
 | 12–13 | Backtest rules / gates | Costs, next-bar entry, chronological periods, FDR in place | `research/mcxhw`, `research/cashq/validate.py` |
 | 14 | Trade construction | Live card has entry / SL / target / lot / expiry / WHY; no confidence or data-quality score | `alerts/candle_setups.py` |
 | 15 | Regimes | Not built | – |
@@ -33,3 +33,8 @@ DEV to 2024 · VALID 2025 · OOS 2026. PASS = profit and PF >= 1.2 in all three.
   (2023–26 was a rising market for metals); the indicator adds roughly +0.13R on top.
 - Per commodity: only 3 of 14,535 pass (SILVER 1h MFI hidden BUY, COPPER 1h MACD hidden BUY, COPPER 1h volume hidden
   BUY) – no more than chance. There is not enough data per commodity to justify separate tuned parameters yet.
+
+## 11-Nov update
+- RSI 75/25 + divergence on stock futures, index futures and cash: `research/rsidiv/README.md`. Two shadow candidates (stock-futures SELL of the first bounce after RSI ≤ 25; cash weekly RSI ≥ 75 BUY in less-liquid stocks). Index futures: nothing.
+- MCX 3-hour hidden divergence stress test: not promoted (`research/mcxhw/hidden_check.py`).
+- Engine defect found by the new tests: RSI returned NaN while a series had no falling bar yet; fixed (it only affected warm-up bars, before any signal date).
