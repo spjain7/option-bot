@@ -22,6 +22,8 @@ LIMIT_DAYS = {"ONE_DAY": 1900, "ONE_HOUR": 390, "FIFTEEN_MINUTE": 190, "FIVE_MIN
               "ONE_MINUTE": 28}                                    # Angel per-request window limits (kept under)
 MAX_PAGES = {"ONE_DAY": 4, "ONE_HOUR": 4, "FIFTEEN_MINUTE": 12,       # ~20 y daily / ~4 y hourly / ~6 y 15-min
              "FIVE_MINUTE": 17, "THREE_MINUTE": 26, "ONE_MINUTE": 14}  # 3-Nov: ~4.4 y 5-min / ~4.1 y 3-min / ~1 y 1-min
+for _kv in filter(None, os.environ.get("RESEARCH_MAX_PAGES", "").split(",")):    # 11-Nov: e.g. ONE_HOUR=10 (index history check)
+    _k, _v = _kv.split("="); MAX_PAGES[_k.strip()] = int(_v)
 
 
 def contracts(master, names):

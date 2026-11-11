@@ -1,8 +1,8 @@
 name: Research data (manual, no alerts)
 
 # Downloads REAL MCX + NSE index-futures candles from Angel One for backtesting.
-# Manual only. Shares the live bot's concurrency group so it never runs at the same time
-# as the live bot (no competition for the Angel API quota). Sends no Telegram messages.
+# Manual only. NOTE (7-Nov): group 'option-bot' is the OLD bot's, not market-loop's – it CAN overlap the live loop
+# (it did on 6-Nov 15:15-20:16 IST); the quiet-hours guard step now stops it during loop hours. Sends no Telegram messages.
 # Results are pushed to the separate branch "research-data" (main is never touched).
 
 on:
@@ -20,6 +20,9 @@ on:
       incremental:
         description: "1 = only fetch bars after the last stored bar and append (MCXE-009, research branch)"
         default: "0"
+      max_pages:
+        description: "override the page limit per interval, e.g. ONE_HOUR=10 (research branch; empty = adapter default)"
+        default: ""
 
 concurrency:
   group: option-bot
@@ -34,6 +37,9 @@ jobs:
     timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
+      - name: Angel quiet-hours guard (shares the live bot's API key – 7-Nov)
+        env: { FORCE: "${{ inputs.force }}" }
+        run: python3 scripts/angel_quiet_hours.py
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -57,6 +63,7 @@ jobs:
           RESEARCH_NAMES:    ${{ github.event.inputs.names }}
           RESEARCH_INTERVALS: ${{ github.event.inputs.intervals || 'ONE_DAY,ONE_HOUR' }}
           RESEARCH_INCREMENTAL: ${{ github.event.inputs.incremental || '0' }}
+          RESEARCH_MAX_PAGES: ${{ github.event.inputs.max_pages }}
       - name: Push to research-data branch (also after a timeout, so partial downloads are kept – fetcher is resumable)
         if: always() && hashFiles('research/data/angel/**') != ''
         run: |
