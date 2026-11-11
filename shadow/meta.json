@@ -1,0 +1,58 @@
+{
+ "SF-CONT-SELL-v1": {
+  "rule_hash": "d2ab63850f54f0b9",
+  "started": "2026-11-11",
+  "label": "CONTINUATION SELL",
+  "params": {
+   "label": "CONTINUATION SELL",
+   "market": "NSE_STOCK_FUT",
+   "tf": "1d",
+   "side": -1,
+   "rsi_n": 14,
+   "rsi_level": 25,
+   "lookback": 10,
+   "brk": 5,
+   "stop_window": 5,
+   "stop_buf_atr": 0.1,
+   "stop_min_atr": 0.5,
+   "stop_max_atr": 3.0,
+   "target_R": 3.0,
+   "max_bars": 15,
+   "min_turnover": 250000000.0,
+   "min_close": 50.0,
+   "slip_per_side": 0.0003,
+   "lot_value_note": "1 lot (exchange lot size)",
+   "research": "research/rsidiv/sf_check.py",
+   "trades": "research/rsidiv/results/sf_check_trades.csv.gz"
+  }
+ },
+ "CM-CONT-BUY-v1": {
+  "rule_hash": "9a5508f32f4590a5",
+  "started": "2026-11-11",
+  "label": "CONTINUATION BUY",
+  "params": {
+   "label": "CONTINUATION BUY",
+   "market": "NSE_CASH",
+   "tf": "1w",
+   "side": 1,
+   "rsi_n": 14,
+   "rsi_level": 75,
+   "liq_weeks": 12,
+   "liq_rank_max": 0.3333333333333333,
+   "stop_window": 5,
+   "stop_buf_atr": 0.1,
+   "stop_min_atr": 0.5,
+   "stop_max_atr": 3.0,
+   "target_R": 1.0,
+   "max_bars": 10,
+   "min_turnover": 250000000.0,
+   "min_close": 50.0,
+   "min_hist": 250,
+   "cost_round_trip": 0.00393,
+   "slip_per_side": 0.0005,
+   "order_value": 500000.0,
+   "research": "research/rsidiv/cash_check.py",
+   "trades": "research/rsidiv/results/cash_check_trades.csv.gz"
+  }
+ }
+}
