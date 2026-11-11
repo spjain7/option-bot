@@ -24,9 +24,9 @@ The file was saved: `ws-depth/wsdepth/2026-11/depth_20261111_1419.csv.gz` (93,05
 | NSE cash | 19 | 7,471 | 95.3 % | 92.9 % | 92.9 % | 97.6 % | 1.76 / 5.75 | 0.0 / 74.0 s | 0.29 % | 90 % | 91.2 (min 90.5) |
 | NSE index spot | 4 | 1,968 | 0.0 % | 0.0 % | 0.0 % | 100.0 % | None / None | 0.0 / 77.0 s | 0.97 % | 90 % | 57.8 (min 56.1) |
 
-- **Bid/ask side:** the SDK list named `best_5_buy_data` is the bid in 98–99 % of futures snapshots. The SDK's internal swap therefore leaves the labels correct. The 1–2 % of snapshots that look reversed coincide with fast moves (the bid and ask lists come from different moments); they are counted, not corrected.
+- **Bid/ask side:** the SDK list named `best_5_buy_data` is the bid in 98–99 % of futures snapshots. The SDK's internal swap therefore leaves the labels correct. The 1–2 % of snapshots that look reversed are not yet explained (one possibility: the two lists come from different moments in a fast market). They are counted, not corrected.
 - **Index spot:** there is no order book. All 4 index tokens give empty depth, so index depth exists only on index FUTURES.
-- **Exchange-time "lag":** the median is 0–1 s. The p95 of about 70 s is the age of the last trade for quiet instruments, not feed delay: the packet timestamp is the last trade time.
+- **Exchange-time "lag":** the median is 0–1 s. The p95 of about 70 s is probably the age of the last trade on quiet instruments rather than feed delay, but this is not yet verified.
 - **Coverage:** below 100 % because this file holds only the morning job; the afternoon and evening jobs save their own files. MCX shows 37 % because its session runs to 23:30.
 - **Quality score:** the 236 stock-future tokens have a median of 91.6, but the worst is 41.8 (thin contracts).
 - **Spread versus the cost assumptions:** the stock-future half-spread median is about 3.9 bp (p90 7.6 bp), against the 3 bp per side slippage used in research. That assumption is slightly optimistic for the median and clearly optimistic for thin contracts.
