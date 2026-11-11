@@ -2646,9 +2646,9 @@
    "status": "OPEN",
    "date": "2026-11-11",
    "uhi": 187791.0,
-   "ulo": 185950.0,
-   "ulast": 185950.0,
-   "uat": "2026-11-11 19:47:01.979477"
+   "ulo": 185905.0,
+   "ulast": 185905.0,
+   "uat": "2026-11-11 19:47:58.416387"
   },
   {
    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|NATURALGAS|2026-11-11 13:00:00",
@@ -2673,8 +2673,8 @@
    "version": null,
    "uhi": 317.0,
    "ulo": 310.6,
-   "ulast": 316.7,
-   "uat": "2026-11-11 19:47:01.979477"
+   "ulast": 316.5,
+   "uat": "2026-11-11 19:47:58.416387"
   },
   {
    "key": "MCX_HAMMER|CRUDEOIL|2026-11-10",
@@ -2706,9 +2706,9 @@
    ],
    "status": "OPEN",
    "date": "2026-11-11",
-   "best_px": 8215.0,
+   "best_px": 8216.0,
    "worst_px": 8071.0,
-   "mfe_R": 0.193,
+   "mfe_R": 0.196,
    "mae_R": -0.263,
    "excursion_measure": "15-min candle highs/lows",
    "excursion_upd": "2026-11-11 19:30:00",
@@ -2716,8 +2716,8 @@
    "stop_touched": false,
    "uhi": 8200.0,
    "ulo": 8123.0,
-   "ulast": 8172.0,
-   "uat": "2026-11-11 19:47:01.979477"
+   "ulast": 8167.0,
+   "uat": "2026-11-11 19:47:58.416387"
   },
   {
    "key": "PHOENIXLTD|1dSTK|2026-11-11 09:15:00",
@@ -2772,9 +2772,9 @@
    "status": "OPEN",
    "date": "2026-11-11",
    "uhi": 187352.0,
-   "ulo": 185950.0,
-   "ulast": 185950.0,
-   "uat": "2026-11-11 19:47:01.979477"
+   "ulo": 185905.0,
+   "ulast": 185905.0,
+   "uat": "2026-11-11 19:47:58.416387"
   }
  ],
  "candle_setups": {
@@ -4549,21 +4549,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 322,
-  "started": "2026-11-11 19:47:01.979477",
-  "finished": "2026-11-11 19:47:12.732314",
-  "seconds": 10,
+  "seq": 323,
+  "started": "2026-11-11 19:47:58.416387",
+  "finished": "2026-11-11 19:48:37.315709",
+  "seconds": 38,
   "status": "SUCCESS",
-  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 24 ok 24 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 4,
-   "ok": 4,
+   "calls": 24,
+   "ok": 24,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 14
+   "disk_hits": 0
   },
   "errors": 0,
   "messages": 0
@@ -11646,7 +11646,7 @@
     "executable": true,
     "assumed_cost": "fees + 1.5 ticks/side",
     "mfe": 0.0,
-    "mae": -0.567,
+    "mae": -0.581,
     "live": true
    },
    {
@@ -11671,7 +11671,7 @@
     "executable": true,
     "assumed_cost": "fees + 1.5 ticks/side",
     "mfe": 0.0,
-    "mae": -0.432,
+    "mae": -0.445,
     "live": true
    }
   ],
