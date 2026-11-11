@@ -1,7 +1,21 @@
 {
- "rows": 43095,
+ "rows": 44134,
  "missing": [],
  "by_study": [
+  {
+   "market": "MCX",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 156,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "CYCLE2-4 MCX continuation by objective daily trend, metals vs energy (11-Nov)",
+   "variants": 504,
+   "passed": 39,
+   "passed_and_multiple_testing": 18
+  },
   {
    "market": "MCX",
    "study": "MCX-HW 80-90 % win search (10-Nov)",
@@ -46,6 +60,20 @@
   },
   {
    "market": "NSE_CASH",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 128,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "CYCLE2-3 cash CONTINUATION BUY market dependence (11-Nov)",
+   "variants": 14,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
    "study": "EQ-BTST cash buy-today-sell-tomorrow",
    "variants": 56,
    "passed": 0,
@@ -67,6 +95,13 @@
   },
   {
    "market": "NSE_INDEX_FUT",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 104,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
    "study": "RSIDIV-IX index futures RSI + divergence + OI (11-Nov)",
    "variants": 5114,
    "passed": 2,
@@ -76,6 +111,20 @@
    "market": "NSE_INDEX_FUT",
    "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
    "variants": 1440,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 128,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "CYCLE2-2 stock-futures CONTINUATION SELL crowding versions (11-Nov)",
+   "variants": 5,
    "passed": 0,
    "passed_and_multiple_testing": 0
   },

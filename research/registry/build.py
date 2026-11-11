@@ -146,6 +146,58 @@ def rsirev():
     return pd.concat(parts, ignore_index=True)
 
 
+def cycle2():
+    parts, C2 = [], ROOT / "research/cycle2/results"
+    f = C2 / "cont_buy_filters_all.csv"
+    if f.exists():
+        L = pd.read_csv(f)
+        o = pd.DataFrame(dict(study="CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+                              script="research/cycle2/cont_buy.py", market=L.market, timeframe=L.tf, family="CONT_BUY_FILTER",
+                              rule=L.base.map({"B1": "B1 RSI crosses >= 75", "B2": "B2 S10"}) + " + " + L["filter"], context="filter keep share " + L.keep_share.astype(str),
+                              side="BUY", target=L.target_R.astype(str) + "R", label="CONTINUATION BUY",
+                              DEV_n=L.DEV_n, DEV_R=L.DEV_R, VAL_n=L.VAL_n, VAL_R=L.VAL_R, OOS_n=L.OOS_n, OOS_R=L.OOS_R, all_n=L.n,
+                              t_day=L.oos_welch_t, mt_pass=L.FDR10, cost_model="per market (research/rsidiv)", trades_file=""))
+        o["result"] = np.where(L.genuine & L.FDR10, "PASS", np.where(L.genuine, "FAIL (selected on DEV+VALID and better OOS, not significant)", "FAIL"))
+        o["note"] = "t_day column = OOS Welch t of filtered vs excluded trades; base OOS R " + L.OOS_base_R.astype(str) + "; walk-forward R " + L.wf_R.astype(str) + " vs base " + L.wf_base_R.astype(str)
+        parts.append(o)
+    f = C2 / "mcx_trend.csv"
+    if f.exists():
+        L = pd.read_csv(f)
+        o = pd.DataFrame(dict(study="CYCLE2-4 MCX continuation by objective daily trend, metals vs energy (11-Nov)", script="research/cycle2/mcx_trend.py",
+                              market="MCX", timeframe=L.tf, family="MCX_TREND", rule=L.strategy, context="trend " + L.trend + " · " + L.realism + " · " + L.group,
+                              side=np.where(L.label.str.endswith("BUY"), "BUY", "SELL"), target=L.target_R.astype(str) + "R", label=L.label,
+                              DEV_n=L.DEV_n, DEV_R=L.DEV_R, DEV_PF=L.DEV_PF, VAL_n=L.VAL_n, VAL_R=L.VAL_R, VAL_PF=L.VAL_PF, OOS_n=L.OOS_n, OOS_R=L.OOS_R,
+                              OOS_PF=L.OOS_PF, all_n=L.n, all_R=L.R, t_day=L.t_day, mt_pass=L.FDR10, cost_model=COST["MCX"], trades_file="",
+                              note=L.per_commodity))
+        o["result"] = np.where(L.PASS, "PASS", "FAIL"); parts.append(o)
+    f = C2 / "sf_crowd.json"
+    if f.exists():
+        J = json.load(open(f))
+        for k, v in J.items():
+            if not (isinstance(v, dict) and "research_basis" in v):
+                continue
+            rb, fb = v["research_basis"], v["futures_basis"]
+            parts.append(pd.DataFrame([dict(study="CYCLE2-2 stock-futures CONTINUATION SELL crowding versions (11-Nov)", script="research/cycle2/sf_crowd.py",
+                                             market="NSE_STOCK_FUT", timeframe="1d", family="SF_CROWD", rule=k, context="futures basis R " + str(fb["all"].get("R")),
+                                             side="SELL", target="3.0R", label="CONTINUATION SELL", DEV_n=rb["DEV"].get("n"), DEV_R=rb["DEV"].get("R"),
+                                             VAL_n=rb["VAL"].get("n"), VAL_R=rb["VAL"].get("R"), OOS_n=rb["OOS"].get("n"), OOS_R=rb["OOS"].get("R"),
+                                             all_n=rb["all"].get("n"), all_R=rb["all"].get("R"), cost_model=COST["FUT"], trades_file="research/cycle2/results/sf_crowd_trades.csv.gz",
+                                             result="v1 = shadow (unchanged)" if k.startswith("v1") else "research only – variant motivated by 2026 data, not evidence",
+                                             note=f"futures: DEV {fb['DEV'].get('R')} VAL {fb['VAL'].get('R')} OOS {fb['OOS'].get('R')} 2026 {fb['y2026'].get('R')}")]))
+    f = C2 / "cash_cm.json"
+    if f.exists():
+        J = json.load(open(f))
+        for k, v in J["conditions"].items():
+            for side_, lab in (("inside", "only when"), ("outside", "only when NOT")):
+                x = v[side_]
+                parts.append(pd.DataFrame([dict(study="CYCLE2-3 cash CONTINUATION BUY market dependence (11-Nov)", script="research/cycle2/cash_cm.py", market="NSE_CASH",
+                                                 timeframe="1w", family="CM_CONDITION", rule=f"CM-CONT-BUY-v1 {lab} {k}", context=f"OOS inside-outside {v['oos_inside_minus_outside']} t {v['oos_welch_t']}",
+                                                 side="BUY", target="1.0R", label="CONTINUATION BUY", DEV_n=x["DEV"].get("n"), DEV_R=x["DEV"].get("R"), VAL_n=x["VAL"].get("n"),
+                                                 VAL_R=x["VAL"].get("R"), OOS_n=x["OOS"].get("n"), OOS_R=x["OOS"].get("R"), all_n=x["all"].get("n"), all_R=x["all"].get("R"),
+                                                 cost_model=COST["CASH_DEL"], trades_file="", result="research only (condition split)")]))
+    return pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
+
+
 def direction_label(R):
     """REVERSAL / CONTINUATION + BUY / SELL for every RSI or divergence row (owner 11-Nov: keep them apart)."""
     lab = pd.Series("not an RSI / divergence rule", index=R.index, dtype=object)
@@ -181,7 +233,7 @@ def main():
             if "per commodity" in st:
                 L = pd.read_csv(ROOT / f); x["instruments"] = L.commodity
             parts.append(x)
-    for fn in (mcx_reversal, mcx_highwin, cashq, btst, rsirev):
+    for fn in (mcx_reversal, mcx_highwin, cashq, btst, rsirev, cycle2):
         try:
             parts.append(fn())
         except Exception as e:
