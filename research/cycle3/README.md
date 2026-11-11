@@ -66,11 +66,20 @@ The untouched window is Jul-2022 to the start of each commodity's 5-minute data 
 - **Per-commodity samples are 28–42 trades, too small to tune.** Gold and silver were strong before 2026, weak in OOS and negative in the untouched window. Zinc is the opposite.
 - **Energy is negative.**
 
-## 4 · Index futures 1h: more data
-- **Why it is short:** Angel's front-month hourly index history was fetched with a self-imposed 4-page limit (about 4.3 years, from Jul-2022).
-- **The fix:** a page-limit override was added on the research branch, together with the quiet-hours guard.
-- **When it runs:** the fetch is scheduled for tonight 00:40 IST, outside live hours.
-- **How the result will be used:** if older data comes back, it will be used only as an untouched window. No threshold changes and no lower standards.
+## 4 · Index futures 1h: more data – `index_untouched.py` (run 12-Nov 00:45 IST)
+- **The refetch:** Angel's front-month hourly index history was re-fetched outside live hours with a higher page limit; 43 requests, 0 refused. NIFTY and BANKNIFTY now start in Apr-2016, FINNIFTY in Jan-2021, MIDCPNIFTY in Jan-2022.
+- **Usable window:** contracts are identified from the NSE F&O bhavcopy, which starts in 2018. The untouched window is therefore **Jan-2018 to Jun-2022** for NIFTY and BANKNIFTY, and from Jul-2021 for FINNIFTY.
+- **Rules unchanged** from cycle 2.
+
+| 2R | UNTOUCHED 2018–Jun-22 | DEV | VALID | OOS |
+|---|---|---|---|---|
+| B1 RSI crosses ≥ 75 | **+0.08R (139 trades, PF 1.22, t 0.64)** | +0.22 (100) | +0.51 (41) | +0.51 (41) |
+| B2 S10 | +0.02R (139, t −0.42) | +0.24 | +0.48 | +0.38 |
+| Drift benchmark (every 10th bar) | −0.10R (1,230) | +0.04 | −0.03 | −0.25 |
+
+- **The edge shrinks sharply on the untouched data.** B1 is still about 0.18R per trade above the drift benchmark, but it is not significant on its own (t 0.64).
+- **NIFTY carries it** (+0.19R); BANKNIFTY is −0.04R. By year: 2018 −0.04, 2019 0.00, 2020 +0.02, 2021 +0.24, 2022 +0.15.
+- **The earlier +0.39R to +0.51R was mostly a property of 2023–26.** All periods together now give about 320 trades.
 
 ## 5 · Cash
 No further work on CM-CONT-BUY-v1. Its shadow log is unchanged.
