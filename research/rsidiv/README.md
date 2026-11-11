@@ -57,3 +57,4 @@ Files: `results/*_variants.csv` (every variant, including failures), `results/*_
 - Basis is the near future close divided by the unadjusted cash close, minus 1; its median is +0.22 %.
 - Index daily series are ratio back-adjusted at each roll. Untraded rows (open = 0) were dropped. FINNIFTY starts in Jul-2021 and MIDCPNIFTY in Jul-2023 because earlier contracts were too thin.
 - Sector for cash uses today's NIFTY 500 industry list, so 529 of 997 stocks have a sector; delisted stocks have none.
+- **Known limitation:** `cash.py` needs at least 300 bars per stock, which on weekly bars leaves out stocks with less than about 6 years of history (697 of 997 kept). The stress test (`cash_check.py`) needs only 60 weeks, so it includes them: 814 trades, against 709 in the registry row, with the same result (+0.14R).
