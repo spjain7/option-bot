@@ -745,24 +745,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-11 22:02:01.666558",
-   "oi": 947900.0,
-   "ltp": 8279.0
+   "time": "2026-11-11 22:17:01.736377",
+   "oi": 943100.0,
+   "ltp": 8273.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-11 22:02:01.666558",
-   "oi": 43706250.0,
-   "ltp": 309.7
+   "time": "2026-11-11 22:17:01.736377",
+   "oi": 43881250.0,
+   "ltp": 309.2
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-11 22:02:01.666558",
-   "oi": 16249.0,
-   "ltp": 140050.0
+   "time": "2026-11-11 22:17:01.736377",
+   "oi": 16312.0,
+   "ltp": 139903.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-11 22:02:01.666558",
-   "oi": 481230.0,
-   "ltp": 184654.0
+   "time": "2026-11-11 22:17:01.736377",
+   "oi": 480660.0,
+   "ltp": 184520.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -800,19 +800,19 @@
    "ltp": 60686.4
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-11 22:02:01.666558",
-   "oi": 18312500.0,
-   "ltp": 1342.05
+   "time": "2026-11-11 22:17:01.736377",
+   "oi": 18267500.0,
+   "ltp": 1342.5
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-11 22:02:01.666558",
-   "oi": 7525.0,
-   "ltp": 411.65
+   "time": "2026-11-11 22:17:01.736377",
+   "oi": 7510.0,
+   "ltp": 411.35
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-11 22:02:01.666558",
-   "oi": 17790.0,
-   "ltp": 330.25
+   "time": "2026-11-11 22:17:01.736377",
+   "oi": 17735.0,
+   "ltp": 330.2
   }
  },
  "bo_active": [
@@ -849,7 +849,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-11 21:45:00",
+   "checked": "2026-11-11 22:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -869,7 +869,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-11 21:45:00",
+   "checked": "2026-11-11 22:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -889,7 +889,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-11 21:45:00",
+   "checked": "2026-11-11 22:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -2644,12 +2644,15 @@
    "mult": 30,
    "time": "2026-11-11 13:02:01.974385",
    "experimental": true,
-   "status": "OPEN",
+   "status": "CLOSED",
    "date": "2026-11-11",
    "uhi": 187791.0,
    "ulo": 184635.0,
    "ulast": 184654.0,
-   "uat": "2026-11-11 22:02:01.666558"
+   "uat": "2026-11-11 22:02:01.666558",
+   "exit": 184542.25,
+   "note": "stop",
+   "closed": "2026-11-11 22:17:01.736377"
   },
   {
    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|NATURALGAS|2026-11-11 13:00:00",
@@ -2674,8 +2677,8 @@
    "version": null,
    "uhi": 317.9,
    "ulo": 308.7,
-   "ulast": 310.2,
-   "uat": "2026-11-11 22:02:01.666558"
+   "ulast": 309.2,
+   "uat": "2026-11-11 22:17:01.736377"
   },
   {
    "key": "MCX_HAMMER|CRUDEOIL|2026-11-10",
@@ -2712,13 +2715,13 @@
    "mfe_R": 0.56,
    "mae_R": -0.263,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-11 21:45:00",
+   "excursion_upd": "2026-11-11 22:00:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 8313.0,
    "ulo": 8123.0,
-   "ulast": 8281.0,
-   "uat": "2026-11-11 22:02:01.666558"
+   "ulast": 8268.0,
+   "uat": "2026-11-11 22:17:01.736377"
   },
   {
    "key": "PHOENIXLTD|1dSTK|2026-11-11 09:15:00",
@@ -2773,9 +2776,9 @@
    "status": "OPEN",
    "date": "2026-11-11",
    "uhi": 187352.0,
-   "ulo": 184635.0,
-   "ulast": 184654.0,
-   "uat": "2026-11-11 22:02:01.666558"
+   "ulo": 184520.0,
+   "ulast": 184520.0,
+   "uat": "2026-11-11 22:17:01.736377"
   },
   {
    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|CRUDEOIL|2026-11-11 20:00:00",
@@ -2799,9 +2802,9 @@
    "strategy": "RB_MCX_1h_BO20X_BUY_EXP",
    "version": null,
    "uhi": 8313.0,
-   "ulo": 8270.0,
-   "ulast": 8281.0,
-   "uat": "2026-11-11 22:02:01.666558"
+   "ulo": 8268.0,
+   "ulast": 8268.0,
+   "uat": "2026-11-11 22:17:01.736377"
   }
  ],
  "candle_setups": {
@@ -3006,7 +3009,7 @@
     "vol_x": 1.29,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 8,690.00 (swing high) at 1.7R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "975,600 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "last_bar": "2026-11-11 21:45:00",
+    "last_bar": "2026-11-11 22:00:00",
     "logged": "2026-11-11 09:02:01.786291",
     "key": "MCX_HAMMER|CRUDEOIL|2026-11-10",
     "grade": "C",
@@ -3022,7 +3025,7 @@
      "daily bias bearish (against)"
     ],
     "live": {},
-    "last_px": 8291.0,
+    "last_px": 8286.0,
     "entry": 8154.0,
     "entry_time": "2026-11-11 14:45:00",
     "risk": 316.0,
@@ -4605,15 +4608,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 332,
-  "started": "2026-11-11 22:02:01.666558",
-  "finished": "2026-11-11 22:02:11.714695",
-  "seconds": 10,
+  "seq": 333,
+  "started": "2026-11-11 22:17:01.736377",
+  "finished": "2026-11-11 22:17:11.029755",
+  "seconds": 9,
   "status": "SUCCESS",
-  "note": "api requests 5 ok 5 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 5,
-   "ok": 5,
+   "calls": 4,
+   "ok": 4,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -4622,7 +4625,7 @@
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
@@ -11721,31 +11724,6 @@
     "name": "SILVER",
     "token": "495214",
     "side": "BUY",
-    "entry": 187791.0,
-    "stop": 184542.25,
-    "risk": 3248.75,
-    "opened": "2026-11-11 13:02:01.974385",
-    "day": "2026-11-11",
-    "key": "SILVER|2026-11-11|13:00",
-    "why": "60m trend up, price above VWAP 186604.3 and 0.38 x daily ATR from the open",
-    "version": "mcx-dtc-0.1 (MCXD-002, shadow)",
-    "checkpoint": "13:00",
-    "signal_close": 187856.0,
-    "vwap": 186604.3299543842,
-    "day_open": 185418.0,
-    "atr_d": 6497.5,
-    "slip_vs_signal": -65.0,
-    "entry_delay_min": 2,
-    "executable": true,
-    "assumed_cost": "fees + 1.5 ticks/side",
-    "mfe": 0.0,
-    "mae": -0.966,
-    "live": true
-   },
-   {
-    "name": "SILVER",
-    "token": "495214",
-    "side": "BUY",
     "entry": 187352.0,
     "stop": 184103.25,
     "risk": 3248.75,
@@ -11764,11 +11742,41 @@
     "executable": true,
     "assumed_cost": "fees + 1.5 ticks/side",
     "mfe": 0.0,
-    "mae": -0.83,
+    "mae": -0.872,
     "live": true
    }
   ],
-  "closed": [],
+  "closed": [
+   {
+    "name": "SILVER",
+    "token": "495214",
+    "side": "BUY",
+    "entry": 187791.0,
+    "stop": 184542.25,
+    "risk": 3248.75,
+    "opened": "2026-11-11 13:02:01.974385",
+    "day": "2026-11-11",
+    "key": "SILVER|2026-11-11|13:00",
+    "why": "60m trend up, price above VWAP 186604.3 and 0.38 x daily ATR from the open",
+    "version": "mcx-dtc-0.1 (MCXD-002, shadow)",
+    "checkpoint": "13:00",
+    "signal_close": 187856.0,
+    "vwap": 186604.3299543842,
+    "day_open": 185418.0,
+    "atr_d": 6497.5,
+    "slip_vs_signal": -65.0,
+    "entry_delay_min": 2,
+    "executable": true,
+    "assumed_cost": "fees + 1.5 ticks/side",
+    "mfe": 0.0,
+    "mae": -1.007,
+    "live": true,
+    "exit": 184542.25,
+    "exit_reason": "stop",
+    "closed": "2026-11-11 22:17:01.736377",
+    "result_R": -1.0
+   }
+  ],
   "seen": [
    "SILVER|2026-11-11|13:00",
    "SILVER|2026-11-11|17:00"
