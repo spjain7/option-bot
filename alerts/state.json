@@ -745,24 +745,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-11 23:32:01.746480",
-   "oi": 902100.0,
-   "ltp": 8189.0
+   "time": "2026-11-11 23:47:01.957347",
+   "oi": 901900.0,
+   "ltp": 8190.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-11 23:32:01.746480",
-   "oi": 43478750.0,
-   "ltp": 305.4
+   "time": "2026-11-11 23:47:01.957347",
+   "oi": 44756250.0,
+   "ltp": 306.3
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-11 23:32:01.746480",
-   "oi": 16389.0,
-   "ltp": 139690.0
+   "time": "2026-11-11 23:47:01.957347",
+   "oi": 16409.0,
+   "ltp": 139701.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-11 23:32:01.746480",
-   "oi": 480090.0,
-   "ltp": 184287.0
+   "time": "2026-11-11 23:47:01.957347",
+   "oi": 480060.0,
+   "ltp": 184555.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -800,19 +800,19 @@
    "ltp": 60686.4
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-11 23:32:01.746480",
-   "oi": 18242500.0,
-   "ltp": 1341.75
+   "time": "2026-11-11 23:47:01.957347",
+   "oi": 18152500.0,
+   "ltp": 1342.2
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-11 23:32:01.746480",
-   "oi": 7450.0,
+   "time": "2026-11-11 23:47:01.957347",
+   "oi": 7455.0,
    "ltp": 411.3
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-11 23:32:01.746480",
-   "oi": 17605.0,
-   "ltp": 330.65
+   "time": "2026-11-11 23:47:01.957347",
+   "oi": 17560.0,
+   "ltp": 330.95
   }
  },
  "bo_active": [
@@ -849,7 +849,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-11 23:15:00",
+   "checked": "2026-11-11 23:30:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -869,7 +869,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-11 23:15:00",
+   "checked": "2026-11-11 23:30:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -889,7 +889,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-11 23:15:00",
+   "checked": "2026-11-11 23:30:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -2720,13 +2720,13 @@
    "mfe_R": 0.56,
    "mae_R": -0.263,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-11 23:15:00",
+   "excursion_upd": "2026-11-11 23:30:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 8313.0,
    "ulo": 8123.0,
    "ulast": 8190.0,
-   "uat": "2026-11-11 23:32:01.746480"
+   "uat": "2026-11-11 23:47:01.957347"
   },
   {
    "key": "PHOENIXLTD|1dSTK|2026-11-11 09:15:00",
@@ -2812,7 +2812,7 @@
    "uhi": 8313.0,
    "ulo": 8133.0,
    "ulast": 8190.0,
-   "uat": "2026-11-11 23:32:01.746480"
+   "uat": "2026-11-11 23:47:01.957347"
   },
   {
    "key": "RB|RB_MCX_1h_BO20X_BUY_EXP|ALUMINIUM|2026-11-11 22:00:00",
@@ -2835,10 +2835,10 @@
    "experimental": true,
    "strategy": "RB_MCX_1h_BO20X_BUY_EXP",
    "version": null,
-   "uhi": 330.65,
+   "uhi": 330.95,
    "ulo": 330.4,
-   "ulast": 330.65,
-   "uat": "2026-11-11 23:32:01.746480"
+   "ulast": 330.95,
+   "uat": "2026-11-11 23:47:01.957347"
   }
  ],
  "candle_setups": {
@@ -3043,7 +3043,7 @@
     "vol_x": 1.29,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 8,690.00 (swing high) at 1.7R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "975,600 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "last_bar": "2026-11-11 23:15:00",
+    "last_bar": "2026-11-11 23:30:00",
     "logged": "2026-11-11 09:02:01.786291",
     "key": "MCX_HAMMER|CRUDEOIL|2026-11-10",
     "grade": "C",
@@ -3059,7 +3059,7 @@
      "daily bias bearish (against)"
     ],
     "live": {},
-    "last_px": 8184.0,
+    "last_px": 8196.0,
     "entry": 8154.0,
     "entry_time": "2026-11-11 14:45:00",
     "risk": 316.0,
@@ -4675,12 +4675,12 @@
   "n": 4
  },
  "scan": {
-  "seq": 338,
-  "started": "2026-11-11 23:32:01.746480",
-  "finished": "2026-11-11 23:32:11.123467",
+  "seq": 339,
+  "started": "2026-11-11 23:47:01.957347",
+  "finished": "2026-11-11 23:47:11.229215",
   "seconds": 9,
   "status": "SUCCESS",
-  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
    "calls": 4,
    "ok": 4,
@@ -4692,7 +4692,7 @@
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
