@@ -4701,23 +4701,23 @@
   "n": 4
  },
  "scan": {
-  "seq": 363,
-  "started": "2026-11-12 14:17:01.502686",
-  "finished": "2026-11-12 14:17:16.580244",
-  "seconds": 15,
-  "status": "SUCCESS",
-  "note": "api requests 9 ok 9 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "seq": 364,
+  "started": "2026-11-12 14:18:07.093743",
+  "finished": "2026-11-12 14:35:16.217516",
+  "seconds": 1029,
+  "status": "BUDGET_EXHAUSTED",
+  "note": "api requests 62 ok 28 rate-limited 34 skipped 32 (budget 15) failed 5 \u00b7 errors 5 \u00b7 messages 0",
   "api": {
-   "calls": 9,
-   "ok": 9,
-   "rate_limited": 0,
-   "skipped": 0,
-   "deadline_skips": 0,
-   "failed": 0,
-   "mem_hits": 0,
-   "disk_hits": 18
+   "calls": 62,
+   "ok": 28,
+   "rate_limited": 34,
+   "skipped": 32,
+   "deadline_skips": 15,
+   "failed": 5,
+   "mem_hits": 4,
+   "disk_hits": 3
   },
-  "errors": 0,
+  "errors": 5,
   "messages": 0
  },
  "paper": {
@@ -9106,7 +9106,7 @@
     "rejected": {},
     "shadow": 0,
     "sent": 0,
-    "data": 5,
+    "data": 6,
     "early": 0,
     "setup": 0,
     "triggered": 0,
@@ -9115,7 +9115,8 @@
      "data|ZINC|15m|2026-11-12 13",
      "data|ZINC|1h|2026-11-12 13",
      "data|ALUMINIUM|15m|2026-11-12 13",
-     "data|ALUMINIUM|1h|2026-11-12 13"
+     "data|ALUMINIUM|1h|2026-11-12 13",
+     "data|CRUDEOIL|1h|2026-11-12 14"
     ]
    },
    "RB_MCX_1h_BO20X_BUY_EXP": {
@@ -9148,6 +9149,22 @@
     "keys": [
      "signal|ALUMINIUM|2026-11-12 13:00:00",
      "rejected|ALUMINIUM|2026-11-12 13:00:00"
+    ]
+   },
+   "INDEX data": {
+    "signal": 0,
+    "rejected": {},
+    "shadow": 0,
+    "sent": 0,
+    "data": 4,
+    "early": 0,
+    "setup": 0,
+    "triggered": 0,
+    "keys": [
+     "data|NIFTY|15m|2026-11-12 14",
+     "data|NIFTY|1h|2026-11-12 14",
+     "data|BANKNIFTY|15m|2026-11-12 14",
+     "data|BANKNIFTY|1h|2026-11-12 14"
     ]
    }
   }
