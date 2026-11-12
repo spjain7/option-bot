@@ -1,0 +1,874 @@
+{
+ "angel": {
+  "GOLD FIVE_MINUTE": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 136000,
+   "first": "2023-06-22 16:25:00",
+   "last": "2026-11-03 23:50:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 100,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.07,
+   "volume_spikes_gt20x_median": 546,
+   "misaligned_timestamps": 0,
+   "outside_session_bars": 5,
+   "trading_days": 866,
+   "days_below_80pct_of_normal_bars": 119,
+   "short_day_examples": [
+    "2026-08-05",
+    "2026-09-14",
+    "2026-10-01",
+    "2026-10-05",
+    "2026-10-20"
+   ],
+   "intraday_gaps_gt_1_step": 2120,
+   "session_last_bar_times": {
+    "23:25": 521,
+    "23:50": 236,
+    "23:30": 41,
+    "23:15": 6
+   },
+   "weekdays_without_bars": 16
+  },
+  "GOLD ONE_HOUR": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 15046,
+   "first": "2022-07-15 09:00:00",
+   "last": "2026-10-21 16:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 15,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.61,
+   "volume_spikes_gt20x_median": 3,
+   "misaligned_timestamps": 2,
+   "outside_session_bars": 0,
+   "trading_days": 1056,
+   "days_below_80pct_of_normal_bars": 100,
+   "short_day_examples": [
+    "2026-09-14",
+    "2026-10-01",
+    "2026-10-05",
+    "2026-10-20",
+    "2026-10-21"
+   ],
+   "intraday_gaps_gt_1_step": 156,
+   "session_last_bar_times": {
+    "23:00": 1010,
+    "22:00": 17,
+    "21:00": 10,
+    "16:00": 6
+   },
+   "weekdays_without_bars": 61
+  },
+  "GOLD ONE_DAY": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 5623,
+   "first": "2005-12-31 00:00:00",
+   "last": "2026-10-21 00:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 395,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.0,
+   "volume_spikes_gt20x_median": 0
+  },
+  "SILVER FIVE_MINUTE": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 136000,
+   "first": "2023-07-24 22:10:00",
+   "last": "2026-11-03 23:50:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 203,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.05,
+   "volume_spikes_gt20x_median": 698,
+   "misaligned_timestamps": 0,
+   "outside_session_bars": 18,
+   "trading_days": 845,
+   "days_below_80pct_of_normal_bars": 102,
+   "short_day_examples": [
+    "2026-07-03",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-14",
+    "2026-10-20"
+   ],
+   "intraday_gaps_gt_1_step": 1462,
+   "session_last_bar_times": {
+    "23:25": 488,
+    "23:50": 227,
+    "23:30": 61,
+    "23:55": 18
+   },
+   "weekdays_without_bars": 15
+  },
+  "SILVER ONE_HOUR": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 15825,
+   "first": "2022-07-15 09:00:00",
+   "last": "2026-10-21 16:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 17,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.17,
+   "volume_spikes_gt20x_median": 10,
+   "misaligned_timestamps": 2,
+   "outside_session_bars": 0,
+   "trading_days": 1098,
+   "days_below_80pct_of_normal_bars": 77,
+   "short_day_examples": [
+    "2026-07-02",
+    "2026-07-03",
+    "2026-09-14",
+    "2026-10-20",
+    "2026-10-21"
+   ],
+   "intraday_gaps_gt_1_step": 94,
+   "session_last_bar_times": {
+    "23:00": 1060,
+    "22:00": 19,
+    "16:00": 6,
+    "20:00": 6
+   },
+   "weekdays_without_bars": 19
+  },
+  "SILVER ONE_DAY": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 5686,
+   "first": "2005-12-31 00:00:00",
+   "last": "2026-10-21 00:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 395,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.0,
+   "volume_spikes_gt20x_median": 0
+  },
+  "CRUDEOIL FIVE_MINUTE": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 136000,
+   "first": "2023-09-27 18:45:00",
+   "last": "2026-11-03 23:50:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 202,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.02,
+   "volume_spikes_gt20x_median": 256,
+   "misaligned_timestamps": 0,
+   "outside_session_bars": 14,
+   "trading_days": 799,
+   "days_below_80pct_of_normal_bars": 43,
+   "short_day_examples": [
+    "2026-05-01",
+    "2026-05-28",
+    "2026-06-26",
+    "2026-09-14",
+    "2026-10-20"
+   ],
+   "intraday_gaps_gt_1_step": 142,
+   "session_last_bar_times": {
+    "23:25": 407,
+    "23:50": 250,
+    "23:30": 120,
+    "23:55": 14
+   },
+   "weekdays_without_bars": 14
+  },
+  "CRUDEOIL ONE_HOUR": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 15983,
+   "first": "2022-07-15 09:00:00",
+   "last": "2026-10-21 21:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 17,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.01,
+   "volume_spikes_gt20x_median": 10,
+   "misaligned_timestamps": 2,
+   "outside_session_bars": 0,
+   "trading_days": 1096,
+   "days_below_80pct_of_normal_bars": 56,
+   "short_day_examples": [
+    "2026-05-01",
+    "2026-05-28",
+    "2026-06-26",
+    "2026-09-14",
+    "2026-10-20"
+   ],
+   "intraday_gaps_gt_1_step": 1,
+   "session_last_bar_times": {
+    "23:00": 1085,
+    "16:00": 5,
+    "22:00": 1,
+    "19:00": 1
+   },
+   "weekdays_without_bars": 21
+  },
+  "CRUDEOIL ONE_DAY": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 5628,
+   "first": "2005-12-31 00:00:00",
+   "last": "2026-10-21 00:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 394,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.0,
+   "volume_spikes_gt20x_median": 1
+  },
+  "NATURALGAS FIVE_MINUTE": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 136000,
+   "first": "2023-09-29 12:00:00",
+   "last": "2026-11-03 23:50:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 204,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.02,
+   "volume_spikes_gt20x_median": 193,
+   "misaligned_timestamps": 0,
+   "outside_session_bars": 49,
+   "trading_days": 797,
+   "days_below_80pct_of_normal_bars": 43,
+   "short_day_examples": [
+    "2026-05-01",
+    "2026-05-28",
+    "2026-06-26",
+    "2026-09-14",
+    "2026-10-20"
+   ],
+   "intraday_gaps_gt_1_step": 8,
+   "session_last_bar_times": {
+    "23:25": 339,
+    "23:50": 215,
+    "23:30": 186,
+    "23:55": 49
+   },
+   "weekdays_without_bars": 14
+  },
+  "NATURALGAS ONE_HOUR": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 15954,
+   "first": "2022-07-15 09:00:00",
+   "last": "2026-10-21 16:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 17,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.01,
+   "volume_spikes_gt20x_median": 18,
+   "misaligned_timestamps": 2,
+   "outside_session_bars": 0,
+   "trading_days": 1095,
+   "days_below_80pct_of_normal_bars": 58,
+   "short_day_examples": [
+    "2026-05-28",
+    "2026-06-26",
+    "2026-09-14",
+    "2026-10-20",
+    "2026-10-21"
+   ],
+   "intraday_gaps_gt_1_step": 1,
+   "session_last_bar_times": {
+    "23:00": 1084,
+    "16:00": 5,
+    "22:00": 1,
+    "19:00": 1
+   },
+   "weekdays_without_bars": 22
+  },
+  "NATURALGAS ONE_DAY": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 2578,
+   "first": "2016-05-27 00:00:00",
+   "last": "2026-10-21 00:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 7,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.0,
+   "volume_spikes_gt20x_median": 2
+  },
+  "COPPER FIVE_MINUTE": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 136000,
+   "first": "2023-04-19 12:25:00",
+   "last": "2026-11-03 23:50:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 187,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.79,
+   "volume_spikes_gt20x_median": 840,
+   "misaligned_timestamps": 0,
+   "outside_session_bars": 3,
+   "trading_days": 912,
+   "days_below_80pct_of_normal_bars": 175,
+   "short_day_examples": [
+    "2026-09-30",
+    "2026-10-20",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30"
+   ],
+   "intraday_gaps_gt_1_step": 3001,
+   "session_last_bar_times": {
+    "23:25": 517,
+    "23:50": 228,
+    "23:30": 44,
+    "16:55": 16
+   },
+   "weekdays_without_bars": 16
+  },
+  "COPPER ONE_HOUR": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 15137,
+   "first": "2022-07-15 09:00:00",
+   "last": "2026-10-21 16:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 17,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.98,
+   "volume_spikes_gt20x_median": 7,
+   "misaligned_timestamps": 2,
+   "outside_session_bars": 0,
+   "trading_days": 1093,
+   "days_below_80pct_of_normal_bars": 143,
+   "short_day_examples": [
+    "2026-08-31",
+    "2026-09-14",
+    "2026-09-30",
+    "2026-10-20",
+    "2026-10-21"
+   ],
+   "intraday_gaps_gt_1_step": 182,
+   "session_last_bar_times": {
+    "23:00": 1000,
+    "16:00": 48,
+    "22:00": 16,
+    "20:00": 7
+   },
+   "weekdays_without_bars": 24
+  },
+  "COPPER ONE_DAY": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 5634,
+   "first": "2005-12-31 00:00:00",
+   "last": "2026-10-21 00:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 395,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.0,
+   "volume_spikes_gt20x_median": 4
+  },
+  "ZINC FIVE_MINUTE": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 136000,
+   "first": "2023-02-03 18:25:00",
+   "last": "2026-11-03 23:50:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 183,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 1.17,
+   "volume_spikes_gt20x_median": 900,
+   "misaligned_timestamps": 0,
+   "outside_session_bars": 3,
+   "trading_days": 961,
+   "days_below_80pct_of_normal_bars": 210,
+   "short_day_examples": [
+    "2026-09-30",
+    "2026-10-20",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30"
+   ],
+   "intraday_gaps_gt_1_step": 6533,
+   "session_last_bar_times": {
+    "23:25": 564,
+    "23:50": 248,
+    "16:55": 15,
+    "23:30": 14
+   },
+   "weekdays_without_bars": 20
+  },
+  "ZINC ONE_HOUR": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 14739,
+   "first": "2022-07-15 09:00:00",
+   "last": "2026-10-21 16:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 17,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 1.4,
+   "volume_spikes_gt20x_median": 15,
+   "misaligned_timestamps": 2,
+   "outside_session_bars": 0,
+   "trading_days": 1090,
+   "days_below_80pct_of_normal_bars": 175,
+   "short_day_examples": [
+    "2026-09-14",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-20",
+    "2026-10-21"
+   ],
+   "intraday_gaps_gt_1_step": 211,
+   "session_last_bar_times": {
+    "23:00": 986,
+    "16:00": 41,
+    "22:00": 24,
+    "21:00": 9
+   },
+   "weekdays_without_bars": 27
+  },
+  "ZINC ONE_DAY": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 5548,
+   "first": "2006-03-27 00:00:00",
+   "last": "2026-10-21 00:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 381,
+   "ohlc_violations": 0,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.61,
+   "volume_spikes_gt20x_median": 0
+  },
+  "ALUMINIUM FIVE_MINUTE": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 135111,
+   "first": "2022-11-04 14:20:00",
+   "last": "2026-11-03 23:50:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 145,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 2.68,
+   "volume_spikes_gt20x_median": 1635,
+   "misaligned_timestamps": 0,
+   "outside_session_bars": 3,
+   "trading_days": 1017,
+   "days_below_80pct_of_normal_bars": 212,
+   "short_day_examples": [
+    "2026-09-30",
+    "2026-10-20",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30"
+   ],
+   "intraday_gaps_gt_1_step": 13521,
+   "session_last_bar_times": {
+    "23:25": 556,
+    "23:50": 306,
+    "16:55": 14,
+    "23:30": 12
+   },
+   "weekdays_without_bars": 29
+  },
+  "ALUMINIUM ONE_HOUR": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 14580,
+   "first": "2022-07-15 09:00:00",
+   "last": "2026-10-21 16:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 18,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 1.5,
+   "volume_spikes_gt20x_median": 38,
+   "misaligned_timestamps": 2,
+   "outside_session_bars": 0,
+   "trading_days": 1083,
+   "days_below_80pct_of_normal_bars": 165,
+   "short_day_examples": [
+    "2026-08-31",
+    "2026-09-14",
+    "2026-09-30",
+    "2026-10-20",
+    "2026-10-21"
+   ],
+   "intraday_gaps_gt_1_step": 152,
+   "session_last_bar_times": {
+    "23:00": 974,
+    "16:00": 31,
+    "22:00": 19,
+    "15:00": 12
+   },
+   "weekdays_without_bars": 34
+  },
+  "ALUMINIUM ONE_DAY": {
+   "status": "REAL (Angel SmartAPI, front-month stitched)",
+   "rows": 5595,
+   "first": "2005-12-31 00:00:00",
+   "last": "2026-10-21 00:00:00",
+   "duplicate_timestamps": 0,
+   "weekend_bars": 395,
+   "ohlc_violations": 1,
+   "nonpositive_prices": 0,
+   "zero_volume_bars_pct": 0.55,
+   "volume_spikes_gt20x_median": 5
+  },
+  "LEAD ALL": "UNAVAILABLE (no Angel files; daily series built from the bhavcopy)",
+  "NICKEL ALL": "UNAVAILABLE (no Angel files; daily series built from the bhavcopy)"
+ },
+ "bhav": {
+  "files": 1118,
+  "first": "20220701",
+  "last": "20261106",
+  "GOLD": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 0,
+   "median_daily_volume_lots": 7589.0,
+   "median_total_oi_lots": 17214.5,
+   "contracts_per_day_median": 6.0
+  },
+  "SILVER": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 0,
+   "median_daily_volume_lots": 17506.5,
+   "median_total_oi_lots": 20605.5,
+   "contracts_per_day_median": 5.0
+  },
+  "CRUDEOIL": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 46,
+   "median_daily_volume_lots": 32759.0,
+   "median_total_oi_lots": 13076.5,
+   "contracts_per_day_median": 6.0
+  },
+  "NATURALGAS": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 11,
+   "median_daily_volume_lots": 116756.5,
+   "median_total_oi_lots": 32297.0,
+   "contracts_per_day_median": 6.0
+  },
+  "COPPER": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 0,
+   "median_daily_volume_lots": 8668.5,
+   "median_total_oi_lots": 8335.5,
+   "contracts_per_day_median": 5.0
+  },
+  "ZINC": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 1,
+   "median_daily_volume_lots": 3934.5,
+   "median_total_oi_lots": 3567.0,
+   "contracts_per_day_median": 5.0
+  },
+  "ALUMINIUM": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 0,
+   "median_daily_volume_lots": 2424.0,
+   "median_total_oi_lots": 4442.0,
+   "contracts_per_day_median": 5.0
+  },
+  "LEAD": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 0,
+   "zero_oi_days": 0,
+   "oi_jumps_gt50pct": 6,
+   "median_daily_volume_lots": 555.5,
+   "median_total_oi_lots": 664.0,
+   "contracts_per_day_median": 5.0
+  },
+  "NICKEL": {
+   "status": "REAL (MCX official bhavcopy, end-of-day)",
+   "days": 1118,
+   "first": "2022-07-01",
+   "last": "2026-11-06",
+   "zero_volume_days": 781,
+   "zero_oi_days": 685,
+   "oi_jumps_gt50pct": 17,
+   "median_daily_volume_lots": 0.0,
+   "median_total_oi_lots": 0.0,
+   "contracts_per_day_median": 5.0
+  }
+ },
+ "rolls": {
+  "GOLD 1h": {
+   "switches": 25,
+   "exact_ratio_from_bhavcopy": 25,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 0.96,
+   "max_abs_switch_gap_pct": 2.2
+  },
+  "GOLD 1d": {
+   "switches": 121,
+   "exact_ratio_from_bhavcopy": 25,
+   "inferred_ratio": 96,
+   "median_abs_switch_gap_pct": 0.87,
+   "max_abs_switch_gap_pct": 3.94
+  },
+  "SILVER 1h": {
+   "switches": 21,
+   "exact_ratio_from_bhavcopy": 21,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 1.91,
+   "max_abs_switch_gap_pct": 4.27
+  },
+  "SILVER 1d": {
+   "switches": 103,
+   "exact_ratio_from_bhavcopy": 22,
+   "inferred_ratio": 81,
+   "median_abs_switch_gap_pct": 1.75,
+   "max_abs_switch_gap_pct": 18.52
+  },
+  "CRUDEOIL 1h": {
+   "switches": 52,
+   "exact_ratio_from_bhavcopy": 52,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 0.76,
+   "max_abs_switch_gap_pct": 4.24
+  },
+  "CRUDEOIL 1d": {
+   "switches": 245,
+   "exact_ratio_from_bhavcopy": 52,
+   "inferred_ratio": 193,
+   "median_abs_switch_gap_pct": 0.74,
+   "max_abs_switch_gap_pct": 58.41
+  },
+  "NATURALGAS 1h": {
+   "switches": 51,
+   "exact_ratio_from_bhavcopy": 51,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 4.39,
+   "max_abs_switch_gap_pct": 53.71
+  },
+  "NATURALGAS 1d": {
+   "switches": 90,
+   "exact_ratio_from_bhavcopy": 51,
+   "inferred_ratio": 39,
+   "median_abs_switch_gap_pct": 2.78,
+   "max_abs_switch_gap_pct": 53.45
+  },
+  "COPPER 1h": {
+   "switches": 51,
+   "exact_ratio_from_bhavcopy": 51,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 0.86,
+   "max_abs_switch_gap_pct": 3.9
+  },
+  "COPPER 1d": {
+   "switches": 213,
+   "exact_ratio_from_bhavcopy": 52,
+   "inferred_ratio": 161,
+   "median_abs_switch_gap_pct": 0.32,
+   "max_abs_switch_gap_pct": 21.3
+  },
+  "ZINC 1h": {
+   "switches": 48,
+   "exact_ratio_from_bhavcopy": 48,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 1.28,
+   "max_abs_switch_gap_pct": 6.4
+  },
+  "ZINC 1d": {
+   "switches": 231,
+   "exact_ratio_from_bhavcopy": 52,
+   "inferred_ratio": 179,
+   "median_abs_switch_gap_pct": 0.45,
+   "max_abs_switch_gap_pct": 17.47
+  },
+  "ALUMINIUM 1h": {
+   "switches": 50,
+   "exact_ratio_from_bhavcopy": 50,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 1.22,
+   "max_abs_switch_gap_pct": 6.97
+  },
+  "ALUMINIUM 1d": {
+   "switches": 231,
+   "exact_ratio_from_bhavcopy": 52,
+   "inferred_ratio": 179,
+   "median_abs_switch_gap_pct": 0.43,
+   "max_abs_switch_gap_pct": 11.11
+  },
+  "LEAD 1d": {
+   "switches": 52,
+   "exact_ratio_from_bhavcopy": 52,
+   "inferred_ratio": 0,
+   "median_abs_switch_gap_pct": 1.3,
+   "max_abs_switch_gap_pct": 3.49
+  },
+  "NICKEL 1d": {
+   "switches": 21,
+   "exact_ratio_from_bhavcopy": 20,
+   "inferred_ratio": 1,
+   "median_abs_switch_gap_pct": 2.27,
+   "max_abs_switch_gap_pct": Infinity
+  }
+ },
+ "depth": {
+  "status": "REAL (Angel SNAP_QUOTE best-5) but FORWARD ONLY: first snapshot 2026-11-11 04:08:32",
+  "snapshots": 6439,
+  "files": 3,
+  "per_symbol": {
+   "ALUMINIUM": {
+    "snapshots": 889,
+    "valid_two_sided_pct": 99.9,
+    "median_spread_ticks": 4.0,
+    "p90_spread_ticks": 7.0,
+    "crossed": 0
+   },
+   "COPPER": {
+    "snapshots": 916,
+    "valid_two_sided_pct": 99.9,
+    "median_spread_ticks": 6.0,
+    "p90_spread_ticks": 8.0,
+    "crossed": 0
+   },
+   "CRUDEOIL": {
+    "snapshots": 946,
+    "valid_two_sided_pct": 99.7,
+    "median_spread_ticks": 2.0,
+    "p90_spread_ticks": 3.0,
+    "crossed": 0
+   },
+   "GOLD": {
+    "snapshots": 934,
+    "valid_two_sided_pct": 99.7,
+    "median_spread_ticks": 31.0,
+    "p90_spread_ticks": 41.0,
+    "crossed": 0
+   },
+   "NATURALGAS": {
+    "snapshots": 934,
+    "valid_two_sided_pct": 99.6,
+    "median_spread_ticks": 1.0,
+    "p90_spread_ticks": 2.0,
+    "crossed": 0
+   },
+   "SILVER": {
+    "snapshots": 932,
+    "valid_two_sided_pct": 99.7,
+    "median_spread_ticks": 56.0,
+    "p90_spread_ticks": 75.2,
+    "crossed": 0
+   },
+   "ZINC": {
+    "snapshots": 888,
+    "valid_two_sided_pct": 99.7,
+    "median_spread_ticks": 4.0,
+    "p90_spread_ticks": 6.0,
+    "crossed": 0
+   }
+  }
+ },
+ "holidays": {
+  "angel_days_missing_bhavcopy": [
+   "2023-11-12",
+   "2025-02-01",
+   "2026-02-01"
+  ],
+  "n_angel_without_bhav": 3,
+  "bhav_days_missing_angel_daily": 55,
+  "examples_bhav_without_angel": [
+   "2026-10-26",
+   "2026-10-27",
+   "2026-10-28",
+   "2026-10-29",
+   "2026-10-30",
+   "2026-11-02",
+   "2026-11-03",
+   "2026-11-04",
+   "2026-11-05",
+   "2026-11-06"
+  ]
+ },
+ "global_sources": {
+  "GOLD": "REAL (Yahoo daily continuous, USD) 2005-01-03..2026-10-21",
+  "SILVER": "REAL (Yahoo daily continuous, USD) 2005-01-03..2026-10-21",
+  "CRUDEOIL": "REAL (Yahoo daily continuous, USD) 2005-01-03..2026-10-21",
+  "NATURALGAS": "REAL (Yahoo daily continuous, USD) 2005-01-03..2026-10-21",
+  "COPPER": "REAL (Yahoo daily continuous, USD) 2005-01-03..2026-10-21",
+  "ZINC": "UNAVAILABLE",
+  "ALUMINIUM": "REAL (Yahoo daily continuous, USD) 2014-05-06..2026-10-21",
+  "LEAD": "UNAVAILABLE",
+  "NICKEL": "UNAVAILABLE",
+  "USDINR": "REAL (Yahoo daily)",
+  "Dollar index": "UNAVAILABLE in this environment (no data file, outbound network restricted)",
+  "US yields": "UNAVAILABLE in this environment (no data file, outbound network restricted)",
+  "Brent": "UNAVAILABLE in this environment (no data file, outbound network restricted)",
+  "EIA crude inventory": "UNAVAILABLE in this environment (no data file, outbound network restricted)",
+  "Henry Hub storage / weather": "UNAVAILABLE in this environment (no data file, outbound network restricted)",
+  "LME official prices": "UNAVAILABLE in this environment (no data file, outbound network restricted)",
+  "LME / SHFE inventories": "UNAVAILABLE in this environment (no data file, outbound network restricted)",
+  "China demand indicators": "UNAVAILABLE in this environment (no data file, outbound network restricted)"
+ },
+ "real_vs_calculated": {
+  "REAL": [
+   "Angel 5-minute / 1-hour / daily OHLCV (7 commodities)",
+   "MCX bhavcopy daily OHLC, volume, OI (9 commodities)",
+   "Yahoo international futures daily (6), USDINR daily",
+   "MCX best-5 depth snapshots (forward, from 11-Nov-2026)"
+  ],
+  "CALCULATED": [
+   "15m / 30m from 5m; 4h from 1h",
+   "LEAD / NICKEL daily continuous from bhavcopy",
+   "roll ratios and back-adjusted prices (indicators only)",
+   "daily total OI = sum over expiries",
+   "all indicators"
+  ],
+  "INFERRED (disclosed)": [
+   "pre-Jul-2022 daily roll ratios (switch open / previous close)",
+   "LOWIMPACT_PROXY (high volume, small range) - NOT observed absorption"
+  ],
+  "NOT AVAILABLE (experiments marked unavailable)": [
+   "historical order book / depth",
+   "trade-by-trade aggressor side, volume delta, footprint",
+   "historical intraday OI",
+   "LEAD / NICKEL intraday",
+   "NICKEL tradable history before Jun-2025"
+  ]
+ }
+}
