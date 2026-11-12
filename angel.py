@@ -1,8 +1,9 @@
 """Angel One SmartAPI market-data client (no orders are ever placed)."""
-import os, json, time, datetime as dt
+import os, json, random, time, datetime as dt
 from pathlib import Path
 import pandas as pd
 import requests
+import wsbars as WB
 
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 SCRIP_URL = "https://margincalculator.angelbroking.com/OpenAPI_File/files/OpenAPIScripMaster.json"
@@ -36,25 +37,118 @@ class Angel:
     STREAK_FORGET = 300                # a block that ended this many seconds ago no longer counts (fresh retries next scan)
     DISK_TTL = 240                     # seconds a candle series may be re-used by another engine process
 
-    def __init__(self):
+    # 10-Nov-2026: ONE login per job instead of one per engine process per scan. Every runner / alerts / option-buy
+    # process logged in again (≈ 8 logins an hour, ≈ 180 a day incl. collector restarts). The session (tokens only) is
+    # kept in the runner's temp dir (NOT .cache – bot.yml saves .cache to the Actions cache of this public repo; never
+    # printed, file mode 600; the runner VM is discarded after the job) and re-used while it is younger than SESSION_MAX_H
+    # and from today; it is checked with one profile call, and an "invalid token" reply forces one fresh login.
+    SESSION_FILE = Path(os.getenv("RUNNER_TEMP") or __import__("tempfile").gettempdir()) / "angel_session.json"
+    SESSION_MAX_H = 5.0
+    TOKEN_ERRORS = ("AG8001", "AG8002", "AG8003", "INVALID TOKEN", "TOKEN EXPIRED")
+
+    def __init__(self, fresh=False):
         from SmartApi import SmartConnect
-        import pyotp
         self.api = SmartConnect(api_key=os.environ["ANGEL_API_KEY"])
+        self.reused = False
+        if fresh or os.getenv("ANGEL_SESSION_REUSE", "1") != "1" or not self._reuse_session():
+            self._login()
+        self._setup()
+
+    def _login(self):
+        import pyotp
         totp = pyotp.TOTP(os.environ["ANGEL_TOTP_SECRET"].replace(" ", "")).now()
         s = self.api.generateSession(os.environ["ANGEL_CLIENT_ID"], os.environ["ANGEL_PIN"], totp)
         if not s or not s.get("status"):
-            raise RuntimeError(f"Angel login failed: {s}")
-        self._setup()
+            raise RuntimeError(f"Angel login failed: {(s or {}).get('message')} {(s or {}).get('errorcode')}")
+        self.jwt, self.feed = (s.get("data") or {}).get("jwtToken"), (s.get("data") or {}).get("feedToken")   # for wsfeed.py
+        self.reused = False
+        try:
+            raw = str(self.jwt or "").replace("Bearer ", "", 1)
+            d = dict(day=f"{now_ist():%Y-%m-%d}", t=time.time(), jwt=raw, refresh=getattr(self.api, "refresh_token", None),
+                     feed=self.feed, user=getattr(self.api, "userId", None) or os.environ.get("ANGEL_CLIENT_ID"))
+            tmp = self.SESSION_FILE.with_suffix(f".{os.getpid()}.tmp")
+            tmp.write_text(json.dumps(d))
+            os.chmod(tmp, 0o600)
+            os.replace(tmp, self.SESSION_FILE)
+        except Exception as e:
+            print("[angel] session not saved:", type(e).__name__)
 
-    def _setup(self, cache_dir=None):
+    def _reuse_session(self):
+        try:
+            d = json.loads(self.SESSION_FILE.read_text())
+        except Exception:
+            return False
+        if d.get("day") != f"{now_ist():%Y-%m-%d}" or time.time() - float(d.get("t", 0)) > self.SESSION_MAX_H * 3600 or not d.get("jwt"):
+            return False
+        try:
+            self.api.setAccessToken(d["jwt"]); self.api.setRefreshToken(d.get("refresh")); self.api.setFeedToken(d.get("feed"))
+            self.api.setUserId(d.get("user"))
+            p = self.api.getProfile(d.get("refresh"))
+            if not p or not p.get("status"):
+                return False
+        except Exception:
+            return False
+        self.jwt, self.feed, self.reused = "Bearer " + d["jwt"], d.get("feed"), True
+        return True
+
+    def _relogin(self):
+        """An 'invalid token' reply: one fresh login (rewrites the shared session file)."""
+        if getattr(self, "_relogged", False):
+            return False
+        self._relogged = True
+        try:
+            self._login(); print("[angel] session invalid – logged in again"); return True
+        except Exception as e:
+            print("[angel] re-login failed:", type(e).__name__); return False
+
+    def _setup(self, cache_dir=None, ws_dir=None, ws=None):
         """Runtime state (separate from the login so the throttling logic can be tested offline)."""
+        self._ws_dir = ws_dir
+        self._ws_on = (os.getenv("ANGEL_WS", "1") == "1") if ws is None else ws
         self._last = 0.0
         self._cache, self._cc = {}, {}
         self._dir = Path(cache_dir) if cache_dir else CACHE / "api"
         self._dir.mkdir(parents=True, exist_ok=True)
-        self.stats = dict(calls=0, ok=0, rate_limited=0, skipped=0, mem_hits=0, disk_hits=0)
+        self.stats = dict(calls=0, ok=0, rate_limited=0, skipped=0, mem_hits=0, disk_hits=0, ws_hits=0, ws_fallback=0, deadline_skips=0, failed=0)
+        # 4-Nov-2026 (P0): time budget. The loop kills a scan with `timeout`; a killed alerts scan saved NO state and sent
+        # NO alerts (12:35-15:10 IST on 4-Nov, every scan exit 124). After ANGEL_DEADLINE (epoch seconds) every API call is
+        # skipped at once (returns None, counted), so the scan finishes with the data it has and its state is saved.
+        try:
+            self.deadline = float(os.getenv("ANGEL_DEADLINE", "0")) or None
+        except ValueError:
+            self.deadline = None
+        self._ws_note = {}
         import atexit
         atexit.register(self.report)
+
+    def over_budget(self):
+        """True once the scan's time budget (ANGEL_DEADLINE) is used up."""
+        return bool(getattr(self, "deadline", None)) and time.time() >= self.deadline
+
+    def _left(self):
+        d = getattr(self, "deadline", None)
+        return float("inf") if not d else max(0.0, d - time.time())
+
+    # ── adaptive pacing (4-Nov-2026): the request gap is learned from Angel's own replies and shared by every engine
+    # process of the job through a small file. Each rate-limit reply widens the gap ×1.5 (max PACE_MAX); each success
+    # narrows it 3 % back toward the base gap. Measured, not guessed: the gap in force is printed in the stats line.
+    PACE_MAX = 4.0
+
+    def _pace_file(self, group):
+        return self._dir / f"pace_{group}.json"
+
+    def pace(self, group="hist"):
+        base = self.HIST_GAP if group == "hist" else self.QUOTE_GAP
+        try:
+            return max(base, min(self.PACE_MAX, float(json.loads(self._pace_file(group).read_text())["gap"])))
+        except Exception:
+            return base
+
+    def _set_pace(self, group, gap):
+        try:
+            self._pace_file(group).write_text(json.dumps({"gap": round(gap, 3), "at": int(time.time())}))
+        except Exception:
+            pass
 
     def _wait(self, gap=0.4):
         d = time.time() - self._last
@@ -68,9 +162,14 @@ class Angel:
         t = str(text).lower()
         return any(k in t for k in ("access rate", "too many", "ab1021", "rate limit"))
 
-    def _breaker(self):
+    def _bfile(self, group):
+        # 29-Oct: separate pauses – Angel limits quotes (market/v1/quote) separately from candles / OI history, and quotes
+        # kept working while candles were blocked; one shared pause had stopped the quotes too
+        return self._dir / ("breaker.json" if group == "hist" else f"breaker_{group}.json")
+
+    def _breaker(self, group="hist"):
         try:
-            b = json.loads((self._dir / "breaker.json").read_text())
+            b = json.loads(self._bfile(group).read_text())
             until, streak = float(b.get("until", 0)), int(b.get("streak", 0))
         except Exception:
             return 0.0, 0
@@ -78,44 +177,78 @@ class Angel:
             return 0.0, 0                              # the new scan gets its normal retries instead of failing fast at once
         return until, streak
 
-    def _trip(self):
+    def _trip(self, group="hist"):
         """A rate-limit reply came back: pause every engine for a while (longer each time in a row)."""
         self.stats["rate_limited"] += 1
-        _, streak = self._breaker()
+        self._set_pace(group, min(self.PACE_MAX, max(0.5, self.pace(group) * 1.5)))
+        _, streak = self._breaker(group)
         streak += 1
         cool = self.COOL_STEPS[min(streak - 1, len(self.COOL_STEPS) - 1)]
+        cool = round(cool * random.uniform(0.85, 1.15), 1)     # jitter: processes that tripped together do not retry together
         try:
-            (self._dir / "breaker.json").write_text(json.dumps({"until": time.time() + cool, "streak": streak}))
+            self._bfile(group).write_text(json.dumps({"until": time.time() + cool, "streak": streak}))
         except Exception:
             pass
-        print(f"[angel] rate limit ({streak} in a row) - pausing API calls for {cool}s")
+        print(f"[angel] rate limit ({streak} in a row) - pausing {'quote' if group == 'quote' else 'candle/OI'} calls for {cool}s")
 
-    def _reset(self):
-        if self._breaker()[1]:
+    def _reset(self, group="hist"):
+        base = self.HIST_GAP if group == "hist" else self.QUOTE_GAP
+        g = self.pace(group)
+        if g > base:
+            n = g * 0.97
+            self._set_pace(group, base if n - base < 0.05 else n)
+        if self._breaker(group)[1]:
             try:
-                (self._dir / "breaker.json").write_text(json.dumps({"until": 0, "streak": 0}))
+                self._bfile(group).write_text(json.dumps({"until": 0, "streak": 0}))
             except Exception:
                 pass
 
-    def failfast(self):
+    def failfast(self, group="hist"):
         """True while the API is blocked and calls are being skipped (callers can stop retrying)."""
-        until, streak = self._breaker()
+        until, streak = self._breaker(group)
         return streak >= self.FAILFAST_AFTER and until > time.time()
 
-    def _gate(self):
-        """May an API call go out now? Waits out a short cool-down; during a long block returns False (skip the call)."""
+    def wait_clear(self, max_s=100):
+        """Priority callers (index / MCX futures calls): wait out an active block (at most max_s) and start a fresh streak,
+        instead of skipping the data. Returns True when the block is over."""
         until, streak = self._breaker()
+        remaining = until - time.time()
+        if remaining > max_s or remaining > self._left():
+            return False
+        if remaining > 0:
+            print(f"[angel] priority fetch: waiting {remaining:.0f}s for the rate-limit pause to end")
+            time.sleep(remaining + 1)
+        try:
+            (self._dir / "breaker.json").write_text(json.dumps({"until": 0, "streak": 0}))
+        except Exception:
+            pass
+        return True
+
+    def _gate(self, group="hist"):
+        """May an API call go out now? Waits out a short cool-down; during a long block returns False (skip the call)."""
+        until, streak = self._breaker(group)
         remaining = until - time.time()
         if remaining <= 0:
             return True
-        if streak >= self.FAILFAST_AFTER:
+        if streak >= self.FAILFAST_AFTER or remaining > self._left():
             return False
         time.sleep(min(remaining, max(self.COOL_STEPS)))
         return True
 
+    def _ep(self, ep, what):
+        """4-Nov rate-limit diagnosis: ok / refused per endpoint (getCandleData vs getOIData ...) and the gap since the
+        previous request of this process when a refusal came back."""
+        d = self.stats.setdefault("by_endpoint", {}).setdefault(ep, {"ok": 0, "refused": 0, "refused_gap_s": []})
+        d[what] += 1
+        if what == "refused":
+            last = getattr(self, "_prev_req", None)
+            if last is not None:
+                d["refused_gap_s"].append(round(time.time() - last, 1))
+
     def _count(self):
         """Count one real API request (also appended to a per-job log so the hourly total can be reported)."""
         self.stats["calls"] += 1
+        self._prev_req, self._last_req = getattr(self, "_last_req", None), time.time()
         try:
             with open(self._dir / "calls.log", "a") as f:
                 f.write(f"{int(time.time())}\n")
@@ -136,9 +269,20 @@ class Angel:
         except Exception:
             pass
         s = self.stats
-        print(f"[angel-stats] API requests={s['calls']} ok={s['ok']} rate-limited={s['rate_limited']} skipped(blocked)={s['skipped']} "
-              f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | requests by all engines of this job in the last 60 min={hour} "
+        print(f"[angel-stats] API requests={s['calls']} ok={s['ok']} rate-limited={s['rate_limited']} skipped(blocked)={s['skipped']} pace candle/quote={self.pace('hist'):.2f}/{self.pace('quote'):.2f}s "
+              f"cache hits memory/disk={s['mem_hits']}/{s['disk_hits']} | skipped after time budget={s['deadline_skips']} failed after retries={s['failed']} | requests by all engines of this job in the last 60 min={hour} "
               f"(community-reported Angel cap for candles: ~5000/h)")
+        be = s.get("by_endpoint") or {}
+        if be:
+            print("[angel-endpoints] " + " | ".join(
+                f"{k}: ok {v['ok']} refused {v['refused']}"
+                + (f" (gap before refusal median {sorted(v['refused_gap_s'])[len(v['refused_gap_s']) // 2]} s)" if v["refused_gap_s"] else "")
+                for k, v in be.items()))
+        st = WB.status(self._ws_dir)
+        if st:
+            print(f"[ws] collector since {str(st.get('start'))[:16]} · ticks {st.get('ticks', 0):,} · last tick {st.get('last_tick')} · "
+                  f"served from WebSocket bars {s['ws_hits']} · REST fallback {s['ws_fallback']}"
+                  + (f" · {self._ws_note}" if self._ws_note else ""))
 
     def _call(self, fn, *a, retries=3):
         self._cache = getattr(self, "_cache", {})
@@ -147,30 +291,41 @@ class Angel:
             self.stats["mem_hits"] += 1
             return self._cache[key]
         for i in range(retries):
+            if self.over_budget():                   # time budget used up: finish the scan with what we have
+                self.stats["skipped"] += 1; self.stats["deadline_skips"] += 1
+                return None
             if not self._gate():                     # API is blocked: don't pile more requests on it (not cached: a later call may work)
                 self.stats["skipped"] += 1
                 return None
-            self._wait(self.HIST_GAP)
+            self._wait(self.pace("hist"))
             self._count()
+            ep = getattr(fn, "__name__", "?")
             try:
                 r = fn(*a)
             except Exception as e:                   # rate limit shows up as a non-JSON reply
                 msg = str(e)
                 print("API error:", msg[:120])
                 if self._is_rate(msg):
+                    self._ep(ep, "refused")
                     self._trip()
                 else:
                     time.sleep(1)
                 continue
             if r and r.get("status") and r.get("data") is not None:
                 self.stats["ok"] += 1
+                self._ep(ep, "ok")
                 self._reset()
                 self._cache[key] = r["data"]
                 return r["data"]
             if r and self._is_rate(f"{r.get('message', '')} {r.get('errorcode', '')}"):
+                self._ep(ep, "refused")
                 self._trip()
                 continue
+            if r and any(k in f"{r.get('message', '')} {r.get('errorcode', '')}".upper() for k in self.TOKEN_ERRORS) and self._relogin():
+                continue                             # 10-Nov: shared session no longer valid -> fresh login, retry
             break                                    # real "bad request / no data" -> don't retry
+        else:
+            self.stats["failed"] += 1                # every retry refused / errored: this data is MISSING for the scan
         self._cache[key] = None
         return None
 
@@ -193,6 +348,144 @@ class Angel:
         except Exception:
             pass
 
+    # ── today's bars from the WebSocket collector (wsfeed.py), history before today from REST once a day ──
+    DAY_EXT = {"ONE_HOUR": 400, "ONE_DAY": 400, "FIFTEEN_MINUTE": 30, "THIRTY_MINUTE": 30, "FIVE_MINUTE": 10,
+               "TEN_MINUTE": 10, "THREE_MINUTE": 5, "ONE_MINUTE": 3}
+
+    def _now(self):
+        return now_ist()
+
+    def _rest(self, kind, exch, token, interval, frm, to):
+        return self._candles(exch, token, interval, frm, to) if kind == "candles" else self._oi_rest(exch, token, interval, frm, to)
+
+    def _day_hist(self, kind, exch, token, interval, frm, day0):
+        """Bars before today, fetched once per day per series (disk, shared by the engine processes of the job)."""
+        p = self._dir / f"day_{kind}_{exch}_{token}_{interval}_{day0:%Y%m%d}.pkl"
+        try:
+            e = pd.read_pickle(p)
+            if e["frm"] <= frm:
+                self.stats["disk_hits"] += 1
+                return e["df"]
+        except Exception:
+            pass
+        f0 = min(frm, day0 - pd.Timedelta(days=self.DAY_EXT.get(interval, 30)))
+        df = self._rest(kind, exch, token, interval, f0, day0 - pd.Timedelta(minutes=1))
+        if df is None:
+            return None
+        df = df[df["time"] < day0].reset_index(drop=True)
+        try:
+            pd.to_pickle(dict(frm=f0, df=df), p)
+        except Exception:
+            pass
+        return df
+
+    def _pre(self, kind, exch, token, interval, day0, ws_start):
+        """Today's REST bars up to the moment the collector started (only when it started after the open)."""
+        p = self._dir / f"pre_{kind}_{exch}_{token}_{interval}_{ws_start:%Y%m%d%H%M%S}.pkl"
+        try:
+            return pd.read_pickle(p)
+        except Exception:
+            pass
+        df = self._rest(kind, exch, token, interval, day0, ws_start)
+        if df is not None:
+            df = df[df["time"] >= day0].reset_index(drop=True)
+            try:
+                pd.to_pickle(df, p)
+            except Exception:
+                pass
+        return df
+
+    def _ws_verify(self, exch, token, st, now):
+        """Once an hour per exchange: the last completed 15-min bars from REST vs the WebSocket bars. A mismatch switches
+        the WebSocket bars off for that exchange for the hour (REST is used) and is printed in the run log."""
+        vf = WB._dir(self._ws_dir) / "verify.json"
+        try:
+            v = json.loads(vf.read_text())
+        except Exception:
+            v = {}
+        e = v.get(exch) or {}
+        if e.get("hour") == f"{now:%Y%m%d%H}":
+            self._ws_note[exch] = e.get("note")
+            return e.get("ok") is not False
+        ws_start = pd.Timestamp(st["start"])
+        b0 = WB.bucket_start(ws_start, "FIFTEEN_MINUTE", exch) + pd.Timedelta(minutes=15)
+        b1 = WB.bucket_start(now, "FIFTEEN_MINUTE", exch)
+        if b1 - b0 < pd.Timedelta(minutes=30):
+            return True                                   # not enough WebSocket history yet to compare
+        if exch == "NFO" and WB.lot(token, self._ws_dir) is None:   # 7-Nov: WebSocket volume units unknown -> REST
+            v[exch] = dict(hour=f"{now:%Y%m%d%H}", ok=False, note="MISMATCH – REST used: lot size unknown (volume units)", token=str(token))
+            try:
+                vf.write_text(json.dumps(v))
+            except Exception:
+                pass
+            self._ws_note[exch] = v[exch]["note"]
+            return False
+        rest = self._candles(exch, token, "FIFTEEN_MINUTE", b0, now)
+        wsb = WB.rest_units(WB.aggregate(WB.minutes(token, now, self._ws_dir), "FIFTEEN_MINUTE", exch), token, exch, self._ws_dir)
+        if rest is None:
+            return True                                   # REST blocked – keep the WebSocket bars, check again next call
+        cut = lambda d: d[(d["time"] >= b0) & (d["time"] < b1)]
+        ok, note = WB.verify_ok(cut(rest), cut(wsb))
+        if ok is None:
+            return True
+        v[exch] = dict(hour=f"{now:%Y%m%d%H}", ok=bool(ok), note=f"{'OK' if ok else 'MISMATCH – REST used'}: {note}", token=str(token))
+        try:
+            vf.write_text(json.dumps(v))
+        except Exception:
+            pass
+        self._ws_note[exch] = v[exch]["note"]
+        print(f"[ws] verify {exch} {token}: {v[exch]['note']}")
+        return bool(ok)
+
+    def _ws_series(self, exch, token, interval, frm, to, kind):
+        if not self._ws_on or interval not in WB.MINUTES or exch not in WB.OPEN:
+            return None
+        now = self._now()
+        day0 = now.normalize()
+        if to < day0:
+            return None
+        st = WB.status(self._ws_dir)
+        if not WB.usable(st, exch, token, now):
+            return None
+        if not self._ws_verify(exch, token, st, now):
+            self.stats["ws_fallback"] += 1
+            return None
+        hist = None
+        if frm < day0 and not (kind == "oi" and exch == "MCX"):
+            hist = self._day_hist(kind, exch, token, interval, frm, day0)
+            if hist is None:
+                self.stats["ws_fallback"] += 1
+                return None
+        ws_start = pd.Timestamp(st["start"])
+        h, m = WB.OPEN[exch]
+        open_t = day0 + pd.Timedelta(hours=h, minutes=m)
+        pre, boundary = None, None
+        if ws_start.normalize() == day0 and ws_start > open_t + pd.Timedelta(minutes=1) and now > open_t \
+                and not (kind == "oi" and exch == "MCX"):
+            boundary = WB.bucket_start(ws_start, interval, exch)
+            pre = self._pre(kind, exch, token, interval, day0, ws_start)
+            if pre is None:
+                self.stats["ws_fallback"] += 1
+                return None
+        m1 = WB.minutes(token, day0, self._ws_dir)
+        if len(m1):
+            m1 = m1[m1["time"] >= ws_start.floor("min")]
+        wsb = WB.aggregate(m1, interval, exch)
+        if kind == "candles":
+            wsb = WB.rest_units(wsb, token, exch, self._ws_dir)     # 7-Nov: same volume units as the REST history
+            if wsb is None:
+                self.stats["ws_fallback"] += 1
+                return None
+            df = WB.combine(hist, pre, wsb.drop(columns=["oi"]), boundary)
+        else:
+            parts = [x for x in (hist, pre[pre["time"] <= boundary] if pre is not None and boundary is not None else pre,
+                                 wsb[["time", "oi"]] if len(wsb) else None) if x is not None and len(x)]
+            df = pd.concat(parts, ignore_index=True).drop_duplicates("time", keep="last").sort_values("time") if parts else None
+        if df is None:
+            return None
+        self.stats["ws_hits"] += 1
+        return df[(df["time"] >= frm) & (df["time"] <= to)].reset_index(drop=True)
+
     def candles(self, exch, token, interval, frm, to):
         # same series asked again in this run (e.g. RSI engine, then MCX buy/sell engine) -> reuse, saves API quota
         self._cc = getattr(self, "_cc", {})
@@ -201,6 +494,11 @@ class Angel:
         if hit is not None and hit[0] <= frm and abs((to - hit[1]).total_seconds()) <= 300:
             self.stats["mem_hits"] += 1
             return hit[2][hit[2]["time"] >= frm].reset_index(drop=True)
+        ws = self._ws_series(exch, token, interval, frm, to, "candles")   # 29-Oct: today from the WebSocket bars
+        if ws is not None:
+            ws = self._checked(ws, exch, token, interval)   # WebSocket bars pass the same validator as REST bars
+            self._cc[key] = (frm, to, ws)
+            return ws
         dh = self._disk_get(key, frm, to)                # fetched a moment ago by another engine process of this job
         if dh is not None:
             self.stats["disk_hits"] += 1
@@ -208,9 +506,24 @@ class Angel:
             return dh[dh["time"] >= frm].reset_index(drop=True)
         df = self._candles(exch, token, interval, frm, to)
         if df is not None:
+            df = self._checked(df, exch, token, interval)
             self._cc[key] = (frm, to, df)
             self._disk_put(key, frm, to, df)
         return df
+
+    def _checked(self, df, exch, token, interval):
+        """4-Nov P1: every REST candle series passes the shared validator (candlecheck.py) before any engine sees it."""
+        import candlecheck as CC
+        try:
+            clean, rep = CC.validate(df, now=self._now(), interval_min=WB.MINUTES.get(interval), label=f"{exch}:{token}:{interval}")
+        except Exception as e:                       # the validator must never take data away by crashing
+            print(f"[dq] {exch}:{token} validator error {type(e).__name__}: {e}")
+            return df
+        line = CC.summary(rep)
+        if line:
+            print(line)
+            self.stats["dq_removed"] = self.stats.get("dq_removed", 0) + sum(rep["removed"].values())
+        return clean
 
     def _candles(self, exch, token, interval, frm, to):
         d = self._call(self.api.getCandleData, {
@@ -223,8 +536,45 @@ class Angel:
         return df
 
     def oi_history(self, exch, token, interval, frm, to):
+        ws = self._ws_series(exch, token, interval, frm, to, "oi")   # live 1-minute OI from the stream (MCX too, 30-Oct)
+        if ws is not None:
+            return ws
         if exch == "MCX":                            # Angel does not serve OI history for MCX (AB1012)
             return None
+        return self._oi_rest(exch, token, interval, frm, to)
+
+    def oi_daily(self, exch, token, now, days=60, live_oi=None, fetch=True):
+        """6-Nov (rate-limit fix): daily OI history UP TO YESTERDAY is identical in every scan of a day, so it is fetched once
+        per day (normally in the quiet pre-NSE window, see alerts/stocks.prefetch_oi_daily) and cached on disk; today's row
+        comes from the live quote's open interest (the value getOIData would report for today at that moment).
+        Returns the same frame shape as oi_history (time, oi) or None. fetch=False -> cache only."""
+        day0 = pd.Timestamp(now).normalize()
+        f = self._dir / f"oid_{exch}_{token}_{day0:%Y%m%d}.pkl"
+        hist = None
+        try:
+            hist = pd.read_pickle(f)
+            self.stats["disk_hits"] += 1
+        except Exception:
+            if not fetch:
+                return None
+            hist = self._oi_rest(exch, token, "ONE_DAY", day0 - pd.Timedelta(days=days), day0 - pd.Timedelta(minutes=1))
+            if hist is None:
+                return None
+            hist = hist[hist["time"] < day0]
+            try:
+                hist.to_pickle(f)
+            except Exception:
+                pass
+        if live_oi is None:
+            return hist.reset_index(drop=True)
+        try:
+            v = float(live_oi)
+        except (TypeError, ValueError):
+            return hist.reset_index(drop=True)
+        today = pd.DataFrame({"time": [day0], "oi": [v]})
+        return pd.concat([hist[["time", "oi"]], today], ignore_index=True)
+
+    def _oi_rest(self, exch, token, interval, frm, to):
         d = self._call(self.api.getOIData, {
             "exchange": exch, "symboltoken": str(token), "interval": interval,
             "fromdate": frm.strftime("%Y-%m-%d %H:%M"), "todate": to.strftime("%Y-%m-%d %H:%M")})
@@ -241,25 +591,34 @@ class Angel:
             toks = [str(t) for t in toks]
             for i in range(0, len(toks), 50):
                 for attempt in range(3):
-                    if not self._gate():
+                    if self.over_budget():
+                        self.stats["skipped"] += 1; self.stats["deadline_skips"] += 1
+                        break
+                    if not self._gate("quote"):
                         self.stats["skipped"] += 1
                         break
-                    self._wait(self.QUOTE_GAP)
+                    self._wait(self.pace("quote"))
                     self._count()
                     try:
+                        t_req = self._now()
                         r = self.api.getMarketData("FULL", {ex: toks[i:i + 50]})
                         if r and self._is_rate(f"{r.get('message', '')} {r.get('errorcode', '')}"):
-                            self._trip()
+                            self._trip("quote")
                             continue
+                        if r and not r.get("status") and any(k in f"{r.get('message', '')} {r.get('errorcode', '')}".upper()
+                                                             for k in self.TOKEN_ERRORS) and self._relogin():
+                            continue                     # 10-Nov: shared session invalid -> fresh login, retry
+                        t_done = self._now()
                         for q in (r.get("data") or {}).get("fetched", []):
+                            q["_req_start"], q["_recv_ist"] = str(t_req), str(t_done)   # reference times for age / skew
                             out[str(q["symbolToken"])] = q
                         self.stats["ok"] += 1
-                        self._reset()
+                        self._reset("quote")
                         break
                     except Exception as e:
                         print("quote error:", str(e)[:120])
                         if self._is_rate(e):
-                            self._trip()
+                            self._trip("quote")
                         else:
                             time.sleep(3 + 2 * attempt)
         return out
@@ -280,4 +639,5 @@ def load_master():
     df["expiry_dt"] = pd.to_datetime(df["expiry"], format="%d%b%Y", errors="coerce")
     df["strike"] = pd.to_numeric(df["strike"], errors="coerce")
     df["lotsize"] = pd.to_numeric(df["lotsize"], errors="coerce")
+    df["tick"] = pd.to_numeric(df["tick_size"], errors="coerce") / 100 if "tick_size" in df else float("nan")   # paise -> ₹
     return df

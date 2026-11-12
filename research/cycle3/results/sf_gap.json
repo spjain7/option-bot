@@ -1,0 +1,82 @@
+{
+ "executed_trades": 930,
+ "same_exit": 658,
+ "exit_differs": 272,
+ "mean_gap_all_R": -0.085,
+ "mean_gap_same_exit_R": 0.003,
+ "mean_gap_exit_differs_R": -0.298,
+ "gap_total_R": -78.9,
+ "futures_stopped_first": {
+  "n": 119,
+  "gap_sum_R": -130.3,
+  "gap_mean_R": -1.095,
+  "by_cause": {
+   "a corporate action inside the trade": {
+    "n": 6,
+    "gap_sum_R": -3.9,
+    "gap_mean_R": -0.652,
+    "basis_change_to_high_median_pct": 0.48
+   },
+   "b expiry / roll inside the trade": {
+    "n": 24,
+    "gap_sum_R": -42.5,
+    "gap_mean_R": -1.77,
+    "basis_change_to_high_median_pct": 0.678
+   },
+   "c premium widened (close basis also up)": {
+    "n": 83,
+    "gap_sum_R": -83.7,
+    "gap_mean_R": -1.008,
+    "basis_change_to_high_median_pct": 0.673
+   },
+   "d futures-only intraday spike (close basis normal)": {
+    "n": 3,
+    "gap_sum_R": -0.4,
+    "gap_mean_R": -0.126,
+    "basis_change_to_high_median_pct": 0.33
+   },
+   "e small basis noise (< 0.15 %) \u2013 stop sat right at the high": {
+    "n": 3,
+    "gap_sum_R": 0.1,
+    "gap_mean_R": 0.037,
+    "basis_change_to_high_median_pct": 0.11
+   }
+  },
+  "cash_high_vs_stop_median_pct": -0.356,
+  "stop_pct_median": 1.757,
+  "basis_change_to_high_median_pct": 0.661
+ },
+ "cash_stopped_first": {
+  "n": 80,
+  "gap_sum_R": 65.2,
+  "gap_mean_R": 0.815
+ },
+ "other_exit_differences": {
+  "n": 73,
+  "gap_sum_R": -15.9
+ },
+ "entry_basis": {
+  "median_pct": 0.026,
+  "p10": -0.839,
+  "p90": 0.639
+ },
+ "gap_by_entry_basis": {
+  "(-50.0, -0.5]": -0.53,
+  "(-0.5, 0.0]": -0.208,
+  "(0.0, 0.5]": 0.045,
+  "(0.5, 1.0]": 0.181,
+  "(1.0, 50.0]": 0.759
+ },
+ "gap_by_stop_pct": {
+  "(0.0, 1.5]": -0.071,
+  "(1.5, 2.5]": -0.082,
+  "(2.5, 4.0]": -0.134,
+  "(4.0, 100.0]": -0.066
+ },
+ "gap_by_contract_liquidity": {
+  "(148.999, 2070.25]": -0.232,
+  "(2070.25, 3921.5]": -0.108,
+  "(3921.5, 7741.5]": 0.122,
+  "(7741.5, 104237.0]": -0.121
+ }
+}

@@ -53,3 +53,12 @@ research/mcxe007/cache/
 research/mcxe007/results/trades_*.parquet
 research/mcxe008/results/trades_*.parquet
 research/mcxe009/cand_*.parquet
+research/cashq/results/*_trades.csv.gz
+research/eqbtst/_btst_cache.pkl
+research/cashq/results/buy_events*.csv.gz
+research/cashq/results/buy_events_div.csv.gz
+research/cashq/results/lonesome_trades.csv.gz
+research/cashq/results/screeners_trades.csv.gz
+research/mcxhw/results/mcxhw_all.csv.gz
+research/shadow/state_local/
+research/inst/results/.cache_confirm_*
