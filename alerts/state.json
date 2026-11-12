@@ -5023,12 +5023,12 @@
   "n": 1
  },
  "scan": {
-  "seq": 401,
-  "started": "2026-11-13 00:02:02.401099",
-  "finished": "2026-11-13 00:02:12.579975",
-  "seconds": 10,
+  "seq": 402,
+  "started": "2026-11-13 00:17:02.085249",
+  "finished": "2026-11-13 00:17:07.749355",
+  "seconds": 5,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -5040,7 +5040,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 2
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
