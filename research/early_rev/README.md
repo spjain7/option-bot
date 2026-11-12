@@ -40,7 +40,7 @@ Research only; nothing is live.
 - The VALID period is weak (+0.12R, PF 1.15, below the 1.2 gate).
 - It was picked from 1,056 tests and does not survive the multiple-testing correction.
 - Copper loses (−0.23R).
-- It wins only about 28 % of the time: long losing streaks are normal (about 1 in 3 chance of 10 losses in a row in 100 trades).
+- It wins only about 28 % of the time: long losing streaks are normal (a run of 10 or more losses within 100 trades happens about 2 times in 3).
 - The SELL mirror loses.
 
 **Status:** a hypothesis that should be tested forward in shadow, not sent as calls.
