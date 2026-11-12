@@ -4,7 +4,8 @@
  "pending": null,
  "early": "2026-11-05",
  "breakout": {
-  "pending": [
+  "pending": [],
+  "open": [
    {
     "key": "INE303R01014",
     "symbol": "KALYANKJIL",
@@ -25,106 +26,90 @@
     "tight": 1.12,
     "clv": 0.63,
     "breadth50": 0.61,
-    "turnover_cr": 323.8
+    "turnover_cr": 323.8,
+    "entry": 675.0,
+    "entry_day": "2026-11-12",
+    "stop": 596.85,
+    "risk": 78.15,
+    "t1": 753.15,
+    "t2": 831.3,
+    "hi": 717.0,
+    "lo": 669.0,
+    "last": 710.9,
+    "sessions": 1,
+    "checked": "2026-11-12",
+    "t1_hit": false,
+    "t2_hit": false,
+    "exit_next_open": false,
+    "version": "cash-bo-0.1 (CASHQ-BUY, experimental)"
    }
   ],
-  "open": [],
   "closed": [],
   "seen": [
    "INE303R01014|2026-11-11"
   ],
   "last_candidates": [
    {
-    "symbol": "KALYANKJIL",
-    "score": 70,
-    "close": 663.75,
-    "day": "2026-11-11"
+    "symbol": "GABRIEL",
+    "score": 65,
+    "close": 1641.2,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "KTKBANK",
+    "symbol": "UNIMECH",
     "score": 61,
-    "close": 349.5,
-    "day": "2026-11-11"
+    "close": 1980.6,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "FLUOROCHEM",
-    "score": 57,
-    "close": 4824.4,
-    "day": "2026-11-11"
+    "symbol": "PAYTM",
+    "score": 60,
+    "close": 1925.0,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "SBIN",
-    "score": 55,
-    "close": 1061.2,
-    "day": "2026-11-11"
+    "symbol": "AARTIPHARM",
+    "score": 47,
+    "close": 1010.5,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "HINDPETRO",
+    "symbol": "POONAWALLA",
     "score": 45,
-    "close": 400.15,
-    "day": "2026-11-11"
+    "close": 493.0,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "M&M",
-    "score": 45,
-    "close": 3465.0,
-    "day": "2026-11-11"
-   },
-   {
-    "symbol": "FEDERALBNK",
+    "symbol": "RADICO",
     "score": 38,
-    "close": 361.6,
-    "day": "2026-11-11"
+    "close": 4638.2,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "IRFC",
+    "symbol": "ABCAPITAL",
     "score": 35,
-    "close": 86.7,
-    "day": "2026-11-11"
+    "close": 419.5,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "PRESTIGE",
+    "symbol": "CDSL",
     "score": 35,
-    "close": 1625.0,
-    "day": "2026-11-11"
+    "close": 1455.0,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "SHREECEM",
+    "symbol": "SBILIFE",
     "score": 35,
-    "close": 25270.0,
-    "day": "2026-11-11"
+    "close": 1819.5,
+    "day": "2026-11-12"
    },
    {
-    "symbol": "CANBK",
-    "score": 26,
-    "close": 132.3,
-    "day": "2026-11-11"
-   },
-   {
-    "symbol": "GMRAIRPORT",
-    "score": 25,
-    "close": 100.97,
-    "day": "2026-11-11"
-   },
-   {
-    "symbol": "HDFCAMC",
-    "score": 25,
-    "close": 2715.0,
-    "day": "2026-11-11"
-   },
-   {
-    "symbol": "BANKINDIA",
-    "score": 20,
-    "close": 150.6,
-    "day": "2026-11-11"
-   },
-   {
-    "symbol": "STYLEBAAZA",
-    "score": 20,
-    "close": 430.95,
-    "day": "2026-11-11"
+    "symbol": "BAJFINANCE",
+    "score": 35,
+    "close": 1115.0,
+    "day": "2026-11-12"
    }
   ],
-  "asof": "2026-11-11"
+  "asof": "2026-11-12"
  }
 }
