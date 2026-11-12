@@ -12,3 +12,4 @@ state/alerts/
 state/obuy/
 
 .cache/
+research/mcx_institutional_buy/reports/*.parquet

@@ -1,0 +1,136 @@
+{
+ "experiment_prefix": "MCXIB",
+ "data_version": "angel stitched front-month (manifest 2026-11-03), MCX bhavcopy 2022-07-01..2026-11-06, Yahoo proxies to 2026-10-21",
+ "contracts": {
+  "GOLD": {
+   "mult": 100,
+   "tick": 1.0,
+   "lot": "1 kg, price per 10 g",
+   "expiry": "bi-monthly ~5th",
+   "slip_ticks_per_side": 16.0
+  },
+  "SILVER": {
+   "mult": 30,
+   "tick": 1.0,
+   "lot": "30 kg, price per kg",
+   "expiry": "Mar/May/Jul/Sep/Dec ~5th",
+   "slip_ticks_per_side": 28.5
+  },
+  "CRUDEOIL": {
+   "mult": 100,
+   "tick": 1.0,
+   "lot": "100 bbl",
+   "expiry": "monthly ~19th-20th",
+   "slip_ticks_per_side": 1.5
+  },
+  "NATURALGAS": {
+   "mult": 1250,
+   "tick": 0.1,
+   "lot": "1250 mmBtu",
+   "expiry": "monthly ~25th-27th",
+   "slip_ticks_per_side": 1.5
+  },
+  "COPPER": {
+   "mult": 2500,
+   "tick": 0.05,
+   "lot": "2500 kg",
+   "expiry": "monthly, last business day",
+   "slip_ticks_per_side": 3.5
+  },
+  "ZINC": {
+   "mult": 5000,
+   "tick": 0.05,
+   "lot": "5 MT",
+   "expiry": "monthly, last business day",
+   "slip_ticks_per_side": 2.5
+  },
+  "ALUMINIUM": {
+   "mult": 5000,
+   "tick": 0.05,
+   "lot": "5 MT",
+   "expiry": "monthly, last business day",
+   "slip_ticks_per_side": 2.5
+  },
+  "LEAD": {
+   "mult": 5000,
+   "tick": 0.05,
+   "lot": "5 MT (ASSUMED from MCX spec, verify)",
+   "expiry": "monthly, last business day",
+   "slip_ticks_per_side": 3.0
+  },
+  "NICKEL": {
+   "mult": 1500,
+   "tick": 0.1,
+   "lot": "1500 kg (ASSUMED from MCX spec, verify)",
+   "expiry": "monthly, last business day",
+   "slip_ticks_per_side": 3.0
+  }
+ },
+ "fees": {
+  "brokerage": 20.0,
+  "exch": 2.1e-05,
+  "sebi": 1e-06,
+  "gst": 0.18,
+  "stamp_buy": 2e-05,
+  "ctt_sell": 0.0001,
+  "ctt_from": "2013-07-01",
+  "slippage_note": "per side = max(1.5 ticks, measured median live half-spread + 0.5 tick) from 6,439 MCX best-5 snapshots (11-12 Nov 2026); LEAD/NICKEL unmeasured -> 3 ticks"
+ },
+ "splits": {
+  "intraday": {
+   "TRAIN": [
+    "2022-07-01",
+    "2024-06-30"
+   ],
+   "VAL": [
+    "2024-07-01",
+    "2025-06-30"
+   ],
+   "OOS": [
+    "2025-07-01",
+    "2026-11-30"
+   ]
+  },
+  "daily": {
+   "TRAIN": [
+    "2006-01-01",
+    "2016-12-31"
+   ],
+   "VAL": [
+    "2017-01-01",
+    "2021-12-31"
+   ],
+   "OOS": [
+    "2022-01-01",
+    "2026-11-30"
+   ]
+  }
+ },
+ "sim": {
+  "max_hold_bars": {
+   "15m": 96,
+   "30m": 64,
+   "1h": 60,
+   "4h": 40,
+   "1d": 30
+  },
+  "time_exit_bars": {
+   "15m": 32,
+   "30m": 24,
+   "1h": 24,
+   "4h": 12,
+   "1d": 10
+  },
+  "stop_entry_window_bars": 3,
+  "min_risk_atr": 0.25,
+  "max_risk_atr": 4.0,
+  "min_struct_rr": 1.5,
+  "trail_atr": 3.0
+ },
+ "gate": {
+  "min_trades_total": 100,
+  "min_trades_period": 30,
+  "min_pf": 1.2,
+  "fdr_q": 0.1
+ }
+}
