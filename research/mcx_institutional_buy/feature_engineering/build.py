@@ -303,6 +303,11 @@ def build(name, tf):
     every = np.zeros(n, bool); every[::10] = True
     add("BASE_RANDOM_EVERY10", every, c - atr, "BASE", "baseline")
     add("BASE_RANDOM_EVERY10_SAMESTOP", every, lw(3) - 0.1 * atr, "BASE", "baseline")
+    # matched control for HIGHBO rules: buy-stop above a random bar's high, stop below the last 3 lows (same construction)
+    add("BASE_RANDOM10_HIGHBO", every, lw(3) - 0.1 * atr, "BASE", "baseline", elev=h + 1e-9)
+    # stricter control: buy-stop above ANY bar that undercut the previous BAR's low and closed above it (no PDL / swing level)
+    und = (l < I.lag(l, 1)) & (c > I.lag(l, 1))
+    add("BASE_UNDERCUT_PREVBAR_HIGHBO", und, lw(2) - 0.1 * atr, "BASE", "baseline", elev=h + 1e-9)
 
     # ---------------- structural targets (known at the signal bar) ----------------
     above = np.where(PH > c[:, None], PH, np.nan)
