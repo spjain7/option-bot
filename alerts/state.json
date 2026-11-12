@@ -737,24 +737,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-12 21:02:01.777221",
-   "oi": 931500.0,
-   "ltp": 8168.0
+   "time": "2026-11-12 21:17:01.741656",
+   "oi": 935000.0,
+   "ltp": 8138.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-12 21:02:01.777221",
-   "oi": 44900000.0,
-   "ltp": 310.4
+   "time": "2026-11-12 21:17:01.741656",
+   "oi": 44845000.0,
+   "ltp": 311.2
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-12 21:02:01.777221",
-   "oi": 16482.0,
-   "ltp": 135951.0
+   "time": "2026-11-12 21:17:01.741656",
+   "oi": 16469.0,
+   "ltp": 135944.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-12 21:02:01.777221",
-   "oi": 501690.0,
-   "ltp": 178021.0
+   "time": "2026-11-12 21:17:01.741656",
+   "oi": 501630.0,
+   "ltp": 178159.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -792,19 +792,19 @@
    "ltp": 61342.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-12 21:02:01.777221",
-   "oi": 19162500.0,
-   "ltp": 1323.0
+   "time": "2026-11-12 21:17:01.741656",
+   "oi": 19270000.0,
+   "ltp": 1323.1
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-12 21:02:01.777221",
-   "oi": 8305.0,
-   "ltp": 407.25
+   "time": "2026-11-12 21:17:01.741656",
+   "oi": 8300.0,
+   "ltp": 407.35
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-12 21:02:01.777221",
-   "oi": 17340.0,
-   "ltp": 328.45
+   "time": "2026-11-12 21:17:01.741656",
+   "oi": 17335.0,
+   "ltp": 328.5
   }
  },
  "bo_active": [
@@ -841,7 +841,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 20:45:00",
+   "checked": "2026-11-12 21:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -861,7 +861,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 20:45:00",
+   "checked": "2026-11-12 21:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -881,7 +881,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 20:45:00",
+   "checked": "2026-11-12 21:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -2804,13 +2804,13 @@
    "mfe_R": 0.56,
    "mae_R": -0.535,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-12 20:45:00",
+   "excursion_upd": "2026-11-12 21:00:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 8313.0,
    "ulo": 7985.0,
-   "ulast": 8167.0,
-   "uat": "2026-11-12 21:02:01.777221"
+   "ulast": 8135.0,
+   "uat": "2026-11-12 21:17:01.741656"
   },
   {
    "key": "PHOENIXLTD|1dSTK|2026-11-11 09:15:00",
@@ -3009,8 +3009,8 @@
    "date": "2026-11-12",
    "uhi": 138214.0,
    "ulo": 135784.0,
-   "ulast": 135951.0,
-   "uat": "2026-11-12 21:02:01.777221"
+   "ulast": 135944.0,
+   "uat": "2026-11-12 21:17:01.741656"
   }
  ],
  "candle_setups": {
@@ -3171,7 +3171,7 @@
     "vol_x": 1.29,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 8,690.00 (swing high) at 1.7R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "975,600 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "last_bar": "2026-11-12 20:45:00",
+    "last_bar": "2026-11-12 21:00:00",
     "logged": "2026-11-11 09:02:01.786291",
     "key": "MCX_HAMMER|CRUDEOIL|2026-11-10",
     "grade": "C",
@@ -3187,7 +3187,7 @@
      "daily bias bearish (against)"
     ],
     "live": {},
-    "last_px": 8185.0,
+    "last_px": 8134.0,
     "entry": 8154.0,
     "entry_time": "2026-11-11 14:45:00",
     "risk": 316.0,
@@ -5021,15 +5021,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 389,
-  "started": "2026-11-12 21:02:01.777221",
-  "finished": "2026-11-12 21:02:12.260306",
-  "seconds": 10,
+  "seq": 390,
+  "started": "2026-11-12 21:17:01.741656",
+  "finished": "2026-11-12 21:17:11.081413",
+  "seconds": 9,
   "status": "SUCCESS",
-  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 4,
-   "ok": 4,
+   "calls": 3,
+   "ok": 3,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
