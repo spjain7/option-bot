@@ -1,0 +1,8 @@
+name,snapshots,imb5_mean,imb5_sd,total_bid_ask_imb_mean,first,last,status
+ALUMINIUM,889,-0.109,0.229,0.231,2026-11-11 04:08:32,2026-11-11 23:55:00,FORWARD ONLY – no historical depth; absorption / volume-delta / footprint not testable historically
+COPPER,916,-0.035,0.244,-0.424,2026-11-11 04:08:32,2026-11-11 23:55:00,FORWARD ONLY – no historical depth; absorption / volume-delta / footprint not testable historically
+CRUDEOIL,946,-0.017,0.158,0.13,2026-11-11 04:08:32,2026-11-11 23:55:00,FORWARD ONLY – no historical depth; absorption / volume-delta / footprint not testable historically
+GOLD,934,-0.011,0.211,-0.144,2026-11-11 04:08:32,2026-11-11 23:55:00,FORWARD ONLY – no historical depth; absorption / volume-delta / footprint not testable historically
+NATURALGAS,934,0.02,0.204,0.196,2026-11-11 04:08:32,2026-11-11 23:55:00,FORWARD ONLY – no historical depth; absorption / volume-delta / footprint not testable historically
+SILVER,932,-0.002,0.204,-0.057,2026-11-11 04:08:32,2026-11-11 23:55:00,FORWARD ONLY – no historical depth; absorption / volume-delta / footprint not testable historically
+ZINC,888,-0.094,0.229,-0.129,2026-11-11 04:08:32,2026-11-11 23:55:00,FORWARD ONLY – no historical depth; absorption / volume-delta / footprint not testable historically
