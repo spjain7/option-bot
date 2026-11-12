@@ -61,3 +61,4 @@ research/cashq/results/lonesome_trades.csv.gz
 research/cashq/results/screeners_trades.csv.gz
 research/mcxhw/results/mcxhw_all.csv.gz
 research/shadow/state_local/
+research/inst/results/.cache_confirm_*

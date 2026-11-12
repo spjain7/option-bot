@@ -148,7 +148,9 @@ def st(r):
 def main(tf=15, positional=False):
     from sklearn.linear_model import LogisticRegression
     tag = f"{tf}m{'_pos' if positional else ''}"
-    T = trades(tf, positional)
+    cache = OUT / f".cache_confirm_{tag}.pkl"
+    T = pd.read_pickle(cache) if cache.exists() else trades(tf, positional)
+    T.to_pickle(cache)
     T = T[T.get("u_OI_have", 1) == 1].reset_index(drop=True)           # OI known for every trade kept
     F = [x for x in T.columns if x.startswith(("d_", "u_")) and x != "u_OI_have"]
     Dd = [x for x in F if x.startswith("d_")]
@@ -171,7 +173,7 @@ def main(tf=15, positional=False):
     lift = {f: T.loc[dev & real & (T[f] == 1), "netR"].mean() - T.loc[dev & real & (T[f] == 0), "netR"].mean() for f in F}
     w1 = pd.Series({f: max(v, 0) if np.isfinite(v) else 0 for f, v in lift.items()})
     T["S_W1_lift"] = T[F].values @ w1[F].values
-    X = pd.get_dummies(T[["setup", "exit"]].astype(str) + T.side.astype(str).values[:, None]).astype(float)
+    X = pd.get_dummies(T.setup.astype(str) + "|" + T.side.astype(str) + "|" + T.exit.astype(str)).astype(float)
     Xf = pd.concat([T[F], X], axis=1).values
     lr = LogisticRegression(C=0.5, max_iter=2000).fit(Xf[(dev & real).values], (T.netR[dev & real] > 0).values)
     T["S_W2_logit"] = lr.predict_proba(Xf)[:, 1]
