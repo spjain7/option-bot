@@ -734,24 +734,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-12 19:02:01.918848",
-   "oi": 918700.0,
-   "ltp": 8215.0
+   "time": "2026-11-12 19:17:01.961920",
+   "oi": 915800.0,
+   "ltp": 8199.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-12 19:02:01.918848",
-   "oi": 45105000.0,
-   "ltp": 310.5
+   "time": "2026-11-12 19:17:01.961920",
+   "oi": 44943750.0,
+   "ltp": 310.9
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-12 19:02:01.918848",
-   "oi": 16357.0,
-   "ltp": 137316.0
+   "time": "2026-11-12 19:17:01.961920",
+   "oi": 16482.0,
+   "ltp": 136745.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-12 19:02:01.918848",
-   "oi": 497190.0,
-   "ltp": 180777.0
+   "time": "2026-11-12 19:17:01.961920",
+   "oi": 497220.0,
+   "ltp": 179051.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -789,19 +789,19 @@
    "ltp": 61342.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-12 19:02:01.918848",
-   "oi": 19285000.0,
-   "ltp": 1329.0
+   "time": "2026-11-12 19:17:01.961920",
+   "oi": 19282500.0,
+   "ltp": 1327.0
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-12 19:02:01.918848",
-   "oi": 8300.0,
-   "ltp": 408.55
+   "time": "2026-11-12 19:17:01.961920",
+   "oi": 8295.0,
+   "ltp": 407.85
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-12 19:02:01.918848",
-   "oi": 17635.0,
-   "ltp": 328.5
+   "time": "2026-11-12 19:17:01.961920",
+   "oi": 17630.0,
+   "ltp": 328.25
   }
  },
  "bo_active": [
@@ -838,7 +838,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 18:45:00",
+   "checked": "2026-11-12 19:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -858,7 +858,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 18:45:00",
+   "checked": "2026-11-12 19:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -878,7 +878,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 18:45:00",
+   "checked": "2026-11-12 19:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -2761,13 +2761,13 @@
    "mfe_R": 0.56,
    "mae_R": -0.535,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-12 18:45:00",
+   "excursion_upd": "2026-11-12 19:00:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 8313.0,
    "ulo": 7985.0,
-   "ulast": 8209.0,
-   "uat": "2026-11-12 19:02:01.918848"
+   "ulast": 8198.0,
+   "uat": "2026-11-12 19:17:01.961920"
   },
   {
    "key": "PHOENIXLTD|1dSTK|2026-11-11 09:15:00",
@@ -2965,9 +2965,9 @@
    "status": "OPEN",
    "date": "2026-11-12",
    "uhi": 138214.0,
-   "ulo": 137318.0,
-   "ulast": 137318.0,
-   "uat": "2026-11-12 19:02:01.918848"
+   "ulo": 136761.0,
+   "ulast": 136761.0,
+   "uat": "2026-11-12 19:17:01.961920"
   }
  ],
  "candle_setups": {
@@ -3128,7 +3128,7 @@
     "vol_x": 1.29,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 8,690.00 (swing high) at 1.7R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "975,600 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "last_bar": "2026-11-12 18:45:00",
+    "last_bar": "2026-11-12 19:00:00",
     "logged": "2026-11-11 09:02:01.786291",
     "key": "MCX_HAMMER|CRUDEOIL|2026-11-10",
     "grade": "C",
@@ -3144,7 +3144,7 @@
      "daily bias bearish (against)"
     ],
     "live": {},
-    "last_px": 8227.0,
+    "last_px": 8189.0,
     "entry": 8154.0,
     "entry_time": "2026-11-11 14:45:00",
     "risk": 316.0,
@@ -4978,15 +4978,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 380,
-  "started": "2026-11-12 19:02:01.918848",
-  "finished": "2026-11-12 19:02:13.573820",
-  "seconds": 11,
+  "seq": 381,
+  "started": "2026-11-12 19:17:01.961920",
+  "finished": "2026-11-12 19:17:10.303374",
+  "seconds": 8,
   "status": "SUCCESS",
-  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 4,
-   "ok": 4,
+   "calls": 3,
+   "ok": 3,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -4995,7 +4995,7 @@
    "disk_hits": 14
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
@@ -12731,7 +12731,7 @@
     "entry_delay_min": 2,
     "executable": true,
     "assumed_cost": "fees + 1.5 ticks/side",
-    "mfe": 0.731,
+    "mfe": 1.195,
     "mae": 0.0,
     "live": true
    }
