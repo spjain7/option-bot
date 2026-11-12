@@ -35,3 +35,28 @@ Research only.
 - The "80 % rule" reaches the other side of the value area in only about half of cases on MCX, not 80 %.
 
 **The only liquidity-grab ("institutional") idea that has held up on MCX** is the 1-hour stop-hunt with a structure shift, BUY with the trend, with a big target (`research/early_rev`). It made +0.43R per trade on untouched 2022–23 data.
+
+## Confirmation with volume, OI and weighted indicators (`confirm.py`, 12-Nov-2026)
+
+**Method:**
+- Each trade from the 7 setups gets 20 votes, all measured on the signal bar.
+  - Volume: RVOL ≥ 1.5 and ≥ 2, plus the OBV slope.
+  - OI from the MCX daily bhavcopy, using the previous trading day only: long or short build-up, covering or unwinding, OI rising, and the 5-day build-up.
+  - EMA 20/50 and 50/200, VWAP side, RSI > 50, the MACD histogram and its slope, Hull 30, DMO, candle colour, daily trend, ADX > 25, and high ATR.
+- Three weightings: per-indicator R lift, logistic regression, and an equal-weight vote count.
+- Weights and thresholds are learned on 2023–24 only, then frozen for 2025 and 2026.
+- Each weighting keeps the top 30 %, 20 % or 10 % of trades.
+
+**Result:** 0 of 297 pass on 15-minute intraday, 0 of 297 on 1-hour positional, and nothing reaches 60 % wins in all three periods.
+
+| All setups pooled | 15-min, 2026 | 1-hour, 2026 |
+|---|---|---|
+| No filter | 37 % wins, −0.33R | 40 % wins, −0.18R |
+| Best weighting (logit, top 10 %) | 45 % wins, −0.04R | 49 % wins, −0.10R |
+| Best weighting (lift, top 20 %) | 40 % wins, −0.08R | 44 % wins, −0.02R |
+
+**Findings:**
+- **OI adds nothing on MCX.** Every OI vote changes sign between periods. A likely reason: previous-day total OI is mostly roll and hedging flow, not direction.
+- **Volume (RVOL) is not consistent either.** It helped in 2026 and did nothing in 2025.
+- **What helps every period** is momentum confirmation on the signal bar: candle colour with the trade, the MACD histogram rising, RSI > 50, VWAP side, and higher ATR. That means "don't fade, wait for the move to start". Even with these, the setups only cut their losses.
+- A few individual setup and filter cells look good in 2026, but each is negative in 2023–24 or 2025 and has only 7–60 trades. These are noise, not edges.
