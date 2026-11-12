@@ -30,3 +30,18 @@ Each trade enters at the next open with a 1-ATR stop and a target of 0.5, 1 or 1
 - **Targets of 1 or 1.5 ATR never reached 70 %** for any model.
 
 **Why:** with a target half the stop, even random entries win about 65 %, and a 70 % win rate is exactly break-even before costs. The features raise the win rate by 3–6 points, which only covers costs. A setup that wins 70–80 % *and* makes money is not in this data, with any weighting of these indicators.
+
+## 60–70 % with profit: full registry check (12-Nov)
+- **Registry scan:** across every tested setup, only one family wins ≥ 60 % with profit in DEV, VALID and OOS (≥ 30 trades each): index futures 1h, RSI(14) crosses to ≥ 75, BUY next open, structure stop, **1R target**.
+- **Untouched 2018 – Jun-2022 index hourly data:** all indices 55 % wins / +0.02R (145 trades); BANKNIFTY 46 % / −0.09R.
+- **NIFTY futures alone:**
+
+| Period | Trades | Wins | R per trade |
+|---|---|---|---|
+| Untouched 2018 – Jun-2022 | 67 | 64 % | +0.15 |
+| DEV Jul-2022 – Jun-2024 | 30 | 60 % | +0.13 |
+| VALID | 9 | 67 % | +0.27 |
+| OOS | 13 | 62 % | +0.16 |
+
+- **About 119 trades** in 8 years (about 13 a year).
+- **Caveats:** NIFTY was singled out after BANKNIFTY failed (a per-instrument choice), the sample is small, and t is about 1.6. Shadow test only.
