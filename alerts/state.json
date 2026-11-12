@@ -4663,24 +4663,24 @@
   "n": 3
  },
  "scan": {
-  "seq": 343,
-  "started": "2026-11-12 08:42:07.197879",
-  "finished": "2026-11-12 08:44:47.070158",
-  "seconds": 159,
+  "seq": 344,
+  "started": "2026-11-12 08:47:01.659895",
+  "finished": "2026-11-12 08:47:20.490560",
+  "seconds": 18,
   "status": "SUCCESS",
-  "note": "api requests 200 ok 189 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 18 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 200,
-   "ok": 189,
+   "calls": 18,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 0
+   "disk_hits": 189
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
