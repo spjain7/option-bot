@@ -732,24 +732,24 @@
  "history": [],
  "oi": {
   "CRUDEOIL19NOV26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 907800.0,
-   "ltp": 8186.0
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 916600.0,
+   "ltp": 8194.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 45418750.0,
-   "ltp": 306.6
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 45160000.0,
+   "ltp": 307.8
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 16613.0,
-   "ltp": 138700.0
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 16617.0,
+   "ltp": 138486.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 490800.0,
-   "ltp": 182707.0
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 491040.0,
+   "ltp": 182681.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -777,29 +777,29 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 11982295.0,
-   "ltp": 25276.4
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 12043265.0,
+   "ltp": 25279.0
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 2310390.0,
-   "ltp": 61261.8
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 2332620.0,
+   "ltp": 61354.8
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 18787500.0,
-   "ltp": 1334.4
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 18715000.0,
+   "ltp": 1334.5
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 8010.0,
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 8025.0,
    "ltp": 409.4
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-12 13:32:01.771668",
-   "oi": 17490.0,
-   "ltp": 331.45
+   "time": "2026-11-12 13:47:01.488948",
+   "oi": 17555.0,
+   "ltp": 332.3
   }
  },
  "bo_active": [
@@ -816,7 +816,7 @@
    "n": 4,
    "last_candle": "2026-11-11 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1d|2026-11-05 09:15:00|CONFLICT",
    "token": "61471",
@@ -836,7 +836,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -856,7 +856,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -876,7 +876,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -896,7 +896,7 @@
    "n": 3,
    "last_candle": "2026-11-11 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1d|2026-11-06 09:15:00|CONFLICT",
    "token": "61471",
@@ -916,7 +916,7 @@
    "n": 3,
    "last_candle": "2026-11-11 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "BANKNIFTY23NOV26FUT",
    "key": "BANKNIFTY|1d|2026-11-06 09:15:00|CONFLICT",
    "token": "61466",
@@ -936,7 +936,7 @@
    "n": 0,
    "last_candle": "2026-11-02 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1w|2026-11-02 09:15:00",
    "token": "61471"
@@ -954,7 +954,7 @@
    "n": 0,
    "last_candle": "2026-11-02 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-12 13:15:00",
+   "checked": "2026-11-12 13:30:00",
    "contract": "BANKNIFTY23NOV26FUT",
    "key": "BANKNIFTY|1w|2026-11-02 09:15:00",
    "token": "61466"
@@ -2120,8 +2120,8 @@
    "date": "2026-11-04",
    "uhi": 2724.0,
    "ulo": 2390.0,
-   "ulast": 2645.0,
-   "uat": "2026-11-12 13:32:01.771668",
+   "ulast": 2650.3,
+   "uat": "2026-11-12 13:47:01.488948",
    "best_px": 2724.0,
    "worst_px": 2390.0,
    "mfe_R": 1.502,
@@ -2150,8 +2150,8 @@
    "date": "2026-11-04",
    "uhi": 5074.2,
    "ulo": 4700.0,
-   "ulast": 4933.8,
-   "uat": "2026-11-12 13:32:01.771668",
+   "ulast": 4942.1,
+   "uat": "2026-11-12 13:47:01.488948",
    "best_px": 5040.0,
    "worst_px": 4700.0,
    "mfe_R": 1.455,
@@ -2331,13 +2331,13 @@
    "mfe_R": 0.814,
    "mae_R": -0.354,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-12 13:15:00",
+   "excursion_upd": "2026-11-12 13:30:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 25466.6,
    "ulo": 24843.0,
-   "ulast": 25296.0,
-   "uat": "2026-11-12 13:32:01.771668"
+   "ulast": 25289.8,
+   "uat": "2026-11-12 13:47:01.488948"
   },
   {
    "key": "RB|RB_IDX_1d_RSI70_BUY|BANKNIFTY|2026-11-06 09:15:00",
@@ -2362,13 +2362,13 @@
    "mfe_R": 1.944,
    "mae_R": -0.177,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-12 13:15:00",
+   "excursion_upd": "2026-11-12 13:30:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 61444.0,
    "ulo": 58820.4,
-   "ulast": 61364.2,
-   "uat": "2026-11-12 13:32:01.771668"
+   "ulast": 61360.0,
+   "uat": "2026-11-12 13:47:01.488948"
   },
   {
    "key": "RB|RB_STK_1d_RSI80_BUY|ICICIBANK|2026-11-06 09:15:00",
@@ -2390,8 +2390,8 @@
    "date": "2026-11-06",
    "uhi": 1612.5,
    "ulo": 1568.2,
-   "ulast": 1589.4,
-   "uat": "2026-11-12 13:32:01.771668",
+   "ulast": 1588.2,
+   "uat": "2026-11-12 13:47:01.488948",
    "best_px": 1589.1,
    "worst_px": 1564.7,
    "mfe_R": 0.316,
@@ -2437,14 +2437,14 @@
    "date": "2026-11-09",
    "uhi": 25466.6,
    "ulo": 24843.0,
-   "ulast": 25296.0,
-   "uat": "2026-11-12 13:32:01.771668",
+   "ulast": 25289.8,
+   "uat": "2026-11-12 13:47:01.488948",
    "best_px": 25466.6,
    "worst_px": 24843.0,
    "mfe_R": 0.358,
    "mae_R": -0.081,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-12 13:15:00",
+   "excursion_upd": "2026-11-12 13:30:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -2485,14 +2485,14 @@
    "date": "2026-11-09",
    "uhi": 61444.0,
    "ulo": 58820.4,
-   "ulast": 61364.2,
-   "uat": "2026-11-12 13:32:01.771668",
+   "ulast": 61360.0,
+   "uat": "2026-11-12 13:47:01.488948",
    "best_px": 61444.0,
    "worst_px": 58820.4,
    "mfe_R": 0.7,
    "mae_R": -0.079,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-12 13:15:00",
+   "excursion_upd": "2026-11-12 13:30:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -2590,8 +2590,8 @@
    "date": "2026-11-09",
    "uhi": 962.3,
    "ulo": 899.55,
-   "ulast": 947.5,
-   "uat": "2026-11-12 13:32:01.771668"
+   "ulast": 949.15,
+   "uat": "2026-11-12 13:47:01.488948"
   },
   {
    "key": "MCX_HAMMER|NATURALGAS|2026-11-08",
@@ -2721,13 +2721,13 @@
    "mfe_R": 0.56,
    "mae_R": -0.535,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-12 13:15:00",
+   "excursion_upd": "2026-11-12 13:30:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 8313.0,
    "ulo": 7985.0,
-   "ulast": 8178.0,
-   "uat": "2026-11-12 13:32:01.771668"
+   "ulast": 8200.0,
+   "uat": "2026-11-12 13:47:01.488948"
   },
   {
    "key": "PHOENIXLTD|1dSTK|2026-11-11 09:15:00",
@@ -2763,8 +2763,8 @@
    "date": "2026-11-11",
    "uhi": 2249.8,
    "ulo": 2150.0,
-   "ulast": 2244.7,
-   "uat": "2026-11-12 13:32:01.771668"
+   "ulast": 2239.2,
+   "uat": "2026-11-12 13:47:01.488948"
   },
   {
    "key": "DTC|SILVER|2026-11-11|17:00",
@@ -2845,10 +2845,10 @@
    "experimental": true,
    "strategy": "RB_MCX_1h_BO20X_BUY_EXP",
    "version": null,
-   "uhi": 331.8,
+   "uhi": 332.85,
    "ulo": 329.75,
-   "ulast": 331.75,
-   "uat": "2026-11-12 13:32:01.771668"
+   "ulast": 332.8,
+   "uat": "2026-11-12 13:47:01.488948"
   }
  ],
  "candle_setups": {
@@ -3053,7 +3053,7 @@
     "vol_x": 1.29,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 8,690.00 (swing high) at 1.7R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "975,600 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "last_bar": "2026-11-12 13:15:00",
+    "last_bar": "2026-11-12 13:30:00",
     "logged": "2026-11-11 09:02:01.786291",
     "key": "MCX_HAMMER|CRUDEOIL|2026-11-10",
     "grade": "C",
@@ -3069,7 +3069,7 @@
      "daily bias bearish (against)"
     ],
     "live": {},
-    "last_px": 8175.0,
+    "last_px": 8180.0,
     "entry": 8154.0,
     "entry_time": "2026-11-11 14:45:00",
     "risk": 316.0,
@@ -4658,43 +4658,7 @@
    "HCLTECH|NFO3H": "2026-11-11 12:15:00",
    "EICHERMOT|NFO3H": "2026-11-12 09:15:00"
   },
-  "stk_block": "2026-11-11 15:30",
-  "stk_progress": {
-   "blk": "2026-11-12 13:15",
-   "done": [
-    "ZYDUSLIFE",
-    "UPL",
-    "TITAN",
-    "TATASTEEL",
-    "SUNPHARMA",
-    "SBICARD",
-    "RELIANCE",
-    "PFC",
-    "MARICO",
-    "KPITTECH",
-    "KALYANKJIL",
-    "INDIGO",
-    "HYUNDAI",
-    "HINDZINC",
-    "FORCEMOT",
-    "EICHERMOT",
-    "BOSCHLTD",
-    "BHARATFORG",
-    "BAJAJFINSV",
-    "ADANIENSOL",
-    "ANGELONE",
-    "BAJAJ-AUTO",
-    "BLUESTARCO",
-    "COLPAL",
-    "FORTIS",
-    "GLENMARK",
-    "ANANDRATHI",
-    "KARURVYSYA",
-    "ADANIGREEN",
-    "ADANIPORTS"
-   ],
-   "sent": 0
-  }
+  "stk_block": "2026-11-12 13:15"
  },
  "news": {
   "sent_ev": [
@@ -4737,21 +4701,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 361,
-  "started": "2026-11-12 13:32:01.771668",
-  "finished": "2026-11-12 13:39:43.496602",
-  "seconds": 461,
+  "seq": 362,
+  "started": "2026-11-12 13:47:01.488948",
+  "finished": "2026-11-12 14:03:54.447954",
+  "seconds": 1012,
   "status": "RATE_LIMITED",
-  "note": "api requests 59 ok 36 rate-limited 23 skipped 1 (budget 0) failed 2 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 66 ok 29 rate-limited 37 skipped 336 (budget 0) failed 6 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 59,
-   "ok": 36,
-   "rate_limited": 23,
-   "skipped": 1,
+   "calls": 66,
+   "ok": 29,
+   "rate_limited": 37,
+   "skipped": 336,
    "deadline_skips": 0,
-   "failed": 2,
+   "failed": 6,
    "mem_hits": 0,
-   "disk_hits": 21
+   "disk_hits": 9
   },
   "errors": 0,
   "messages": 0
@@ -9120,24 +9084,6 @@
   }
  },
  "rulebook_seen": [
-  "RB_STK_4h_MACD0_SELL|TATACONSUM|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|PRESTIGE|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|PRESTIGE|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|PGEL|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|PGEL|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|PERSISTENT|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|PERSISTENT|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|ABCAPITAL|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|ABCAPITAL|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|APLAPOLLO|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|APLAPOLLO|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|BAJFINANCE|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|BAJFINANCE|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|BANKBARODA|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|BANKBARODA|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|BSE|2026-11-09 15:15:00",
-  "RB_STK_4h_MACD0_SELL|BSE|2026-11-09 13:15:00",
-  "RB_STK_2h_SQZ_SELL|CIPLA|2026-11-09 15:15:00",
   "RB_STK_4h_MACD0_SELL|CIPLA|2026-11-09 13:15:00",
   "RB_STK_2h_SQZ_SELL|ALKEM|2026-11-09 15:15:00",
   "RB_STK_4h_MACD0_SELL|ALKEM|2026-11-09 13:15:00",
@@ -12119,7 +12065,25 @@
   "RB_STK_2h_SQZ_SELL|ADANIGREEN|2026-11-12 11:15:00",
   "RB_STK_4h_MACD0_SELL|ADANIGREEN|2026-11-12 09:15:00",
   "RB_STK_2h_SQZ_SELL|ADANIPORTS|2026-11-12 11:15:00",
-  "RB_STK_4h_MACD0_SELL|ADANIPORTS|2026-11-12 09:15:00"
+  "RB_STK_4h_MACD0_SELL|ADANIPORTS|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|APLAPOLLO|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|APLAPOLLO|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|BAJFINANCE|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|BAJFINANCE|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|BANKBARODA|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|BANKBARODA|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|BSE|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|BSE|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|CIPLA|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|CIPLA|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|COFORGE|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|COFORGE|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|CROMPTON|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|CROMPTON|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|GVT&D|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|GVT&D|2026-11-12 09:15:00",
+  "RB_STK_2h_SQZ_SELL|ICICIGI|2026-11-12 11:15:00",
+  "RB_STK_4h_MACD0_SELL|ICICIGI|2026-11-12 09:15:00"
  ],
  "mcxdtc": {
   "open": [],
