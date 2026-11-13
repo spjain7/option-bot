@@ -5017,21 +5017,22 @@
    "golddriftsbelow4000ashighusyieldsfueldecemberfedhikeoddsfxstreet",
    "goldpricefallinbhubaneswartodaynovember122026check22k24kratesinmajorcitieskaling",
    "goldfallstooveroneweeklowonfirmdollarfedratehikebetsreuters",
-   "goldpricecrashesbelow3900asfedratehikebetsoverwhelmsafehavendemandcoinpaper"
+   "goldpricecrashesbelow3900asfedratehikebetsoverwhelmsafehavendemandcoinpaper",
+   "goldpricefallinbhubaneswartodaynovember132026check22k24kratesinmajorcitieskaling"
   ],
   "day": "2026-11-13",
-  "n": 1
+  "n": 2
  },
  "scan": {
-  "seq": 403,
-  "started": "2026-11-13 00:19:02.718645",
-  "finished": "2026-11-13 00:19:12.548442",
-  "seconds": 9,
+  "seq": 404,
+  "started": "2026-11-13 08:42:06.382438",
+  "finished": "2026-11-13 08:44:46.881825",
+  "seconds": 160,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 200 ok 189 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 0,
-   "ok": 0,
+   "calls": 200,
+   "ok": 189,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -5040,7 +5041,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
