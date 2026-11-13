@@ -79,17 +79,17 @@
   "NIFTY|3h": "2026-10-22 09:15:00",
   "BANKNIFTY|1h": "2026-10-22 11:15:00",
   "BANKNIFTY|3h": "2026-10-22 09:15:00",
-  "BO|CRUDEOIL|3h": "2026-11-13 12:00:00",
-  "BO|NATURALGAS|3h": "2026-11-13 12:00:00",
+  "BO|CRUDEOIL|3h": "2026-11-13 15:00:00",
+  "BO|NATURALGAS|3h": "2026-11-13 15:00:00",
   "BO|NATURALGAS|1d": "2026-11-12 09:00:00",
-  "BO|GOLD|3h": "2026-11-13 12:00:00",
-  "BO|SILVER|3h": "2026-11-13 12:00:00",
+  "BO|GOLD|3h": "2026-11-13 15:00:00",
+  "BO|SILVER|3h": "2026-11-13 15:00:00",
   "BO|SILVER|1d": "2026-11-12 09:00:00",
-  "BO|COPPER|3h": "2026-11-13 12:00:00",
+  "BO|COPPER|3h": "2026-11-13 15:00:00",
   "BO|COPPER|1d": "2026-11-12 09:00:00",
-  "BO|ZINC|3h": "2026-11-13 12:00:00",
+  "BO|ZINC|3h": "2026-11-13 15:00:00",
   "BO|ZINC|1d": "2026-11-12 09:00:00",
-  "BO|ALUMINIUM|3h": "2026-11-13 12:00:00",
+  "BO|ALUMINIUM|3h": "2026-11-13 15:00:00",
   "BO|ALUMINIUM|1d": "2026-11-12 09:00:00",
   "BO|NIFTY|3h": "2026-11-13 12:15:00",
   "BO|NIFTY|1d": "2026-11-13 09:15:00",
@@ -738,19 +738,19 @@
    "ltp": 8305.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-13 17:47:02.359955",
-   "oi": 45970000.0,
-   "ltp": 309.9
+   "time": "2026-11-13 18:02:01.998115",
+   "oi": 45790000.0,
+   "ltp": 310.5
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-13 17:47:02.359955",
-   "oi": 15839.0,
-   "ltp": 136645.0
+   "time": "2026-11-13 18:02:01.998115",
+   "oi": 15812.0,
+   "ltp": 136555.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-13 17:47:02.359955",
-   "oi": 508500.0,
-   "ltp": 178416.0
+   "time": "2026-11-13 18:02:01.998115",
+   "oi": 508320.0,
+   "ltp": 178257.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -788,24 +788,24 @@
    "ltp": 60910.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-13 17:47:02.359955",
-   "oi": 18907500.0,
-   "ltp": 1317.7
+   "time": "2026-11-13 18:02:01.998115",
+   "oi": 18925000.0,
+   "ltp": 1316.35
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-13 17:47:02.359955",
-   "oi": 7880.0,
-   "ltp": 404.15
+   "time": "2026-11-13 18:02:01.998115",
+   "oi": 7860.0,
+   "ltp": 404.45
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-13 17:47:02.359955",
+   "time": "2026-11-13 18:02:01.998115",
    "oi": 16900.0,
    "ltp": 327.65
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-13 17:47:02.359955",
-   "oi": 713700.0,
-   "ltp": 8298.0
+   "time": "2026-11-13 18:02:01.998115",
+   "oi": 712900.0,
+   "ltp": 8297.0
   }
  },
  "bo_active": [
@@ -842,7 +842,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -862,7 +862,7 @@
    "n": 1,
    "last_candle": "2026-11-02 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -882,7 +882,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -975,10 +975,10 @@
    "risk": 2428.0,
    "best": 135951.0,
    "trailed": false,
-   "n": 3,
-   "last_candle": "2026-11-13 12:00:00",
+   "n": 4,
+   "last_candle": "2026-11-13 15:00:00",
    "tick": 1.0,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|3h|2026-11-12 18:00:00",
    "token": "495213",
@@ -995,10 +995,10 @@
    "risk": 16.7,
    "best": 1315.45,
    "trailed": false,
-   "n": 3,
-   "last_candle": "2026-11-13 12:00:00",
+   "n": 4,
+   "last_candle": "2026-11-13 15:00:00",
    "tick": 0.05,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "COPPER30NOV26FUT",
    "key": "COPPER|3h|2026-11-12 18:00:00",
    "token": "578634",
@@ -1018,7 +1018,7 @@
    "n": 0,
    "last_candle": "2026-11-12 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1d|2026-11-12 09:00:00",
    "token": "495213",
@@ -1038,7 +1038,7 @@
    "n": 0,
    "last_candle": "2026-11-12 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1m|2026-11-12 09:00:00",
    "token": "495213",
@@ -1055,10 +1055,10 @@
    "risk": 5.85,
    "best": 403.1,
    "trailed": false,
-   "n": 0,
-   "last_candle": "2026-11-13 12:00:00",
+   "n": 1,
+   "last_candle": "2026-11-13 15:00:00",
    "tick": 0.05,
-   "checked": "2026-11-13 17:30:00",
+   "checked": "2026-11-13 17:45:00",
    "contract": "ZINC30NOV26FUT",
    "key": "ZINC|3h|2026-11-13 12:00:00",
    "token": "578638",
@@ -1425,12 +1425,12 @@
  },
  "status": {
   "CRUDEOIL|3h": {
-   "candle": "2026-11-13 12:00:00",
-   "close": 8292.0,
-   "buy_above": 8308.0,
+   "candle": "2026-11-13 15:00:00",
+   "close": 8297.0,
+   "buy_above": 8345.0,
    "sell_below": 7807.0,
-   "ema200": 8687.37,
-   "vol_x": 1.78,
+   "ema200": 8683.48,
+   "vol_x": 0.85,
    "result": "no breakout (BUY 10-candle high / SELL 20-candle low)"
   },
   "CRUDEOIL|1d": {
@@ -1443,21 +1443,21 @@
    "result": "no 20-day breakout"
   },
   "NATURALGAS|3h": {
-   "candle": "2026-11-13 12:00:00",
-   "close": 309.6,
+   "candle": "2026-11-13 15:00:00",
+   "close": 310.0,
    "buy_above": 319.2,
    "sell_below": 275.5,
-   "ema200": 305.17,
-   "vol_x": 0.47,
+   "ema200": 305.21,
+   "vol_x": 0.57,
    "result": "no breakout (BUY 10-candle high / SELL 20-candle low)"
   },
   "GOLD|3h": {
-   "candle": "2026-11-13 12:00:00",
-   "close": 136620.0,
-   "buy_above": 141990.0,
+   "candle": "2026-11-13 15:00:00",
+   "close": 136621.0,
+   "buy_above": 141608.0,
    "sell_below": 135530.0,
-   "ema200": 146056.08,
-   "vol_x": 0.7,
+   "ema200": 145962.2,
+   "vol_x": 0.46,
    "result": "no breakout (BUY 10-candle high / SELL 20-candle low)"
   },
   "GOLD|1d": {
@@ -1470,12 +1470,12 @@
    "result": "SELL"
   },
   "SILVER|3h": {
-   "candle": "2026-11-13 12:00:00",
-   "close": 178201.0,
-   "buy_above": 187979.0,
+   "candle": "2026-11-13 15:00:00",
+   "close": 178306.0,
+   "buy_above": 187970.0,
    "sell_below": 177128.0,
-   "ema200": 205514.91,
-   "vol_x": 0.63,
+   "ema200": 205244.17,
+   "vol_x": 0.52,
    "result": "no breakout (BUY 10-candle high / SELL 20-candle low)"
   },
   "SILVER|1d": {
@@ -1488,13 +1488,13 @@
    "result": "no 20-day breakout"
   },
   "COPPER|3h": {
-   "candle": "2026-11-13 12:00:00",
-   "close": 1315.45,
-   "buy_above": 1348.75,
-   "sell_below": 1319.65,
-   "ema200": 1377.58,
-   "vol_x": 1.6,
-   "result": "SELL"
+   "candle": "2026-11-13 15:00:00",
+   "close": 1316.95,
+   "buy_above": 1347.0,
+   "sell_below": 1313.0,
+   "ema200": 1376.98,
+   "vol_x": 0.84,
+   "result": "no breakout (BUY 10-candle high / SELL 20-candle low)"
   },
   "COPPER|1d": {
    "candle": "2026-11-12 09:00:00",
@@ -1506,13 +1506,13 @@
    "result": "no 20-day breakout"
   },
   "ZINC|3h": {
-   "candle": "2026-11-13 12:00:00",
-   "close": 403.1,
-   "buy_above": 413.2,
-   "sell_below": 406.5,
-   "ema200": 420.16,
-   "vol_x": 3.35,
-   "result": "SELL"
+   "candle": "2026-11-13 15:00:00",
+   "close": 404.45,
+   "buy_above": 411.95,
+   "sell_below": 402.0,
+   "ema200": 420.01,
+   "vol_x": 0.92,
+   "result": "no breakout (BUY 10-candle high / SELL 20-candle low)"
   },
   "ZINC|1d": {
    "candle": "2026-11-12 09:00:00",
@@ -1524,12 +1524,12 @@
    "result": "no 20-day breakout"
   },
   "ALUMINIUM|3h": {
-   "candle": "2026-11-13 12:00:00",
-   "close": 327.0,
+   "candle": "2026-11-13 15:00:00",
+   "close": 327.65,
    "buy_above": 332.85,
    "sell_below": 324.25,
-   "ema200": 330.83,
-   "vol_x": 1.58,
+   "ema200": 330.8,
+   "vol_x": 1.09,
    "result": "no breakout (BUY 10-candle high / SELL 20-candle low)"
   },
   "ALUMINIUM|1d": {
@@ -3099,8 +3099,8 @@
    "version": null,
    "uhi": 8340.0,
    "ulo": 8232.0,
-   "ulast": 8292.0,
-   "uat": "2026-11-13 17:47:02.359955"
+   "ulast": 8297.0,
+   "uat": "2026-11-13 18:02:01.998115"
   },
   {
    "key": "RB|RB_MCX_1h_OIBO_SELL_EXP|ZINC|2026-11-13 12:00:00",
@@ -3131,8 +3131,8 @@
    "quote_time": "2026-11-13 13:02:02",
    "uhi": 405.0,
    "ulo": 402.85,
-   "ulast": 404.15,
-   "uat": "2026-11-13 17:47:02.359955"
+   "ulast": 404.45,
+   "uat": "2026-11-13 18:02:01.998115"
   },
   {
    "key": "RB|RB_STK_3h_EMA921_SELL|FORTIS|2026-11-13 12:15:00",
@@ -3174,8 +3174,8 @@
    "date": "2026-11-13",
    "uhi": 178260.0,
    "ulo": 177776.0,
-   "ulast": 178228.0,
-   "uat": "2026-11-13 17:47:02.359955"
+   "ulast": 178221.0,
+   "uat": "2026-11-13 18:02:01.998115"
   },
   {
    "key": "4H|GRASIM|2026-11-13 13:15:00",
@@ -5011,7 +5011,7 @@
     "best": 8302.0,
     "trailed": false,
     "trail_tf": "1h",
-    "trail_from": "2026-11-13 16:00:00",
+    "trail_from": "2026-11-13 17:00:00",
     "trail_noted": 8131.0
    },
    {
@@ -5476,16 +5476,16 @@
   "n": 4
  },
  "scan": {
-  "seq": 439,
-  "started": "2026-11-13 17:47:02.359955",
-  "finished": "2026-11-13 17:50:44.827696",
-  "seconds": 222,
+  "seq": 440,
+  "started": "2026-11-13 18:02:01.998115",
+  "finished": "2026-11-13 18:02:12.114353",
+  "seconds": 10,
   "status": "SUCCESS",
-  "note": "api requests 67 ok 61 rate-limited 6 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 67,
-   "ok": 61,
-   "rate_limited": 6,
+   "calls": 4,
+   "ok": 4,
+   "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
@@ -10792,34 +10792,6 @@
   }
  },
  "rulebook_seen": [
-  "RB_STK_4h_MACD0_SELL|PFC|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|MARICO|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|MARICO|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|KPITTECH|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|KPITTECH|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|KALYANKJIL|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|KALYANKJIL|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|INDIGO|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|INDIGO|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|HYUNDAI|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|HYUNDAI|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|HINDZINC|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|HINDZINC|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|FORCEMOT|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|FORCEMOT|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|EICHERMOT|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|EICHERMOT|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|BOSCHLTD|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|BOSCHLTD|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|BHARATFORG|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|BHARATFORG|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|BAJAJFINSV|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|BAJAJFINSV|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|ADANIENSOL|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|ADANIENSOL|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|BAJFINANCE|2026-11-11 15:15:00",
-  "RB_STK_4h_MACD0_SELL|BAJFINANCE|2026-11-11 13:15:00",
-  "RB_STK_2h_SQZ_SELL|APLAPOLLO|2026-11-11 15:15:00",
   "RB_STK_4h_MACD0_SELL|APLAPOLLO|2026-11-11 13:15:00",
   "RB_STK_2h_SQZ_SELL|ABCAPITAL|2026-11-11 15:15:00",
   "RB_STK_4h_MACD0_SELL|ABCAPITAL|2026-11-11 13:15:00",
@@ -13791,7 +13763,35 @@
   "RB_STK_2h_SQZ_SELL|HINDUNILVR|2026-11-13 15:15:00",
   "RB_STK_4h_MACD0_SELL|HINDUNILVR|2026-11-13 13:15:00",
   "RB_STK_2h_SQZ_SELL|LODHA|2026-11-13 15:15:00",
-  "RB_STK_4h_MACD0_SELL|LODHA|2026-11-13 13:15:00"
+  "RB_STK_4h_MACD0_SELL|LODHA|2026-11-13 13:15:00",
+  "RB_MCX_1h_MACD_BUY|CRUDEOIL|2026-11-13 17:00:00",
+  "RB_MCX_1h_BO20X_BUY_EXP|CRUDEOIL|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_BUY_EXP|CRUDEOIL|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_SELL_EXP|CRUDEOIL|2026-11-13 17:00:00",
+  "RB_MCX_1h_MACD_BUY|NATURALGAS|2026-11-13 17:00:00",
+  "RB_MCX_1h_BO20X_BUY_EXP|NATURALGAS|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_BUY_EXP|NATURALGAS|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_SELL_EXP|NATURALGAS|2026-11-13 17:00:00",
+  "RB_MCX_1h_MACD_BUY|GOLD|2026-11-13 17:00:00",
+  "RB_MCX_1h_BO20X_BUY_EXP|GOLD|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_BUY_EXP|GOLD|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_SELL_EXP|GOLD|2026-11-13 17:00:00",
+  "RB_MCX_1h_MACD_BUY|SILVER|2026-11-13 17:00:00",
+  "RB_MCX_1h_BO20X_BUY_EXP|SILVER|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_BUY_EXP|SILVER|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_SELL_EXP|SILVER|2026-11-13 17:00:00",
+  "RB_MCX_1h_MACD_BUY|COPPER|2026-11-13 17:00:00",
+  "RB_MCX_1h_BO20X_BUY_EXP|COPPER|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_BUY_EXP|COPPER|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_SELL_EXP|COPPER|2026-11-13 17:00:00",
+  "RB_MCX_1h_MACD_BUY|ZINC|2026-11-13 17:00:00",
+  "RB_MCX_1h_BO20X_BUY_EXP|ZINC|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_BUY_EXP|ZINC|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_SELL_EXP|ZINC|2026-11-13 17:00:00",
+  "RB_MCX_1h_MACD_BUY|ALUMINIUM|2026-11-13 17:00:00",
+  "RB_MCX_1h_BO20X_BUY_EXP|ALUMINIUM|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_BUY_EXP|ALUMINIUM|2026-11-13 17:00:00",
+  "RB_MCX_1h_OIBO_SELL_EXP|ALUMINIUM|2026-11-13 17:00:00"
  ],
  "mcxdtc": {
   "open": [
