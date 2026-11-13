@@ -1,20 +1,20 @@
 {
- "seq": 407,
- "started": "2026-11-13 09:17:01.874851",
- "finished": "2026-11-13 09:19:30.753074",
- "seconds": 148,
- "status": "RATE_LIMITED",
- "note": "api requests 24 ok 17 rate-limited 7 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 2",
+ "seq": 408,
+ "started": "2026-11-13 09:32:01.951977",
+ "finished": "2026-11-13 09:32:55.896253",
+ "seconds": 53,
+ "status": "SUCCESS",
+ "note": "api requests 13 ok 10 rate-limited 3 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 3",
  "api": {
-  "calls": 24,
-  "ok": 17,
-  "rate_limited": 7,
+  "calls": 13,
+  "ok": 10,
+  "rate_limited": 3,
   "skipped": 0,
   "deadline_skips": 0,
-  "failed": 1,
-  "mem_hits": 2,
-  "disk_hits": 15
+  "failed": 0,
+  "mem_hits": 0,
+  "disk_hits": 18
  },
  "errors": 0,
- "messages": 2
+ "messages": 3
 }
