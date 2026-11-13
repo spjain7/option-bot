@@ -33,11 +33,11 @@
     "risk": 78.15,
     "t1": 753.15,
     "t2": 831.3,
-    "hi": 717.0,
+    "hi": 718.05,
     "lo": 669.0,
-    "last": 710.9,
-    "sessions": 1,
-    "checked": "2026-11-12",
+    "last": 697.0,
+    "sessions": 2,
+    "checked": "2026-11-13",
     "t1_hit": false,
     "t2_hit": false,
     "exit_next_open": false,
@@ -50,66 +50,30 @@
   ],
   "last_candidates": [
    {
-    "symbol": "GABRIEL",
-    "score": 65,
-    "close": 1641.2,
-    "day": "2026-11-12"
-   },
-   {
-    "symbol": "UNIMECH",
+    "symbol": "HONASA",
     "score": 61,
-    "close": 1980.6,
-    "day": "2026-11-12"
+    "close": 501.95,
+    "day": "2026-11-13"
    },
    {
-    "symbol": "PAYTM",
-    "score": 60,
-    "close": 1925.0,
-    "day": "2026-11-12"
-   },
-   {
-    "symbol": "AARTIPHARM",
-    "score": 47,
-    "close": 1010.5,
-    "day": "2026-11-12"
-   },
-   {
-    "symbol": "POONAWALLA",
+    "symbol": "APOLLO",
     "score": 45,
-    "close": 493.0,
-    "day": "2026-11-12"
+    "close": 475.6,
+    "day": "2026-11-13"
    },
    {
-    "symbol": "RADICO",
-    "score": 38,
-    "close": 4638.2,
-    "day": "2026-11-12"
-   },
-   {
-    "symbol": "ABCAPITAL",
+    "symbol": "ANURAS",
     "score": 35,
-    "close": 419.5,
-    "day": "2026-11-12"
+    "close": 1300.6,
+    "day": "2026-11-13"
    },
    {
-    "symbol": "CDSL",
+    "symbol": "LICHSGFIN",
     "score": 35,
-    "close": 1455.0,
-    "day": "2026-11-12"
-   },
-   {
-    "symbol": "SBILIFE",
-    "score": 35,
-    "close": 1819.5,
-    "day": "2026-11-12"
-   },
-   {
-    "symbol": "BAJFINANCE",
-    "score": 35,
-    "close": 1115.0,
-    "day": "2026-11-12"
+    "close": 585.1,
+    "day": "2026-11-13"
    }
   ],
-  "asof": "2026-11-12"
+  "asof": "2026-11-13"
  }
 }
