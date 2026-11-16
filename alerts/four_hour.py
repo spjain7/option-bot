@@ -208,7 +208,8 @@ def _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close
     key = f"{'4H' if rule.get('tf', '4h') == '4h' else '3H'}|{name}|{last}"
     st["open"].append(dict(name=name, ex=ex, token=str(c["token"]), contract=c["symbol"], expiry=c["expiry"], side=sig["side"],
                            entry=plan["entry"], stop=plan["sl"], target=plan["target"], risk=plan["risk_unit"], tick=t, mult=mult,
-                           opened=str(now), days=[str(now.date())], key=key, max_days=rule["max_days"], tfl=tft))
+                           opened=str(now), days=[str(now.date())], key=key, max_days=rule["max_days"], tfl=tft,
+                           **(dict(await_open=True, atr=float(sig["atr"])) if after_close else {})))
     gf = {}
     try:                                                  # 4-Nov: shadow grade (alerts/intel.py) – stored only, never blocks
         import config as C_
@@ -236,15 +237,123 @@ def _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close
     return "SENT"
 
 
+GAP_MAX_ATR = 0.5         # after-close calls: skip if the next session opens more than 0.5 ATR past the call's entry
+
+
+def open_verdict(r, op):
+    """16-Nov (owner): an after-close call is decided at the next session's opening price `op`.
+    -> ("active", None) or ("skip", reason). Skip if the open is beyond the SL, at / beyond the target, or more than
+    GAP_MAX_ATR x ATR past the entry in the call's direction (no chasing)."""
+    s_ = 1 if r["side"] == "BUY" else -1
+    if s_ * (op - r["stop"]) <= 0:
+        return "skip", "opened beyond the SL"
+    if r.get("target") is not None and s_ * (op - r["target"]) >= 0:
+        return "skip", "opened at / beyond the target"
+    a = float(r.get("atr") or 0)
+    if a > 0 and s_ * (op - r["entry"]) > GAP_MAX_ATR * a:
+        return "skip", f"opened {s_ * (op - r['entry']) / a:.1f} ATR past the entry (max {GAP_MAX_ATR:g})"
+    return "active", None
+
+
+def _ledger_rows(state, key):
+    return [L for L in state.get("ledger", []) if L.get("status") == "OPEN" and L.get("key") in (key, f"{key}|OPT")]
+
+
+def _activate(state, st, r, op, now, msgs, closed_out):
+    """apply open_verdict; returns True if the record stays open."""
+    s_ = 1 if r["side"] == "BUY" else -1
+    t = r.get("tick")
+    v, why = open_verdict(r, op)
+    d = str(now.date())
+    if v == "skip":
+        if not r.get("shadow"):
+            msgs.append(f"🚫 SKIPPED – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) call of {pd.Timestamp(r['opened']):%d-%b %H:%M}: "
+                        f"{why} – opened {TP.fmt(op, t)} vs entry {TP.fmt(r['entry'], t)} · NO TRADE (call withdrawn)")
+        for L in _ledger_rows(state, r["key"]):
+            L.update(status="CLOSED", exit=L["entry"], note="skipped – gap", closed=str(now))
+        r.update(await_open=False, exit=None, exit_reason=f"skipped – {why}", closed=str(now), result_R=None, open_px=float(op))
+        closed_out.append(r)
+        return False
+    e = TP.tick_round(op, t) if t else float(op)
+    risk = s_ * (e - r["stop"])
+    r.update(await_open=False, call_entry=r["entry"], entry=e, risk=risk, days=[d], activated=str(now), open_px=float(op))
+    if r.get("trail_atr"):
+        r["best"] = e
+    for L in _ledger_rows(state, r["key"]):
+        if L.get("key") == r["key"]:
+            L.update(call_entry=L.get("entry"), entry=e)
+    if not r.get("shadow"):
+        rr = f" · target {TP.fmt(r['target'], t)} (R:R 1:{s_ * (r['target'] - e) / risk:.1f})" if r.get("target") is not None and risk > 0 else ""
+        msgs.append(f"✅ ACTIVE – {r['name']} FUT {r['side']} ({r.get('tfl', '')}): opened {TP.fmt(op, t)} (call entry {TP.fmt(r['call_entry'], t)}) "
+                    f"· SL {TP.fmt(r['stop'], t)}{rr} · risk {TP.fmt(risk, t)} pts")
+    return True
+
+
+MIGRATE_DAY = "2026-11-16"     # one-time: after-close calls of 13-Nov were never confirmed at today's open
+
+
+def _migrate(state, st, now):
+    """16-Nov one-time: tag the after-close NSE calls sent on 13-Nov (still open) to be decided at today's open, and
+    flag the TMPV call that was booked as a target at the open for re-checking. Runs only on MIGRATE_DAY."""
+    if st.get("await_v") or str(now.date()) != MIGRATE_DAY:
+        return []
+    from alerts import rulebook as RB
+    recheck = []
+    for r in st["open"]:
+        op_t = pd.Timestamp(r["opened"])
+        if str(op_t.date()) == "2026-11-13" and r["ex"] == "NFO" and op_t.hour * 60 + op_t.minute >= 15 * 60 + 30 and not r.get("pending"):
+            k = (RB.RULES.get(r.get("rule"), {}) or {}).get("k") or (RULES["NFO3H"]["k"] if r["key"].startswith("3H|") else RULES["NFO"]["k"])
+            r.update(await_open=True, atr=float(r.get("atr") or (r["risk"] / k if k else 0)), days=[str(op_t.date())])
+    for r in st["closed"]:
+        op_t = pd.Timestamp(r["opened"])
+        if (str(op_t.date()) == "2026-11-13" and r["ex"] == "NFO" and op_t.hour * 60 + op_t.minute >= 15 * 60 + 30
+                and str(r.get("closed", "")).startswith(MIGRATE_DAY) and not r.get("rechecked")):
+            k = (RB.RULES.get(r.get("rule"), {}) or {}).get("k") or RULES["NFO"]["k"]
+            r["atr"] = float(r.get("atr") or r["risk"] / k)
+            recheck.append(r)
+    st["await_v"] = 1
+    return recheck
+
+
+def _recheck_closed(state, st, r, op, now, msgs):
+    """a call closed at today's first check although it should first have been confirmed at the open."""
+    v, why = open_verdict(dict(r, entry=r.get("call_entry", r["entry"])), op)
+    t = r.get("tick")
+    r["rechecked"] = True
+    old = r.get("result_R")
+    if v == "skip":
+        r.update(exit=None, exit_reason=f"skipped – {why}", result_R=None, open_px=float(op))
+        for L in state.get("ledger", []):
+            if L.get("key") in (r["key"], f"{r['key']}|OPT"):
+                L.update(status="CLOSED", exit=L["entry"], note="skipped – gap")
+        msgs.append(f"ℹ️ CORRECTION – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) call of {pd.Timestamp(r['opened']):%d-%b %H:%M}: "
+                    f"today it {why} (open {TP.fmt(op, t)} vs entry {TP.fmt(r['entry'], t)}), so under the call's rule it was "
+                    f"NO TRADE – not the {old:+.2f}R exit reported earlier. Results corrected.")
+    else:
+        s_ = 1 if r["side"] == "BUY" else -1
+        e = TP.tick_round(op, t) if t else float(op)
+        risk = s_ * (e - r["stop"])
+        px = r["exit"]                                       # open was inside the zone, so the level itself was traded
+        res = s_ * (px - e) / risk if (risk > 0 and px is not None) else None
+        r.update(call_entry=r["entry"], entry=e, risk=risk, exit=px, result_R=None if res is None else round(res, 3), open_px=float(op))
+        for L in state.get("ledger", []):
+            if L.get("key") == r["key"]:
+                L.update(call_entry=L.get("entry"), entry=e, exit=round(px, 2))
+        if res is not None and old is not None and abs(res - old) >= 0.05:
+            msgs.append(f"ℹ️ CORRECTION – {r['name']} FUT {r['side']} ({r.get('tfl', '')}): measured from today's open {TP.fmt(op, t)} "
+                        f"the result is {res:+.2f}R (reported {old:+.2f}R).")
+
+
 def track(state, msgs, api, now, is_open):
     """Every scan: live price vs stop / target, time exit, exit one session before expiry."""
     from alerts import breakout as BO
     st = store(state)
-    if not st["open"]:
+    recheck = _migrate(state, st, now) if is_open("NFO", now) else []
+    if not st["open"] and not recheck:
         return
     keep = []
     by_ex = {}
-    for r in st["open"]:
+    for r in st["open"] + recheck:
         by_ex.setdefault(r["ex"], []).append(r["token"])
     qq = {}
     for ex, toks in by_ex.items():
@@ -253,14 +362,30 @@ def track(state, msgs, api, now, is_open):
                 qq.update(api.quotes({ex: sorted(set(toks))}) or {})
             except Exception:
                 pass
+    for r in recheck:
+        op = float((qq.get(r["token"]) or {}).get("open") or 0)
+        if op > 0:
+            _recheck_closed(state, st, r, op, now, msgs)
+        else:
+            st["await_v"] = 0                                # quote missing – try again next scan
+    skipped = []
     for r in st["open"]:
         s_ = 1 if r["side"] == "BUY" else -1
         if not is_open(r["ex"], now):
             keep.append(r); continue
         d = str(now.date())
+        ltp = float((qq.get(r["token"]) or {}).get("ltp") or 0)
+        q_ = qq.get(r["token"]) or {}
+        if r.get("await_open"):                               # 16-Nov (owner): decide at the next session's open
+            if d == str(pd.Timestamp(r["opened"]).date()):
+                keep.append(r); continue
+            op = float(q_.get("open") or 0) or ltp
+            if op <= 0:
+                keep.append(r); continue                      # no quote yet – decide at the next scan
+            if not _activate(state, st, r, op, now, msgs, skipped):
+                continue
         if d not in r["days"]:
             r["days"].append(d)
-        ltp = float((qq.get(r["token"]) or {}).get("ltp") or 0)
         if r.get("pending"):                                  # 6-Nov RSIX: stop-entry call waiting for its trigger
             if d not in r["pending_days"]:
                 r["pending_days"].append(d)
@@ -291,10 +416,13 @@ def track(state, msgs, api, now, is_open):
             st["closed"] = (st["closed"] + [r])[-200:]
             continue
         why = px = None
+        op = float(q_.get("open") or 0)                       # 16-Nov: a session that OPENS through a level fills at the open
         if ltp > 0 and s_ * (ltp - r["stop"]) <= 0:
-            why, px = ("trailing stop" if r.get("trailed") else "stop-loss"), r["stop"]
+            gap = op > 0 and s_ * (op - r["stop"]) <= 0 and r.get("stop_day") != d and r.get("activated", "")[:10] != d
+            why, px = ("trailing stop" if r.get("trailed") else "stop-loss") + (" (gap – filled at the open)" if gap else ""), (op if gap else r["stop"])
         elif ltp > 0 and r.get("target") is not None and s_ * (ltp - r["target"]) >= 0:
-            why, px = "🎯 target", r["target"]
+            gap = op > 0 and s_ * (op - r["target"]) >= 0 and r.get("activated", "")[:10] != d
+            why, px = "🎯 target" + (" (gap – filled at the open)" if gap else ""), (op if gap else r["target"])
         elif ltp > 0 and len(r["days"]) > r["max_days"]:
             why, px = f"time exit ({r['max_days']} sessions)", ltp
         elif ltp > 0 and (pd.Timestamp(r["expiry"]).normalize() - now.normalize()).days <= 1:
@@ -312,3 +440,5 @@ def track(state, msgs, api, now, is_open):
         else:
             keep.append(r)
     st["open"] = keep
+    if skipped:
+        st["closed"] = (st["closed"] + skipped)[-200:]
