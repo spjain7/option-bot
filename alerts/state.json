@@ -3334,8 +3334,8 @@
    "date": "2026-11-16",
    "uhi": 135323.0,
    "ulo": 134645.0,
-   "ulast": 135088.0,
-   "uat": "2026-11-16 19:47:01.432559"
+   "ulast": 135149.0,
+   "uat": "2026-11-16 19:48:02.990321"
   }
  ],
  "candle_setups": {
@@ -5876,24 +5876,24 @@
   "n": 4
  },
  "scan": {
-  "seq": 507,
-  "started": "2026-11-16 19:47:01.432559",
-  "finished": "2026-11-16 19:47:08.936229",
-  "seconds": 7,
+  "seq": 508,
+  "started": "2026-11-16 19:48:02.990321",
+  "finished": "2026-11-16 19:48:50.929528",
+  "seconds": 47,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 25 ok 25 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 25,
+   "ok": 25,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 15
+   "disk_hits": 0
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
