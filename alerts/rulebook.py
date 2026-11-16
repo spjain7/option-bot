@@ -385,6 +385,8 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
                    entry=plan["entry"], stop=plan["sl"], target=plan["target"], risk=plan["risk_unit"], tick=t, mult=mult,
                    opened=str(now), days=[str(now.date())], key=f"RB|{rid}|{name}|{last}", max_days=max_days,
                    tfl=TF_TXT[rule["tf"]], rule=rid, **({"shadow": True} if shadow else {}))
+        if after_close:                                       # 16-Nov (owner): confirm ACTIVE / SKIPPED at the next open
+            rec.update(await_open=True, atr=float(sig["atr"]))
         if rule.get("trail"):                                 # 7-Nov H1.12L: trailing stop on candle closes, no fixed target
             rec.update(trail_atr=float(rule["trail"]), atr=float(sig["atr"]), best=float(plan["entry"]), trailed=False,
                        trail_tf=rule["tf"], trail_from=last, trail_noted=float(plan["sl"]))
@@ -563,7 +565,7 @@ def _trail_update(state, msgs, st, name, frames):
     best close -/+ trail_atr x ATR (ATR of the signal candle, as in the research). Never loosens a stop. A message is sent
     when the stop has moved by >= 0.5 ATR since the last message (non-shadow calls only)."""
     for r in st.get("open", []):
-        if r.get("name") != name or not r.get("trail_atr") or r.get("pending"):
+        if r.get("name") != name or not r.get("trail_atr") or r.get("pending") or r.get("await_open"):
             continue
         fr = frames.get(r.get("trail_tf"))
         if fr is None or not len(fr):
@@ -577,6 +579,7 @@ def _trail_update(state, msgs, st, name, frames):
         ns = r["best"] - s_ * r["trail_atr"] * r["atr"]
         if s_ * (ns - r["stop"]) > 0:
             r["stop"] = round(ns, 2); r["trailed"] = True
+            r["stop_day"] = str(pd.Timestamp(new["time"].iloc[-1]).date())   # 16-Nov: a stop set today is not a gap fill
             if not r.get("shadow") and s_ * (r["stop"] - r.get("trail_noted", r["stop"])) >= 0.5 * r["atr"]:
                 msgs.append(f"🔁 SL UPDATE – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) · EXPERIMENTAL: trailing stop now "
                             f"{TP.fmt(r['stop'], r.get('tick'))} (best close {TP.fmt(r['best'], r.get('tick'))})")
