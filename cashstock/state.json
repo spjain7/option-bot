@@ -4,7 +4,30 @@
  "pending": null,
  "early": "2026-11-05",
  "breakout": {
-  "pending": [],
+  "pending": [
+   {
+    "key": "INE385F01024",
+    "symbol": "SGMART",
+    "day": "2026-11-16",
+    "close": 983.4,
+    "atr": 41.79,
+    "ema50": 827.62,
+    "score": 80,
+    "parts": {
+     "rs": 35,
+     "trend": 25,
+     "base": 0,
+     "entry": 10,
+     "breadth": 10
+    },
+    "rs126": 0.92,
+    "adx": 46.1,
+    "tight": 1.11,
+    "clv": 0.46,
+    "breadth50": 0.57,
+    "turnover_cr": 25.1
+   }
+  ],
   "open": [
    {
     "key": "INE303R01014",
@@ -33,11 +56,11 @@
     "risk": 78.15,
     "t1": 753.15,
     "t2": 831.3,
-    "hi": 718.05,
+    "hi": 729.35,
     "lo": 669.0,
-    "last": 697.0,
-    "sessions": 2,
-    "checked": "2026-11-13",
+    "last": 708.15,
+    "sessions": 3,
+    "checked": "2026-11-16",
     "t1_hit": false,
     "t2_hit": false,
     "exit_next_open": false,
@@ -46,34 +69,23 @@
   ],
   "closed": [],
   "seen": [
-   "INE303R01014|2026-11-11"
+   "INE303R01014|2026-11-11",
+   "INE385F01024|2026-11-16"
   ],
   "last_candidates": [
    {
-    "symbol": "HONASA",
+    "symbol": "SGMART",
+    "score": 80,
+    "close": 983.4,
+    "day": "2026-11-16"
+   },
+   {
+    "symbol": "ABDL",
     "score": 61,
-    "close": 501.95,
-    "day": "2026-11-13"
-   },
-   {
-    "symbol": "APOLLO",
-    "score": 45,
-    "close": 475.6,
-    "day": "2026-11-13"
-   },
-   {
-    "symbol": "ANURAS",
-    "score": 35,
-    "close": 1300.6,
-    "day": "2026-11-13"
-   },
-   {
-    "symbol": "LICHSGFIN",
-    "score": 35,
-    "close": 585.1,
-    "day": "2026-11-13"
+    "close": 784.25,
+    "day": "2026-11-16"
    }
   ],
-  "asof": "2026-11-13"
+  "asof": "2026-11-16"
  }
 }
