@@ -722,7 +722,7 @@
   ]
  },
  "day": {
-  "date": "2026-11-14",
+  "date": "2026-11-16",
   "alerts": 0,
   "watches": 0,
   "startup_sent": false,
@@ -5472,21 +5472,22 @@
    "goldpricecrashesbelow3900asfedratehikebetsoverwhelmsafehavendemandcoinpaper",
    "goldpricefallinbhubaneswartodaynovember132026check22k24kratesinmajorcitieskaling",
    "goldpricetodaynovember13continuingthedownwardtrendsinkingintoredlaodongvn",
-   "silverpriceforecastxagusdrisestonear5050despitefedratehikebetsfxstreet"
+   "silverpriceforecastxagusdrisestonear5050despitefedratehikebetsfxstreet",
+   "oilsteadieswithiranianattackonbaseinbahraininfocusbloomberg"
   ],
-  "day": "2026-11-14",
-  "n": 0
+  "day": "2026-11-16",
+  "n": 1
  },
  "scan": {
-  "seq": 467,
-  "started": "2026-11-14 00:19:35.022923",
-  "finished": "2026-11-14 00:19:44.541324",
-  "seconds": 9,
+  "seq": 468,
+  "started": "2026-11-16 08:42:21.826657",
+  "finished": "2026-11-16 08:45:01.637463",
+  "seconds": 159,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 195 ok 189 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
   "api": {
-   "calls": 0,
-   "ok": 0,
+   "calls": 195,
+   "ok": 189,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -5495,7 +5496,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 2
  },
  "paper": {
   "E_BUY_v1": {
