@@ -44,7 +44,7 @@ def frames(name):
     for x, days in ((h1, 4), (dd, 7)):
         gap = pd.to_datetime(x["time"]).diff().dt.days.fillna(0) > days
         x["seg"] = x["seg"].values + np.cumsum(gap.values) * 100000
-    fr = {"2h": blocks(h1, 2), "3h": blocks(h1, 3), "4h": blocks(h1, 4), "1d": dd}
+    fr = {"1h": h1, "2h": blocks(h1, 2), "3h": blocks(h1, 3), "4h": blocks(h1, 4), "1d": dd}
     return {k: RB.features(v).assign(seg=v.seg.values, raw_close=v.raw_close.values) for k, v in fr.items()}, dd
 
 
