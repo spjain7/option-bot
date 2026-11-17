@@ -4,30 +4,7 @@
  "pending": null,
  "early": "2026-11-05",
  "breakout": {
-  "pending": [
-   {
-    "key": "INE385F01024",
-    "symbol": "SGMART",
-    "day": "2026-11-16",
-    "close": 983.4,
-    "atr": 41.79,
-    "ema50": 827.62,
-    "score": 80,
-    "parts": {
-     "rs": 35,
-     "trend": 25,
-     "base": 0,
-     "entry": 10,
-     "breadth": 10
-    },
-    "rs126": 0.92,
-    "adx": 46.1,
-    "tight": 1.11,
-    "clv": 0.46,
-    "breadth50": 0.57,
-    "turnover_cr": 25.1
-   }
-  ],
+  "pending": [],
   "open": [
    {
     "key": "INE303R01014",
@@ -58,9 +35,46 @@
     "t2": 831.3,
     "hi": 729.35,
     "lo": 669.0,
-    "last": 708.15,
-    "sessions": 3,
-    "checked": "2026-11-16",
+    "last": 682.75,
+    "sessions": 4,
+    "checked": "2026-11-17",
+    "t1_hit": false,
+    "t2_hit": false,
+    "exit_next_open": false,
+    "version": "cash-bo-0.1 (CASHQ-BUY, experimental)"
+   },
+   {
+    "key": "INE385F01024",
+    "symbol": "SGMART",
+    "day": "2026-11-16",
+    "close": 983.4,
+    "atr": 41.79,
+    "ema50": 827.62,
+    "score": 80,
+    "parts": {
+     "rs": 35,
+     "trend": 25,
+     "base": 0,
+     "entry": 10,
+     "breadth": 10
+    },
+    "rs126": 0.92,
+    "adx": 46.1,
+    "tight": 1.11,
+    "clv": 0.46,
+    "breadth50": 0.57,
+    "turnover_cr": 25.1,
+    "entry": 979.0,
+    "entry_day": "2026-11-17",
+    "stop": 853.63,
+    "risk": 125.37,
+    "t1": 1104.37,
+    "t2": 1229.74,
+    "hi": 1028.0,
+    "lo": 975.6,
+    "last": 1016.25,
+    "sessions": 1,
+    "checked": "2026-11-17",
     "t1_hit": false,
     "t2_hit": false,
     "exit_next_open": false,
@@ -74,18 +88,36 @@
   ],
   "last_candidates": [
    {
-    "symbol": "SGMART",
-    "score": 80,
-    "close": 983.4,
-    "day": "2026-11-16"
+    "symbol": "CHOLAFIN",
+    "score": 57,
+    "close": 1884.7,
+    "day": "2026-11-17"
    },
    {
-    "symbol": "ABDL",
-    "score": 61,
-    "close": 784.25,
-    "day": "2026-11-16"
+    "symbol": "ADANIENSOL",
+    "score": 45,
+    "close": 1493.7,
+    "day": "2026-11-17"
+   },
+   {
+    "symbol": "ASIANPAINT",
+    "score": 45,
+    "close": 2625.0,
+    "day": "2026-11-17"
+   },
+   {
+    "symbol": "RELIANCE",
+    "score": 45,
+    "close": 1367.0,
+    "day": "2026-11-17"
+   },
+   {
+    "symbol": "DEEPAKFERT",
+    "score": 35,
+    "close": 1443.7,
+    "day": "2026-11-17"
    }
   ],
-  "asof": "2026-11-16"
+  "asof": "2026-11-17"
  }
 }
