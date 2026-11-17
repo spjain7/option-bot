@@ -1,0 +1,22 @@
+c,tf,side,setup,sl,exit,n,win,R,rs_L,T_R,V_R,OOS_n,OOS_win,OOS_R,OOS_rs_L
+GOLD,3h,BUY,10-candle breakout,2.0,single 1.5R,219,56.6,0.373,66.9,0.286,0.515,73,57.5,0.365,30.6
+GOLD,3h,BUY,10-candle breakout,2.0,"half 1R + rest 1.5R, SL to cost",225,63.1,0.316,62.5,0.258,0.413,74,60.8,0.31,31.0
+GOLD,3h,BUY,10-candle breakout,2.0,single 3R,149,52.3,0.719,89.6,0.657,0.974,53,49.1,0.61,44.5
+GOLD,4h,BUY,10-candle breakout,2.0,single 1.5R,183,59.6,0.449,77.4,0.335,0.623,58,60.3,0.462,36.2
+GOLD,4h,BUY,10-candle breakout,2.0,"half 1R + rest 1.5R, SL to cost",189,64.0,0.336,60.1,0.282,0.416,58,63.8,0.344,28.4
+GOLD,4h,BUY,10-candle breakout,2.0,single 3R,127,54.3,0.798,86.5,0.829,0.842,44,52.3,0.73,46.2
+SILVER,3h,BUY,RSI 70 momentum,1.5,single 1.5R,98,57.1,0.421,39.2,0.483,-0.122,34,70.6,0.713,35.9
+SILVER,3h,BUY,RSI 70 momentum,1.5,"half 1R + rest 1.5R, SL to cost",99,60.6,0.312,35.2,0.312,-0.206,34,73.5,0.664,33.9
+SILVER,3h,BUY,RSI 70 momentum,1.5,single 3R,80,47.5,0.672,54.8,0.679,0.007,28,57.1,1.139,49.3
+SILVER,3h,BUY,RSI 70 momentum,2.0,single 1.5R,86,57.0,0.386,32.7,0.561,-0.216,28,67.9,0.607,28.9
+SILVER,3h,BUY,RSI 70 momentum,2.0,"half 1R + rest 1.5R, SL to cost",87,65.5,0.393,30.1,0.515,-0.086,29,75.9,0.583,25.5
+SILVER,3h,BUY,RSI 70 momentum,2.0,single 3R,70,55.7,0.833,73.4,0.825,0.028,25,64.0,1.39,65.7
+COPPER,1d,BUY,10-candle breakout,2.0,single 1.5R,248,52.8,0.189,17.3,0.143,0.269,52,53.8,0.223,5.8
+COPPER,1d,BUY,10-candle breakout,2.0,"half 1R + rest 1.5R, SL to cost",249,55.8,0.161,15.0,0.1,0.264,52,55.8,0.214,5.4
+COPPER,1d,BUY,10-candle breakout,2.0,single 3R,200,51.5,0.303,26.1,0.184,0.379,41,65.9,0.562,15.6
+ZINC,1d,BUY,10-candle breakout,2.0,single 1.5R,245,52.2,0.184,13.9,0.133,0.166,55,54.5,0.325,8.4
+ZINC,1d,BUY,10-candle breakout,2.0,"half 1R + rest 1.5R, SL to cost",248,56.9,0.161,13.6,0.108,0.159,55,60.0,0.295,7.7
+ZINC,1d,BUY,10-candle breakout,2.0,single 3R,207,45.9,0.17,9.0,0.083,0.254,44,54.5,0.307,6.1
+NATURALGAS,4h,SELL,20-candle breakout,2.0,single 1.5R,124,47.6,0.108,5.0,0.148,0.255,35,42.9,-0.079,-0.2
+NATURALGAS,4h,SELL,20-candle breakout,2.0,"half 1R + rest 1.5R, SL to cost",123,54.5,0.093,4.6,0.145,0.178,35,51.4,-0.063,-0.1
+NATURALGAS,4h,SELL,20-candle breakout,2.0,single 3R,94,46.8,0.326,8.5,0.362,0.385,27,48.1,0.219,1.2

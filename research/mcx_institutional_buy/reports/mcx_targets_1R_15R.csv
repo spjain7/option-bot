@@ -1,0 +1,76 @@
+c,tf,side,setup,sl,tg,n,win,R,rs_L,OOS_n,OOS_win,OOS_R,OOS_rs_L
+GOLD,3h,BUY,10-candle breakout,2.0,1.0,279,63.8,0.24,61.3,85,63.5,0.263,32.9
+GOLD,3h,BUY,10-candle breakout,2.0,1.5,219,56.6,0.373,66.9,73,57.5,0.365,30.6
+GOLD,3h,BUY,10-candle breakout,2.0,3.0,149,52.3,0.719,89.6,53,49.1,0.61,44.5
+GOLD,3h,BUY,10-candle breakout,1.5,1.0,332,63.6,0.221,50.1,106,61.3,0.219,20.6
+GOLD,3h,BUY,10-candle breakout,1.5,1.5,267,57.7,0.374,70.3,84,57.1,0.4,33.9
+GOLD,4h,BUY,10-candle breakout,2.0,1.0,243,66.3,0.296,68.3,75,64.0,0.272,32.5
+GOLD,4h,BUY,10-candle breakout,2.0,1.5,183,59.6,0.449,77.4,58,60.3,0.462,36.2
+GOLD,4h,BUY,10-candle breakout,2.0,3.0,127,54.3,0.798,86.5,44,52.3,0.73,46.2
+GOLD,4h,BUY,10-candle breakout,1.5,1.0,284,63.4,0.23,43.3,89,61.8,0.229,18.1
+GOLD,4h,BUY,10-candle breakout,1.5,1.5,234,58.5,0.412,67.5,76,57.9,0.396,30.8
+SILVER,3h,BUY,RSI 70 momentum,2.0,1.0,97,63.9,0.273,32.7,33,75.8,0.478,29.9
+SILVER,3h,BUY,RSI 70 momentum,2.0,1.5,86,57.0,0.386,32.7,28,67.9,0.607,28.9
+SILVER,3h,BUY,RSI 70 momentum,2.0,3.0,70,55.7,0.833,73.4,25,64.0,1.39,65.7
+SILVER,3h,BUY,RSI 70 momentum,1.5,1.0,111,62.2,0.194,27.9,39,74.4,0.458,27.6
+SILVER,3h,BUY,RSI 70 momentum,1.5,1.5,98,57.1,0.421,39.2,34,70.6,0.713,35.9
+SILVER,3h,BUY,20-candle breakout,2.0,1.0,224,56.7,0.103,28.8,80,66.2,0.287,30.5
+SILVER,3h,BUY,20-candle breakout,2.0,1.5,177,48.6,0.136,34.4,60,63.3,0.483,37.0
+SILVER,3h,BUY,20-candle breakout,2.0,3.0,131,43.5,0.367,66.6,43,48.8,0.644,58.1
+SILVER,3h,BUY,20-candle breakout,1.5,1.0,260,54.2,0.029,15.8,92,63.0,0.227,19.1
+SILVER,3h,BUY,20-candle breakout,1.5,1.5,218,47.7,0.134,25.5,80,56.2,0.357,26.0
+COPPER,1d,BUY,10-candle breakout,2.0,1.0,293,57.0,0.134,15.9,62,59.7,0.202,7.5
+COPPER,1d,BUY,10-candle breakout,2.0,1.5,248,52.8,0.189,17.3,52,53.8,0.223,5.8
+COPPER,1d,BUY,10-candle breakout,2.0,3.0,200,51.5,0.303,26.1,41,65.9,0.562,15.6
+COPPER,1d,BUY,10-candle breakout,1.5,1.0,348,56.6,0.106,11.4,71,54.9,0.145,4.1
+COPPER,1d,BUY,10-candle breakout,1.5,1.5,286,51.7,0.17,13.8,56,55.4,0.298,6.7
+ZINC,1d,BUY,Breakout retest,2.0,1.0,209,57.4,0.124,6.1,46,56.5,0.186,3.7
+ZINC,1d,BUY,Breakout retest,2.0,1.5,172,50.0,0.123,4.3,39,46.2,0.179,4.1
+ZINC,1d,BUY,Breakout retest,2.0,3.0,139,48.9,0.226,6.6,30,46.7,0.232,3.7
+ZINC,1d,BUY,Breakout retest,1.5,1.0,252,55.6,0.075,4.2,57,56.1,0.148,2.8
+ZINC,1d,BUY,Breakout retest,1.5,1.5,209,49.8,0.133,6.5,47,48.9,0.206,3.5
+ZINC,1d,BUY,10-candle breakout,2.0,1.0,296,56.4,0.11,10.3,65,58.5,0.22,6.1
+ZINC,1d,BUY,10-candle breakout,2.0,1.5,245,52.2,0.184,13.9,55,54.5,0.325,8.4
+ZINC,1d,BUY,10-candle breakout,2.0,3.0,207,45.9,0.17,9.0,44,54.5,0.307,6.1
+ZINC,1d,BUY,10-candle breakout,1.5,1.0,354,53.1,0.041,5.3,80,57.5,0.163,5.2
+ZINC,1d,BUY,10-candle breakout,1.5,1.5,291,48.5,0.11,8.9,64,51.6,0.273,6.3
+NATURALGAS,4h,SELL,20-candle breakout,2.0,1.0,149,55.0,0.064,3.5,40,47.5,-0.126,-0.7
+NATURALGAS,4h,SELL,20-candle breakout,2.0,1.5,124,47.6,0.108,5.0,35,42.9,-0.079,-0.2
+NATURALGAS,4h,SELL,20-candle breakout,2.0,3.0,94,46.8,0.326,8.5,27,48.1,0.219,1.2
+NATURALGAS,4h,SELL,20-candle breakout,1.5,1.0,182,55.5,0.058,3.9,47,44.7,-0.165,-0.6
+NATURALGAS,4h,SELL,20-candle breakout,1.5,1.5,144,44.4,0.026,2.3,38,39.5,-0.154,-0.3
+CRUDEOIL,4h,BUY,MACD signal cross,2.0,1.0,65,52.3,-0.014,-0.1,27,59.3,0.087,0.4
+CRUDEOIL,4h,BUY,MACD signal cross,2.0,1.5,62,48.4,0.107,0.5,27,55.6,0.217,0.6
+CRUDEOIL,4h,BUY,MACD signal cross,2.0,3.0,58,43.1,0.391,5.7,25,52.0,0.586,4.7
+CRUDEOIL,4h,BUY,MACD signal cross,1.5,1.0,72,55.6,0.076,0.4,31,61.3,0.165,0.5
+CRUDEOIL,4h,BUY,MACD signal cross,1.5,1.5,68,47.1,0.089,1.7,30,53.3,0.216,1.7
+ALUMINIUM,1w,BUY,10-candle breakout,2.0,1.0,58,53.4,0.065,3.0,16,62.5,0.275,3.8
+ALUMINIUM,1w,BUY,10-candle breakout,2.0,1.5,47,40.4,-0.055,-1.8,12,50.0,0.214,2.0
+ALUMINIUM,1w,BUY,10-candle breakout,2.0,3.0,37,40.5,0.444,9.7,10,50.0,0.991,8.3
+ALUMINIUM,1w,BUY,10-candle breakout,1.5,1.0,66,57.6,0.099,4.3,17,70.6,0.38,4.7
+ALUMINIUM,1w,BUY,10-candle breakout,1.5,1.5,55,50.9,0.232,5.7,16,56.2,0.355,3.3
+ALUMINIUM,1w,BUY,20-candle breakout,2.0,1.0,43,55.8,0.114,3.0,13,53.8,0.117,1.6
+ALUMINIUM,1w,BUY,20-candle breakout,2.0,1.5,37,43.2,0.065,1.0,12,41.7,0.086,1.0
+ALUMINIUM,1w,BUY,20-candle breakout,2.0,3.0,25,48.0,0.598,9.7,7,57.1,1.058,6.1
+ALUMINIUM,1w,BUY,20-candle breakout,1.5,1.0,49,61.2,0.163,4.7,14,64.3,0.258,3.0
+ALUMINIUM,1w,BUY,20-candle breakout,1.5,1.5,41,51.2,0.231,4.0,12,50.0,0.199,1.2
+ALUMINIUM,1w,SELL,10-candle breakout,2.0,1.0,34,32.4,-0.374,-6.9,8,25.0,-0.546,-3.5
+ALUMINIUM,1w,SELL,10-candle breakout,2.0,1.5,29,31.0,-0.342,-5.4,6,16.7,-0.797,-3.7
+ALUMINIUM,1w,SELL,10-candle breakout,2.0,3.0,25,28.0,-0.341,-5.2,6,16.7,-0.797,-3.7
+ALUMINIUM,1w,SELL,10-candle breakout,1.5,1.0,42,42.9,-0.229,-4.8,8,25.0,-0.619,-2.9
+ALUMINIUM,1w,SELL,10-candle breakout,1.5,1.5,36,27.8,-0.39,-5.1,6,33.3,-0.312,-0.6
+ALUMINIUM,1w,SELL,20-candle breakout,2.0,1.0,22,40.9,-0.2,-0.3,3,33.3,-0.4,-0.0
+ALUMINIUM,1w,SELL,20-candle breakout,2.0,1.5,21,33.3,-0.23,-0.9,3,33.3,-0.611,-0.8
+ALUMINIUM,1w,SELL,20-candle breakout,2.0,3.0,17,35.3,-0.178,-0.7,3,33.3,-0.611,-0.8
+ALUMINIUM,1w,SELL,20-candle breakout,1.5,1.0,27,48.1,-0.134,-1.1,4,25.0,-0.692,-1.0
+ALUMINIUM,1w,SELL,20-candle breakout,1.5,1.5,24,33.3,-0.298,-2.1,3,33.3,-0.746,-0.7
+ALUMINIUM,1M,BUY,10-candle breakout,2.0,1.0,18,66.7,0.302,8.5,7,85.7,0.688,7.8
+ALUMINIUM,1M,BUY,10-candle breakout,2.0,1.5,14,50.0,0.187,4.8,4,75.0,0.968,6.5
+ALUMINIUM,1M,BUY,10-candle breakout,2.0,3.0,12,41.7,0.174,3.3,3,66.7,1.102,5.4
+ALUMINIUM,1M,BUY,10-candle breakout,1.5,1.0,20,65.0,0.258,5.6,7,71.4,0.396,3.5
+ALUMINIUM,1M,BUY,10-candle breakout,1.5,1.5,16,62.5,0.489,9.3,5,80.0,0.967,6.8
+ALUMINIUM,1M,SELL,10-candle breakout,2.0,1.0,7,14.3,-0.637,-7.2,2,0.0,-0.973,-3.5
+ALUMINIUM,1M,SELL,10-candle breakout,2.0,1.5,7,14.3,-0.637,-7.2,2,0.0,-0.973,-3.5
+ALUMINIUM,1M,SELL,10-candle breakout,2.0,3.0,7,14.3,-0.637,-7.2,2,0.0,-0.973,-3.5
+ALUMINIUM,1M,SELL,10-candle breakout,1.5,1.0,9,22.2,-0.565,-5.9,2,0.0,-1.033,-2.8
+ALUMINIUM,1M,SELL,10-candle breakout,1.5,1.5,7,14.3,-0.676,-5.8,2,0.0,-1.033,-2.8

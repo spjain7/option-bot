@@ -7,7 +7,7 @@
   segments   no trade spans a contract switch; at the last bar of a segment the trade is closed at that bar's close.
   overlap    one position at a time per commodity per rule; the next signal must come after the exit bar.
 Exit kinds: 0 fixed-R target, 1 level target (structural), 2 chandelier trail (k ATR from the highest close, never below the
-initial stop), 3 time exit (close of bar entry+N-1), 4 partial (half at +1R, stop to break-even, rest at +3R).
+initial stop), 3 time exit (close of bar entry+N-1), 4 partial (half at +1R, stop to break-even, rest at +3R), 5 the same with the rest at Rmult (17-Nov).
 All exits also stop at max_hold bars (closed at that bar's close)."""
 import numpy as np
 from numba import njit
@@ -39,8 +39,8 @@ def simulate(o, h, l, c, atr, seg, costf, sig, stop, elev, tgt, kind, Rmult, max
         st = stop[t]; rk = px - st
         if rk < min_risk * atr[t] or rk > max_risk * atr[t] or rk <= 0:
             rej += 1; t += 1; continue
-        if kind == 0 or kind == 4:
-            tp = px + (Rmult if kind == 0 else 3.0) * rk
+        if kind == 0 or kind == 4 or kind == 5:
+            tp = px + (3.0 if kind == 4 else Rmult) * rk
         elif kind == 1:
             tp = tgt[t]
             if not np.isfinite(tp) or (tp - px) / rk < min_rr:
@@ -54,9 +54,9 @@ def simulate(o, h, l, c, atr, seg, costf, sig, stop, elev, tgt, kind, Rmult, max
                 x = o[j]; reason = 1; break
             if l[j] <= cur:
                 x = cur; reason = 1 if not half else 5; break
-            if (kind == 0 or kind == 1 or kind == 4) and h[j] >= tp:
+            if (kind == 0 or kind == 1 or kind == 4 or kind == 5) and h[j] >= tp:
                 x = max(o[j], tp) if j > e else tp; reason = 2; break
-            if kind == 4 and not half and h[j] >= px + rk:
+            if (kind == 4 or kind == 5) and not half and h[j] >= px + rk:
                 half = True; bank = 0.5 * 1.0; cur = max(cur, px)
             best = max(best, (h[j] - px) / rk); worst = min(worst, (l[j] - px) / rk)
             if kind == 2:
@@ -72,7 +72,7 @@ def simulate(o, h, l, c, atr, seg, costf, sig, stop, elev, tgt, kind, Rmult, max
             break
         best = max(best, (h[j] - px) / rk); worst = min(worst, (l[j] - px) / rk)
         g = (x - px) / rk
-        if kind == 4:
+        if kind == 4 or kind == 5:
             g = bank + 0.5 * g if half else g
         out_s[m] = t; out_e[m] = e; out_x[m] = j; gR[m] = g; nR[m] = g - costf[e] * px / rk
         mfe[m] = best; mae[m] = worst; why[m] = reason; m += 1
