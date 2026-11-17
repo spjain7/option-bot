@@ -3375,7 +3375,7 @@
    "uhi": 330.0,
    "ulo": 326.6,
    "ulast": 326.9,
-   "uat": "2026-11-17 19:47:02.091132"
+   "uat": "2026-11-17 19:48:04.732382"
   },
   {
    "key": "STK_HANGMAN|LTM|2026-11-09",
@@ -3436,7 +3436,7 @@
    "uhi": 134450.0,
    "ulo": 133739.0,
    "ulast": 134135.0,
-   "uat": "2026-11-17 19:47:02.091132"
+   "uat": "2026-11-17 19:48:04.732382"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|COCHINSHIP|2026-11-13 13:15:00",
@@ -6442,21 +6442,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 567,
-  "started": "2026-11-17 19:47:02.091132",
-  "finished": "2026-11-17 19:47:10.659097",
-  "seconds": 8,
+  "seq": 568,
+  "started": "2026-11-17 19:48:04.732382",
+  "finished": "2026-11-17 19:48:56.476569",
+  "seconds": 51,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 26 ok 26 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 26,
+   "ok": 26,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 15
+   "disk_hits": 0
   },
   "errors": 0,
   "messages": 0
