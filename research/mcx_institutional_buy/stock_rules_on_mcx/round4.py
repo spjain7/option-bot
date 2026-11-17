@@ -24,7 +24,8 @@ from research.mcx_institutional_buy.stock_rules_on_mcx.run import frames
 
 warnings.filterwarnings("ignore")
 TFS = ["3h", "4h", "1d", "1w", "1M"]
-HT = {"3h": ("1d", "1w"), "4h": ("1d", "1w"), "1d": ("1w", "1M"), "1w": ("1M", None), "1M": (None, None)}
+ORD = ["1h", "2h", "3h", "4h", "1d", "1w", "1M"]
+HT = {"1h": ("1d", "1w"), "2h": ("1d", "1w"), "3h": ("1d", "1w"), "4h": ("1d", "1w"), "1d": ("1w", "1M"), "1w": ("1M", None), "1M": (None, None)}
 FAMS = ["BO10", "BO20", "BO55", "PWK", "PMO", "MARU20"]
 FILTS = [(), ("VOL",), ("HT1",), ("HT2",), ("HT1", "HT2"), ("VOL", "HT1"), ("VOL", "HT1", "HT2")]
 EXITS = [(k, r, 0) for k in (1.5, 2.0, 3.0) for r in (0.75, 1.0, 2.0, 3.0)] + [(2.0, 0.0, 2)]
@@ -68,13 +69,13 @@ def prev_level(f_hi, t_lo, known_from, col):
     return np.where(idx >= 0, s.values[np.clip(idx, 0, None)], np.nan)
 
 
-def build(name):
+def build(name, tfs=None):
     F, dd = frames(name)
     dd = dd.reset_index(drop=True)
     w = resample(dd, "W-MON") if False else resample(dd, "W")
     m = resample(dd, "MS")
-    fr = {"3h": F["3h"].reset_index(drop=True), "4h": F["4h"].reset_index(drop=True), "1d": feats(dd), "1w": feats(w), "1M": feats(m)}
-    for k in ("3h", "4h"):
+    fr = {"1h": F["1h"].reset_index(drop=True), "2h": F["2h"].reset_index(drop=True), "3h": F["3h"].reset_index(drop=True), "4h": F["4h"].reset_index(drop=True), "1d": feats(dd), "1w": feats(w), "1M": feats(m)}
+    for k in ("1h", "2h", "3h", "4h"):
         fr[k]["atr"] = fr[k]["atr"].values
     # gap segments only for weekly / monthly (positions are rolled; costs raised instead)
     for k in ("1w", "1M"):
@@ -85,7 +86,7 @@ def build(name):
              "1w": pd.to_datetime(fr["1w"]["time"]) + pd.Timedelta(days=7),
              "1M": pd.to_datetime(fr["1M"]["time"]) + pd.offsets.MonthBegin(1)}
     out = {}
-    for tf in TFS:
+    for tf in (tfs or TFS):
         f = fr[tf]; t = pd.to_datetime(f["time"]).values
         if tf in ("1d",):
             t_eval = (pd.to_datetime(f["time"]).dt.normalize() + pd.Timedelta(hours=23, minutes=59)).values   # decided at the close
@@ -105,11 +106,11 @@ def build(name):
                 ht[lab] = trend_map(fr[hk], t_eval, known[hk].values)
         lv = {}
         for lab, hk in (("PWK", "1w"), ("PMO", "1M")):
-            if TFS.index(tf) >= TFS.index(hk):
+            if ORD.index(tf) >= ORD.index(hk):
                 lv[lab] = None
             else:
                 lv[lab] = (prev_level(fr[hk], t_eval, known[hk].values, "high"), prev_level(fr[hk], t_eval, known[hk].values, "low"))
-        out[tf] = dict(f=f, ht=ht, lv=lv, per=RN.period_of("1h" if tf in ("3h", "4h") else "1d", pd.to_datetime(f["time"])))
+        out[tf] = dict(f=f, ht=ht, lv=lv, per=RN.period_of("1h" if tf in ("1h", "2h", "3h", "4h") else "1d", pd.to_datetime(f["time"])))
     return out
 
 
