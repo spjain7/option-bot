@@ -6454,12 +6454,12 @@
   "n": 2
  },
  "scan": {
-  "seq": 586,
-  "started": "2026-11-18 00:17:01.311274",
-  "finished": "2026-11-18 00:17:06.598670",
-  "seconds": 5,
+  "seq": 587,
+  "started": "2026-11-18 00:19:37.284553",
+  "finished": "2026-11-18 00:19:47.667982",
+  "seconds": 10,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -6471,7 +6471,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 1
+  "messages": 0
  },
  "paper": {
   "E_BUY_v1": {
