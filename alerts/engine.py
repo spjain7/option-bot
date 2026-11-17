@@ -666,7 +666,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                 rbf = {"1d": dd,                                    # index: daily rules (LONG20-001)
                        "1h": RB.complete(h1full.reset_index(drop=True), "1h", ex, now)}   # 7-Nov: owner 1h OI rule (EXPERIMENTAL)
             info["rulebook"] = RB.run(state, msgs, api, name, ex, c, rbf, dd, q, now, RP.mult_for(name, ex, c.get("lot")),
-                                      "MCX" if ex == "MCX" else "INDEX", oi=oi)
+                                      "MCX" if ex == "MCX" else "INDEX", oi=oi,
+                                      after_close=not is_open("MCX" if ex == "MCX" else "NFO", now))   # 17-Nov: held to the next open
         except Exception as e_:
             print(f"[rulebook] {name} skipped: {type(e_).__name__}: {e_}")
     if ex == "MCX" and _cfg("PAPER_EBUY", True):                     # 4-Nov: E_BUY_v1 PAPER ONLY (never sent, alerts/paper.py)
