@@ -39,6 +39,11 @@ def frames(name):
                            raw_close=h.close))
     dd = pd.DataFrame(dict(time=d.time, open=d.a_open, high=d.a_high, low=d.a_low, close=d.a_close, volume=d.volume, seg=d.seg,
                            raw_close=d.close))
+    # 17-Nov: the Angel files have holes (all commodities Jan-Apr 2022 on daily, gold Aug-Oct 2022): a gap starts a new
+    # segment, so no trade is ever held across missing data (the simulator closes it at the last bar before the gap)
+    for x, days in ((h1, 4), (dd, 7)):
+        gap = pd.to_datetime(x["time"]).diff().dt.days.fillna(0) > days
+        x["seg"] = x["seg"].values + np.cumsum(gap.values) * 100000
     fr = {"2h": blocks(h1, 2), "3h": blocks(h1, 3), "4h": blocks(h1, 4), "1d": dd}
     return {k: RB.features(v).assign(seg=v.seg.values, raw_close=v.raw_close.values) for k, v in fr.items()}, dd
 
