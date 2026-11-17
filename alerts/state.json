@@ -6447,18 +6447,19 @@
    "goldpricetoday3865at9ametamidfedhikebetstheeasternherald",
    "goldsilverpricesedgehigherasinvestorsawaitusfedsignalschecktodaysrates17112026ma",
    "silverpricefluctuationsonnovember17continuingthedownwardtrendlaodongvn",
-   "crudeoilpricerisetankerattacksliftbrentabove93slugcrudeoilpriceriseconstructionr"
+   "crudeoilpricerisetankerattacksliftbrentabove93slugcrudeoilpriceriseconstructionr",
+   "midwestrockiesnaturalgasforwardpricesreflectexpectedjanuarychillsnaturalgasintel"
   ],
   "day": "2026-11-18",
-  "n": 1
+  "n": 2
  },
  "scan": {
-  "seq": 585,
-  "started": "2026-11-18 00:02:02.171652",
-  "finished": "2026-11-18 00:02:12.783882",
-  "seconds": 10,
+  "seq": 586,
+  "started": "2026-11-18 00:17:01.311274",
+  "finished": "2026-11-18 00:17:06.598670",
+  "seconds": 5,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -6470,7 +6471,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 2
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
