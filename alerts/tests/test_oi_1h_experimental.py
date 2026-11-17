@@ -26,7 +26,10 @@ try:
     src = subprocess.check_output(["git", "-C", str(ROOT), "show", "567805d:alerts/rulebook.py"], text=True)
     base = types.ModuleType("rb_base"); exec(compile(src, "rb_base", "exec"), base.__dict__)
     new = {k for k in RB.RULES if "OIBO" in k}
-    check(set(RB.RULES) - new == set(base.RULES) and all(RB.RULES[k] == base.RULES[k] for k in base.RULES) and len(new) == 4,
+    _later = {k for k, v in RB.RULES.items() if v.get("half_t1")}    # 17-Nov: per-commodity T1-half rules (own test)
+    _off = {"RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP"}                     # 17-Nov: switched OFF by the owner
+    _same = lambda a, b, k: {**a, **({"status": b["status"]} if k in _off else {})} == b
+    check(set(RB.RULES) - new - _later == set(base.RULES) and all(_same(RB.RULES[k], base.RULES[k], k) for k in base.RULES) and len(new) == 4,
           "17 existing rules unchanged; 4 new OI rules (MCX / index × BUY / SELL)")
 except subprocess.CalledProcessError:
     print("(baseline commit not available – identity check skipped)")
@@ -58,7 +61,7 @@ def ws(oi_from, oi_to, t0=fr["time"].iloc[-1]):
 
 
 keep = dict(RB.RULES)
-RB.RULES = {RID: keep[RID]}
+RB.RULES = {RID: dict(keep[RID], status="LIVE")}          # 17-Nov: rule OFF live; code path still tested
 
 
 def run(f=fr, d=daily, oi=None, ws_df=None):

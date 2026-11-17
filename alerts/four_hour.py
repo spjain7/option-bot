@@ -307,6 +307,8 @@ def _activate(state, st, r, op, now, msgs, closed_out):
     e = TP.tick_round(op, t) if t else float(op)
     risk = s_ * (e - r["stop"])
     r.update(await_open=False, call_entry=r["entry"], entry=e, risk=risk, days=[d], activated=str(now), open_px=float(op))
+    if r.get("half_t1"):                                      # 17-Nov: T1 = 1R from the actual entry
+        r["t1"] = round(e + s_ * risk, 2)
     if r.get("trail_atr"):
         r["best"] = e
     for L in state.get("ledger", []):
@@ -517,6 +519,14 @@ def track(state, msgs, api, now, is_open):
             continue
         why = px = None
         op = float(q_.get("open") or 0)                       # 16-Nov: a session that OPENS through a level fills at the open
+        if r.get("half_t1") and not r.get("t1_done") and ltp > 0 and s_ * (ltp - r["stop"]) > 0 and s_ * (ltp - r["t1"]) >= 0:
+            # 17-Nov (owner: T1 1R + T2 1.5R): book half at T1, the rest runs with the stop at cost
+            r.update(t1_done=True, t1_time=str(now), stop=float(r["entry"]), stop_day=d)
+            if not r.get("shadow"):
+                h_rs = s_ * (r["t1"] - r["entry"]) * float(r["mult"] or 1) / 2
+                msgs.append(f"🎯 T1 HIT – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) at {TP.fmt(r['t1'], r['tick'])}: book HALF "
+                            f"(+1R, +₹{abs(h_rs):,.0f} per lot on the half) · SL for the rest moved to cost {TP.fmt(r['entry'], r['tick'])} · "
+                            f"T2 {TP.fmt(r['target'], r['tick'])}")
         if ltp > 0 and s_ * (ltp - r["stop"]) <= 0:
             gap = op > 0 and s_ * (op - r["stop"]) <= 0 and r.get("stop_day") != d and r.get("activated", "")[:10] != d
             why, px = ("trailing stop" if r.get("trailed") else "stop-loss") + (" (gap – filled at the open)" if gap else ""), (op if gap else r["stop"])
@@ -528,11 +538,17 @@ def track(state, msgs, api, now, is_open):
         elif ltp > 0 and (pd.Timestamp(r["expiry"]).normalize() - now.normalize()).days <= 1:
             why, px = "expiry – exit (re-enter in the next month if you wish)", ltp
         if why:
+            if r.get("half_t1") and r.get("t1_done"):        # 17-Nov: half closed at T1 -> blended exit for the whole lot
+                if why.startswith("stop-loss") and abs(float(px) - float(r["entry"])) <= max(float(r.get("tick") or 0), 1e-9):
+                    why = "rest stopped at cost after T1"
+                why = "T1 half + " + why.replace("🎯 ", "")
+                px = (float(r["t1"]) + float(px)) / 2
             res = s_ * (px - r["entry"]) / r["risk"] if r["risk"] else 0
             rs = s_ * (px - r["entry"]) * float(r["mult"] or 1)
             icon = "✅" if res > 0 else "❌" if res < 0 else "➖"
             if not r.get("shadow"):                       # 6-Nov rulebook: logged-only calls are tracked silently
-                msgs.append(f"{icon} EXIT – {r['name']} FUT {r['side']} ({r.get('tfl', '4-hour')}) at {TP.fmt(px, r['tick'])}: {why} · {res:+.2f}R · "
+                msgs.append(f"{icon} EXIT – {r['name']} FUT {r['side']} ({r.get('tfl', '4-hour')}) at {TP.fmt(px, r['tick'])}"
+                            f"{' (average of both halves)' if r.get('t1_done') else ''}: {why} · {res:+.2f}R · "
                             f"{'+' if rs >= 0 else '−'}₹{abs(rs):,.0f} per lot before costs")
                 BO.close_ledger(state, r["key"], float(px), why.replace("🎯 ", ""), now)
             r.update(exit=float(px), exit_reason=why, closed=str(now), result_R=round(res, 3))

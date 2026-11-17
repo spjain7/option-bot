@@ -429,7 +429,9 @@ def scan(api, master, now, state, only=None):
         try:                                               # 29-Oct (owner): 1H BIG MOVE watch – information only, not a call
             from alerts import watch1h as W1
             sd = _switch_day(state, c, d)
-            if sd is None or (now.normalize() - sd).days > 3:
+            if name in _positional_only():                 # 17-Nov: aluminium – no intraday messages
+                info["watch1h"] = "off: weekly / monthly only"
+            elif sd is None or (now.normalize() - sd).days > 3:
                 lab_ = None
                 if full_1h is not None and len(full_1h):              # 30-Oct: OI over the hour from the live 1-minute OI
                     from alerts import four_hour as FH
@@ -624,6 +626,15 @@ def ha_tags(fr, sig):
     return tags
 
 
+def _positional_only():
+    """17-Nov-2026 (owner): commodities that get weekly / monthly calls only (alerts/rulebook.POSITIONAL_ONLY)."""
+    try:
+        from alerts import rulebook as RB_
+        return RB_.POSITIONAL_ONLY
+    except Exception:
+        return set()
+
+
 def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=None, master=None, api=None):
     """Volume-breakout alerts on 3-hour and daily candles + trailing-stop follow-ups."""
     if h1full is None or h1full.empty:
@@ -654,7 +665,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
     htf = BO.htf_levels(dd)
     state.setdefault("bo_active", [])
     _promote_shadow_sells(state, msgs, name, ex, c, q, now, oi)
-    if ex == "MCX":                                                  # 30-Oct (approved): 4-hour BUY
+    pos_only = name in _positional_only()                           # 17-Nov (owner): aluminium weekly / monthly only
+    if ex == "MCX" and not pos_only:                                 # 30-Oct (approved): 4-hour BUY
         try:
             from alerts import four_hour as FH
             info["4h"] = FH.on_candles(state, msgs, api, name, ex, c, h1full, FH.four_hour(h1full, ex, now), q, now,
@@ -668,6 +680,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                 f4 = FH_.four_hour(h1full, ex, now)
                 rbf = {"1h": RB.complete(h1full.reset_index(drop=True), "1h", ex, now),
                        "2h": RB.complete(RB.blocks(h1full, ex, 2), "2h", ex, now),
+                       "3h": RB.complete(RB.blocks(h1full, ex, 3), "3h", ex, now),      # 17-Nov: gold 3h 10-candle rule
                        "4h": f4.drop(columns=["end"]) if f4 is not None else None, "1d": dd}
             else:
                 rbf = {"1d": dd,                                    # index: daily rules (LONG20-001)
@@ -688,7 +701,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                                                pd.Timestamp(h1full["time"].iloc[-1]).normalize() != sw_day else None, now, grade_fields=gf)
         except Exception as e_:
             print(f"[paper] {name} skipped: {type(e_).__name__}: {e_}")
-    if ex == "MCX":                                                  # 29-Oct (approved, live): candle-setup calls
+    if ex == "MCX" and not pos_only:                                 # 29-Oct (approved, live): candle-setup calls
         try:
             lv_ = (q or {}).get("ltp")
             CS.OI_NOTE = _oi_line(oi).replace("OI     : ", "")          # 30-Oct: OI line in every setup message
@@ -702,6 +715,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         BO.manage(state, msgs, name, tf, fr, c15, now)
         if fr is None or len(fr) < 30:
             info[f"bo_{tf}"] = "insufficient candles"; continue
+        if pos_only and tf not in ("1w", "1m", "1M"):            # 17-Nov: aluminium – no 3-hour / daily breakout calls
+            info[f"bo_{tf}"] = "off: weekly / monthly only for this commodity"; continue
         last = str(fr["time"].iloc[-1])
         k = f"BO|{name}|{tf}"
         if state["last_eval"].get(k) == last:
