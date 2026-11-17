@@ -328,6 +328,61 @@ def _activate(state, st, r, op, now, msgs, closed_out):
     return True
 
 
+LATE_FROM = "2026-11-16"       # index rulebook calls fired after the close before 17-Nov were never confirmed at the open
+
+
+def late_activate(state, msgs, api, now):
+    """17-Nov one-time: an INDEX rulebook call fired after the close (from LATE_FROM) that was never confirmed at the next open
+    (engine passed no after_close) is decided at that session's real opening price from Angel 15-minute candles:
+    ACTIVE -> entry = that open (risk re-measured, issued time = the open); SKIPPED -> no trade. One info message each."""
+    st = store(state)
+    from alerts import rulebook as RB
+    for r in list(st["open"]):
+        op_t = pd.Timestamp(r["opened"])
+        if (r.get("activated") or r.get("await_open") or r.get("late_checked") or not str(r.get("rule", "")).startswith("RB_IDX")
+                or str(op_t.date()) < LATE_FROM or (op_t.hour, op_t.minute) < (15, 30) or r.get("shadow")):
+            continue
+        try:
+            c = api.candles(r["ex"], str(r["token"]), "FIFTEEN_MINUTE", op_t.normalize() + pd.Timedelta(days=1), now)
+        except Exception as e_:
+            print(f"[late] {r['name']} candles failed: {type(e_).__name__}: {e_}")
+            continue
+        if c is None or not len(c):
+            continue
+        r["late_checked"] = True
+        nxt = c[c["time"].dt.normalize() > op_t.normalize()].sort_values("time")
+        if not len(nxt):
+            r["late_checked"] = False
+            continue
+        b0 = nxt.iloc[0]; op = float(b0["open"])
+        k = (RB.RULES.get(r.get("rule"), {}) or {}).get("k") or 1.5
+        r["atr"] = float(r.get("atr") or r["risk"] / k)
+        v, why = open_verdict(r, op)
+        t = r.get("tick")
+        when = pd.Timestamp(b0["time"])
+        if v == "skip":
+            for L in _ledger_rows(state, r["key"]):
+                L.update(status="CLOSED", exit=L["entry"], note="skipped – gap", closed=str(now))
+            r.update(exit=None, exit_reason=f"skipped – {why}", closed=str(now), result_R=None, open_px=op)
+            st["open"].remove(r); st["closed"] = (st["closed"] + [r])[-200:]
+            msgs.append(f"ℹ️ CORRECTION – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) call of {op_t:%d-%b %H:%M}: it should have "
+                        f"waited for the next open; {when:%d-%b} it {why} (open {TP.fmt(op, t)}) – NO TRADE, removed from open calls.")
+            continue
+        s_ = 1 if r["side"] == "BUY" else -1
+        e = TP.tick_round(op, t) if t else op
+        old = r["entry"]
+        r.update(call_entry=old, entry=e, risk=s_ * (e - r["stop"]), activated=str(when), open_px=op,
+                 days=sorted({str(when.date())} | {d for d in r.get("days", []) if d >= str(when.date())}))
+        for L in state.get("ledger", []):
+            if L.get("key") == r["key"]:
+                L.update(call_entry=L.get("entry"), entry=e, time=str(when), date=str(when.date()), activated=True)
+                for k_ in ("uhi", "ulo", "uat", "ulast", "hilo_bf"):
+                    L.pop(k_, None)
+        msgs.append(f"ℹ️ CORRECTION – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) call of {op_t:%d-%b %H:%M}: ACTIVE from the "
+                    f"{when:%d-%b} open {TP.fmt(e, t)} (not the {TP.fmt(old, t)} close) · SL {TP.fmt(r['stop'], t)}"
+                    + (f" · target {TP.fmt(r['target'], t)}" if r.get("target") is not None else ""))
+
+
 MIGRATE_DAY = "2026-11-16"     # one-time: after-close calls of 13-Nov were never confirmed at today's open
 
 

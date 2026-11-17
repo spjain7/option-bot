@@ -503,9 +503,16 @@ def scan(api, master, now, state, only=None):
             tk_ = sorted({r["mark_key"] for r in state.get("ledger", []) if r["seg"] == seg_ and r["status"] == "OPEN" and r.get("mark_key")})
             if tk_:
                 RP.track(state, api.quotes({ex_: tk_}) or {}, now)
-                RP.backfill_hilo(state, api, now)             # 17-Nov: rows with no high / low yet (LTM, re-created rows)
     except Exception as e_:
         print(f"[report] tracking skipped: {type(e_).__name__}: {e_}")
+    try:                                                   # 17-Nov owner: Angel candles work after the close too
+        from alerts import four_hour as FH2
+        FH2.late_activate(state, msgs, api, now)
+        n_bf = RP.backfill_hilo(state, api, now)
+        if n_bf:
+            print(f"[report] high / low filled from candles for {n_bf} call(s)")
+    except Exception as e_:
+        print(f"[report] high / low backfill skipped: {type(e_).__name__}: {e_}")
     # end-of-day call reports (table image + text): Index + Stock after the NSE close, MCX after the MCX close
     for seg, ex, flag in (("NSE", "NFO", "rep_nse"), ("MCX", "MCX", "rep_mcx")):
         if state["day"].get(flag) or now.weekday() >= 5 or is_open(ex, now) or not _after_close(ex, now):

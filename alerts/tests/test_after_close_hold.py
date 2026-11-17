@@ -149,5 +149,32 @@ lt = dict(ledger=[dict(key="STK_HANGMAN|LTM|x", mark_key="61635", seg="NSE", cat
 CS.heal_live(lt)
 check(lt["ledger"][0]["time"] == "2026-11-11 13:17:02", "LTM issued time = live trigger 13:17 (not the 09:15 daily bar)")
 
+# one-time: index rulebook call fired after the close (BANKNIFTY 16-Nov 15:32) -> decided at 17-Nov's real open from candles
+def bn(**k):
+    r = dict(name="BANKNIFTY", ex="NFO", token="61466", contract="BANKNIFTY23NOV26FUT", expiry="2026-11-25", side="BUY", entry=61480.0,
+             stop=60163.0, target=64114.0, risk=1317.0, tick=0.05, mult=30, opened="2026-11-16 15:32:00", days=["2026-11-16", "2026-11-17"],
+             key="RB|RB_IDX_1d_BO10_BUY|BANKNIFTY|x", max_days=10, tfl="daily", rule="RB_IDX_1d_BO10_BUY")
+    r.update(k); return r
+cbn = pd.DataFrame(dict(time=pd.date_range("2026-11-17 09:15", periods=4, freq="15min"), open=[61620.0, 61700, 61800, 61900],
+                        high=61950.0, low=61500.0, close=61900.0))
+sb = dict(ledger=[dict(key="RB|RB_IDX_1d_BO10_BUY|BANKNIFTY|x", status="OPEN", entry=61480.0, time="2026-11-16 15:32:00", seg="NSE",
+                       cat="FUTURES", name="BANKNIFTY")], fourh=dict(open=[bn()], closed=[], last={}))
+mb = []
+FH.late_activate(sb, mb, Api({}, cbn), pd.Timestamp("2026-11-17 18:00"))
+rb = sb["fourh"]["open"][0]
+check(rb["entry"] == 61620.0 and rb["call_entry"] == 61480.0 and sb["ledger"][0]["time"] == "2026-11-17 09:15:00" and mb and "ACTIVE" in mb[0],
+      "BANKNIFTY: entry corrected to 17-Nov open, issued = 09:15, one correction message")
+mb = []
+FH.late_activate(sb, mb, Api({}, cbn), pd.Timestamp("2026-11-17 18:15"))
+check(not mb, "late activation runs once")
+sk = dict(ledger=[dict(key="RB|RB_IDX_1d_BO10_BUY|BANKNIFTY|x", status="OPEN", entry=61480.0, time="2026-11-16 15:32:00")],
+          fourh=dict(open=[bn()], closed=[], last={}))
+mk = []
+FH.late_activate(sk, mk, Api({}, cbn.assign(open=[62400.0, 62400, 62400, 62400])), pd.Timestamp("2026-11-17 18:00"))
+check(not sk["fourh"]["open"] and "NO TRADE" in mk[0] and sk["ledger"][0]["note"] == "skipped – gap", "gapped > 0.5 ATR above: no trade")
+old_ = dict(ledger=[], fourh=dict(open=[bn(opened="2026-11-06 15:32:00")], closed=[], last={}))
+FH.late_activate(old_, [], Api({}, cbn), pd.Timestamp("2026-11-17 18:00"))
+check(old_["fourh"]["open"][0]["entry"] == 61480.0, "older calls untouched")
+
 print(f"\n{ok} passed, {fail} failed")
 sys.exit(1 if fail else 0)
