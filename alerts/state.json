@@ -743,19 +743,19 @@
    "ltp": 8305.0
   },
   "NATURALGAS24NOV26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 40387500.0,
-   "ltp": 289.9
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 40398750.0,
+   "ltp": 289.5
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 15333.0,
-   "ltp": 134560.0
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 15315.0,
+   "ltp": 134848.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 503160.0,
-   "ltp": 168071.0
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 502380.0,
+   "ltp": 168723.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -783,34 +783,34 @@
    "ltp": 54942.6
   },
   "NIFTY23NOV26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 11552320.0,
-   "ltp": 25403.0
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 11478675.0,
+   "ltp": 25414.7
   },
   "BANKNIFTY23NOV26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 2015130.0,
-   "ltp": 61932.0
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 2004810.0,
+   "ltp": 62250.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 18235000.0,
-   "ltp": 1273.7
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 18210000.0,
+   "ltp": 1276.95
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 7380.0,
-   "ltp": 399.0
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 7450.0,
+   "ltp": 400.05
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 16290.0,
-   "ltp": 325.25
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 16190.0,
+   "ltp": 326.85
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-17 10:02:01.822030",
-   "oi": 745600.0,
-   "ltp": 7883.0
+   "time": "2026-11-17 10:17:02.128704",
+   "oi": 754500.0,
+   "ltp": 7884.0
   }
  },
  "bo_active": [
@@ -827,7 +827,7 @@
    "n": 7,
    "last_candle": "2026-11-16 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1d|2026-11-05 09:15:00|CONFLICT",
    "token": "61471",
@@ -847,7 +847,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -867,7 +867,7 @@
    "n": 2,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -887,7 +887,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -907,7 +907,7 @@
    "n": 6,
    "last_candle": "2026-11-16 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1d|2026-11-06 09:15:00|CONFLICT",
    "token": "61471",
@@ -927,7 +927,7 @@
    "n": 6,
    "last_candle": "2026-11-16 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "BANKNIFTY23NOV26FUT",
    "key": "BANKNIFTY|1d|2026-11-06 09:15:00|CONFLICT",
    "token": "61466",
@@ -947,7 +947,7 @@
    "n": 1,
    "last_candle": "2026-11-09 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1w|2026-11-02 09:15:00",
    "token": "61471"
@@ -965,7 +965,7 @@
    "n": 1,
    "last_candle": "2026-11-09 09:15:00",
    "tick": 0.2,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "BANKNIFTY23NOV26FUT",
    "key": "BANKNIFTY|1w|2026-11-02 09:15:00",
    "token": "61466"
@@ -983,7 +983,7 @@
    "n": 11,
    "last_candle": "2026-11-16 21:00:00",
    "tick": 1.0,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|3h|2026-11-12 18:00:00",
    "token": "495213",
@@ -1003,7 +1003,7 @@
    "n": 2,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1d|2026-11-12 09:00:00",
    "token": "495213",
@@ -1023,7 +1023,7 @@
    "n": 2,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1m|2026-11-12 09:00:00",
    "token": "495213",
@@ -1043,7 +1043,7 @@
    "n": 8,
    "last_candle": "2026-11-16 21:00:00",
    "tick": 0.05,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "ZINC30NOV26FUT",
    "key": "ZINC|3h|2026-11-13 12:00:00",
    "token": "578638",
@@ -1063,7 +1063,7 @@
    "n": 0,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-17 09:45:00",
+   "checked": "2026-11-17 10:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1w|2026-11-09 09:00:00",
    "token": "495213",
@@ -2279,8 +2279,8 @@
    "date": "2026-11-04",
    "uhi": 2724.0,
    "ulo": 2390.0,
-   "ulast": 2629.1,
-   "uat": "2026-11-17 10:02:01.822030",
+   "ulast": 2631.1,
+   "uat": "2026-11-17 10:17:02.128704",
    "best_px": 2724.0,
    "worst_px": 2390.0,
    "mfe_R": 1.502,
@@ -2309,8 +2309,8 @@
    "date": "2026-11-04",
    "uhi": 5074.2,
    "ulo": 4700.0,
-   "ulast": 4900.0,
-   "uat": "2026-11-17 10:02:01.822030",
+   "ulast": 4916.7,
+   "uat": "2026-11-17 10:17:02.128704",
    "best_px": 5074.2,
    "worst_px": 4700.0,
    "mfe_R": 1.623,
@@ -2490,13 +2490,13 @@
    "mfe_R": 0.814,
    "mae_R": -0.354,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-17 09:45:00",
+   "excursion_upd": "2026-11-17 10:00:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 25466.6,
    "ulo": 24843.0,
-   "ulast": 25419.5,
-   "uat": "2026-11-17 10:02:01.822030"
+   "ulast": 25439.8,
+   "uat": "2026-11-17 10:17:02.128704"
   },
   {
    "key": "RB|RB_IDX_1d_RSI70_BUY|BANKNIFTY|2026-11-06 09:15:00",
@@ -2554,8 +2554,8 @@
    "date": "2026-11-06",
    "uhi": 1612.5,
    "ulo": 1568.2,
-   "ulast": 1596.5,
-   "uat": "2026-11-17 10:02:01.822030",
+   "ulast": 1601.7,
+   "uat": "2026-11-17 10:17:02.128704",
    "best_px": 1612.5,
    "worst_px": 1564.7,
    "mfe_R": 0.669,
@@ -2601,14 +2601,14 @@
    "date": "2026-11-09",
    "uhi": 25466.6,
    "ulo": 24843.0,
-   "ulast": 25419.5,
-   "uat": "2026-11-17 10:02:01.822030",
+   "ulast": 25439.8,
+   "uat": "2026-11-17 10:17:02.128704",
    "best_px": 25466.6,
    "worst_px": 24843.0,
    "mfe_R": 0.358,
    "mae_R": -0.081,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-17 09:45:00",
+   "excursion_upd": "2026-11-17 10:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -2647,16 +2647,16 @@
    ],
    "status": "OPEN",
    "date": "2026-11-09",
-   "uhi": 62250.0,
+   "uhi": 62327.4,
    "ulo": 58820.4,
-   "ulast": 62215.6,
-   "uat": "2026-11-17 10:02:01.822030",
-   "best_px": 61950.0,
+   "ulast": 62274.8,
+   "uat": "2026-11-17 10:17:02.128704",
+   "best_px": 62193.6,
    "worst_px": 58820.4,
-   "mfe_R": 0.85,
+   "mfe_R": 0.922,
    "mae_R": -0.079,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-17 09:45:00",
+   "excursion_upd": "2026-11-17 10:00:00",
    "t1_hit": false,
    "stop_touched": false
   },
@@ -2754,8 +2754,8 @@
    "date": "2026-11-09",
    "uhi": 962.3,
    "ulo": 899.55,
-   "ulast": 957.45,
-   "uat": "2026-11-17 10:02:01.822030",
+   "ulast": 955.1,
+   "uat": "2026-11-17 10:17:02.128704",
    "best_px": 962.3,
    "worst_px": 927.7,
    "mfe_R": 0.434,
@@ -2937,8 +2937,8 @@
    "date": "2026-11-11",
    "uhi": 2280.0,
    "ulo": 2150.0,
-   "ulast": 2255.7,
-   "uat": "2026-11-17 10:02:01.822030"
+   "ulast": 2248.4,
+   "uat": "2026-11-17 10:17:02.128704"
   },
   {
    "key": "DTC|SILVER|2026-11-11|17:00",
@@ -3081,10 +3081,10 @@
    "time": "2026-11-12 15:32:02.487205",
    "status": "OPEN",
    "date": "2026-11-12",
-   "uhi": 275.74,
+   "uhi": 275.95,
    "ulo": 269.13,
-   "ulast": 274.29,
-   "uat": "2026-11-17 10:02:01.822030"
+   "ulast": 275.2,
+   "uat": "2026-11-17 10:17:02.128704"
   },
   {
    "key": "DTC|GOLD|2026-11-12|17:00",
@@ -3271,8 +3271,8 @@
    "date": "2026-11-13",
    "uhi": 3112.0,
    "ulo": 3021.7,
-   "ulast": 3099.0,
-   "uat": "2026-11-17 10:02:01.822030",
+   "ulast": 3099.9,
+   "uat": "2026-11-17 10:17:02.128704",
    "call_entry": 3033.3
   },
   {
@@ -5909,19 +5909,19 @@
   "n": 4
  },
  "scan": {
-  "seq": 532,
-  "started": "2026-11-17 10:02:01.822030",
-  "finished": "2026-11-17 10:15:49.502834",
-  "seconds": 827,
+  "seq": 533,
+  "started": "2026-11-17 10:17:02.128704",
+  "finished": "2026-11-17 10:30:00.586478",
+  "seconds": 778,
   "status": "RATE_LIMITED",
-  "note": "api requests 49 ok 24 rate-limited 25 skipped 3 (budget 0) failed 5 \u00b7 errors 1 \u00b7 messages 0",
+  "note": "api requests 43 ok 20 rate-limited 23 skipped 3 (budget 0) failed 4 \u00b7 errors 1 \u00b7 messages 0",
   "api": {
-   "calls": 49,
-   "ok": 24,
-   "rate_limited": 25,
+   "calls": 43,
+   "ok": 20,
+   "rate_limited": 23,
    "skipped": 3,
    "deadline_skips": 0,
-   "failed": 5,
+   "failed": 4,
    "mem_hits": 0,
    "disk_hits": 4
   },
@@ -11925,22 +11925,38 @@
     "rejected": {},
     "shadow": 0,
     "sent": 0,
-    "data": 2,
+    "data": 3,
     "early": 0,
     "setup": 0,
     "triggered": 0,
     "keys": [
      "data|ZINC|15m|2026-11-17 09",
-     "data|ALUMINIUM|15m|2026-11-17 10"
+     "data|ALUMINIUM|15m|2026-11-17 10",
+     "data|COPPER|15m|2026-11-17 10"
+    ]
+   },
+   "RB_IDX_1h_OIBO_BUY_EXP": {
+    "signal": 2,
+    "rejected": {
+     "resistance 25,420.0 leaves only -0.03R of room (min 1.2)": 1,
+     "SL 61,757.2 not beyond the breakout level 61,660.8 \u2013 chasing": 1
+    },
+    "shadow": 0,
+    "sent": 0,
+    "data": 0,
+    "early": 0,
+    "setup": 0,
+    "triggered": 0,
+    "keys": [
+     "signal|NIFTY|2026-11-17 09:15:00",
+     "rejected|NIFTY|2026-11-17 09:15:00",
+     "signal|BANKNIFTY|2026-11-17 09:15:00",
+     "rejected|BANKNIFTY|2026-11-17 09:15:00"
     ]
    }
   }
  },
  "rulebook_seen": [
-  "RB_MCX_1h_OIBO_BUY_EXP|COPPER|2026-11-12 17:00:00",
-  "RB_MCX_1h_OIBO_SELL_EXP|COPPER|2026-11-12 17:00:00",
-  "RB_MCX_1h_MACD_BUY|ZINC|2026-11-12 17:00:00",
-  "RB_MCX_1h_BO20X_BUY_EXP|ZINC|2026-11-12 17:00:00",
   "RB_MCX_1h_OIBO_BUY_EXP|ZINC|2026-11-12 17:00:00",
   "RB_MCX_1h_OIBO_SELL_EXP|ZINC|2026-11-12 17:00:00",
   "RB_MCX_1h_MACD_BUY|ALUMINIUM|2026-11-12 17:00:00",
@@ -14936,7 +14952,11 @@
   "RB_MCX_1h_MACD_BUY|ALUMINIUM|2026-11-17 09:00:00",
   "RB_MCX_1h_BO20X_BUY_EXP|ALUMINIUM|2026-11-17 09:00:00",
   "RB_MCX_1h_OIBO_BUY_EXP|ALUMINIUM|2026-11-17 09:00:00",
-  "RB_MCX_1h_OIBO_SELL_EXP|ALUMINIUM|2026-11-17 09:00:00"
+  "RB_MCX_1h_OIBO_SELL_EXP|ALUMINIUM|2026-11-17 09:00:00",
+  "RB_IDX_1h_OIBO_BUY_EXP|NIFTY|2026-11-17 09:15:00",
+  "RB_IDX_1h_OIBO_SELL_EXP|NIFTY|2026-11-17 09:15:00",
+  "RB_IDX_1h_OIBO_BUY_EXP|BANKNIFTY|2026-11-17 09:15:00",
+  "RB_IDX_1h_OIBO_SELL_EXP|BANKNIFTY|2026-11-17 09:15:00"
  ],
  "mcxdtc": {
   "open": [],
