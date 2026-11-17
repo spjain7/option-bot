@@ -402,6 +402,7 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
             rec.update(version=rule.get("version"), vol_x=sig.get("vol_x"), oi_txt=sig.get("oi_txt"), sr_level=sig.get("sr_level"),
                        brk_level=sig.get("brk_level"), target_basis=plan.get("target_basis"), quote_time=plan.get("quote_time"))
         st["open"].append(rec)
+        n0 = len(msgs)
         if shadow:
             FN.note(state, rid, "shadow", key=fk, now=now); out[rid] = "shadow"
             print(f"[rulebook] {name} {rid} logged only: entry {plan['entry']} SL {plan['sl']} T {plan['target']}")
@@ -443,6 +444,9 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
         FN.note(state, rid, "sent", key=fk, now=now)
         out[rid] = "SENT"
         print(f"[rulebook] {name} {rid} SENT entry {plan['entry']} SL {plan['sl']} T {plan['target']}")
+        if after_close:                                       # 17-Nov owner: held until the next open (four_hour.hold)
+            from alerts import four_hour as FH_
+            FH_.hold(state, msgs, n0, rec)
     return out
 
 

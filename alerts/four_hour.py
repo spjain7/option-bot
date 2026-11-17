@@ -109,7 +109,10 @@ def on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close=
     """Funnel wrapper (6-Nov): counts every fired signal once per candle and why it was not sent."""
     global LAST_SIG
     LAST_SIG = None
+    n0 = len(msgs)
     res = _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close, rule_key, dtrend)
+    if after_close and res == "SENT":
+        hold(state, msgs, n0)
     if LAST_SIG:
         try:
             from alerts import funnel as FN
@@ -237,6 +240,24 @@ def _on_candles(state, msgs, api, name, ex, c, h1, fr, q, now, mult, after_close
     return "SENT"
 
 
+def hold(state, msgs, n0, rec=None):
+    """17-Nov (owner: nobody can trade a call sent after 15:30): an after-close call is NOT sent in the evening. Its messages
+    (msgs[n0:]) are stored on the call record and sent at the next session's open together with the ACTIVE line (entry =
+    the opening price); if the open skips it, nothing is ever sent. Its report row waits (status WAITING) – not shown,
+    but still seen by the duplicate guard."""
+    st = store(state)
+    rec = rec or st["open"][-1]
+    rec["held_msgs"] = list(msgs[n0:])
+    del msgs[n0:]
+    rec["await_open"] = True
+    for L in state.get("ledger", []):
+        if L.get("key") == rec["key"] and L.get("status") == "OPEN":
+            L["status"] = "WAITING"
+    if isinstance(state.get("day"), dict):                     # counted when the call is released at the open
+        state["day"]["alerts"] = max(0, state["day"].get("alerts", 0) - 1)
+    print(f"[after-close] {rec['name']} {rec['side']} ({rec.get('tfl')}) held for the next open ({len(rec['held_msgs'])} messages)")
+
+
 GAP_MAX_ATR = 0.5         # after-close calls: skip if the next session opens more than 0.5 ATR past the call's entry
 
 
@@ -265,6 +286,15 @@ def _activate(state, st, r, op, now, msgs, closed_out):
     t = r.get("tick")
     v, why = open_verdict(r, op)
     d = str(now.date())
+    held = r.pop("held_msgs", None)
+    if v == "skip" and held is not None:                       # never published -> nothing to withdraw
+        for L in state.get("ledger", []):
+            if L.get("key") in (r["key"], f"{r['key']}|OPT") and L.get("status") in ("WAITING", "OPEN"):
+                L.update(status="VOID", note=f"not published – {why}")
+        r.update(await_open=False, exit=None, exit_reason=f"not published – {why}", closed=str(now), result_R=None, open_px=float(op))
+        closed_out.append(r)
+        print(f"[after-close] {r['name']} {r['side']} not published: {why}")
+        return False
     if v == "skip":
         if not r.get("shadow"):
             msgs.append(f"🚫 SKIPPED – {r['name']} FUT {r['side']} ({r.get('tfl', '')}) call of {pd.Timestamp(r['opened']):%d-%b %H:%M}: "
@@ -279,9 +309,18 @@ def _activate(state, st, r, op, now, msgs, closed_out):
     r.update(await_open=False, call_entry=r["entry"], entry=e, risk=risk, days=[d], activated=str(now), open_px=float(op))
     if r.get("trail_atr"):
         r["best"] = e
+    for L in state.get("ledger", []):
+        if L.get("key") in (r["key"], f"{r['key']}|OPT") and L.get("status") in ("WAITING", "OPEN"):
+            L.update(status="OPEN", time=str(now), date=d, activated=True)   # issued = the open, when it can be traded
     for L in _ledger_rows(state, r["key"]):
         if L.get("key") == r["key"]:
             L.update(call_entry=L.get("entry"), entry=e)
+    if held and not r.get("shadow"):
+        hdr = (f"📢 NEW CALL – {r['name']} FUT {r['side']} – set up after yesterday's close, ACTIVE from today's open "
+               f"{TP.fmt(op, t)} (entry below = setup price)")
+        msgs.append(hdr)
+        msgs.extend(held)
+        state.setdefault("day", {})["alerts"] = state.get("day", {}).get("alerts", 0) + 1
     if not r.get("shadow"):
         rr = f" · target {TP.fmt(r['target'], t)} (R:R 1:{s_ * (r['target'] - e) / risk:.1f})" if r.get("target") is not None and risk > 0 else ""
         msgs.append(f"✅ ACTIVE – {r['name']} FUT {r['side']} ({r.get('tfl', '')}): opened {TP.fmt(op, t)} (call entry {TP.fmt(r['call_entry'], t)}) "
@@ -350,6 +389,8 @@ def track(state, msgs, api, now, is_open):
     st = store(state)
     try:
         RP.heal(state)                                        # 17-Nov: report rows lost to the describe() crash
+        from alerts import candle_setups as CS_
+        CS_.heal_live(state)
     except Exception as e_:
         print(f"[4h] ledger heal skipped: {type(e_).__name__}: {e_}")
     recheck = _migrate(state, st, now) if is_open("NFO", now) else []
