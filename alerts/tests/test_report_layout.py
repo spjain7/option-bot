@@ -46,7 +46,7 @@ RP.add(s, key="A", mark_key="1", seg="NSE", cat="FUTURES", name="GLENMARK", symb
        entry=2509.0, sl=2365.0, target=None, lot=375, mult=375, time="2026-11-04 15:32")
 RP.add(s, key="B", mark_key="2", seg="NSE", cat="FUTURES", name="GRASIM", symbol="GRASIM23NOV26FUT", type="Swing (4-hour)", side="SELL",
        entry=3030.0, sl=3129.0, target=2842.0, lot=250, mult=250, time="2026-11-13 17:32")
-RP.add(s, key="C", mark_key="3", seg="NSE", cat="FUTURES", name="FORTIS", symbol="FORTIS23NOV26FUT", type="3-hour EMAX", side="SELL",
+RP.add(s, key="C", mark_key="3", seg="NSE", cat="FUTURES", name="SBIN", symbol="SBIN23NOV26FUT", type="3-hour EMAX", side="SELL",
        entry=767.65, sl=793.65, target=686.6, lot=550, mult=550, time="2026-11-13 15:32")
 RP.add(s, key="D", mark_key="4", seg="NSE", cat="FUTURES", name="TMPV", symbol="TMPV23NOV26FUT", type="Swing (4-hour)", side="SELL",
        entry=288.5, sl=299.05, target=267.5, lot=1600, mult=1600, time="2026-11-13 17:32")
@@ -63,12 +63,12 @@ check(blk[1].startswith("🗓 Issued : 04-Nov 15:32") and "Basis" not in txt.spl
 check([x.split(":")[0].strip() for x in blk[2:]] == ["💰 Entry", "🛑 SL", "📈 High", "📉 Low", "💹 CMP", "✅ Best profit", "⚠️ Highest loss",
                                                       "🟢 In profit"], "one value per line: entry, SL/target, high, low, CMP, best, worst, status")
 intl = [m for m in out if m.startswith("🔒 INTERNAL")]
-check(len(intl) == 1 and "GRASIM FUT SELL · 13-Nov 17:32 · Swing · 4-hour chart" in intl[0] and "FORTIS FUT SELL" in intl[0],
+check(len(intl) == 1 and "GRASIM FUT SELL · 13-Nov 17:32 · Swing · 4-hour chart" in intl[0] and "SBIN FUT SELL" in intl[0],
       "basis in a separate internal message, one line per script")
-check("🛑 Stop-loss hit : −₹" in txt and "FORTIS FUT" in txt.split("CLOSED TODAY")[1], "closed call with result line")
+check("🛑 Stop-loss hit : −₹" in txt and "SBIN FUT" in txt.split("CLOSED TODAY")[1], "closed call with result line")
 check(all(len(m) <= 4000 for m in out), "every message under Telegram's 4,000-character cut")
 H = RP.history_nse(s)
-check([h["name"] for h in H] == ["FORTIS"], "closed history: futures only, never-active (no-trade) calls left out")
+check([h["name"] for h in H] == ["SBIN"], "closed history: futures only, never-active (no-trade) calls left out")
 check(Path(out[0].split("::")[1]).exists(), "image with open table + closed-call history renders")
 cells = RP._cells_nse([r for r in RP.rows_for(s, "NSE", "2026-11-17", {}) if r["name"] == "GRASIM"][0])
 check(len(cells) == len(RP.HEAD_NSE) and "Swing (4-hour)" not in cells, "image has no call-type / category column")

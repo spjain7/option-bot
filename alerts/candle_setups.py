@@ -317,6 +317,15 @@ def heal_live(state):
     breakout' (SONACOMS 4-Nov, COFORGE 11-Nov) were never written to the call report. Re-create them as trades entered at the
     trigger at the live time and stopped at the stop level (the daily candle shows the stop was touched that day). Idempotent."""
     s = _store(state)
+    for r in s.get("open", []):                               # entered on its LIVE day: issued = the live trigger time
+        lt = (r.get("live") or {}).get("trigger")
+        if lt and r.get("entry_time") and str(r["entry_time"])[:10] == lt[:10] and not r.get("time_synced"):
+            for L in state.get("ledger", []):
+                if L.get("key") == r["key"] and L.get("status") == "OPEN":
+                    L.update(time=lt, hilo_bf=False, uhi=None, ulo=None, uat=None)
+                    for k in ("uhi", "ulo", "uat"):
+                        L.pop(k, None)
+            r["time_synced"] = True
     have = {L.get("key") for L in state.get("ledger", [])}
     n = 0
     for r in s.get("closed", []):
