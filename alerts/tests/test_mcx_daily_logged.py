@@ -67,8 +67,12 @@ with mock.patch.object(BO, "evaluate", side_effect=lambda fr, n_buy=None: fake_s
      mock.patch.object(BO, "evaluate_monthly_candle", side_effect=none):
     st2 = E.new_state(); st2["day"] = day(); m2 = []
     E._breakouts(st2, m2, {}, "NIFTY", "NFO", C_idx, hi_, None, NOW, None, qi)
-d2 = [p for p in st2["bo_active"] if p["tf"] == "1d"]
-check(len(d2) == 1 and not d2[0].get("shadow") and any("NIFTY" in m for m in m2), "index daily BUY is still SENT (unchanged)")
+d2 = [p for p in st2["bo_active"] if p["tf"] == "1d" and not str(p.get("key", "")).endswith("|CONFLICT")]   # 17-Nov: a conflict-logged record is not a call
+# 17-Nov: the index daily BUY is still SENT – by the rulebook daily-breakout rule or the breakout engine, never both (before the
+# describe() fix the rulebook call crashed before its ledger row, so the duplicate guard missed it and two calls went out)
+rb2 = [r for r in (st2.get("fourh") or {}).get("open", []) if r.get("rule") == "RB_IDX_1d_BO10_BUY"]
+calls = [m for m in m2 if "NIFTY" in m and ("🟢 BUY" in m or "BUY" in m.split("\n")[0])]
+check(len(d2) + len(rb2) == 1 and not any(x.get("shadow") for x in d2 + rb2) and calls, "index daily BUY is still SENT, exactly once")
 check(ST.is_live("BO_1w_BUY") and ST.is_live("BO_1M_BUY") and ST.is_live("BO_3h_BUY") and ST.is_live("BO_1d_BUY"),
       "other breakout strategies remain LIVE")
 print(f"\n{ok} checks passed")

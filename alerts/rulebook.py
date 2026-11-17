@@ -299,13 +299,21 @@ def evaluate(f, rule, dtr):
 
 def describe(rule):
     fam, par = rule["fam"], rule["par"]
-    txt = {"BO": f"close beyond the {par.split()[0][1:]}-candle high/low", "PB": f"pull-back to EMA{par.split('/')[0][3:]} in an EMA trend",
-           "NR7": "break of the narrowest candle of 7", "RSIREV": f"RSI back inside {par}", "RSICONT": f"RSI momentum beyond {par}",
-           "RSIDIV": "RSI divergence at a 10-candle extreme", "MACD": f"MACD {par} cross", "ST": "Supertrend (10, 3) flip",
-           "EMAX": f"EMA {par} cross", "INSIDE": "inside-bar breakout", "PIN": "pin bar at a 20-candle extreme",
-           "MOMO": "momentum candle (body ≥ 1.5 ATR)", "FAIL": "failed 20-candle breakout – reversal",
-           "RETEST": "breakout retest of the 20-candle level", "SQZ": "Bollinger squeeze (20, 2) break",
-           "RSIX": f"RSI({par.split('/')[0]}) touched {par.split('/')[1]} / {100 - int(par.split('/')[1])} + reversal candle, ADX < 20"}.get(fam, fam)
+    # 17-Nov: built lazily – the eager RSIX entry raised IndexError for every rule whose parameter has no "/" (MACD "zero",
+    # SQZ "BB20"), so their WHY message and report-ledger row were never written (COCHINSHIP / OFSS / ONGC, 13-Nov).
+    txt = {"BO": lambda: f"close beyond the {par.split()[0][1:]}-candle high/low",
+           "PB": lambda: f"pull-back to EMA{par.split('/')[0][3:]} in an EMA trend",
+           "NR7": lambda: "break of the narrowest candle of 7", "RSIREV": lambda: f"RSI back inside {par}",
+           "RSICONT": lambda: f"RSI momentum beyond {par}", "RSIDIV": lambda: "RSI divergence at a 10-candle extreme",
+           "MACD": lambda: f"MACD {par} cross", "ST": lambda: "Supertrend (10, 3) flip", "EMAX": lambda: f"EMA {par} cross",
+           "INSIDE": lambda: "inside-bar breakout", "PIN": lambda: "pin bar at a 20-candle extreme",
+           "MOMO": lambda: "momentum candle (body ≥ 1.5 ATR)", "FAIL": lambda: "failed 20-candle breakout – reversal",
+           "RETEST": lambda: "breakout retest of the 20-candle level", "SQZ": lambda: "Bollinger squeeze (20, 2) break",
+           "RSIX": lambda: f"RSI({par.split('/')[0]}) touched {par.split('/')[1]} / {100 - int(par.split('/')[1])} + reversal candle, ADX < 20"}
+    try:
+        txt = txt[fam]() if fam in txt else fam
+    except Exception:
+        txt = f"{fam} {par}"
     flt = {"none": "", "DT": " · with the daily trend", "EMA200": " · EMA200 side", "ADX25": " · ADX ≥ 25"}.get(rule["filt"], " · " + rule["filt"])
     return txt + flt
 

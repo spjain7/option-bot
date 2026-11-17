@@ -348,6 +348,10 @@ def track(state, msgs, api, now, is_open):
     """Every scan: live price vs stop / target, time exit, exit one session before expiry."""
     from alerts import breakout as BO
     st = store(state)
+    try:
+        RP.heal(state)                                        # 17-Nov: report rows lost to the describe() crash
+    except Exception as e_:
+        print(f"[4h] ledger heal skipped: {type(e_).__name__}: {e_}")
     recheck = _migrate(state, st, now) if is_open("NFO", now) else []
     if not st["open"] and not recheck:
         return
