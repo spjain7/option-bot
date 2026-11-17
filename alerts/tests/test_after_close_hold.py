@@ -124,5 +124,30 @@ FH.track(pf, m5, Api({"1": dict(ltp=7712.0, open=7715.0)}), pd.Timestamp("2026-1
 row = [r for r in RP.rows_for(pf, "NSE", "2026-11-18", {}) if r["name"] == "POLYCAB"]
 check(len(row) == 1 and row[0]["time"] == "2026-11-18 09:17:00" and m5[0].startswith("✅ ACTIVE"), "listed after activation, issued = the open")
 
+# owner: FORTIS 13-Nov not traded -> not in the list or the history
+fx = dict(ledger=[dict(key="F", mark_key="7", seg="NSE", cat="FUTURES", name="FORTIS", side="SELL", entry=767.65, sl=793.65, target=686.6,
+                       lot=550, mult=550, time="2026-11-16 09:47:01", date="2026-11-13", status="CLOSED", exit=793.65, note="stop-loss",
+                       closed="2026-11-16 11:17")])
+fx["ledger"][0]["time"] = "2026-11-13 15:32:01"
+check(not RP.history_nse(fx) and not RP.rows_for(fx, "NSE", "2026-11-16", {}), "FORTIS (owner: not traded) removed from list and history")
+
+# closed row without high / low (re-created SONACOMS) gets them from candles between entry and exit
+cl = dict(ledger=[dict(key="S", mark_key="61711", seg="NSE", cat="FUTURES", name="SONACOMS", side="SELL", entry=893.5, sl=916.25,
+                       lot=1225, mult=1225, time="2026-11-04 12:17:02", status="CLOSED", exit=916.25, note="stop-loss",
+                       closed="2026-11-05 12:02:01")])
+c2 = pd.DataFrame(dict(time=pd.date_range("2026-11-04 09:15", "2026-11-05 15:15", freq="15min"), open=900.0, high=905.0, low=880.0, close=900.0))
+check(RP.backfill_hilo(cl, Api({}, c2), pd.Timestamp("2026-11-17 10:00")) == 1 and cl["ledger"][0]["uhi"] == 916.25 and cl["ledger"][0]["ulo"] == 880.0,
+      "closed call: high / low filled from candles (exit price included)")
+h2 = RP.history_nse(cl)[0]
+check(h2["best"] == round((893.5 - 880.0) * 1225) and h2["worst"] == round(-(916.25 - 893.5) * 1225), "closed call: best / worst filled")
+
+# LTM: entered on its live day -> issued = live time, high / low re-measured from then
+lt = dict(ledger=[dict(key="STK_HANGMAN|LTM|x", mark_key="61635", seg="NSE", cat="FUTURES", name="LTM", side="SELL", entry=4258.9,
+                       time="2026-11-11 09:15:00", status="OPEN")],
+          candle_setups=dict(open=[dict(setup="STK_HANGMAN", name="LTM", key="STK_HANGMAN|LTM|x", status="open", entry=4258.9,
+                                        entry_time="2026-11-11 09:15:00", live=dict(trigger="2026-11-11 13:17:02"))], closed=[]))
+CS.heal_live(lt)
+check(lt["ledger"][0]["time"] == "2026-11-11 13:17:02", "LTM issued time = live trigger 13:17 (not the 09:15 daily bar)")
+
 print(f"\n{ok} passed, {fail} failed")
 sys.exit(1 if fail else 0)

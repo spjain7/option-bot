@@ -137,31 +137,37 @@ def track(state, quotes, now):
         r["uhi"], r["ulo"], r["ulast"], r["uat"] = round(hi, 2), round(lo, 2), round(p, 2), str(now)
 
 
-def backfill_hilo(state, api, now, max_rows=6):
+def backfill_hilo(state, api, now, max_rows=8):
     """17-Nov: an OPEN futures call with no high / low yet (row re-created by heal(), or no live quote reached track()) gets
     them from 15-minute candles since the call time – once per row. Returns rows filled."""
     n = 0
     for r in state.get("ledger", []):
         if n >= max_rows:
             break
-        if (r.get("status") != "OPEN" or not str(r.get("cat", "")).startswith("FUTURES") or not r.get("mark_key")
-                or r.get("hilo_bf") or (r.get("uhi") is not None and r.get("uat"))):
+        closed_ok = (r.get("status") == "CLOSED" and r.get("closed") and r.get("hi") is None and r.get("uhi") is None and not no_trade(r)
+                     and (now - pd.Timestamp(r["closed"])).days <= 30)
+        if ((r.get("status") != "OPEN" and not closed_ok) or not str(r.get("cat", "")).startswith("FUTURES") or not r.get("mark_key")
+                or r.get("hilo_bf") or (r.get("status") == "OPEN" and r.get("uhi") is not None and r.get("uat"))):
             continue
         r["hilo_bf"] = True
         try:
             t0 = pd.Timestamp(r["time"])
-            c = api.candles("MCX" if r.get("seg") == "MCX" else "NFO", str(r["mark_key"]), "FIFTEEN_MINUTE", t0.floor("D"), now)
+            t1 = pd.Timestamp(r["closed"]) if r.get("status") == "CLOSED" else now
+            c = api.candles("MCX" if r.get("seg") == "MCX" else "NFO", str(r["mark_key"]), "FIFTEEN_MINUTE", t0.floor("D"), t1)
         except Exception as e_:
             print(f"[report] high/low backfill {r.get('name')} skipped: {type(e_).__name__}: {e_}")
             continue
         if c is None or not len(c):
             continue
-        a = c[c["time"] >= t0.floor("15min")]
+        a = c[(c["time"] >= t0.floor("15min")) & (c["time"] <= t1)]
         if not len(a):
             continue
         e = float(r["entry"])
         hi, lo = max(float(a["high"].max()), r.get("uhi", e)), min(float(a["low"].min()), r.get("ulo", e))
-        r.update(uhi=round(hi, 2), ulo=round(lo, 2), ulast=round(float(a["close"].iloc[-1]), 2), uat=str(now))
+        if r.get("status") == "CLOSED" and r.get("exit") is not None:   # the exit price was traded
+            hi, lo = max(hi, float(r["exit"])), min(lo, float(r["exit"]))
+        r.update(uhi=round(hi, 2), ulo=round(lo, 2), uat=str(now), **({} if r.get("status") == "CLOSED" else
+                                                                       {"ulast": round(float(a["close"].iloc[-1]), 2)}))
         n += 1
     return n
 
@@ -255,6 +261,13 @@ def not_yet_active(r):
     return str(t.date()) >= SHOW_FROM and (t.hour, t.minute) >= (h, m)
 
 
+OWNER_NOT_TRADED = [("FORTIS", "2026-11-13")]   # 17-Nov owner: "remove FORTIS from the list – we have not traded it"
+
+
+def owner_excluded(r):
+    return any(r.get("name") == n and str(r.get("time") or r.get("date") or "").startswith(d) for n, d in OWNER_NOT_TRADED)
+
+
 def no_trade(r):
     n = str(r.get("note") or "").lower()
     return r.get("status") == "CLOSED" and ("cancel" in n or "skip" in n or "not published" in n)
@@ -266,7 +279,7 @@ def rows_for(state, seg, today, marks):
     for r in state.get("ledger", []):
         if r["seg"] != seg or r["status"] in ("VOID", "WAITING") or (r["status"] == "CLOSED" and str(r.get("closed", r["date"]))[:10] != today):
             continue
-        if seg != "MCX" and (not_yet_active(r) or no_trade(r)):  # 17-Nov owner: only calls that could be traded
+        if seg != "MCX" and (not_yet_active(r) or no_trade(r) or owner_excluded(r)):  # 17-Nov owner: only traded calls
             continue
         mk = _ltp(marks.get(r.get("mark_key"))) if r["status"] == "OPEN" else None
         if mk is None and r["status"] == "OPEN":
@@ -509,7 +522,7 @@ def history_nse(state, limit=40):
     """closed index + stock FUTURES calls (newest first) with high / low after the call, exit, best / worst and P&L per lot."""
     out = []
     for r in reversed(state.get("ledger", [])):
-        if r.get("seg") != "NSE" or r.get("cat") != "FUTURES" or r.get("status") != "CLOSED" or no_trade(r):
+        if r.get("seg") != "NSE" or r.get("cat") != "FUTURES" or r.get("status") != "CLOSED" or no_trade(r) or owner_excluded(r):
             continue
         hi, lo = _hilo(r)
         x = dict(r, pnl=pnl_rs(r), hi=hi, lo=lo, cmp=r.get("exit"))
