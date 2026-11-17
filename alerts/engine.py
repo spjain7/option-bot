@@ -503,6 +503,7 @@ def scan(api, master, now, state, only=None):
             tk_ = sorted({r["mark_key"] for r in state.get("ledger", []) if r["seg"] == seg_ and r["status"] == "OPEN" and r.get("mark_key")})
             if tk_:
                 RP.track(state, api.quotes({ex_: tk_}) or {}, now)
+                RP.backfill_hilo(state, api, now)             # 17-Nov: rows with no high / low yet (LTM, re-created rows)
     except Exception as e_:
         print(f"[report] tracking skipped: {type(e_).__name__}: {e_}")
     # end-of-day call reports (table image + text): Index + Stock after the NSE close, MCX after the MCX close

@@ -545,6 +545,9 @@ def scan(api, master, now, state, msgs, rep, engine):
                     DQ.shadow_event(st, p.get("key"), now, status="cancelled", cancel_price=float(ltp), cancel_time=str(now))
                     continue
                 p["pending"] = False
+                for L in state.get("ledger", []):              # 17-Nov owner: listed from activation (display only)
+                    if L.get("key") in (p.get("key"), (p.get("key") or "") + "|OPT") and L["status"] == "OPEN":
+                        L.update(time=str(now), date=str(now.date()), activated=True)
                 DQ.shadow_event(st, p.get("key"), now, status="active", entry_fill=float(ltp), entry_time=str(now),
                                 entry_quote_time=TP.quote_time(q.get(p["token"]) or {}) and str(TP.quote_time(q.get(p["token"]))),
                                 entry_basis="first scan LTP after the open – not a broker fill")

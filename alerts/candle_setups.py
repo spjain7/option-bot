@@ -312,6 +312,32 @@ def _enter(state, msgs, r, e0, t, gapped):
     print(f"[setup] {r['setup']} {r['name']} {r['side']} entered {e0} stop {r['stop']} target {r.get('target')}")
 
 
+def heal_live(state):
+    """17-Nov: setups whose LIVE 'ACTIVE' message was sent but which the daily candle closed as 'stop level touched before the
+    breakout' (SONACOMS 4-Nov, COFORGE 11-Nov) were never written to the call report. Re-create them as trades entered at the
+    trigger at the live time and stopped at the stop level (the daily candle shows the stop was touched that day). Idempotent."""
+    s = _store(state)
+    have = {L.get("key") for L in state.get("ledger", [])}
+    n = 0
+    for r in s.get("closed", []):
+        lt = (r.get("live") or {}).get("trigger")
+        if not lt or r.get("entry") is not None or r.get("exit_reason") != "stop level touched before the breakout" or r["key"] in have:
+            continue
+        sd = 1 if r["side"] == "BUY" else -1
+        ls_ = (r.get("live") or {}).get("stop")
+        closed = ls_ or f"{pd.Timestamp(lt):%Y-%m-%d} 15:30:00"
+        risk = sd * (r["trigger"] - r["stop"])
+        r.update(entry=r["trigger"], entry_time=lt, risk=risk, exit=r["stop"], exit_reason="stop-loss (live-triggered)",
+                 gross_pts=-risk, gross_R=-1.0, healed=True)
+        RP.add(state, key=r["key"], mark_key=r.get("token"), seg="MCX" if r["setup"].startswith("MCX") else "NSE", cat="FUTURES",
+               name=r["name"], symbol=r["contract"], type=TITLE[r["setup"]].title(), side=r["side"], entry=r["trigger"], sl=r["stop"],
+               target=r["trigger"] + sd * r.get("target_r", P["target_r"]) * risk, tick=r.get("tick"), lot=r.get("lot"),
+               mult=r.get("mult"), time=lt)
+        state["ledger"][-1].update(status="CLOSED", exit=round(float(r["stop"]), 2), note="stop-loss", closed=closed, healed=True)
+        n += 1
+    return n
+
+
 LIVE_SETUPS = ("STK_HANGMAN", "STK_SWEEP3H")
 
 
@@ -387,10 +413,21 @@ def _step_pattern(state, msgs, r, bars, daily, now):
             if window_end is not None and pd.Timestamp(b.time).normalize() > window_end:
                 return True, None, b.time, "no breakout within 3 sessions"
             trig = r["trigger"]
+            lt = (r.get("live") or {}).get("trigger")
             if sd * (o - trig) > 0:
                 if sd * (o - st) <= 0:
                     return True, None, b.time, "opened beyond the stop"
                 _enter(state, msgs, r, o, b.time, True)
+            elif lt and pd.Timestamp(lt).normalize() == pd.Timestamp(b.time).normalize():
+                # 17-Nov: the LIVE message told the owner the setup was ACTIVE at the trigger – it is a trade, entered at the
+                # trigger at the live time (a daily candle cannot show whether the stop or the trigger came first)
+                _enter(state, msgs, r, trig, pd.Timestamp(lt), False)
+                if (l <= st) if sd > 0 else (h >= st):
+                    ls_ = (r.get("live") or {}).get("stop")
+                    return True, st, pd.Timestamp(ls_) if ls_ else b.time, "stop-loss"
+                if (h >= r["target"]) if sd > 0 else (l <= r["target"]):
+                    return True, r["target"], b.time, "🎯 target 2R"
+                continue
             elif (l <= st) if sd > 0 else (h >= st):
                 return True, None, b.time, "stop level touched before the breakout"
             elif (h > trig) if sd > 0 else (l < trig):

@@ -59,16 +59,16 @@ txt = "\n\n".join(m for m in out if not m.startswith("PHOTO::"))
 check(out[0].startswith("PHOTO::"), "image first")
 check("🟢 OPEN CALLS" in txt and "📕 CLOSED TODAY" in txt and txt.index("OPEN CALLS") < txt.index("CLOSED TODAY"), "open and closed in separate sections")
 blk = txt[txt.index("GLENMARK FUT"):].split("\n\n")[0].split("\n")
-check(blk[1].startswith("🗓 Issued : 04-Nov 15:32") and blk[2] == "📌 Basis  : Positional · daily chart", "issued date and basis on their own lines")
-check([x.split(":")[0].strip() for x in blk[3:]] == ["💰 Entry", "🛑 SL", "📈 High", "📉 Low", "💹 CMP", "✅ Best profit", "⚠️ Highest loss",
+check(blk[1].startswith("🗓 Issued : 04-Nov 15:32") and "Basis" not in txt.split("🔒 INTERNAL")[0], "issued date on its own line, no basis in the client text")
+check([x.split(":")[0].strip() for x in blk[2:]] == ["💰 Entry", "🛑 SL", "📈 High", "📉 Low", "💹 CMP", "✅ Best profit", "⚠️ Highest loss",
                                                       "🟢 In profit"], "one value per line: entry, SL/target, high, low, CMP, best, worst, status")
-check("Swing · 4-hour chart" in txt and "EMAX" not in txt and "Positional · daily chart" in txt, "basis shown without internal strategy codes")
+intl = [m for m in out if m.startswith("🔒 INTERNAL")]
+check(len(intl) == 1 and "GRASIM FUT SELL · 13-Nov 17:32 · Swing · 4-hour chart" in intl[0] and "FORTIS FUT SELL" in intl[0],
+      "basis in a separate internal message, one line per script")
 check("🛑 Stop-loss hit : −₹" in txt and "FORTIS FUT" in txt.split("CLOSED TODAY")[1], "closed call with result line")
 check(all(len(m) <= 4000 for m in out), "every message under Telegram's 4,000-character cut")
 H = RP.history_nse(s)
-t_ = [h for h in H if h["name"] == "TMPV"][0]
-check(t_["pnl"] is None and t_["best"] is None and t_["cmp"] is None, "no-trade row shows no fake excursion / P&L")
-check([h["name"] for h in H] == ["TMPV", "FORTIS"], "closed history newest first, futures only")
+check([h["name"] for h in H] == ["FORTIS"], "closed history: futures only, never-active (no-trade) calls left out")
 check(Path(out[0].split("::")[1]).exists(), "image with open table + closed-call history renders")
 cells = RP._cells_nse([r for r in RP.rows_for(s, "NSE", "2026-11-17", {}) if r["name"] == "GRASIM"][0])
 check(len(cells) == len(RP.HEAD_NSE) and "Swing (4-hour)" not in cells, "image has no call-type / category column")

@@ -105,7 +105,7 @@ def conflict(state, name, side, tf=None):
     timeframe: 4.6 calls/day, +0.22R, PF 1.42, max DD 90R vs one per instrument + direction: 3.3/day, +0.15R, PF 1.30, 90R).
     tf=None keeps the old rule (any open same-side call blocks)."""
     for r in state.get("ledger", []):
-        if r.get("status") == "OPEN" and r.get("cat") == "FUTURES" and r.get("name") == name:
+        if r.get("status") in ("OPEN", "WAITING") and r.get("cat") == "FUTURES" and r.get("name") == name:   # WAITING = held after-close call
             if r.get("side") != side:
                 return f"contradicts the open {r.get('side')} call ({r.get('type')}, {str(r.get('time'))[:16]})"
             rtf = tf_of(r)
