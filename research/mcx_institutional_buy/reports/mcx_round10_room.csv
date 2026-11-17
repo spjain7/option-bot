@@ -1,0 +1,85 @@
+commodity,tf,side,setup,filt,n,win,R,OOS_R,OOS_n
+ALUMINIUM,Daily,BUY,DMO zero cross,all,208,46.6,0.13,0.165,43
+ALUMINIUM,Daily,BUY,DMO zero cross,room>=2R or new high,11,63.6,0.442,0.219,2
+ALUMINIUM,Daily,BUY,DMO zero cross,room>=3R or new high,8,62.5,0.197,0.219,2
+ALUMINIUM,Daily,BUY,DMO zero cross,blocked (<1R room),182,46.2,0.135,0.191,39
+ALUMINIUM,Daily,BUY,Hull trend cross,all,227,44.5,0.092,0.216,49
+ALUMINIUM,Daily,BUY,Hull trend cross,room>=2R or new high,37,35.1,-0.147,0.413,11
+ALUMINIUM,Daily,BUY,Hull trend cross,room>=3R or new high,27,37.0,-0.095,0.413,11
+ALUMINIUM,Daily,BUY,Hull trend cross,blocked (<1R room),158,47.5,0.114,0.177,31
+ALUMINIUM,Daily,BUY,Trendline breakout (candle),all,91,52.7,0.227,0.125,12
+ALUMINIUM,Daily,BUY,Trendline breakout (candle),room>=2R or new high,6,66.7,0.95,,0
+ALUMINIUM,Daily,BUY,Trendline breakout (candle),room>=3R or new high,6,66.7,0.95,,0
+ALUMINIUM,Daily,BUY,Trendline breakout (candle),blocked (<1R room),78,53.8,0.203,0.233,11
+COPPER,Daily,BUY,10-candle breakout,all,200,51.5,0.303,0.562,41
+COPPER,Daily,BUY,10-candle breakout,room>=2R or new high,68,57.4,0.504,0.447,12
+COPPER,Daily,BUY,10-candle breakout,room>=3R or new high,57,57.9,0.539,0.966,8
+COPPER,Daily,BUY,10-candle breakout,blocked (<1R room),144,51.4,0.24,0.474,31
+COPPER,Daily,BUY,Breakout retest,all,133,51.9,0.267,0.386,30
+COPPER,Daily,BUY,Breakout retest,room>=2R or new high,64,53.1,0.353,0.343,13
+COPPER,Daily,BUY,Breakout retest,room>=3R or new high,57,59.6,0.506,1.08,8
+COPPER,Daily,BUY,Breakout retest,blocked (<1R room),74,54.1,0.213,0.166,19
+COPPER,Daily,BUY,Previous-week high break,all,230,46.5,0.202,0.366,53
+COPPER,Daily,BUY,Previous-week high break,room>=2R or new high,63,57.1,0.505,0.754,11
+COPPER,Daily,BUY,Previous-week high break,room>=3R or new high,52,55.8,0.518,1.351,7
+COPPER,Daily,BUY,Previous-week high break,blocked (<1R room),169,45.0,0.171,0.279,43
+CRUDEOIL,4 hour,BUY,MACD signal cross,all,58,43.1,0.391,0.586,25
+CRUDEOIL,4 hour,BUY,MACD signal cross,room>=2R or new high,11,54.5,1.088,0.172,4
+CRUDEOIL,4 hour,BUY,MACD signal cross,room>=3R or new high,9,55.6,0.927,0.306,3
+CRUDEOIL,4 hour,BUY,MACD signal cross,blocked (<1R room),47,44.7,0.518,0.844,21
+CRUDEOIL,Daily,BUY,Previous-month high break,all,110,49.1,0.196,0.448,23
+CRUDEOIL,Daily,BUY,Previous-month high break,room>=2R or new high,38,52.6,0.317,0.612,6
+CRUDEOIL,Daily,BUY,Previous-month high break,room>=3R or new high,33,48.5,0.271,0.761,5
+CRUDEOIL,Daily,BUY,Previous-month high break,blocked (<1R room),78,47.4,0.151,0.468,18
+CRUDEOIL,Daily,SELL,Previous-month high break,all,108,51.9,0.199,0.205,21
+CRUDEOIL,Daily,SELL,Previous-month high break,room>=2R or new high,21,66.7,0.624,0.463,2
+CRUDEOIL,Daily,SELL,Previous-month high break,room>=3R or new high,17,70.6,0.795,0.463,2
+CRUDEOIL,Daily,SELL,Previous-month high break,blocked (<1R room),80,43.8,0.045,0.114,17
+GOLD,3 hour,BUY,10-candle breakout,all,149,52.3,0.719,0.61,53
+GOLD,3 hour,BUY,10-candle breakout,room>=2R or new high,69,55.1,0.86,0.881,28
+GOLD,3 hour,BUY,10-candle breakout,room>=3R or new high,63,52.4,0.811,0.916,25
+GOLD,3 hour,BUY,10-candle breakout,blocked (<1R room),103,47.6,0.601,0.72,29
+GOLD,4 hour,BUY,10-candle breakout,all,127,54.3,0.798,0.73,44
+GOLD,4 hour,BUY,10-candle breakout,room>=2R or new high,62,61.3,1.054,1.472,22
+GOLD,4 hour,BUY,10-candle breakout,room>=3R or new high,57,56.1,0.893,1.235,20
+GOLD,4 hour,BUY,10-candle breakout,blocked (<1R room),85,52.9,0.701,0.462,25
+GOLD,4 hour,BUY,DMO zero cross,all,112,50.9,0.701,0.812,37
+GOLD,4 hour,BUY,DMO zero cross,room>=2R or new high,12,66.7,1.537,1.657,7
+GOLD,4 hour,BUY,DMO zero cross,room>=3R or new high,9,66.7,1.504,1.674,4
+GOLD,4 hour,BUY,DMO zero cross,blocked (<1R room),93,50.5,0.644,0.822,29
+NATURALGAS,3 hour,SELL,Stock swing 5-candle + volume 2x,all,83,50.6,0.325,0.166,19
+NATURALGAS,3 hour,SELL,Stock swing 5-candle + volume 2x,room>=2R or new high,26,46.2,-0.022,-0.402,6
+NATURALGAS,3 hour,SELL,Stock swing 5-candle + volume 2x,room>=3R or new high,23,43.5,-0.048,-0.402,6
+NATURALGAS,3 hour,SELL,Stock swing 5-candle + volume 2x,blocked (<1R room),59,54.2,0.559,0.324,14
+NATURALGAS,4 hour,SELL,20-candle breakout,all,94,46.8,0.326,0.219,27
+NATURALGAS,4 hour,SELL,20-candle breakout,room>=2R or new high,43,41.9,-0.033,-0.395,13
+NATURALGAS,4 hour,SELL,20-candle breakout,room>=3R or new high,42,40.5,-0.06,-0.395,13
+NATURALGAS,4 hour,SELL,20-candle breakout,blocked (<1R room),65,47.7,0.4,0.317,21
+NATURALGAS,4 hour,SELL,DMO zero cross,all,118,43.2,0.213,0.044,42
+NATURALGAS,4 hour,SELL,DMO zero cross,room>=2R or new high,7,57.1,0.393,0.284,3
+NATURALGAS,4 hour,SELL,DMO zero cross,room>=3R or new high,6,50.0,-0.037,0.284,3
+NATURALGAS,4 hour,SELL,DMO zero cross,blocked (<1R room),107,42.1,0.196,0.015,38
+SILVER,3 hour,BUY,20-candle breakout,all,131,43.5,0.367,0.644,43
+SILVER,3 hour,BUY,20-candle breakout,room>=2R or new high,58,50.0,0.732,0.917,25
+SILVER,3 hour,BUY,20-candle breakout,room>=3R or new high,51,49.0,0.699,1.048,23
+SILVER,3 hour,BUY,20-candle breakout,blocked (<1R room),78,44.9,0.358,0.342,19
+SILVER,3 hour,BUY,Previous-week high break,all,98,49.0,0.573,0.96,33
+SILVER,3 hour,BUY,Previous-week high break,room>=2R or new high,45,46.7,0.553,1.245,18
+SILVER,3 hour,BUY,Previous-week high break,room>=3R or new high,40,45.0,0.521,1.245,18
+SILVER,3 hour,BUY,Previous-week high break,blocked (<1R room),58,50.0,0.611,0.959,17
+SILVER,3 hour,BUY,RSI 70 momentum,all,70,55.7,0.833,1.39,25
+SILVER,3 hour,BUY,RSI 70 momentum,room>=2R or new high,36,61.1,1.067,2.006,17
+SILVER,3 hour,BUY,RSI 70 momentum,room>=3R or new high,33,60.6,1.097,2.144,15
+SILVER,3 hour,BUY,RSI 70 momentum,blocked (<1R room),38,44.7,0.494,0.448,12
+ZINC,3 hour,BUY,Hammer / pin bar,all,148,43.9,0.389,0.586,51
+ZINC,3 hour,BUY,Hammer / pin bar,room>=2R or new high,37,29.7,-0.049,-0.389,15
+ZINC,3 hour,BUY,Hammer / pin bar,room>=3R or new high,26,30.8,0.13,-0.389,15
+ZINC,3 hour,BUY,Hammer / pin bar,blocked (<1R room),109,45.0,0.323,0.726,34
+ZINC,Daily,BUY,Hull trend cross,all,233,50.2,0.156,0.343,47
+ZINC,Daily,BUY,Hull trend cross,room>=2R or new high,49,49.0,0.146,0.376,10
+ZINC,Daily,BUY,Hull trend cross,room>=3R or new high,28,42.9,0.187,0.538,8
+ZINC,Daily,BUY,Hull trend cross,blocked (<1R room),147,49.0,0.158,0.389,31
+ZINC,Daily,BUY,Previous-week high break,all,233,48.5,0.174,0.295,50
+ZINC,Daily,BUY,Previous-week high break,room>=2R or new high,69,52.2,0.2,0.374,16
+ZINC,Daily,BUY,Previous-week high break,room>=3R or new high,62,53.2,0.223,0.41,15
+ZINC,Daily,BUY,Previous-week high break,blocked (<1R room),173,48.6,0.182,0.265,32
