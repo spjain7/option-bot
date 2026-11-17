@@ -27,7 +27,10 @@ try:
     base = types.ModuleType("rb_base"); base.__dict__["__name__"] = "rb_base"
     exec(compile(src, "rb_base", "exec"), base.__dict__)
     added = {RID} | {k for k in RB.RULES if "OIBO" in k}            # 7-Nov: owner OI rules added later (own test)
-    check(set(RB.RULES) - added == set(base.RULES) and all(RB.RULES[k] == base.RULES[k] for k in base.RULES),
+    added |= {k for k, v in RB.RULES.items() if v.get("half_t1")}    # 17-Nov: per-commodity T1-half rules (own test)
+    _off = {"RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP"}                     # 17-Nov: switched OFF by the owner
+    _same = lambda a, b, k: {**a, **({"status": b["status"]} if k in _off else {})} == b
+    check(set(RB.RULES) - added == set(base.RULES) and all(_same(RB.RULES[k], base.RULES[k], k) for k in base.RULES),
           "all 16 existing rulebook rules unchanged")
     r = np.random.default_rng(1)
     n = 600; c = 100 + np.cumsum(r.normal(0, 1, n))
@@ -55,7 +58,7 @@ daily = pd.DataFrame(dict(time=pd.bdate_range(end=NOW.normalize() - pd.Timedelta
 C = dict(symbol="ZINC30NOV26FUT", token="9", expiry="2026-11-30", lot=1, tick=0.05)
 q = {"ltp": 103.0, "exchFeedTime": f"{NOW:%d-%b-%Y %H:%M:%S}"}
 keep = dict(RB.RULES)
-RB.RULES = {RID: keep[RID]}
+RB.RULES = {RID: dict(keep[RID], status="LIVE")}          # 17-Nov: rule OFF live; code path still tested
 st, m = {"day": {"date": str(NOW.date())}}, []
 out = RB.run(st, m, None, "ZINC", "MCX", C, {"1h": fr}, daily, q, NOW, 5000, "MCX")
 rec = st["fourh"]["open"][0]

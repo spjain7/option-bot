@@ -95,6 +95,30 @@ for _mkt in ("MCX", "INDEX"):
 # SL 1 ATR stopped 63-73 % of trades; SL 1.5 ATR + S/R-capped 3-ATR target: DEV +0.27 -> +0.34R, VALID -0.08 -> +0.01R,
 # stop-outs 63 -> 47 %; swing-low / breakout-candle stops were worse. Small samples (36 / 13) – still EXPERIMENTAL.
 
+# 17-Nov-2026 (owner: "enable the 1R / 1.5R alert instead of the old 1-hour breakout alert", chose "T1 1R + T2 1.5R": book half
+# at T1 and move the stop to cost, rest at T2). The 3 MCX 1-hour EXPERIMENTAL rules are switched OFF (definitions kept so calls
+# still open are tracked to the end). New per-commodity rules, research branch research/mcx-institutional-buy
+# (stock_rules_on_mcx/round8.py scorecard + reports/mcx_t1_half_15R*.csv): same signal code as below (raw "BO N10 vol0"),
+# entry next candle open, SL 2 ATR, half at 1R + stop to cost + rest at 1.5R, time exit 40 candles, real MCX fees + live spread
+# (1x costs). Periods: 3h / 4h TRAIN 2022-07..2024-06 / VALID ..2025-06 / OOS ..2026-10; daily 2006-16 / 2017-21 / 2022-26.
+# Natural gas and crude had no setup that held on the newest data with these targets -> none added.
+for _rid in ("RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP"):
+    RULES[_rid]["status"] = "OFF"
+for _rid, _tf, _nm, _n, _win, _R, _per in (
+        ("RB_MCX_3h_BO10_GOLD_BUY", "3h", "GOLD", 225, 63, 0.32, "+0.26/+0.41/+0.31 · OOS 74 trades 61 % won"),
+        ("RB_MCX_4h_BO10_GOLD_BUY", "4h", "GOLD", 189, 64, 0.34, "+0.28/+0.42/+0.34 · OOS 58 trades 64 % won"),
+        ("RB_MCX_1d_BO10_SILVER_BUY", "1d", "SILVER", 231, 60, 0.21, "+0.14/+0.32/+0.29 (20 y) · OOS 55 trades 67 % won"),
+        ("RB_MCX_1d_BO10_COPPER_BUY", "1d", "COPPER", 249, 56, 0.16, "+0.10/+0.26/+0.21 (20 y) · OOS 52 trades 56 % won"),
+        ("RB_MCX_1d_BO10_ZINC_BUY", "1d", "ZINC", 248, 57, 0.16, "+0.11/+0.16/+0.30 (20 y) · OOS 55 trades 60 % won")):
+    RULES[_rid] = dict(_r("MCX", _tf, "BO", "N10 vol0", "none", "BUY", 2.0, 1.5, 40, _n, _win, _R, _per, "A",
+                          "10-candle breakout · T1 1R book half · T2 1.5R"), names=(_nm,), half_t1=True, costs="1x")
+
+# 17-Nov-2026 (owner: "aluminium only positional weekly or monthly breakout / breakdown, intraday avoid"): no rulebook, 3-hour,
+# 4-hour, daily, candle-setup or 1-hour watch alerts for these names; weekly / monthly breakouts (alerts/breakout.py) only.
+# Weekly / monthly breakdown SELL stays logged-only: 0 of 625 filtered variants (volume, trend, EMA, RSI, MACD, DMO, Hull)
+# were positive in both 2006-16 and 2017-21 (research reports/mcx_alu_sell.csv).
+POSITIONAL_ONLY = {"ALUMINIUM"}
+
 
 
 # ── candles ──────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -329,7 +353,11 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
     _trail_update(state, msgs, st, name, frames)
     feats = {}
     for rid, rule in RULES.items():
-        if rule["mkt"] != mkt or rule["tf"] not in frames:
+        if rule["mkt"] != mkt or rule["tf"] not in frames or rule.get("status") == "OFF":
+            continue
+        if rule.get("names") and name not in rule["names"]:            # 17-Nov: per-commodity rules
+            continue
+        if name in POSITIONAL_ONLY and rule["tf"] not in ("1w", "1M"):  # 17-Nov: aluminium weekly / monthly only
             continue
         fr = frames[rule["tf"]]
         if fr is None or len(fr) < 220:
@@ -393,6 +421,8 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
                    entry=plan["entry"], stop=plan["sl"], target=plan["target"], risk=plan["risk_unit"], tick=t, mult=mult,
                    opened=str(now), days=[str(now.date())], key=f"RB|{rid}|{name}|{last}", max_days=max_days,
                    tfl=TF_TXT[rule["tf"]], rule=rid, **({"shadow": True} if shadow else {}))
+        if rule.get("half_t1"):                               # 17-Nov: book half at T1 (1R), stop to cost, rest at T2
+            rec.update(t1=float(t1), half_t1=True, t1_done=False)
         if after_close:                                       # 16-Nov (owner): confirm ACTIVE / SKIPPED at the next open
             rec.update(await_open=True, atr=float(sig["atr"]))
         if rule.get("trail"):                                 # 7-Nov H1.12L: trailing stop on candle closes, no fixed target
@@ -418,8 +448,9 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
               "━━━━━━━━━━━━━━",
               f"Entry   : {TP.fmt(plan['entry'], t)}  (no chase beyond {TP.fmt(plan['entry'] + s_ * 0.5 * sig['atr'], t)})",
               f"SL      : {TP.fmt(plan['sl'], t)}",
-              f"T1      : {TP.fmt(t1, t)}  (1R)",
-              f"T2      : {TP.fmt(plan['target'], t)}  ({rr:g}R – exit here)",
+              (f"T1      : {TP.fmt(t1, t)}  (1R – book HALF, move SL to cost {TP.fmt(plan['entry'], t)})" if rule.get("half_t1")
+               else f"T1      : {TP.fmt(t1, t)}  (1R)"),
+              f"T2      : {TP.fmt(plan['target'], t)}  ({rr:g}R – exit {'the rest' if rule.get('half_t1') else 'here'})",
               f"R:R     : 1:{rr:g} · risk ₹{plan['risk_lot']:,.0f} per lot",
               f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
               f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")]))
@@ -428,9 +459,11 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
               f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b %H:%M} candle – {describe(rule)}",
               f"• Numbers : close {TP.fmt(sig['close'], t)} · ATR {TP.fmt(sig['atr'], t)} · RSI {sig['rsi']:.0f} · ADX {sig['adx']:.0f}"
               + (f" · volume {sig['vol_x']:.1f}×" if sig.get("vol_x") else ""),
-              f"• Exit    : SL or T2 · time exit after {rule['maxh']} candles (~{max_days} sessions) · exit 1 session before expiry",
+              (f"• Exit    : half at T1 (stop then moves to cost), rest at T2 or SL · time exit after {rule['maxh']} candles "
+               f"(~{max_days} sessions) · exit 1 session before expiry" if rule.get("half_t1") else
+               f"• Exit    : SL or T2 · time exit after {rule['maxh']} candles (~{max_days} sessions) · exit 1 session before expiry"),
               f"• Strength: tier {rule.get('tier', 'B')} – {rule['n']} backtest trades, {rule['win']:.0f}% won, {rule['R']:+.2f}R avg after "
-              f"2× costs, periods {rule['periods']} (backtest, not a guarantee)",
+              f"{'real MCX' if rule.get('costs') == '1x' else '2×'} costs, periods {rule['periods']} (backtest, not a guarantee)",
               WARN]))
         RP.add(state, key=rec["key"], mark_key=str(c["token"]), seg="MCX" if ex == "MCX" else "NSE", cat="FUTURES", name=name,
                symbol=c["symbol"], type=f"{TF_TXT[rule['tf']].capitalize()} {rule['fam']}", side=rule["side"], entry=plan["entry"],
