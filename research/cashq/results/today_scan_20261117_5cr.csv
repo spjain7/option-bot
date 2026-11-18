@@ -1,0 +1,41 @@
+setup,status,symbol,candle,close,sl,target,risk_pct,ext200_pct,ret20_pct,adx,atr_pct,rs,confirmations
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),ASAHIINDIA,2026-11-17,1165.71,913.49,1922.39,21.6,26.7,26.2,38.0,3.06,0.87,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),POONAWALLA,2026-11-17,494.09,352.79,917.98,28.6,10.5,10.1,29.0,3.6,0.7,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),MAHABANK,2026-11-17,96.8,75.85,159.66,21.6,25.7,21.3,27.0,2.82,0.75,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),GABRIEL,2026-11-17,1476.67,1060.23,2725.96,28.2,18.8,1.9,17.0,4.73,0.83,✅ not extended + no run-up (59 % win setup)
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),MARICO,2026-11-17,928.65,789.37,1346.5,15.0,15.2,18.3,38.0,2.17,0.6,✅ ADX>=30 + not extended (62 % win setup)
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),BHARTIARTL,2026-11-17,2160.55,1817.16,3190.73,15.9,13.4,13.4,49.0,2.09,0.64,✅ ADX>=30 + not extended (62 % win setup)
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),PHOENIXLTD,2026-11-17,2254.53,1765.36,3722.02,21.7,20.3,18.9,37.0,3.05,0.79,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),FEDERALBNK,2026-11-17,369.49,308.51,552.43,16.5,17.5,9.3,28.0,2.35,0.8,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),ICICIBANK,2026-11-17,1605.03,1361.12,2336.78,15.2,16.3,14.9,46.0,1.98,0.79,✅ ADX>=30 + not extended (62 % win setup)
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),GOODLUCK,2026-11-17,561.51,397.22,1054.37,29.3,18.6,-5.3,17.0,4.36,0.74,✅ not extended + no run-up (59 % win setup)
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),PARAGMILK,2026-11-17,339.02,233.88,654.43,31.0,35.5,22.7,36.0,5.26,0.92,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),GRWRHITECH,2026-11-17,7715.48,5627.77,13978.59,27.1,28.2,10.7,13.0,4.32,0.87,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),SAREGAMA,2026-11-17,660.35,491.96,1165.53,25.5,38.2,31.0,39.0,3.99,0.93,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),APOLLO,2026-11-17,448.64,326.28,815.74,27.3,26.0,4.6,15.0,5.3,0.91,✅ not extended + no run-up (59 % win setup)
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),EMCURE,2026-11-17,2270.45,1763.1,3792.48,22.3,26.9,24.7,38.0,3.39,0.82,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),HEGAM,2026-11-17,276.45,190.68,533.74,31.0,24.2,23.0,30.0,5.52,0.75,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),DRREDDY,2026-11-17,1391.04,1114.76,2219.89,19.9,11.6,12.8,44.0,1.86,0.5,✅ ADX>=30 + not extended (62 % win setup)
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),DIACABS,2026-11-17,365.16,259.8,681.24,28.9,35.2,0.8,17.0,4.92,0.96,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),ROSSTECH,2026-11-17,1509.76,1096.84,2748.53,27.4,38.3,-0.9,21.0,5.03,0.95,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),SAILIFE,2026-11-17,1792.78,1419.1,2913.82,20.8,37.0,29.0,37.0,4.7,0.94,
+Monthly all-time-high breakout (market up),PROVISIONAL (candle still open),UNIMECH,2026-11-17,1803.42,1190.23,3642.99,34.0,33.8,0.7,19.0,5.07,0.97,
+Monthly 5-year (multi-year) breakout (market up),PROVISIONAL (candle still open),PHOENIXLTD,2026-11-17,2254.53,1765.36,3722.02,21.7,20.3,18.9,37.0,3.05,0.79,
+Monthly 5-year (multi-year) breakout (market up),PROVISIONAL (candle still open),PNB,2026-11-17,151.19,122.11,238.45,19.2,31.0,30.0,42.0,2.71,0.9,
+Monthly 5-year (multi-year) breakout (market up),PROVISIONAL (candle still open),UNOMINDA,2026-11-17,1397.9,1061.8,2406.22,24.0,19.7,26.2,39.0,3.25,0.76,
+Monthly 5-year (multi-year) breakout (market up),PROVISIONAL (candle still open),ETERNAL,2026-11-17,373.76,295.62,608.21,20.9,24.3,14.9,27.0,2.56,0.91,
+Weekly all-time-high breakout on volume,CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),GABRIEL,2026-11-13,1529.67,1129.69,2729.61,26.1,23.5,7.7,15.0,4.72,0.85,
+Weekly all-time-high breakout on volume,CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),APOLLO,2026-11-13,465.53,328.21,877.47,29.5,31.5,10.4,13.0,5.35,0.91,
+Weekly all-time-high breakout on volume,CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),RPEL,2026-11-13,1913.85,1350.96,3602.51,29.4,45.7,2.6,22.0,5.13,0.99,
+Weekly all-time-high breakout on volume,CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),STYLEBAAZA,2026-11-13,458.77,327.66,852.09,28.6,32.1,16.4,20.0,4.67,0.63,
+Weekly 5-year (multi-year) breakout on volume,CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),PNB,2026-11-13,143.95,123.42,205.53,14.3,25.4,21.5,36.0,2.63,0.86,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),BANKINDIA,2026-11-13,153.94,128.05,231.61,16.8,11.2,14.5,19.0,2.85,0.58,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),KTKBANK,2026-11-13,359.86,287.3,577.56,20.2,28.4,6.1,25.0,3.46,0.88,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),UNIONBANK,2026-11-13,203.49,170.71,301.83,16.1,18.2,16.9,29.0,2.46,0.75,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),TANLA,2026-11-13,736.69,576.33,1217.77,21.8,33.7,29.7,58.0,4.09,0.87,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),PNB,2026-11-13,143.95,123.42,205.53,14.3,25.4,21.5,36.0,2.63,0.86,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),NAVINFLUOR,2026-11-13,9941.32,8151.84,15309.73,18.0,33.1,17.6,30.0,3.14,0.88,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),KALYANKJIL,2026-11-13,695.53,529.98,1192.17,23.8,35.0,23.3,33.0,4.07,0.97,
+Weekly strong-candle 20-week breakout (uptrend),CONFIRMED week to 2026-11-13 (entry Mon 16-Nov open),STYLEBAAZA,2026-11-13,458.77,327.66,852.09,28.6,32.1,16.4,20.0,4.67,0.63,
+Weekly strong-candle 20-week breakout (uptrend),PROVISIONAL (candle still open),HINDOILEXP,2026-11-17,212.27,160.92,366.29,24.2,29.9,27.5,31.0,4.84,0.76,
+Weekly strong-candle 20-week breakout (uptrend),PROVISIONAL (candle still open),SGFIN,2026-11-17,795.63,583.54,1431.9,26.7,34.5,17.6,20.0,5.06,0.84,
