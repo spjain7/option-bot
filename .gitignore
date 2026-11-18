@@ -62,3 +62,4 @@ research/cashq/results/screeners_trades.csv.gz
 research/mcxhw/results/mcxhw_all.csv.gz
 research/shadow/state_local/
 research/inst/results/.cache_confirm_*
+research/cashq/results/intraday_vol_trades.parquet
