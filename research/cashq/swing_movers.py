@@ -91,7 +91,10 @@ def main():
     nr = rng.shift(1) <= rng.shift(1).rolling(7).min()
     S["NR7BO"] = nr & (c > h.shift(1)) & (F["rs_rank"] >= 0.8)
     # live scored 50-day breakout (cashstock/breakout.py rules) at lower thresholds
-    from cashstock import breakout as B
+    try:
+        from cashstock import breakout as B
+    except ImportError:                                     # cashstock lives on main
+        sys.path.insert(0, str(ROOT.parent / "ob-main")); from cashstock import breakout as B
     BF = B.features(dict(open=o, high=h, low=l, close=c, volume=v, symbol=pd.Series(dict(zip(c.columns, c.columns)))))
     rsr, adx, tight, clv2, br = BF["rs126"], BF["adx"], BF["tight"], BF["clv"], BF["breadth50"]
     sc = (np.where(rsr >= .85, 35, np.where(rsr >= .70, 22, np.where(rsr >= .50, 10, 0))) + np.where(adx >= 30, 25, np.where(adx >= 22, 15, np.where(adx >= 16, 6, 0)))
