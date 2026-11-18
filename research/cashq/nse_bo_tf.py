@@ -21,9 +21,10 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]; sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT.parent / "mcxib"))
 from research.cashq import data as D, ind as I  # noqa: E402
-from research.mcx_institutional_buy.backtesting import sim as S  # noqa: E402
+import importlib.util as _iu  # noqa: E402
+_sp = _iu.spec_from_file_location("mcx_sim", ROOT.parent / "mcxib/research/mcx_institutional_buy/backtesting/sim.py")
+S = _iu.module_from_spec(_sp); _sp.loader.exec_module(S)     # the shared numba simulator (research/mcx-institutional-buy)
 
 OUT = Path(__file__).resolve().parent / "results"
 COST = 0.00393
