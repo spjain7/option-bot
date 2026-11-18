@@ -4,7 +4,83 @@
  "pending": null,
  "early": "2026-11-05",
  "breakout": {
-  "pending": [],
+  "pending": [
+   {
+    "key": "INE424H01027",
+    "setup": "HI52VOL",
+    "symbol": "SUNTV",
+    "day": "2026-11-18",
+    "close": 696.35,
+    "atr": 29.36,
+    "ema50": 594.26,
+    "score": 62,
+    "parts": {
+     "rs": 22,
+     "trend": 25,
+     "base": 0,
+     "entry": 10,
+     "breadth": 5
+    },
+    "rs126": 0.777,
+    "adx": 37.8,
+    "tight": 1.21,
+    "clv": 0.85,
+    "breadth50": 0.54,
+    "turnover_cr": 32.9,
+    "volx": 3.93,
+    "day_ret": 0.0556
+   },
+   {
+    "key": "INE048G01026",
+    "setup": "MOMBURST",
+    "symbol": "NAVINFLUOR",
+    "day": "2026-11-18",
+    "close": 10278.0,
+    "atr": 322.5,
+    "ema50": 8733.65,
+    "score": 65,
+    "parts": {
+     "rs": 35,
+     "trend": 25,
+     "base": 0,
+     "entry": 0,
+     "breadth": 5
+    },
+    "rs126": 0.875,
+    "adx": 36.6,
+    "tight": 1.21,
+    "clv": 0.97,
+    "breadth50": 0.54,
+    "turnover_cr": 98.4,
+    "volx": 1.57,
+    "day_ret": 0.0472
+   },
+   {
+    "key": "INE616N01034",
+    "setup": "MOMBURST",
+    "symbol": "INOXINDIA",
+    "day": "2026-11-18",
+    "close": 2123.2,
+    "atr": 98.06,
+    "ema50": 2026.33,
+    "score": 50,
+    "parts": {
+     "rs": 35,
+     "trend": 0,
+     "base": 10,
+     "entry": 0,
+     "breadth": 5
+    },
+    "rs126": 0.87,
+    "adx": 14.1,
+    "tight": 0.99,
+    "clv": 0.86,
+    "breadth50": 0.54,
+    "turnover_cr": 34.9,
+    "volx": 16.3,
+    "day_ret": 0.0781
+   }
+  ],
   "open": [
    {
     "key": "INE303R01014",
@@ -34,10 +110,10 @@
     "t1": 753.15,
     "t2": 831.3,
     "hi": 729.35,
-    "lo": 669.0,
-    "last": 682.75,
-    "sessions": 4,
-    "checked": "2026-11-17",
+    "lo": 645.8,
+    "last": 650.0,
+    "sessions": 5,
+    "checked": "2026-11-18",
     "t1_hit": false,
     "t2_hit": false,
     "exit_next_open": false,
@@ -70,11 +146,11 @@
     "risk": 125.37,
     "t1": 1104.37,
     "t2": 1229.74,
-    "hi": 1028.0,
+    "hi": 1047.75,
     "lo": 975.6,
-    "last": 1016.25,
-    "sessions": 1,
-    "checked": "2026-11-17",
+    "last": 1025.25,
+    "sessions": 2,
+    "checked": "2026-11-18",
     "t1_hit": false,
     "t2_hit": false,
     "exit_next_open": false,
@@ -84,40 +160,40 @@
   "closed": [],
   "seen": [
    "INE303R01014|2026-11-11",
-   "INE385F01024|2026-11-16"
+   "INE385F01024|2026-11-16",
+   "INE424H01027|2026-11-18|HI52VOL",
+   "INE048G01026|2026-11-18|MOMBURST",
+   "INE616N01034|2026-11-18|MOMBURST"
   ],
   "last_candidates": [
    {
-    "symbol": "CHOLAFIN",
-    "score": 57,
-    "close": 1884.7,
-    "day": "2026-11-17"
-   },
-   {
-    "symbol": "ADANIENSOL",
-    "score": 45,
-    "close": 1493.7,
-    "day": "2026-11-17"
-   },
-   {
-    "symbol": "ASIANPAINT",
-    "score": 45,
-    "close": 2625.0,
-    "day": "2026-11-17"
-   },
-   {
-    "symbol": "RELIANCE",
-    "score": 45,
-    "close": 1367.0,
-    "day": "2026-11-17"
-   },
-   {
-    "symbol": "DEEPAKFERT",
-    "score": 35,
-    "close": 1443.7,
-    "day": "2026-11-17"
+    "symbol": "SUNTV",
+    "score": 62,
+    "close": 696.35,
+    "day": "2026-11-18"
    }
   ],
-  "asof": "2026-11-17"
+  "asof": "2026-11-18",
+  "last_candidates_by_setup": {
+   "HI52VOL": [
+    {
+     "symbol": "SUNTV",
+     "close": 696.35,
+     "day": "2026-11-18"
+    }
+   ],
+   "MOMBURST": [
+    {
+     "symbol": "NAVINFLUOR",
+     "close": 10278.0,
+     "day": "2026-11-18"
+    },
+    {
+     "symbol": "INOXINDIA",
+     "close": 2123.2,
+     "day": "2026-11-18"
+    }
+   ]
+  }
  }
 }
