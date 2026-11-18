@@ -19,7 +19,7 @@ concurrency: { group: cash-stock, cancel-in-progress: false }
 jobs:
   run:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       CASHSTOCK_TELEGRAM: "1"
       CASHSTOCK_ALERTS: "1"            # 6-Nov: resumed after re-validation without ETFs (research EQ-MOM-001b)
@@ -31,23 +31,32 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install requests pandas numpy
-      - name: Restore cash bhavcopy history (last 3 years) and state
+      - name: Restore cash bhavcopy history (all years – cashstock.run reads the last 3, the monthly swing check all) and state
         run: |
           git fetch -q --depth 1 origin research-nse-cm
-          y=$(date -u +%Y); git archive FETCH_HEAD research/data/nse_cm/$((y-2)).csv.gz research/data/nse_cm/$((y-1)).csv.gz research/data/nse_cm/$y.csv.gz | tar -x -C .
+          git archive FETCH_HEAD research/data/nse_cm | tar -x -C . --wildcards 'research/data/nse_cm/20*.csv.gz'
           mkdir -p state/cashstock
           if git ls-remote --exit-code --heads origin cash-state > /dev/null 2>&1; then
             git fetch -q --depth 1 origin cash-state && git show FETCH_HEAD:cashstock/state.json > state/cashstock/state.json || true
+            git show FETCH_HEAD:cashstock/swing.json > state/cashstock/swing.json 2>/dev/null || rm -f state/cashstock/swing.json
           fi
       - run: python -m cashstock.run
+      # 18-Nov-2026: weekly / monthly swing calls + NSE delivery % (cashstock/swing.py, EXPERIMENTAL). Own step and
+      # continue-on-error, so it can never stop the daily cash alerts above.
+      - name: Cash swing (weekly / monthly + delivery %)
+        continue-on-error: true
+        timeout-minutes: 20
+        run: python -m cashstock.swing_run
       - name: Save state to cash-state
         run: |
           git config user.name "option-bot"; git config user.email "bot@users.noreply.github.com"
           cp state/cashstock/state.json /tmp/cs.json
+          cp state/cashstock/swing.json /tmp/csw.json 2>/dev/null || true
           if git ls-remote --exit-code --heads origin cash-state > /dev/null 2>&1; then
             git fetch -q --depth 1 origin cash-state && git switch -q -f -C cash-state FETCH_HEAD
           else
             git switch -q -f --orphan cash-state && git rm -rqf --cached . > /dev/null 2>&1 || true
           fi
           mkdir -p cashstock && cp /tmp/cs.json cashstock/state.json
+          if [ -f /tmp/csw.json ]; then cp /tmp/csw.json cashstock/swing.json && git add -f cashstock/swing.json; fi
           git add -f cashstock/state.json && (git diff --cached --quiet || git commit -qm "cash state $(date -u +%F)") && git push -q origin HEAD:cash-state
