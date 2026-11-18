@@ -16,13 +16,21 @@ Rules (identical to the research code; parity checked in tests/test_cash_breakou
             Entry next session's open,
             stop 3 ATR below the entry, T1 +1R, T2 +2R (information), exit on a close below EMA50 (sell next open) or after
             250 sessions. Tracked daily: high / low since entry, T1 / T2 / stop / exit, P&L for 100 shares.
+18-Nov-2026 (owner: "only one cash call while many stocks move 10/20 %", chose A + C): two more BUY setups, same entry /
+stop / exit / tracking, one call per stock (priority BO50 > HI52VOL > MOMBURST), one position per stock per setup (busy mask):
+  HI52VOL   new 252-day closing high with volume >= 1.5x the 20-day average, first in 20 sessions
+            backtest 2005-26 4,051 trades, 36 % won, +0.24R; 2005-14 +0.26 · 2015-19 +0.04 · 2020-26 +0.29; 2025 +0.04, 2026 +0.06
+  MOMBURST  day >= +4 %, volume > yesterday and >= 1.5x, close in the top 30 % of the range, < 8 % up in the 5 days before,
+            above EMA50, 6-month RS top 15 %   backtest 2,054 trades, 32 % won, +0.25R; +0.21 / +0.08 / +0.32; 2026 +0.21
+  (research/cashq/swing_movers_pos.py on exp/cash-equity-engine). CASHSTOCK_SETUPS (default "BO50,HI52VOL,MOMBURST") switches them.
 """
+import os
 import numpy as np
 import pandas as pd
 
 MIN_TURNOVER, MIN_PRICE, MIN_HIST = 25e7, 50.0, 250
 MIN_SCORE, STOP_ATR, MAX_SESSIONS, QTY = 70, 3.0, 250, 100
-VERSION = "cash-bo-0.1 (CASHQ-BUY, experimental)"
+VERSION = "cash-bo-0.2 (CASHQ-BUY + HI52VOL + MOMBURST, experimental)"
 WARN = "Alert only – no auto trade. Not investment advice."
 LINE = "━━━━━━━━━━━━━━"
 
@@ -67,15 +75,24 @@ def features(W):
     F["tight"] = (_atr(h, l, c, 10) / _atr(h, l, c, 50)).shift(1)
     F["clv"] = (c - l) / (h - l).replace(0, np.nan)
     F["breadth50"] = ((c > F["ema50"]) & F["elig"]).sum(axis=1) / F["elig"].sum(axis=1).replace(0, np.nan)
+    # 18-Nov-2026 (owner chose A + C): two more BUY setups with the same entry / stop / exit (research/cashq/swing_movers_pos.py)
+    vx = v / v.rolling(20).mean().shift(1)
+    F["volx"] = vx
+    hi252 = (c >= c.rolling(252, min_periods=240).max()) & (vx >= 1.5)
+    F["sig_HI52VOL"] = hi252 & ~hi252.shift(1).rolling(20, min_periods=1).max().fillna(0).astype(bool) & F["elig"]
+    pc = c.shift(1)
+    F["day_ret"] = c / pc - 1
+    F["sig_MOMBURST"] = ((F["day_ret"] >= 0.04) & (v > v.shift(1)) & (vx >= 1.5) & (F["clv"] >= 0.7) & (pc / c.shift(6) - 1 < 0.08)
+                         & (c > F["ema50"]) & (F["rs126"] >= 0.85) & F["elig"])
     return F
 
 
-def busy_mask(F):
+def busy_mask(F, sig_key="signal"):
     """Research parity: the backtest holds ONE position per stock – a breakout signal that comes while an earlier breakout
     trade of the same stock is still running (any score) was never a trade there (2026: 241 signals with score >= 70 vs 64
     tested trades). Replays every signal of the loaded window with the research exits (stop 3 ATR, close below EMA50 ->
     next open, 250 sessions) and returns a frame that is True where a signal must be ignored."""
-    sig = F["signal"]
+    sig = F[sig_key].fillna(False).astype(bool)
     out = pd.DataFrame(False, index=sig.index, columns=sig.columns)
     n = len(sig.index)
     for k in sig.columns[sig.values.any(axis=0)]:
@@ -116,13 +133,18 @@ def score_parts(rs, adx, tight, clv, breadth):
     return p, sum(p.values())
 
 
-def candidates(F, day=None):
-    """All signals of `day` (default: the last session) with their score, best first."""
+SETUPS = ("BO50", "HI52VOL", "MOMBURST")                 # call priority when one stock fires more than one on the same day
+SIG_KEY = {"BO50": "signal", "HI52VOL": "sig_HI52VOL", "MOMBURST": "sig_MOMBURST"}
+
+
+def candidates(F, day=None, setup="BO50"):
+    """All signals of `setup` on `day` (default: the last session) with their score, best first."""
     idx = F["close"].index
     i = len(idx) - 1 if day is None else idx.get_loc(pd.Timestamp(day))
-    if "busy" not in F:
-        F["busy"] = busy_mask(F)
-    row = F["signal"].iloc[i] & ~F["busy"].iloc[i]
+    sk = SIG_KEY[setup]; bk = "busy" if setup == "BO50" else f"busy_{setup}"
+    if bk not in F:
+        F[bk] = busy_mask(F, sk)
+    row = F[sk].iloc[i].fillna(False).astype(bool) & ~F[bk].iloc[i]
     out = []
     for k in row.index[row.values]:
         g = lambda f: float(F[f][k].iloc[i])
@@ -130,10 +152,11 @@ def candidates(F, day=None):
         if any(not np.isfinite(x) for x in vals.values()) or not g("atr") > 0:
             continue
         parts, sc = score_parts(**vals)
-        out.append(dict(key=k, symbol=F["symbol"][k], day=str(idx[i].date()), close=round(g("close"), 2), atr=round(g("atr"), 2),
+        out.append(dict(key=k, setup=setup, symbol=F["symbol"][k], day=str(idx[i].date()), close=round(g("close"), 2), atr=round(g("atr"), 2),
                         ema50=round(g("ema50"), 2), score=int(sc), parts=parts, rs126=round(vals["rs"], 3), adx=round(vals["adx"], 1),
                         tight=round(vals["tight"], 2), clv=round(vals["clv"], 2), breadth50=round(vals["breadth"], 2),
-                        turnover_cr=round(g("turnover_cr"), 1)))
+                        turnover_cr=round(g("turnover_cr"), 1),
+                        **({} if setup == "BO50" else dict(volx=round(g("volx"), 2), day_ret=round(g("day_ret"), 4)))))
     return sorted(out, key=lambda r: -r["score"])
 
 
@@ -141,27 +164,47 @@ def _f(x):
     return f"{x:,.2f}"
 
 
+TITLE = {"BO50": "scored 50-day breakout", "HI52VOL": "52-week high on volume", "MOMBURST": "momentum burst (strong stock)"}
+RECORD = {  # research/cashq/swing_movers_pos.py: same entry / stop / exit as below, NSE bhavcopies 2005-26, delivery costs 0.393 %
+    "BO50": "score ≥ 70 in 2020-26: 461 trades, 34 % winners, T1 reached 49 %, +0.35R avg, PF 1.65; 2024-26 negative",
+    "HI52VOL": "2005-26: 4,051 trades, 36 % winners, +0.24R avg (+2.3 % per trade); 2005-14 +0.26R · 2015-19 +0.04R · 2020-26 "
+               "+0.29R; 2024 −0.12R, 2025 +0.04R, 2026 +0.06R",
+    "MOMBURST": "2005-26: 2,054 trades, 32 % winners, +0.25R avg (+2.9 % per trade); 2005-14 +0.21R · 2015-19 +0.08R · 2020-26 "
+                "+0.32R; 2024 −0.26R, 2025 −0.06R, 2026 +0.21R"}
+
+
 def call_msgs(c):
+    setup = c.get("setup", "BO50")
     risk = STOP_ATR * c["atr"]
     ref = c["close"]
     card = "\n".join([
-        f"🟢 BUY  {c['symbol']} (NSE cash)  ·  Positional · 🧪 EXPERIMENTAL – scored 50-day breakout",
+        f"🟢 BUY  {c['symbol']} (NSE cash)  ·  Positional · 🧪 EXPERIMENTAL – {TITLE[setup]}",
         LINE,
         f"Entry   : next session's open (reference close {_f(ref)}) – as in the backtest, whatever the gap",
         f"SL      : ~{_f(ref - risk)}  (3 ATR = {_f(risk)} below the actual entry – exact level sent after the open)",
         f"Target  : T1 ~{_f(ref + risk)} (1R) · T2 ~{_f(ref + 2 * risk)} (2R) · then trail: exit on a close below the 50-day EMA",
         f"Qty     : {QTY} shares ≈ ₹{QTY * ref:,.0f} · risk ≈ ₹{QTY * risk:,.0f} ({100 * risk / ref:.1f} %)  ·  delivery (CNC)"])
     p = c["parts"]
+    if setup == "BO50":
+        sig = [f"• Chart   : daily close {_f(ref)} on {pd.Timestamp(c['day']):%d-%b} – first close above the 50-day high in 5 sessions",
+               f"• Score   : {c['score']} / 100 (rank, not a probability)",
+               f"• RS      : stronger than {100 * c['rs126']:.0f} % of liquid stocks over 6 months ({p['rs']}/35)",
+               f"• Trend   : ADX {c['adx']:.0f} ({p['trend']}/25) · base before the breakout: ATR10/50 {c['tight']:.2f} ({p['base']}/20)",
+               f"• Entry   : close at {100 * c['clv']:.0f} % of the day's range ({p['entry']}/10) · market breadth {100 * c['breadth50']:.0f} % above EMA50 ({p['breadth']}/10)"]
+    elif setup == "HI52VOL":
+        sig = [f"• Chart   : daily close {_f(ref)} on {pd.Timestamp(c['day']):%d-%b} – a new 52-week closing high (first in 20 sessions)",
+               f"• Volume  : {c['volx']:.1f}× the 20-day average (needs ≥ 1.5×) · day {100 * c['day_ret']:+.1f} %",
+               f"• RS      : stronger than {100 * c['rs126']:.0f} % of liquid stocks over 6 months · ADX {c['adx']:.0f}"]
+    else:
+        sig = [f"• Chart   : {pd.Timestamp(c['day']):%d-%b} up {100 * c['day_ret']:+.1f} % (needs ≥ 4 %), close at {100 * c['clv']:.0f} % of the day's range, "
+               f"above the 50-day EMA, not already up 8 % in the 5 days before",
+               f"• Volume  : {c['volx']:.1f}× the 20-day average and above yesterday's",
+               f"• RS      : stronger than {100 * c['rs126']:.0f} % of liquid stocks over 6 months (needs top 15 %) · ADX {c['adx']:.0f}"]
     why = "\n".join([
-        f"📌 WHY – {c['symbol']} BUY (positional)", LINE,
-        f"• Chart   : daily close {_f(ref)} on {pd.Timestamp(c['day']):%d-%b} – first close above the 50-day high in 5 sessions",
-        f"• Score   : {c['score']} / 100 (rank, not a probability)",
-        f"• RS      : stronger than {100 * c['rs126']:.0f} % of liquid stocks over 6 months ({p['rs']}/35)",
-        f"• Trend   : ADX {c['adx']:.0f} ({p['trend']}/25) · base before the breakout: ATR10/50 {c['tight']:.2f} ({p['base']}/20)",
-        f"• Entry   : close at {100 * c['clv']:.0f} % of the day's range ({p['entry']}/10) · market breadth {100 * c['breadth50']:.0f} % above EMA50 ({p['breadth']}/10)",
-        "• Exit    : SL, or sell at the next open after a daily close below the 50-day EMA · average hold ~7 weeks · max 250 sessions",
-        "• Record  : BACKTEST ONLY, after costs – score ≥ 70 in 2020-26: 461 trades, 34 % winners, T1 reached 49 %, +0.35R avg, "
-        "PF 1.65; 2024-26 negative. About 1 trade in 3 wins – the result depends on a few big winners. No live record yet.",
+        f"📌 WHY – {c['symbol']} BUY (positional, {TITLE[setup]})", LINE, *sig,
+        "• Exit    : SL, or sell at the next open after a daily close below the 50-day EMA · max 250 sessions",
+        f"• Record  : BACKTEST ONLY, after costs – {RECORD[setup]}. About 1 trade in 3 wins – the result depends on a few big "
+        "winners. No live record yet.",
         WARN])
     return [card, why]
 
@@ -247,12 +290,17 @@ def step(st, F, msgs):
     held = {r["key"] for r in st["open"]} | {p["key"] for p in st["pending"]}
     cands = candidates(F)
     st["last_candidates"] = [dict(symbol=c["symbol"], score=c["score"], close=c["close"], day=c["day"]) for c in cands]
-    for c in cands:
-        sid = f"{c['key']}|{c['day']}"
-        if c["score"] < MIN_SCORE or sid in st["seen"] or c["key"] in held:
-            continue
-        st["seen"] = (st["seen"] + [sid])[-2000:]
-        st["pending"].append(c)
-        msgs.extend(call_msgs(c))
+    on = [x.strip() for x in os.getenv("CASHSTOCK_SETUPS", ",".join(SETUPS)).split(",") if x.strip() in SETUPS]
+    for setup in [x for x in SETUPS if x in on]:              # 18-Nov: BO50 first, then 52-week high, then momentum burst
+        cs = cands if setup == "BO50" else candidates(F, setup=setup)
+        if setup != "BO50":
+            st.setdefault("last_candidates_by_setup", {})[setup] = [dict(symbol=c["symbol"], close=c["close"], day=c["day"]) for c in cs]
+        for c in cs:
+            sid = f"{c['key']}|{c['day']}" if setup == "BO50" else f"{c['key']}|{c['day']}|{setup}"
+            if (setup == "BO50" and c["score"] < MIN_SCORE) or sid in st["seen"] or c["key"] in held:
+                continue
+            st["seen"] = (st["seen"] + [sid])[-2000:]
+            st["pending"].append(c); held.add(c["key"])
+            msgs.extend(call_msgs(c))
     st["asof"] = str(last.date())
     return st
