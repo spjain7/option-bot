@@ -6,6 +6,8 @@ open, SL k ATR (of that timeframe) below the entry, target 3R, max 12 monthly / 
   W_ATH   weekly close at an all-time closing high · volume >= 1.5x the 20-week average · SL 3 ATR
   W_MARU  weekly strong candle (body >= 70 % of range, range >= 1.5 ATR) closing above the 20-week high · uptrend · SL 3 ATR
   D_HI52  daily 52-week closing high · volume >= 1.5x · uptrend · SL 3 ATR
+  W_MY260 weekly close above the 5-year high, that high made >= 1 year earlier · volume >= 1.5x · SL 3 ATR (18-Nov)
+  M_MY60  monthly close above the 5-year high, made >= 12 months earlier · market above its 200-day average · SL 2 ATR
 python -m research.cashq.nse_bo_trades -> results/nse_bo_trades.json ({rows, meta})"""
 import json
 import sys
@@ -21,7 +23,9 @@ QTY = 100
 SETUPS = {"M_ATH": ("1M", "Monthly all-time-high breakout (market up)", 2.0),
           "W_ATH": ("1w", "Weekly all-time-high breakout on volume", 3.0),
           "W_MARU": ("1w", "Weekly strong-candle 20-week breakout (uptrend)", 3.0),
-          "D_HI52": ("1d", "Daily 52-week-high breakout on volume (uptrend)", 3.0)}
+          "D_HI52": ("1d", "Daily 52-week-high breakout on volume (uptrend)", 3.0),
+          "W_MY260": ("1w", "Weekly 5-year (multi-year) breakout on volume", 3.0),
+          "M_MY60": ("1M", "Monthly 5-year (multi-year) breakout (market up)", 2.0)}
 
 
 def signals(P, tf, sid, mkt):
@@ -32,12 +36,16 @@ def signals(P, tf, sid, mkt):
     MK = pd.DataFrame(np.repeat(mk[:, None], c.shape[1], 1), index=c.index, columns=c.columns)
     if sid in ("M_ATH", "W_ATH"):
         s = (c >= c.cummax()) & (c.notna().cumsum() >= (24 if tf == "1M" else 104))
+    elif sid in ("W_MY260", "M_MY60"):                      # 18-Nov: multi-year breakout (research/cashq/multiyear_bo.py)
+        from research.cashq.multiyear_bo import age_of_max
+        N = 260 if sid == "W_MY260" else 60
+        s = (c > h.shift(1).rolling(N, min_periods=N).max()) & (age_of_max(h, N) >= (52 if sid == "W_MY260" else 12))
     elif sid == "W_MARU":
         rg = h - l; s = (c > o) & ((c - o).abs() >= 0.7 * rg) & (rg >= 1.5 * atr) & (c > h.shift(1).rolling(20).max())
     else:
         s = c >= c.rolling(252, min_periods=240).max()
     s = s.fillna(False); s = s & ~s.shift(1).rolling(3, min_periods=1).max().fillna(0).astype(bool)
-    s = s & (MK if sid == "M_ATH" else True) & (vx >= 1.5 if sid in ("W_ATH", "D_HI52") else True) & (trend if sid in ("W_MARU", "D_HI52") else True)
+    s = s & (MK if sid in ("M_ATH", "M_MY60") else True) & (vx >= 1.5 if sid in ("W_ATH", "D_HI52", "W_MY260") else True) & (trend if sid in ("W_MARU", "D_HI52") else True)
     return s & P["elig"].reindex_like(c).fillna(False).astype(bool), o, h, l, c, atr
 
 
