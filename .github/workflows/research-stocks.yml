@@ -1,11 +1,16 @@
-name: Research data – stock futures (manual, no alerts)
+name: Research data – stock futures (daily + manual, no alerts)
+# 19-Nov-2026 (owner: "make sure to download it daily"): runs every weekday night at 01:22 IST (Tue-Sat), after the live
+# market loop's quiet-hours window opens (00:30 IST), then starts the stock-futures OI fetch. Read-only Angel calls, no alerts.
 on:
+  schedule:
+    - cron: "52 19 * * 1-5"          # 01:22 IST Tue-Sat (after each weekday session)
   workflow_dispatch:
 concurrency:
   group: research-stocks
   cancel-in-progress: false
 permissions:
   contents: write
+  actions: write
 jobs:
   fetch:
     runs-on: ubuntu-24.04
@@ -32,3 +37,6 @@ jobs:
           git checkout --orphan research-stocks && git rm -rqf --ignore-unmatch . && rm -rf research
           mkdir -p research/data/angel && cp -r /tmp/o/NFO_STK research/data/angel/
           git add research && git commit -qm "stock futures 1h $(date -u +%F)" && git push -qf origin research-stocks
+      - name: Start the stock-futures OI fetch (adds OI files to the same branch)
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: gh api -X POST "repos/${{ github.repository }}/actions/workflows/research-stock-oi.yml/dispatches" -f ref=main -f "inputs[mode]=fetch" || echo "OI dispatch failed"
