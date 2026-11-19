@@ -734,14 +734,14 @@
    "ltp": 297.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 12658.0,
-   "ltp": 129330.0
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 12665.0,
+   "ltp": 129424.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 494820.0,
-   "ltp": 161005.0
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 495960.0,
+   "ltp": 160985.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -779,39 +779,39 @@
    "ltp": 61960.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 15450000.0,
-   "ltp": 1201.15
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 15445000.0,
+   "ltp": 1202.75
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 6505.0,
-   "ltp": 390.9
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 6480.0,
+   "ltp": 391.5
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 8780.0,
-   "ltp": 312.9
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 8790.0,
+   "ltp": 313.35
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 679600.0,
-   "ltp": 7721.0
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 676200.0,
+   "ltp": 7704.0
   },
   "NATURALGAS28DEC26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 19442500.0,
-   "ltp": 352.0
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 19496250.0,
+   "ltp": 350.9
   },
   "NIFTY29DEC26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 4267250.0,
-   "ltp": 25547.7
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 4409925.0,
+   "ltp": 25587.0
   },
   "BANKNIFTY29DEC26FUT": {
-   "time": "2026-11-19 13:17:01.491668",
-   "oi": 815790.0,
-   "ltp": 63084.8
+   "time": "2026-11-19 13:47:01.254303",
+   "oi": 853410.0,
+   "ltp": 63291.8
   }
  },
  "bo_active": [
@@ -828,7 +828,7 @@
    "n": 9,
    "last_candle": "2026-11-18 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1d|2026-11-05 09:15:00|CONFLICT",
    "token": "61471",
@@ -848,7 +848,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -868,7 +868,7 @@
    "n": 2,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -888,7 +888,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -908,7 +908,7 @@
    "n": 8,
    "last_candle": "2026-11-18 09:15:00",
    "tick": 0.1,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "NIFTY23NOV26FUT",
    "key": "NIFTY|1d|2026-11-06 09:15:00|CONFLICT",
    "token": "61471",
@@ -964,7 +964,7 @@
    "n": 4,
    "last_candle": "2026-11-18 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1d|2026-11-12 09:00:00",
    "token": "495213",
@@ -984,7 +984,7 @@
    "n": 0,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1w|2026-11-09 09:00:00",
    "token": "495213",
@@ -1004,7 +1004,7 @@
    "n": 5,
    "last_candle": "2026-11-19 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-19 13:00:00",
+   "checked": "2026-11-19 13:30:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|3h|2026-11-18 09:00:00",
    "token": "495213",
@@ -1075,7 +1075,7 @@
     "key": "PHOENIXLTD|1dSTK|2026-11-11 09:15:00"
    }
   ],
-  "last_block": "2026-11-18 15:30:00",
+  "last_block": "2026-11-19 12:15:00",
   "rescan_v": 2,
   "dq_holds": {},
   "shadow": [
@@ -1361,186 +1361,7 @@
      }
     ]
    }
-  ],
-  "progress": {
-   "blk": "2026-11-19 12:15:00",
-   "done": [
-    "ADANIENSOL",
-    "BAJAJ-AUTO",
-    "AUBANK",
-    "ALKEM",
-    "CDSL",
-    "ETERNAL",
-    "HDFCAMC",
-    "INFY",
-    "BRITANNIA",
-    "MANKIND",
-    "ATHERENERG",
-    "PERSISTENT",
-    "PETRONET",
-    "PIDILITIND",
-    "SHREECEM",
-    "VOLTAS",
-    "TATASTEEL",
-    "SRF",
-    "RVNL",
-    "PAYTM",
-    "MUTHOOTFIN",
-    "MAZDOCK",
-    "JIOFIN",
-    "LTF",
-    "KAYNES",
-    "JSWENERGY",
-    "INDUSINDBK",
-    "ICICIGI",
-    "HDFCLIFE",
-    "FEDERALBNK",
-    "DRREDDY",
-    "COCHINSHIP",
-    "COALINDIA",
-    "CAMS",
-    "BPCL",
-    "BDL",
-    "ADANIENT",
-    "MARUTI",
-    "HDFCBANK",
-    "PAGEIND",
-    "ANGELONE",
-    "NAVINFLUOR",
-    "KARURVYSYA",
-    "WAAREEENER",
-    "TORNTPHARM",
-    "TMPV",
-    "TATAPOWER",
-    "SUPREMEIND",
-    "SOLARINDS",
-    "RELIANCE",
-    "RADICO",
-    "MPHASIS",
-    "PHOENIXLTD",
-    "OBEROIRLTY",
-    "NESTLEIND",
-    "MFSL",
-    "MCX",
-    "KOTAKBANK",
-    "JUBLFOOD",
-    "SYRMA",
-    "INDIANB",
-    "BOSCHLTD",
-    "ENRIN",
-    "GODFRYPHLP",
-    "GODREJCP",
-    "APLAPOLLO",
-    "BHEL",
-    "COLPAL",
-    "CUMMINSIND",
-    "POWERINDIA",
-    "RECLTD",
-    "SBILIFE",
-    "TATAELXSI",
-    "TVSMOTOR",
-    "ABB",
-    "UNOMINDA",
-    "CUB",
-    "HINDUNILVR",
-    "VEDL",
-    "UPL",
-    "TITAN",
-    "NAM-INDIA",
-    "TIINDIA",
-    "SUNPHARMA",
-    "PRESTIGE",
-    "PREMIERENE",
-    "POWERGRID",
-    "PATANJALI",
-    "NTPC",
-    "LAURUSLABS",
-    "KFINTECH",
-    "INDIGO",
-    "GODREJPROP",
-    "DIXON",
-    "DELHIVERY",
-    "TATACONSUM",
-    "JSWSTEEL",
-    "PIIND",
-    "GLENMARK",
-    "SBICARD",
-    "SIEMENS",
-    "DABUR",
-    "DMART",
-    "SWIGGY",
-    "TECHM",
-    "HAL",
-    "ICICIBANK",
-    "ZYDUSLIFE",
-    "INDUSTOWER",
-    "JINDALSTEL",
-    "KEI",
-    "KPITTECH",
-    "LT",
-    "LTM",
-    "LUPIN",
-    "M&M",
-    "MAXHEALTH",
-    "NAUKRI",
-    "OFSS",
-    "TCS",
-    "TRENT",
-    "VBL",
-    "360ONE",
-    "AMBER",
-    "AMBUJACEM",
-    "APOLLOHOSP",
-    "ASIANPAINT",
-    "ASTRAL",
-    "BEL",
-    "BIOCON",
-    "AXISBANK",
-    "PNBHOUSING",
-    "ADANIGREEN",
-    "BAJFINANCE",
-    "BHARATFORG",
-    "DLF",
-    "FORTIS",
-    "HEROMOTOCO",
-    "HINDZINC",
-    "INDHOTEL",
-    "KALYANKJIL",
-    "LICI",
-    "MOTILALOFS",
-    "PGEL",
-    "SBIN",
-    "SHRIRAMFIN",
-    "ULTRACEMCO",
-    "UNITDSPR",
-    "ABCAPITAL",
-    "BANKBARODA",
-    "BHARTIARTL",
-    "HINDPETRO",
-    "CROMPTON",
-    "EICHERMOT",
-    "GVT&D",
-    "HAVELLS",
-    "ICICILIFE",
-    "LICHSGFIN",
-    "LODHA",
-    "NATIONALUM",
-    "ADANIPORTS",
-    "ANANDRATHI",
-    "BSE",
-    "COFORGE",
-    "GRASIM",
-    "BLUESTARCO",
-    "CGPOWER",
-    "CHOLAFIN",
-    "CONCOR",
-    "HINDALCO",
-    "FORCEMOT",
-    "DATAPATTNS",
-    "COROMANDEL",
-    "SONACOMS"
-   ]
-  }
+  ]
  },
  "status": {
   "CRUDEOIL|3h": {
@@ -2381,8 +2202,8 @@
    "date": "2026-11-04",
    "uhi": 2724.0,
    "ulo": 2390.0,
-   "ulast": 2640.0,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 2629.4,
+   "uat": "2026-11-19 13:47:01.254303",
    "best_px": 2724.0,
    "worst_px": 2390.0,
    "mfe_R": 1.502,
@@ -2602,8 +2423,8 @@
    "stop_touched": false,
    "uhi": 25550.6,
    "ulo": 24843.0,
-   "ulast": 25393.7,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 25410.0,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_IDX_1d_RSI70_BUY|BANKNIFTY|2026-11-06 09:15:00",
@@ -2661,8 +2482,8 @@
    "date": "2026-11-06",
    "uhi": 1614.2,
    "ulo": 1568.2,
-   "ulast": 1597.7,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 1601.3,
+   "uat": "2026-11-19 13:47:01.254303",
    "best_px": 1614.2,
    "worst_px": 1564.7,
    "mfe_R": 0.695,
@@ -2708,8 +2529,8 @@
    "date": "2026-11-09",
    "uhi": 25550.6,
    "ulo": 24843.0,
-   "ulast": 25393.7,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 25410.0,
+   "uat": "2026-11-19 13:47:01.254303",
    "best_px": 25550.6,
    "worst_px": 24843.0,
    "mfe_R": 0.418,
@@ -2754,10 +2575,10 @@
    ],
    "status": "OPEN",
    "date": "2026-11-09",
-   "uhi": 62702.8,
+   "uhi": 62895.0,
    "ulo": 58820.4,
-   "ulast": 62668.0,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 62863.2,
+   "uat": "2026-11-19 13:47:01.254303",
    "best_px": 62399.0,
    "worst_px": 58820.4,
    "mfe_R": 0.983,
@@ -2861,8 +2682,8 @@
    "date": "2026-11-09",
    "uhi": 962.3,
    "ulo": 899.55,
-   "ulast": 942.25,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 940.75,
+   "uat": "2026-11-19 13:47:01.254303",
    "best_px": 962.3,
    "worst_px": 927.7,
    "mfe_R": 0.434,
@@ -3044,8 +2865,8 @@
    "date": "2026-11-11",
    "uhi": 2280.0,
    "ulo": 2150.0,
-   "ulast": 2244.9,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 2246.8,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "DTC|SILVER|2026-11-11|17:00",
@@ -3190,8 +3011,8 @@
    "date": "2026-11-12",
    "uhi": 284.0,
    "ulo": 269.13,
-   "ulast": 281.01,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 281.41,
+   "uat": "2026-11-19 13:47:01.254303",
    "best_px": 276.68,
    "worst_px": 269.13,
    "mfe_R": 0.082,
@@ -3386,8 +3207,8 @@
    "date": "2026-11-16",
    "uhi": 3125.0,
    "ulo": 3021.7,
-   "ulast": 3095.0,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 3109.6,
+   "uat": "2026-11-19 13:47:01.254303",
    "call_entry": 3033.3,
    "activated": true
   },
@@ -3520,8 +3341,8 @@
    "hilo_bf": true,
    "uhi": 4333.8,
    "ulo": 3999.1,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 4031.6
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 4064.0
   },
   {
    "key": "DTC|GOLD|2026-11-17|17:00",
@@ -3573,8 +3394,8 @@
    "hilo_bf": true,
    "uhi": 1173.8,
    "ulo": 1125.9,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 1140.0,
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 1139.7,
    "best_px": 1125.9,
    "worst_px": 1171.4,
    "mfe_R": 1.039,
@@ -3607,8 +3428,8 @@
    "hilo_bf": true,
    "uhi": 9996.0,
    "ulo": 9616.0,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 9807.5
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 9819.5
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|ONGC|2026-11-13 13:15:00",
@@ -3633,8 +3454,8 @@
    "hilo_bf": true,
    "uhi": 227.25,
    "ulo": 222.8,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 225.33
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 224.88
   },
   {
    "key": "RB|RB_IDX_1d_BO10_BUY|BANKNIFTY|2026-11-16 09:15:00",
@@ -3658,10 +3479,10 @@
    "call_entry": 61480.0,
    "activated": true,
    "hilo_bf": true,
-   "uhi": 62702.8,
+   "uhi": 62895.0,
    "ulo": 61400.0,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 62668.0,
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 62863.2,
    "best_px": 62399.0,
    "worst_px": 61400.0,
    "mfe_R": 0.524,
@@ -3694,8 +3515,8 @@
    "hilo_bf": true,
    "uhi": 1054.5,
    "ulo": 1006.9,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 1038.35
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 1036.85
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|TATAPOWER|2026-11-16 13:15:00",
@@ -3720,8 +3541,8 @@
    "hilo_bf": true,
    "uhi": 348.25,
    "ulo": 336.0,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 341.35
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 341.6
   },
   {
    "key": "RB|RB_STK_2h_SQZ_SELL|COALINDIA|2026-11-16 15:15:00",
@@ -3746,8 +3567,8 @@
    "hilo_bf": true,
    "uhi": 398.9,
    "ulo": 385.9,
-   "uat": "2026-11-19 13:17:01.491668",
-   "ulast": 391.05
+   "uat": "2026-11-19 13:47:01.254303",
+   "ulast": 392.1
   },
   {
    "key": "RB|RB_STK_3h_MACD0_SELL|POLYCAB|2026-11-17 12:15:00",
@@ -3913,8 +3734,8 @@
    "date": "2026-11-18",
    "uhi": 907.45,
    "ulo": 882.0,
-   "ulast": 901.45,
-   "uat": "2026-11-19 13:17:01.491668",
+   "ulast": 898.95,
+   "uat": "2026-11-19 13:47:01.254303",
    "best_px": 896.1,
    "worst_px": 905.1,
    "mfe_R": 0.254,
@@ -3980,8 +3801,8 @@
    "date": "2026-11-18",
    "uhi": 532.15,
    "ulo": 508.9,
-   "ulast": 521.8,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 522.8,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_3h_MACD0_SELL|MAZDOCK|2026-11-18 09:15:00",
@@ -4003,8 +3824,8 @@
    "date": "2026-11-18",
    "uhi": 1869.8,
    "ulo": 1825.3,
-   "ulast": 1839.2,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 1846.3,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|KPITTECH|2026-11-18 09:15:00",
@@ -4026,8 +3847,8 @@
    "date": "2026-11-18",
    "uhi": 533.1,
    "ulo": 511.55,
-   "ulast": 520.15,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 518.65,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "4H|SBICARD|2026-11-18 09:15:00",
@@ -4064,8 +3885,8 @@
    "date": "2026-11-18",
    "uhi": 571.9,
    "ulo": 557.65,
-   "ulast": 569.15,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 570.8,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_2h_SQZ_SELL|GODFRYPHLP|2026-11-18 11:15:00",
@@ -4085,10 +3906,10 @@
    "time": "2026-11-18 13:17:02.229041",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 1788.9,
+   "uhi": 1794.0,
    "ulo": 1748.9,
-   "ulast": 1786.0,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 1790.3,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_2h_SQZ_SELL|MAZDOCK|2026-11-18 11:15:00",
@@ -4110,8 +3931,8 @@
    "date": "2026-11-18",
    "uhi": 1869.8,
    "ulo": 1825.3,
-   "ulast": 1839.2,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 1846.3,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|MAZDOCK|2026-11-18 09:15:00",
@@ -4133,8 +3954,8 @@
    "date": "2026-11-18",
    "uhi": 1869.8,
    "ulo": 1825.3,
-   "ulast": 1839.2,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 1846.3,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|JUBLFOOD|2026-11-18 09:15:00",
@@ -4154,10 +3975,10 @@
    "time": "2026-11-18 13:17:02.229041",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 423.85,
+   "uhi": 424.65,
    "ulo": 418.5,
-   "ulast": 423.0,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 424.05,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "4H|HAVELLS|2026-11-18 09:15:00",
@@ -4219,10 +4040,10 @@
    "time": "2026-11-18 13:17:02.229041",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 423.85,
+   "uhi": 424.65,
    "ulo": 418.5,
-   "ulast": 423.0,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 424.05,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "3H|NATIONALUM|2026-11-18 09:15:00",
@@ -4257,8 +4078,8 @@
    "date": "2026-11-18",
    "uhi": 308.0,
    "ulo": 298.0,
-   "ulast": 302.55,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 302.05,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "3H|POLYCAB|2026-11-18 09:15:00",
@@ -4293,10 +4114,10 @@
    ],
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 7478.0,
+   "uhi": 7496.5,
    "ulo": 7228.0,
-   "ulast": 7478.0,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 7489.5,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "3H|RECLTD|2026-11-18 09:15:00",
@@ -4333,8 +4154,8 @@
    "date": "2026-11-18",
    "uhi": 296.85,
    "ulo": 290.4,
-   "ulast": 295.3,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 296.8,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|ALKEM|2026-11-18 09:15:00",
@@ -4355,9 +4176,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 5225.0,
-   "ulo": 5132.5,
-   "ulast": 5134.5,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulo": 5106.0,
+   "ulast": 5136.5,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|NATIONALUM|2026-11-18 09:15:00",
@@ -4379,8 +4200,8 @@
    "date": "2026-11-18",
    "uhi": 307.35,
    "ulo": 298.0,
-   "ulast": 302.55,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 302.05,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "4H|INFY|2026-11-18 09:15:00",
@@ -4416,8 +4237,8 @@
    "date": "2026-11-18",
    "uhi": 1116.2,
    "ulo": 1073.0,
-   "ulast": 1076.8,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 1077.7,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "4H|DABUR|2026-11-18 09:15:00",
@@ -4578,8 +4399,8 @@
    "call_entry": 4634.4,
    "uhi": 4658.9,
    "ulo": 4600.9,
-   "ulast": 4631.4,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 4626.5,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_3h_EMA921_SELL|RVNL|2026-11-18 12:15:00",
@@ -4601,10 +4422,10 @@
    "date": "2026-11-19",
    "activated": true,
    "call_entry": 189.03,
-   "uhi": 194.1,
+   "uhi": 196.09,
    "ulo": 188.1,
-   "ulast": 194.1,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 196.09,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|TORNTPHARM|2026-11-18 13:15:00",
@@ -4628,8 +4449,8 @@
    "call_entry": 4634.0,
    "uhi": 4658.9,
    "ulo": 4600.9,
-   "ulast": 4631.4,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 4626.5,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "4H|TITAN|2026-11-18 13:15:00",
@@ -4669,8 +4490,8 @@
    "call_entry": 4654.0,
    "uhi": 4673.1,
    "ulo": 4602.0,
-   "ulast": 4668.8,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 4664.5,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|RECLTD|2026-11-18 13:15:00",
@@ -4692,10 +4513,10 @@
    "date": "2026-11-19",
    "activated": true,
    "call_entry": 291.45,
-   "uhi": 296.5,
+   "uhi": 296.8,
    "ulo": 291.2,
-   "ulast": 295.3,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 296.8,
+   "uat": "2026-11-19 13:47:01.254303"
   },
   {
    "key": "DTC|SILVER|2026-11-18|17:00",
@@ -4751,10 +4572,10 @@
    "brk_level": 62770.0,
    "target_basis": "3 ATR reference (2R)",
    "quote_time": "2026-11-19 10:17:05",
-   "uhi": 63130.0,
+   "uhi": 63332.4,
    "ulo": 62803.6,
-   "ulast": 63130.0,
-   "uat": "2026-11-19 13:17:01.491668"
+   "ulast": 63332.4,
+   "uat": "2026-11-19 13:47:01.254303"
   }
  ],
  "candle_setups": {
@@ -8302,7 +8123,7 @@
    "JUBLFOOD|NFO": "2026-11-09 09:15:00",
    "ADANIGREEN|NFO3H": "2026-11-11 12:15:00",
    "INDHOTEL|NFO3H": "2026-11-11 12:15:00",
-   "HCLTECH|NFO3H": "2026-11-11 12:15:00",
+   "HCLTECH|NFO3H": "2026-11-19 09:15:00",
    "EICHERMOT|NFO3H": "2026-11-12 09:15:00",
    "BDL|NFO": "2026-11-12 13:15:00",
    "PAGEIND|NFO": "2026-11-12 13:15:00",
@@ -8392,7 +8213,8 @@
    "LTM|NFO3H": "2026-11-19 09:15:00",
    "TCS|NFO3H": "2026-11-19 09:15:00",
    "HINDZINC|NFO3H": "2026-11-19 09:15:00",
-   "SHRIRAMFIN|NFO3H": "2026-11-19 09:15:00"
+   "SHRIRAMFIN|NFO3H": "2026-11-19 09:15:00",
+   "POLICYBZR|NFO3H": "2026-11-19 09:15:00"
   },
   "stk_block": "2026-11-18 15:30",
   "await_v": 1,
@@ -8438,7 +8260,150 @@
     "ADANIENT",
     "MARUTI",
     "HDFCBANK",
-    "PAGEIND"
+    "PAGEIND",
+    "ANGELONE",
+    "NAVINFLUOR",
+    "KARURVYSYA",
+    "WAAREEENER",
+    "TORNTPHARM",
+    "TMPV",
+    "TATAPOWER",
+    "SUPREMEIND",
+    "SOLARINDS",
+    "RELIANCE",
+    "RADICO",
+    "MPHASIS",
+    "PHOENIXLTD",
+    "OBEROIRLTY",
+    "NESTLEIND",
+    "MFSL",
+    "MCX",
+    "KOTAKBANK",
+    "JUBLFOOD",
+    "SYRMA",
+    "INDIANB",
+    "BOSCHLTD",
+    "ENRIN",
+    "GODFRYPHLP",
+    "GODREJCP",
+    "APLAPOLLO",
+    "BHEL",
+    "COLPAL",
+    "CUMMINSIND",
+    "POWERINDIA",
+    "RECLTD",
+    "SBILIFE",
+    "TATAELXSI",
+    "TVSMOTOR",
+    "ABB",
+    "UNOMINDA",
+    "CUB",
+    "HINDUNILVR",
+    "VEDL",
+    "UPL",
+    "TITAN",
+    "NAM-INDIA",
+    "TIINDIA",
+    "SUNPHARMA",
+    "PRESTIGE",
+    "PREMIERENE",
+    "POWERGRID",
+    "PATANJALI",
+    "NTPC",
+    "LAURUSLABS",
+    "KFINTECH",
+    "INDIGO",
+    "GODREJPROP",
+    "DIXON",
+    "DELHIVERY",
+    "TATACONSUM",
+    "JSWSTEEL",
+    "PIIND",
+    "GLENMARK",
+    "SBICARD",
+    "SIEMENS",
+    "DABUR",
+    "DMART",
+    "SWIGGY",
+    "TECHM",
+    "HAL",
+    "ICICIBANK",
+    "ZYDUSLIFE",
+    "INDUSTOWER",
+    "JINDALSTEL",
+    "KEI",
+    "KPITTECH",
+    "LT",
+    "LTM",
+    "LUPIN",
+    "M&M",
+    "MAXHEALTH",
+    "NAUKRI",
+    "OFSS",
+    "TCS",
+    "TRENT",
+    "VBL",
+    "360ONE",
+    "AMBER",
+    "AMBUJACEM",
+    "APOLLOHOSP",
+    "ASIANPAINT",
+    "ASTRAL",
+    "BEL",
+    "BIOCON",
+    "AXISBANK",
+    "PNBHOUSING",
+    "ADANIGREEN",
+    "BAJFINANCE",
+    "BHARATFORG",
+    "DLF",
+    "FORTIS",
+    "HEROMOTOCO",
+    "HINDZINC",
+    "INDHOTEL",
+    "KALYANKJIL",
+    "LICI",
+    "MOTILALOFS",
+    "PGEL",
+    "SBIN",
+    "SHRIRAMFIN",
+    "ULTRACEMCO",
+    "UNITDSPR",
+    "ABCAPITAL",
+    "BANKBARODA",
+    "BHARTIARTL",
+    "HINDPETRO",
+    "CROMPTON",
+    "EICHERMOT",
+    "GVT&D",
+    "HAVELLS",
+    "ICICILIFE",
+    "LICHSGFIN",
+    "LODHA",
+    "NATIONALUM",
+    "ADANIPORTS",
+    "ANANDRATHI",
+    "BSE",
+    "COFORGE",
+    "GRASIM",
+    "BLUESTARCO",
+    "CGPOWER",
+    "CHOLAFIN",
+    "CONCOR",
+    "HINDALCO",
+    "FORCEMOT",
+    "DATAPATTNS",
+    "COROMANDEL",
+    "SONACOMS",
+    "POLYCAB",
+    "POLICYBZR",
+    "PFC",
+    "ONGC",
+    "OIL",
+    "MARICO",
+    "ITC",
+    "HYUNDAI",
+    "BAJAJFINSV"
    ],
    "sent": 0
   }
@@ -8505,21 +8470,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 671,
-  "started": "2026-11-19 13:17:01.491668",
-  "finished": "2026-11-19 13:32:11.106581",
-  "seconds": 909,
+  "seq": 672,
+  "started": "2026-11-19 13:47:01.254303",
+  "finished": "2026-11-19 13:59:34.440143",
+  "seconds": 753,
   "status": "RATE_LIMITED",
-  "note": "api requests 106 ok 61 rate-limited 45 skipped 3 (budget 0) failed 2 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 110 ok 71 rate-limited 39 skipped 0 (budget 0) failed 4 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 106,
-   "ok": 61,
-   "rate_limited": 45,
-   "skipped": 3,
+   "calls": 110,
+   "ok": 71,
+   "rate_limited": 39,
+   "skipped": 0,
    "deadline_skips": 0,
-   "failed": 2,
-   "mem_hits": 0,
-   "disk_hits": 55
+   "failed": 4,
+   "mem_hits": 9,
+   "disk_hits": 143
   },
   "errors": 0,
   "messages": 0
@@ -15941,9 +15906,9 @@
     ]
    },
    "STOCK 3h SELL": {
-    "signal": 15,
+    "signal": 17,
     "rejected": {
-     "daily trend not down": 15
+     "daily trend not down": 17
     },
     "shadow": 0,
     "sent": 0,
@@ -15981,7 +15946,41 @@
      "signal|SHRIRAMFIN|2026-11-19 09:15:00",
      "rejected|SHRIRAMFIN|2026-11-19 09:15:00",
      "signal|NATIONALUM|2026-11-19 09:15:00",
-     "rejected|NATIONALUM|2026-11-19 09:15:00"
+     "rejected|NATIONALUM|2026-11-19 09:15:00",
+     "signal|POLICYBZR|2026-11-19 09:15:00",
+     "rejected|POLICYBZR|2026-11-19 09:15:00",
+     "signal|HCLTECH|2026-11-19 09:15:00",
+     "rejected|HCLTECH|2026-11-19 09:15:00"
+    ]
+   },
+   "STOCK data": {
+    "signal": 0,
+    "rejected": {},
+    "shadow": 0,
+    "sent": 0,
+    "data": 18,
+    "early": 0,
+    "setup": 0,
+    "triggered": 0,
+    "keys": [
+     "data|071NSETEST|2026-11-19 12:15:00",
+     "data|111NSETEST|2026-11-19 12:15:00",
+     "data|061NSETEST|2026-11-19 12:15:00",
+     "data|081NSETEST|2026-11-19 12:15:00",
+     "data|011NSETEST|2026-11-19 12:15:00",
+     "data|041NSETEST|2026-11-19 12:15:00",
+     "data|031NSETEST|2026-11-19 12:15:00",
+     "data|181NSETEST|2026-11-19 12:15:00",
+     "data|171NSETEST|2026-11-19 12:15:00",
+     "data|131NSETEST|2026-11-19 12:15:00",
+     "data|141NSETEST|2026-11-19 12:15:00",
+     "data|091NSETEST|2026-11-19 12:15:00",
+     "data|101NSETEST|2026-11-19 12:15:00",
+     "data|121NSETEST|2026-11-19 12:15:00",
+     "data|151NSETEST|2026-11-19 12:15:00",
+     "data|051NSETEST|2026-11-19 12:15:00",
+     "data|161NSETEST|2026-11-19 12:15:00",
+     "data|021NSETEST|2026-11-19 12:15:00"
     ]
    }
   }
