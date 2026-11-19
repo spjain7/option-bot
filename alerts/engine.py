@@ -778,7 +778,7 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                 print(f"[rejected] {name} {tf} SELL: {why_}")
                 info[f"bo_{tf}"] += f" · skipped: {why_}"; continue
         key = f"{name}|{tf}|{last}"
-        clash = None if shadow_only else ST.conflict(state, name, sig["side"], tf)
+        clash = None if shadow_only else ST.conflict(state, name, sig["side"], tf, now=now)
         if clash:                                         # 4-Nov: no contradictory / duplicate live calls on one instrument
             print(f"[conflict] {name} {tf} {sig['side']} not sent: {clash}")
             info[f"bo_{tf}"] += f" · not sent: {clash}"

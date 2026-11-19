@@ -10,6 +10,11 @@ Status rules (owner directive 4-Nov: fewer, better calls; unvalidated = shadow):
   PAPER   frozen candidate under a pre-registered prospective test (alerts/paper.py)
 Tier (shown on LIVE calls): A = robust (all periods positive, >= 200 trades) · B = positive but smaller sample or uneven.
 """
+import datetime as _dt
+import os
+import numpy as np
+import pandas as pd
+
 
 S = {
     # id: (status, tier, label, trades, win %, avg R after costs, PF, note)
@@ -98,21 +103,75 @@ def tf_of(row):
             "STK_SWEEP15": "15m"}.get(p[0])
 
 
-def conflict(state, name, side, tf=None):
+# 19-Nov-2026 (owner: "too many calls, they hit SL"; research exp/stock-call-audit STK-CALL-AUDIT-001, 181 F&O stocks
+# 2022-26, the 6 live stock SELL rules trade by trade): STOCK futures only – one open call per stock on ANY timeframe, at most
+# STOCK_DAY_CAP new stock-futures calls per day, no new call on a stock for STOCK_COOLDOWN sessions after a stop-loss on it.
+# Backtest: 5.0 -> 2.0 calls/day, worst day 84 -> 5 calls, +0.17R -> +0.17R per call, max drawdown 153R -> 52R, positive in
+# all three periods (+0.09 / +0.16 / +0.22R). MCX and NIFTY / BANKNIFTY calls are unchanged. STOCK_GATE=0 switches it off.
+NOT_STOCK = {"CRUDEOIL", "NATURALGAS", "GOLD", "SILVER", "COPPER", "ZINC", "ALUMINIUM", "LEAD", "NICKEL", "GOLDM", "SILVERM",
+             "CRUDEOILM", "NATGASMINI", "NIFTY", "BANKNIFTY", "FINNIFTY", "MIDCPNIFTY", "NIFTYNXT50", "SENSEX", "BANKEX"}
+STOCK_DAY_CAP = int(os.getenv("STOCK_DAY_CAP", "5"))
+STOCK_COOLDOWN = int(os.getenv("STOCK_COOLDOWN", "5"))
+NOT_SENT = ("not published", "skipped", "cancelled", "withdrawn", "void")
+
+
+def is_stock(name, row=None):
+    if row is not None and row.get("seg") == "MCX":
+        return False
+    return str(name).upper() not in NOT_STOCK
+
+
+def _today():
+    try:
+        from zoneinfo import ZoneInfo
+        return _dt.datetime.now(ZoneInfo("Asia/Kolkata")).date()
+    except Exception:  # noqa: BLE001
+        return _dt.date.today()
+
+
+def stock_gate(state, name, now=None):
+    """19-Nov stock-futures gate (daily cap + cooldown after a stop-loss). Reason string or None."""
+    if os.getenv("STOCK_GATE", "1") == "0" or not is_stock(name):
+        return None
+    day = (pd.Timestamp(now).date() if now is not None else _today())
+    n = 0
+    for r in state.get("ledger", []):
+        if r.get("cat") != "FUTURES" or not is_stock(r.get("name"), r) or r.get("seg") == "MCX":
+            continue
+        note = str(r.get("note") or "").lower()
+        if r.get("status") == "VOID" or any(w in note for w in NOT_SENT):
+            continue
+        if str(r.get("date") or str(r.get("time") or "")[:10]) == str(day):
+            n += 1
+        if r.get("name") == name and r.get("status") == "CLOSED" and "stop" in note and "cost" not in note and STOCK_COOLDOWN > 0:
+            cd = str(r.get("closed") or r.get("date") or "")[:10]
+            try:
+                gap = int(np.busday_count(pd.Timestamp(cd).date(), day))
+            except Exception:  # noqa: BLE001
+                gap = 99
+            if 0 <= gap <= STOCK_COOLDOWN:
+                return f"cooldown – {name} hit its stop-loss on {cd} ({gap} session(s) ago, wait {STOCK_COOLDOWN})"
+    if STOCK_DAY_CAP > 0 and n >= STOCK_DAY_CAP:
+        return f"daily cap – {n} stock-futures calls already sent today (max {STOCK_DAY_CAP})"
+    return None
+
+
+def conflict(state, name, side, tf=None, now=None):
     """Reason string if a new call on `name` would contradict or duplicate an OPEN live futures call, else None.
     Opposite side open -> contradictory (always blocked).
-    Same side open -> duplicate only on the SAME timeframe (6-Nov, PORTFOLIO-001: one call per instrument + direction +
-    timeframe: 4.6 calls/day, +0.22R, PF 1.42, max DD 90R vs one per instrument + direction: 3.3/day, +0.15R, PF 1.30, 90R).
-    tf=None keeps the old rule (any open same-side call blocks)."""
+    MCX / index: same side open -> duplicate only on the SAME timeframe (6-Nov, PORTFOLIO-001: one call per instrument +
+    direction + timeframe). tf=None keeps the old rule (any open same-side call blocks).
+    STOCKS (19-Nov): one open call per stock on any timeframe + stock_gate (daily cap, cooldown after a stop-loss)."""
+    stock = is_stock(name) and os.getenv("STOCK_GATE", "1") != "0"
     for r in state.get("ledger", []):
         if r.get("status") in ("OPEN", "WAITING") and r.get("cat") == "FUTURES" and r.get("name") == name:   # WAITING = held after-close call
             if r.get("side") != side:
                 return f"contradicts the open {r.get('side')} call ({r.get('type')}, {str(r.get('time'))[:16]})"
             rtf = tf_of(r)
-            if tf is not None and rtf is not None and rtf != tf:
-                continue                                  # independent opportunity on another timeframe
+            if not stock and tf is not None and rtf is not None and rtf != tf:
+                continue                                  # independent opportunity on another timeframe (MCX / index)
             return f"duplicate of the open {side} call ({r.get('type')}, {str(r.get('time'))[:16]})"
-    return None
+    return stock_gate(state, name, now) if stock else None
 
 
 SHADOW_MARK = "SHADOW_ONLY"          # messages of shadow calls carry this; alerts/run.py logs them instead of sending
