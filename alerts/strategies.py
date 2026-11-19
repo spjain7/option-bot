@@ -45,7 +45,7 @@ S = {
     "MCX_HAMMER":    ("LIVE",   "B", "MCX daily hammer breakout BUY", 413, 41, 0.20, 1.33,
                       "VERIFIED bhavcopy re-test (DATA-AUDIT-001): 2024-26 positive, 2022-23 and SILVER/NATURALGAS negative"),
     "MCX_EMA1348":   ("LIVE",   "B", "MCX 3-hour EMA 13/48 BUY", 79, 48, 0.67, None, "small sample, GOLD-heavy"),
-    "STK_HANGMAN":   ("LIVE",   "B", "stock hanging-man breakdown SELL", 1217, 44, 0.18, None, "flat in 2023 and 2025"),
+    "STK_HANGMAN":   ("OFF",    "-", "stock hanging-man breakdown SELL", 1217, 44, 0.18, None, "19-Nov owner: switched off (live 2 closed, both stop-loss; open calls finish)"),
     "STK_SWEEP3H":   ("LIVE",   "B", "stock 3-hour sweep SELL", 387, 58, 0.15, None, "every year positive"),
     "E_BUY_v1":      ("PAPER",  "-", "MCX 1-hour compression breakout BUY", 174, 60, 0.21, None, "prospective test VAL-EBUY-001"),
 }
