@@ -345,6 +345,8 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
     """4-hour stock SELL (alerts/four_hour.py) on the 09:15-13:15 candle (scan from 13:17) and the 13:15-15:30 candle (after
     the close). Resumes next cycle when the time budget or an Angel block stops it."""
     from alerts import four_hour as FH
+    if not ST.is_live("FH_STK_SELL"):               # 19-Nov (owner): switched off - no new 4h calls; open ones are still tracked
+        return
     hm = f"{now:%H:%M}"
     if now.weekday() >= 5 or hm < "13:17":
         return

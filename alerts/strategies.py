@@ -37,7 +37,7 @@ S = {
                       "6-Nov rule vol 1.5x + daily trend, 2 ATR / 3R: +0.48/+0.09/+0.55, 7/7 commodities (SEARCH-ALL-001)"),
     "FH_STK3H_SELL": ("LIVE",   "A", "stock 3-hour breakdown SELL (daily downtrend)", 1335, 50, 0.13, None,
                       "6-Nov SEARCH-ALL-001: 5-candle low, vol>=2x, daily trend down, 1.5 ATR / 2R: +0.08/+0.01/+0.19"),
-    "FH_STK_SELL":   ("LIVE",   "A", "stock 4-hour breakdown SELL", 913, 56, 0.17, None, "positive in all 3 periods (TFNH-001)"),
+    "FH_STK_SELL":   ("OFF",    "-", "stock 4-hour breakdown SELL", 913, 56, 0.17, None, "19-Nov owner: switched off (live 3 closed, 0 won, -2R; open calls finish)"),
     "STK_OI_BUY":    ("LIVE",   "B", "stock OI breakout BUY", 623, 45, 0.08, 1.17,
                       "owner 6-Nov: keep sending (GLENMARK / TITAN type); backtest decaying train +0.27 / valid +0.01 / test -0.07"),
     "STK_OI_SELL":   ("LIVE",   "B", "stock OI breakdown SELL", 220, 57, 0.23, 1.76, "train/valid/test +0.05/+0.09/+0.32"),

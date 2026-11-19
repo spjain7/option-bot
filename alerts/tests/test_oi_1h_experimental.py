@@ -27,7 +27,8 @@ try:
     base = types.ModuleType("rb_base"); exec(compile(src, "rb_base", "exec"), base.__dict__)
     new = {k for k in RB.RULES if "OIBO" in k}
     _later = {k for k, v in RB.RULES.items() if v.get("half_t1")}    # 17-Nov: per-commodity T1-half rules (own test)
-    _off = {"RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP", "RB_STK_2h_SQZ_SELL"}                     # 17-Nov: switched OFF by the owner
+    _off = {"RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP", "RB_STK_2h_SQZ_SELL",
+            "RB_STK_4h_MACD0_SELL", "RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL"}   # 19-Nov owner: switched off                     # 17-Nov: switched OFF by the owner
     _same = lambda a, b, k: {**a, **({"status": b["status"]} if k in _off else {})} == b
     check(set(RB.RULES) - new - _later == set(base.RULES) and all(_same(RB.RULES[k], base.RULES[k], k) for k in base.RULES) and len(new) == 4,
           "17 existing rules unchanged; 4 new OI rules (MCX / index × BUY / SELL)")
