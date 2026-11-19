@@ -27,6 +27,10 @@ from crude import indicators as I
 from alerts import tradeplan as TP, report as RP
 
 ENABLED = {"MCX_HAMMER": True, "STK_HANGMAN": True, "MCX_EMA1348": True, "STK_SWEEP3H": True}
+# 19-Nov-2026 (owner: "remove hanging man breakdown"): no NEW calls from these setups. Calls already OPEN are still managed
+# and their exit is still sent; calls still WAITING for the trigger are cancelled (no entry). Live record 28-Oct..19-Nov:
+# STK_HANGMAN 2 closed, both stop-loss (-2R), 28 of 30 waiting calls never triggered.
+NO_NEW = {"STK_HANGMAN"}
 SWEEP15_LOG = True        # 15-minute stock sweep: every sweep is recorded (both sides) for review
 SWEEP15_SEND = False      # 1-Nov (owner "yes all"): OFF – 15-min sweeps only had 2-month evidence; still logged (SWEEP15_LOG)
 HOURLY_SKIP = ("14:15", "15:15")
@@ -513,6 +517,9 @@ def _manage(state, msgs, s, setup, name, contract, bars, daily, now, f3=None):
             _close(s, msgs, state, r, px_, now,
                    "contract changed – closed at the last price" if r["status"] == "open" else "contract changed", now)
             continue
+        if setup in NO_NEW and r["status"] == "pending":
+            _close(s, msgs, state, r, None, now, "strategy switched off – waiting call cancelled (no entry)", now)
+            continue
         try:
             if setup == "MCX_EMA1348":
                 done, px, t, why = _step_ema(state, msgs, r, f3, bars, now)
@@ -534,7 +541,7 @@ def _manage(state, msgs, s, setup, name, contract, bars, daily, now, f3=None):
 
 
 def _new_pattern(state, msgs, s, setup, name, c, side, df, now, mult, lot, last_px=None):
-    if not ENABLED.get(setup) or any(r["setup"] == setup and r["name"] == name for r in s["open"]):
+    if not ENABLED.get(setup) or setup in NO_NEW or any(r["setup"] == setup and r["name"] == name for r in s["open"]):
         return
     if df is None or len(df) < 60:
         return

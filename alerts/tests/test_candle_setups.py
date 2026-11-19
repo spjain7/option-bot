@@ -116,7 +116,32 @@ def test_contract_change_and_one_at_a_time():
           and cl[0]["exit"] is not None)
 
 
+def test_stock_hanging_man_switched_off():
+    """19-Nov (owner): STK_HANGMAN sends no new call; a waiting call is cancelled; an open call is still managed."""
+    up = base(step=+2.0)
+    last = up["close"].iloc[-1]
+    d = add(up, "2026-10-21", last, last + 1, last - 20, last + 0.5)
+    st, m = {"day": {}}, []
+    CS.on_stock_daily(st, m, "TCS", dict(symbol="TCS26NOVFUT", token="t", tick=0.05, lot=175), d, pd.Timestamp("2026-10-21 15:40"))
+    check("hanging man switched off -> no new call, no message", not st["candle_setups"]["open"] and not m)
+    st = {"day": {}, "candle_setups": dict(open=[dict(setup="STK_HANGMAN", name="TCS", contract="TCS26NOVFUT", side="SELL", status="pending",
+                                                     trigger=100.0, stop=104.0, key="STK_HANGMAN|TCS|x", pattern_time="2026-10-20")], closed=[], seen=[])}
+    m = []
+    CS.on_stock_daily(st, m, "TCS", dict(symbol="TCS26NOVFUT", token="t", tick=0.05, lot=175), d, pd.Timestamp("2026-10-22 15:40"))
+    cl = st["candle_setups"]["closed"]
+    check("waiting hanging-man call is cancelled with no entry", not st["candle_setups"]["open"] and len(cl) == 1
+          and cl[0].get("entry") is None and "switched off" in cl[0]["exit_reason"])
+
+
 def test_stock_hanging_man_needs_uptrend():
+    _off, CS.NO_NEW = CS.NO_NEW, set()                  # pattern logic still tested with the switch lifted
+    try:
+        _hangman_logic()
+    finally:
+        CS.NO_NEW = _off
+
+
+def _hangman_logic():
     up = base(step=+2.0)
     last = up["close"].iloc[-1]
     d = add(up, "2026-10-21", last, last + 1, last - 20, last + 0.5)
@@ -254,7 +279,7 @@ def test_sweep15():
 
 if __name__ == "__main__":
     test_hammer_flow(); test_gap_through_target(); test_cancellations(); test_contract_change_and_one_at_a_time()
-    test_stock_hanging_man_needs_uptrend(); test_ema_cross(); test_hourly_rule(); test_engine_path(); test_sweep3h(); test_sweep15()
+    test_stock_hanging_man_needs_uptrend(); test_stock_hanging_man_switched_off(); test_ema_cross(); test_hourly_rule(); test_engine_path(); test_sweep3h(); test_sweep15()
     print(f"\nALL {len(OK)} CANDLE-SETUP CHECKS PASSED")
 
 # 4-Nov: every setup record carries a shadow grade and the ledger row copies it at entry

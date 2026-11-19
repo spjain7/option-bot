@@ -104,6 +104,9 @@ for _mkt in ("MCX", "INDEX"):
 # Natural gas and crude had no setup that held on the newest data with these targets -> none added.
 for _rid in ("RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP"):
     RULES[_rid]["status"] = "OFF"
+# 19-Nov-2026 (owner: "remove ... 2H squeeze"): no new calls are sent; signals are still logged as SHADOW so the outcome
+# stays measured. Calls already sent keep their own record (no shadow flag) and are managed to the end as before.
+RULES["RB_STK_2h_SQZ_SELL"]["status"] = "SHADOW"
 for _rid, _tf, _nm, _n, _win, _R, _per in (
         ("RB_MCX_3h_BO10_GOLD_BUY", "3h", "GOLD", 225, 63, 0.32, "+0.26/+0.41/+0.31 · OOS 74 trades 61 % won"),
         ("RB_MCX_4h_BO10_GOLD_BUY", "4h", "GOLD", 189, 64, 0.34, "+0.28/+0.42/+0.34 · OOS 58 trades 64 % won"),
