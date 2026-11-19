@@ -107,6 +107,10 @@ for _rid in ("RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIB
 # 19-Nov-2026 (owner: "remove ... 2H squeeze"): no new calls are sent; signals are still logged as SHADOW so the outcome
 # stays measured. Calls already sent keep their own record (no shadow flag) and are managed to the end as before.
 RULES["RB_STK_2h_SQZ_SELL"]["status"] = "SHADOW"
+# 19-Nov-2026 (owner: "switch off what is not working"): live 28-Oct..19-Nov these stock SELL rules closed 5 calls, 0 won
+# (4h MACD 2, 3h MACD 2, 3h EMA 9/21 1: -3R). Same treatment: logged as SHADOW, not sent; calls already sent run to the end.
+for _rid in ("RB_STK_4h_MACD0_SELL", "RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL"):
+    RULES[_rid]["status"] = "SHADOW"
 for _rid, _tf, _nm, _n, _win, _R, _per in (
         ("RB_MCX_3h_BO10_GOLD_BUY", "3h", "GOLD", 225, 63, 0.32, "+0.26/+0.41/+0.31 · OOS 74 trades 61 % won"),
         ("RB_MCX_4h_BO10_GOLD_BUY", "4h", "GOLD", 189, 64, 0.34, "+0.28/+0.42/+0.34 · OOS 58 trades 64 % won"),
