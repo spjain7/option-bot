@@ -505,6 +505,48 @@ def rescale_for_corporate_actions(st, state, msgs, now, registry=None):
     st["active"] = keep
 
 
+REV_CATCHUP_BUDGET_SEC = 540
+
+
+def rev_catchup(api, now, state, msgs, uni, engine):
+    """19-Nov-2026 (owner: "make all strategy live today instead of tomorrow"): the reversal SELL rules (rulebook REV, PR #83)
+    were merged after today's 15:30 daily stock scan. Runs the rulebook daily stock rules once on today's completed daily
+    candle (400 days of 1-hour candles, as the daily scan) - rules already evaluated today are skipped by their seen key, so
+    only the new rules can fire - and fills the daily-EMA200 cache that tomorrow's 4-hour scan needs. Resumes across scans
+    (time budget / Angel block); sets stk.rev_v = 1 when every stock is done."""
+    from alerts import rulebook as RB
+    st = state["stk"]
+    prog = st.get("rev_prog") or {}
+    if prog.get("day") != str(now.date()):
+        prog = dict(day=str(now.date()), done=[], sent=0)
+    st["rev_prog"] = prog
+    t0, holds = time.monotonic(), set((st.get("dq_holds") or {}).keys())
+    for name, c in uni.items():
+        if name in prog["done"]:
+            continue
+        if time.monotonic() - t0 > REV_CATCHUP_BUDGET_SEC or (hasattr(api, "failfast") and api.failfast()):
+            return f"{len(prog['done'])}/{len(uni)} stocks (resumes next scan)"
+        prog["done"].append(name)
+        if name in holds:
+            continue
+        try:
+            h = api.candles("NFO", c["token"], "ONE_HOUR", now - pd.Timedelta(days=400), now)
+        except Exception:
+            h = None
+        if h is None or h.empty:
+            continue
+        h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
+        d = BO.daily_candles(h, None)
+        if d is None or len(d) < 220 or d["time"].iloc[-1].normalize() != now.normalize():
+            continue
+        n0 = len(msgs)
+        RB.run(state, msgs, api, name, "NFO", c, {"1d": d}, d, None, now, int(c.get("lot") or 1), "STOCKS", after_close=True)
+        prog["sent"] += int(len(msgs) > n0)
+    st["rev_v"] = 1
+    st.pop("rev_prog", None)
+    return f"done: {len(uni)} stocks, {prog['sent']} with a new call"
+
+
 def scan(api, master, now, state, msgs, rep, engine):
     if not ENABLED:
         rep["stocks"] = "disabled"
@@ -591,6 +633,14 @@ def scan(api, master, now, state, msgs, rep, engine):
         except Exception as e_:
             print(f"[stocks] OI prefetch skipped: {type(e_).__name__}: {e_}")
     blk = last_block_end(now)
+    if st.get("rev_v") != 1:                                   # 19-Nov one-time: reversal SELL rules went live after today's close
+        if blk is not None and blk.endswith("15:30:00") and st["last_block"] == blk:
+            try:
+                rep["stocks"]["rev_catchup"] = rev_catchup(api, now, state, msgs, uni, engine)
+            except Exception as e_:
+                print(f"[stocks] reversal catch-up skipped: {type(e_).__name__}: {e_}")
+        else:
+            st["rev_v"] = 1                                    # today's daily scan has not run yet - it evaluates them itself
     if blk is None or st["last_block"] == blk:
         rep["stocks"]["scan"] = "stock scans run after 12:15 (3h) and after the 15:30 close (3h + daily)"
         return
