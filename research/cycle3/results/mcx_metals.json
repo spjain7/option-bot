@@ -1,0 +1,28 @@
+{
+ "hourly_vs_5min_3h_close_check": {
+  "GOLD": {
+   "overlap_bars": 3876,
+   "median_abs_diff_pct": 0.0,
+   "p99_abs_diff_pct": 0.0
+  },
+  "SILVER": {
+   "overlap_bars": 3871,
+   "median_abs_diff_pct": 0.0,
+   "p99_abs_diff_pct": 0.0
+  },
+  "ZINC": {
+   "overlap_bars": 3914,
+   "median_abs_diff_pct": 0.0,
+   "p99_abs_diff_pct": 0.0
+  }
+ },
+ "untouched_window": {
+  "CRUDEOIL": "2023-09-27",
+  "NATURALGAS": "2023-09-29",
+  "GOLD": "2023-06-22",
+  "SILVER": "2023-07-24",
+  "COPPER": "2023-04-19",
+  "ZINC": "2023-02-03",
+  "ALUMINIUM": "2022-11-04"
+ }
+}

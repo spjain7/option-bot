@@ -1,0 +1,28 @@
+period,filter,value,n,win,avgR
+DEV,minervini,False,1059,36.4,0.25
+DEV,minervini,True,365,33.4,0.167
+DEV,pocket10,False,767,35.2,0.277
+DEV,pocket10,True,657,36.2,0.172
+DEV,squeeze,False,1199,36.1,0.253
+DEV,squeeze,True,225,33.3,0.099
+DEV,score>=70 & minervini,True,101,38.6,0.132
+DEV,score>=70 only,True,160,40.0,0.439
+DEV,score>=55 & minervini & rvol50>=1.5,True,134,37.3,0.184
+VALID,minervini,False,1136,27.3,-0.065
+VALID,minervini,True,416,32.7,0.063
+VALID,pocket10,False,799,24.2,-0.149
+VALID,pocket10,True,753,33.6,0.094
+VALID,squeeze,False,1361,28.4,-0.023
+VALID,squeeze,True,191,30.9,-0.087
+VALID,score>=70 & minervini,True,110,34.5,0.414
+VALID,score>=70 only,True,161,31.7,0.276
+VALID,score>=55 & minervini & rvol50>=1.5,True,180,33.3,0.083
+OOS,minervini,False,3257,33.5,0.223
+OOS,minervini,True,1328,32.3,0.134
+OOS,pocket10,False,2277,33.4,0.177
+OOS,pocket10,True,2308,33.0,0.218
+OOS,squeeze,False,4076,34.2,0.229
+OOS,squeeze,True,509,25.0,-0.057
+OOS,score>=70 & minervini,True,378,32.3,0.245
+OOS,score>=70 only,True,461,34.5,0.348
+OOS,score>=55 & minervini & rvol50>=1.5,True,634,33.3,0.26

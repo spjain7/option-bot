@@ -1,0 +1,27 @@
+{
+ "DEV": {
+  "months": 108,
+  "CAGR": 10.4,
+  "sharpe": 0.51,
+  "maxDD": -30.2,
+  "momentum_B0_CAGR": 21.0,
+  "momentum_B0_sharpe": 1.05
+ },
+ "VAL": {
+  "months": 60,
+  "CAGR": -0.9,
+  "sharpe": 0.01,
+  "maxDD": -28.0,
+  "momentum_B0_CAGR": 1.7,
+  "momentum_B0_sharpe": 0.19
+ },
+ "OOS": {
+  "months": 83,
+  "CAGR": 27.3,
+  "sharpe": 0.98,
+  "maxDD": -29.7,
+  "momentum_B0_CAGR": 37.4,
+  "momentum_B0_sharpe": 1.71
+ },
+ "corr_with_momentum": 0.62
+}

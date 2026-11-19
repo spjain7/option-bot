@@ -1,0 +1,124 @@
+{
+ "all": {
+  "n": 814,
+  "win": 57.0,
+  "R": 0.143,
+  "PF": 1.48
+ },
+ "entry_locked_up_circuit": 0,
+ "exit_day_locked_lower_circuit": 1,
+ "BE_series_entries": 5,
+ "by_participation": {
+  "0.5-1%": {
+   "n": 5,
+   "win": 80.0,
+   "R": 0.357,
+   "PF": 3.76
+  },
+  "1-2%": {
+   "n": 1
+  },
+  "<0.5%": {
+   "n": 743,
+   "win": 57.2,
+   "R": 0.145,
+   "PF": 1.49
+  }
+ },
+ "participation_median_pct": 0.079,
+ "share_participation_over_2pct": 0.0,
+ "by_entry_gap": {
+  "-2..0%": {
+   "n": 190,
+   "win": 59.5,
+   "R": 0.12,
+   "PF": 1.42
+  },
+  "0..2%": {
+   "n": 494,
+   "win": 56.1,
+   "R": 0.14,
+   "PF": 1.45
+  },
+  "2..5%": {
+   "n": 41,
+   "win": 58.5,
+   "R": 0.277,
+   "PF": 2.38
+  },
+  "<-2%": {
+   "n": 23,
+   "win": 65.2,
+   "R": 0.257,
+   "PF": 2.14
+  },
+  ">5%": {
+   "n": 1
+  }
+ },
+ "gap_through_stop": {
+  "n": 3,
+  "avg_R": -1.311
+ },
+ "worst_trades": [
+  {
+   "name": "AAVAS",
+   "entry_day": "2025-04-01",
+   "netR": "-1.5029407952232272",
+   "reason": "stop (gap)"
+  },
+  {
+   "name": "BLUEJET",
+   "entry_day": "2025-03-24",
+   "netR": "-1.3771213784130738",
+   "reason": "stop (gap)"
+  },
+  {
+   "name": "LTFOODS",
+   "entry_day": "2022-10-24",
+   "netR": "-1.053733818409591",
+   "reason": "stop (gap)"
+  },
+  {
+   "name": "GRWRHITECH",
+   "entry_day": "2026-08-24",
+   "netR": "-1.0530840445669238",
+   "reason": "stop"
+  },
+  {
+   "name": "RAJESHEXPO",
+   "entry_day": "2016-02-01",
+   "netR": "-1.0492896089586046",
+   "reason": "stop"
+  }
+ ],
+ "momentum": {
+  "overlap_share_pct": 9.3,
+  "in_momentum": {
+   "n": 76,
+   "win": 73.7,
+   "R": 0.39,
+   "PF": 2.74
+  },
+  "not_in_momentum": {
+   "n": 738,
+   "win": 55.3,
+   "R": 0.117,
+   "PF": 1.39
+  },
+  "when_momentum_invested": {
+   "n": 718,
+   "win": 58.4,
+   "R": 0.176,
+   "PF": 1.63
+  },
+  "when_momentum_in_cash": {
+   "n": 96,
+   "win": 46.9,
+   "R": -0.103,
+   "PF": 0.75
+  },
+  "monthly_correlation": 0.324,
+  "months": 176
+ }
+}

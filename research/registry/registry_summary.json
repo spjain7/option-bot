@@ -1,0 +1,227 @@
+{
+ "rows": 44776,
+ "missing": [],
+ "by_study": [
+  {
+   "market": "MCX",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 156,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "CYCLE2-4 MCX continuation by objective daily trend, metals vs energy (11-Nov)",
+   "variants": 504,
+   "passed": 39,
+   "passed_and_multiple_testing": 18
+  },
+  {
+   "market": "MCX",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 6,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "CYCLE3-3 MCX 3h continuation by commodity + benchmarks + untouched Jul-2022 window (11-Nov)",
+   "variants": 480,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 64,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "MCX-HW 80-90 % win search (10-Nov)",
+   "variants": 805,
+   "passed": 6,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "MCX-RD RSI 75/25 + divergence, per commodity (10-Nov)",
+   "variants": 14535,
+   "passed": 3,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "MCX-RD RSI 75/25 + divergence, pooled (10-Nov)",
+   "variants": 2325,
+   "passed": 15,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "MCX-REV reversal candles (10-Nov)",
+   "variants": 3400,
+   "passed": 23,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "MCX",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 2160,
+   "passed": 10,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "CASHQ cash research engine (Nov-2026)",
+   "variants": 2409,
+   "passed": 10,
+   "passed_and_multiple_testing": 10
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 128,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "CYCLE2-3 cash CONTINUATION BUY market dependence (11-Nov)",
+   "variants": 14,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 4,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "EQ-BTST cash buy-today-sell-tomorrow",
+   "variants": 56,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 14,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "FORWARD SHADOW (live, from 11-Nov-2026)",
+   "variants": 1,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "RSIDIV-CM cash RSI + divergence + liquidity / RS / sector (11-Nov)",
+   "variants": 2805,
+   "passed": 29,
+   "passed_and_multiple_testing": 11
+  },
+  {
+   "market": "NSE_CASH",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 720,
+   "passed": 6,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 104,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 4,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 36,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "RSIDIV-IX index futures RSI + divergence + OI (11-Nov)",
+   "variants": 5114,
+   "passed": 2,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_INDEX_FUT",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 1440,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "CYCLE2-1 continuation BUY: one filter at a time, DEV+VALID selection, OOS check, walk-forward (11-Nov)",
+   "variants": 128,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "CYCLE2-2 stock-futures CONTINUATION SELL crowding versions (11-Nov)",
+   "variants": 5,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "CYCLE3-1 CONT-BUY-B1-RVOL2-v1 stability (11-Nov)",
+   "variants": 4,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "FAMILIES ORB / sweep+MSS / VWAP / squeeze / climax / pullback / S-R retest (11-Nov)",
+   "variants": 28,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "FORWARD SHADOW (live, from 11-Nov-2026)",
+   "variants": 1,
+   "passed": 0,
+   "passed_and_multiple_testing": 0
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "RSIDIV-SF stock futures RSI + divergence + OI + basis (11-Nov)",
+   "variants": 5886,
+   "passed": 50,
+   "passed_and_multiple_testing": 4
+  },
+  {
+   "market": "NSE_STOCK_FUT",
+   "study": "RSIREV reversal vs continuation, 10 strategies x entry x stop x target x regime (11-Nov)",
+   "variants": 1440,
+   "passed": 2,
+   "passed_and_multiple_testing": 0
+  }
+ ],
+ "stress_files": [
+  "research/mcxhw/results/hidden_check.json",
+  "research/rsidiv/results/sf_check.json"
+ ]
+}
