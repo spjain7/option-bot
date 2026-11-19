@@ -1,0 +1,7 @@
+rule,base_R,base_win,noise_pos_share,noise_avgR,delay1_R,delay2_R,neighbours_pos_share,neighbours_min_R,robust,stocks_positive_share
+FH_NFO3H_SELL,0.128,49.9,1.0,0.123,0.12,0.134,1.0,0.059,True,0.63
+FH_NFO_4h_SELL,0.11,53.5,1.0,0.102,0.124,0.104,1.0,0.06,True,0.6
+RB_STK_2h_SQZ_SELL,0.274,46.4,1.0,0.251,0.279,0.256,0.92,-0.021,True,0.64
+RB_STK_3h_EMA921_SELL,0.151,49.3,1.0,0.146,0.131,0.131,1.0,0.085,True,0.6
+RB_STK_3h_MACD0_SELL,0.172,48.9,1.0,0.161,0.168,0.123,1.0,0.124,True,0.59
+RB_STK_4h_MACD0_SELL,0.191,48.8,1.0,0.169,0.142,0.135,1.0,0.115,True,0.63
