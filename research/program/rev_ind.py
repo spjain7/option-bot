@@ -153,7 +153,7 @@ def one(job):
             for nm, s in S.items():
                 s = s.values
                 for ctx, m in (("none", s), ("UP", s & up), ("DT", s & dt)):
-                    if m.sum() < 2:
+                    if m.sum() < 1:
                         continue
                     for k, r in EXITS:
                         for i, j, rr, why, mfe, booked in run(o, h, l, c, at, sw, m, k, r, maxh, cost, 0.0, 0.0, 0.0, H.CHASE):
