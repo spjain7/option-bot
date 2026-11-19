@@ -345,8 +345,6 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
     """4-hour stock SELL (alerts/four_hour.py) on the 09:15-13:15 candle (scan from 13:17) and the 13:15-15:30 candle (after
     the close). Resumes next cycle when the time budget or an Angel block stops it."""
     from alerts import four_hour as FH
-    if not ST.is_live("FH_STK_SELL"):               # 19-Nov (owner): switched off - no new 4h calls; open ones are still tracked
-        return
     hm = f"{now:%H:%M}"
     if now.weekday() >= 5 or hm < "13:17":
         return
@@ -397,6 +395,8 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
                    BO.daily_candles(h, None), None, now, int(c.get("lot") or 1), "STOCKS", after_close=after_close)
         except Exception as e_:
             print(f"[rulebook] {name} 2h/4h skipped: {type(e_).__name__}: {e_}")
+        if not ST.is_live("FH_STK_SELL"):                # 19-Nov (owner): 4h breakdown SELL switched off (rulebook 2h / 4h above still run)
+            continue
         if fr is None or len(fr) < 210 or not FH.evaluate(fr, FH.RULES["NFO"])["side"]:
             continue
         q = None

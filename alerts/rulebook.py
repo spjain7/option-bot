@@ -126,6 +126,23 @@ for _rid, _tf, _nm, _n, _win, _R, _per in (
 # were positive in both 2006-16 and 2017-21 (research reports/mcx_alu_sell.csv).
 POSITIONAL_ONLY = {"ALUMINIUM"}
 
+# 19-Nov-2026 (owner: "activate what looks good"): REVERSAL SELL basket, research branch exp/stock-call-audit
+# (research/program/rev_ind.py signals, rev_more.py / rev_call_lists.py results). A short-term TOP signal while the stock's
+# daily trend is already DOWN and the stock is still ABOVE its daily EMA200 (both from the previous completed day).
+# Stop 2 ATR, target 1R (1:1), entry next candle open. Backtest 2022-26, 181 F&O stock futures, 2x costs, one open call
+# per stock (the live stock gate): basket 314 calls, 63 % won, stop-loss 25 %, +0.19R, positive in all 3 periods.
+# Per signal (n / won / R): see each rule. Reversal BUY (bottoms) failed every test (rev_buy.py) – none added.
+for _rid, _tf, _ind, _maxh, _n, _win, _R, _per, _lab in (
+        ("RB_STK_4h_REV_TD9P_SELL", "4h", "TD9P", 40, 116, 67, 0.28, "+0.24/+0.25/+0.36", "TD Sequential 9 (perfected) top"),
+        ("RB_STK_4h_REV_TD9_SELL", "4h", "TD9", 40, 156, 60, 0.16, "+0.06/+0.23/+0.23", "TD Sequential 9 top"),
+        ("RB_STK_4h_REV_CCI200_SELL", "4h", "CCI200", 40, 47, 68, 0.31, "+0.11/+0.40/+0.47 (small sample)", "CCI back below +100 after +200"),
+        ("RB_STK_1d_REV_TD9P_SELL", "1d", "TD9P", 10, 18, 83, 0.56, "+0.51/+0.47/+0.77 (small sample)", "TD Sequential 9 (perfected) top"),
+        ("RB_STK_1d_REV_TD9_SELL", "1d", "TD9", 10, 28, 71, 0.40, "+0.30/+0.33/+0.59 (small sample)", "TD Sequential 9 top"),
+        ("RB_STK_1d_REV_WPR20_SELL", "1d", "WPR20", 10, 106, 66, 0.19, "+0.09/+0.25/+0.19", "Williams %R back below -20"),
+        ("RB_STK_1d_REV_STOCH80_SELL", "1d", "STOCH80", 10, 70, 70, 0.22, "-0.15/+0.48/+0.30 (basket member)", "Stochastic turns down from 80"),
+        ("RB_STK_1d_REV_FISHER_SELL", "1d", "FISHER", 10, 24, 67, 0.29, "-0.17/+0.55/+0.31 (basket member, small sample)", "Fisher Transform turns down from +2")):
+    RULES[_rid] = _r("STOCKS", _tf, "REV", _ind, "DT+A200", "SELL", 2.0, 1.0, _maxh, _n, _win, _R, _per, "B", "REVERSAL · " + _lab)
+
 
 
 # ── candles ──────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -187,6 +204,62 @@ def daily_trend_map(daily):
     s = s[~s.index.duplicated(keep="last")]
     s.attrs["last_day"], s.attrs["last"] = pd.Timestamp(s.index[-1]), int(t[-1])   # for days after the frame (today, intraday)
     return s
+
+
+def a200_map(daily, state=None, name=None):
+    """date -> previous completed day's 'close above daily EMA200' (1 / 0), as research rev_more.py (ewm span 200, adjust=False).
+    Needs >= 250 daily candles; the result is cached per stock in state['a200'] so the 4-hour scan (200 days of 1-hour candles
+    only) uses the flag of the last long daily history (the after-close daily scan)."""
+    cache = state.setdefault("a200", {}) if state is not None else {}
+    if daily is not None and len(daily) >= 250:
+        c = daily["close"].astype(float).reset_index(drop=True)
+        f = (c > c.ewm(span=200, adjust=False).mean()).astype(int).values
+        s = pd.Series(f, index=pd.to_datetime(daily["time"]).dt.normalize().values).shift(1)
+        s = s[~s.index.duplicated(keep="last")]
+        s.attrs["last_day"], s.attrs["last"] = pd.Timestamp(s.index[-1]), int(f[-1])
+        if name is not None and state is not None:
+            cache[name] = dict(day=str(s.attrs["last_day"].date()), v=int(f[-1]))
+        return s
+    s = pd.Series(dtype=float)
+    if name in cache:
+        s.attrs["last_day"], s.attrs["last"] = pd.Timestamp(cache[name]["day"]), int(cache[name]["v"])
+    return s
+
+
+def _rsi_w(c, n=14):                                       # research rev_ind.rsi (Wilder)
+    d = c.diff(); a = 1 / n
+    return 100 - 100 / (1 + d.clip(lower=0).ewm(alpha=a, adjust=False).mean() / (-d.clip(upper=0)).ewm(alpha=a, adjust=False).mean().replace(0, np.nan))
+
+
+def rev_tops(f):
+    """Reversal TOP signals – exact copy of research/program/rev_ind.py tops() for the six indicators used live."""
+    h, l, c = (f[x].astype(float).reset_index(drop=True) for x in ("high", "low", "close"))
+    C, Hh = c.values, h.values; n = len(C)
+    up = np.zeros(n, int); dn = np.zeros(n, int)
+    for i in range(4, n):
+        up[i] = up[i - 1] + 1 if C[i] > C[i - 4] else 0
+        dn[i] = dn[i - 1] + 1 if C[i] < C[i - 4] else 0
+    s9 = up == 9
+    s9p = np.zeros(n, bool)
+    for i in np.flatnonzero(s9):
+        if i >= 3 and max(Hh[i], Hh[i - 1]) >= max(Hh[i - 3], Hh[i - 2]):
+            s9p[i] = True
+    S = {"TD9": s9, "TD9P": s9p}
+    ll, hh = l.rolling(14).min(), h.rolling(14).max()
+    k = (100 * (c - ll) / (hh - ll).replace(0, np.nan)).rolling(3).mean(); d = k.rolling(3).mean()
+    S["STOCH80"] = ((k < d) & (k.shift(1) >= d.shift(1)) & (k.shift(1) > 80)).fillna(False).values
+    tp = (h + l + c) / 3
+    cci = (tp - tp.rolling(20).mean()) / (0.015 * tp.rolling(20).apply(lambda x: np.abs(x - x.mean()).mean(), raw=True))
+    S["CCI200"] = ((cci < 100) & (cci.shift(1) >= 100) & (cci.rolling(5).max() > 200)).fillna(False).values
+    hl2 = (h + l) / 2; mx, mn = hl2.rolling(10).max(), hl2.rolling(10).min()
+    val = (0.66 * ((hl2 - mn) / (mx - mn).replace(0, np.nan) - 0.5)).fillna(0).values; V = np.zeros(n); F = np.zeros(n)
+    for i in range(1, n):
+        V[i] = min(max(val[i] + 0.67 * V[i - 1], -0.999), 0.999); F[i] = 0.5 * np.log((1 + V[i]) / (1 - V[i])) + 0.5 * F[i - 1]
+    fi = pd.Series(F); fs = fi.shift(1)
+    S["FISHER"] = ((fi < fs) & (fi.shift(1) >= fs.shift(1)) & (fi.shift(1) > 2)).fillna(False).values
+    wpr = -100 * (hh - c) / (hh - ll).replace(0, np.nan)
+    S["WPR20"] = ((wpr < -20) & (wpr.shift(1) >= -20)).fillna(False).values
+    return {k_: np.asarray(v, bool) for k_, v in S.items()}
 
 
 # ── signal families (copied from research/program/search_v2.py) ──────────────────────────────────────────────────────
@@ -294,6 +367,8 @@ def raw(f, fam, par):
         w = (up - dn) / mid.values
         sq = pd.Series(w <= pd.Series(w).rolling(100).min().values * 1.1).rolling(5).max().fillna(0).values.astype(bool)
         return sq & (c > up), sq & (c < dn)
+    if fam == "REV":                                       # 19-Nov reversal TOP (SELL only)
+        return np.zeros(n, bool), rev_tops(f)[par]
     raise ValueError(f"unknown family {fam}")
 
 
@@ -322,6 +397,17 @@ def evaluate(f, rule, dtr):
             t = 0 if t != t else t
         if t != side:
             return dict(rejected=f"daily trend not {'up' if side > 0 else 'down'}")
+    if "A200" in flt:                                      # 19-Nov: stock above its daily EMA200 (previous completed day)
+        a2 = dtr.attrs.get("a200")
+        day = pd.Timestamp(f["time"].iloc[i]).normalize()
+        if a2 is None or not len(a2.attrs):
+            return dict(rejected="daily EMA200 unknown (no long daily history yet)")
+        if len(a2) and day <= a2.attrs["last_day"]:
+            v = a2.get(day, np.nan); v = 0 if v != v else v
+        else:
+            v = a2.attrs["last"] if day > a2.attrs["last_day"] else 0
+        if v != 1:
+            return dict(rejected="stock below its daily EMA200")
     if "VOL" in flt and not float(f["volx"].iloc[i]) >= 1.5:
         return dict(rejected="volume < 1.5x")
     return dict(candle=str(f["time"].iloc[i]), close=c, open=float(f["open"].iloc[i]), high=float(f["high"].iloc[i]), low=float(f["low"].iloc[i]), atr=float(f["atr"].iloc[i]), adx=float(f["adx"].iloc[i]),
@@ -340,12 +426,16 @@ def describe(rule):
            "INSIDE": lambda: "inside-bar breakout", "PIN": lambda: "pin bar at a 20-candle extreme",
            "MOMO": lambda: "momentum candle (body ≥ 1.5 ATR)", "FAIL": lambda: "failed 20-candle breakout – reversal",
            "RETEST": lambda: "breakout retest of the 20-candle level", "SQZ": lambda: "Bollinger squeeze (20, 2) break",
+           "REV": lambda: {"TD9P": "TD Sequential 9 (perfected) top", "TD9": "TD Sequential 9 top", "CCI200": "CCI back below +100 after +200",
+                           "WPR20": "Williams %R back below -20", "STOCH80": "Stochastic turns down from 80",
+                           "FISHER": "Fisher Transform turns down from +2"}.get(par, par),
            "RSIX": lambda: f"RSI({par.split('/')[0]}) touched {par.split('/')[1]} / {100 - int(par.split('/')[1])} + reversal candle, ADX < 20"}
     try:
         txt = txt[fam]() if fam in txt else fam
     except Exception:
         txt = f"{fam} {par}"
-    flt = {"none": "", "DT": " · with the daily trend", "EMA200": " · EMA200 side", "ADX25": " · ADX ≥ 25"}.get(rule["filt"], " · " + rule["filt"])
+    flt = {"none": "", "DT": " · with the daily trend", "EMA200": " · EMA200 side", "ADX25": " · ADX ≥ 25",
+           "DT+A200": " · daily trend down, stock still above its daily EMA200"}.get(rule["filt"], " · " + rule["filt"])
     return txt + flt
 
 
@@ -357,6 +447,8 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
     st = FH.store(state)
     seen = state.setdefault("rulebook_seen", [])
     dtr = daily_trend_map(daily)
+    if any(r.get("filt", "").endswith("A200") and r["mkt"] == mkt and r.get("status") != "OFF" for r in RULES.values()):
+        dtr.attrs["a200"] = a200_map(daily, state, name)
     _trail_update(state, msgs, st, name, frames)
     feats = {}
     for rid, rule in RULES.items():
@@ -450,17 +542,17 @@ def run(state, msgs, api, name, ex, c, frames, daily, q, now, mult, mkt, after_c
         elif rule.get("untested"):
             msgs.extend(_untested_messages(rule, rid, sig, plan, c, t, s_, name, valid_to, after_close, max_days, t1, ex))
         else:
-          msgs.append("\n".join([
+          msgs.append("\n".join(x for x in [
               f"{'🟢 BUY' if s_ > 0 else '🔴 SELL'}  {name} FUT  ·  {TF_TXT[rule['tf']].upper()} · {rule.get('label', rid)}",
               "━━━━━━━━━━━━━━",
               f"Entry   : {TP.fmt(plan['entry'], t)}  (no chase beyond {TP.fmt(plan['entry'] + s_ * 0.5 * sig['atr'], t)})",
               f"SL      : {TP.fmt(plan['sl'], t)}",
               (f"T1      : {TP.fmt(t1, t)}  (1R – book HALF, move SL to cost {TP.fmt(plan['entry'], t)})" if rule.get("half_t1")
-               else f"T1      : {TP.fmt(t1, t)}  (1R)"),
+               else f"T1      : {TP.fmt(t1, t)}  (1R)" if rr != 1 else None),
               f"T2      : {TP.fmt(plan['target'], t)}  ({rr:g}R – exit {'the rest' if rule.get('half_t1') else 'here'})",
               f"R:R     : 1:{rr:g} · risk ₹{plan['risk_lot']:,.0f} per lot",
               f"Lot     : {c.get('lot') or '-'}  ·  {pd.Timestamp(c['expiry']):%b} expiry  ·  {'MCX' if ex == 'MCX' else 'NSE'}",
-              f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")]))
+              f"Valid   : enter by {valid_to:%d-%b %H:%M}" + (" (next session open)" if after_close else "")] if x is not None))
           msgs.append("\n".join([
               f"📌 WHY – {name} {rule['side']} ({TF_TXT[rule['tf']]})",
               f"• Signal  : {pd.Timestamp(sig['candle']):%d-%b %H:%M} candle – {describe(rule)}",

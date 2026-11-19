@@ -27,7 +27,7 @@ try:
     base = types.ModuleType("rb_base"); base.__dict__["__name__"] = "rb_base"
     exec(compile(src, "rb_base", "exec"), base.__dict__)
     added = {RID} | {k for k in RB.RULES if "OIBO" in k}            # 7-Nov: owner OI rules added later (own test)
-    added |= {k for k, v in RB.RULES.items() if v.get("half_t1")}    # 17-Nov: per-commodity T1-half rules (own test)
+    added |= {k for k, v in RB.RULES.items() if v.get("half_t1") or v.get("fam") == "REV"}    # 17-Nov: per-commodity T1-half rules (own test)
     _off = {"RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP", "RB_STK_2h_SQZ_SELL",
             "RB_STK_4h_MACD0_SELL", "RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL"}   # 19-Nov owner: switched off                     # 17-Nov: switched OFF by the owner
     _same = lambda a, b, k: {**a, **({"status": b["status"]} if k in _off else {})} == b
