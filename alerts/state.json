@@ -715,7 +715,7 @@
  },
  "day": {
   "date": "2026-11-19",
-  "alerts": 0,
+  "alerts": 5,
   "watches": 0,
   "startup_sent": true,
   "eod_sent": false,
@@ -734,14 +734,14 @@
    "ltp": 297.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-19 09:02:01.177419",
-   "oi": 13220.0,
-   "ltp": 128900.0
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 13055.0,
+   "ltp": 128794.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-19 09:02:01.177419",
-   "oi": 508830.0,
-   "ltp": 160000.0
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 505440.0,
+   "ltp": 159800.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -779,29 +779,39 @@
    "ltp": 61960.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-19 09:02:01.177419",
-   "oi": 15627500.0,
-   "ltp": 1198.4
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 15832500.0,
+   "ltp": 1194.7
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-19 09:02:01.177419",
-   "oi": 6665.0,
-   "ltp": 389.0
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 6555.0,
+   "ltp": 388.7
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-19 09:02:01.177419",
-   "oi": 8805.0,
-   "ltp": 310.65
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 8755.0,
+   "ltp": 309.0
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-19 09:02:01.177419",
-   "oi": 657600.0,
-   "ltp": 7684.0
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 666700.0,
+   "ltp": 7696.0
   },
   "NATURALGAS28DEC26FUT": {
-   "time": "2026-11-19 09:02:01.177419",
-   "oi": 17281250.0,
-   "ltp": 354.1
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 17567500.0,
+   "ltp": 354.9
+  },
+  "NIFTY29DEC26FUT": {
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 3193125.0,
+   "ltp": 25361.5
+  },
+  "BANKNIFTY29DEC26FUT": {
+   "time": "2026-11-19 09:17:01.525796",
+   "oi": 527400.0,
+   "ltp": 62525.0
   }
  },
  "bo_active": [
@@ -838,7 +848,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-18 23:45:00",
+   "checked": "2026-11-19 09:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -858,7 +868,7 @@
    "n": 2,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-18 23:45:00",
+   "checked": "2026-11-19 09:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -878,7 +888,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-18 23:45:00",
+   "checked": "2026-11-19 09:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -974,7 +984,7 @@
    "n": 4,
    "last_candle": "2026-11-18 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-18 23:45:00",
+   "checked": "2026-11-19 09:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1d|2026-11-12 09:00:00",
    "token": "495213",
@@ -994,7 +1004,7 @@
    "n": 0,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-18 23:45:00",
+   "checked": "2026-11-19 09:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1w|2026-11-09 09:00:00",
    "token": "495213",
@@ -1014,7 +1024,7 @@
    "n": 4,
    "last_candle": "2026-11-18 21:00:00",
    "tick": 1.0,
-   "checked": "2026-11-18 23:45:00",
+   "checked": "2026-11-19 09:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|3h|2026-11-18 09:00:00",
    "token": "495213",
@@ -2212,8 +2222,8 @@
    "date": "2026-11-04",
    "uhi": 2724.0,
    "ulo": 2390.0,
-   "ulast": 2662.0,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 2650.0,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 2724.0,
    "worst_px": 2390.0,
    "mfe_R": 1.502,
@@ -2433,8 +2443,8 @@
    "stop_touched": false,
    "uhi": 25550.6,
    "ulo": 24843.0,
-   "ulast": 25241.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulast": 25201.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_IDX_1d_RSI70_BUY|BANKNIFTY|2026-11-06 09:15:00",
@@ -2492,8 +2502,8 @@
    "date": "2026-11-06",
    "uhi": 1614.2,
    "ulo": 1568.2,
-   "ulast": 1597.6,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 1598.9,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 1614.2,
    "worst_px": 1564.7,
    "mfe_R": 0.695,
@@ -2539,8 +2549,8 @@
    "date": "2026-11-09",
    "uhi": 25550.6,
    "ulo": 24843.0,
-   "ulast": 25241.0,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 25201.0,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 25550.6,
    "worst_px": 24843.0,
    "mfe_R": 0.418,
@@ -2587,8 +2597,8 @@
    "date": "2026-11-09",
    "uhi": 62399.0,
    "ulo": 58820.4,
-   "ulast": 61924.8,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 62100.0,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 62399.0,
    "worst_px": 58820.4,
    "mfe_R": 0.983,
@@ -2692,8 +2702,8 @@
    "date": "2026-11-09",
    "uhi": 962.3,
    "ulo": 899.55,
-   "ulast": 936.55,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 940.7,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 962.3,
    "worst_px": 927.7,
    "mfe_R": 0.434,
@@ -2875,8 +2885,8 @@
    "date": "2026-11-11",
    "uhi": 2280.0,
    "ulo": 2150.0,
-   "ulast": 2235.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulast": 2214.1,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "DTC|SILVER|2026-11-11|17:00",
@@ -3021,8 +3031,8 @@
    "date": "2026-11-12",
    "uhi": 276.68,
    "ulo": 269.13,
-   "ulast": 274.01,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 276.53,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 276.68,
    "worst_px": 269.13,
    "mfe_R": 0.082,
@@ -3217,8 +3227,8 @@
    "date": "2026-11-16",
    "uhi": 3112.0,
    "ulo": 3021.7,
-   "ulast": 3059.4,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 3052.2,
+   "uat": "2026-11-19 09:17:01.525796",
    "call_entry": 3033.3,
    "activated": true
   },
@@ -3350,9 +3360,9 @@
    "date": "2026-11-11",
    "hilo_bf": true,
    "uhi": 4333.8,
-   "ulo": 4061.1,
-   "uat": "2026-11-18 15:17:01.413186",
-   "ulast": 4093.2
+   "ulo": 4000.4,
+   "uat": "2026-11-19 09:17:01.525796",
+   "ulast": 4043.6
   },
   {
    "key": "DTC|GOLD|2026-11-17|17:00",
@@ -3404,8 +3414,8 @@
    "hilo_bf": true,
    "uhi": 1173.8,
    "ulo": 1125.9,
-   "uat": "2026-11-18 15:17:01.413186",
-   "ulast": 1140.0,
+   "uat": "2026-11-19 09:17:01.525796",
+   "ulast": 1144.9,
    "best_px": 1125.9,
    "worst_px": 1171.4,
    "mfe_R": 1.039,
@@ -3437,9 +3447,9 @@
    "activated": true,
    "hilo_bf": true,
    "uhi": 9996.0,
-   "ulo": 9656.0,
-   "uat": "2026-11-18 15:17:01.413186",
-   "ulast": 9715.0
+   "ulo": 9628.5,
+   "uat": "2026-11-19 09:17:01.525796",
+   "ulast": 9690.0
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|ONGC|2026-11-13 13:15:00",
@@ -3464,8 +3474,8 @@
    "hilo_bf": true,
    "uhi": 227.25,
    "ulo": 222.84,
-   "uat": "2026-11-18 15:17:01.413186",
-   "ulast": 224.44
+   "uat": "2026-11-19 09:17:01.525796",
+   "ulast": 223.94
   },
   {
    "key": "RB|RB_IDX_1d_BO10_BUY|BANKNIFTY|2026-11-16 09:15:00",
@@ -3491,8 +3501,8 @@
    "hilo_bf": true,
    "uhi": 62399.0,
    "ulo": 61400.0,
-   "uat": "2026-11-18 15:17:01.413186",
-   "ulast": 61924.8,
+   "uat": "2026-11-19 09:17:01.525796",
+   "ulast": 62100.0,
    "best_px": 62399.0,
    "worst_px": 61400.0,
    "mfe_R": 0.524,
@@ -3525,8 +3535,8 @@
    "hilo_bf": true,
    "uhi": 1054.5,
    "ulo": 1006.9,
-   "uat": "2026-11-18 15:17:01.413186",
-   "ulast": 1009.25
+   "uat": "2026-11-19 09:17:01.525796",
+   "ulast": 1034.95
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|TATAPOWER|2026-11-16 13:15:00",
@@ -3550,9 +3560,9 @@
    "activated": true,
    "hilo_bf": true,
    "uhi": 348.25,
-   "ulo": 337.6,
-   "uat": "2026-11-18 15:17:01.413186",
-   "ulast": 338.55
+   "ulo": 336.4,
+   "uat": "2026-11-19 09:17:01.525796",
+   "ulast": 338.05
   },
   {
    "key": "RB|RB_STK_2h_SQZ_SELL|COALINDIA|2026-11-16 15:15:00",
@@ -3576,8 +3586,8 @@
    "activated": true,
    "hilo_bf": true,
    "uhi": 398.9,
-   "ulo": 387.15,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulo": 385.9,
+   "uat": "2026-11-19 09:17:01.525796",
    "ulast": 387.85
   },
   {
@@ -3652,10 +3662,10 @@
    "date": "2026-11-18",
    "activated": true,
    "call_entry": 6260.0,
-   "uhi": 6290.0,
+   "uhi": 6309.5,
    "ulo": 6220.0,
-   "ulast": 6255.5,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 6293.5,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 6243.0,
    "worst_px": 6313.5,
    "mfe_R": 0.068,
@@ -3738,9 +3748,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 905.65,
-   "ulo": 899.8,
-   "ulast": 900.4,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulo": 882.0,
+   "ulast": 896.1,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 896.1,
    "worst_px": 905.1,
    "mfe_R": 0.254,
@@ -3768,10 +3778,10 @@
    "time": "2026-11-18 12:17:01.886859",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 6290.0,
+   "uhi": 6309.5,
    "ulo": 6253.5,
-   "ulast": 6255.5,
-   "uat": "2026-11-18 15:17:01.413186",
+   "ulast": 6293.5,
+   "uat": "2026-11-19 09:17:01.525796",
    "best_px": 6243.0,
    "worst_px": 6298.0,
    "mfe_R": 0.122,
@@ -3800,9 +3810,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 532.15,
-   "ulo": 527.55,
-   "ulast": 527.55,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 508.9,
+   "ulast": 514.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_3h_MACD0_SELL|MAZDOCK|2026-11-18 09:15:00",
@@ -3822,10 +3832,10 @@
    "time": "2026-11-18 13:02:01.484944",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 1836.5,
+   "uhi": 1846.0,
    "ulo": 1825.3,
-   "ulast": 1827.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulast": 1846.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|KPITTECH|2026-11-18 09:15:00",
@@ -3846,9 +3856,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 533.1,
-   "ulo": 526.05,
-   "ulast": 526.05,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 512.25,
+   "ulast": 516.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "4H|SBICARD|2026-11-18 09:15:00",
@@ -3884,9 +3894,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 565.45,
-   "ulo": 559.25,
-   "ulast": 559.25,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 558.6,
+   "ulast": 560.2,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_2h_SQZ_SELL|GODFRYPHLP|2026-11-18 11:15:00",
@@ -3906,10 +3916,10 @@
    "time": "2026-11-18 13:17:02.229041",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 1772.3,
-   "ulo": 1753.7,
-   "ulast": 1762.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "uhi": 1773.3,
+   "ulo": 1748.9,
+   "ulast": 1772.1,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_2h_SQZ_SELL|MAZDOCK|2026-11-18 11:15:00",
@@ -3929,10 +3939,10 @@
    "time": "2026-11-18 13:17:02.229041",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 1836.5,
+   "uhi": 1846.0,
    "ulo": 1825.3,
-   "ulast": 1827.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulast": 1846.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|MAZDOCK|2026-11-18 09:15:00",
@@ -3952,10 +3962,10 @@
    "time": "2026-11-18 13:17:02.229041",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 1836.5,
+   "uhi": 1846.0,
    "ulo": 1825.3,
-   "ulast": 1827.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulast": 1846.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|JUBLFOOD|2026-11-18 09:15:00",
@@ -3976,9 +3986,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 422.2,
-   "ulo": 419.5,
-   "ulast": 421.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 418.5,
+   "ulast": 419.6,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "4H|HAVELLS|2026-11-18 09:15:00",
@@ -4012,10 +4022,10 @@
    ],
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 1137.3,
-   "ulo": 1133.7,
-   "ulast": 1136.8,
-   "uat": "2026-11-18 15:17:01.413186"
+   "uhi": 1140.8,
+   "ulo": 1130.0,
+   "ulast": 1137.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_3h_MACD0_SELL|JUBLFOOD|2026-11-18 09:15:00",
@@ -4036,9 +4046,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 422.2,
-   "ulo": 419.5,
-   "ulast": 421.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 418.5,
+   "ulast": 419.6,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "3H|NATIONALUM|2026-11-18 09:15:00",
@@ -4072,9 +4082,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 308.0,
-   "ulo": 305.0,
-   "ulast": 306.2,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 298.0,
+   "ulast": 302.45,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "3H|POLYCAB|2026-11-18 09:15:00",
@@ -4110,9 +4120,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 7372.0,
-   "ulo": 7326.0,
-   "ulast": 7330.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 7228.0,
+   "ulast": 7298.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "3H|RECLTD|2026-11-18 09:15:00",
@@ -4147,10 +4157,10 @@
    ],
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 291.6,
+   "uhi": 293.75,
    "ulo": 290.4,
-   "ulast": 291.5,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulast": 292.35,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|ALKEM|2026-11-18 09:15:00",
@@ -4170,10 +4180,10 @@
    "time": "2026-11-18 13:47:01.828941",
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 5219.0,
-   "ulo": 5205.0,
-   "ulast": 5209.0,
-   "uat": "2026-11-18 15:17:01.413186"
+   "uhi": 5225.0,
+   "ulo": 5187.5,
+   "ulast": 5206.0,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|NATIONALUM|2026-11-18 09:15:00",
@@ -4194,9 +4204,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 307.35,
-   "ulo": 305.0,
-   "ulast": 306.2,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 298.0,
+   "ulast": 302.45,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "4H|INFY|2026-11-18 09:15:00",
@@ -4231,9 +4241,9 @@
    "status": "OPEN",
    "date": "2026-11-18",
    "uhi": 1116.2,
-   "ulo": 1109.5,
-   "ulast": 1109.6,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulo": 1081.0,
+   "ulast": 1087.2,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "4H|DABUR|2026-11-18 09:15:00",
@@ -4268,10 +4278,10 @@
    ],
    "status": "OPEN",
    "date": "2026-11-18",
-   "uhi": 380.8,
+   "uhi": 384.5,
    "ulo": 379.35,
-   "ulast": 380.8,
-   "uat": "2026-11-18 15:17:01.413186"
+   "ulast": 384.5,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|HINDALCO|2026-11-18 13:15:00",
@@ -4289,8 +4299,9 @@
    "lot": 700,
    "mult": 700,
    "time": "2026-11-18 15:32:01.795758",
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "status": "VOID",
+   "date": "2026-11-18",
+   "note": "not published \u2013 opened 1.0 ATR past the entry (max 0.5)"
   },
   {
    "key": "4H|VEDL|2026-11-18 13:15:00",
@@ -4322,8 +4333,9 @@
    "why_against": [
     "support 243.50 only 0.0R away"
    ],
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "status": "VOID",
+   "date": "2026-11-18",
+   "note": "not published \u2013 opened 0.6 ATR past the entry (max 0.5)"
   },
   {
    "key": "RB|RB_STK_3h_EMA921_SELL|BAJAJ-AUTO|2026-11-18 12:15:00",
@@ -4341,8 +4353,9 @@
    "lot": 75,
    "mult": 75,
    "time": "2026-11-18 15:32:01.795758",
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "status": "VOID",
+   "date": "2026-11-18",
+   "note": "not published \u2013 opened 1.1 ATR past the entry (max 0.5)"
   },
   {
    "key": "RB|RB_STK_3h_EMA921_SELL|VEDL|2026-11-18 12:15:00",
@@ -4360,8 +4373,9 @@
    "lot": 1150,
    "mult": 1150,
    "time": "2026-11-18 15:32:01.795758",
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "status": "VOID",
+   "date": "2026-11-18",
+   "note": "not published \u2013 opened 0.7 ATR past the entry (max 0.5)"
   },
   {
    "key": "RB|RB_STK_3h_MACD0_SELL|TORNTPHARM|2026-11-18 12:15:00",
@@ -4372,15 +4386,21 @@
    "symbol": "TORNTPHARM23NOV26FUT",
    "type": "3-hour MACD",
    "side": "SELL",
-   "entry": 4634.4,
+   "entry": 4620.1,
    "sl": 4727.5,
    "target": 4448.4,
    "tick": 0.1,
    "lot": 125,
    "mult": 125,
-   "time": "2026-11-18 15:32:01.795758",
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "time": "2026-11-19 09:17:01.525796",
+   "status": "OPEN",
+   "date": "2026-11-19",
+   "activated": true,
+   "call_entry": 4634.4,
+   "uhi": 4620.1,
+   "ulo": 4605.6,
+   "ulast": 4605.6,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_3h_EMA921_SELL|RVNL|2026-11-18 12:15:00",
@@ -4391,15 +4411,21 @@
    "symbol": "RVNL23NOV26FUT",
    "type": "3-hour EMAX",
    "side": "SELL",
-   "entry": 189.03,
+   "entry": 188.1,
    "sl": 199.13,
    "target": 158.74,
    "tick": 0.01,
    "lot": 1925,
    "mult": 1925,
-   "time": "2026-11-18 15:32:01.795758",
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "time": "2026-11-19 09:17:01.525796",
+   "status": "OPEN",
+   "date": "2026-11-19",
+   "activated": true,
+   "call_entry": 189.03,
+   "uhi": 188.9,
+   "ulo": 188.1,
+   "ulast": 188.9,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|TORNTPHARM|2026-11-18 13:15:00",
@@ -4410,15 +4436,21 @@
    "symbol": "TORNTPHARM23NOV26FUT",
    "type": "4-hour MACD",
    "side": "SELL",
-   "entry": 4634.0,
+   "entry": 4620.1,
    "sl": 4727.7,
    "target": 4446.7,
    "tick": 0.1,
    "lot": 125,
    "mult": 125,
-   "time": "2026-11-18 16:02:01.526906",
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "time": "2026-11-19 09:17:01.525796",
+   "status": "OPEN",
+   "date": "2026-11-19",
+   "activated": true,
+   "call_entry": 4634.0,
+   "uhi": 4620.1,
+   "ulo": 4605.6,
+   "ulast": 4605.6,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "4H|TITAN|2026-11-18 13:15:00",
@@ -4429,13 +4461,13 @@
    "symbol": "TITAN23NOV26FUT",
    "type": "Swing (4-hour)",
    "side": "SELL",
-   "entry": 4654.0,
+   "entry": 4639.0,
    "sl": 4806.8,
    "target": 4348.5,
    "tick": 0.1,
    "lot": 175,
    "mult": 175,
-   "time": "2026-11-18 16:02:01.526906",
+   "time": "2026-11-19 09:17:01.525796",
    "grade": "B",
    "grade_v": "intel-1.0",
    "grade_pts": 3,
@@ -4452,8 +4484,14 @@
     "daily bias bullish (against)",
     "support 4,623.60 only 0.2R away"
    ],
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "status": "OPEN",
+   "date": "2026-11-19",
+   "activated": true,
+   "call_entry": 4654.0,
+   "uhi": 4639.0,
+   "ulo": 4617.9,
+   "ulast": 4617.9,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "RB|RB_STK_4h_MACD0_SELL|RECLTD|2026-11-18 13:15:00",
@@ -4464,15 +4502,21 @@
    "symbol": "RECLTD23NOV26FUT",
    "type": "4-hour MACD",
    "side": "SELL",
-   "entry": 291.45,
+   "entry": 291.6,
    "sl": 299.25,
    "target": 275.95,
    "tick": 0.05,
    "lot": 1575,
    "mult": 1575,
-   "time": "2026-11-18 16:47:01.420830",
-   "status": "WAITING",
-   "date": "2026-11-18"
+   "time": "2026-11-19 09:17:01.525796",
+   "status": "OPEN",
+   "date": "2026-11-19",
+   "activated": true,
+   "call_entry": 291.45,
+   "uhi": 292.35,
+   "ulo": 291.6,
+   "ulast": 292.35,
+   "uat": "2026-11-19 09:17:01.525796"
   },
   {
    "key": "DTC|SILVER|2026-11-18|17:00",
@@ -4588,7 +4632,8 @@
      "support 4,166.00 only 1.0R away"
     ],
     "live": {
-     "trigger": "2026-11-11 13:17:02.115853"
+     "trigger": "2026-11-11 13:17:02.115853",
+     "target": "2026-11-19 09:17:01.525796"
     },
     "entry": 4258.9,
     "entry_time": "2026-11-11 09:15:00",
@@ -4637,7 +4682,9 @@
     "why_against": [
      "daily bias bullish (against)"
     ],
-    "live": {}
+    "live": {
+     "trigger": "2026-11-19 09:17:01.525796"
+    }
    },
    {
     "setup": "STK_HANGMAN",
@@ -4721,7 +4768,10 @@
     ],
     "why_against": [
      "daily bias bullish (against)"
-    ]
+    ],
+    "live": {
+     "stop": "2026-11-19 09:17:01.525796"
+    }
    },
    {
     "setup": "STK_HANGMAN",
@@ -4761,7 +4811,8 @@
     "why_against": [
      "against the bullish trending regime",
      "daily bias bullish (against)"
-    ]
+    ],
+    "live": {}
    },
    {
     "setup": "STK_HANGMAN",
@@ -4802,7 +4853,8 @@
     ],
     "why_against": [
      "daily bias bullish (against)"
-    ]
+    ],
+    "live": {}
    }
   ],
   "closed": [
@@ -6458,7 +6510,8 @@
      "2026-11-13",
      "2026-11-16",
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_IDX_1d_EMA2050_BUY|NIFTY|2026-11-06 09:15:00",
     "max_days": 20,
@@ -6488,7 +6541,8 @@
      "2026-11-13",
      "2026-11-16",
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_1d_RSI80_BUY|ICICIBANK|2026-11-06 09:15:00",
     "max_days": 20,
@@ -6514,7 +6568,8 @@
      "2026-11-13",
      "2026-11-16",
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_1d_RSI80_BUY|BANKBARODA|2026-11-12 09:15:00",
     "max_days": 20,
@@ -6538,7 +6593,8 @@
     "days": [
      "2026-11-16",
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|COCHINSHIP|2026-11-13 13:15:00",
     "max_days": 20,
@@ -6567,7 +6623,8 @@
     "days": [
      "2026-11-16",
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_2h_SQZ_SELL|OFSS|2026-11-13 15:15:00",
     "max_days": 13,
@@ -6596,7 +6653,8 @@
     "days": [
      "2026-11-16",
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|ONGC|2026-11-13 13:15:00",
     "max_days": 20,
@@ -6625,7 +6683,8 @@
     "days": [
      "2026-11-16",
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "4H|GRASIM|2026-11-13 13:15:00",
     "max_days": 20,
@@ -6652,7 +6711,8 @@
     "opened": "2026-11-16 15:32:00.973179",
     "days": [
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_IDX_1d_BO10_BUY|BANKNIFTY|2026-11-16 09:15:00",
     "max_days": 20,
@@ -6680,7 +6740,8 @@
     "opened": "2026-11-16 16:47:01.062224",
     "days": [
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|BDL|2026-11-16 13:15:00",
     "max_days": 20,
@@ -6708,7 +6769,8 @@
     "opened": "2026-11-16 17:17:01.156623",
     "days": [
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|TATAPOWER|2026-11-16 13:15:00",
     "max_days": 20,
@@ -6736,7 +6798,8 @@
     "opened": "2026-11-16 17:47:01.098234",
     "days": [
      "2026-11-17",
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_2h_SQZ_SELL|COALINDIA|2026-11-16 15:15:00",
     "max_days": 13,
@@ -6763,7 +6826,8 @@
     "mult": 100,
     "opened": "2026-11-17 17:17:02.245170",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|AMBER|2026-11-17 13:15:00",
     "max_days": 20,
@@ -6790,7 +6854,8 @@
     "mult": 700,
     "opened": "2026-11-18 12:17:01.886859",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_3h_EMA921_SELL|HINDALCO|2026-11-18 09:15:00",
     "max_days": 20,
@@ -6812,7 +6877,8 @@
     "mult": 100,
     "opened": "2026-11-18 12:17:01.886859",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_3h_MACD0_SELL|AMBER|2026-11-18 09:15:00",
     "max_days": 20,
@@ -6834,7 +6900,8 @@
     "mult": 1225,
     "opened": "2026-11-18 12:32:02.038646",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_3h_EMA921_SELL|HINDZINC|2026-11-18 09:15:00",
     "max_days": 20,
@@ -6856,7 +6923,8 @@
     "mult": 225,
     "opened": "2026-11-18 13:02:01.484944",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_3h_MACD0_SELL|MAZDOCK|2026-11-18 09:15:00",
     "max_days": 20,
@@ -6878,7 +6946,8 @@
     "mult": 775,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|KPITTECH|2026-11-18 09:15:00",
     "max_days": 20,
@@ -6900,7 +6969,8 @@
     "mult": 800,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "4H|SBICARD|2026-11-18 09:15:00",
     "max_days": 20,
@@ -6921,7 +6991,8 @@
     "mult": 275,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_2h_SQZ_SELL|GODFRYPHLP|2026-11-18 11:15:00",
     "max_days": 13,
@@ -6943,7 +7014,8 @@
     "mult": 225,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_2h_SQZ_SELL|MAZDOCK|2026-11-18 11:15:00",
     "max_days": 13,
@@ -6965,7 +7037,8 @@
     "mult": 225,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|MAZDOCK|2026-11-18 09:15:00",
     "max_days": 20,
@@ -6987,7 +7060,8 @@
     "mult": 1250,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|JUBLFOOD|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7009,7 +7083,8 @@
     "mult": 500,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "4H|HAVELLS|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7030,7 +7105,8 @@
     "mult": 1250,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_3h_MACD0_SELL|JUBLFOOD|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7052,7 +7128,8 @@
     "mult": 1875,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "3H|NATIONALUM|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7073,7 +7150,8 @@
     "mult": 125,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "3H|POLYCAB|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7094,7 +7172,8 @@
     "mult": 1575,
     "opened": "2026-11-18 13:17:02.229041",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "3H|RECLTD|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7115,7 +7194,8 @@
     "mult": 125,
     "opened": "2026-11-18 13:47:01.828941",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|ALKEM|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7137,7 +7217,8 @@
     "mult": 1875,
     "opened": "2026-11-18 13:47:01.828941",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|NATIONALUM|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7159,7 +7240,8 @@
     "mult": 400,
     "opened": "2026-11-18 13:47:01.828941",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "4H|INFY|2026-11-18 09:15:00",
     "max_days": 20,
@@ -7180,122 +7262,12 @@
     "mult": 1250,
     "opened": "2026-11-18 13:47:01.828941",
     "days": [
-     "2026-11-18"
+     "2026-11-18",
+     "2026-11-19"
     ],
     "key": "4H|DABUR|2026-11-18 09:15:00",
     "max_days": 20,
     "tfl": "4-hour"
-   },
-   {
-    "name": "HINDALCO",
-    "ex": "NFO",
-    "token": "61585",
-    "contract": "HINDALCO23NOV26FUT",
-    "expiry": "2026-11-23",
-    "side": "SELL",
-    "entry": 898.75,
-    "stop": 924.55,
-    "target": 847.25,
-    "risk": 25.8,
-    "tick": 0.05,
-    "mult": 700,
-    "opened": "2026-11-18 15:32:01.795758",
-    "days": [
-     "2026-11-18"
-    ],
-    "key": "RB|RB_STK_4h_MACD0_SELL|HINDALCO|2026-11-18 13:15:00",
-    "max_days": 20,
-    "tfl": "4-hour",
-    "rule": "RB_STK_4h_MACD0_SELL",
-    "await_open": true,
-    "atr": 17.17492643717304,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  HINDALCO FUT  \u00b7  4-HOUR \u00b7 MACD zero-line cross\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 898.75  (no chase beyond 890.16)\nSL      : 924.55\nT1      : 872.95  (1R)\nT2      : 847.25  (2R \u2013 exit here)\nR:R     : 1:2 \u00b7 risk \u20b918,060 per lot\nLot     : 700  \u00b7  Nov expiry  \u00b7  NSE\nValid   : enter by 18-Nov 21:15 (next session open)",
-     "\ud83d\udccc WHY \u2013 HINDALCO SELL (4-hour)\n\u2022 Signal  : 18-Nov 13:15 candle \u2013 MACD zero cross \u00b7 with the daily trend\n\u2022 Numbers : close 898.75 \u00b7 ATR 17.17 \u00b7 RSI 35 \u00b7 ADX 24 \u00b7 volume 1.6\u00d7\n\u2022 Exit    : SL or T2 \u00b7 time exit after 40 candles (~20 sessions) \u00b7 exit 1 session before expiry\n\u2022 Strength: tier A \u2013 1034 backtest trades, 49% won, +0.19R avg after 2\u00d7 costs, periods +0.11/+0.24/+0.20 (backtest, not a guarantee)\nAlert only \u2013 not investment advice."
-    ]
-   },
-   {
-    "name": "VEDL",
-    "ex": "NFO",
-    "token": "61742",
-    "contract": "VEDL23NOV26FUT",
-    "expiry": "2026-11-23",
-    "side": "SELL",
-    "entry": 243.92,
-    "stop": 253.63,
-    "target": 224.51,
-    "risk": 9.71,
-    "tick": 0.01,
-    "mult": 1150,
-    "opened": "2026-11-18 15:32:01.795758",
-    "days": [
-     "2026-11-18"
-    ],
-    "key": "4H|VEDL|2026-11-18 13:15:00",
-    "max_days": 20,
-    "tfl": "4-hour",
-    "await_open": true,
-    "atr": 4.8547896658110385,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  VEDL FUT  \u00b7  SWING (4-hour candles)\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 243.92\nSL      : 253.63\nTarget  : 224.51  (2R)\nLot     : 1150  \u00b7  Nov expiry  \u00b7  NSE\nENTRY at the next session's open (skip if it opens more than 0.5 ATR past this price)",
-     "\ud83d\udccc WHY \u2013 VEDL SELL (4-hour)\n\u2022 Candle  : 18-Nov 13:15\u201315:30 closed 243.92 below the 5-candle low 246.54\n\u2022 Volume  : 2.2\u00d7 the 20-candle average \u2705\n\u2022 OI      : 47,381,150 (+0.63% during the candle) \u2192 Short buildup \u2705\n\u2022 Trend   : below EMA200 264.42 \u2705\n\u2022 Support   : 221.35 (swing low) at 2.3R \u2013 beyond the target \u2705\n\u2022 Risk    : 9.71 pts (3.98%) \u00b7 \u20b911,166 per lot \u00b7 time exit after 20 sessions\n\ud83d\udcda Backtest 2023-26 (after 2\u00d7 costs): +0.12R per trade, 1,452 trades; slightly negative in 2024-25 \u2013 smaller size.\nAlert only \u2013 not investment advice."
-    ]
-   },
-   {
-    "name": "BAJAJ-AUTO",
-    "ex": "NFO",
-    "token": "61505",
-    "contract": "BAJAJ-AUTO23NOV26FUT",
-    "expiry": "2026-11-23",
-    "side": "SELL",
-    "entry": 10544.0,
-    "stop": 10851.0,
-    "target": 9624.0,
-    "risk": 307.0,
-    "tick": 1.0,
-    "mult": 75,
-    "opened": "2026-11-18 15:32:01.795758",
-    "days": [
-     "2026-11-18"
-    ],
-    "key": "RB|RB_STK_3h_EMA921_SELL|BAJAJ-AUTO|2026-11-18 12:15:00",
-    "max_days": 20,
-    "tfl": "3-hour",
-    "rule": "RB_STK_3h_EMA921_SELL",
-    "await_open": true,
-    "atr": 153.3368551109749,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  BAJAJ-AUTO FUT  \u00b7  3-HOUR \u00b7 EMA 9/21 cross\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 10,544  (no chase beyond 10,467)\nSL      : 10,851\nT1      : 10,237  (1R)\nT2      : 9,624  (3R \u2013 exit here)\nR:R     : 1:3 \u00b7 risk \u20b923,025 per lot\nLot     : 75  \u00b7  Nov expiry  \u00b7  NSE\nValid   : enter by 18-Nov 18:15 (next session open)",
-     "\ud83d\udccc WHY \u2013 BAJAJ-AUTO SELL (3-hour)\n\u2022 Signal  : 18-Nov 12:15 candle \u2013 EMA 9/21 cross \u00b7 with the daily trend\n\u2022 Numbers : close 10,544 \u00b7 ATR 153 \u00b7 RSI 42 \u00b7 ADX 25 \u00b7 volume 2.5\u00d7\n\u2022 Exit    : SL or T2 \u00b7 time exit after 40 candles (~20 sessions) \u00b7 exit 1 session before expiry\n\u2022 Strength: tier B \u2013 1274 backtest trades, 49% won, +0.15R avg after 2\u00d7 costs, periods +0.08/+0.09/+0.21 (backtest, not a guarantee)\nAlert only \u2013 not investment advice."
-    ]
-   },
-   {
-    "name": "VEDL",
-    "ex": "NFO",
-    "token": "61742",
-    "contract": "VEDL23NOV26FUT",
-    "expiry": "2026-11-23",
-    "side": "SELL",
-    "entry": 244.61,
-    "stop": 254.43,
-    "target": 215.17,
-    "risk": 9.82,
-    "tick": 0.01,
-    "mult": 1150,
-    "opened": "2026-11-18 15:32:01.795758",
-    "days": [
-     "2026-11-18"
-    ],
-    "key": "RB|RB_STK_3h_EMA921_SELL|VEDL|2026-11-18 12:15:00",
-    "max_days": 20,
-    "tfl": "3-hour",
-    "rule": "RB_STK_3h_EMA921_SELL",
-    "await_open": true,
-    "atr": 4.907826310194309,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  VEDL FUT  \u00b7  3-HOUR \u00b7 EMA 9/21 cross\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 244.61  (no chase beyond 242.16)\nSL      : 254.43\nT1      : 234.79  (1R)\nT2      : 215.17  (3R \u2013 exit here)\nR:R     : 1:3 \u00b7 risk \u20b911,293 per lot\nLot     : 1150  \u00b7  Nov expiry  \u00b7  NSE\nValid   : enter by 18-Nov 18:15 (next session open)",
-     "\ud83d\udccc WHY \u2013 VEDL SELL (3-hour)\n\u2022 Signal  : 18-Nov 12:15 candle \u2013 EMA 9/21 cross \u00b7 with the daily trend\n\u2022 Numbers : close 244.61 \u00b7 ATR 4.91 \u00b7 RSI 38 \u00b7 ADX 25 \u00b7 volume 2.9\u00d7\n\u2022 Exit    : SL or T2 \u00b7 time exit after 40 candles (~20 sessions) \u00b7 exit 1 session before expiry\n\u2022 Strength: tier B \u2013 1274 backtest trades, 49% won, +0.15R avg after 2\u00d7 costs, periods +0.08/+0.09/+0.21 (backtest, not a guarantee)\nAlert only \u2013 not investment advice."
-    ]
    },
    {
     "name": "TORNTPHARM",
@@ -7304,26 +7276,25 @@
     "contract": "TORNTPHARM23NOV26FUT",
     "expiry": "2026-11-23",
     "side": "SELL",
-    "entry": 4634.4,
+    "entry": 4620.1,
     "stop": 4727.5,
     "target": 4448.4,
-    "risk": 93.1,
+    "risk": 107.39999999999964,
     "tick": 0.1,
     "mult": 125,
     "opened": "2026-11-18 15:32:01.795758",
     "days": [
-     "2026-11-18"
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_3h_MACD0_SELL|TORNTPHARM|2026-11-18 12:15:00",
     "max_days": 20,
     "tfl": "3-hour",
     "rule": "RB_STK_3h_MACD0_SELL",
-    "await_open": true,
+    "await_open": false,
     "atr": 62.027918935080855,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  TORNTPHARM FUT  \u00b7  3-HOUR \u00b7 MACD zero-line cross\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 4,634.4  (no chase beyond 4,603.4)\nSL      : 4,727.5\nT1      : 4,541.3  (1R)\nT2      : 4,448.4  (2R \u2013 exit here)\nR:R     : 1:2 \u00b7 risk \u20b911,638 per lot\nLot     : 125  \u00b7  Nov expiry  \u00b7  NSE\nValid   : enter by 18-Nov 18:15 (next session open)",
-     "\ud83d\udccc WHY \u2013 TORNTPHARM SELL (3-hour)\n\u2022 Signal  : 18-Nov 12:15 candle \u2013 MACD zero cross \u00b7 with the daily trend\n\u2022 Numbers : close 4,634.4 \u00b7 ATR 62.0 \u00b7 RSI 43 \u00b7 ADX 27 \u00b7 volume 6.4\u00d7\n\u2022 Exit    : SL or T2 \u00b7 time exit after 40 candles (~20 sessions) \u00b7 exit 1 session before expiry\n\u2022 Strength: tier B \u2013 1036 backtest trades, 49% won, +0.17R avg after 2\u00d7 costs, periods +0.08/+0.22/+0.19 (backtest, not a guarantee)\nAlert only \u2013 not investment advice."
-    ]
+    "call_entry": 4634.4,
+    "activated": "2026-11-19 09:17:01.525796",
+    "open_px": 4620.1
    },
    {
     "name": "RVNL",
@@ -7332,26 +7303,25 @@
     "contract": "RVNL23NOV26FUT",
     "expiry": "2026-11-23",
     "side": "SELL",
-    "entry": 189.03,
+    "entry": 188.1,
     "stop": 199.13,
     "target": 158.74,
-    "risk": 10.1,
+    "risk": 11.030000000000001,
     "tick": 0.01,
     "mult": 1925,
     "opened": "2026-11-18 15:32:01.795758",
     "days": [
-     "2026-11-18"
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_3h_EMA921_SELL|RVNL|2026-11-18 12:15:00",
     "max_days": 20,
     "tfl": "3-hour",
     "rule": "RB_STK_3h_EMA921_SELL",
-    "await_open": true,
+    "await_open": false,
     "atr": 5.0487903385944035,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  RVNL FUT  \u00b7  3-HOUR \u00b7 EMA 9/21 cross\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 189.03  (no chase beyond 186.51)\nSL      : 199.13\nT1      : 178.93  (1R)\nT2      : 158.74  (3R \u2013 exit here)\nR:R     : 1:3 \u00b7 risk \u20b919,442 per lot\nLot     : 1925  \u00b7  Nov expiry  \u00b7  NSE\nValid   : enter by 18-Nov 18:15 (next session open)",
-     "\ud83d\udccc WHY \u2013 RVNL SELL (3-hour)\n\u2022 Signal  : 18-Nov 12:15 candle \u2013 EMA 9/21 cross \u00b7 with the daily trend\n\u2022 Numbers : close 189.03 \u00b7 ATR 5.05 \u00b7 RSI 42 \u00b7 ADX 22 \u00b7 volume 2.2\u00d7\n\u2022 Exit    : SL or T2 \u00b7 time exit after 40 candles (~20 sessions) \u00b7 exit 1 session before expiry\n\u2022 Strength: tier B \u2013 1274 backtest trades, 49% won, +0.15R avg after 2\u00d7 costs, periods +0.08/+0.09/+0.21 (backtest, not a guarantee)\nAlert only \u2013 not investment advice."
-    ]
+    "call_entry": 189.03,
+    "activated": "2026-11-19 09:17:01.525796",
+    "open_px": 188.1
    },
    {
     "name": "TORNTPHARM",
@@ -7360,26 +7330,25 @@
     "contract": "TORNTPHARM23NOV26FUT",
     "expiry": "2026-11-23",
     "side": "SELL",
-    "entry": 4634.0,
+    "entry": 4620.1,
     "stop": 4727.7,
     "target": 4446.7,
-    "risk": 93.7,
+    "risk": 107.59999999999945,
     "tick": 0.1,
     "mult": 125,
     "opened": "2026-11-18 16:02:01.526906",
     "days": [
-     "2026-11-18"
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|TORNTPHARM|2026-11-18 13:15:00",
     "max_days": 20,
     "tfl": "4-hour",
     "rule": "RB_STK_4h_MACD0_SELL",
-    "await_open": true,
+    "await_open": false,
     "atr": 62.45833072155794,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  TORNTPHARM FUT  \u00b7  4-HOUR \u00b7 MACD zero-line cross\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 4,634.0  (no chase beyond 4,602.8)\nSL      : 4,727.7\nT1      : 4,540.3  (1R)\nT2      : 4,446.7  (2R \u2013 exit here)\nR:R     : 1:2 \u00b7 risk \u20b911,712 per lot\nLot     : 125  \u00b7  Nov expiry  \u00b7  NSE\nValid   : enter by 18-Nov 21:15 (next session open)",
-     "\ud83d\udccc WHY \u2013 TORNTPHARM SELL (4-hour)\n\u2022 Signal  : 18-Nov 13:15 candle \u2013 MACD zero cross \u00b7 with the daily trend\n\u2022 Numbers : close 4,634.0 \u00b7 ATR 62.5 \u00b7 RSI 42 \u00b7 ADX 29 \u00b7 volume 4.3\u00d7\n\u2022 Exit    : SL or T2 \u00b7 time exit after 40 candles (~20 sessions) \u00b7 exit 1 session before expiry\n\u2022 Strength: tier A \u2013 1034 backtest trades, 49% won, +0.19R avg after 2\u00d7 costs, periods +0.11/+0.24/+0.20 (backtest, not a guarantee)\nAlert only \u2013 not investment advice."
-    ]
+    "call_entry": 4634.0,
+    "activated": "2026-11-19 09:17:01.525796",
+    "open_px": 4620.1
    },
    {
     "name": "TITAN",
@@ -7388,25 +7357,24 @@
     "contract": "TITAN23NOV26FUT",
     "expiry": "2026-11-23",
     "side": "SELL",
-    "entry": 4654.0,
+    "entry": 4639.0,
     "stop": 4806.8,
     "target": 4348.5,
-    "risk": 152.8,
+    "risk": 167.80000000000018,
     "tick": 0.1,
     "mult": 175,
     "opened": "2026-11-18 16:02:01.526906",
     "days": [
-     "2026-11-18"
+     "2026-11-19"
     ],
     "key": "4H|TITAN|2026-11-18 13:15:00",
     "max_days": 20,
     "tfl": "4-hour",
-    "await_open": true,
+    "await_open": false,
     "atr": 76.37817042438793,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  TITAN FUT  \u00b7  SWING (4-hour candles)\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 4,654.0\nSL      : 4,806.8\nTarget  : 4,348.5  (2R)\nLot     : 175  \u00b7  Nov expiry  \u00b7  NSE\nENTRY at the next session's open (skip if it opens more than 0.5 ATR past this price)",
-     "\ud83d\udccc WHY \u2013 TITAN SELL (4-hour)\n\u2022 Candle  : 18-Nov 13:15\u201315:30 closed 4,654.0 below the 5-candle low 4,675.9\n\u2022 Volume  : 2.1\u00d7 the 20-candle average \u2705\n\u2022 OI      : 4,160,450 (+0.94% during the candle) \u2192 Short buildup \u2705\n\u2022 Trend   : below EMA200 4,678.1 \u2705\n\u2022 Support   : 4,511.7 (swing low) at 0.9R \u2013 before the target, may pause there\n\u2022 Risk    : 152.8 pts (3.28%) \u00b7 \u20b926,740 per lot \u00b7 time exit after 20 sessions\n\ud83d\udcda Backtest 2023-26 (after 2\u00d7 costs): +0.12R per trade, 1,452 trades; slightly negative in 2024-25 \u2013 smaller size.\nAlert only \u2013 not investment advice."
-    ]
+    "call_entry": 4654.0,
+    "activated": "2026-11-19 09:17:01.525796",
+    "open_px": 4639.0
    },
    {
     "name": "RECLTD",
@@ -7415,26 +7383,25 @@
     "contract": "RECLTD23NOV26FUT",
     "expiry": "2026-11-23",
     "side": "SELL",
-    "entry": 291.45,
+    "entry": 291.6,
     "stop": 299.25,
     "target": 275.95,
-    "risk": 7.8,
+    "risk": 7.649999999999977,
     "tick": 0.05,
     "mult": 1575,
     "opened": "2026-11-18 16:47:01.420830",
     "days": [
-     "2026-11-18"
+     "2026-11-19"
     ],
     "key": "RB|RB_STK_4h_MACD0_SELL|RECLTD|2026-11-18 13:15:00",
     "max_days": 20,
     "tfl": "4-hour",
     "rule": "RB_STK_4h_MACD0_SELL",
-    "await_open": true,
+    "await_open": false,
     "atr": 5.178710940473661,
-    "held_msgs": [
-     "\ud83d\udd34 SELL  RECLTD FUT  \u00b7  4-HOUR \u00b7 MACD zero-line cross\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nEntry   : 291.45  (no chase beyond 288.86)\nSL      : 299.25\nT1      : 283.65  (1R)\nT2      : 275.95  (2R \u2013 exit here)\nR:R     : 1:2 \u00b7 risk \u20b912,285 per lot\nLot     : 1575  \u00b7  Nov expiry  \u00b7  NSE\nValid   : enter by 18-Nov 21:15 (next session open)",
-     "\ud83d\udccc WHY \u2013 RECLTD SELL (4-hour)\n\u2022 Signal  : 18-Nov 13:15 candle \u2013 MACD zero cross \u00b7 with the daily trend\n\u2022 Numbers : close 291.45 \u00b7 ATR 5.18 \u00b7 RSI 41 \u00b7 ADX 15 \u00b7 volume 1.5\u00d7\n\u2022 Exit    : SL or T2 \u00b7 time exit after 40 candles (~20 sessions) \u00b7 exit 1 session before expiry\n\u2022 Strength: tier A \u2013 1034 backtest trades, 49% won, +0.19R avg after 2\u00d7 costs, periods +0.11/+0.24/+0.20 (backtest, not a guarantee)\nAlert only \u2013 not investment advice."
-    ]
+    "call_entry": 291.45,
+    "activated": "2026-11-19 09:17:01.525796",
+    "open_px": 291.6
    }
   ],
   "closed": [
@@ -7945,6 +7912,121 @@
     "closed": "2026-11-18 09:17:01.496332",
     "result_R": null,
     "open_px": 7626.0
+   },
+   {
+    "name": "HINDALCO",
+    "ex": "NFO",
+    "token": "61585",
+    "contract": "HINDALCO23NOV26FUT",
+    "expiry": "2026-11-23",
+    "side": "SELL",
+    "entry": 898.75,
+    "stop": 924.55,
+    "target": 847.25,
+    "risk": 25.8,
+    "tick": 0.05,
+    "mult": 700,
+    "opened": "2026-11-18 15:32:01.795758",
+    "days": [
+     "2026-11-18"
+    ],
+    "key": "RB|RB_STK_4h_MACD0_SELL|HINDALCO|2026-11-18 13:15:00",
+    "max_days": 20,
+    "tfl": "4-hour",
+    "rule": "RB_STK_4h_MACD0_SELL",
+    "await_open": false,
+    "atr": 17.17492643717304,
+    "exit": null,
+    "exit_reason": "not published \u2013 opened 1.0 ATR past the entry (max 0.5)",
+    "closed": "2026-11-19 09:17:01.525796",
+    "result_R": null,
+    "open_px": 882.0
+   },
+   {
+    "name": "VEDL",
+    "ex": "NFO",
+    "token": "61742",
+    "contract": "VEDL23NOV26FUT",
+    "expiry": "2026-11-23",
+    "side": "SELL",
+    "entry": 243.92,
+    "stop": 253.63,
+    "target": 224.51,
+    "risk": 9.71,
+    "tick": 0.01,
+    "mult": 1150,
+    "opened": "2026-11-18 15:32:01.795758",
+    "days": [
+     "2026-11-18"
+    ],
+    "key": "4H|VEDL|2026-11-18 13:15:00",
+    "max_days": 20,
+    "tfl": "4-hour",
+    "await_open": false,
+    "atr": 4.8547896658110385,
+    "exit": null,
+    "exit_reason": "not published \u2013 opened 0.6 ATR past the entry (max 0.5)",
+    "closed": "2026-11-19 09:17:01.525796",
+    "result_R": null,
+    "open_px": 241.01
+   },
+   {
+    "name": "BAJAJ-AUTO",
+    "ex": "NFO",
+    "token": "61505",
+    "contract": "BAJAJ-AUTO23NOV26FUT",
+    "expiry": "2026-11-23",
+    "side": "SELL",
+    "entry": 10544.0,
+    "stop": 10851.0,
+    "target": 9624.0,
+    "risk": 307.0,
+    "tick": 1.0,
+    "mult": 75,
+    "opened": "2026-11-18 15:32:01.795758",
+    "days": [
+     "2026-11-18"
+    ],
+    "key": "RB|RB_STK_3h_EMA921_SELL|BAJAJ-AUTO|2026-11-18 12:15:00",
+    "max_days": 20,
+    "tfl": "3-hour",
+    "rule": "RB_STK_3h_EMA921_SELL",
+    "await_open": false,
+    "atr": 153.3368551109749,
+    "exit": null,
+    "exit_reason": "not published \u2013 opened 1.1 ATR past the entry (max 0.5)",
+    "closed": "2026-11-19 09:17:01.525796",
+    "result_R": null,
+    "open_px": 10371.0
+   },
+   {
+    "name": "VEDL",
+    "ex": "NFO",
+    "token": "61742",
+    "contract": "VEDL23NOV26FUT",
+    "expiry": "2026-11-23",
+    "side": "SELL",
+    "entry": 244.61,
+    "stop": 254.43,
+    "target": 215.17,
+    "risk": 9.82,
+    "tick": 0.01,
+    "mult": 1150,
+    "opened": "2026-11-18 15:32:01.795758",
+    "days": [
+     "2026-11-18"
+    ],
+    "key": "RB|RB_STK_3h_EMA921_SELL|VEDL|2026-11-18 12:15:00",
+    "max_days": 20,
+    "tfl": "3-hour",
+    "rule": "RB_STK_3h_EMA921_SELL",
+    "await_open": false,
+    "atr": 4.907826310194309,
+    "exit": null,
+    "exit_reason": "not published \u2013 opened 0.7 ATR past the entry (max 0.5)",
+    "closed": "2026-11-19 09:17:01.525796",
+    "result_R": null,
+    "open_px": 241.01
    }
   ],
   "last": {
@@ -8104,30 +8186,31 @@
    "chuangongsealinglooksforwardtomeetingyouatsmmlze202722ndleadzincconferenceandind",
    "oilpricetodaynovember19brentcruderisesto93astrumplikelyweighsfreshiranattackswha",
    "trumpreportedlyweighingnewmilitarystrikeoniranglobaloilpriceshaltslideandrebound",
-   "goldpricetodaynovember19thextendingthedownwardtrendlaodongvn"
+   "goldpricetodaynovember19thextendingthedownwardtrendlaodongvn",
+   "silverpriceforecastxagusdholdslossesnear14monthlowsamidhawkishfedtonefxstreet"
   ],
   "day": "2026-11-19",
-  "n": 3
+  "n": 4
  },
  "scan": {
-  "seq": 654,
-  "started": "2026-11-19 09:02:01.177419",
-  "finished": "2026-11-19 09:02:54.260036",
-  "seconds": 53,
-  "status": "SUCCESS",
-  "note": "api requests 40 ok 22 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "seq": 655,
+  "started": "2026-11-19 09:17:01.525796",
+  "finished": "2026-11-19 09:19:30.772041",
+  "seconds": 149,
+  "status": "RATE_LIMITED",
+  "note": "api requests 26 ok 19 rate-limited 7 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 24",
   "api": {
-   "calls": 40,
-   "ok": 22,
-   "rate_limited": 0,
+   "calls": 26,
+   "ok": 19,
+   "rate_limited": 7,
    "skipped": 0,
    "deadline_skips": 0,
-   "failed": 0,
-   "mem_hits": 0,
-   "disk_hits": 189
+   "failed": 1,
+   "mem_hits": 2,
+   "disk_hits": 16
   },
   "errors": 0,
-  "messages": 2
+  "messages": 24
  },
  "paper": {
   "E_BUY_v1": {
@@ -15518,10 +15601,6 @@
   }
  },
  "rulebook_seen": [
-  "RB_STK_4h_MACD0_SELL|POLYCAB|2026-11-16 13:15:00",
-  "RB_MCX_1h_MACD_BUY|CRUDEOIL|2026-11-16 17:00:00",
-  "RB_MCX_1h_BO20X_BUY_EXP|CRUDEOIL|2026-11-16 17:00:00",
-  "RB_MCX_1h_OIBO_BUY_EXP|CRUDEOIL|2026-11-16 17:00:00",
   "RB_MCX_1h_OIBO_SELL_EXP|CRUDEOIL|2026-11-16 17:00:00",
   "RB_MCX_1h_MACD_BUY|NATURALGAS|2026-11-16 17:00:00",
   "RB_MCX_1h_BO20X_BUY_EXP|NATURALGAS|2026-11-16 17:00:00",
@@ -18517,7 +18596,11 @@
   "RB_MCX_1h_MACD_BUY|ZINC|2026-11-18 23:00:00",
   "RB_MCX_1d_BO55_BUY|ZINC|2026-11-18 09:00:00",
   "RB_MCX_1d_RSIX_BUY|ZINC|2026-11-18 09:00:00",
-  "RB_MCX_1d_BO10_ZINC_BUY|ZINC|2026-11-18 09:00:00"
+  "RB_MCX_1d_BO10_ZINC_BUY|ZINC|2026-11-18 09:00:00",
+  "RB_IDX_1h_OIBO_BUY_EXP|NIFTY|2026-11-18 15:15:00",
+  "RB_IDX_1h_OIBO_SELL_EXP|NIFTY|2026-11-18 15:15:00",
+  "RB_IDX_1h_OIBO_BUY_EXP|BANKNIFTY|2026-11-18 15:15:00",
+  "RB_IDX_1h_OIBO_SELL_EXP|BANKNIFTY|2026-11-18 15:15:00"
  ],
  "mcxdtc": {
   "open": [],
