@@ -8292,21 +8292,22 @@
    "trumpreportedlyweighingnewmilitarystrikeoniranglobaloilpriceshaltslideandrebound",
    "goldpricetodaynovember19thextendingthedownwardtrendlaodongvn",
    "silverpriceforecastxagusdholdslossesnear14monthlowsamidhawkishfedtonefxstreet",
-   "oilpriceforecastwti83788750andbrent92699570upsidetargetsonhormuztankerattackstra"
+   "oilpriceforecastwti83788750andbrent92699570upsidetargetsonhormuztankerattackstra",
+   "oilpricetodaynovember20brentcruderisesto93asfreshhouthiattacksheightenworrieswha"
   ],
   "day": "2026-11-20",
-  "n": 1
+  "n": 2
  },
  "scan": {
-  "seq": 715,
-  "started": "2026-11-20 00:19:18.880622",
-  "finished": "2026-11-20 00:19:28.635545",
-  "seconds": 9,
+  "seq": 716,
+  "started": "2026-11-20 08:42:15.540014",
+  "finished": "2026-11-20 08:45:04.239263",
+  "seconds": 168,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 192 ok 189 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 0,
-   "ok": 0,
+   "calls": 192,
+   "ok": 189,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -8315,7 +8316,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
