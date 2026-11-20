@@ -746,14 +746,14 @@
    "ltp": 297.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-20 16:17:02.267434",
-   "oi": 11864.0,
-   "ltp": 123701.0
+   "time": "2026-11-20 16:32:02.214508",
+   "oi": 11880.0,
+   "ltp": 123688.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-20 16:17:02.267434",
-   "oi": 448890.0,
-   "ltp": 152518.0
+   "time": "2026-11-20 16:32:02.214508",
+   "oi": 448410.0,
+   "ltp": 152500.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -791,29 +791,29 @@
    "ltp": 61960.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-20 16:17:02.267434",
-   "oi": 13342500.0,
-   "ltp": 1168.8
+   "time": "2026-11-20 16:32:02.214508",
+   "oi": 13330000.0,
+   "ltp": 1166.95
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-20 16:17:02.267434",
-   "oi": 6355.0,
-   "ltp": 389.9
+   "time": "2026-11-20 16:32:02.214508",
+   "oi": 6345.0,
+   "ltp": 389.6
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-20 16:17:02.267434",
-   "oi": 8585.0,
-   "ltp": 317.0
+   "time": "2026-11-20 16:32:02.214508",
+   "oi": 8630.0,
+   "ltp": 316.6
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-20 16:17:02.267434",
-   "oi": 924700.0,
-   "ltp": 7576.0
+   "time": "2026-11-20 16:32:02.214508",
+   "oi": 924500.0,
+   "ltp": 7590.0
   },
   "NATURALGAS28DEC26FUT": {
-   "time": "2026-11-20 16:17:02.267434",
-   "oi": 21871250.0,
-   "ltp": 333.8
+   "time": "2026-11-20 16:32:02.214508",
+   "oi": 21927500.0,
+   "ltp": 333.7
   },
   "NIFTY29DEC26FUT": {
    "time": "2026-11-20 15:32:02.384604",
@@ -840,7 +840,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-20 16:00:00",
+   "checked": "2026-11-20 16:15:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -860,7 +860,7 @@
    "n": 2,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-20 16:00:00",
+   "checked": "2026-11-20 16:15:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -880,7 +880,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-20 16:00:00",
+   "checked": "2026-11-20 16:15:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -956,7 +956,7 @@
    "n": 0,
    "last_candle": "2026-11-09 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-20 16:00:00",
+   "checked": "2026-11-20 16:15:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1w|2026-11-09 09:00:00",
    "token": "495213",
@@ -976,7 +976,7 @@
    "n": 1,
    "last_candle": "2026-11-20 12:00:00",
    "tick": 1.0,
-   "checked": "2026-11-20 16:00:00",
+   "checked": "2026-11-20 16:15:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|3h|2026-11-20 09:00:00",
    "token": "495213",
@@ -4586,8 +4586,8 @@
    "date": "2026-11-20",
    "uhi": 123770.0,
    "ulo": 122500.0,
-   "ulast": 123592.0,
-   "uat": "2026-11-20 16:17:02.267434"
+   "ulast": 123625.0,
+   "uat": "2026-11-20 16:32:02.214508"
   }
  ],
  "candle_setups": {
@@ -8407,7 +8407,38 @@
     "CONCOR",
     "CHOLAFIN",
     "LICHSGFIN",
-    "LODHA"
+    "LODHA",
+    "NATIONALUM",
+    "PNBHOUSING",
+    "SBICARD",
+    "SIEMENS",
+    "SWIGGY",
+    "CGPOWER",
+    "TECHM",
+    "ZYDUSLIFE",
+    "BLUESTARCO",
+    "BAJAJFINSV",
+    "AUROPHARMA",
+    "ADANIGREEN",
+    "BAJFINANCE",
+    "ICICILIFE",
+    "BHARATFORG",
+    "DIVISLAB",
+    "HAVELLS",
+    "PIDILITIND",
+    "PIIND",
+    "SHREECEM",
+    "UNOMINDA",
+    "PETRONET",
+    "MPHASIS",
+    "JSWSTEEL",
+    "HINDPETRO",
+    "GLENMARK",
+    "ADANIPORTS",
+    "ABCAPITAL",
+    "BANKBARODA",
+    "BHARTIARTL",
+    "COFORGE"
    ],
    "sent": 0
   }
@@ -8479,19 +8510,19 @@
   "n": 4
  },
  "scan": {
-  "seq": 744,
-  "started": "2026-11-20 16:17:02.267434",
-  "finished": "2026-11-20 16:22:14.139057",
+  "seq": 745,
+  "started": "2026-11-20 16:32:02.214508",
+  "finished": "2026-11-20 16:37:14.000409",
   "seconds": 311,
-  "status": "RATE_LIMITED",
-  "note": "api requests 66 ok 56 rate-limited 10 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
+  "status": "SUCCESS",
+  "note": "api requests 75 ok 64 rate-limited 11 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 66,
-   "ok": 56,
-   "rate_limited": 10,
+   "calls": 75,
+   "ok": 64,
+   "rate_limited": 11,
    "skipped": 0,
    "deadline_skips": 0,
-   "failed": 1,
+   "failed": 0,
    "mem_hits": 0,
    "disk_hits": 15
   },
