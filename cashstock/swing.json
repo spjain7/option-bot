@@ -1,9 +1,51 @@
 {
- "pending": [],
+ "pending": [
+  {
+   "key": "INE511C01022",
+   "setup": "W_RETEST_DP",
+   "symbol": "POONAWALLA",
+   "day": "2026-11-20",
+   "close": 518.4,
+   "atr": 37.48,
+   "turnover_cr": 53.1,
+   "segment": "cash-only",
+   "low": 482.35,
+   "lvl": 508.34,
+   "dp": 56.3,
+   "dpx": 1.28,
+   "rs": 0.818
+  },
+  {
+   "key": "INE0J5401028",
+   "setup": "W_HI52_DP",
+   "symbol": "HONASA",
+   "day": "2026-11-20",
+   "close": 525.4,
+   "atr": 37.83,
+   "turnover_cr": 34.6,
+   "segment": "cash-only",
+   "low": 492.0,
+   "lvl": null,
+   "dp": 52.9,
+   "dpx": 1.22,
+   "rs": 0.855
+  }
+ ],
  "open": [],
  "closed": [],
- "seen": [],
- "last_candidates": {},
- "lowdp_day": "2026-11-19",
- "asof": "2026-11-19"
+ "seen": [
+  "INE511C01022|2026-11-20|W_RETEST_DP",
+  "INE0J5401028|2026-11-20|W_HI52_DP"
+ ],
+ "last_candidates": {
+  "W_RETEST_DP": [
+   "POONAWALLA"
+  ],
+  "W_HI52_DP": [
+   "POONAWALLA",
+   "HONASA"
+  ]
+ },
+ "lowdp_day": "2026-11-20",
+ "asof": "2026-11-20"
 }
