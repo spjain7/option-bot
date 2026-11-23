@@ -729,14 +729,12 @@
   ]
  },
  "day": {
-  "date": "2026-11-23",
-  "alerts": 1,
+  "date": "2026-11-24",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
+  "startup_sent": false,
   "eod_sent": false,
-  "outcomes": [],
-  "watch1h_sum_NFO": true,
-  "rep_nse": true
+  "outcomes": []
  },
  "history": [],
  "oi": {
@@ -8887,28 +8885,28 @@
    "silverpriceforecastxagusdholdsopeninggainsasfedbiggerratehikeprospectswanewwwtmg",
    "crudeoilfuturesextendlossesasaiselloffspillsovershipattacksnearhormuzprovidesupp"
   ],
-  "day": "2026-11-23",
-  "n": 4
+  "day": "2026-11-24",
+  "n": 0
  },
  "scan": {
-  "seq": 838,
-  "started": "2026-11-23 23:47:02.261799",
-  "finished": "2026-11-23 23:47:10.399777",
-  "seconds": 8,
+  "seq": 839,
+  "started": "2026-11-24 00:02:01.682520",
+  "finished": "2026-11-24 00:02:18.886703",
+  "seconds": 17,
   "status": "SUCCESS",
-  "note": "api requests 1 ok 1 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 1,
-   "ok": 1,
+   "calls": 0,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 15
+   "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
