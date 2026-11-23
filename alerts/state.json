@@ -751,14 +751,14 @@
    "ltp": 297.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-23 21:17:02.111153",
-   "oi": 9868.0,
-   "ltp": 126435.0
+   "time": "2026-11-23 21:32:02.285873",
+   "oi": 9849.0,
+   "ltp": 126608.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-23 21:17:02.111153",
-   "oi": 383940.0,
-   "ltp": 154796.0
+   "time": "2026-11-23 21:32:02.285873",
+   "oi": 384180.0,
+   "ltp": 155050.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -796,28 +796,28 @@
    "ltp": 61960.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-23 21:17:02.111153",
-   "oi": 9880000.0,
-   "ltp": 1194.0
+   "time": "2026-11-23 21:32:02.285873",
+   "oi": 9772500.0,
+   "ltp": 1197.45
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-23 21:17:02.111153",
-   "oi": 5920.0,
-   "ltp": 396.1
+   "time": "2026-11-23 21:32:02.285873",
+   "oi": 5885.0,
+   "ltp": 397.45
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-23 21:17:02.111153",
-   "oi": 8195.0,
+   "time": "2026-11-23 21:32:02.285873",
+   "oi": 8190.0,
    "ltp": 322.7
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-23 21:17:02.111153",
-   "oi": 852400.0,
-   "ltp": 7513.0
+   "time": "2026-11-23 21:32:02.285873",
+   "oi": 868800.0,
+   "ltp": 7470.0
   },
   "NATURALGAS28DEC26FUT": {
-   "time": "2026-11-23 21:17:02.111153",
-   "oi": 27538750.0,
+   "time": "2026-11-23 21:32:02.285873",
+   "oi": 28302500.0,
    "ltp": 323.5
   },
   "NIFTY29DEC26FUT": {
@@ -845,7 +845,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 21:00:00",
+   "checked": "2026-11-23 21:15:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -865,7 +865,7 @@
    "n": 3,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 21:00:00",
+   "checked": "2026-11-23 21:15:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -885,7 +885,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 21:00:00",
+   "checked": "2026-11-23 21:15:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -961,7 +961,7 @@
    "n": 1,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 21:00:00",
+   "checked": "2026-11-23 21:15:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1w|2026-11-09 09:00:00",
    "token": "495213",
@@ -981,7 +981,7 @@
    "n": 0,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 0.05,
-   "checked": "2026-11-23 21:00:00",
+   "checked": "2026-11-23 21:15:00",
    "contract": "COPPER30NOV26FUT",
    "key": "COPPER|1w|2026-11-16 09:00:00",
    "token": "578634",
@@ -4811,7 +4811,7 @@
     "daily bias bearish (against)",
     "resistance 7,790.00 only 0.0R away"
    ],
-   "status": "OPEN",
+   "status": "CLOSED",
    "date": "2026-11-23",
    "best_px": 7833.0,
    "worst_px": 7505.0,
@@ -4824,7 +4824,10 @@
    "uhi": 7820.0,
    "ulo": 7513.0,
    "ulast": 7513.0,
-   "uat": "2026-11-23 21:17:02.111153"
+   "uat": "2026-11-23 21:17:02.111153",
+   "exit": 7488.0,
+   "note": "stop-loss",
+   "closed": "2026-11-23 21:32:02.285873"
   }
  ],
  "candle_setups": {
@@ -4966,54 +4969,6 @@
     "live": {
      "stop": "2026-11-19 15:17:01.735873"
     }
-   },
-   {
-    "setup": "MCX_HAMMER",
-    "name": "CRUDEOIL",
-    "contract": "CRUDEOIL18DEC26FUT",
-    "token": "576264",
-    "side": "BUY",
-    "status": "open",
-    "pattern_time": "2026-11-20 09:00:00",
-    "pattern": {
-     "open": 7734.0,
-     "high": 7787.0,
-     "low": 7508.0,
-     "close": 7720.0
-    },
-    "trigger": 7787.0,
-    "stop": 7488.0,
-    "atr": 391.5806,
-    "tick": 1.0,
-    "mult": 100,
-    "lot": 100,
-    "trend_ok": true,
-    "vol_x": 0.7,
-    "sr": "\u2022 Resistance : \u26a0\ufe0f 7,861.00 (swing low) at 0.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
-    "oi_note": "845,900 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "last_bar": "2026-11-23 21:00:00",
-    "logged": "2026-11-23 09:02:01.669017",
-    "key": "MCX_HAMMER|CRUDEOIL|2026-11-20",
-    "grade": "C",
-    "grade_v": "intel-1.0",
-    "grade_pts": 0,
-    "regime": "Transition (trend not confirmed)",
-    "family": "reversal",
-    "why_for": [
-     "regime fits a reversal (Transition (trend not confirmed), ADX 29.6)",
-     "reward:risk 2.0"
-    ],
-    "why_against": [
-     "daily bias bearish (against)",
-     "resistance 7,790.00 only 0.0R away"
-    ],
-    "live": {},
-    "last_px": 7523.0,
-    "entry": 7787.0,
-    "entry_time": "2026-11-23 09:30:00",
-    "risk": 299.0,
-    "oi_entry": "837,100 (+0.12% in 15 min, price +27.00) \u2192 flat \u2013 no clear buildup",
-    "target": 8385.0
    }
   ],
   "closed": [
@@ -6791,6 +6746,59 @@
     "exit": null,
     "exit_time": "2026-11-23 13:30:00",
     "exit_reason": "stop level touched before the breakout"
+   },
+   {
+    "setup": "MCX_HAMMER",
+    "name": "CRUDEOIL",
+    "contract": "CRUDEOIL18DEC26FUT",
+    "token": "576264",
+    "side": "BUY",
+    "status": "closed",
+    "pattern_time": "2026-11-20 09:00:00",
+    "pattern": {
+     "open": 7734.0,
+     "high": 7787.0,
+     "low": 7508.0,
+     "close": 7720.0
+    },
+    "trigger": 7787.0,
+    "stop": 7488.0,
+    "atr": 391.5806,
+    "tick": 1.0,
+    "mult": 100,
+    "lot": 100,
+    "trend_ok": true,
+    "vol_x": 0.7,
+    "sr": "\u2022 Resistance : \u26a0\ufe0f 7,861.00 (swing low) at 0.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
+    "oi_note": "845,900 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
+    "last_bar": "2026-11-23 21:15:00",
+    "logged": "2026-11-23 09:02:01.669017",
+    "key": "MCX_HAMMER|CRUDEOIL|2026-11-20",
+    "grade": "C",
+    "grade_v": "intel-1.0",
+    "grade_pts": 0,
+    "regime": "Transition (trend not confirmed)",
+    "family": "reversal",
+    "why_for": [
+     "regime fits a reversal (Transition (trend not confirmed), ADX 29.6)",
+     "reward:risk 2.0"
+    ],
+    "why_against": [
+     "daily bias bearish (against)",
+     "resistance 7,790.00 only 0.0R away"
+    ],
+    "live": {},
+    "last_px": 7482.0,
+    "entry": 7787.0,
+    "entry_time": "2026-11-23 09:30:00",
+    "risk": 299.0,
+    "oi_entry": "837,100 (+0.12% in 15 min, price +27.00) \u2192 flat \u2013 no clear buildup",
+    "target": 8385.0,
+    "exit": 7488.0,
+    "exit_time": "2026-11-23 21:15:00",
+    "exit_reason": "stop-loss",
+    "gross_pts": -299.0,
+    "gross_R": -1.0
    }
   ],
   "seen": [
@@ -8883,15 +8891,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 828,
-  "started": "2026-11-23 21:17:02.111153",
-  "finished": "2026-11-23 21:17:11.662413",
-  "seconds": 9,
+  "seq": 829,
+  "started": "2026-11-23 21:32:02.285873",
+  "finished": "2026-11-23 21:32:09.945831",
+  "seconds": 7,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 1 ok 1 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 1,
+   "ok": 1,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -8900,7 +8908,7 @@
    "disk_hits": 15
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
