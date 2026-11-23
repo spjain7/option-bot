@@ -751,14 +751,14 @@
    "ltp": 297.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-23 21:02:02.485093",
-   "oi": 9832.0,
-   "ltp": 126644.0
+   "time": "2026-11-23 21:17:02.111153",
+   "oi": 9868.0,
+   "ltp": 126435.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-23 21:02:02.485093",
-   "oi": 383910.0,
-   "ltp": 155362.0
+   "time": "2026-11-23 21:17:02.111153",
+   "oi": 383940.0,
+   "ltp": 154796.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -796,29 +796,29 @@
    "ltp": 61960.0
   },
   "COPPER30NOV26FUT": {
-   "time": "2026-11-23 21:02:02.485093",
-   "oi": 9855000.0,
-   "ltp": 1202.55
+   "time": "2026-11-23 21:17:02.111153",
+   "oi": 9880000.0,
+   "ltp": 1194.0
   },
   "ZINC30NOV26FUT": {
-   "time": "2026-11-23 21:02:02.485093",
-   "oi": 5940.0,
-   "ltp": 397.0
+   "time": "2026-11-23 21:17:02.111153",
+   "oi": 5920.0,
+   "ltp": 396.1
   },
   "ALUMINIUM30NOV26FUT": {
-   "time": "2026-11-23 21:02:02.485093",
-   "oi": 8220.0,
-   "ltp": 323.05
+   "time": "2026-11-23 21:17:02.111153",
+   "oi": 8195.0,
+   "ltp": 322.7
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-23 21:02:02.485093",
-   "oi": 853700.0,
-   "ltp": 7540.0
+   "time": "2026-11-23 21:17:02.111153",
+   "oi": 852400.0,
+   "ltp": 7513.0
   },
   "NATURALGAS28DEC26FUT": {
-   "time": "2026-11-23 21:02:02.485093",
-   "oi": 27265000.0,
-   "ltp": 322.0
+   "time": "2026-11-23 21:17:02.111153",
+   "oi": 27538750.0,
+   "ltp": 323.5
   },
   "NIFTY29DEC26FUT": {
    "time": "2026-11-23 15:32:01.976015",
@@ -845,7 +845,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 20:45:00",
+   "checked": "2026-11-23 21:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1M|2026-10-01 00:00:00",
    "token": "495213",
@@ -865,7 +865,7 @@
    "n": 3,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 20:45:00",
+   "checked": "2026-11-23 21:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1w|2026-10-26 09:00:00",
    "token": "495214",
@@ -885,7 +885,7 @@
    "n": 0,
    "last_candle": "2026-10-01 00:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 20:45:00",
+   "checked": "2026-11-23 21:00:00",
    "contract": "SILVER04DEC26FUT",
    "key": "SILVER|1M|2026-10-01 00:00:00",
    "token": "495214",
@@ -961,7 +961,7 @@
    "n": 1,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 1.0,
-   "checked": "2026-11-23 20:45:00",
+   "checked": "2026-11-23 21:00:00",
    "contract": "GOLD04DEC26FUT",
    "key": "GOLD|1w|2026-11-09 09:00:00",
    "token": "495213",
@@ -981,7 +981,7 @@
    "n": 0,
    "last_candle": "2026-11-16 09:00:00",
    "tick": 0.05,
-   "checked": "2026-11-23 20:45:00",
+   "checked": "2026-11-23 21:00:00",
    "contract": "COPPER30NOV26FUT",
    "key": "COPPER|1w|2026-11-16 09:00:00",
    "token": "578634",
@@ -4818,13 +4818,13 @@
    "mfe_R": 0.154,
    "mae_R": -0.943,
    "excursion_measure": "15-min candle highs/lows",
-   "excursion_upd": "2026-11-23 20:45:00",
+   "excursion_upd": "2026-11-23 21:00:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 7820.0,
-   "ulo": 7524.0,
-   "ulast": 7540.0,
-   "uat": "2026-11-23 21:02:02.485093"
+   "ulo": 7513.0,
+   "ulast": 7513.0,
+   "uat": "2026-11-23 21:17:02.111153"
   }
  ],
  "candle_setups": {
@@ -4991,7 +4991,7 @@
     "vol_x": 0.7,
     "sr": "\u2022 Resistance : \u26a0\ufe0f 7,861.00 (swing low) at 0.2R \u2013 BEFORE the 2R target; price may stall there (consider booking part there)",
     "oi_note": "845,900 \u00b7 change: first reading this session (needs a 2nd scan 10-40 min later)",
-    "last_bar": "2026-11-23 20:45:00",
+    "last_bar": "2026-11-23 21:00:00",
     "logged": "2026-11-23 09:02:01.669017",
     "key": "MCX_HAMMER|CRUDEOIL|2026-11-20",
     "grade": "C",
@@ -5008,7 +5008,7 @@
      "resistance 7,790.00 only 0.0R away"
     ],
     "live": {},
-    "last_px": 7539.0,
+    "last_px": 7523.0,
     "entry": 7787.0,
     "entry_time": "2026-11-23 09:30:00",
     "risk": 299.0,
@@ -8883,15 +8883,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 827,
-  "started": "2026-11-23 21:02:02.485093",
-  "finished": "2026-11-23 21:02:13.069079",
-  "seconds": 10,
+  "seq": 828,
+  "started": "2026-11-23 21:17:02.111153",
+  "finished": "2026-11-23 21:17:11.662413",
+  "seconds": 9,
   "status": "SUCCESS",
-  "note": "api requests 4 ok 4 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 4,
-   "ok": 4,
+   "calls": 3,
+   "ok": 3,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
