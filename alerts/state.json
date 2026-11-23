@@ -4833,17 +4833,17 @@
    "status": "OPEN",
    "date": "2026-11-23",
    "best_px": 7833.0,
-   "worst_px": 7508.0,
+   "worst_px": 7507.0,
    "mfe_R": 0.154,
-   "mae_R": -0.933,
+   "mae_R": -0.936,
    "excursion_measure": "15-min candle highs/lows",
    "excursion_upd": "2026-11-23 19:30:00",
    "t1_hit": false,
    "stop_touched": false,
    "uhi": 7820.0,
    "ulo": 7587.0,
-   "ulast": 7660.0,
-   "uat": "2026-11-23 19:47:02.255588"
+   "ulast": 7654.0,
+   "uat": "2026-11-23 19:48:10.899756"
   }
  ],
  "candle_setups": {
@@ -8902,21 +8902,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 821,
-  "started": "2026-11-23 19:47:02.255588",
-  "finished": "2026-11-23 19:47:11.899847",
-  "seconds": 9,
+  "seq": 822,
+  "started": "2026-11-23 19:48:10.899756",
+  "finished": "2026-11-23 19:49:00.099212",
+  "seconds": 49,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 26 ok 26 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 26,
+   "ok": 26,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 15
+   "disk_hits": 0
   },
   "errors": 0,
   "messages": 0
