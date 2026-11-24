@@ -730,12 +730,12 @@
    "ltp": 297.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 9476.0,
    "ltp": 125996.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 12733.0,
    "ltp": 154217.0
   },
@@ -790,37 +790,37 @@
    "ltp": 322.75
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 8584.0,
    "ltp": 7570.0
   },
   "NATURALGAS28DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 20816.0,
    "ltp": 328.5
   },
   "NIFTY29DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 11790610.0,
    "ltp": 25504.7
   },
   "BANKNIFTY29DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 1458630.0,
    "ltp": 62923.4
   },
   "COPPER31DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 5195.0,
    "ltp": 1193.65
   },
   "ZINC31DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 1325.0,
    "ltp": 375.6
   },
   "ALUMINIUM31DEC26FUT": {
-   "time": "2026-11-24 09:32:02.104687",
+   "time": "2026-11-24 09:47:01.821246",
    "oi": 3490.0,
    "ltp": 316.45
   }
@@ -8887,24 +8887,24 @@
   "n": 2
  },
  "scan": {
-  "seq": 845,
-  "started": "2026-11-24 09:32:02.104687",
-  "finished": "2026-11-24 09:36:53.802081",
-  "seconds": 291,
+  "seq": 846,
+  "started": "2026-11-24 09:47:01.821246",
+  "finished": "2026-11-24 09:50:40.335350",
+  "seconds": 218,
   "status": "SUCCESS",
-  "note": "api requests 62 ok 47 rate-limited 15 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 60 ok 55 rate-limited 5 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 62,
-   "ok": 47,
-   "rate_limited": 15,
+   "calls": 60,
+   "ok": 55,
+   "rate_limited": 5,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 16
+   "disk_hits": 18
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
@@ -19486,11 +19486,12 @@
  "feed": {
   "MCX": {
    "day": "2026-11-24",
-   "dead_scans": 1
+   "dead_scans": 2,
+   "warned": "2026-11-24 09:47:01.821246"
   },
   "NFO": {
-   "day": "2026-11-23",
-   "dead_scans": 0
+   "day": "2026-11-24",
+   "dead_scans": 1
   }
  },
  "shadow_bo": [
