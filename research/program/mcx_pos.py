@@ -41,7 +41,9 @@ def load():
     D = pd.concat([pd.read_csv(f) for f in fs], ignore_index=True)
     D = D[(D.instrument == "FUTCOM") & D.symbol.isin(COMS)].copy()
     D["date"] = pd.to_datetime(D["date"]); D["exp"] = pd.to_datetime(D["expiry"], format="%d%b%Y", errors="coerce")
-    return D[D.close > 0]
+    D = D[(D[["open", "high", "low", "close"]] > 0).all(axis=1) & (D.volume_lots > 0)]          # holidays / no-trade rows
+    D = D[(D.low <= D[["open", "close"]].min(axis=1)) & (D.high >= D[["open", "close"]].max(axis=1))]
+    return D
 
 
 def series(D, sym):
