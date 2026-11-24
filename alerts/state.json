@@ -8897,16 +8897,17 @@
    "goldreboundsto3600levelwhyareexchangesstillissuingcriticalriskwarnings36kr",
    "naturalgaswtioilbrentoilforecastsoilreboundsashouthisattacksaudisriyadhfxempire",
    "goldslidesdespiteweakerusdollarasfedhikebetsdominatefxstreet",
-   "oilfuturescrudeupfromlowsastankerattacksoffsetsurplusfearsquantumcommodityintell"
+   "oilfuturescrudeupfromlowsastankerattacksoffsetsurplusfearsquantumcommodityintell",
+   "iraqrefusestoacceptopecassessmentofitsproductioncapacitycrudeoilpricestodayoilpr"
   ],
   "day": "2026-11-25",
-  "n": 3
+  "n": 4
  },
  "scan": {
-  "seq": 904,
-  "started": "2026-11-25 00:17:02.153742",
-  "finished": "2026-11-25 00:17:07.633416",
-  "seconds": 5,
+  "seq": 905,
+  "started": "2026-11-25 00:19:49.696336",
+  "finished": "2026-11-25 00:20:17.204262",
+  "seconds": 27,
   "status": "SUCCESS",
   "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
