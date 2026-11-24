@@ -8883,21 +8883,23 @@
    "oilpricesfallamidequityselloffthoughiranwarattackslimitlossesbusinessstandard",
    "oilpricetodaynovember23brentcrudedipsbelow93despitefreshhouthiattackswhatareexpe",
    "silverpriceforecastxagusdholdsopeninggainsasfedbiggerratehikeprospectswanewwwtmg",
-   "crudeoilfuturesextendlossesasaiselloffspillsovershipattacksnearhormuzprovidesupp"
+   "crudeoilfuturesextendlossesasaiselloffspillsovershipattacksnearhormuzprovidesupp",
+   "naturalgaswtioilbrentoilforecastsoildivesastrumpsignalshewouldnotattackiranuntil",
+   "goldpricetoday2411extendingtheupwardmomentumfor2consecutivedayslaodongvn"
   ],
   "day": "2026-11-24",
-  "n": 0
+  "n": 2
  },
  "scan": {
-  "seq": 840,
-  "started": "2026-11-24 00:17:01.386891",
-  "finished": "2026-11-24 00:17:07.117981",
-  "seconds": 5,
+  "seq": 841,
+  "started": "2026-11-24 08:42:34.350296",
+  "finished": "2026-11-24 08:45:13.939054",
+  "seconds": 159,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 200 ok 189 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
   "api": {
-   "calls": 0,
-   "ok": 0,
+   "calls": 200,
+   "ok": 189,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
@@ -8906,7 +8908,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 2
  },
  "paper": {
   "E_BUY_v1": {
