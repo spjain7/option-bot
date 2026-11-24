@@ -1,0 +1,1546 @@
+fam,side,flt,exit,n,win,sl,R,p1_n,p2_n,p3_n,p1_R,p2_R,p3_R,p1_rand,p2_rand,p3_rand,coms_pos,pass,minR
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,LT,CH3,67,43.3,91.0,0.278,11,11,45,-0.002,0.95,0.183,-0.608,0.206,0.555,5,False,-0.002
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,LT,EMA20,78,41.0,0.0,-0.027,14,12,52,0.034,-0.007,-0.049,-0.224,0.092,0.231,3,False,-0.049
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,LT,F2x2_20,68,44.1,44.1,0.03,11,11,46,0.421,0.621,-0.206,-0.465,0.184,0.19,4,False,-0.206
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,LT,F2x3_40,63,42.9,49.2,0.214,8,10,45,-0.035,1.045,0.074,-0.854,0.028,0.339,5,False,-0.035
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,LT,F3x2_40,60,53.3,38.3,0.114,8,10,42,-0.19,0.703,0.031,-0.654,0.095,0.267,4,False,-0.19
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,none,CH3,135,38.5,90.4,0.126,32,32,71,-0.187,0.572,0.067,-0.254,0.65,0.403,5,False,-0.187
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,none,EMA20,158,38.6,0.0,-0.036,38,37,83,0.018,-0.063,-0.049,-0.198,0.05,0.131,2,False,-0.063
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,none,F2x2_20,138,43.5,44.2,-0.023,35,32,71,0.058,0.275,-0.198,0.018,0.311,0.114,5,False,-0.198
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,none,F2x3_40,127,39.4,53.5,0.094,29,30,68,-0.289,0.705,-0.011,-0.267,0.342,0.267,6,False,-0.289
+BOT Bollinger: close back above lower band (TV BB strategy),BUY,none,F3x2_40,114,45.6,44.7,0.007,25,28,61,-0.288,0.414,-0.06,-0.251,0.317,0.202,6,False,-0.288
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,LT,CH3,60,45.0,93.3,0.081,16,19,25,0.516,-0.239,0.046,-0.432,-0.374,-0.255,4,False,-0.239
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,LT,EMA20,79,46.8,1.3,0.041,21,27,31,0.271,-0.117,0.023,-0.148,-0.113,-0.036,5,False,-0.117
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,LT,F2x2_20,67,46.3,49.3,0.039,18,21,28,0.495,-0.453,0.114,-0.278,-0.188,-0.028,6,False,-0.453
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,LT,F2x3_40,62,37.1,54.8,0.038,14,21,27,0.506,-0.417,0.148,-0.559,-0.364,-0.2,3,False,-0.417
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,LT,F3x2_40,54,42.6,44.4,0.053,13,19,22,0.458,-0.297,0.114,0.128,-0.366,-0.223,3,False,-0.297
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,none,CH3,169,34.3,94.1,-0.129,24,40,105,0.435,-0.111,-0.265,-0.068,-0.356,-0.145,3,False,-0.265
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,none,EMA20,218,44.0,0.5,-0.02,30,53,135,0.191,-0.025,-0.065,-0.143,-0.163,-0.061,2,False,-0.065
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,none,F2x2_20,181,37.0,53.6,-0.09,26,44,111,0.59,-0.18,-0.214,0.02,-0.297,-0.224,1,False,-0.214
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,none,F2x3_40,168,29.2,66.1,-0.165,22,41,105,0.803,-0.224,-0.345,-0.144,-0.481,-0.226,2,False,-0.345
+BOT Bollinger: close back above lower band (TV BB strategy),SELL,none,F3x2_40,145,37.9,53.1,-0.109,21,38,86,0.651,-0.166,-0.269,0.304,-0.387,-0.226,2,False,-0.269
+BOT Bullish engulfing at a 20-candle low,BUY,none,EMA20,32,34.4,0.0,-0.013,8,7,17,0.014,-0.157,0.034,-0.198,0.05,0.131,3,False,-0.157
+BOT Bullish engulfing at a 20-candle low,BUY,none,F2x2_20,30,43.3,30.0,0.114,8,6,16,-0.088,0.161,0.197,0.018,0.311,0.114,5,False,-0.088
+BOT Bullish engulfing at a 20-candle low,BUY,none,F2x3_40,30,33.3,60.0,-0.07,8,6,16,-1.077,0.294,0.297,-0.267,0.342,0.267,5,False,-1.077
+BOT Bullish engulfing at a 20-candle low,SELL,LT,EMA20,32,37.5,0.0,0.032,8,10,14,-0.039,0.107,0.019,-0.148,-0.113,-0.036,3,False,-0.039
+BOT Bullish engulfing at a 20-candle low,SELL,none,CH3,56,46.4,92.9,0.012,16,13,27,0.134,-0.144,0.014,-0.068,-0.356,-0.145,5,False,-0.144
+BOT Bullish engulfing at a 20-candle low,SELL,none,EMA20,62,41.9,0.0,0.019,16,15,31,0.026,0.016,0.017,-0.143,-0.163,-0.061,4,False,0.016
+BOT Bullish engulfing at a 20-candle low,SELL,none,F2x2_20,59,47.5,42.4,0.218,16,14,29,0.422,0.246,0.091,0.02,-0.297,-0.224,6,False,0.091
+BOT Bullish engulfing at a 20-candle low,SELL,none,F2x3_40,57,38.6,57.9,0.052,16,13,28,0.511,-0.092,-0.144,-0.144,-0.481,-0.226,3,False,-0.144
+BOT Bullish engulfing at a 20-candle low,SELL,none,F3x2_40,51,43.1,45.1,-0.057,14,12,25,0.341,-0.224,-0.2,0.304,-0.387,-0.226,3,False,-0.224
+BOT CCI(20) cross above -100,BUY,LT,CH3,102,41.2,92.2,0.254,14,30,58,-0.324,0.492,0.27,-0.608,0.206,0.555,4,False,-0.324
+BOT CCI(20) cross above -100,BUY,LT,EMA20,150,40.7,0.0,-0.013,19,39,92,-0.074,0.08,-0.04,-0.224,0.092,0.231,3,False,-0.074
+BOT CCI(20) cross above -100,BUY,LT,F2x2_20,110,45.5,40.9,0.087,16,30,64,0.023,0.243,0.03,-0.465,0.184,0.19,4,False,0.023
+BOT CCI(20) cross above -100,BUY,LT,F2x3_40,92,38.0,51.1,0.204,13,25,54,-0.329,0.463,0.213,-0.854,0.028,0.339,5,False,-0.329
+BOT CCI(20) cross above -100,BUY,LT,F3x2_40,81,42.0,40.7,0.095,11,20,50,-0.348,0.31,0.106,-0.654,0.095,0.267,4,False,-0.348
+BOT CCI(20) cross above -100,BUY,TR,CH3,48,39.6,93.8,0.333,7,11,30,-0.082,0.289,0.446,-0.597,0.635,0.591,4,False,-0.082
+BOT CCI(20) cross above -100,BUY,TR,EMA20,61,29.5,0.0,0.004,8,15,38,0.055,0.085,-0.04,-0.345,0.101,0.345,5,False,-0.04
+BOT CCI(20) cross above -100,BUY,TR,F2x2_20,48,45.8,45.8,0.138,7,11,30,-0.13,0.308,0.137,-0.515,0.451,0.196,5,False,-0.13
+BOT CCI(20) cross above -100,BUY,TR,F2x3_40,44,31.8,59.1,0.154,6,11,27,0.357,0.102,0.129,-0.697,0.37,0.364,4,False,0.102
+BOT CCI(20) cross above -100,BUY,TR,F3x2_40,44,38.6,45.5,0.119,6,11,27,0.137,0.128,0.112,-0.484,0.368,0.365,4,False,0.112
+BOT CCI(20) cross above -100,BUY,TR+LT,CH3,39,35.9,94.9,0.266,3,10,26,-0.261,0.422,0.267,-0.758,0.301,0.77,4,False,-0.261
+BOT CCI(20) cross above -100,BUY,TR+LT,EMA20,52,26.9,0.0,-0.015,4,14,34,-0.13,0.152,-0.07,-0.392,0.099,0.433,3,False,-0.13
+BOT CCI(20) cross above -100,BUY,TR+LT,F2x2_20,39,48.7,46.2,0.147,3,10,26,-0.046,0.444,0.055,-0.804,0.302,0.236,4,False,-0.046
+BOT CCI(20) cross above -100,BUY,TR+LT,F2x3_40,36,27.8,63.9,0.024,3,10,23,0.287,0.217,-0.095,-1.057,-0.01,0.508,3,False,-0.095
+BOT CCI(20) cross above -100,BUY,TR+LT,F3x2_40,36,33.3,52.8,-0.03,3,10,23,-0.031,0.244,-0.149,-0.555,0.104,0.518,3,False,-0.149
+BOT CCI(20) cross above -100,BUY,none,CH3,209,39.7,91.9,0.178,50,65,94,-0.128,0.456,0.149,-0.254,0.65,0.403,5,False,-0.128
+BOT CCI(20) cross above -100,BUY,none,EMA20,323,37.5,0.0,0.005,75,96,152,-0.046,0.071,-0.011,-0.198,0.05,0.131,6,False,-0.046
+BOT CCI(20) cross above -100,BUY,none,F2x2_20,226,42.9,42.5,0.042,54,68,104,0.105,0.09,-0.021,0.018,0.311,0.114,5,False,-0.021
+BOT CCI(20) cross above -100,BUY,none,F2x3_40,191,36.6,56.0,0.114,45,58,88,-0.16,0.288,0.139,-0.267,0.342,0.267,7,False,-0.16
+BOT CCI(20) cross above -100,BUY,none,F3x2_40,160,41.2,41.2,0.051,38,45,77,-0.248,0.19,0.118,-0.251,0.317,0.202,6,False,-0.248
+BOT CCI(20) cross above -100,SELL,LT,CH3,83,38.6,91.6,-0.019,24,28,31,0.021,0.001,-0.068,-0.432,-0.374,-0.255,4,False,-0.068
+BOT CCI(20) cross above -100,SELL,LT,EMA20,133,41.4,0.0,0.027,43,43,47,0.032,0.048,0.004,-0.148,-0.113,-0.036,4,False,0.004
+BOT CCI(20) cross above -100,SELL,LT,F2x2_20,92,50.0,42.4,0.094,28,31,33,0.242,0.012,0.046,-0.278,-0.188,-0.028,4,False,0.012
+BOT CCI(20) cross above -100,SELL,LT,F2x3_40,75,37.3,56.0,-0.001,20,27,28,0.112,-0.105,0.018,-0.559,-0.364,-0.2,4,False,-0.105
+BOT CCI(20) cross above -100,SELL,LT,F3x2_40,69,42.0,46.4,-0.057,18,26,25,0.016,-0.171,0.009,0.128,-0.366,-0.223,4,False,-0.171
+BOT CCI(20) cross above -100,SELL,TR,CH3,51,35.3,94.1,-0.181,14,14,23,-0.021,-0.399,-0.146,-0.458,-0.26,-0.288,3,False,-0.399
+BOT CCI(20) cross above -100,SELL,TR,EMA20,68,33.8,0.0,-0.042,19,17,32,-0.026,-0.03,-0.056,-0.222,-0.241,-0.167,2,False,-0.056
+BOT CCI(20) cross above -100,SELL,TR,F2x2_20,53,41.5,43.4,-0.106,15,14,24,0.352,-0.294,-0.283,-0.417,-0.255,-0.117,4,False,-0.294
+BOT CCI(20) cross above -100,SELL,TR,F2x3_40,45,24.4,71.1,-0.443,11,14,20,-0.122,-0.751,-0.405,-0.621,-0.442,-0.292,2,False,-0.751
+BOT CCI(20) cross above -100,SELL,TR,F3x2_40,45,42.2,42.2,-0.155,11,14,20,0.336,-0.75,-0.008,0.182,-0.358,-0.129,3,False,-0.75
+BOT CCI(20) cross above -100,SELL,TR+LT,CH3,34,35.3,94.1,-0.126,11,10,13,-0.228,-0.416,0.184,-0.523,-0.114,-0.171,2,False,-0.416
+BOT CCI(20) cross above -100,SELL,TR+LT,EMA20,48,39.6,0.0,-0.014,16,12,20,-0.021,-0.031,0.003,-0.235,-0.119,-0.094,2,False,-0.031
+BOT CCI(20) cross above -100,SELL,TR+LT,F2x2_20,36,50.0,36.1,0.059,12,10,14,0.19,-0.121,0.074,-0.53,0.182,0.101,6,False,-0.121
+BOT CCI(20) cross above -100,SELL,TR+LT,F2x3_40,31,32.3,61.3,-0.253,9,10,12,-0.35,-0.638,0.141,-0.708,-0.089,-0.163,3,False,-0.638
+BOT CCI(20) cross above -100,SELL,TR+LT,F3x2_40,31,45.2,38.7,-0.063,9,10,12,-0.026,-0.692,0.433,0.136,-0.204,0.065,3,False,-0.692
+BOT CCI(20) cross above -100,SELL,none,CH3,242,33.9,93.8,-0.084,41,64,137,0.186,-0.004,-0.202,-0.068,-0.356,-0.145,3,False,-0.202
+BOT CCI(20) cross above -100,SELL,none,EMA20,363,37.5,0.3,-0.025,63,99,201,0.01,0.044,-0.071,-0.143,-0.163,-0.061,2,False,-0.071
+BOT CCI(20) cross above -100,SELL,none,F2x2_20,262,39.3,50.0,-0.066,46,75,141,0.421,0.013,-0.266,0.02,-0.297,-0.224,3,False,-0.266
+BOT CCI(20) cross above -100,SELL,none,F2x3_40,220,31.8,64.5,-0.079,34,60,126,0.321,-0.059,-0.196,-0.144,-0.481,-0.226,4,False,-0.196
+BOT CCI(20) cross above -100,SELL,none,F3x2_40,182,37.9,51.6,-0.112,29,55,98,0.31,-0.154,-0.214,0.304,-0.387,-0.226,3,False,-0.214
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,LT,CH3,94,34.0,91.5,0.19,14,27,53,-0.477,-0.267,0.6,-0.608,0.206,0.555,4,False,-0.477
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,LT,EMA20,118,38.1,0.8,-0.0,19,31,68,-0.092,-0.094,0.068,-0.224,0.092,0.231,3,False,-0.094
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,LT,F2x2_20,103,43.7,44.7,0.057,14,29,60,-0.46,-0.172,0.288,-0.465,0.184,0.19,4,False,-0.46
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,LT,F2x3_40,91,35.2,57.1,0.12,12,25,54,-0.453,-0.122,0.36,-0.854,0.028,0.339,4,False,-0.453
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,LT,F3x2_40,80,43.8,43.8,0.104,10,22,48,-0.29,-0.122,0.29,-0.654,0.095,0.267,4,False,-0.29
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR,CH3,71,43.7,95.8,0.45,9,20,42,-0.095,-0.159,0.857,-0.597,0.635,0.591,5,False,-0.159
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR,EMA20,84,31.0,1.2,0.014,11,20,53,-0.129,-0.134,0.1,-0.345,0.101,0.345,4,False,-0.134
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR,F2x2_20,80,46.2,42.5,0.223,9,22,49,-0.311,-0.064,0.45,-0.515,0.451,0.196,4,False,-0.311
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR,F2x3_40,69,34.8,58.0,0.224,8,18,43,-0.295,-0.224,0.509,-0.697,0.37,0.364,4,False,-0.295
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR,F3x2_40,62,41.9,43.5,0.19,8,15,39,0.023,-0.199,0.373,-0.484,0.368,0.365,4,False,-0.199
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR+LT,CH3,61,41.0,95.1,0.444,6,16,39,-0.325,-0.162,0.811,-0.758,0.301,0.77,4,False,-0.325
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR+LT,EMA20,73,31.5,1.4,0.015,7,17,49,-0.102,-0.178,0.099,-0.392,0.099,0.433,3,False,-0.178
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR+LT,F2x2_20,68,50.0,41.2,0.275,6,18,44,-0.238,-0.038,0.473,-0.804,0.302,0.236,4,False,-0.238
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR+LT,F2x3_40,57,36.8,56.1,0.264,5,14,38,0.065,-0.278,0.49,-1.057,-0.01,0.508,4,False,-0.278
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,TR+LT,F3x2_40,51,43.1,43.1,0.191,5,11,35,-0.07,-0.171,0.342,-0.555,0.104,0.518,4,False,-0.171
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,none,CH3,154,33.8,92.2,0.099,37,46,71,-0.258,-0.143,0.443,-0.254,0.65,0.403,4,False,-0.258
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,none,EMA20,190,40.5,0.5,-0.018,48,52,90,-0.107,-0.055,0.05,-0.198,0.05,0.131,4,False,-0.107
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,none,F2x2_20,166,39.8,44.6,-0.02,37,49,80,-0.247,-0.197,0.193,0.018,0.311,0.114,4,False,-0.247
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,none,F2x3_40,149,32.2,59.7,-0.019,34,43,72,-0.445,-0.051,0.202,-0.267,0.342,0.267,3,False,-0.445
+BOT CM Williams Vix Fix: spike ends + green candle,BUY,none,F3x2_40,135,41.5,43.0,0.032,32,39,64,-0.291,0.022,0.2,-0.251,0.317,0.202,5,False,-0.291
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,TR,CH3,35,28.6,94.3,-0.034,7,12,16,-0.611,-0.57,0.62,-0.458,-0.26,-0.288,2,False,-0.611
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,TR,EMA20,35,14.3,11.4,-0.206,7,12,16,-0.309,-0.38,-0.03,-0.222,-0.241,-0.167,4,False,-0.38
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,TR,F2x2_20,35,42.9,51.4,0.007,7,12,16,-0.531,-0.384,0.536,-0.417,-0.255,-0.117,4,False,-0.531
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,TR,F2x3_40,35,31.4,68.6,-0.066,7,12,16,-0.224,-0.618,0.417,-0.621,-0.442,-0.292,5,False,-0.618
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,TR,F3x2_40,33,39.4,54.5,-0.054,7,11,15,0.013,-0.396,0.165,0.182,-0.358,-0.129,3,False,-0.396
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,none,CH3,53,30.2,96.2,-0.112,10,15,28,-0.696,-0.525,0.317,-0.068,-0.356,-0.145,4,False,-0.696
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,none,EMA20,55,20.0,9.1,-0.113,11,15,29,-0.313,-0.338,0.079,-0.143,-0.163,-0.061,4,False,-0.338
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,none,F2x2_20,53,39.6,56.6,-0.077,10,15,28,-0.684,-0.401,0.314,0.02,-0.297,-0.224,4,False,-0.684
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,none,F2x3_40,53,30.2,67.9,-0.188,10,15,28,-0.469,-0.577,0.121,-0.144,-0.481,-0.226,4,False,-0.577
+BOT CM Williams Vix Fix: spike ends + green candle,SELL,none,F3x2_40,51,37.3,54.9,-0.165,10,14,27,-0.148,-0.418,-0.041,0.304,-0.387,-0.226,3,False,-0.418
+BOT Hammer at a 20-candle low,BUY,LT,CH3,37,32.4,97.3,0.105,4,11,22,0.08,0.797,-0.236,-0.608,0.206,0.555,3,False,-0.236
+BOT Hammer at a 20-candle low,BUY,LT,EMA20,42,50.0,0.0,-0.014,6,13,23,0.014,0.006,-0.033,-0.224,0.092,0.231,4,False,-0.033
+BOT Hammer at a 20-candle low,BUY,LT,F2x2_20,39,48.7,33.3,0.204,5,11,23,0.12,0.73,-0.029,-0.465,0.184,0.19,4,False,-0.029
+BOT Hammer at a 20-candle low,BUY,LT,F2x3_40,38,39.5,52.6,0.028,5,11,22,0.019,0.682,-0.297,-0.854,0.028,0.339,3,False,-0.297
+BOT Hammer at a 20-candle low,BUY,LT,F3x2_40,34,44.1,38.2,-0.073,4,10,20,-0.169,0.323,-0.251,-0.654,0.095,0.267,4,False,-0.251
+BOT Hammer at a 20-candle low,BUY,none,CH3,70,35.7,92.9,0.147,16,21,33,-0.016,0.583,-0.052,-0.254,0.65,0.403,6,False,-0.052
+BOT Hammer at a 20-candle low,BUY,none,EMA20,90,36.7,0.0,-0.05,22,27,41,-0.028,-0.055,-0.059,-0.198,0.05,0.131,1,False,-0.059
+BOT Hammer at a 20-candle low,BUY,none,F2x2_20,75,49.3,32.0,0.201,17,22,36,0.211,0.445,0.047,0.018,0.311,0.114,6,False,0.047
+BOT Hammer at a 20-candle low,BUY,none,F2x3_40,69,39.1,49.3,0.118,15,20,34,0.078,0.268,0.047,-0.267,0.342,0.267,5,False,0.047
+BOT Hammer at a 20-candle low,BUY,none,F3x2_40,63,41.3,38.1,-0.007,14,18,31,-0.054,0.029,-0.007,-0.251,0.317,0.202,5,False,-0.054
+BOT Hammer at a 20-candle low,SELL,LT,EMA20,33,39.4,0.0,0.004,7,13,13,-0.014,0.083,-0.066,-0.148,-0.113,-0.036,3,False,-0.066
+BOT Hammer at a 20-candle low,SELL,none,CH3,85,29.4,92.9,-0.133,13,22,50,0.873,-0.231,-0.351,-0.068,-0.356,-0.145,4,False,-0.351
+BOT Hammer at a 20-candle low,SELL,none,EMA20,107,43.0,0.0,-0.016,14,29,64,0.069,0.014,-0.048,-0.143,-0.163,-0.061,3,False,-0.048
+BOT Hammer at a 20-candle low,SELL,none,F2x2_20,88,30.7,61.4,-0.245,13,23,52,0.41,0.006,-0.52,0.02,-0.297,-0.224,3,False,-0.52
+BOT Hammer at a 20-candle low,SELL,none,F2x3_40,85,25.9,74.1,-0.199,13,22,50,0.946,-0.066,-0.556,-0.144,-0.481,-0.226,5,False,-0.556
+BOT Hammer at a 20-candle low,SELL,none,F3x2_40,77,37.7,55.8,-0.075,12,20,45,1.033,-0.093,-0.363,0.304,-0.387,-0.226,5,False,-0.363
+BOT Heikin-Ashi first green after 3 red,BUY,LT,CH3,160,40.6,93.8,0.338,23,43,94,-0.463,0.308,0.547,-0.608,0.206,0.555,5,False,-0.463
+BOT Heikin-Ashi first green after 3 red,BUY,LT,EMA20,486,33.1,1.2,0.1,69,113,304,-0.157,0.069,0.17,-0.224,0.092,0.231,6,False,-0.157
+BOT Heikin-Ashi first green after 3 red,BUY,LT,F2x2_20,284,50.4,41.5,0.26,32,66,186,-0.299,0.19,0.381,-0.465,0.184,0.19,5,False,-0.299
+BOT Heikin-Ashi first green after 3 red,BUY,LT,F2x3_40,194,38.7,56.7,0.259,27,46,121,-0.787,0.123,0.544,-0.854,0.028,0.339,5,False,-0.787
+BOT Heikin-Ashi first green after 3 red,BUY,LT,F3x2_40,164,49.4,39.6,0.234,21,36,107,-0.693,0.2,0.427,-0.654,0.095,0.267,5,False,-0.693
+BOT Heikin-Ashi first green after 3 red,BUY,TR,CH3,197,35.0,93.9,0.254,42,54,101,-0.513,0.51,0.436,-0.597,0.635,0.591,6,False,-0.513
+BOT Heikin-Ashi first green after 3 red,BUY,TR,EMA20,391,29.7,1.3,0.155,72,105,214,-0.272,0.215,0.269,-0.345,0.101,0.345,6,False,-0.272
+BOT Heikin-Ashi first green after 3 red,BUY,TR,F2x2_20,332,45.2,44.6,0.156,51,89,192,-0.456,0.239,0.28,-0.515,0.451,0.196,6,False,-0.456
+BOT Heikin-Ashi first green after 3 red,BUY,TR,F2x3_40,239,36.4,57.7,0.244,43,67,129,-0.615,0.288,0.508,-0.697,0.37,0.364,6,False,-0.615
+BOT Heikin-Ashi first green after 3 red,BUY,TR,F3x2_40,206,43.7,45.1,0.175,38,58,110,-0.617,0.246,0.411,-0.484,0.368,0.365,6,False,-0.617
+BOT Heikin-Ashi first green after 3 red,BUY,TR+LT,CH3,137,38.0,95.6,0.307,19,36,82,-0.671,0.292,0.541,-0.758,0.301,0.77,4,False,-0.671
+BOT Heikin-Ashi first green after 3 red,BUY,TR+LT,EMA20,281,29.5,2.1,0.191,31,73,177,-0.33,0.077,0.329,-0.392,0.099,0.433,7,False,-0.33
+BOT Heikin-Ashi first green after 3 red,BUY,TR+LT,F2x2_20,240,47.9,44.2,0.223,22,58,160,-0.594,0.179,0.351,-0.804,0.302,0.236,5,False,-0.594
+BOT Heikin-Ashi first green after 3 red,BUY,TR+LT,F2x3_40,166,36.7,58.4,0.261,20,41,105,-0.918,0.038,0.572,-1.057,-0.01,0.508,5,False,-0.918
+BOT Heikin-Ashi first green after 3 red,BUY,TR+LT,F3x2_40,140,47.1,42.1,0.246,15,35,90,-0.793,0.025,0.506,-0.555,0.104,0.518,5,False,-0.793
+BOT Heikin-Ashi first green after 3 red,BUY,none,CH3,271,37.6,92.6,0.207,60,79,132,-0.262,0.379,0.318,-0.254,0.65,0.403,6,False,-0.262
+BOT Heikin-Ashi first green after 3 red,BUY,none,EMA20,924,32.3,0.5,0.053,221,243,460,-0.101,0.108,0.099,-0.198,0.05,0.131,6,False,-0.101
+BOT Heikin-Ashi first green after 3 red,BUY,none,F2x2_20,467,46.3,43.7,0.155,89,131,247,-0.155,0.189,0.25,0.018,0.311,0.114,6,False,-0.155
+BOT Heikin-Ashi first green after 3 red,BUY,none,F2x3_40,318,37.4,56.6,0.187,65,91,162,-0.421,0.283,0.377,-0.267,0.342,0.267,7,False,-0.421
+BOT Heikin-Ashi first green after 3 red,BUY,none,F3x2_40,264,47.7,40.9,0.177,55,72,137,-0.349,0.291,0.328,-0.251,0.317,0.202,6,False,-0.349
+BOT Heikin-Ashi first green after 3 red,SELL,LT,CH3,130,35.4,91.5,-0.08,38,39,53,-0.08,-0.112,-0.056,-0.432,-0.374,-0.255,4,False,-0.112
+BOT Heikin-Ashi first green after 3 red,SELL,LT,EMA20,335,31.9,1.2,-0.024,114,92,129,-0.033,-0.016,-0.023,-0.148,-0.113,-0.036,5,False,-0.033
+BOT Heikin-Ashi first green after 3 red,SELL,LT,F2x2_20,204,39.7,46.6,-0.075,65,60,79,-0.087,-0.057,-0.08,-0.278,-0.188,-0.028,4,False,-0.087
+BOT Heikin-Ashi first green after 3 red,SELL,LT,F2x3_40,143,33.6,60.1,-0.036,41,47,55,0.048,-0.156,0.005,-0.559,-0.364,-0.2,5,False,-0.156
+BOT Heikin-Ashi first green after 3 red,SELL,LT,F3x2_40,125,38.4,48.8,-0.06,38,39,48,0.003,-0.186,-0.009,0.128,-0.366,-0.223,3,False,-0.186
+BOT Heikin-Ashi first green after 3 red,SELL,TR,CH3,192,36.5,92.7,-0.023,45,58,89,0.068,-0.202,0.048,-0.458,-0.26,-0.288,4,False,-0.202
+BOT Heikin-Ashi first green after 3 red,SELL,TR,EMA20,390,29.7,1.5,-0.015,104,97,189,-0.019,-0.041,-0.0,-0.222,-0.241,-0.167,3,False,-0.041
+BOT Heikin-Ashi first green after 3 red,SELL,TR,F2x2_20,304,42.4,45.1,-0.037,77,86,141,0.012,-0.161,0.012,-0.417,-0.255,-0.117,5,False,-0.161
+BOT Heikin-Ashi first green after 3 red,SELL,TR,F2x3_40,205,36.1,58.0,0.026,54,58,93,0.08,-0.132,0.093,-0.621,-0.442,-0.292,3,False,-0.132
+BOT Heikin-Ashi first green after 3 red,SELL,TR,F3x2_40,173,45.7,43.4,-0.01,47,47,79,0.113,-0.239,0.053,0.182,-0.358,-0.129,3,False,-0.239
+BOT Heikin-Ashi first green after 3 red,SELL,TR+LT,CH3,106,34.9,92.5,-0.038,34,32,40,-0.088,-0.127,0.074,-0.523,-0.114,-0.171,4,False,-0.127
+BOT Heikin-Ashi first green after 3 red,SELL,TR+LT,EMA20,231,30.3,0.9,-0.014,83,59,89,-0.043,-0.003,0.006,-0.235,-0.119,-0.094,5,False,-0.043
+BOT Heikin-Ashi first green after 3 red,SELL,TR+LT,F2x2_20,173,42.8,43.4,-0.035,58,52,63,-0.121,-0.016,0.029,-0.53,0.182,0.101,4,False,-0.121
+BOT Heikin-Ashi first green after 3 red,SELL,TR+LT,F2x3_40,114,36.8,57.0,0.005,41,32,41,-0.108,0.006,0.117,-0.708,-0.089,-0.163,5,False,-0.108
+BOT Heikin-Ashi first green after 3 red,SELL,TR+LT,F3x2_40,100,45.0,44.0,0.01,36,29,35,0.022,-0.169,0.147,0.136,-0.204,0.065,4,False,-0.169
+BOT Heikin-Ashi first green after 3 red,SELL,none,CH3,294,33.0,93.5,-0.106,53,78,163,0.196,-0.143,-0.188,-0.068,-0.356,-0.145,3,False,-0.188
+BOT Heikin-Ashi first green after 3 red,SELL,none,EMA20,905,33.0,0.8,-0.018,165,224,516,0.006,-0.027,-0.022,-0.143,-0.163,-0.061,4,False,-0.027
+BOT Heikin-Ashi first green after 3 red,SELL,none,F2x2_20,455,38.5,49.5,-0.098,90,120,245,0.102,-0.1,-0.171,0.02,-0.297,-0.224,3,False,-0.171
+BOT Heikin-Ashi first green after 3 red,SELL,none,F2x3_40,318,32.4,64.2,-0.08,56,89,173,0.272,-0.142,-0.161,-0.144,-0.481,-0.226,3,False,-0.161
+BOT Heikin-Ashi first green after 3 red,SELL,none,F3x2_40,265,38.9,51.3,-0.116,52,75,138,0.134,-0.195,-0.167,0.304,-0.387,-0.226,3,False,-0.195
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,LT,CH3,114,38.6,93.9,0.529,18,30,66,-0.549,0.468,0.852,-0.608,0.206,0.555,4,False,-0.549
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,LT,EMA20,171,37.4,0.0,0.222,23,42,106,-0.111,0.157,0.32,-0.224,0.092,0.231,6,False,-0.111
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,LT,F2x2_20,134,41.8,46.3,0.023,18,36,80,-0.462,0.12,0.089,-0.465,0.184,0.19,4,False,-0.462
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,LT,F2x3_40,110,38.2,57.3,0.15,15,28,67,-0.525,0.211,0.276,-0.854,0.028,0.339,4,False,-0.525
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,LT,F3x2_40,96,45.8,43.8,0.061,14,22,60,-0.569,0.315,0.115,-0.654,0.095,0.267,4,False,-0.569
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR,CH3,96,38.5,93.8,0.735,17,29,50,-0.492,0.996,1.001,-0.597,0.635,0.591,8,False,-0.492
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR,EMA20,126,34.1,0.0,0.367,19,39,68,-0.173,0.343,0.531,-0.345,0.101,0.345,7,False,-0.173
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR,F2x2_20,107,43.0,45.8,0.088,18,35,54,-0.462,0.167,0.219,-0.515,0.451,0.196,6,False,-0.462
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR,F2x3_40,91,37.4,58.2,0.244,15,30,46,-0.608,0.577,0.305,-0.697,0.37,0.364,6,False,-0.608
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR,F3x2_40,83,43.4,47.0,0.134,13,26,44,-0.583,0.424,0.175,-0.484,0.368,0.365,6,False,-0.583
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR+LT,CH3,78,35.9,96.2,0.635,11,21,46,-0.733,0.421,1.059,-0.758,0.301,0.77,4,False,-0.733
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR+LT,EMA20,99,34.3,0.0,0.356,11,29,59,-0.258,0.062,0.615,-0.392,0.099,0.433,7,False,-0.258
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR+LT,F2x2_20,85,40.0,49.4,0.042,11,26,48,-0.685,0.045,0.208,-0.804,0.302,0.236,4,False,-0.685
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR+LT,F2x3_40,73,34.2,63.0,0.126,10,22,41,-0.846,0.381,0.227,-1.057,-0.01,0.508,4,False,-0.846
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,TR+LT,F3x2_40,66,39.4,51.5,0.01,9,18,39,-0.846,0.336,0.057,-0.555,0.104,0.518,3,False,-0.846
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,none,CH3,215,38.1,92.6,0.326,54,61,100,-0.247,0.475,0.545,-0.254,0.65,0.403,6,False,-0.247
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,none,EMA20,336,35.1,0.0,0.171,80,94,162,-0.087,0.288,0.23,-0.198,0.05,0.131,6,False,-0.087
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,none,F2x2_20,249,43.4,42.2,0.025,55,72,122,-0.078,0.104,0.025,0.018,0.311,0.114,6,False,-0.078
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,none,F2x3_40,203,37.9,58.1,0.108,44,57,102,-0.259,0.218,0.204,-0.267,0.342,0.267,7,False,-0.259
+BOT Laguerre RSI cross above 0.2 (Ehlers),BUY,none,F3x2_40,173,44.5,42.8,0.031,41,43,89,-0.335,0.23,0.104,-0.251,0.317,0.202,6,False,-0.335
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,LT,CH3,94,30.9,93.6,-0.168,28,30,36,-0.099,-0.144,-0.24,-0.432,-0.374,-0.255,2,False,-0.24
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,LT,EMA20,155,29.0,0.6,-0.048,49,48,58,-0.025,-0.044,-0.07,-0.148,-0.113,-0.036,2,False,-0.07
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,LT,F2x2_20,111,44.1,44.1,-0.072,37,34,40,-0.115,-0.048,-0.051,-0.278,-0.188,-0.028,3,False,-0.115
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,LT,F2x3_40,96,35.4,64.6,-0.146,30,30,36,-0.208,-0.064,-0.162,-0.559,-0.364,-0.2,3,False,-0.208
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,LT,F3x2_40,83,43.4,48.2,-0.114,24,28,31,-0.065,-0.142,-0.127,0.128,-0.366,-0.223,3,False,-0.142
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR,CH3,96,34.4,94.8,-0.148,25,28,43,0.024,-0.18,-0.227,-0.458,-0.26,-0.288,1,False,-0.227
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR,EMA20,140,30.0,0.7,-0.084,37,36,67,-0.103,-0.014,-0.111,-0.222,-0.241,-0.167,0,False,-0.111
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR,F2x2_20,109,46.8,40.4,-0.028,29,29,51,0.146,0.013,-0.151,-0.417,-0.255,-0.117,3,False,-0.151
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR,F2x3_40,92,35.9,60.9,-0.162,23,25,44,-0.176,-0.026,-0.233,-0.621,-0.442,-0.292,3,False,-0.233
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR,F3x2_40,81,44.4,42.0,-0.112,20,22,39,0.095,-0.096,-0.227,0.182,-0.358,-0.129,3,False,-0.227
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR+LT,CH3,65,33.8,95.4,-0.17,20,21,24,-0.219,-0.233,-0.074,-0.523,-0.114,-0.171,2,False,-0.233
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR+LT,EMA20,96,29.2,0.0,-0.068,31,26,39,-0.117,-0.064,-0.031,-0.235,-0.119,-0.094,1,False,-0.117
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR+LT,F2x2_20,75,45.3,41.3,-0.06,24,22,29,-0.112,-0.07,-0.009,-0.53,0.182,0.101,4,False,-0.112
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR+LT,F2x3_40,65,38.5,60.0,-0.09,20,18,27,-0.269,-0.078,0.036,-0.708,-0.089,-0.163,3,False,-0.269
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,TR+LT,F3x2_40,57,45.6,43.9,-0.086,17,17,23,-0.12,-0.191,0.016,0.136,-0.204,0.065,3,False,-0.191
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,none,CH3,237,33.3,94.1,-0.108,44,64,129,0.162,-0.14,-0.185,-0.068,-0.356,-0.145,3,False,-0.185
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,none,EMA20,368,31.5,0.8,-0.051,70,93,205,0.037,0.009,-0.108,-0.143,-0.163,-0.061,1,False,-0.108
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,none,F2x2_20,273,39.6,49.1,-0.109,53,72,148,0.242,0.008,-0.292,0.02,-0.297,-0.224,4,False,-0.292
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,none,F2x3_40,232,34.1,65.1,-0.11,40,60,132,0.116,-0.01,-0.224,-0.144,-0.481,-0.226,3,False,-0.224
+BOT Laguerre RSI cross above 0.2 (Ehlers),SELL,none,F3x2_40,197,40.1,52.3,-0.137,34,55,108,0.178,-0.133,-0.237,0.304,-0.387,-0.226,2,False,-0.237
+BOT MFI(14) cross above 20,BUY,LT,EMA20,31,51.6,0.0,0.13,2,11,18,-0.021,0.222,0.09,-0.224,0.092,0.231,4,False,-0.021
+BOT MFI(14) cross above 20,BUY,none,CH3,56,30.4,91.1,-0.066,8,23,25,-0.1,-0.306,0.165,-0.254,0.65,0.403,4,False,-0.306
+BOT MFI(14) cross above 20,BUY,none,EMA20,67,52.2,0.0,0.046,9,27,31,0.003,0.068,0.039,-0.198,0.05,0.131,4,False,0.003
+BOT MFI(14) cross above 20,BUY,none,F2x2_20,58,46.6,36.2,0.065,9,23,26,0.414,-0.094,0.085,0.018,0.311,0.114,4,False,-0.094
+BOT MFI(14) cross above 20,BUY,none,F2x3_40,55,40.0,54.5,0.015,8,21,26,0.049,-0.067,0.072,-0.267,0.342,0.267,5,False,-0.067
+BOT MFI(14) cross above 20,BUY,none,F3x2_40,53,49.1,41.5,-0.04,7,20,26,0.095,-0.037,-0.079,-0.251,0.317,0.202,5,False,-0.079
+BOT MFI(14) cross above 20,SELL,none,CH3,81,23.5,97.5,-0.399,11,25,45,-0.299,-0.085,-0.598,-0.068,-0.356,-0.145,0,False,-0.598
+BOT MFI(14) cross above 20,SELL,none,EMA20,95,38.9,0.0,-0.041,12,29,54,-0.105,0.015,-0.057,-0.143,-0.163,-0.061,1,False,-0.105
+BOT MFI(14) cross above 20,SELL,none,F2x2_20,83,22.9,69.9,-0.419,12,25,46,-0.199,-0.172,-0.61,0.02,-0.297,-0.224,0,False,-0.61
+BOT MFI(14) cross above 20,SELL,none,F2x3_40,82,22.0,78.0,-0.379,12,24,46,-0.223,0.025,-0.631,-0.144,-0.481,-0.226,0,False,-0.631
+BOT MFI(14) cross above 20,SELL,none,F3x2_40,78,34.6,64.1,-0.228,10,23,45,0.213,0.098,-0.493,0.304,-0.387,-0.226,3,False,-0.493
+BOT Morning star at a 20-candle low,BUY,none,EMA20,31,41.9,0.0,-0.033,18,5,8,-0.071,0.053,-0.004,-0.198,0.05,0.131,4,False,-0.071
+BOT Morning star at a 20-candle low,BUY,none,F2x2_20,31,41.9,41.9,0.003,18,5,8,-0.021,-0.494,0.368,0.018,0.311,0.114,6,False,-0.494
+BOT Morning star at a 20-candle low,BUY,none,F2x3_40,30,33.3,63.3,-0.109,17,5,8,-0.457,0.56,0.213,-0.267,0.342,0.267,3,False,-0.457
+BOT Morning star at a 20-candle low,SELL,none,CH3,47,31.9,91.5,-0.16,9,10,28,0.459,-0.121,-0.372,-0.068,-0.356,-0.145,2,False,-0.372
+BOT Morning star at a 20-candle low,SELL,none,EMA20,47,48.9,0.0,0.044,9,10,28,0.426,0.12,-0.107,-0.143,-0.163,-0.061,3,False,-0.107
+BOT Morning star at a 20-candle low,SELL,none,F2x2_20,47,29.8,57.4,-0.257,9,10,28,0.571,-0.08,-0.587,0.02,-0.297,-0.224,2,False,-0.587
+BOT Morning star at a 20-candle low,SELL,none,F2x3_40,46,32.6,65.2,-0.135,9,10,27,0.81,-0.141,-0.449,-0.144,-0.481,-0.226,4,False,-0.449
+BOT Morning star at a 20-candle low,SELL,none,F3x2_40,44,34.1,56.8,-0.232,9,10,25,0.428,-0.262,-0.458,0.304,-0.387,-0.226,3,False,-0.458
+"BOT RSI bullish divergence (TV Divergence, pivot 5)",SELL,none,CH3,36,38.9,97.2,-0.117,3,13,20,-0.283,0.475,-0.477,-0.068,-0.356,-0.145,3,False,-0.477
+"BOT RSI bullish divergence (TV Divergence, pivot 5)",SELL,none,EMA20,37,37.8,0.0,-0.053,3,14,20,-0.169,-0.151,0.033,-0.143,-0.163,-0.061,3,False,-0.169
+"BOT RSI bullish divergence (TV Divergence, pivot 5)",SELL,none,F2x2_20,36,41.7,52.8,-0.027,3,13,20,-0.449,0.65,-0.404,0.02,-0.297,-0.224,2,False,-0.449
+"BOT RSI bullish divergence (TV Divergence, pivot 5)",SELL,none,F2x3_40,35,34.3,62.9,-0.006,3,12,20,-0.102,0.721,-0.428,-0.144,-0.481,-0.226,3,False,-0.428
+"BOT RSI bullish divergence (TV Divergence, pivot 5)",SELL,none,F3x2_40,32,46.9,43.8,0.096,2,11,19,0.859,0.662,-0.312,0.304,-0.387,-0.226,5,False,-0.312
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,LT,CH3,115,41.7,93.9,0.428,16,27,72,-0.532,0.401,0.652,-0.608,0.206,0.555,6,False,-0.532
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,LT,EMA20,160,36.9,0.6,0.24,18,35,107,-0.139,0.198,0.317,-0.224,0.092,0.231,6,False,-0.139
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,LT,F2x2_20,128,46.9,39.8,0.18,16,28,84,-0.159,0.314,0.2,-0.465,0.184,0.19,5,False,-0.159
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,LT,F2x3_40,106,42.5,51.9,0.276,13,23,70,-0.589,0.498,0.364,-0.854,0.028,0.339,5,False,-0.589
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,LT,F3x2_40,95,48.4,40.0,0.157,12,20,63,-0.603,0.487,0.198,-0.654,0.095,0.267,4,False,-0.603
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR,CH3,76,44.7,93.4,0.779,13,19,44,-0.525,1.095,1.028,-0.597,0.635,0.591,6,False,-0.525
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR,EMA20,94,36.2,1.1,0.495,14,26,54,-0.207,0.466,0.69,-0.345,0.101,0.345,5,False,-0.207
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR,F2x2_20,84,47.6,39.3,0.25,14,21,49,-0.562,0.543,0.357,-0.515,0.451,0.196,4,False,-0.562
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR,F2x3_40,70,41.4,52.9,0.389,12,17,41,-0.619,0.941,0.455,-0.697,0.37,0.364,5,False,-0.619
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR,F3x2_40,68,45.6,41.2,0.235,10,17,41,-0.542,0.567,0.287,-0.484,0.368,0.365,5,False,-0.542
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR+LT,CH3,62,45.2,95.2,0.807,7,14,41,-0.754,0.811,1.072,-0.758,0.301,0.77,5,False,-0.754
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR+LT,EMA20,75,37.3,1.3,0.583,7,18,50,-0.301,0.396,0.773,-0.392,0.099,0.433,6,False,-0.301
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR+LT,F2x2_20,66,51.5,37.9,0.357,7,14,45,-0.614,0.603,0.432,-0.804,0.302,0.236,4,False,-0.614
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR+LT,F2x3_40,55,41.8,52.7,0.462,6,12,37,-0.882,0.859,0.551,-1.057,-0.01,0.508,5,False,-0.882
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,TR+LT,F3x2_40,54,46.3,42.6,0.249,5,12,37,-0.835,0.605,0.28,-0.555,0.104,0.518,4,False,-0.835
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,none,CH3,219,39.3,94.1,0.263,51,60,108,-0.237,0.457,0.392,-0.254,0.65,0.403,6,False,-0.237
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,none,EMA20,330,37.0,0.3,0.127,75,91,164,-0.097,0.147,0.218,-0.198,0.05,0.131,5,False,-0.097
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,none,F2x2_20,252,44.4,43.7,0.055,57,67,128,-0.024,0.179,0.026,0.018,0.311,0.114,5,False,-0.024
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,none,F2x3_40,205,37.6,57.6,0.127,45,54,106,-0.197,0.323,0.165,-0.267,0.342,0.267,6,False,-0.197
+BOT Squeeze Momentum turns up below zero (LazyBear),BUY,none,F3x2_40,176,43.8,45.5,0.048,40,43,93,-0.36,0.328,0.094,-0.251,0.317,0.202,5,False,-0.36
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,LT,CH3,89,34.8,93.3,-0.077,27,29,33,-0.061,-0.079,-0.087,-0.432,-0.374,-0.255,3,False,-0.087
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,LT,EMA20,135,34.1,0.7,-0.027,42,42,51,-0.042,-0.008,-0.031,-0.148,-0.113,-0.036,4,False,-0.042
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,LT,F2x2_20,102,42.2,44.1,-0.026,32,34,36,0.097,-0.099,-0.067,-0.278,-0.188,-0.028,5,False,-0.099
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,LT,F2x3_40,83,39.8,57.8,0.032,25,28,30,0.001,-0.074,0.158,-0.559,-0.364,-0.2,4,False,-0.074
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,LT,F3x2_40,76,44.7,46.1,-0.056,23,26,27,0.038,-0.212,0.014,0.128,-0.366,-0.223,3,False,-0.212
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR,CH3,78,34.6,93.6,-0.138,21,22,35,-0.067,-0.106,-0.201,-0.458,-0.26,-0.288,2,False,-0.201
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR,EMA20,105,31.4,1.9,-0.033,29,26,50,-0.102,0.073,-0.048,-0.222,-0.241,-0.167,2,False,-0.102
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR,F2x2_20,83,42.2,42.2,-0.001,24,22,37,0.08,0.22,-0.184,-0.417,-0.255,-0.117,5,False,-0.184
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR,F2x3_40,74,35.1,60.8,-0.107,21,20,33,-0.109,0.146,-0.259,-0.621,-0.442,-0.292,5,False,-0.259
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR,F3x2_40,67,44.8,40.3,-0.053,19,19,29,0.128,0.008,-0.211,0.182,-0.358,-0.129,4,False,-0.211
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR+LT,CH3,45,26.7,93.3,-0.185,16,13,16,-0.348,-0.317,0.084,-0.523,-0.114,-0.171,2,False,-0.348
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR+LT,EMA20,62,30.6,0.0,-0.052,22,16,24,-0.125,-0.07,0.027,-0.235,-0.119,-0.094,3,False,-0.125
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR+LT,F2x2_20,49,38.8,38.8,-0.053,18,13,18,-0.084,0.007,-0.064,-0.53,0.182,0.101,4,False,-0.084
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR+LT,F2x3_40,42,38.1,59.5,-0.102,15,11,16,-0.339,-0.355,0.294,-0.708,-0.089,-0.163,3,False,-0.355
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,TR+LT,F3x2_40,37,45.9,37.8,-0.049,13,10,14,-0.156,-0.392,0.296,0.136,-0.204,0.065,3,False,-0.392
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,none,CH3,246,32.5,94.7,-0.112,39,65,142,0.107,-0.05,-0.201,-0.068,-0.356,-0.145,3,False,-0.201
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,none,EMA20,374,34.0,1.1,-0.041,57,90,227,-0.017,0.058,-0.087,-0.143,-0.163,-0.061,3,False,-0.087
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,none,F2x2_20,273,35.9,52.7,-0.138,46,72,155,0.205,0.055,-0.33,0.02,-0.297,-0.224,3,False,-0.33
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,none,F2x3_40,231,31.2,66.7,-0.144,36,57,138,0.122,0.036,-0.288,-0.144,-0.481,-0.226,3,False,-0.288
+BOT Squeeze Momentum turns up below zero (LazyBear),SELL,none,F3x2_40,202,38.1,54.5,-0.153,34,52,116,0.121,-0.049,-0.28,0.304,-0.387,-0.226,3,False,-0.28
+BOT Stoch RSI cross up below 20,BUY,LT,CH3,127,40.2,90.6,0.455,18,32,77,-0.199,0.417,0.624,-0.608,0.206,0.555,5,False,-0.199
+BOT Stoch RSI cross up below 20,BUY,LT,EMA20,202,40.6,0.5,0.066,29,49,124,-0.092,-0.085,0.163,-0.224,0.092,0.231,4,False,-0.092
+BOT Stoch RSI cross up below 20,BUY,LT,F2x2_20,154,48.7,42.9,0.179,19,38,97,0.028,0.012,0.273,-0.465,0.184,0.19,4,False,0.012
+BOT Stoch RSI cross up below 20,BUY,LT,F2x3_40,123,42.3,52.0,0.297,16,29,78,-0.27,0.317,0.405,-0.854,0.028,0.339,5,False,-0.27
+BOT Stoch RSI cross up below 20,BUY,LT,F3x2_40,105,47.6,36.2,0.243,15,24,66,-0.313,0.463,0.289,-0.654,0.095,0.267,5,False,-0.313
+BOT Stoch RSI cross up below 20,BUY,TR,CH3,80,43.8,91.2,0.609,8,25,47,-0.455,0.338,0.934,-0.597,0.635,0.591,7,False,-0.455
+BOT Stoch RSI cross up below 20,BUY,TR,EMA20,115,37.4,0.0,0.173,13,34,68,-0.172,-0.053,0.351,-0.345,0.101,0.345,8,False,-0.172
+BOT Stoch RSI cross up below 20,BUY,TR,F2x2_20,94,48.9,41.5,0.3,9,27,58,-0.55,-0.004,0.573,-0.515,0.451,0.196,7,False,-0.55
+BOT Stoch RSI cross up below 20,BUY,TR,F2x3_40,76,42.1,52.6,0.442,8,22,46,-0.474,0.244,0.695,-0.697,0.37,0.364,6,False,-0.474
+BOT Stoch RSI cross up below 20,BUY,TR,F3x2_40,70,44.3,40.0,0.265,8,19,43,-0.407,0.143,0.444,-0.484,0.368,0.365,6,False,-0.407
+BOT Stoch RSI cross up below 20,BUY,TR+LT,CH3,68,42.6,92.6,0.584,5,18,45,-0.653,-0.01,0.959,-0.758,0.301,0.77,5,False,-0.653
+BOT Stoch RSI cross up below 20,BUY,TR+LT,EMA20,100,39.0,0.0,0.161,8,27,65,-0.253,-0.11,0.325,-0.392,0.099,0.433,6,False,-0.253
+BOT Stoch RSI cross up below 20,BUY,TR+LT,F2x2_20,80,48.8,41.2,0.27,6,20,54,-0.805,-0.13,0.538,-0.804,0.302,0.236,4,False,-0.805
+BOT Stoch RSI cross up below 20,BUY,TR+LT,F2x3_40,63,39.7,55.6,0.379,5,16,42,-0.933,0.097,0.643,-1.057,-0.01,0.508,5,False,-0.933
+BOT Stoch RSI cross up below 20,BUY,TR+LT,F3x2_40,57,42.1,42.1,0.227,5,13,39,-0.802,0.065,0.412,-0.555,0.104,0.518,4,False,-0.802
+BOT Stoch RSI cross up below 20,BUY,none,CH3,214,39.7,91.1,0.365,47,62,105,-0.233,0.709,0.429,-0.254,0.65,0.403,7,False,-0.233
+BOT Stoch RSI cross up below 20,BUY,none,EMA20,326,39.3,0.3,0.041,70,94,162,-0.051,-0.052,0.134,-0.198,0.05,0.131,4,False,-0.052
+BOT Stoch RSI cross up below 20,BUY,none,F2x2_20,252,48.0,42.9,0.139,51,73,128,-0.002,0.132,0.199,0.018,0.311,0.114,6,False,-0.002
+BOT Stoch RSI cross up below 20,BUY,none,F2x3_40,204,40.7,52.9,0.234,44,53,107,-0.257,0.4,0.354,-0.267,0.342,0.267,6,False,-0.257
+BOT Stoch RSI cross up below 20,BUY,none,F3x2_40,172,44.8,39.0,0.162,39,45,88,-0.286,0.35,0.264,-0.251,0.317,0.202,5,False,-0.286
+BOT Stoch RSI cross up below 20,SELL,LT,CH3,99,39.4,90.9,-0.029,30,37,32,0.006,-0.246,0.188,-0.432,-0.374,-0.255,3,False,-0.246
+BOT Stoch RSI cross up below 20,SELL,LT,EMA20,147,40.8,0.7,-0.005,42,55,50,-0.075,-0.004,0.052,-0.148,-0.113,-0.036,5,False,-0.075
+BOT Stoch RSI cross up below 20,SELL,LT,F2x2_20,116,44.8,44.8,0.015,36,40,40,0.052,-0.072,0.071,-0.278,-0.188,-0.028,4,False,-0.072
+BOT Stoch RSI cross up below 20,SELL,LT,F2x3_40,93,33.3,58.1,-0.109,27,33,33,0.06,-0.484,0.128,-0.559,-0.364,-0.2,3,False,-0.484
+BOT Stoch RSI cross up below 20,SELL,LT,F3x2_40,82,41.5,47.6,-0.081,24,29,29,0.044,-0.351,0.087,0.128,-0.366,-0.223,3,False,-0.351
+BOT Stoch RSI cross up below 20,SELL,TR,CH3,69,29.0,91.3,-0.246,21,21,27,-0.432,-0.318,-0.044,-0.458,-0.26,-0.288,2,False,-0.432
+BOT Stoch RSI cross up below 20,SELL,TR,EMA20,109,27.5,0.9,-0.099,27,36,46,-0.163,-0.107,-0.056,-0.222,-0.241,-0.167,2,False,-0.163
+BOT Stoch RSI cross up below 20,SELL,TR,F2x2_20,80,45.0,40.0,-0.056,23,25,32,-0.088,-0.161,0.048,-0.417,-0.255,-0.117,4,False,-0.161
+BOT Stoch RSI cross up below 20,SELL,TR,F2x3_40,63,28.6,57.1,-0.333,18,20,25,-0.344,-0.779,0.033,-0.621,-0.442,-0.292,1,False,-0.779
+BOT Stoch RSI cross up below 20,SELL,TR,F3x2_40,57,35.1,40.4,-0.256,17,18,22,-0.26,-0.599,0.029,0.182,-0.358,-0.129,1,False,-0.599
+BOT Stoch RSI cross up below 20,SELL,TR+LT,CH3,50,28.0,90.0,-0.19,17,16,17,-0.553,-0.385,0.356,-0.523,-0.114,-0.171,2,False,-0.553
+BOT Stoch RSI cross up below 20,SELL,TR+LT,EMA20,77,31.2,1.3,-0.06,22,26,29,-0.142,-0.092,0.03,-0.235,-0.119,-0.094,3,False,-0.142
+BOT Stoch RSI cross up below 20,SELL,TR+LT,F2x2_20,58,48.3,34.5,0.0,19,17,22,-0.314,-0.054,0.313,-0.53,0.182,0.101,4,False,-0.314
+BOT Stoch RSI cross up below 20,SELL,TR+LT,F2x3_40,47,31.9,53.2,-0.252,16,14,17,-0.413,-0.74,0.301,-0.708,-0.089,-0.163,2,False,-0.74
+BOT Stoch RSI cross up below 20,SELL,TR+LT,F3x2_40,43,37.2,44.2,-0.232,15,14,14,-0.336,-0.69,0.338,0.136,-0.204,0.065,2,False,-0.69
+BOT Stoch RSI cross up below 20,SELL,none,CH3,220,33.2,93.2,-0.105,42,69,109,0.213,-0.232,-0.147,-0.068,-0.356,-0.145,3,False,-0.232
+BOT Stoch RSI cross up below 20,SELL,none,EMA20,316,39.2,0.3,-0.033,60,102,154,-0.071,-0.026,-0.023,-0.143,-0.163,-0.061,4,False,-0.071
+BOT Stoch RSI cross up below 20,SELL,none,F2x2_20,255,38.4,49.8,-0.068,51,78,126,0.309,-0.105,-0.197,0.02,-0.297,-0.224,5,False,-0.197
+BOT Stoch RSI cross up below 20,SELL,none,F2x3_40,210,30.0,65.2,-0.15,37,62,111,0.304,-0.288,-0.225,-0.144,-0.481,-0.226,3,False,-0.288
+BOT Stoch RSI cross up below 20,SELL,none,F3x2_40,178,39.9,51.1,-0.117,33,53,92,0.231,-0.236,-0.174,0.304,-0.387,-0.226,2,False,-0.236
+BOT WaveTrend cross up below -53 (Market Cipher green dot),BUY,none,CH3,55,43.6,96.4,0.106,12,13,30,0.181,0.06,0.096,-0.254,0.65,0.403,5,False,0.06
+BOT WaveTrend cross up below -53 (Market Cipher green dot),BUY,none,EMA20,57,47.4,0.0,0.094,12,13,32,0.016,0.323,0.031,-0.198,0.05,0.131,5,False,0.016
+BOT WaveTrend cross up below -53 (Market Cipher green dot),BUY,none,F2x2_20,55,52.7,34.5,0.157,12,13,30,0.505,0.208,-0.004,0.018,0.311,0.114,6,False,-0.004
+BOT WaveTrend cross up below -53 (Market Cipher green dot),BUY,none,F2x3_40,55,52.7,41.8,0.408,12,13,30,0.765,0.423,0.26,-0.267,0.342,0.267,7,False,0.26
+BOT WaveTrend cross up below -53 (Market Cipher green dot),BUY,none,F3x2_40,54,57.4,35.2,0.238,12,12,30,0.426,0.414,0.093,-0.251,0.317,0.202,6,False,0.093
+BOT WaveTrend cross up below -53 (Market Cipher green dot),SELL,none,CH3,91,26.4,95.6,-0.257,3,24,64,-0.782,-0.02,-0.321,-0.068,-0.356,-0.145,2,False,-0.782
+BOT WaveTrend cross up below -53 (Market Cipher green dot),SELL,none,EMA20,114,33.3,2.6,-0.079,4,31,79,-0.247,0.001,-0.102,-0.143,-0.163,-0.061,2,False,-0.247
+BOT WaveTrend cross up below -53 (Market Cipher green dot),SELL,none,F2x2_20,97,28.9,63.9,-0.329,3,26,68,-0.63,0.199,-0.518,0.02,-0.297,-0.224,3,False,-0.63
+BOT WaveTrend cross up below -53 (Market Cipher green dot),SELL,none,F2x3_40,95,24.2,75.8,-0.311,3,25,67,-0.253,0.219,-0.511,-0.144,-0.481,-0.226,3,False,-0.511
+BOT WaveTrend cross up below -53 (Market Cipher green dot),SELL,none,F3x2_40,82,29.3,67.1,-0.314,3,23,56,-0.393,0.044,-0.457,0.304,-0.387,-0.226,3,False,-0.457
+BOT Williams %R cross above -80,BUY,LT,CH3,130,38.5,93.8,0.427,21,37,72,-0.389,0.349,0.706,-0.608,0.206,0.555,5,False,-0.389
+BOT Williams %R cross above -80,BUY,LT,EMA20,252,38.9,0.0,-0.017,36,68,148,-0.077,-0.002,-0.009,-0.224,0.092,0.231,3,False,-0.077
+BOT Williams %R cross above -80,BUY,LT,F2x2_20,142,44.4,43.7,0.068,22,39,81,-0.235,0.082,0.144,-0.465,0.184,0.19,4,False,-0.235
+BOT Williams %R cross above -80,BUY,LT,F2x3_40,112,40.2,51.8,0.193,18,28,66,-0.355,0.409,0.25,-0.854,0.028,0.339,4,False,-0.355
+BOT Williams %R cross above -80,BUY,LT,F3x2_40,98,43.9,37.8,0.12,15,23,60,-0.547,0.37,0.192,-0.654,0.095,0.267,4,False,-0.547
+BOT Williams %R cross above -80,BUY,TR,CH3,77,40.3,92.2,0.54,11,23,43,-0.26,0.287,0.88,-0.597,0.635,0.591,6,False,-0.26
+BOT Williams %R cross above -80,BUY,TR,EMA20,122,27.9,0.0,-0.005,16,35,71,-0.088,0.045,-0.012,-0.345,0.101,0.345,4,False,-0.088
+BOT Williams %R cross above -80,BUY,TR,F2x2_20,80,43.8,46.2,0.091,11,24,45,-0.325,0.191,0.14,-0.515,0.451,0.196,5,False,-0.325
+BOT Williams %R cross above -80,BUY,TR,F2x3_40,69,33.3,56.5,0.152,10,19,40,-0.149,0.241,0.185,-0.697,0.37,0.364,5,False,-0.149
+BOT Williams %R cross above -80,BUY,TR,F3x2_40,67,38.8,38.8,0.113,10,17,40,-0.246,0.131,0.195,-0.484,0.368,0.365,5,False,-0.246
+BOT Williams %R cross above -80,BUY,TR+LT,CH3,65,36.9,93.8,0.496,7,19,39,-0.417,-0.036,0.92,-0.758,0.301,0.77,5,False,-0.417
+BOT Williams %R cross above -80,BUY,TR+LT,EMA20,105,27.6,0.0,-0.022,11,30,64,-0.198,0.018,-0.011,-0.392,0.099,0.433,3,False,-0.198
+BOT Williams %R cross above -80,BUY,TR+LT,F2x2_20,67,43.3,46.3,0.063,7,20,40,-0.405,0.13,0.112,-0.804,0.302,0.236,4,False,-0.405
+BOT Williams %R cross above -80,BUY,TR+LT,F2x3_40,57,29.8,59.6,0.048,7,15,35,-0.401,0.031,0.146,-1.057,-0.01,0.508,4,False,-0.401
+BOT Williams %R cross above -80,BUY,TR+LT,F3x2_40,55,34.5,41.8,0.013,7,13,35,-0.485,0.011,0.113,-0.555,0.104,0.518,4,False,-0.485
+BOT Williams %R cross above -80,BUY,none,CH3,240,38.3,92.5,0.267,62,72,106,-0.249,0.481,0.424,-0.254,0.65,0.403,6,False,-0.249
+BOT Williams %R cross above -80,BUY,none,EMA20,468,37.4,0.0,0.016,112,141,215,-0.055,0.097,0.0,-0.198,0.05,0.131,3,False,-0.055
+BOT Williams %R cross above -80,BUY,none,F2x2_20,266,42.1,43.2,0.024,62,83,121,-0.047,0.136,-0.016,0.018,0.311,0.114,5,False,-0.047
+BOT Williams %R cross above -80,BUY,none,F2x3_40,213,36.6,55.9,0.075,51,60,102,-0.392,0.392,0.122,-0.267,0.342,0.267,6,False,-0.392
+BOT Williams %R cross above -80,BUY,none,F3x2_40,178,43.3,40.4,0.04,43,49,86,-0.282,0.279,0.066,-0.251,0.317,0.202,5,False,-0.282
+BOT Williams %R cross above -80,SELL,LT,CH3,108,35.2,93.5,-0.086,34,38,36,-0.01,-0.242,0.007,-0.432,-0.374,-0.255,3,False,-0.242
+BOT Williams %R cross above -80,SELL,LT,EMA20,212,39.6,0.0,-0.015,61,70,81,0.038,-0.018,-0.052,-0.148,-0.113,-0.036,2,False,-0.052
+BOT Williams %R cross above -80,SELL,LT,F2x2_20,125,44.0,43.2,-0.044,40,45,40,0.09,-0.194,-0.008,-0.278,-0.188,-0.028,2,False,-0.194
+BOT Williams %R cross above -80,SELL,LT,F2x3_40,100,38.0,57.0,-0.007,28,39,33,0.13,-0.223,0.131,-0.559,-0.364,-0.2,3,False,-0.223
+BOT Williams %R cross above -80,SELL,LT,F3x2_40,85,43.5,47.1,-0.06,24,31,30,0.248,-0.437,0.084,0.128,-0.366,-0.223,3,False,-0.437
+BOT Williams %R cross above -80,SELL,TR,CH3,78,26.9,92.3,-0.309,23,26,29,-0.323,-0.382,-0.232,-0.458,-0.26,-0.288,1,False,-0.382
+BOT Williams %R cross above -80,SELL,TR,EMA20,128,31.2,0.0,-0.089,34,38,56,-0.067,-0.041,-0.136,-0.222,-0.241,-0.167,0,False,-0.136
+BOT Williams %R cross above -80,SELL,TR,F2x2_20,84,41.7,45.2,-0.173,23,28,33,-0.055,-0.183,-0.247,-0.417,-0.255,-0.117,3,False,-0.247
+BOT Williams %R cross above -80,SELL,TR,F2x3_40,70,28.6,62.9,-0.374,18,22,30,-0.266,-0.586,-0.284,-0.621,-0.442,-0.292,2,False,-0.586
+BOT Williams %R cross above -80,SELL,TR,F3x2_40,66,33.3,48.5,-0.274,18,21,27,-0.038,-0.619,-0.164,0.182,-0.358,-0.129,2,False,-0.619
+BOT Williams %R cross above -80,SELL,TR+LT,CH3,56,26.8,92.9,-0.277,20,20,16,-0.409,-0.451,0.105,-0.523,-0.114,-0.171,1,False,-0.451
+BOT Williams %R cross above -80,SELL,TR+LT,EMA20,93,33.3,0.0,-0.066,29,27,37,-0.035,-0.021,-0.123,-0.235,-0.119,-0.094,1,False,-0.123
+BOT Williams %R cross above -80,SELL,TR+LT,F2x2_20,59,47.5,33.9,-0.064,20,20,19,-0.112,-0.197,0.128,-0.53,0.182,0.101,3,False,-0.197
+BOT Williams %R cross above -80,SELL,TR+LT,F2x3_40,48,35.4,54.2,-0.258,16,16,16,-0.413,-0.477,0.116,-0.708,-0.089,-0.163,2,False,-0.477
+BOT Williams %R cross above -80,SELL,TR+LT,F3x2_40,48,39.6,41.7,-0.169,16,16,16,-0.098,-0.609,0.2,0.136,-0.204,0.065,2,False,-0.609
+BOT Williams %R cross above -80,SELL,none,CH3,281,32.7,94.3,-0.132,52,78,151,0.214,-0.197,-0.218,-0.068,-0.356,-0.145,3,False,-0.218
+BOT Williams %R cross above -80,SELL,none,EMA20,515,41.6,0.4,-0.026,87,156,272,0.051,-0.006,-0.062,-0.143,-0.163,-0.061,1,False,-0.062
+BOT Williams %R cross above -80,SELL,none,F2x2_20,321,37.1,53.0,-0.137,59,95,167,0.33,-0.106,-0.319,0.02,-0.297,-0.224,3,False,-0.319
+BOT Williams %R cross above -80,SELL,none,F2x3_40,262,30.9,66.0,-0.119,42,77,143,0.485,-0.18,-0.263,-0.144,-0.481,-0.226,4,False,-0.263
+BOT Williams %R cross above -80,SELL,none,F3x2_40,212,39.2,53.3,-0.11,37,61,114,0.463,-0.261,-0.216,0.304,-0.387,-0.226,4,False,-0.261
+OWN Donchian 20 break,BUY,LT,CH3,78,37.2,98.7,0.526,11,19,48,-0.893,0.117,1.013,-0.608,0.206,0.555,5,False,-0.893
+OWN Donchian 20 break,BUY,LT,EMA20,84,35.7,7.1,0.482,12,20,52,-0.787,0.195,0.885,-0.224,0.092,0.231,6,False,-0.787
+OWN Donchian 20 break,BUY,LT,F2x2_20,110,47.3,47.3,0.243,12,24,74,-1.046,0.161,0.478,-0.465,0.184,0.19,5,False,-1.046
+OWN Donchian 20 break,BUY,LT,F2x3_40,98,37.8,61.2,0.325,12,24,62,-1.046,-0.115,0.761,-0.854,0.028,0.339,5,False,-1.046
+OWN Donchian 20 break,BUY,LT,F3x2_40,91,46.2,47.3,0.195,11,22,58,-0.999,-0.096,0.532,-0.654,0.095,0.267,5,False,-0.999
+OWN Donchian 20 break,BUY,TR,CH3,119,37.0,97.5,0.385,28,33,58,-0.742,0.503,0.862,-0.597,0.635,0.591,5,False,-0.742
+OWN Donchian 20 break,BUY,TR,EMA20,132,34.8,5.3,0.346,30,37,65,-0.565,0.447,0.709,-0.345,0.101,0.345,7,False,-0.565
+OWN Donchian 20 break,BUY,TR,F2x2_20,165,43.6,51.5,0.135,31,45,89,-0.776,0.184,0.428,-0.515,0.451,0.196,5,False,-0.776
+OWN Donchian 20 break,BUY,TR,F2x3_40,145,37.2,62.1,0.285,28,42,75,-0.753,0.147,0.751,-0.697,0.37,0.364,5,False,-0.753
+OWN Donchian 20 break,BUY,TR,F3x2_40,136,43.4,47.8,0.152,25,39,72,-0.71,0.072,0.496,-0.484,0.368,0.365,6,False,-0.71
+OWN Donchian 20 break,BUY,TR+LT,CH3,77,37.7,98.7,0.53,10,19,48,-0.886,0.117,0.989,-0.758,0.301,0.77,5,False,-0.886
+OWN Donchian 20 break,BUY,TR+LT,EMA20,82,35.4,7.3,0.491,11,20,51,-0.84,0.195,0.895,-0.392,0.099,0.433,6,False,-0.84
+OWN Donchian 20 break,BUY,TR+LT,F2x2_20,108,48.1,47.2,0.257,11,24,73,-1.045,0.161,0.485,-0.804,0.302,0.236,6,False,-1.045
+OWN Donchian 20 break,BUY,TR+LT,F2x3_40,96,38.5,60.4,0.354,11,24,61,-1.045,-0.115,0.79,-1.057,-0.01,0.508,5,False,-1.045
+OWN Donchian 20 break,BUY,TR+LT,F3x2_40,90,45.6,48.9,0.19,10,22,58,-0.996,-0.096,0.503,-0.555,0.104,0.518,5,False,-0.996
+OWN Donchian 20 break,BUY,none,CH3,122,36.1,97.5,0.365,29,34,59,-0.749,0.472,0.851,-0.254,0.65,0.403,5,False,-0.749
+OWN Donchian 20 break,BUY,none,EMA20,136,34.6,5.1,0.331,31,38,67,-0.553,0.433,0.682,-0.198,0.05,0.131,6,False,-0.553
+OWN Donchian 20 break,BUY,none,F2x2_20,169,42.6,52.1,0.111,32,46,91,-0.785,0.157,0.403,0.018,0.311,0.114,5,False,-0.785
+OWN Donchian 20 break,BUY,none,F2x3_40,149,36.2,63.1,0.247,29,43,77,-0.763,0.119,0.7,-0.267,0.342,0.267,5,False,-0.763
+OWN Donchian 20 break,BUY,none,F3x2_40,138,44.2,47.1,0.161,26,39,73,-0.723,0.121,0.497,-0.251,0.317,0.202,6,False,-0.723
+OWN Donchian 20 break,SELL,LT,CH3,55,36.4,92.7,-0.074,18,17,20,-0.097,-0.195,0.049,-0.432,-0.374,-0.255,3,False,-0.195
+OWN Donchian 20 break,SELL,LT,EMA20,64,29.7,9.4,-0.018,18,24,22,0.324,-0.381,0.099,-0.148,-0.113,-0.036,5,False,-0.381
+OWN Donchian 20 break,SELL,LT,F2x2_20,72,43.1,44.4,0.009,21,25,26,0.095,-0.257,0.194,-0.278,-0.188,-0.028,5,False,-0.257
+OWN Donchian 20 break,SELL,LT,F2x3_40,55,40.0,52.7,0.154,17,18,20,0.373,-0.179,0.268,-0.559,-0.364,-0.2,6,False,-0.179
+OWN Donchian 20 break,SELL,LT,F3x2_40,51,51.0,37.3,0.155,16,16,19,0.251,-0.078,0.271,0.128,-0.366,-0.223,6,False,-0.078
+OWN Donchian 20 break,SELL,TR,CH3,108,39.8,93.5,-0.089,29,32,47,-0.167,-0.299,0.102,-0.458,-0.26,-0.288,3,False,-0.299
+OWN Donchian 20 break,SELL,TR,EMA20,121,33.1,5.8,-0.007,29,41,51,0.115,-0.29,0.151,-0.222,-0.241,-0.167,5,False,-0.29
+OWN Donchian 20 break,SELL,TR,F2x2_20,135,43.7,43.7,0.019,34,42,59,0.022,-0.313,0.253,-0.417,-0.255,-0.117,4,False,-0.313
+OWN Donchian 20 break,SELL,TR,F2x3_40,108,37.0,53.7,0.065,26,33,49,0.322,-0.249,0.141,-0.621,-0.442,-0.292,7,False,-0.249
+OWN Donchian 20 break,SELL,TR,F3x2_40,98,51.0,37.8,0.093,25,28,45,0.127,-0.11,0.201,0.182,-0.358,-0.129,6,False,-0.11
+OWN Donchian 20 break,SELL,TR+LT,CH3,55,36.4,92.7,-0.074,18,17,20,-0.097,-0.195,0.049,-0.523,-0.114,-0.171,3,False,-0.195
+OWN Donchian 20 break,SELL,TR+LT,EMA20,64,29.7,9.4,-0.018,18,24,22,0.324,-0.381,0.099,-0.235,-0.119,-0.094,5,False,-0.381
+OWN Donchian 20 break,SELL,TR+LT,F2x2_20,72,43.1,44.4,0.009,21,25,26,0.095,-0.257,0.194,-0.53,0.182,0.101,5,False,-0.257
+OWN Donchian 20 break,SELL,TR+LT,F2x3_40,55,40.0,52.7,0.154,17,18,20,0.373,-0.179,0.268,-0.708,-0.089,-0.163,6,False,-0.179
+OWN Donchian 20 break,SELL,TR+LT,F3x2_40,51,51.0,37.3,0.155,16,16,19,0.251,-0.078,0.271,0.136,-0.204,0.065,6,False,-0.078
+OWN Donchian 20 break,SELL,none,CH3,108,40.7,93.5,-0.038,29,32,47,-0.153,-0.299,0.211,-0.068,-0.356,-0.145,4,False,-0.299
+OWN Donchian 20 break,SELL,none,EMA20,122,33.6,4.9,0.032,29,41,52,0.129,-0.29,0.232,-0.143,-0.163,-0.061,5,False,-0.29
+OWN Donchian 20 break,SELL,none,F2x2_20,137,43.1,43.8,0.046,34,42,61,0.02,-0.313,0.306,0.02,-0.297,-0.224,5,False,-0.313
+OWN Donchian 20 break,SELL,none,F2x3_40,109,39.4,53.2,0.147,26,33,50,0.402,-0.249,0.275,-0.144,-0.481,-0.226,7,False,-0.249
+OWN Donchian 20 break,SELL,none,F3x2_40,99,53.5,37.4,0.153,25,28,46,0.183,-0.11,0.296,0.304,-0.387,-0.226,6,False,-0.11
+OWN Donchian 55 break,BUY,LT,CH3,51,43.1,98.0,0.869,8,8,35,-0.8,0.7,1.289,-0.608,0.206,0.555,5,False,-0.8
+OWN Donchian 55 break,BUY,LT,EMA20,53,43.4,17.0,0.733,9,8,36,-0.816,0.69,1.129,-0.224,0.092,0.231,6,False,-0.816
+OWN Donchian 55 break,BUY,LT,F2x2_20,74,55.4,41.9,0.435,9,12,53,-0.9,0.62,0.62,-0.465,0.184,0.19,6,False,-0.9
+OWN Donchian 55 break,BUY,LT,F2x3_40,61,44.3,52.5,0.58,8,10,43,-0.768,-0.107,0.99,-0.854,0.028,0.339,5,False,-0.768
+OWN Donchian 55 break,BUY,LT,F3x2_40,55,52.7,40.0,0.44,7,9,39,-0.722,0.019,0.746,-0.654,0.095,0.267,5,False,-0.722
+OWN Donchian 55 break,BUY,TR,CH3,67,47.8,97.0,0.792,12,14,41,-0.68,1.198,1.084,-0.597,0.635,0.591,5,False,-0.68
+OWN Donchian 55 break,BUY,TR,EMA20,73,43.8,13.7,0.637,13,15,45,-0.611,0.985,0.882,-0.345,0.101,0.345,6,False,-0.611
+OWN Donchian 55 break,BUY,TR,F2x2_20,101,51.5,44.6,0.348,14,22,65,-0.612,0.561,0.483,-0.515,0.451,0.196,6,False,-0.612
+OWN Donchian 55 break,BUY,TR,F2x3_40,83,43.4,54.2,0.531,12,19,52,-0.523,0.427,0.813,-0.697,0.37,0.364,6,False,-0.523
+OWN Donchian 55 break,BUY,TR,F3x2_40,76,51.3,39.5,0.428,11,18,47,-0.559,0.367,0.683,-0.484,0.368,0.365,6,False,-0.559
+OWN Donchian 55 break,BUY,TR+LT,CH3,51,43.1,98.0,0.869,8,8,35,-0.8,0.7,1.289,-0.758,0.301,0.77,5,False,-0.8
+OWN Donchian 55 break,BUY,TR+LT,EMA20,53,43.4,17.0,0.733,9,8,36,-0.816,0.69,1.129,-0.392,0.099,0.433,6,False,-0.816
+OWN Donchian 55 break,BUY,TR+LT,F2x2_20,74,55.4,41.9,0.435,9,12,53,-0.9,0.62,0.62,-0.804,0.302,0.236,6,False,-0.9
+OWN Donchian 55 break,BUY,TR+LT,F2x3_40,61,44.3,52.5,0.58,8,10,43,-0.768,-0.107,0.99,-1.057,-0.01,0.508,5,False,-0.768
+OWN Donchian 55 break,BUY,TR+LT,F3x2_40,55,52.7,40.0,0.44,7,9,39,-0.722,0.019,0.746,-0.555,0.104,0.518,5,False,-0.722
+OWN Donchian 55 break,BUY,none,CH3,67,47.8,97.0,0.792,12,14,41,-0.68,1.198,1.084,-0.254,0.65,0.403,5,False,-0.68
+OWN Donchian 55 break,BUY,none,EMA20,73,43.8,13.7,0.637,13,15,45,-0.611,0.985,0.882,-0.198,0.05,0.131,6,False,-0.611
+OWN Donchian 55 break,BUY,none,F2x2_20,101,51.5,44.6,0.348,14,22,65,-0.612,0.561,0.483,0.018,0.311,0.114,6,False,-0.612
+OWN Donchian 55 break,BUY,none,F2x3_40,83,43.4,54.2,0.531,12,19,52,-0.523,0.427,0.813,-0.267,0.342,0.267,6,False,-0.523
+OWN Donchian 55 break,BUY,none,F3x2_40,76,51.3,39.5,0.428,11,18,47,-0.559,0.367,0.683,-0.251,0.317,0.202,6,False,-0.559
+OWN Donchian 55 break,SELL,LT,CH3,42,28.6,90.5,-0.171,11,14,17,0.069,-0.458,-0.091,-0.432,-0.374,-0.255,4,False,-0.458
+OWN Donchian 55 break,SELL,LT,EMA20,44,29.5,18.2,-0.073,11,15,18,0.464,-0.47,-0.07,-0.148,-0.113,-0.036,4,False,-0.47
+OWN Donchian 55 break,SELL,LT,F2x2_20,51,37.3,47.1,-0.085,13,18,20,0.413,-0.45,-0.08,-0.278,-0.188,-0.028,4,False,-0.45
+OWN Donchian 55 break,SELL,LT,F2x3_40,42,35.7,57.1,-0.03,10,15,17,0.237,-0.445,0.18,-0.559,-0.364,-0.2,4,False,-0.445
+OWN Donchian 55 break,SELL,LT,F3x2_40,39,41.0,41.0,-0.034,10,13,16,0.162,-0.401,0.142,0.128,-0.366,-0.223,4,False,-0.401
+OWN Donchian 55 break,SELL,TR,CH3,70,30.0,91.4,-0.209,16,20,34,0.036,-0.399,-0.213,-0.458,-0.26,-0.288,2,False,-0.399
+OWN Donchian 55 break,SELL,TR,EMA20,73,27.4,16.4,-0.135,16,21,36,0.271,-0.349,-0.191,-0.222,-0.241,-0.167,3,False,-0.349
+OWN Donchian 55 break,SELL,TR,F2x2_20,82,35.4,46.3,-0.102,19,24,39,0.369,-0.31,-0.204,-0.417,-0.255,-0.117,3,False,-0.31
+OWN Donchian 55 break,SELL,TR,F2x3_40,71,31.0,63.4,-0.229,15,21,35,0.147,-0.503,-0.226,-0.621,-0.442,-0.292,3,False,-0.503
+OWN Donchian 55 break,SELL,TR,F3x2_40,67,37.3,47.8,-0.189,15,19,33,0.0,-0.509,-0.09,0.182,-0.358,-0.129,2,False,-0.509
+OWN Donchian 55 break,SELL,TR+LT,CH3,42,28.6,90.5,-0.171,11,14,17,0.069,-0.458,-0.091,-0.523,-0.114,-0.171,4,False,-0.458
+OWN Donchian 55 break,SELL,TR+LT,EMA20,44,29.5,18.2,-0.073,11,15,18,0.464,-0.47,-0.07,-0.235,-0.119,-0.094,4,False,-0.47
+OWN Donchian 55 break,SELL,TR+LT,F2x2_20,51,37.3,47.1,-0.085,13,18,20,0.413,-0.45,-0.08,-0.53,0.182,0.101,4,False,-0.45
+OWN Donchian 55 break,SELL,TR+LT,F2x3_40,42,35.7,57.1,-0.03,10,15,17,0.237,-0.445,0.18,-0.708,-0.089,-0.163,4,False,-0.445
+OWN Donchian 55 break,SELL,TR+LT,F3x2_40,39,41.0,41.0,-0.034,10,13,16,0.162,-0.401,0.142,0.136,-0.204,0.065,4,False,-0.401
+OWN Donchian 55 break,SELL,none,CH3,70,30.0,91.4,-0.209,16,20,34,0.036,-0.399,-0.213,-0.068,-0.356,-0.145,2,False,-0.399
+OWN Donchian 55 break,SELL,none,EMA20,73,27.4,16.4,-0.135,16,21,36,0.271,-0.349,-0.191,-0.143,-0.163,-0.061,3,False,-0.349
+OWN Donchian 55 break,SELL,none,F2x2_20,82,35.4,46.3,-0.102,19,24,39,0.369,-0.31,-0.204,0.02,-0.297,-0.224,3,False,-0.31
+OWN Donchian 55 break,SELL,none,F2x3_40,71,31.0,63.4,-0.229,15,21,35,0.147,-0.503,-0.226,-0.144,-0.481,-0.226,3,False,-0.503
+OWN Donchian 55 break,SELL,none,F3x2_40,67,37.3,47.8,-0.189,15,19,33,0.0,-0.509,-0.09,0.304,-0.387,-0.226,2,False,-0.509
+OWN EMA 20/50 cross,BUY,TR,CH3,63,36.5,95.2,0.4,18,19,26,-0.751,1.418,0.453,-0.597,0.635,0.591,6,False,-0.751
+OWN EMA 20/50 cross,BUY,TR,EMA20,66,31.8,6.1,0.234,18,20,28,-0.536,1.037,0.156,-0.345,0.101,0.345,6,False,-0.536
+OWN EMA 20/50 cross,BUY,TR,F2x2_20,65,41.5,50.8,0.147,18,20,27,-0.767,0.479,0.51,-0.515,0.451,0.196,4,False,-0.767
+OWN EMA 20/50 cross,BUY,TR,F2x3_40,64,34.4,57.8,0.231,17,20,27,-0.658,0.818,0.355,-0.697,0.37,0.364,6,False,-0.658
+OWN EMA 20/50 cross,BUY,TR,F3x2_40,61,39.3,44.3,0.089,16,19,26,-0.612,0.625,0.128,-0.484,0.368,0.365,4,False,-0.612
+OWN EMA 20/50 cross,BUY,none,CH3,63,36.5,95.2,0.4,18,19,26,-0.751,1.418,0.453,-0.254,0.65,0.403,6,False,-0.751
+OWN EMA 20/50 cross,BUY,none,EMA20,66,31.8,6.1,0.234,18,20,28,-0.536,1.037,0.156,-0.198,0.05,0.131,6,False,-0.536
+OWN EMA 20/50 cross,BUY,none,F2x2_20,65,41.5,50.8,0.147,18,20,27,-0.767,0.479,0.51,0.018,0.311,0.114,4,False,-0.767
+OWN EMA 20/50 cross,BUY,none,F2x3_40,64,34.4,57.8,0.231,17,20,27,-0.658,0.818,0.355,-0.267,0.342,0.267,6,False,-0.658
+OWN EMA 20/50 cross,BUY,none,F3x2_40,61,39.3,44.3,0.089,16,19,26,-0.612,0.625,0.128,-0.251,0.317,0.202,4,False,-0.612
+OWN EMA 20/50 cross,SELL,TR,CH3,68,38.2,92.6,-0.054,17,20,31,0.025,-0.315,0.071,-0.458,-0.26,-0.288,5,False,-0.315
+OWN EMA 20/50 cross,SELL,TR,EMA20,69,37.7,7.2,0.069,17,20,32,0.309,-0.108,0.052,-0.222,-0.241,-0.167,7,False,-0.108
+OWN EMA 20/50 cross,SELL,TR,F2x2_20,68,45.6,38.2,0.155,17,20,31,0.449,0.224,-0.05,-0.417,-0.255,-0.117,5,False,-0.05
+OWN EMA 20/50 cross,SELL,TR,F2x3_40,68,47.1,50.0,0.241,17,20,31,0.395,0.233,0.161,-0.621,-0.442,-0.292,5,True,0.161
+OWN EMA 20/50 cross,SELL,TR,F3x2_40,64,51.6,40.6,0.08,14,20,30,0.239,0.01,0.052,0.182,-0.358,-0.129,6,False,0.01
+OWN EMA 20/50 cross,SELL,none,CH3,68,38.2,92.6,-0.054,17,20,31,0.025,-0.315,0.071,-0.068,-0.356,-0.145,5,False,-0.315
+OWN EMA 20/50 cross,SELL,none,EMA20,69,37.7,7.2,0.069,17,20,32,0.309,-0.108,0.052,-0.143,-0.163,-0.061,7,False,-0.108
+OWN EMA 20/50 cross,SELL,none,F2x2_20,68,45.6,38.2,0.155,17,20,31,0.449,0.224,-0.05,0.02,-0.297,-0.224,5,False,-0.05
+OWN EMA 20/50 cross,SELL,none,F2x3_40,68,47.1,50.0,0.241,17,20,31,0.395,0.233,0.161,-0.144,-0.481,-0.226,5,True,0.161
+OWN EMA 20/50 cross,SELL,none,F3x2_40,64,51.6,40.6,0.08,14,20,30,0.239,0.01,0.052,0.304,-0.387,-0.226,6,False,0.01
+OWN MACD zero cross,BUY,LT,CH3,43,37.2,95.3,0.281,7,13,23,-0.934,0.342,0.617,-0.608,0.206,0.555,4,False,-0.934
+OWN MACD zero cross,BUY,LT,EMA20,50,26.0,0.0,0.197,8,13,29,-0.428,0.547,0.213,-0.224,0.092,0.231,3,False,-0.428
+OWN MACD zero cross,BUY,LT,F2x2_20,46,41.3,50.0,-0.039,8,13,25,-1.062,-0.117,0.33,-0.465,0.184,0.19,3,False,-1.062
+OWN MACD zero cross,BUY,LT,F2x3_40,46,34.8,63.0,0.091,8,13,25,-1.062,-0.045,0.531,-0.854,0.028,0.339,4,False,-1.062
+OWN MACD zero cross,BUY,LT,F3x2_40,41,41.5,51.2,0.024,7,12,22,-1.033,-0.233,0.5,-0.654,0.095,0.267,4,False,-1.033
+OWN MACD zero cross,BUY,TR,CH3,95,33.7,94.7,0.197,27,31,37,-0.663,0.735,0.374,-0.597,0.635,0.591,5,False,-0.663
+OWN MACD zero cross,BUY,TR,EMA20,105,27.6,1.9,0.151,30,32,43,-0.366,0.695,0.107,-0.345,0.101,0.345,5,False,-0.366
+OWN MACD zero cross,BUY,TR,F2x2_20,99,38.4,53.5,-0.08,28,32,39,-0.737,0.024,0.306,-0.515,0.451,0.196,3,False,-0.737
+OWN MACD zero cross,BUY,TR,F2x3_40,97,33.0,64.9,0.068,26,32,39,-0.709,0.227,0.454,-0.697,0.37,0.364,5,False,-0.709
+OWN MACD zero cross,BUY,TR,F3x2_40,86,40.7,48.8,0.027,23,28,35,-0.604,0.072,0.406,-0.484,0.368,0.365,4,False,-0.604
+OWN MACD zero cross,BUY,TR+LT,CH3,41,36.6,95.1,0.304,6,13,22,-0.941,0.342,0.621,-0.758,0.301,0.77,4,False,-0.941
+OWN MACD zero cross,BUY,TR+LT,EMA20,46,26.1,0.0,0.212,6,13,27,-0.495,0.547,0.207,-0.392,0.099,0.433,3,False,-0.495
+OWN MACD zero cross,BUY,TR+LT,F2x2_20,43,41.9,48.8,-0.009,6,13,24,-1.062,-0.117,0.313,-0.804,0.302,0.236,3,False,-1.062
+OWN MACD zero cross,BUY,TR+LT,F2x3_40,43,34.9,62.8,0.126,6,13,24,-1.062,-0.045,0.515,-1.057,-0.01,0.508,4,False,-1.062
+OWN MACD zero cross,BUY,TR+LT,F3x2_40,39,41.0,51.3,0.036,6,12,21,-1.032,-0.233,0.495,-0.555,0.104,0.518,4,False,-1.032
+OWN MACD zero cross,BUY,none,CH3,104,34.6,95.2,0.156,30,33,41,-0.652,0.715,0.297,-0.254,0.65,0.403,5,False,-0.652
+OWN MACD zero cross,BUY,none,EMA20,118,27.1,2.5,0.12,34,34,50,-0.353,0.689,0.056,-0.198,0.05,0.131,5,False,-0.353
+OWN MACD zero cross,BUY,none,F2x2_20,109,37.6,53.2,-0.089,32,34,43,-0.684,0.071,0.228,0.018,0.311,0.114,3,False,-0.684
+OWN MACD zero cross,BUY,none,F2x3_40,107,32.7,65.4,0.027,30,34,43,-0.712,0.271,0.35,-0.267,0.342,0.267,5,False,-0.712
+OWN MACD zero cross,BUY,none,F3x2_40,94,40.4,50.0,-0.002,25,30,39,-0.595,0.099,0.299,-0.251,0.317,0.202,4,False,-0.595
+OWN MACD zero cross,SELL,LT,CH3,43,32.6,97.7,-0.139,16,13,14,-0.199,-0.076,-0.129,-0.432,-0.374,-0.255,3,False,-0.199
+OWN MACD zero cross,SELL,LT,EMA20,47,34.0,2.1,-0.003,18,14,15,0.021,-0.084,0.045,-0.148,-0.113,-0.036,2,False,-0.084
+OWN MACD zero cross,SELL,LT,F2x2_20,44,43.2,36.4,0.057,18,12,14,-0.303,0.541,0.104,-0.278,-0.188,-0.028,4,False,-0.303
+OWN MACD zero cross,SELL,LT,F2x3_40,42,42.9,54.8,0.157,17,12,13,-0.258,0.73,0.171,-0.559,-0.364,-0.2,4,False,-0.258
+OWN MACD zero cross,SELL,LT,F3x2_40,37,51.4,43.2,0.114,13,12,12,-0.089,0.403,0.046,0.128,-0.366,-0.223,2,False,-0.089
+OWN MACD zero cross,SELL,TR,CH3,99,38.4,93.9,-0.037,29,29,41,-0.046,-0.296,0.153,-0.458,-0.26,-0.288,5,False,-0.296
+OWN MACD zero cross,SELL,TR,EMA20,105,37.1,3.8,0.007,32,30,43,0.001,-0.127,0.104,-0.222,-0.241,-0.167,4,False,-0.127
+OWN MACD zero cross,SELL,TR,F2x2_20,100,48.0,40.0,0.147,31,28,41,0.027,0.077,0.287,-0.417,-0.255,-0.117,7,True,0.027
+OWN MACD zero cross,SELL,TR,F2x3_40,97,40.2,54.6,0.125,29,28,40,-0.032,0.093,0.261,-0.621,-0.442,-0.292,7,False,-0.032
+OWN MACD zero cross,SELL,TR,F3x2_40,85,48.2,41.2,0.093,23,25,37,0.109,0.058,0.107,0.182,-0.358,-0.129,7,False,0.058
+OWN MACD zero cross,SELL,TR+LT,CH3,43,32.6,97.7,-0.139,16,13,14,-0.199,-0.076,-0.129,-0.523,-0.114,-0.171,3,False,-0.199
+OWN MACD zero cross,SELL,TR+LT,EMA20,47,34.0,2.1,-0.003,18,14,15,0.021,-0.084,0.045,-0.235,-0.119,-0.094,2,False,-0.084
+OWN MACD zero cross,SELL,TR+LT,F2x2_20,44,43.2,36.4,0.057,18,12,14,-0.303,0.541,0.104,-0.53,0.182,0.101,4,False,-0.303
+OWN MACD zero cross,SELL,TR+LT,F2x3_40,42,42.9,54.8,0.157,17,12,13,-0.258,0.73,0.171,-0.708,-0.089,-0.163,4,False,-0.258
+OWN MACD zero cross,SELL,TR+LT,F3x2_40,37,51.4,43.2,0.114,13,12,12,-0.089,0.403,0.046,0.136,-0.204,0.065,2,False,-0.089
+OWN MACD zero cross,SELL,none,CH3,107,40.2,94.4,-0.02,29,32,46,-0.046,-0.271,0.171,-0.068,-0.356,-0.145,5,False,-0.271
+OWN MACD zero cross,SELL,none,EMA20,116,36.2,3.4,0.0,32,33,51,0.001,-0.134,0.087,-0.143,-0.163,-0.061,5,False,-0.134
+OWN MACD zero cross,SELL,none,F2x2_20,108,49.1,38.0,0.167,31,31,46,0.027,0.059,0.333,0.02,-0.297,-0.224,7,True,0.027
+OWN MACD zero cross,SELL,none,F2x3_40,104,42.3,52.9,0.161,29,31,44,-0.032,0.19,0.267,-0.144,-0.481,-0.226,6,False,-0.032
+OWN MACD zero cross,SELL,none,F3x2_40,92,50.0,40.2,0.112,23,28,41,0.109,0.118,0.109,0.304,-0.387,-0.226,6,False,0.109
+OWN NR7 break,BUY,LT,CH3,111,39.6,92.8,0.47,16,29,66,-0.51,0.358,0.756,-0.608,0.206,0.555,5,False,-0.51
+OWN NR7 break,BUY,LT,EMA20,168,33.9,1.2,0.252,20,39,109,-0.28,0.049,0.423,-0.224,0.092,0.231,7,False,-0.28
+OWN NR7 break,BUY,LT,F2x2_20,149,45.0,45.0,0.096,18,35,96,-0.297,0.139,0.154,-0.465,0.184,0.19,4,False,-0.297
+OWN NR7 break,BUY,LT,F2x3_40,121,40.5,54.5,0.268,15,26,80,-0.668,0.448,0.384,-0.854,0.028,0.339,5,False,-0.668
+OWN NR7 break,BUY,LT,F3x2_40,109,49.5,40.4,0.211,11,25,73,-0.519,0.227,0.315,-0.654,0.095,0.267,5,False,-0.519
+OWN NR7 break,BUY,TR,CH3,115,39.1,93.0,0.523,22,27,66,-0.617,1.155,0.644,-0.597,0.635,0.591,6,False,-0.617
+OWN NR7 break,BUY,TR,EMA20,158,32.3,2.5,0.291,27,37,94,-0.323,0.286,0.469,-0.345,0.101,0.345,6,False,-0.323
+OWN NR7 break,BUY,TR,F2x2_20,157,43.9,46.5,0.119,26,36,95,-0.448,0.359,0.183,-0.515,0.451,0.196,6,False,-0.448
+OWN NR7 break,BUY,TR,F2x3_40,127,39.4,57.5,0.243,22,29,76,-0.584,0.632,0.334,-0.697,0.37,0.364,5,False,-0.584
+OWN NR7 break,BUY,TR,F3x2_40,114,50.0,42.1,0.211,18,28,68,-0.472,0.345,0.337,-0.484,0.368,0.365,6,False,-0.472
+OWN NR7 break,BUY,TR+LT,CH3,83,41.0,94.0,0.654,10,20,53,-0.607,0.527,0.939,-0.758,0.301,0.77,6,False,-0.607
+OWN NR7 break,BUY,TR+LT,EMA20,117,29.9,1.7,0.369,13,26,78,-0.385,0.023,0.61,-0.392,0.099,0.433,7,False,-0.385
+OWN NR7 break,BUY,TR+LT,F2x2_20,118,44.9,46.6,0.113,12,26,80,-0.352,0.127,0.179,-0.804,0.302,0.236,4,False,-0.352
+OWN NR7 break,BUY,TR+LT,F2x3_40,97,38.1,57.7,0.256,11,21,65,-0.866,0.337,0.419,-1.057,-0.01,0.508,6,False,-0.866
+OWN NR7 break,BUY,TR+LT,F3x2_40,87,48.3,43.7,0.214,8,20,59,-0.738,0.119,0.374,-0.555,0.104,0.518,5,False,-0.738
+OWN NR7 break,BUY,none,CH3,192,35.4,92.7,0.26,43,52,97,-0.405,0.572,0.387,-0.254,0.65,0.403,6,False,-0.405
+OWN NR7 break,BUY,none,EMA20,291,34.4,1.0,0.136,64,73,154,-0.178,0.156,0.258,-0.198,0.05,0.131,5,False,-0.178
+OWN NR7 break,BUY,none,F2x2_20,246,43.1,45.5,0.046,49,65,132,-0.226,0.222,0.06,0.018,0.311,0.114,5,False,-0.226
+OWN NR7 break,BUY,none,F2x3_40,200,36.0,59.5,0.076,43,49,108,-0.445,0.435,0.121,-0.267,0.342,0.267,5,False,-0.445
+OWN NR7 break,BUY,none,F3x2_40,176,44.9,43.8,0.081,36,45,95,-0.401,0.241,0.187,-0.251,0.317,0.202,6,False,-0.401
+OWN NR7 break,SELL,LT,CH3,76,38.2,93.4,-0.041,24,27,25,0.053,-0.187,0.027,-0.432,-0.374,-0.255,2,False,-0.187
+OWN NR7 break,SELL,LT,EMA20,108,29.6,1.9,0.01,41,34,33,-0.03,-0.035,0.105,-0.148,-0.113,-0.036,6,False,-0.035
+OWN NR7 break,SELL,LT,F2x2_20,98,38.8,46.9,-0.066,36,34,28,-0.075,-0.15,0.048,-0.278,-0.188,-0.028,3,False,-0.15
+OWN NR7 break,SELL,LT,F2x3_40,81,38.3,59.3,-0.008,28,27,26,-0.05,-0.075,0.106,-0.559,-0.364,-0.2,3,False,-0.075
+OWN NR7 break,SELL,LT,F3x2_40,73,49.3,42.5,0.039,23,26,24,0.324,-0.244,0.073,0.128,-0.366,-0.223,4,False,-0.244
+OWN NR7 break,SELL,TR,CH3,113,35.4,92.0,-0.047,29,33,51,-0.004,-0.175,0.01,-0.458,-0.26,-0.288,4,False,-0.175
+OWN NR7 break,SELL,TR,EMA20,149,28.2,2.7,-0.0,42,41,66,-0.0,-0.157,0.097,-0.222,-0.241,-0.167,5,False,-0.157
+OWN NR7 break,SELL,TR,F2x2_20,140,43.6,40.7,-0.037,38,39,63,-0.086,-0.107,0.034,-0.417,-0.255,-0.117,5,False,-0.107
+OWN NR7 break,SELL,TR,F2x3_40,112,41.1,54.5,0.054,27,33,52,0.007,-0.022,0.127,-0.621,-0.442,-0.292,5,False,-0.022
+OWN NR7 break,SELL,TR,F3x2_40,102,51.0,37.3,0.093,24,31,47,0.277,-0.107,0.131,0.182,-0.358,-0.129,6,False,-0.107
+OWN NR7 break,SELL,TR+LT,CH3,61,37.7,91.8,-0.018,22,18,21,-0.09,-0.065,0.099,-0.523,-0.114,-0.171,3,False,-0.09
+OWN NR7 break,SELL,TR+LT,EMA20,86,27.9,3.5,0.002,34,23,29,-0.006,-0.077,0.075,-0.235,-0.119,-0.094,5,False,-0.077
+OWN NR7 break,SELL,TR+LT,F2x2_20,77,44.2,42.9,-0.012,31,22,24,-0.146,0.083,0.073,-0.53,0.182,0.101,5,False,-0.146
+OWN NR7 break,SELL,TR+LT,F2x3_40,63,44.4,52.4,0.05,24,17,22,-0.221,0.262,0.181,-0.708,-0.089,-0.163,5,False,-0.221
+OWN NR7 break,SELL,TR+LT,F3x2_40,56,57.1,32.1,0.151,20,16,20,0.16,0.1,0.183,0.136,-0.204,0.065,6,True,0.1
+OWN NR7 break,SELL,none,CH3,185,34.1,94.1,-0.135,33,58,94,0.194,-0.277,-0.163,-0.068,-0.356,-0.145,2,False,-0.277
+OWN NR7 break,SELL,none,EMA20,267,29.6,1.1,-0.013,56,77,134,-0.004,-0.098,0.032,-0.143,-0.163,-0.061,6,False,-0.098
+OWN NR7 break,SELL,none,F2x2_20,232,37.5,49.6,-0.111,49,69,114,0.098,-0.202,-0.146,0.02,-0.297,-0.224,4,False,-0.202
+OWN NR7 break,SELL,none,F2x3_40,191,33.5,62.8,-0.085,36,58,97,0.149,-0.119,-0.151,-0.144,-0.481,-0.226,3,False,-0.151
+OWN NR7 break,SELL,none,F3x2_40,170,42.4,49.4,-0.083,31,53,86,0.383,-0.258,-0.144,0.304,-0.387,-0.226,3,False,-0.258
+OWN OI long build-up,BUY,LT,CH3,86,37.2,97.7,0.472,8,22,56,-0.687,0.212,0.74,-0.608,0.206,0.555,5,False,-0.687
+OWN OI long build-up,BUY,LT,EMA20,122,27.9,6.6,0.226,8,31,83,-0.601,0.109,0.349,-0.224,0.092,0.231,4,False,-0.601
+OWN OI long build-up,BUY,LT,F2x2_20,118,49.2,40.7,0.263,8,28,82,-0.554,-0.026,0.442,-0.465,0.184,0.19,6,False,-0.554
+OWN OI long build-up,BUY,LT,F2x3_40,99,41.4,57.6,0.391,8,23,68,-0.97,-0.016,0.688,-0.854,0.028,0.339,5,False,-0.97
+OWN OI long build-up,BUY,LT,F3x2_40,85,51.8,42.4,0.274,8,19,58,-0.873,0.064,0.501,-0.654,0.095,0.267,5,False,-0.873
+OWN OI long build-up,BUY,TR,CH3,105,39.0,97.1,0.484,14,31,60,-0.537,0.544,0.692,-0.597,0.635,0.591,6,False,-0.537
+OWN OI long build-up,BUY,TR,EMA20,149,29.5,6.7,0.242,15,42,92,-0.408,0.294,0.323,-0.345,0.101,0.345,5,False,-0.408
+OWN OI long build-up,BUY,TR,F2x2_20,147,47.6,42.2,0.257,15,41,91,-0.577,0.144,0.445,-0.515,0.451,0.196,6,False,-0.577
+OWN OI long build-up,BUY,TR,F2x3_40,122,40.2,57.4,0.387,14,35,73,-0.712,0.339,0.621,-0.697,0.37,0.364,6,False,-0.712
+OWN OI long build-up,BUY,TR,F3x2_40,104,51.9,41.3,0.305,13,30,61,-0.61,0.278,0.512,-0.484,0.368,0.365,6,False,-0.61
+OWN OI long build-up,BUY,TR+LT,CH3,86,37.2,97.7,0.472,8,22,56,-0.687,0.212,0.74,-0.758,0.301,0.77,5,False,-0.687
+OWN OI long build-up,BUY,TR+LT,EMA20,122,27.9,6.6,0.226,8,31,83,-0.601,0.109,0.349,-0.392,0.099,0.433,4,False,-0.601
+OWN OI long build-up,BUY,TR+LT,F2x2_20,118,49.2,40.7,0.263,8,28,82,-0.554,-0.026,0.442,-0.804,0.302,0.236,6,False,-0.554
+OWN OI long build-up,BUY,TR+LT,F2x3_40,99,41.4,57.6,0.391,8,23,68,-0.97,-0.016,0.688,-1.057,-0.01,0.508,5,False,-0.97
+OWN OI long build-up,BUY,TR+LT,F3x2_40,85,51.8,42.4,0.274,8,19,58,-0.873,0.064,0.501,-0.555,0.104,0.518,5,False,-0.873
+OWN OI long build-up,BUY,none,CH3,105,39.0,97.1,0.484,14,31,60,-0.537,0.544,0.692,-0.254,0.65,0.403,6,False,-0.537
+OWN OI long build-up,BUY,none,EMA20,149,29.5,6.7,0.242,15,42,92,-0.408,0.294,0.323,-0.198,0.05,0.131,5,False,-0.408
+OWN OI long build-up,BUY,none,F2x2_20,147,47.6,42.2,0.257,15,41,91,-0.577,0.144,0.445,0.018,0.311,0.114,6,False,-0.577
+OWN OI long build-up,BUY,none,F2x3_40,122,40.2,57.4,0.387,14,35,73,-0.712,0.339,0.621,-0.267,0.342,0.267,6,False,-0.712
+OWN OI long build-up,BUY,none,F3x2_40,104,51.9,41.3,0.305,13,30,61,-0.61,0.278,0.512,-0.251,0.317,0.202,6,False,-0.61
+OWN OI long build-up,SELL,LT,CH3,97,32.0,90.7,-0.11,29,33,35,-0.048,-0.267,-0.013,-0.432,-0.374,-0.255,4,False,-0.267
+OWN OI long build-up,SELL,LT,EMA20,231,28.6,2.6,-0.069,83,67,81,-0.049,-0.098,-0.065,-0.148,-0.113,-0.036,4,False,-0.098
+OWN OI long build-up,SELL,LT,F2x2_20,152,38.2,49.3,-0.157,53,49,50,-0.177,-0.218,-0.076,-0.278,-0.188,-0.028,4,False,-0.218
+OWN OI long build-up,SELL,LT,F2x3_40,107,34.6,59.8,-0.041,39,30,38,-0.132,-0.133,0.126,-0.559,-0.364,-0.2,4,False,-0.133
+OWN OI long build-up,SELL,LT,F3x2_40,89,42.7,46.1,-0.031,31,28,30,0.007,-0.303,0.183,0.128,-0.366,-0.223,4,False,-0.303
+OWN OI long build-up,SELL,TR,CH3,144,34.0,91.0,-0.114,36,42,66,-0.037,-0.232,-0.081,-0.458,-0.26,-0.288,2,False,-0.232
+OWN OI long build-up,SELL,TR,EMA20,321,29.6,2.5,-0.068,94,82,145,-0.041,-0.097,-0.07,-0.222,-0.241,-0.167,3,False,-0.097
+OWN OI long build-up,SELL,TR,F2x2_20,219,39.3,45.2,-0.109,62,62,95,-0.119,-0.204,-0.04,-0.417,-0.255,-0.117,1,False,-0.204
+OWN OI long build-up,SELL,TR,F2x3_40,150,34.0,60.7,-0.098,43,43,64,-0.056,-0.216,-0.047,-0.621,-0.442,-0.292,3,False,-0.216
+OWN OI long build-up,SELL,TR,F3x2_40,128,42.2,45.3,-0.062,37,37,54,0.074,-0.257,-0.023,0.182,-0.358,-0.129,3,False,-0.257
+OWN OI long build-up,SELL,TR+LT,CH3,97,32.0,90.7,-0.11,29,33,35,-0.048,-0.267,-0.013,-0.523,-0.114,-0.171,4,False,-0.267
+OWN OI long build-up,SELL,TR+LT,EMA20,231,28.6,2.6,-0.069,83,67,81,-0.049,-0.098,-0.065,-0.235,-0.119,-0.094,4,False,-0.098
+OWN OI long build-up,SELL,TR+LT,F2x2_20,152,38.2,49.3,-0.157,53,49,50,-0.177,-0.218,-0.076,-0.53,0.182,0.101,4,False,-0.218
+OWN OI long build-up,SELL,TR+LT,F2x3_40,107,34.6,59.8,-0.041,39,30,38,-0.132,-0.133,0.126,-0.708,-0.089,-0.163,4,False,-0.133
+OWN OI long build-up,SELL,TR+LT,F3x2_40,89,42.7,46.1,-0.031,31,28,30,0.007,-0.303,0.183,0.136,-0.204,0.065,4,False,-0.303
+OWN OI long build-up,SELL,none,CH3,144,34.0,91.0,-0.114,36,42,66,-0.037,-0.232,-0.081,-0.068,-0.356,-0.145,2,False,-0.232
+OWN OI long build-up,SELL,none,EMA20,321,29.6,2.5,-0.068,94,82,145,-0.041,-0.097,-0.07,-0.143,-0.163,-0.061,3,False,-0.097
+OWN OI long build-up,SELL,none,F2x2_20,219,39.3,45.2,-0.109,62,62,95,-0.119,-0.204,-0.04,0.02,-0.297,-0.224,1,False,-0.204
+OWN OI long build-up,SELL,none,F2x3_40,150,34.0,60.7,-0.098,43,43,64,-0.056,-0.216,-0.047,-0.144,-0.481,-0.226,3,False,-0.216
+OWN OI long build-up,SELL,none,F3x2_40,128,42.2,45.3,-0.062,37,37,54,0.074,-0.257,-0.023,0.304,-0.387,-0.226,3,False,-0.257
+OWN RSI(2) < 10 in trend,BUY,LT,CH3,56,35.7,91.1,0.411,8,15,33,-0.731,0.196,0.785,-0.608,0.206,0.555,6,False,-0.731
+OWN RSI(2) < 10 in trend,BUY,LT,EMA20,78,30.8,1.3,0.002,8,23,47,-0.257,-0.078,0.085,-0.224,0.092,0.231,3,False,-0.257
+OWN RSI(2) < 10 in trend,BUY,LT,F2x2_20,69,46.4,46.4,0.137,8,19,42,-0.599,0.221,0.24,-0.465,0.184,0.19,3,False,-0.599
+OWN RSI(2) < 10 in trend,BUY,LT,F2x3_40,62,38.7,54.8,0.373,8,17,37,-0.543,0.247,0.628,-0.854,0.028,0.339,5,False,-0.543
+OWN RSI(2) < 10 in trend,BUY,LT,F3x2_40,60,43.3,43.3,0.207,8,16,36,-0.654,0.153,0.422,-0.654,0.095,0.267,5,False,-0.654
+OWN RSI(2) < 10 in trend,BUY,TR,CH3,66,37.9,92.4,0.385,10,20,36,-0.524,0.105,0.794,-0.597,0.635,0.591,6,False,-0.524
+OWN RSI(2) < 10 in trend,BUY,TR,EMA20,96,30.2,1.0,0.005,13,30,53,-0.216,-0.034,0.082,-0.345,0.101,0.345,4,False,-0.216
+OWN RSI(2) < 10 in trend,BUY,TR,F2x2_20,82,45.1,46.3,0.114,11,24,47,-0.446,0.122,0.241,-0.515,0.451,0.196,5,False,-0.446
+OWN RSI(2) < 10 in trend,BUY,TR,F2x3_40,73,39.7,56.2,0.354,11,22,40,-0.314,0.138,0.657,-0.697,0.37,0.364,4,False,-0.314
+OWN RSI(2) < 10 in trend,BUY,TR,F3x2_40,71,43.7,46.5,0.167,11,21,39,-0.482,0.014,0.433,-0.484,0.368,0.365,4,False,-0.482
+OWN RSI(2) < 10 in trend,BUY,TR+LT,CH3,56,35.7,91.1,0.411,8,15,33,-0.731,0.196,0.785,-0.758,0.301,0.77,6,False,-0.731
+OWN RSI(2) < 10 in trend,BUY,TR+LT,EMA20,78,30.8,1.3,0.002,8,23,47,-0.257,-0.078,0.085,-0.392,0.099,0.433,3,False,-0.257
+OWN RSI(2) < 10 in trend,BUY,TR+LT,F2x2_20,69,46.4,46.4,0.137,8,19,42,-0.599,0.221,0.24,-0.804,0.302,0.236,3,False,-0.599
+OWN RSI(2) < 10 in trend,BUY,TR+LT,F2x3_40,62,38.7,54.8,0.373,8,17,37,-0.543,0.247,0.628,-1.057,-0.01,0.508,5,False,-0.543
+OWN RSI(2) < 10 in trend,BUY,TR+LT,F3x2_40,60,43.3,43.3,0.207,8,16,36,-0.654,0.153,0.422,-0.555,0.104,0.518,5,False,-0.654
+OWN RSI(2) < 10 in trend,BUY,none,CH3,66,37.9,92.4,0.385,10,20,36,-0.524,0.105,0.794,-0.254,0.65,0.403,6,False,-0.524
+OWN RSI(2) < 10 in trend,BUY,none,EMA20,96,30.2,1.0,0.005,13,30,53,-0.216,-0.034,0.082,-0.198,0.05,0.131,4,False,-0.216
+OWN RSI(2) < 10 in trend,BUY,none,F2x2_20,82,45.1,46.3,0.114,11,24,47,-0.446,0.122,0.241,0.018,0.311,0.114,5,False,-0.446
+OWN RSI(2) < 10 in trend,BUY,none,F2x3_40,73,39.7,56.2,0.354,11,22,40,-0.314,0.138,0.657,-0.267,0.342,0.267,4,False,-0.314
+OWN RSI(2) < 10 in trend,BUY,none,F3x2_40,71,43.7,46.5,0.167,11,21,39,-0.482,0.014,0.433,-0.251,0.317,0.202,4,False,-0.482
+OWN RSI(2) < 10 in trend,SELL,LT,CH3,47,40.4,95.7,-0.113,16,13,18,-0.234,-0.243,0.089,-0.432,-0.374,-0.255,2,False,-0.243
+OWN RSI(2) < 10 in trend,SELL,LT,EMA20,82,34.1,1.2,-0.084,26,27,29,-0.056,-0.113,-0.083,-0.148,-0.113,-0.036,3,False,-0.113
+OWN RSI(2) < 10 in trend,SELL,LT,F2x2_20,62,48.4,46.8,-0.007,21,18,23,-0.263,0.008,0.215,-0.278,-0.188,-0.028,3,False,-0.263
+OWN RSI(2) < 10 in trend,SELL,LT,F2x3_40,52,34.6,57.7,-0.109,18,15,19,-0.168,-0.317,0.112,-0.559,-0.364,-0.2,2,False,-0.317
+OWN RSI(2) < 10 in trend,SELL,LT,F3x2_40,49,40.8,42.9,-0.096,17,15,17,-0.051,-0.405,0.133,0.128,-0.366,-0.223,3,False,-0.405
+OWN RSI(2) < 10 in trend,SELL,TR,CH3,73,41.1,95.9,-0.149,21,16,36,-0.009,-0.176,-0.219,-0.458,-0.26,-0.288,3,False,-0.219
+OWN RSI(2) < 10 in trend,SELL,TR,EMA20,122,31.1,0.8,-0.102,34,32,56,-0.05,-0.121,-0.122,-0.222,-0.241,-0.167,0,False,-0.122
+OWN RSI(2) < 10 in trend,SELL,TR,F2x2_20,97,45.4,47.4,-0.039,29,23,45,-0.116,0.011,-0.014,-0.417,-0.255,-0.117,4,False,-0.116
+OWN RSI(2) < 10 in trend,SELL,TR,F2x3_40,80,28.8,62.5,-0.264,24,18,38,-0.104,-0.375,-0.312,-0.621,-0.442,-0.292,2,False,-0.375
+OWN RSI(2) < 10 in trend,SELL,TR,F3x2_40,75,36.0,45.3,-0.193,23,18,34,0.094,-0.391,-0.283,0.182,-0.358,-0.129,2,False,-0.391
+OWN RSI(2) < 10 in trend,SELL,TR+LT,CH3,47,40.4,95.7,-0.113,16,13,18,-0.234,-0.243,0.089,-0.523,-0.114,-0.171,2,False,-0.243
+OWN RSI(2) < 10 in trend,SELL,TR+LT,EMA20,82,34.1,1.2,-0.084,26,27,29,-0.056,-0.113,-0.083,-0.235,-0.119,-0.094,3,False,-0.113
+OWN RSI(2) < 10 in trend,SELL,TR+LT,F2x2_20,62,48.4,46.8,-0.007,21,18,23,-0.263,0.008,0.215,-0.53,0.182,0.101,3,False,-0.263
+OWN RSI(2) < 10 in trend,SELL,TR+LT,F2x3_40,52,34.6,57.7,-0.109,18,15,19,-0.168,-0.317,0.112,-0.708,-0.089,-0.163,2,False,-0.317
+OWN RSI(2) < 10 in trend,SELL,TR+LT,F3x2_40,49,40.8,42.9,-0.096,17,15,17,-0.051,-0.405,0.133,0.136,-0.204,0.065,3,False,-0.405
+OWN RSI(2) < 10 in trend,SELL,none,CH3,73,41.1,95.9,-0.149,21,16,36,-0.009,-0.176,-0.219,-0.068,-0.356,-0.145,3,False,-0.219
+OWN RSI(2) < 10 in trend,SELL,none,EMA20,122,31.1,0.8,-0.102,34,32,56,-0.05,-0.121,-0.122,-0.143,-0.163,-0.061,0,False,-0.122
+OWN RSI(2) < 10 in trend,SELL,none,F2x2_20,97,45.4,47.4,-0.039,29,23,45,-0.116,0.011,-0.014,0.02,-0.297,-0.224,4,False,-0.116
+OWN RSI(2) < 10 in trend,SELL,none,F2x3_40,80,28.8,62.5,-0.264,24,18,38,-0.104,-0.375,-0.312,-0.144,-0.481,-0.226,2,False,-0.375
+OWN RSI(2) < 10 in trend,SELL,none,F3x2_40,75,36.0,45.3,-0.193,23,18,34,0.094,-0.391,-0.283,0.304,-0.387,-0.226,2,False,-0.391
+OWN SuperTrend flip,BUY,LT,CH3,52,36.5,98.1,0.378,6,14,32,-0.869,0.322,0.637,-0.608,0.206,0.555,5,False,-0.869
+OWN SuperTrend flip,BUY,LT,EMA20,52,30.8,11.5,0.287,6,14,32,-0.517,0.458,0.362,-0.224,0.092,0.231,5,False,-0.517
+OWN SuperTrend flip,BUY,LT,F2x2_20,52,48.1,50.0,0.167,6,14,32,-1.07,0.178,0.394,-0.465,0.184,0.19,5,False,-1.07
+OWN SuperTrend flip,BUY,LT,F2x3_40,49,38.8,57.1,0.249,6,13,30,-1.07,0.166,0.549,-0.854,0.028,0.339,4,False,-1.07
+OWN SuperTrend flip,BUY,LT,F3x2_40,48,47.9,43.8,0.183,6,13,29,-1.038,0.089,0.477,-0.654,0.095,0.267,5,False,-1.038
+OWN SuperTrend flip,BUY,TR,CH3,96,34.4,95.8,0.18,22,28,46,-0.736,0.515,0.414,-0.597,0.635,0.591,5,False,-0.736
+OWN SuperTrend flip,BUY,TR,EMA20,96,30.2,8.3,0.184,22,28,46,-0.442,0.562,0.254,-0.345,0.101,0.345,5,False,-0.442
+OWN SuperTrend flip,BUY,TR,F2x2_20,96,38.5,55.2,0.006,22,28,46,-0.715,0.187,0.24,-0.515,0.451,0.196,5,False,-0.715
+OWN SuperTrend flip,BUY,TR,F2x3_40,94,34.0,63.8,0.137,22,27,45,-0.624,0.356,0.379,-0.697,0.37,0.364,6,False,-0.624
+OWN SuperTrend flip,BUY,TR,F3x2_40,92,44.6,45.7,0.148,21,27,44,-0.595,0.321,0.395,-0.484,0.368,0.365,7,False,-0.595
+OWN SuperTrend flip,BUY,TR+LT,CH3,51,35.3,98.0,0.381,6,14,31,-0.869,0.322,0.65,-0.758,0.301,0.77,5,False,-0.869
+OWN SuperTrend flip,BUY,TR+LT,EMA20,51,31.4,11.8,0.295,6,14,31,-0.517,0.458,0.378,-0.392,0.099,0.433,5,False,-0.517
+OWN SuperTrend flip,BUY,TR+LT,F2x2_20,51,47.1,51.0,0.164,6,14,31,-1.07,0.178,0.396,-0.804,0.302,0.236,4,False,-1.07
+OWN SuperTrend flip,BUY,TR+LT,F2x3_40,49,38.8,57.1,0.273,6,13,30,-1.07,0.166,0.588,-1.057,-0.01,0.508,4,False,-1.07
+OWN SuperTrend flip,BUY,TR+LT,F3x2_40,48,47.9,43.8,0.199,6,13,29,-1.038,0.089,0.504,-0.555,0.104,0.518,5,False,-1.038
+OWN SuperTrend flip,BUY,none,CH3,106,34.9,95.3,0.214,25,32,49,-0.749,0.689,0.395,-0.254,0.65,0.403,5,False,-0.749
+OWN SuperTrend flip,BUY,none,EMA20,106,29.2,7.5,0.147,25,32,49,-0.465,0.502,0.227,-0.198,0.05,0.131,5,False,-0.465
+OWN SuperTrend flip,BUY,none,F2x2_20,106,39.6,54.7,0.02,25,32,49,-0.755,0.316,0.222,0.018,0.311,0.114,4,False,-0.755
+OWN SuperTrend flip,BUY,none,F2x3_40,102,34.3,64.7,0.129,25,30,47,-0.675,0.405,0.38,-0.267,0.342,0.267,6,False,-0.675
+OWN SuperTrend flip,BUY,none,F3x2_40,98,44.9,45.9,0.15,23,29,46,-0.592,0.369,0.383,-0.251,0.317,0.202,6,False,-0.592
+OWN SuperTrend flip,SELL,LT,CH3,39,30.8,100.0,-0.191,14,13,12,0.013,-0.327,-0.281,-0.432,-0.374,-0.255,3,False,-0.327
+OWN SuperTrend flip,SELL,LT,EMA20,39,30.8,5.1,-0.062,14,13,12,0.198,-0.221,-0.191,-0.148,-0.113,-0.036,2,False,-0.221
+OWN SuperTrend flip,SELL,LT,F2x2_20,39,35.9,46.2,-0.127,14,13,12,-0.174,0.022,-0.234,-0.278,-0.188,-0.028,3,False,-0.234
+OWN SuperTrend flip,SELL,LT,F2x3_40,39,33.3,64.1,-0.218,14,13,12,-0.077,-0.048,-0.567,-0.559,-0.364,-0.2,1,False,-0.567
+OWN SuperTrend flip,SELL,LT,F3x2_40,36,47.2,41.7,-0.015,13,12,11,0.106,-0.114,-0.051,0.128,-0.366,-0.223,2,False,-0.114
+OWN SuperTrend flip,SELL,TR,CH3,82,32.9,93.9,-0.128,22,26,34,0.065,-0.454,-0.003,-0.458,-0.26,-0.288,2,False,-0.454
+OWN SuperTrend flip,SELL,TR,EMA20,82,30.5,4.9,-0.116,22,26,34,0.116,-0.3,-0.125,-0.222,-0.241,-0.167,3,False,-0.3
+OWN SuperTrend flip,SELL,TR,F2x2_20,81,42.0,42.0,-0.019,22,25,34,0.124,-0.25,0.058,-0.417,-0.255,-0.117,5,False,-0.25
+OWN SuperTrend flip,SELL,TR,F2x3_40,78,39.7,56.4,-0.002,22,23,33,0.266,-0.126,-0.095,-0.621,-0.442,-0.292,4,False,-0.126
+OWN SuperTrend flip,SELL,TR,F3x2_40,74,51.4,40.5,0.058,20,22,32,0.353,-0.238,0.077,0.182,-0.358,-0.129,6,False,-0.238
+OWN SuperTrend flip,SELL,TR+LT,CH3,38,31.6,100.0,-0.178,14,13,11,0.013,-0.327,-0.244,-0.523,-0.114,-0.171,3,False,-0.327
+OWN SuperTrend flip,SELL,TR+LT,EMA20,38,31.6,5.3,-0.057,14,13,11,0.198,-0.221,-0.187,-0.235,-0.119,-0.094,2,False,-0.221
+OWN SuperTrend flip,SELL,TR+LT,F2x2_20,38,36.8,47.4,-0.123,14,13,11,-0.174,0.022,-0.23,-0.53,0.182,0.101,3,False,-0.23
+OWN SuperTrend flip,SELL,TR+LT,F2x3_40,38,34.2,63.2,-0.197,14,13,11,-0.077,-0.048,-0.526,-0.708,-0.089,-0.163,1,False,-0.526
+OWN SuperTrend flip,SELL,TR+LT,F3x2_40,35,48.6,42.9,-0.014,13,12,10,0.106,-0.114,-0.05,0.136,-0.204,0.065,2,False,-0.114
+OWN SuperTrend flip,SELL,none,CH3,104,32.7,95.2,-0.125,23,32,49,0.028,-0.395,-0.021,-0.068,-0.356,-0.145,4,False,-0.395
+OWN SuperTrend flip,SELL,none,EMA20,104,26.0,3.8,-0.11,23,32,49,0.095,-0.295,-0.085,-0.143,-0.163,-0.061,4,False,-0.295
+OWN SuperTrend flip,SELL,none,F2x2_20,103,38.8,42.7,-0.031,23,31,49,0.074,-0.253,0.061,0.02,-0.297,-0.224,5,False,-0.253
+OWN SuperTrend flip,SELL,none,F2x3_40,100,39.0,58.0,-0.009,23,29,48,0.21,-0.089,-0.065,-0.144,-0.481,-0.226,4,False,-0.089
+OWN SuperTrend flip,SELL,none,F3x2_40,94,48.9,42.6,0.039,21,27,46,0.378,-0.17,0.008,0.304,-0.387,-0.226,6,False,-0.17
+OWN inside-day break,BUY,LT,CH3,95,37.9,94.7,0.4,11,25,59,-0.636,-0.028,0.775,-0.608,0.206,0.555,5,False,-0.636
+OWN inside-day break,BUY,LT,EMA20,134,39.6,5.2,0.217,15,26,93,-0.374,-0.015,0.377,-0.224,0.092,0.231,5,False,-0.374
+OWN inside-day break,BUY,LT,F2x2_20,120,42.5,46.7,0.056,12,28,80,-0.562,-0.12,0.211,-0.465,0.184,0.19,3,False,-0.562
+OWN inside-day break,BUY,LT,F2x3_40,101,32.7,59.4,0.1,9,23,69,-0.644,-0.195,0.295,-0.854,0.028,0.339,4,False,-0.644
+OWN inside-day break,BUY,LT,F3x2_40,93,40.9,47.3,0.095,8,21,64,-0.545,-0.15,0.255,-0.654,0.095,0.267,5,False,-0.545
+OWN inside-day break,BUY,TR,CH3,108,37.0,94.4,0.376,18,28,62,-0.834,0.676,0.592,-0.597,0.635,0.591,5,False,-0.834
+OWN inside-day break,BUY,TR,EMA20,122,34.4,6.6,0.28,19,30,73,-0.564,0.387,0.455,-0.345,0.101,0.345,6,False,-0.564
+OWN inside-day break,BUY,TR,F2x2_20,129,38.0,51.9,-0.014,18,33,78,-0.855,0.118,0.125,-0.515,0.451,0.196,3,False,-0.855
+OWN inside-day break,BUY,TR,F2x3_40,114,31.6,60.5,0.131,17,28,69,-0.765,0.277,0.292,-0.697,0.37,0.364,5,False,-0.765
+OWN inside-day break,BUY,TR,F3x2_40,105,41.0,48.6,0.11,16,26,63,-0.692,0.266,0.25,-0.484,0.368,0.365,5,False,-0.692
+OWN inside-day break,BUY,TR+LT,CH3,82,36.6,97.6,0.353,9,20,53,-0.939,0.046,0.688,-0.758,0.301,0.77,5,False,-0.939
+OWN inside-day break,BUY,TR+LT,EMA20,92,37.0,8.7,0.287,9,20,63,-0.747,0.002,0.525,-0.392,0.099,0.433,6,False,-0.747
+OWN inside-day break,BUY,TR+LT,F2x2_20,98,38.8,51.0,0.003,9,22,67,-0.835,-0.074,0.142,-0.804,0.302,0.236,3,False,-0.835
+OWN inside-day break,BUY,TR+LT,F2x3_40,85,30.6,61.2,0.098,8,19,58,-0.934,-0.089,0.302,-1.057,-0.01,0.508,4,False,-0.934
+OWN inside-day break,BUY,TR+LT,F3x2_40,78,39.7,52.6,0.075,8,17,53,-0.916,-0.061,0.268,-0.555,0.104,0.518,5,False,-0.916
+OWN inside-day break,BUY,none,CH3,160,36.9,92.5,0.243,31,48,81,-0.511,0.312,0.49,-0.254,0.65,0.403,6,False,-0.511
+OWN inside-day break,BUY,none,EMA20,222,36.5,3.2,0.156,44,55,123,-0.212,0.175,0.279,-0.198,0.05,0.131,6,False,-0.212
+OWN inside-day break,BUY,none,F2x2_20,194,39.2,49.5,-0.015,34,55,105,-0.387,0.001,0.098,0.018,0.311,0.114,5,False,-0.387
+OWN inside-day break,BUY,none,F2x3_40,165,31.5,61.8,0.016,27,45,93,-0.456,0.063,0.13,-0.267,0.342,0.267,5,False,-0.456
+OWN inside-day break,BUY,none,F3x2_40,146,41.1,46.6,0.053,25,40,81,-0.372,0.189,0.117,-0.251,0.317,0.202,6,False,-0.372
+OWN inside-day break,SELL,LT,CH3,71,39.4,93.0,-0.108,21,22,28,0.123,-0.345,-0.094,-0.432,-0.374,-0.255,4,False,-0.345
+OWN inside-day break,SELL,LT,EMA20,98,27.6,1.0,-0.076,32,29,37,0.035,-0.263,-0.026,-0.148,-0.113,-0.036,5,False,-0.263
+OWN inside-day break,SELL,LT,F2x2_20,87,46.0,44.8,-0.001,27,28,32,0.163,-0.225,0.056,-0.278,-0.188,-0.028,5,False,-0.225
+OWN inside-day break,SELL,LT,F2x3_40,72,37.5,56.9,-0.053,22,23,27,0.184,-0.346,0.003,-0.559,-0.364,-0.2,6,False,-0.346
+OWN inside-day break,SELL,LT,F3x2_40,64,50.0,35.9,0.021,21,18,25,0.296,-0.23,-0.029,0.128,-0.366,-0.223,6,False,-0.23
+OWN inside-day break,SELL,TR,CH3,95,35.8,91.6,-0.122,22,25,48,0.097,-0.365,-0.096,-0.458,-0.26,-0.288,2,False,-0.365
+OWN inside-day break,SELL,TR,EMA20,121,25.6,1.7,-0.071,33,31,57,0.063,-0.297,-0.025,-0.222,-0.241,-0.167,3,False,-0.297
+OWN inside-day break,SELL,TR,F2x2_20,115,45.2,40.9,-0.022,30,32,53,0.202,-0.175,-0.057,-0.417,-0.255,-0.117,5,False,-0.175
+OWN inside-day break,SELL,TR,F2x3_40,97,36.1,55.7,-0.052,21,27,49,0.362,-0.247,-0.122,-0.621,-0.442,-0.292,2,False,-0.247
+OWN inside-day break,SELL,TR,F3x2_40,85,45.9,36.5,0.021,20,21,44,0.203,-0.028,-0.038,0.182,-0.358,-0.129,5,False,-0.038
+OWN inside-day break,SELL,TR+LT,CH3,52,42.3,90.4,-0.059,15,15,22,0.009,-0.36,0.101,-0.523,-0.114,-0.171,5,False,-0.36
+OWN inside-day break,SELL,TR+LT,EMA20,70,27.1,1.4,-0.049,23,18,29,0.087,-0.336,0.022,-0.235,-0.119,-0.094,6,False,-0.336
+OWN inside-day break,SELL,TR+LT,F2x2_20,65,55.4,33.8,0.175,20,20,25,0.244,-0.012,0.269,-0.53,0.182,0.101,7,False,-0.012
+OWN inside-day break,SELL,TR+LT,F2x3_40,55,41.8,49.1,0.023,16,17,22,0.112,-0.192,0.125,-0.708,-0.089,-0.163,5,False,-0.192
+OWN inside-day break,SELL,TR+LT,F3x2_40,48,50.0,31.2,0.075,15,13,20,0.063,0.061,0.094,0.136,-0.204,0.065,6,False,0.061
+OWN inside-day break,SELL,none,CH3,158,34.2,93.0,-0.141,29,44,85,0.189,-0.396,-0.122,-0.068,-0.356,-0.145,1,False,-0.396
+OWN inside-day break,SELL,none,EMA20,223,26.5,0.9,-0.09,45,60,118,0.029,-0.218,-0.071,-0.143,-0.163,-0.061,1,False,-0.218
+OWN inside-day break,SELL,none,F2x2_20,188,37.2,50.5,-0.165,38,52,98,0.208,-0.297,-0.24,0.02,-0.297,-0.224,2,False,-0.297
+OWN inside-day break,SELL,none,F2x3_40,162,31.5,64.2,-0.112,30,46,86,0.393,-0.405,-0.132,-0.144,-0.481,-0.226,4,False,-0.405
+OWN inside-day break,SELL,none,F3x2_40,143,41.3,48.3,-0.109,29,37,77,0.337,-0.313,-0.179,0.304,-0.387,-0.226,3,False,-0.313
+OWN pull-back to EMA20 in trend,BUY,LT,CH3,86,39.5,95.3,0.623,10,23,53,-0.63,0.576,0.879,-0.608,0.206,0.555,6,False,-0.63
+OWN pull-back to EMA20 in trend,BUY,LT,EMA20,156,24.4,1.3,0.328,16,40,100,-0.269,0.157,0.493,-0.224,0.092,0.231,6,False,-0.269
+OWN pull-back to EMA20 in trend,BUY,LT,F2x2_20,100,50.0,39.0,0.293,11,26,63,-0.603,0.097,0.53,-0.465,0.184,0.19,5,False,-0.603
+OWN pull-back to EMA20 in trend,BUY,LT,F2x3_40,80,45.0,51.2,0.432,11,20,49,-0.634,0.443,0.667,-0.854,0.028,0.339,5,False,-0.634
+OWN pull-back to EMA20 in trend,BUY,LT,F3x2_40,71,47.9,38.0,0.277,9,16,46,-0.594,0.383,0.411,-0.654,0.095,0.267,5,False,-0.594
+OWN pull-back to EMA20 in trend,BUY,TR,CH3,108,36.1,95.4,0.473,18,32,58,-0.562,0.527,0.764,-0.597,0.635,0.591,5,False,-0.562
+OWN pull-back to EMA20 in trend,BUY,TR,EMA20,195,24.6,1.0,0.251,28,53,114,-0.275,0.149,0.427,-0.345,0.101,0.345,5,False,-0.275
+OWN pull-back to EMA20 in trend,BUY,TR,F2x2_20,127,47.2,44.1,0.207,19,35,73,-0.63,0.078,0.486,-0.515,0.451,0.196,5,False,-0.63
+OWN pull-back to EMA20 in trend,BUY,TR,F2x3_40,103,41.7,54.4,0.344,19,28,56,-0.596,0.416,0.628,-0.697,0.37,0.364,5,False,-0.596
+OWN pull-back to EMA20 in trend,BUY,TR,F3x2_40,92,45.7,38.0,0.223,16,24,52,-0.503,0.279,0.422,-0.484,0.368,0.365,4,False,-0.503
+OWN pull-back to EMA20 in trend,BUY,TR+LT,CH3,86,39.5,95.3,0.623,10,23,53,-0.63,0.576,0.879,-0.758,0.301,0.77,6,False,-0.63
+OWN pull-back to EMA20 in trend,BUY,TR+LT,EMA20,156,24.4,1.3,0.328,16,40,100,-0.269,0.157,0.493,-0.392,0.099,0.433,6,False,-0.269
+OWN pull-back to EMA20 in trend,BUY,TR+LT,F2x2_20,100,50.0,39.0,0.293,11,26,63,-0.603,0.097,0.53,-0.804,0.302,0.236,5,False,-0.603
+OWN pull-back to EMA20 in trend,BUY,TR+LT,F2x3_40,80,45.0,51.2,0.432,11,20,49,-0.634,0.443,0.667,-1.057,-0.01,0.508,5,False,-0.634
+OWN pull-back to EMA20 in trend,BUY,TR+LT,F3x2_40,71,47.9,38.0,0.277,9,16,46,-0.594,0.383,0.411,-0.555,0.104,0.518,5,False,-0.594
+OWN pull-back to EMA20 in trend,BUY,none,CH3,108,36.1,95.4,0.473,18,32,58,-0.562,0.527,0.764,-0.254,0.65,0.403,5,False,-0.562
+OWN pull-back to EMA20 in trend,BUY,none,EMA20,195,24.6,1.0,0.251,28,53,114,-0.275,0.149,0.427,-0.198,0.05,0.131,5,False,-0.275
+OWN pull-back to EMA20 in trend,BUY,none,F2x2_20,127,47.2,44.1,0.207,19,35,73,-0.63,0.078,0.486,0.018,0.311,0.114,5,False,-0.63
+OWN pull-back to EMA20 in trend,BUY,none,F2x3_40,103,41.7,54.4,0.344,19,28,56,-0.596,0.416,0.628,-0.267,0.342,0.267,5,False,-0.596
+OWN pull-back to EMA20 in trend,BUY,none,F3x2_40,92,45.7,38.0,0.223,16,24,52,-0.503,0.279,0.422,-0.251,0.317,0.202,4,False,-0.503
+OWN pull-back to EMA20 in trend,SELL,LT,CH3,78,34.6,94.9,-0.115,29,25,24,-0.289,-0.089,0.068,-0.432,-0.374,-0.255,2,False,-0.289
+OWN pull-back to EMA20 in trend,SELL,LT,EMA20,169,25.4,0.6,-0.082,65,47,57,-0.129,-0.015,-0.085,-0.148,-0.113,-0.036,2,False,-0.129
+OWN pull-back to EMA20 in trend,SELL,LT,F2x2_20,93,47.3,38.7,0.038,38,28,27,-0.214,0.282,0.139,-0.278,-0.188,-0.028,3,False,-0.214
+OWN pull-back to EMA20 in trend,SELL,LT,F2x3_40,72,33.3,61.1,-0.127,29,21,22,-0.455,0.009,0.176,-0.559,-0.364,-0.2,3,False,-0.455
+OWN pull-back to EMA20 in trend,SELL,LT,F3x2_40,65,41.5,46.2,-0.12,24,20,21,-0.268,-0.158,0.084,0.128,-0.366,-0.223,3,False,-0.268
+OWN pull-back to EMA20 in trend,SELL,TR,CH3,114,33.3,93.0,-0.159,34,34,46,-0.171,-0.17,-0.142,-0.458,-0.26,-0.288,2,False,-0.171
+OWN pull-back to EMA20 in trend,SELL,TR,EMA20,256,23.8,0.4,-0.095,81,62,113,-0.117,-0.044,-0.107,-0.222,-0.241,-0.167,2,False,-0.117
+OWN pull-back to EMA20 in trend,SELL,TR,F2x2_20,136,41.2,42.6,-0.064,45,37,54,-0.084,0.058,-0.13,-0.417,-0.255,-0.117,4,False,-0.13
+OWN pull-back to EMA20 in trend,SELL,TR,F2x3_40,104,31.7,64.4,-0.238,34,29,41,-0.249,-0.176,-0.272,-0.621,-0.442,-0.292,1,False,-0.272
+OWN pull-back to EMA20 in trend,SELL,TR,F3x2_40,94,38.3,47.9,-0.185,28,28,38,-0.078,-0.309,-0.173,0.182,-0.358,-0.129,2,False,-0.309
+OWN pull-back to EMA20 in trend,SELL,TR+LT,CH3,78,34.6,94.9,-0.115,29,25,24,-0.289,-0.089,0.068,-0.523,-0.114,-0.171,2,False,-0.289
+OWN pull-back to EMA20 in trend,SELL,TR+LT,EMA20,169,25.4,0.6,-0.082,65,47,57,-0.129,-0.015,-0.085,-0.235,-0.119,-0.094,2,False,-0.129
+OWN pull-back to EMA20 in trend,SELL,TR+LT,F2x2_20,93,47.3,38.7,0.038,38,28,27,-0.214,0.282,0.139,-0.53,0.182,0.101,3,False,-0.214
+OWN pull-back to EMA20 in trend,SELL,TR+LT,F2x3_40,72,33.3,61.1,-0.127,29,21,22,-0.455,0.009,0.176,-0.708,-0.089,-0.163,3,False,-0.455
+OWN pull-back to EMA20 in trend,SELL,TR+LT,F3x2_40,65,41.5,46.2,-0.12,24,20,21,-0.268,-0.158,0.084,0.136,-0.204,0.065,3,False,-0.268
+OWN pull-back to EMA20 in trend,SELL,none,CH3,114,33.3,93.0,-0.159,34,34,46,-0.171,-0.17,-0.142,-0.068,-0.356,-0.145,2,False,-0.171
+OWN pull-back to EMA20 in trend,SELL,none,EMA20,256,23.8,0.4,-0.095,81,62,113,-0.117,-0.044,-0.107,-0.143,-0.163,-0.061,2,False,-0.117
+OWN pull-back to EMA20 in trend,SELL,none,F2x2_20,136,41.2,42.6,-0.064,45,37,54,-0.084,0.058,-0.13,0.02,-0.297,-0.224,4,False,-0.13
+OWN pull-back to EMA20 in trend,SELL,none,F2x3_40,104,31.7,64.4,-0.238,34,29,41,-0.249,-0.176,-0.272,-0.144,-0.481,-0.226,1,False,-0.272
+OWN pull-back to EMA20 in trend,SELL,none,F3x2_40,94,38.3,47.9,-0.185,28,28,38,-0.078,-0.309,-0.173,0.304,-0.387,-0.226,2,False,-0.309
+RANDOM,BUY,LT,CH3,96,43.8,92.7,0.342,11,22,63,-0.608,0.206,0.555,-0.608,0.206,0.555,5,False,-0.608
+RANDOM,BUY,LT,EMA20,161,37.3,1.9,0.158,14,39,108,-0.224,0.092,0.231,-0.224,0.092,0.231,4,False,-0.224
+RANDOM,BUY,LT,F2x2_20,129,50.4,43.4,0.133,11,30,88,-0.465,0.184,0.19,-0.465,0.184,0.19,5,False,-0.465
+RANDOM,BUY,LT,F2x3_40,104,38.5,57.7,0.158,9,26,69,-0.854,0.028,0.339,-0.854,0.028,0.339,4,False,-0.854
+RANDOM,BUY,LT,F3x2_40,97,47.4,41.2,0.141,9,23,65,-0.654,0.095,0.267,-0.654,0.095,0.267,3,False,-0.654
+RANDOM,BUY,TR,CH3,99,44.4,94.9,0.424,15,28,56,-0.597,0.635,0.591,-0.597,0.635,0.591,6,False,-0.597
+RANDOM,BUY,TR,EMA20,131,30.5,3.1,0.178,18,39,74,-0.345,0.101,0.345,-0.345,0.101,0.345,4,False,-0.345
+RANDOM,BUY,TR,F2x2_20,130,49.2,44.6,0.186,15,37,78,-0.515,0.451,0.196,-0.515,0.451,0.196,6,False,-0.515
+RANDOM,BUY,TR,F2x3_40,106,36.8,59.4,0.236,13,32,61,-0.697,0.37,0.364,-0.697,0.37,0.364,7,False,-0.697
+RANDOM,BUY,TR,F3x2_40,100,47.0,37.0,0.255,13,30,57,-0.484,0.368,0.365,-0.484,0.368,0.365,7,False,-0.484
+RANDOM,BUY,TR+LT,CH3,67,46.3,95.5,0.56,4,17,46,-0.758,0.301,0.77,-0.758,0.301,0.77,7,False,-0.758
+RANDOM,BUY,TR+LT,EMA20,93,32.3,3.2,0.288,5,28,60,-0.392,0.099,0.433,-0.392,0.099,0.433,6,False,-0.392
+RANDOM,BUY,TR+LT,F2x2_20,92,51.1,43.5,0.208,4,24,64,-0.804,0.302,0.236,-0.804,0.302,0.236,5,False,-0.804
+RANDOM,BUY,TR+LT,F2x3_40,73,39.7,57.5,0.281,4,20,49,-1.057,-0.01,0.508,-1.057,-0.01,0.508,4,False,-1.057
+RANDOM,BUY,TR+LT,F3x2_40,68,52.9,32.4,0.345,4,18,46,-0.555,0.104,0.518,-0.555,0.104,0.518,6,False,-0.555
+RANDOM,BUY,none,CH3,169,45.6,91.7,0.336,35,47,87,-0.254,0.65,0.403,-0.254,0.65,0.403,7,False,-0.254
+RANDOM,BUY,none,EMA20,291,35.7,1.7,0.047,54,81,156,-0.198,0.05,0.131,-0.198,0.05,0.131,4,False,-0.198
+RANDOM,BUY,none,F2x2_20,226,50.0,43.4,0.152,39,62,125,0.018,0.311,0.114,0.018,0.311,0.114,6,False,0.018
+RANDOM,BUY,none,F2x3_40,180,40.0,55.0,0.196,31,51,98,-0.267,0.342,0.267,-0.267,0.342,0.267,6,False,-0.267
+RANDOM,BUY,none,F3x2_40,161,47.8,41.0,0.149,30,44,87,-0.251,0.317,0.202,-0.251,0.317,0.202,7,False,-0.251
+RANDOM,SELL,LT,CH3,88,28.4,95.5,-0.352,27,32,29,-0.432,-0.374,-0.255,-0.432,-0.374,-0.255,1,False,-0.432
+RANDOM,SELL,LT,EMA20,128,35.2,2.3,-0.099,41,45,42,-0.148,-0.113,-0.036,-0.148,-0.113,-0.036,1,False,-0.148
+RANDOM,SELL,LT,F2x2_20,99,36.4,51.5,-0.161,33,31,35,-0.278,-0.188,-0.028,-0.278,-0.188,-0.028,3,False,-0.278
+RANDOM,SELL,LT,F2x3_40,86,26.7,70.9,-0.369,28,27,31,-0.559,-0.364,-0.2,-0.559,-0.364,-0.2,1,False,-0.559
+RANDOM,SELL,LT,F3x2_40,75,40.0,52.0,-0.156,24,24,27,0.128,-0.366,-0.223,0.128,-0.366,-0.223,4,False,-0.366
+RANDOM,SELL,TR,CH3,94,28.7,96.8,-0.33,28,27,39,-0.458,-0.26,-0.288,-0.458,-0.26,-0.288,3,False,-0.458
+RANDOM,SELL,TR,EMA20,127,25.2,3.1,-0.205,35,39,53,-0.222,-0.241,-0.167,-0.222,-0.241,-0.167,2,False,-0.241
+RANDOM,SELL,TR,F2x2_20,112,34.8,50.9,-0.245,33,32,47,-0.417,-0.255,-0.117,-0.417,-0.255,-0.117,3,False,-0.417
+RANDOM,SELL,TR,F2x3_40,95,23.2,71.6,-0.435,28,29,38,-0.621,-0.442,-0.292,-0.621,-0.442,-0.292,1,False,-0.621
+RANDOM,SELL,TR,F3x2_40,83,41.0,43.4,-0.112,23,25,35,0.182,-0.358,-0.129,0.182,-0.358,-0.129,3,False,-0.358
+RANDOM,SELL,TR+LT,CH3,59,30.5,94.9,-0.299,24,16,19,-0.523,-0.114,-0.171,-0.523,-0.114,-0.171,2,False,-0.523
+RANDOM,SELL,TR+LT,EMA20,78,30.8,3.8,-0.155,30,23,25,-0.235,-0.119,-0.094,-0.235,-0.119,-0.094,3,False,-0.235
+RANDOM,SELL,TR+LT,F2x2_20,69,37.7,44.9,-0.134,28,18,23,-0.53,0.182,0.101,-0.53,0.182,0.101,3,False,-0.53
+RANDOM,SELL,TR+LT,F2x3_40,60,26.7,70.0,-0.372,25,15,20,-0.708,-0.089,-0.163,-0.708,-0.089,-0.163,2,False,-0.708
+RANDOM,SELL,TR+LT,F3x2_40,53,47.2,39.6,0.022,21,14,18,0.136,-0.204,0.065,0.136,-0.204,0.065,4,False,-0.204
+RANDOM,SELL,none,CH3,197,33.0,94.4,-0.192,37,58,102,-0.068,-0.356,-0.145,-0.068,-0.356,-0.145,2,False,-0.356
+RANDOM,SELL,none,EMA20,301,32.2,1.3,-0.107,58,89,154,-0.143,-0.163,-0.061,-0.143,-0.163,-0.061,1,False,-0.163
+RANDOM,SELL,none,F2x2_20,230,35.7,54.8,-0.195,46,63,121,0.02,-0.297,-0.224,0.02,-0.297,-0.224,2,False,-0.297
+RANDOM,SELL,none,F2x3_40,198,27.3,70.2,-0.28,39,54,105,-0.144,-0.481,-0.226,-0.144,-0.481,-0.226,2,False,-0.481
+RANDOM,SELL,none,F3x2_40,172,37.2,54.7,-0.173,32,48,92,0.304,-0.387,-0.226,0.304,-0.387,-0.226,2,False,-0.387
+REV BAR3,BUY,LT,CH3,132,41.7,93.2,0.409,19,35,78,-0.501,0.265,0.696,-0.608,0.206,0.555,5,False,-0.501
+REV BAR3,BUY,LT,EMA20,264,31.4,1.1,0.144,35,62,167,-0.204,0.075,0.243,-0.224,0.092,0.231,5,False,-0.204
+REV BAR3,BUY,LT,F2x2_20,183,51.4,38.8,0.248,20,45,118,-0.342,0.166,0.379,-0.465,0.184,0.19,5,False,-0.342
+REV BAR3,BUY,LT,F2x3_40,145,42.1,53.1,0.344,17,37,91,-0.539,0.249,0.547,-0.854,0.028,0.339,5,False,-0.539
+REV BAR3,BUY,LT,F3x2_40,128,50.0,38.3,0.245,14,29,85,-0.626,0.335,0.358,-0.654,0.095,0.267,5,False,-0.626
+REV BAR3,BUY,TR,CH3,151,37.1,94.0,0.355,35,40,76,-0.595,0.602,0.662,-0.597,0.635,0.591,5,False,-0.595
+REV BAR3,BUY,TR,EMA20,239,24.7,2.9,0.173,47,61,131,-0.299,0.272,0.296,-0.345,0.101,0.345,6,False,-0.299
+REV BAR3,BUY,TR,F2x2_20,201,45.8,46.8,0.178,37,52,112,-0.463,0.203,0.377,-0.515,0.451,0.196,5,False,-0.463
+REV BAR3,BUY,TR,F2x3_40,163,36.2,57.7,0.204,29,42,92,-0.609,0.373,0.384,-0.697,0.37,0.364,5,False,-0.609
+REV BAR3,BUY,TR,F3x2_40,143,44.8,44.8,0.131,25,38,80,-0.616,0.192,0.335,-0.484,0.368,0.365,5,False,-0.616
+REV BAR3,BUY,TR+LT,CH3,100,41.0,94.0,0.514,12,26,62,-0.714,0.269,0.855,-0.758,0.301,0.77,6,False,-0.714
+REV BAR3,BUY,TR+LT,EMA20,169,25.4,1.8,0.247,18,42,109,-0.337,0.115,0.394,-0.392,0.099,0.433,6,False,-0.337
+REV BAR3,BUY,TR+LT,F2x2_20,135,51.1,40.7,0.3,12,31,92,-0.645,0.192,0.46,-0.804,0.302,0.236,6,False,-0.645
+REV BAR3,BUY,TR+LT,F2x3_40,111,40.5,53.2,0.382,11,25,75,-0.639,0.239,0.58,-1.057,-0.01,0.508,6,False,-0.639
+REV BAR3,BUY,TR+LT,F3x2_40,97,49.5,40.2,0.269,9,21,67,-0.818,0.18,0.443,-0.555,0.104,0.518,5,False,-0.818
+REV BAR3,BUY,none,CH3,225,39.1,92.4,0.256,53,64,108,-0.256,0.315,0.473,-0.254,0.65,0.403,6,False,-0.256
+REV BAR3,BUY,none,EMA20,481,30.4,1.0,0.065,114,120,247,-0.146,0.141,0.125,-0.198,0.05,0.131,4,False,-0.146
+REV BAR3,BUY,none,F2x2_20,322,45.7,43.8,0.112,67,88,167,-0.142,0.125,0.207,0.018,0.311,0.114,5,False,-0.142
+REV BAR3,BUY,none,F2x3_40,247,37.2,57.9,0.187,50,68,129,-0.36,0.412,0.281,-0.267,0.342,0.267,5,False,-0.36
+REV BAR3,BUY,none,F3x2_40,212,43.9,42.5,0.107,42,57,113,-0.387,0.288,0.2,-0.251,0.317,0.202,5,False,-0.387
+REV BAR3,SELL,LT,CH3,105,35.2,92.4,-0.044,35,31,39,-0.034,-0.038,-0.059,-0.432,-0.374,-0.255,4,False,-0.059
+REV BAR3,SELL,LT,EMA20,185,34.6,1.1,-0.004,68,59,58,-0.003,-0.013,0.003,-0.148,-0.113,-0.036,5,False,-0.013
+REV BAR3,SELL,LT,F2x2_20,138,44.9,44.9,-0.048,51,41,46,-0.026,-0.004,-0.112,-0.278,-0.188,-0.028,3,False,-0.112
+REV BAR3,SELL,LT,F2x3_40,103,36.9,56.3,-0.0,37,29,37,-0.02,-0.049,0.057,-0.559,-0.364,-0.2,6,False,-0.049
+REV BAR3,SELL,LT,F3x2_40,92,41.3,46.7,-0.067,31,26,35,0.06,-0.23,-0.06,0.128,-0.366,-0.223,4,False,-0.23
+REV BAR3,SELL,TR,CH3,146,39.0,92.5,-0.031,41,42,63,-0.085,-0.176,0.101,-0.458,-0.26,-0.288,4,False,-0.176
+REV BAR3,SELL,TR,EMA20,232,34.5,2.6,-0.015,71,62,99,-0.028,-0.127,0.065,-0.222,-0.241,-0.167,4,False,-0.127
+REV BAR3,SELL,TR,F2x2_20,191,45.0,44.0,-0.0,55,49,87,0.033,-0.122,0.047,-0.417,-0.255,-0.117,5,False,-0.122
+REV BAR3,SELL,TR,F2x3_40,147,36.1,58.5,-0.041,42,38,67,-0.093,-0.215,0.09,-0.621,-0.442,-0.292,5,False,-0.215
+REV BAR3,SELL,TR,F3x2_40,131,42.0,45.8,-0.073,37,34,60,-0.026,-0.333,0.045,0.182,-0.358,-0.129,2,False,-0.333
+REV BAR3,SELL,TR+LT,CH3,83,34.9,92.8,-0.015,31,25,27,-0.185,-0.008,0.174,-0.523,-0.114,-0.171,4,False,-0.185
+REV BAR3,SELL,TR+LT,EMA20,137,35.0,2.9,-0.012,57,40,40,-0.048,-0.027,0.053,-0.235,-0.119,-0.094,4,False,-0.048
+REV BAR3,SELL,TR+LT,F2x2_20,109,46.8,42.2,-0.038,43,31,35,-0.088,0.057,-0.061,-0.53,0.182,0.101,4,False,-0.088
+REV BAR3,SELL,TR+LT,F2x3_40,85,35.3,56.5,-0.051,34,23,28,-0.261,-0.012,0.17,-0.708,-0.089,-0.163,5,False,-0.261
+REV BAR3,SELL,TR+LT,F3x2_40,76,38.2,46.1,-0.099,29,21,26,-0.092,-0.292,0.049,0.136,-0.204,0.065,4,False,-0.292
+REV BAR3,SELL,none,CH3,252,32.9,94.0,-0.11,53,65,134,0.142,-0.132,-0.198,-0.068,-0.356,-0.145,4,False,-0.198
+REV BAR3,SELL,none,EMA20,473,36.4,0.6,-0.006,106,124,243,0.012,-0.024,-0.004,-0.143,-0.163,-0.061,5,False,-0.024
+REV BAR3,SELL,none,F2x2_20,329,39.2,51.1,-0.082,74,83,172,0.199,-0.062,-0.214,0.02,-0.297,-0.224,4,False,-0.214
+REV BAR3,SELL,none,F2x3_40,250,31.6,64.4,-0.103,50,62,138,0.276,-0.114,-0.236,-0.144,-0.481,-0.226,3,False,-0.236
+REV BAR3,SELL,none,F3x2_40,211,37.0,50.2,-0.131,43,50,118,0.235,-0.194,-0.238,0.304,-0.387,-0.226,3,False,-0.238
+REV BB_REJECT,BUY,LT,CH3,51,43.1,90.2,0.291,10,6,35,-0.042,1.96,0.1,-0.608,0.206,0.555,4,False,-0.042
+REV BB_REJECT,BUY,LT,EMA20,57,43.9,0.0,-0.01,13,7,37,0.04,-0.025,-0.026,-0.224,0.092,0.231,4,False,-0.026
+REV BB_REJECT,BUY,LT,F2x2_20,51,47.1,45.1,0.041,10,6,35,0.267,1.077,-0.202,-0.465,0.184,0.19,4,False,-0.202
+REV BB_REJECT,BUY,LT,F2x3_40,48,43.8,47.9,0.234,8,5,35,-0.035,1.621,0.097,-0.854,0.028,0.339,4,False,-0.035
+REV BB_REJECT,BUY,LT,F3x2_40,46,52.2,37.0,0.111,8,5,33,-0.19,1.081,0.037,-0.654,0.095,0.267,4,False,-0.19
+REV BB_REJECT,BUY,none,CH3,100,36.0,90.0,0.116,26,22,52,-0.224,0.816,-0.01,-0.254,0.65,0.403,4,False,-0.224
+REV BB_REJECT,BUY,none,EMA20,115,40.9,0.0,-0.03,31,27,57,0.018,-0.081,-0.033,-0.198,0.05,0.131,2,False,-0.081
+REV BB_REJECT,BUY,none,F2x2_20,101,42.6,46.5,-0.071,28,22,51,-0.105,0.302,-0.214,0.018,0.311,0.114,3,False,-0.214
+REV BB_REJECT,BUY,none,F2x3_40,93,36.6,55.9,0.059,23,20,50,-0.415,0.825,-0.029,-0.267,0.342,0.267,4,False,-0.415
+REV BB_REJECT,BUY,none,F3x2_40,86,41.9,46.5,-0.031,20,19,47,-0.387,0.446,-0.072,-0.251,0.317,0.202,5,False,-0.387
+REV BB_REJECT,SELL,LT,CH3,53,43.4,94.3,0.068,15,17,21,0.509,-0.115,-0.1,-0.432,-0.374,-0.255,3,False,-0.115
+REV BB_REJECT,SELL,LT,EMA20,65,47.7,1.5,0.035,19,20,26,0.294,-0.153,-0.01,-0.148,-0.113,-0.036,3,False,-0.153
+REV BB_REJECT,SELL,LT,F2x2_20,59,45.8,49.2,0.006,17,18,24,0.408,-0.312,-0.041,-0.278,-0.188,-0.028,5,False,-0.312
+REV BB_REJECT,SELL,LT,F2x3_40,54,35.2,55.6,-0.004,13,18,23,0.378,-0.271,-0.012,-0.559,-0.364,-0.2,3,False,-0.271
+REV BB_REJECT,SELL,LT,F3x2_40,46,39.1,45.7,-0.006,12,15,19,0.375,-0.229,-0.07,0.128,-0.366,-0.223,3,False,-0.229
+REV BB_REJECT,SELL,none,CH3,144,33.3,94.4,-0.18,22,32,90,0.406,-0.101,-0.352,-0.068,-0.356,-0.145,2,False,-0.352
+REV BB_REJECT,SELL,none,EMA20,179,43.0,0.6,-0.033,27,38,114,0.213,-0.05,-0.086,-0.143,-0.163,-0.061,1,False,-0.086
+REV BB_REJECT,SELL,none,F2x2_20,155,37.4,54.2,-0.123,24,35,96,0.475,-0.123,-0.273,0.02,-0.297,-0.224,1,False,-0.273
+REV BB_REJECT,SELL,none,F2x3_40,145,29.7,65.5,-0.155,20,34,91,0.655,-0.056,-0.371,-0.144,-0.481,-0.226,2,False,-0.371
+REV BB_REJECT,SELL,none,F3x2_40,127,37.8,52.8,-0.108,19,29,79,0.56,0.004,-0.31,0.304,-0.387,-0.226,2,False,-0.31
+REV CCI200,BUY,none,CH3,47,53.2,89.4,0.534,11,12,24,0.045,0.523,0.764,-0.254,0.65,0.403,6,False,0.045
+REV CCI200,BUY,none,EMA20,50,44.0,0.0,0.057,12,13,25,-0.041,0.079,0.094,-0.198,0.05,0.131,5,False,-0.041
+REV CCI200,BUY,none,F2x2_20,48,50.0,39.6,0.225,12,12,24,0.416,0.206,0.138,0.018,0.311,0.114,6,False,0.138
+REV CCI200,BUY,none,F2x3_40,46,45.7,45.7,0.498,10,12,24,0.538,0.381,0.54,-0.267,0.342,0.267,6,False,0.381
+REV CCI200,BUY,none,F3x2_40,44,52.3,36.4,0.304,9,12,23,0.088,0.431,0.323,-0.251,0.317,0.202,5,False,0.088
+REV CCI200,SELL,none,CH3,62,37.1,96.8,-0.105,9,13,40,0.323,-0.261,-0.15,-0.068,-0.356,-0.145,3,False,-0.261
+REV CCI200,SELL,none,EMA20,65,29.2,0.0,-0.016,9,13,43,0.378,-0.106,-0.071,-0.143,-0.163,-0.061,3,False,-0.106
+REV CCI200,SELL,none,F2x2_20,63,46.0,42.9,-0.042,9,13,41,0.497,-0.354,-0.062,0.02,-0.297,-0.224,4,False,-0.354
+REV CCI200,SELL,none,F2x3_40,60,38.3,50.0,0.053,9,12,39,0.408,-0.222,0.055,-0.144,-0.481,-0.226,5,False,-0.222
+REV CCI200,SELL,none,F3x2_40,57,47.4,33.3,0.084,9,12,36,0.301,0.081,0.031,0.304,-0.387,-0.226,4,False,0.031
+REV FISHER,BUY,LT,CH3,64,32.8,93.8,-0.146,9,20,35,-0.472,-0.186,-0.038,-0.608,0.206,0.555,1,False,-0.472
+REV FISHER,BUY,LT,EMA20,89,46.1,0.0,-0.005,13,27,49,0.018,0.068,-0.051,-0.224,0.092,0.231,3,False,-0.051
+REV FISHER,BUY,LT,F2x2_20,66,39.4,42.4,-0.112,10,21,35,-0.138,-0.014,-0.163,-0.465,0.184,0.19,3,False,-0.163
+REV FISHER,BUY,LT,F2x3_40,60,30.0,56.7,-0.143,8,19,33,-0.722,0.052,-0.116,-0.854,0.028,0.339,2,False,-0.722
+REV FISHER,BUY,LT,F3x2_40,55,34.5,43.6,-0.12,7,16,32,-0.665,0.182,-0.152,-0.654,0.095,0.267,2,False,-0.665
+REV FISHER,BUY,none,CH3,145,37.2,92.4,0.012,35,49,61,-0.168,0.324,-0.134,-0.254,0.65,0.403,4,False,-0.168
+REV FISHER,BUY,none,EMA20,200,42.0,0.0,0.016,49,64,87,-0.025,0.1,-0.023,-0.198,0.05,0.131,4,False,-0.025
+REV FISHER,BUY,none,F2x2_20,147,41.5,40.8,-0.028,36,48,63,0.043,0.098,-0.164,0.018,0.311,0.114,2,False,-0.164
+REV FISHER,BUY,none,F2x3_40,129,33.3,56.6,-0.078,33,40,56,-0.241,0.135,-0.135,-0.267,0.342,0.267,4,False,-0.241
+REV FISHER,BUY,none,F3x2_40,117,38.5,43.6,-0.07,28,36,53,-0.178,0.067,-0.107,-0.251,0.317,0.202,3,False,-0.178
+REV FISHER,SELL,LT,CH3,58,36.2,93.1,0.01,14,23,21,-0.002,-0.029,0.061,-0.432,-0.374,-0.255,3,False,-0.029
+REV FISHER,SELL,LT,EMA20,69,46.4,1.4,0.1,17,28,24,0.173,0.064,0.091,-0.148,-0.113,-0.036,4,False,0.064
+REV FISHER,SELL,LT,F2x2_20,60,51.7,40.0,0.166,15,23,22,0.134,0.197,0.155,-0.278,-0.188,-0.028,5,True,0.134
+REV FISHER,SELL,LT,F2x3_40,56,42.9,53.6,0.198,14,21,21,0.144,0.288,0.146,-0.559,-0.364,-0.2,4,False,0.144
+REV FISHER,SELL,LT,F3x2_40,52,48.1,44.2,0.055,13,20,19,0.112,0.052,0.02,0.128,-0.366,-0.223,4,False,0.02
+REV FISHER,SELL,none,CH3,183,32.8,95.1,-0.129,26,50,107,0.192,-0.067,-0.237,-0.068,-0.356,-0.145,2,False,-0.237
+REV FISHER,SELL,none,EMA20,236,39.8,0.4,-0.007,31,67,138,0.064,0.045,-0.047,-0.143,-0.163,-0.061,3,False,-0.047
+REV FISHER,SELL,none,F2x2_20,193,38.9,53.4,-0.106,26,52,115,0.443,0.124,-0.335,0.02,-0.297,-0.224,4,False,-0.335
+REV FISHER,SELL,none,F2x3_40,180,31.7,67.2,-0.11,23,47,110,0.358,0.011,-0.259,-0.144,-0.481,-0.226,4,False,-0.259
+REV FISHER,SELL,none,F3x2_40,154,37.7,54.5,-0.147,21,41,92,0.281,-0.062,-0.283,0.304,-0.387,-0.226,4,False,-0.283
+REV MACD_DIV,BUY,LT,EMA20,30,33.3,0.0,0.22,7,8,15,-0.178,-0.186,0.622,-0.224,0.092,0.231,3,False,-0.186
+REV MACD_DIV,BUY,none,CH3,54,40.7,90.7,0.299,16,12,26,-0.244,0.552,0.516,-0.254,0.65,0.403,6,False,-0.244
+REV MACD_DIV,BUY,none,EMA20,57,31.6,1.8,0.159,17,13,27,-0.097,-0.199,0.492,-0.198,0.05,0.131,3,False,-0.199
+REV MACD_DIV,BUY,none,F2x2_20,54,37.0,42.6,-0.023,16,12,26,-0.115,-0.31,0.167,0.018,0.311,0.114,5,False,-0.31
+REV MACD_DIV,BUY,none,F2x3_40,54,44.4,50.0,0.404,16,12,26,-0.035,0.455,0.651,-0.267,0.342,0.267,6,False,-0.035
+REV MACD_DIV,BUY,none,F3x2_40,53,50.9,34.0,0.241,15,12,26,-0.209,0.324,0.462,-0.251,0.317,0.202,6,False,-0.209
+REV MACD_DIV,SELL,none,CH3,60,31.7,95.0,-0.102,12,15,33,-0.201,-0.113,-0.061,-0.068,-0.356,-0.145,3,False,-0.201
+REV MACD_DIV,SELL,none,EMA20,65,41.5,3.1,-0.026,13,16,36,0.14,-0.168,-0.022,-0.143,-0.163,-0.061,2,False,-0.168
+REV MACD_DIV,SELL,none,F2x2_20,59,33.9,55.9,-0.2,11,15,33,-0.161,0.015,-0.311,0.02,-0.297,-0.224,2,False,-0.311
+REV MACD_DIV,SELL,none,F2x3_40,59,32.2,64.4,-0.159,11,15,33,0.077,-0.178,-0.228,-0.144,-0.481,-0.226,2,False,-0.228
+REV MACD_DIV,SELL,none,F3x2_40,54,50.0,38.9,0.108,11,14,29,0.546,-0.079,0.032,0.304,-0.387,-0.226,5,False,-0.079
+REV RSI_DIV,SELL,none,CH3,36,38.9,97.2,-0.117,3,13,20,-0.283,0.475,-0.477,-0.068,-0.356,-0.145,3,False,-0.477
+REV RSI_DIV,SELL,none,EMA20,37,37.8,0.0,-0.053,3,14,20,-0.169,-0.151,0.033,-0.143,-0.163,-0.061,3,False,-0.169
+REV RSI_DIV,SELL,none,F2x2_20,36,41.7,52.8,-0.027,3,13,20,-0.449,0.65,-0.404,0.02,-0.297,-0.224,2,False,-0.449
+REV RSI_DIV,SELL,none,F2x3_40,35,34.3,62.9,-0.006,3,12,20,-0.102,0.721,-0.428,-0.144,-0.481,-0.226,3,False,-0.428
+REV RSI_DIV,SELL,none,F3x2_40,32,46.9,43.8,0.096,2,11,19,0.859,0.662,-0.312,0.304,-0.387,-0.226,5,False,-0.312
+REV SFP,BUY,LT,CH3,59,35.6,96.6,0.405,9,16,34,-0.087,0.553,0.466,-0.608,0.206,0.555,4,False,-0.087
+REV SFP,BUY,LT,EMA20,83,49.4,0.0,-0.008,14,20,49,-0.027,0.011,-0.011,-0.224,0.092,0.231,4,False,-0.027
+REV SFP,BUY,LT,F2x2_20,60,46.7,43.3,0.028,10,16,34,0.335,0.235,-0.16,-0.465,0.184,0.19,4,False,-0.16
+REV SFP,BUY,LT,F2x3_40,57,38.6,52.6,0.087,9,16,32,-0.122,0.26,0.059,-0.854,0.028,0.339,4,False,-0.122
+REV SFP,BUY,LT,F3x2_40,54,50.0,40.7,0.021,8,14,32,-0.127,0.161,-0.004,-0.654,0.095,0.267,4,False,-0.127
+REV SFP,BUY,none,CH3,129,38.0,94.6,0.279,37,38,54,-0.07,0.534,0.337,-0.254,0.65,0.403,6,False,-0.07
+REV SFP,BUY,none,EMA20,176,42.6,0.0,-0.027,46,54,76,-0.008,-0.045,-0.025,-0.198,0.05,0.131,3,False,-0.045
+REV SFP,BUY,none,F2x2_20,126,44.4,45.2,-0.021,37,37,52,0.208,0.087,-0.261,0.018,0.311,0.114,4,False,-0.261
+REV SFP,BUY,none,F2x3_40,118,36.4,56.8,0.022,32,35,51,-0.266,0.327,-0.008,-0.267,0.342,0.267,5,False,-0.266
+REV SFP,BUY,none,F3x2_40,107,48.6,41.1,0.027,26,32,49,-0.188,0.193,0.032,-0.251,0.317,0.202,6,False,-0.188
+REV SFP,SELL,LT,CH3,58,31.0,96.6,-0.186,15,23,20,-0.23,-0.44,0.139,-0.432,-0.374,-0.255,3,False,-0.44
+REV SFP,SELL,LT,EMA20,88,35.2,1.1,-0.082,19,40,29,-0.026,-0.079,-0.122,-0.148,-0.113,-0.036,2,False,-0.122
+REV SFP,SELL,LT,F2x2_20,60,31.7,61.7,-0.145,16,24,20,-0.124,-0.17,-0.132,-0.278,-0.188,-0.028,3,False,-0.17
+REV SFP,SELL,LT,F2x3_40,55,30.9,69.1,-0.102,13,24,18,0.081,-0.289,0.015,-0.559,-0.364,-0.2,3,False,-0.289
+REV SFP,SELL,LT,F3x2_40,49,40.8,55.1,-0.053,11,22,16,0.192,-0.268,0.075,0.128,-0.366,-0.223,2,False,-0.268
+REV SFP,SELL,none,CH3,157,27.4,95.5,-0.282,24,40,93,-0.088,-0.313,-0.318,-0.068,-0.356,-0.145,1,False,-0.318
+REV SFP,SELL,none,EMA20,236,41.9,0.8,-0.055,31,69,136,0.029,-0.089,-0.056,-0.143,-0.163,-0.061,0,False,-0.089
+REV SFP,SELL,none,F2x2_20,170,30.0,64.1,-0.248,27,43,100,0.184,-0.086,-0.435,0.02,-0.297,-0.224,3,False,-0.435
+REV SFP,SELL,none,F2x3_40,154,24.0,74.7,-0.324,21,40,93,0.351,-0.174,-0.541,-0.144,-0.481,-0.226,3,False,-0.541
+REV SFP,SELL,none,F3x2_40,133,31.6,61.7,-0.273,18,36,79,0.248,-0.143,-0.451,0.304,-0.387,-0.226,3,False,-0.451
+REV STOCH80,BUY,LT,CH3,118,37.3,90.7,0.213,20,28,70,-0.27,0.661,0.172,-0.608,0.206,0.555,4,False,-0.27
+REV STOCH80,BUY,LT,EMA20,173,41.6,0.6,-0.044,25,46,102,-0.045,0.055,-0.089,-0.224,0.092,0.231,2,False,-0.089
+REV STOCH80,BUY,LT,F2x2_20,123,41.5,48.8,-0.054,20,30,73,-0.082,0.382,-0.226,-0.465,0.184,0.19,4,False,-0.226
+REV STOCH80,BUY,LT,F2x3_40,99,35.4,57.6,0.02,17,21,61,-0.31,0.572,-0.078,-0.854,0.028,0.339,4,False,-0.31
+REV STOCH80,BUY,LT,F3x2_40,87,40.2,43.7,0.002,14,19,54,-0.336,0.514,-0.09,-0.654,0.095,0.267,3,False,-0.336
+REV STOCH80,BUY,TR,CH3,54,35.2,94.4,0.084,8,14,32,-0.023,0.089,0.108,-0.597,0.635,0.591,4,False,-0.023
+REV STOCH80,BUY,TR,EMA20,62,40.3,1.6,-0.036,8,16,38,0.086,0.05,-0.097,-0.345,0.101,0.345,4,False,-0.097
+REV STOCH80,BUY,TR,F2x2_20,54,38.9,46.3,-0.056,8,13,33,-0.067,0.391,-0.23,-0.515,0.451,0.196,5,False,-0.23
+REV STOCH80,BUY,TR,F2x3_40,49,28.6,61.2,-0.048,7,11,31,0.236,-0.108,-0.09,-0.697,0.37,0.364,3,False,-0.108
+REV STOCH80,BUY,TR,F3x2_40,49,32.7,51.0,-0.116,7,11,31,0.054,-0.209,-0.121,-0.484,0.368,0.365,3,False,-0.209
+REV STOCH80,BUY,TR+LT,CH3,45,33.3,93.3,0.097,5,12,28,-0.371,0.214,0.131,-0.758,0.301,0.77,3,False,-0.371
+REV STOCH80,BUY,TR+LT,EMA20,53,37.7,1.9,-0.077,5,14,34,-0.148,0.109,-0.144,-0.392,0.099,0.433,2,False,-0.148
+REV STOCH80,BUY,TR+LT,F2x2_20,45,40.0,48.9,-0.081,5,11,29,-0.272,0.649,-0.324,-0.804,0.302,0.236,4,False,-0.324
+REV STOCH80,BUY,TR+LT,F2x3_40,41,24.4,65.9,-0.13,5,9,27,-0.138,0.097,-0.204,-1.057,-0.01,0.508,3,False,-0.204
+REV STOCH80,BUY,TR+LT,F3x2_40,41,29.3,56.1,-0.17,5,9,27,-0.295,-0.029,-0.194,-0.555,0.104,0.518,3,False,-0.295
+REV STOCH80,BUY,none,CH3,221,37.1,91.9,0.159,55,61,105,-0.257,0.673,0.077,-0.254,0.65,0.403,6,False,-0.257
+REV STOCH80,BUY,none,EMA20,340,41.5,0.3,-0.004,81,101,158,-0.031,0.04,-0.018,-0.198,0.05,0.131,4,False,-0.031
+REV STOCH80,BUY,none,F2x2_20,235,40.4,47.2,-0.047,60,65,110,-0.162,0.272,-0.173,0.018,0.311,0.114,4,False,-0.173
+REV STOCH80,BUY,none,F2x3_40,196,33.7,59.7,-0.017,51,48,97,-0.361,0.426,-0.055,-0.267,0.342,0.267,5,False,-0.361
+REV STOCH80,BUY,none,F3x2_40,161,39.8,44.1,-0.036,40,41,80,-0.282,0.358,-0.114,-0.251,0.317,0.202,3,False,-0.282
+REV STOCH80,SELL,LT,CH3,87,34.5,92.0,-0.086,28,32,27,-0.024,-0.228,0.018,-0.432,-0.374,-0.255,3,False,-0.228
+REV STOCH80,SELL,LT,EMA20,130,40.8,0.0,-0.03,37,51,42,-0.097,-0.032,0.031,-0.148,-0.113,-0.036,3,False,-0.097
+REV STOCH80,SELL,LT,F2x2_20,102,38.2,51.0,-0.115,31,39,32,-0.05,-0.266,0.005,-0.278,-0.188,-0.028,2,False,-0.266
+REV STOCH80,SELL,LT,F2x3_40,89,33.7,62.9,-0.106,25,35,29,0.021,-0.387,0.124,-0.559,-0.364,-0.2,2,False,-0.387
+REV STOCH80,SELL,LT,F3x2_40,74,41.9,50.0,-0.049,20,30,24,0.016,-0.211,0.101,0.128,-0.366,-0.223,3,False,-0.211
+REV STOCH80,SELL,TR,CH3,58,31.0,93.1,-0.281,19,19,20,-0.336,-0.374,-0.14,-0.458,-0.26,-0.288,2,False,-0.374
+REV STOCH80,SELL,TR,EMA20,73,31.5,0.0,-0.079,22,22,29,-0.228,0.019,-0.04,-0.222,-0.241,-0.167,3,False,-0.228
+REV STOCH80,SELL,TR,F2x2_20,61,37.7,45.9,-0.162,19,19,23,-0.191,-0.175,-0.127,-0.417,-0.255,-0.117,3,False,-0.191
+REV STOCH80,SELL,TR,F2x3_40,53,32.1,60.4,-0.264,17,16,20,-0.226,-0.549,-0.068,-0.621,-0.442,-0.292,3,False,-0.549
+REV STOCH80,SELL,TR,F3x2_40,50,36.0,44.0,-0.206,16,16,18,-0.032,-0.533,-0.071,0.182,-0.358,-0.129,3,False,-0.533
+REV STOCH80,SELL,TR+LT,CH3,41,29.3,92.7,-0.22,16,15,10,-0.404,-0.438,0.4,-0.523,-0.114,-0.171,2,False,-0.438
+REV STOCH80,SELL,TR+LT,EMA20,51,37.3,0.0,-0.04,18,16,17,-0.215,0.064,0.046,-0.235,-0.119,-0.094,3,False,-0.215
+REV STOCH80,SELL,TR+LT,F2x2_20,43,39.5,44.2,-0.11,16,14,13,-0.324,-0.202,0.253,-0.53,0.182,0.101,2,False,-0.324
+REV STOCH80,SELL,TR+LT,F2x3_40,39,35.9,56.4,-0.167,15,13,11,-0.255,-0.514,0.364,-0.708,-0.089,-0.163,2,False,-0.514
+REV STOCH80,SELL,TR+LT,F3x2_40,37,37.8,45.9,-0.168,14,13,10,-0.139,-0.535,0.268,0.136,-0.204,0.065,3,False,-0.535
+REV STOCH80,SELL,none,CH3,247,31.2,94.7,-0.175,44,70,133,0.15,-0.192,-0.273,-0.068,-0.356,-0.145,3,False,-0.273
+REV STOCH80,SELL,none,EMA20,369,38.8,0.5,-0.044,55,114,200,-0.065,-0.022,-0.051,-0.143,-0.163,-0.061,3,False,-0.065
+REV STOCH80,SELL,none,F2x2_20,271,34.3,55.0,-0.155,46,80,145,0.178,-0.108,-0.287,0.02,-0.297,-0.224,3,False,-0.287
+REV STOCH80,SELL,none,F2x3_40,238,28.2,69.3,-0.203,36,70,132,0.17,-0.207,-0.302,-0.144,-0.481,-0.226,3,False,-0.302
+REV STOCH80,SELL,none,F3x2_40,192,36.5,56.8,-0.179,30,58,104,0.198,-0.175,-0.291,0.304,-0.387,-0.226,4,False,-0.291
+REV TD13,BUY,none,CH3,32,46.9,84.4,0.723,9,13,10,0.03,1.633,0.163,-0.254,0.65,0.403,7,False,0.03
+REV TD13,BUY,none,EMA20,32,46.9,0.0,0.116,9,13,10,-0.131,0.366,0.015,-0.198,0.05,0.131,4,False,-0.131
+REV TD13,BUY,none,F2x2_20,32,62.5,31.2,0.47,9,13,10,0.287,0.826,0.172,0.018,0.311,0.114,6,False,0.172
+REV TD13,BUY,none,F2x3_40,32,56.2,37.5,0.564,9,13,10,0.185,1.131,0.167,-0.267,0.342,0.267,6,False,0.167
+REV TD13,BUY,none,F3x2_40,32,62.5,25.0,0.354,9,13,10,0.165,0.708,0.063,-0.251,0.317,0.202,6,False,0.063
+REV TD13,SELL,none,CH3,43,37.2,95.3,-0.071,4,10,29,0.667,0.58,-0.398,-0.068,-0.356,-0.145,3,False,-0.398
+REV TD13,SELL,none,EMA20,43,41.9,2.3,0.033,4,10,29,0.341,-0.03,0.012,-0.143,-0.163,-0.061,2,False,-0.03
+REV TD13,SELL,none,F2x2_20,43,37.2,55.8,-0.027,4,10,29,1.131,0.286,-0.295,0.02,-0.297,-0.224,4,False,-0.295
+REV TD13,SELL,none,F2x3_40,43,23.3,67.4,-0.235,4,10,29,1.35,0.201,-0.604,-0.144,-0.481,-0.226,3,False,-0.604
+REV TD13,SELL,none,F3x2_40,42,31.0,57.1,-0.199,4,10,28,0.815,0.442,-0.572,0.304,-0.387,-0.226,2,False,-0.572
+REV TD9,BUY,LT,CH3,45,40.0,95.6,0.019,10,11,24,0.147,0.45,-0.232,-0.608,0.206,0.555,4,False,-0.232
+REV TD9,BUY,LT,EMA20,45,46.7,0.0,0.004,10,11,24,-0.062,-0.084,0.072,-0.224,0.092,0.231,4,False,-0.084
+REV TD9,BUY,LT,F2x2_20,45,51.1,37.8,0.226,10,11,24,0.489,0.597,-0.053,-0.465,0.184,0.19,3,False,-0.053
+REV TD9,BUY,LT,F2x3_40,43,37.2,48.8,0.035,9,10,24,0.073,0.402,-0.132,-0.854,0.028,0.339,4,False,-0.132
+REV TD9,BUY,LT,F3x2_40,41,39.0,41.5,-0.056,9,9,23,-0.14,0.411,-0.207,-0.654,0.095,0.267,4,False,-0.207
+REV TD9,BUY,none,CH3,94,38.3,95.7,0.036,25,31,38,-0.117,0.392,-0.153,-0.254,0.65,0.403,4,False,-0.153
+REV TD9,BUY,none,EMA20,94,44.7,0.0,-0.009,25,31,38,-0.066,-0.033,0.048,-0.198,0.05,0.131,3,False,-0.066
+REV TD9,BUY,none,F2x2_20,92,47.8,40.2,0.135,25,31,36,0.317,0.25,-0.09,0.018,0.311,0.114,4,False,-0.09
+REV TD9,BUY,none,F2x3_40,86,37.2,53.5,0.035,22,29,35,-0.168,0.339,-0.09,-0.267,0.342,0.267,4,False,-0.168
+REV TD9,BUY,none,F3x2_40,83,39.8,44.6,-0.041,21,28,34,-0.213,0.169,-0.11,-0.251,0.317,0.202,4,False,-0.213
+REV TD9,SELL,LT,CH3,39,41.0,97.4,-0.068,13,13,13,0.173,-0.433,0.056,-0.432,-0.374,-0.255,2,False,-0.433
+REV TD9,SELL,LT,EMA20,43,55.8,0.0,0.026,15,14,14,-0.043,0.01,0.117,-0.148,-0.113,-0.036,2,False,-0.043
+REV TD9,SELL,LT,F2x2_20,40,37.5,50.0,-0.076,14,12,14,0.011,-0.324,0.051,-0.278,-0.188,-0.028,2,False,-0.324
+REV TD9,SELL,LT,F2x3_40,38,31.6,60.5,-0.043,14,12,12,0.08,-0.487,0.256,-0.559,-0.364,-0.2,2,False,-0.487
+REV TD9,SELL,LT,F3x2_40,37,37.8,54.1,-0.165,13,12,12,-0.105,-0.546,0.152,0.128,-0.366,-0.223,2,False,-0.546
+REV TD9,SELL,none,CH3,118,35.6,93.2,-0.005,22,31,65,0.4,-0.22,-0.041,-0.068,-0.356,-0.145,3,False,-0.22
+REV TD9,SELL,none,EMA20,123,46.3,2.4,-0.026,24,32,67,-0.02,-0.042,-0.02,-0.143,-0.163,-0.061,3,False,-0.042
+REV TD9,SELL,none,F2x2_20,115,37.4,53.9,-0.088,23,30,62,0.3,-0.146,-0.204,0.02,-0.297,-0.224,4,False,-0.204
+REV TD9,SELL,none,F2x3_40,107,29.0,66.4,-0.06,21,28,58,0.426,-0.297,-0.121,-0.144,-0.481,-0.226,4,False,-0.297
+REV TD9,SELL,none,F3x2_40,98,35.7,58.2,-0.107,18,26,54,0.172,-0.187,-0.162,0.304,-0.387,-0.226,4,False,-0.187
+REV TD9P,BUY,LT,CH3,35,40.0,97.1,0.074,9,10,16,0.172,0.455,-0.219,-0.608,0.206,0.555,4,False,-0.219
+REV TD9P,BUY,LT,EMA20,35,45.7,0.0,-0.036,9,10,16,-0.067,-0.102,0.023,-0.224,0.092,0.231,3,False,-0.102
+REV TD9P,BUY,LT,F2x2_20,35,51.4,37.1,0.268,9,10,16,0.448,0.518,0.009,-0.465,0.184,0.19,4,False,0.009
+REV TD9P,BUY,LT,F2x3_40,33,39.4,48.5,0.065,8,9,16,0.216,0.314,-0.15,-0.854,0.028,0.339,4,False,-0.15
+REV TD9P,BUY,LT,F3x2_40,32,40.6,40.6,-0.039,8,8,16,-0.023,0.362,-0.246,-0.654,0.095,0.267,4,False,-0.246
+REV TD9P,BUY,none,CH3,75,38.7,96.0,0.094,22,26,27,-0.143,0.434,-0.041,-0.254,0.65,0.403,5,False,-0.143
+REV TD9P,BUY,none,EMA20,75,44.0,0.0,-0.032,22,26,27,-0.075,-0.045,0.017,-0.198,0.05,0.131,2,False,-0.075
+REV TD9P,BUY,none,F2x2_20,73,50.7,38.4,0.201,22,26,25,0.27,0.282,0.056,0.018,0.311,0.114,4,False,0.056
+REV TD9P,BUY,none,F2x3_40,69,39.1,52.2,0.088,19,25,25,-0.279,0.469,-0.013,-0.267,0.342,0.267,5,False,-0.279
+REV TD9P,BUY,none,F3x2_40,67,41.8,41.8,0.014,18,24,25,-0.288,0.292,-0.036,-0.251,0.317,0.202,4,False,-0.288
+REV TD9P,SELL,LT,CH3,30,40.0,96.7,-0.075,9,12,9,-0.056,-0.435,0.388,-0.432,-0.374,-0.255,2,False,-0.435
+REV TD9P,SELL,LT,EMA20,32,59.4,0.0,0.068,10,13,9,0.036,0.006,0.194,-0.148,-0.113,-0.036,4,False,0.006
+REV TD9P,SELL,LT,F2x2_20,31,32.3,58.1,-0.143,10,12,9,-0.229,-0.361,0.243,-0.278,-0.188,-0.028,2,False,-0.361
+REV TD9P,SELL,LT,F2x3_40,30,30.0,63.3,-0.104,10,12,8,-0.265,-0.486,0.672,-0.559,-0.364,-0.2,2,False,-0.486
+REV TD9P,SELL,LT,F3x2_40,30,36.7,56.7,-0.185,10,12,8,-0.303,-0.546,0.503,0.128,-0.366,-0.223,2,False,-0.546
+REV TD9P,SELL,none,CH3,91,36.3,92.3,0.033,15,29,47,0.385,-0.211,0.071,-0.068,-0.356,-0.145,5,False,-0.211
+REV TD9P,SELL,none,EMA20,94,48.9,2.1,-0.004,16,30,48,0.016,-0.045,0.015,-0.143,-0.163,-0.061,6,False,-0.045
+REV TD9P,SELL,none,F2x2_20,90,37.8,55.6,-0.06,16,29,45,0.219,-0.131,-0.113,0.02,-0.297,-0.224,5,False,-0.131
+REV TD9P,SELL,none,F2x3_40,84,29.8,65.5,-0.019,14,27,43,0.213,-0.27,0.064,-0.144,-0.481,-0.226,5,False,-0.27
+REV TD9P,SELL,none,F3x2_40,79,36.7,57.0,-0.062,13,26,40,0.072,-0.187,-0.025,0.304,-0.387,-0.226,5,False,-0.187
+REV WPR20,BUY,LT,CH3,130,38.5,93.8,0.427,21,37,72,-0.389,0.349,0.706,-0.608,0.206,0.555,5,False,-0.389
+REV WPR20,BUY,LT,EMA20,252,38.9,0.0,-0.017,36,68,148,-0.077,-0.002,-0.009,-0.224,0.092,0.231,3,False,-0.077
+REV WPR20,BUY,LT,F2x2_20,142,44.4,43.7,0.068,22,39,81,-0.235,0.082,0.144,-0.465,0.184,0.19,4,False,-0.235
+REV WPR20,BUY,LT,F2x3_40,112,40.2,51.8,0.193,18,28,66,-0.355,0.409,0.25,-0.854,0.028,0.339,4,False,-0.355
+REV WPR20,BUY,LT,F3x2_40,98,43.9,37.8,0.12,15,23,60,-0.547,0.37,0.192,-0.654,0.095,0.267,4,False,-0.547
+REV WPR20,BUY,TR,CH3,77,40.3,92.2,0.54,11,23,43,-0.26,0.287,0.88,-0.597,0.635,0.591,6,False,-0.26
+REV WPR20,BUY,TR,EMA20,122,27.9,0.0,-0.005,16,35,71,-0.088,0.045,-0.012,-0.345,0.101,0.345,4,False,-0.088
+REV WPR20,BUY,TR,F2x2_20,80,43.8,46.2,0.091,11,24,45,-0.325,0.191,0.14,-0.515,0.451,0.196,5,False,-0.325
+REV WPR20,BUY,TR,F2x3_40,69,33.3,56.5,0.152,10,19,40,-0.149,0.241,0.185,-0.697,0.37,0.364,5,False,-0.149
+REV WPR20,BUY,TR,F3x2_40,67,38.8,38.8,0.113,10,17,40,-0.246,0.131,0.195,-0.484,0.368,0.365,5,False,-0.246
+REV WPR20,BUY,TR+LT,CH3,65,36.9,93.8,0.496,7,19,39,-0.417,-0.036,0.92,-0.758,0.301,0.77,5,False,-0.417
+REV WPR20,BUY,TR+LT,EMA20,105,27.6,0.0,-0.022,11,30,64,-0.198,0.018,-0.011,-0.392,0.099,0.433,3,False,-0.198
+REV WPR20,BUY,TR+LT,F2x2_20,67,43.3,46.3,0.063,7,20,40,-0.405,0.13,0.112,-0.804,0.302,0.236,4,False,-0.405
+REV WPR20,BUY,TR+LT,F2x3_40,57,29.8,59.6,0.048,7,15,35,-0.401,0.031,0.146,-1.057,-0.01,0.508,4,False,-0.401
+REV WPR20,BUY,TR+LT,F3x2_40,55,34.5,41.8,0.013,7,13,35,-0.485,0.011,0.113,-0.555,0.104,0.518,4,False,-0.485
+REV WPR20,BUY,none,CH3,240,38.3,92.5,0.267,62,72,106,-0.249,0.481,0.424,-0.254,0.65,0.403,6,False,-0.249
+REV WPR20,BUY,none,EMA20,468,37.4,0.0,0.016,112,141,215,-0.055,0.097,0.0,-0.198,0.05,0.131,3,False,-0.055
+REV WPR20,BUY,none,F2x2_20,266,42.1,43.2,0.024,62,83,121,-0.047,0.136,-0.016,0.018,0.311,0.114,5,False,-0.047
+REV WPR20,BUY,none,F2x3_40,213,36.6,55.9,0.075,51,60,102,-0.392,0.392,0.122,-0.267,0.342,0.267,6,False,-0.392
+REV WPR20,BUY,none,F3x2_40,178,43.3,40.4,0.04,43,49,86,-0.282,0.279,0.066,-0.251,0.317,0.202,5,False,-0.282
+REV WPR20,SELL,LT,CH3,108,35.2,93.5,-0.086,34,38,36,-0.01,-0.242,0.007,-0.432,-0.374,-0.255,3,False,-0.242
+REV WPR20,SELL,LT,EMA20,212,39.6,0.0,-0.015,61,70,81,0.038,-0.018,-0.052,-0.148,-0.113,-0.036,2,False,-0.052
+REV WPR20,SELL,LT,F2x2_20,125,44.0,43.2,-0.044,40,45,40,0.09,-0.194,-0.008,-0.278,-0.188,-0.028,2,False,-0.194
+REV WPR20,SELL,LT,F2x3_40,100,38.0,57.0,-0.007,28,39,33,0.13,-0.223,0.131,-0.559,-0.364,-0.2,3,False,-0.223
+REV WPR20,SELL,LT,F3x2_40,85,43.5,47.1,-0.06,24,31,30,0.248,-0.437,0.084,0.128,-0.366,-0.223,3,False,-0.437
+REV WPR20,SELL,TR,CH3,78,26.9,92.3,-0.309,23,26,29,-0.323,-0.382,-0.232,-0.458,-0.26,-0.288,1,False,-0.382
+REV WPR20,SELL,TR,EMA20,128,31.2,0.0,-0.089,34,38,56,-0.067,-0.041,-0.136,-0.222,-0.241,-0.167,0,False,-0.136
+REV WPR20,SELL,TR,F2x2_20,84,41.7,45.2,-0.173,23,28,33,-0.055,-0.183,-0.247,-0.417,-0.255,-0.117,3,False,-0.247
+REV WPR20,SELL,TR,F2x3_40,70,28.6,62.9,-0.374,18,22,30,-0.266,-0.586,-0.284,-0.621,-0.442,-0.292,2,False,-0.586
+REV WPR20,SELL,TR,F3x2_40,66,33.3,48.5,-0.274,18,21,27,-0.038,-0.619,-0.164,0.182,-0.358,-0.129,2,False,-0.619
+REV WPR20,SELL,TR+LT,CH3,56,26.8,92.9,-0.277,20,20,16,-0.409,-0.451,0.105,-0.523,-0.114,-0.171,1,False,-0.451
+REV WPR20,SELL,TR+LT,EMA20,93,33.3,0.0,-0.066,29,27,37,-0.035,-0.021,-0.123,-0.235,-0.119,-0.094,1,False,-0.123
+REV WPR20,SELL,TR+LT,F2x2_20,59,47.5,33.9,-0.064,20,20,19,-0.112,-0.197,0.128,-0.53,0.182,0.101,3,False,-0.197
+REV WPR20,SELL,TR+LT,F2x3_40,48,35.4,54.2,-0.258,16,16,16,-0.413,-0.477,0.116,-0.708,-0.089,-0.163,2,False,-0.477
+REV WPR20,SELL,TR+LT,F3x2_40,48,39.6,41.7,-0.169,16,16,16,-0.098,-0.609,0.2,0.136,-0.204,0.065,2,False,-0.609
+REV WPR20,SELL,none,CH3,281,32.7,94.3,-0.132,52,78,151,0.214,-0.197,-0.218,-0.068,-0.356,-0.145,3,False,-0.218
+REV WPR20,SELL,none,EMA20,515,41.6,0.4,-0.026,87,156,272,0.051,-0.006,-0.062,-0.143,-0.163,-0.061,1,False,-0.062
+REV WPR20,SELL,none,F2x2_20,321,37.1,53.0,-0.137,59,95,167,0.33,-0.106,-0.319,0.02,-0.297,-0.224,3,False,-0.319
+REV WPR20,SELL,none,F2x3_40,262,30.9,66.0,-0.119,42,77,143,0.485,-0.18,-0.263,-0.144,-0.481,-0.226,4,False,-0.263
+REV WPR20,SELL,none,F3x2_40,212,39.2,53.3,-0.11,37,61,114,0.463,-0.261,-0.216,0.304,-0.387,-0.226,4,False,-0.261
+TV Chartink NR7 breakdown,BUY,LT,CH3,111,39.6,92.8,0.47,16,29,66,-0.51,0.358,0.756,-0.608,0.206,0.555,5,False,-0.51
+TV Chartink NR7 breakdown,BUY,LT,EMA20,168,33.9,1.2,0.252,20,39,109,-0.28,0.049,0.423,-0.224,0.092,0.231,7,False,-0.28
+TV Chartink NR7 breakdown,BUY,LT,F2x2_20,149,45.0,45.0,0.096,18,35,96,-0.297,0.139,0.154,-0.465,0.184,0.19,4,False,-0.297
+TV Chartink NR7 breakdown,BUY,LT,F2x3_40,121,40.5,54.5,0.268,15,26,80,-0.668,0.448,0.384,-0.854,0.028,0.339,5,False,-0.668
+TV Chartink NR7 breakdown,BUY,LT,F3x2_40,109,49.5,40.4,0.211,11,25,73,-0.519,0.227,0.315,-0.654,0.095,0.267,5,False,-0.519
+TV Chartink NR7 breakdown,BUY,TR,CH3,115,39.1,93.0,0.523,22,27,66,-0.617,1.155,0.644,-0.597,0.635,0.591,6,False,-0.617
+TV Chartink NR7 breakdown,BUY,TR,EMA20,158,32.3,2.5,0.291,27,37,94,-0.323,0.286,0.469,-0.345,0.101,0.345,6,False,-0.323
+TV Chartink NR7 breakdown,BUY,TR,F2x2_20,157,43.9,46.5,0.119,26,36,95,-0.448,0.359,0.183,-0.515,0.451,0.196,6,False,-0.448
+TV Chartink NR7 breakdown,BUY,TR,F2x3_40,127,39.4,57.5,0.243,22,29,76,-0.584,0.632,0.334,-0.697,0.37,0.364,5,False,-0.584
+TV Chartink NR7 breakdown,BUY,TR,F3x2_40,114,50.0,42.1,0.211,18,28,68,-0.472,0.345,0.337,-0.484,0.368,0.365,6,False,-0.472
+TV Chartink NR7 breakdown,BUY,TR+LT,CH3,83,41.0,94.0,0.654,10,20,53,-0.607,0.527,0.939,-0.758,0.301,0.77,6,False,-0.607
+TV Chartink NR7 breakdown,BUY,TR+LT,EMA20,117,29.9,1.7,0.369,13,26,78,-0.385,0.023,0.61,-0.392,0.099,0.433,7,False,-0.385
+TV Chartink NR7 breakdown,BUY,TR+LT,F2x2_20,118,44.9,46.6,0.113,12,26,80,-0.352,0.127,0.179,-0.804,0.302,0.236,4,False,-0.352
+TV Chartink NR7 breakdown,BUY,TR+LT,F2x3_40,97,38.1,57.7,0.256,11,21,65,-0.866,0.337,0.419,-1.057,-0.01,0.508,6,False,-0.866
+TV Chartink NR7 breakdown,BUY,TR+LT,F3x2_40,87,48.3,43.7,0.214,8,20,59,-0.738,0.119,0.374,-0.555,0.104,0.518,5,False,-0.738
+TV Chartink NR7 breakdown,BUY,none,CH3,192,35.4,92.7,0.26,43,52,97,-0.405,0.572,0.387,-0.254,0.65,0.403,6,False,-0.405
+TV Chartink NR7 breakdown,BUY,none,EMA20,291,34.4,1.0,0.136,64,73,154,-0.178,0.156,0.258,-0.198,0.05,0.131,5,False,-0.178
+TV Chartink NR7 breakdown,BUY,none,F2x2_20,246,43.1,45.5,0.046,49,65,132,-0.226,0.222,0.06,0.018,0.311,0.114,5,False,-0.226
+TV Chartink NR7 breakdown,BUY,none,F2x3_40,200,36.0,59.5,0.076,43,49,108,-0.445,0.435,0.121,-0.267,0.342,0.267,5,False,-0.445
+TV Chartink NR7 breakdown,BUY,none,F3x2_40,176,44.9,43.8,0.081,36,45,95,-0.401,0.241,0.187,-0.251,0.317,0.202,6,False,-0.401
+TV Chartink NR7 breakdown,SELL,LT,CH3,76,38.2,93.4,-0.041,24,27,25,0.053,-0.187,0.027,-0.432,-0.374,-0.255,2,False,-0.187
+TV Chartink NR7 breakdown,SELL,LT,EMA20,108,29.6,1.9,0.01,41,34,33,-0.03,-0.035,0.105,-0.148,-0.113,-0.036,6,False,-0.035
+TV Chartink NR7 breakdown,SELL,LT,F2x2_20,98,38.8,46.9,-0.066,36,34,28,-0.075,-0.15,0.048,-0.278,-0.188,-0.028,3,False,-0.15
+TV Chartink NR7 breakdown,SELL,LT,F2x3_40,81,38.3,59.3,-0.008,28,27,26,-0.05,-0.075,0.106,-0.559,-0.364,-0.2,3,False,-0.075
+TV Chartink NR7 breakdown,SELL,LT,F3x2_40,73,49.3,42.5,0.039,23,26,24,0.324,-0.244,0.073,0.128,-0.366,-0.223,4,False,-0.244
+TV Chartink NR7 breakdown,SELL,TR,CH3,113,35.4,92.0,-0.047,29,33,51,-0.004,-0.175,0.01,-0.458,-0.26,-0.288,4,False,-0.175
+TV Chartink NR7 breakdown,SELL,TR,EMA20,149,28.2,2.7,-0.0,42,41,66,-0.0,-0.157,0.097,-0.222,-0.241,-0.167,5,False,-0.157
+TV Chartink NR7 breakdown,SELL,TR,F2x2_20,140,43.6,40.7,-0.037,38,39,63,-0.086,-0.107,0.034,-0.417,-0.255,-0.117,5,False,-0.107
+TV Chartink NR7 breakdown,SELL,TR,F2x3_40,112,41.1,54.5,0.054,27,33,52,0.007,-0.022,0.127,-0.621,-0.442,-0.292,5,False,-0.022
+TV Chartink NR7 breakdown,SELL,TR,F3x2_40,102,51.0,37.3,0.093,24,31,47,0.277,-0.107,0.131,0.182,-0.358,-0.129,6,False,-0.107
+TV Chartink NR7 breakdown,SELL,TR+LT,CH3,61,37.7,91.8,-0.018,22,18,21,-0.09,-0.065,0.099,-0.523,-0.114,-0.171,3,False,-0.09
+TV Chartink NR7 breakdown,SELL,TR+LT,EMA20,86,27.9,3.5,0.002,34,23,29,-0.006,-0.077,0.075,-0.235,-0.119,-0.094,5,False,-0.077
+TV Chartink NR7 breakdown,SELL,TR+LT,F2x2_20,77,44.2,42.9,-0.012,31,22,24,-0.146,0.083,0.073,-0.53,0.182,0.101,5,False,-0.146
+TV Chartink NR7 breakdown,SELL,TR+LT,F2x3_40,63,44.4,52.4,0.05,24,17,22,-0.221,0.262,0.181,-0.708,-0.089,-0.163,5,False,-0.221
+TV Chartink NR7 breakdown,SELL,TR+LT,F3x2_40,56,57.1,32.1,0.151,20,16,20,0.16,0.1,0.183,0.136,-0.204,0.065,6,True,0.1
+TV Chartink NR7 breakdown,SELL,none,CH3,185,34.1,94.1,-0.135,33,58,94,0.194,-0.277,-0.163,-0.068,-0.356,-0.145,2,False,-0.277
+TV Chartink NR7 breakdown,SELL,none,EMA20,267,29.6,1.1,-0.013,56,77,134,-0.004,-0.098,0.032,-0.143,-0.163,-0.061,6,False,-0.098
+TV Chartink NR7 breakdown,SELL,none,F2x2_20,232,37.5,49.6,-0.111,49,69,114,0.098,-0.202,-0.146,0.02,-0.297,-0.224,4,False,-0.202
+TV Chartink NR7 breakdown,SELL,none,F2x3_40,191,33.5,62.8,-0.085,36,58,97,0.149,-0.119,-0.151,-0.144,-0.481,-0.226,3,False,-0.151
+TV Chartink NR7 breakdown,SELL,none,F3x2_40,170,42.4,49.4,-0.083,31,53,86,0.383,-0.258,-0.144,0.304,-0.387,-0.226,3,False,-0.258
+TV Chartink RSI(14) crosses below 40,BUY,LT,CH3,85,40.0,97.6,0.562,9,18,58,-0.79,0.421,0.816,-0.608,0.206,0.555,5,False,-0.79
+TV Chartink RSI(14) crosses below 40,BUY,LT,EMA20,101,31.7,4.0,0.451,9,20,72,-0.572,0.247,0.636,-0.224,0.092,0.231,8,False,-0.572
+TV Chartink RSI(14) crosses below 40,BUY,LT,F2x2_20,104,48.1,45.2,0.215,10,21,73,-0.749,0.08,0.386,-0.465,0.184,0.19,5,False,-0.749
+TV Chartink RSI(14) crosses below 40,BUY,LT,F2x3_40,82,42.7,52.4,0.443,8,20,54,-0.929,0.262,0.714,-0.854,0.028,0.339,7,False,-0.929
+TV Chartink RSI(14) crosses below 40,BUY,LT,F3x2_40,77,46.8,45.5,0.211,8,19,50,-0.914,0.039,0.457,-0.654,0.095,0.267,7,False,-0.914
+TV Chartink RSI(14) crosses below 40,BUY,TR,CH3,136,36.8,97.1,0.36,31,35,70,-0.654,0.659,0.66,-0.597,0.635,0.591,6,False,-0.654
+TV Chartink RSI(14) crosses below 40,BUY,TR,EMA20,165,30.3,4.8,0.278,35,39,91,-0.471,0.508,0.468,-0.345,0.101,0.345,6,False,-0.471
+TV Chartink RSI(14) crosses below 40,BUY,TR,F2x2_20,165,43.0,49.7,0.131,34,43,88,-0.575,0.143,0.397,-0.515,0.451,0.196,6,False,-0.575
+TV Chartink RSI(14) crosses below 40,BUY,TR,F2x3_40,139,36.0,61.9,0.19,31,41,67,-0.707,0.387,0.484,-0.697,0.37,0.364,6,False,-0.707
+TV Chartink RSI(14) crosses below 40,BUY,TR,F3x2_40,126,43.7,49.2,0.109,27,36,63,-0.643,0.23,0.361,-0.484,0.368,0.365,6,False,-0.643
+TV Chartink RSI(14) crosses below 40,BUY,TR+LT,CH3,85,40.0,97.6,0.562,9,18,58,-0.79,0.421,0.816,-0.758,0.301,0.77,5,False,-0.79
+TV Chartink RSI(14) crosses below 40,BUY,TR+LT,EMA20,101,31.7,4.0,0.451,9,20,72,-0.572,0.247,0.636,-0.392,0.099,0.433,8,False,-0.572
+TV Chartink RSI(14) crosses below 40,BUY,TR+LT,F2x2_20,104,48.1,45.2,0.215,10,21,73,-0.749,0.08,0.386,-0.804,0.302,0.236,5,False,-0.749
+TV Chartink RSI(14) crosses below 40,BUY,TR+LT,F2x3_40,82,42.7,52.4,0.443,8,20,54,-0.929,0.262,0.714,-1.057,-0.01,0.508,7,False,-0.929
+TV Chartink RSI(14) crosses below 40,BUY,TR+LT,F3x2_40,77,46.8,45.5,0.211,8,19,50,-0.914,0.039,0.457,-0.555,0.104,0.518,7,False,-0.914
+TV Chartink RSI(14) crosses below 40,BUY,none,CH3,136,36.8,97.1,0.36,31,35,70,-0.654,0.659,0.66,-0.254,0.65,0.403,6,False,-0.654
+TV Chartink RSI(14) crosses below 40,BUY,none,EMA20,165,30.3,4.8,0.278,35,39,91,-0.471,0.508,0.468,-0.198,0.05,0.131,6,False,-0.471
+TV Chartink RSI(14) crosses below 40,BUY,none,F2x2_20,165,43.0,49.7,0.131,34,43,88,-0.575,0.143,0.397,0.018,0.311,0.114,6,False,-0.575
+TV Chartink RSI(14) crosses below 40,BUY,none,F2x3_40,139,36.0,61.9,0.19,31,41,67,-0.707,0.387,0.484,-0.267,0.342,0.267,6,False,-0.707
+TV Chartink RSI(14) crosses below 40,BUY,none,F3x2_40,126,43.7,49.2,0.109,27,36,63,-0.643,0.23,0.361,-0.251,0.317,0.202,6,False,-0.643
+TV Chartink RSI(14) crosses below 40,SELL,LT,CH3,65,32.3,90.8,-0.044,19,20,26,-0.086,-0.185,0.095,-0.432,-0.374,-0.255,3,False,-0.185
+TV Chartink RSI(14) crosses below 40,SELL,LT,EMA20,86,26.7,4.7,-0.026,25,31,30,0.052,-0.242,0.132,-0.148,-0.113,-0.036,4,False,-0.242
+TV Chartink RSI(14) crosses below 40,SELL,LT,F2x2_20,79,39.2,40.5,-0.029,26,25,28,-0.104,-0.009,0.024,-0.278,-0.188,-0.028,4,False,-0.104
+TV Chartink RSI(14) crosses below 40,SELL,LT,F2x3_40,62,43.5,54.8,0.091,21,19,22,-0.08,0.006,0.326,-0.559,-0.364,-0.2,5,False,-0.08
+TV Chartink RSI(14) crosses below 40,SELL,LT,F3x2_40,59,47.5,44.1,0.012,19,18,22,-0.162,-0.074,0.232,0.128,-0.366,-0.223,5,False,-0.162
+TV Chartink RSI(14) crosses below 40,SELL,TR,CH3,126,33.3,92.1,-0.127,32,39,55,-0.105,-0.357,0.024,-0.458,-0.26,-0.288,2,False,-0.357
+TV Chartink RSI(14) crosses below 40,SELL,TR,EMA20,154,27.9,3.2,-0.071,39,51,64,-0.009,-0.273,0.053,-0.222,-0.241,-0.167,2,False,-0.273
+TV Chartink RSI(14) crosses below 40,SELL,TR,F2x2_20,146,39.0,41.1,-0.052,40,44,62,-0.049,-0.174,0.033,-0.417,-0.255,-0.117,3,False,-0.174
+TV Chartink RSI(14) crosses below 40,SELL,TR,F2x3_40,111,40.5,54.1,0.055,31,33,47,0.082,-0.069,0.124,-0.621,-0.442,-0.292,5,False,-0.069
+TV Chartink RSI(14) crosses below 40,SELL,TR,F3x2_40,107,43.9,43.9,-0.032,29,31,47,-0.004,-0.188,0.054,0.182,-0.358,-0.129,3,False,-0.188
+TV Chartink RSI(14) crosses below 40,SELL,TR+LT,CH3,65,32.3,90.8,-0.044,19,20,26,-0.086,-0.185,0.095,-0.523,-0.114,-0.171,3,False,-0.185
+TV Chartink RSI(14) crosses below 40,SELL,TR+LT,EMA20,86,26.7,4.7,-0.026,25,31,30,0.052,-0.242,0.132,-0.235,-0.119,-0.094,4,False,-0.242
+TV Chartink RSI(14) crosses below 40,SELL,TR+LT,F2x2_20,79,39.2,40.5,-0.029,26,25,28,-0.104,-0.009,0.024,-0.53,0.182,0.101,4,False,-0.104
+TV Chartink RSI(14) crosses below 40,SELL,TR+LT,F2x3_40,62,43.5,54.8,0.091,21,19,22,-0.08,0.006,0.326,-0.708,-0.089,-0.163,5,False,-0.08
+TV Chartink RSI(14) crosses below 40,SELL,TR+LT,F3x2_40,59,47.5,44.1,0.012,19,18,22,-0.162,-0.074,0.232,0.136,-0.204,0.065,5,False,-0.162
+TV Chartink RSI(14) crosses below 40,SELL,none,CH3,126,34.1,92.1,-0.104,32,39,55,-0.105,-0.357,0.076,-0.068,-0.356,-0.145,3,False,-0.357
+TV Chartink RSI(14) crosses below 40,SELL,none,EMA20,154,28.6,3.2,-0.052,39,51,64,-0.009,-0.273,0.098,-0.143,-0.163,-0.061,3,False,-0.273
+TV Chartink RSI(14) crosses below 40,SELL,none,F2x2_20,147,39.5,40.8,-0.039,40,44,63,-0.049,-0.174,0.063,0.02,-0.297,-0.224,4,False,-0.174
+TV Chartink RSI(14) crosses below 40,SELL,none,F2x3_40,112,41.1,53.6,0.081,31,33,48,0.082,-0.069,0.183,-0.144,-0.481,-0.226,6,False,-0.069
+TV Chartink RSI(14) crosses below 40,SELL,none,F3x2_40,108,44.4,43.5,-0.013,29,31,48,-0.004,-0.188,0.094,0.304,-0.387,-0.226,4,False,-0.188
+TV Chartink Supertrend 7/3 turns red,BUY,LT,CH3,49,38.8,100.0,0.439,6,13,30,-0.869,0.448,0.696,-0.608,0.206,0.555,5,False,-0.869
+TV Chartink Supertrend 7/3 turns red,BUY,LT,EMA20,49,34.7,10.2,0.392,6,13,30,-0.517,0.567,0.497,-0.224,0.092,0.231,4,False,-0.517
+TV Chartink Supertrend 7/3 turns red,BUY,LT,F2x2_20,49,51.0,46.9,0.272,6,13,30,-1.07,0.295,0.531,-0.465,0.184,0.19,5,False,-1.07
+TV Chartink Supertrend 7/3 turns red,BUY,LT,F2x3_40,47,40.4,55.3,0.407,6,12,29,-1.07,0.329,0.744,-0.854,0.028,0.339,5,False,-1.07
+TV Chartink Supertrend 7/3 turns red,BUY,LT,F3x2_40,46,47.8,43.5,0.253,6,12,28,-1.038,0.224,0.542,-0.654,0.095,0.267,5,False,-1.038
+TV Chartink Supertrend 7/3 turns red,BUY,TR,CH3,96,36.5,95.8,0.303,22,28,46,-0.728,0.925,0.418,-0.597,0.635,0.591,6,False,-0.728
+TV Chartink Supertrend 7/3 turns red,BUY,TR,EMA20,96,31.2,7.3,0.245,22,28,46,-0.427,0.637,0.328,-0.345,0.101,0.345,5,False,-0.427
+TV Chartink Supertrend 7/3 turns red,BUY,TR,F2x2_20,96,41.7,52.1,0.091,22,28,46,-0.721,0.304,0.35,-0.515,0.451,0.196,6,False,-0.721
+TV Chartink Supertrend 7/3 turns red,BUY,TR,F2x3_40,94,35.1,62.8,0.217,22,27,45,-0.631,0.533,0.442,-0.697,0.37,0.364,6,False,-0.631
+TV Chartink Supertrend 7/3 turns red,BUY,TR,F3x2_40,91,46.2,45.1,0.199,21,27,43,-0.571,0.452,0.417,-0.484,0.368,0.365,7,False,-0.571
+TV Chartink Supertrend 7/3 turns red,BUY,TR+LT,CH3,49,38.8,100.0,0.439,6,13,30,-0.869,0.448,0.696,-0.758,0.301,0.77,5,False,-0.869
+TV Chartink Supertrend 7/3 turns red,BUY,TR+LT,EMA20,49,34.7,10.2,0.392,6,13,30,-0.517,0.567,0.497,-0.392,0.099,0.433,4,False,-0.517
+TV Chartink Supertrend 7/3 turns red,BUY,TR+LT,F2x2_20,49,51.0,46.9,0.272,6,13,30,-1.07,0.295,0.531,-0.804,0.302,0.236,5,False,-1.07
+TV Chartink Supertrend 7/3 turns red,BUY,TR+LT,F2x3_40,47,40.4,55.3,0.407,6,12,29,-1.07,0.329,0.744,-1.057,-0.01,0.508,5,False,-1.07
+TV Chartink Supertrend 7/3 turns red,BUY,TR+LT,F3x2_40,46,47.8,43.5,0.253,6,12,28,-1.038,0.224,0.542,-0.555,0.104,0.518,5,False,-1.038
+TV Chartink Supertrend 7/3 turns red,BUY,none,CH3,106,34.9,95.3,0.231,25,32,49,-0.741,0.758,0.383,-0.254,0.65,0.403,5,False,-0.741
+TV Chartink Supertrend 7/3 turns red,BUY,none,EMA20,106,30.2,6.6,0.195,25,32,49,-0.452,0.559,0.286,-0.198,0.05,0.131,4,False,-0.452
+TV Chartink Supertrend 7/3 turns red,BUY,none,F2x2_20,106,40.6,53.8,0.057,25,32,49,-0.76,0.326,0.298,0.018,0.311,0.114,6,False,-0.76
+TV Chartink Supertrend 7/3 turns red,BUY,none,F2x3_40,103,34.0,65.0,0.163,25,30,48,-0.681,0.432,0.435,-0.267,0.342,0.267,6,False,-0.681
+TV Chartink Supertrend 7/3 turns red,BUY,none,F3x2_40,98,44.9,45.9,0.169,23,29,46,-0.57,0.388,0.401,-0.251,0.317,0.202,6,False,-0.57
+TV Chartink Supertrend 7/3 turns red,SELL,LT,CH3,39,30.8,97.4,-0.182,13,14,12,-0.023,-0.322,-0.19,-0.432,-0.374,-0.255,3,False,-0.322
+TV Chartink Supertrend 7/3 turns red,SELL,LT,EMA20,39,25.6,2.6,-0.083,13,14,12,0.145,-0.282,-0.098,-0.148,-0.113,-0.036,2,False,-0.282
+TV Chartink Supertrend 7/3 turns red,SELL,LT,F2x2_20,39,35.9,46.2,-0.173,13,14,12,-0.31,-0.081,-0.132,-0.278,-0.188,-0.028,3,False,-0.31
+TV Chartink Supertrend 7/3 turns red,SELL,LT,F2x3_40,38,34.2,63.2,-0.166,13,13,12,-0.154,0.05,-0.414,-0.559,-0.364,-0.2,2,False,-0.414
+TV Chartink Supertrend 7/3 turns red,SELL,LT,F3x2_40,35,48.6,40.0,0.016,12,12,11,0.063,-0.051,0.038,0.128,-0.366,-0.223,3,False,-0.051
+TV Chartink Supertrend 7/3 turns red,SELL,TR,CH3,82,35.4,92.7,-0.082,23,25,34,0.044,-0.402,0.069,-0.458,-0.26,-0.288,5,False,-0.402
+TV Chartink Supertrend 7/3 turns red,SELL,TR,EMA20,82,31.7,2.4,-0.059,23,25,34,0.03,-0.238,0.014,-0.222,-0.241,-0.167,2,False,-0.238
+TV Chartink Supertrend 7/3 turns red,SELL,TR,F2x2_20,82,42.7,41.5,0.016,23,25,34,-0.007,-0.122,0.131,-0.417,-0.255,-0.117,5,False,-0.122
+TV Chartink Supertrend 7/3 turns red,SELL,TR,F2x3_40,77,44.2,53.2,0.132,22,22,33,0.175,0.073,0.142,-0.621,-0.442,-0.292,4,False,0.073
+TV Chartink Supertrend 7/3 turns red,SELL,TR,F3x2_40,73,54.8,38.4,0.135,20,21,32,0.358,-0.172,0.197,0.182,-0.358,-0.129,6,False,-0.172
+TV Chartink Supertrend 7/3 turns red,SELL,TR+LT,CH3,37,29.7,97.3,-0.196,13,13,11,-0.023,-0.413,-0.145,-0.523,-0.114,-0.171,2,False,-0.413
+TV Chartink Supertrend 7/3 turns red,SELL,TR+LT,EMA20,37,27.0,2.7,-0.064,13,13,11,0.145,-0.257,-0.084,-0.235,-0.119,-0.094,2,False,-0.257
+TV Chartink Supertrend 7/3 turns red,SELL,TR+LT,F2x2_20,37,37.8,45.9,-0.146,13,13,11,-0.31,-0.007,-0.118,-0.53,0.182,0.101,4,False,-0.31
+TV Chartink Supertrend 7/3 turns red,SELL,TR+LT,F2x3_40,36,36.1,61.1,-0.118,13,12,11,-0.154,0.141,-0.359,-0.708,-0.089,-0.163,3,False,-0.359
+TV Chartink Supertrend 7/3 turns red,SELL,TR+LT,F3x2_40,33,48.5,42.4,-0.01,12,11,10,0.063,-0.141,0.047,0.136,-0.204,0.065,3,False,-0.141
+TV Chartink Supertrend 7/3 turns red,SELL,none,CH3,104,36.5,94.2,-0.066,24,32,48,0.009,-0.334,0.076,-0.068,-0.356,-0.145,5,False,-0.334
+TV Chartink Supertrend 7/3 turns red,SELL,none,EMA20,104,27.9,1.9,-0.073,24,32,48,0.012,-0.253,0.005,-0.143,-0.163,-0.061,3,False,-0.253
+TV Chartink Supertrend 7/3 turns red,SELL,none,F2x2_20,104,40.4,41.3,0.016,24,32,48,-0.049,-0.196,0.19,0.02,-0.297,-0.224,6,False,-0.196
+TV Chartink Supertrend 7/3 turns red,SELL,none,F2x3_40,98,42.9,55.1,0.101,23,28,47,0.123,-0.026,0.166,-0.144,-0.481,-0.226,5,False,-0.026
+TV Chartink Supertrend 7/3 turns red,SELL,none,F3x2_40,92,53.3,39.1,0.13,21,26,45,0.382,-0.119,0.155,0.304,-0.387,-0.226,7,False,-0.119
+"TV TV -DI crosses above +DI, ADX > 25",BUY,none,CH3,44,25.0,90.9,0.084,7,14,23,-0.598,-0.26,0.5,-0.254,0.65,0.403,2,False,-0.598
+"TV TV -DI crosses above +DI, ADX > 25",BUY,none,EMA20,51,29.4,0.0,0.147,8,16,27,-0.325,-0.087,0.425,-0.198,0.05,0.131,3,False,-0.325
+"TV TV -DI crosses above +DI, ADX > 25",BUY,none,F2x2_20,44,31.8,52.3,-0.233,7,14,23,-0.575,-0.557,0.068,0.018,0.311,0.114,3,False,-0.575
+"TV TV -DI crosses above +DI, ADX > 25",BUY,none,F2x3_40,44,31.8,65.9,-0.043,7,14,23,-0.489,-0.273,0.233,-0.267,0.342,0.267,4,False,-0.489
+"TV TV -DI crosses above +DI, ADX > 25",BUY,none,F3x2_40,44,43.2,40.9,0.031,7,14,23,-0.541,0.159,0.128,-0.251,0.317,0.202,4,False,-0.541
+"TV TV -DI crosses above +DI, ADX > 25",SELL,none,CH3,48,31.2,91.7,-0.117,8,13,27,-0.513,-0.107,-0.005,-0.068,-0.356,-0.145,4,False,-0.513
+"TV TV -DI crosses above +DI, ADX > 25",SELL,none,EMA20,52,23.1,3.8,-0.065,8,15,29,-0.268,-0.059,-0.012,-0.143,-0.163,-0.061,5,False,-0.268
+"TV TV -DI crosses above +DI, ADX > 25",SELL,none,F2x2_20,49,38.8,44.9,-0.085,8,13,28,-0.359,-0.159,0.028,0.02,-0.297,-0.224,6,False,-0.359
+"TV TV -DI crosses above +DI, ADX > 25",SELL,none,F2x3_40,48,41.7,58.3,0.019,8,13,27,-0.116,0.004,0.066,-0.144,-0.481,-0.226,5,False,-0.116
+"TV TV -DI crosses above +DI, ADX > 25",SELL,none,F3x2_40,47,51.1,42.6,0.009,8,13,26,0.155,-0.026,-0.018,0.304,-0.387,-0.226,6,False,-0.026
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",BUY,none,CH3,53,37.7,86.8,0.173,13,11,29,-0.016,0.886,-0.013,-0.254,0.65,0.403,6,False,-0.016
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",BUY,none,EMA20,57,36.8,0.0,-0.043,13,12,32,0.054,-0.155,-0.04,-0.198,0.05,0.131,5,False,-0.155
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",BUY,none,F2x2_20,53,47.2,37.7,0.037,13,11,29,0.107,0.457,-0.153,0.018,0.311,0.114,5,False,-0.153
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",BUY,none,F2x3_40,52,46.2,46.2,0.303,13,11,28,0.172,1.075,0.06,-0.267,0.342,0.267,7,False,0.06
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",BUY,none,F3x2_40,46,54.3,32.6,0.2,11,10,25,0.214,0.794,-0.044,-0.251,0.317,0.202,7,False,-0.044
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",SELL,none,CH3,85,25.9,96.5,-0.363,5,20,60,0.382,-0.13,-0.502,-0.068,-0.356,-0.145,2,False,-0.502
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",SELL,none,EMA20,98,38.8,0.0,-0.003,6,21,71,0.839,0.013,-0.078,-0.143,-0.163,-0.061,2,False,-0.078
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",SELL,none,F2x2_20,87,28.7,65.5,-0.329,5,20,62,0.469,-0.313,-0.399,0.02,-0.297,-0.224,2,False,-0.399
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",SELL,none,F2x3_40,87,19.5,78.2,-0.476,5,20,62,1.074,-0.47,-0.603,-0.144,-0.481,-0.226,3,False,-0.603
+"TV TV Bollinger + RSI: back below upper band, RSI > 70 (ChartArt)",SELL,none,F3x2_40,81,28.4,66.7,-0.326,5,20,56,0.849,0.035,-0.559,0.304,-0.387,-0.226,2,False,-0.559
+TV TV Chandelier Exit sell (22/3),BUY,LT,CH3,81,39.5,96.3,0.536,9,23,49,-0.571,0.165,0.914,-0.608,0.206,0.555,4,False,-0.571
+TV TV Chandelier Exit sell (22/3),BUY,LT,EMA20,100,22.0,1.0,0.267,11,27,62,-0.296,0.26,0.37,-0.224,0.092,0.231,5,False,-0.296
+TV TV Chandelier Exit sell (22/3),BUY,LT,F2x2_20,89,38.2,50.6,-0.025,10,25,54,-0.675,-0.207,0.18,-0.465,0.184,0.19,4,False,-0.675
+TV TV Chandelier Exit sell (22/3),BUY,LT,F2x3_40,84,35.7,60.7,0.103,10,24,50,-0.608,-0.099,0.342,-0.854,0.028,0.339,5,False,-0.608
+TV TV Chandelier Exit sell (22/3),BUY,LT,F3x2_40,71,46.5,46.5,0.086,9,21,41,-0.594,-0.135,0.348,-0.654,0.095,0.267,6,False,-0.594
+TV TV Chandelier Exit sell (22/3),BUY,TR,CH3,117,35.9,94.9,0.369,27,34,56,-0.554,0.516,0.725,-0.597,0.635,0.591,4,False,-0.554
+TV TV Chandelier Exit sell (22/3),BUY,TR,EMA20,136,28.7,3.7,0.244,29,39,68,-0.381,0.473,0.38,-0.345,0.101,0.345,5,False,-0.381
+TV TV Chandelier Exit sell (22/3),BUY,TR,F2x2_20,130,38.5,51.5,0.005,28,37,65,-0.475,0.068,0.175,-0.515,0.451,0.196,4,False,-0.475
+TV TV Chandelier Exit sell (22/3),BUY,TR,F2x3_40,120,35.8,60.8,0.158,25,36,59,-0.605,0.35,0.364,-0.697,0.37,0.364,4,False,-0.605
+TV TV Chandelier Exit sell (22/3),BUY,TR,F3x2_40,107,42.1,50.5,0.046,23,33,51,-0.606,0.173,0.258,-0.484,0.368,0.365,5,False,-0.606
+TV TV Chandelier Exit sell (22/3),BUY,TR+LT,CH3,69,37.7,95.7,0.65,8,20,41,-0.538,0.255,1.075,-0.758,0.301,0.77,4,False,-0.538
+TV TV Chandelier Exit sell (22/3),BUY,TR+LT,EMA20,84,25.0,1.2,0.347,10,24,50,-0.317,0.275,0.513,-0.392,0.099,0.433,5,False,-0.317
+TV TV Chandelier Exit sell (22/3),BUY,TR+LT,F2x2_20,77,37.7,49.4,-0.015,9,22,46,-0.633,-0.231,0.209,-0.804,0.302,0.236,4,False,-0.633
+TV TV Chandelier Exit sell (22/3),BUY,TR+LT,F2x3_40,72,36.1,58.3,0.164,9,21,42,-0.558,0.035,0.383,-1.057,-0.01,0.508,4,False,-0.558
+TV TV Chandelier Exit sell (22/3),BUY,TR+LT,F3x2_40,62,43.5,50.0,0.063,8,19,35,-0.538,-0.166,0.325,-0.555,0.104,0.518,4,False,-0.538
+TV TV Chandelier Exit sell (22/3),BUY,none,CH3,149,34.9,94.6,0.288,33,44,72,-0.583,0.501,0.556,-0.254,0.65,0.403,5,False,-0.583
+TV TV Chandelier Exit sell (22/3),BUY,none,EMA20,176,26.7,2.8,0.146,37,50,89,-0.381,0.358,0.247,-0.198,0.05,0.131,4,False,-0.381
+TV TV Chandelier Exit sell (22/3),BUY,none,F2x2_20,163,38.0,52.1,-0.028,34,48,81,-0.526,0.089,0.111,0.018,0.311,0.114,4,False,-0.526
+TV TV Chandelier Exit sell (22/3),BUY,none,F2x3_40,151,33.1,62.9,0.068,31,45,75,-0.659,0.185,0.299,-0.267,0.342,0.267,6,False,-0.659
+TV TV Chandelier Exit sell (22/3),BUY,none,F3x2_40,134,41.0,48.5,0.02,29,40,65,-0.595,0.115,0.237,-0.251,0.317,0.202,4,False,-0.595
+TV TV Chandelier Exit sell (22/3),SELL,LT,CH3,55,32.7,92.7,-0.068,18,18,19,-0.099,-0.218,0.103,-0.432,-0.374,-0.255,3,False,-0.218
+TV TV Chandelier Exit sell (22/3),SELL,LT,EMA20,60,30.0,1.7,-0.012,19,19,22,0.111,-0.15,0.0,-0.148,-0.113,-0.036,3,False,-0.15
+TV TV Chandelier Exit sell (22/3),SELL,LT,F2x2_20,57,49.1,38.6,0.026,18,18,21,0.043,-0.134,0.148,-0.278,-0.188,-0.028,4,False,-0.134
+TV TV Chandelier Exit sell (22/3),SELL,LT,F2x3_40,52,36.5,57.7,-0.023,17,18,17,-0.103,-0.138,0.179,-0.559,-0.364,-0.2,3,False,-0.138
+TV TV Chandelier Exit sell (22/3),SELL,LT,F3x2_40,46,52.2,34.8,0.174,14,17,15,0.101,0.03,0.405,0.128,-0.366,-0.223,5,False,0.03
+TV TV Chandelier Exit sell (22/3),SELL,TR,CH3,99,33.3,91.9,-0.092,26,32,41,-0.112,-0.401,0.162,-0.458,-0.26,-0.288,4,False,-0.401
+TV TV Chandelier Exit sell (22/3),SELL,TR,EMA20,112,26.8,1.8,-0.125,27,36,49,-0.098,-0.25,-0.048,-0.222,-0.241,-0.167,3,False,-0.25
+TV TV Chandelier Exit sell (22/3),SELL,TR,F2x2_20,100,48.0,40.0,0.023,26,30,44,0.108,-0.224,0.143,-0.417,-0.255,-0.117,5,False,-0.224
+TV TV Chandelier Exit sell (22/3),SELL,TR,F2x3_40,90,40.0,54.4,0.117,24,28,38,0.132,-0.195,0.337,-0.621,-0.442,-0.292,6,False,-0.195
+TV TV Chandelier Exit sell (22/3),SELL,TR,F3x2_40,81,51.9,38.3,0.141,20,26,35,0.261,-0.167,0.3,0.182,-0.358,-0.129,6,False,-0.167
+TV TV Chandelier Exit sell (22/3),SELL,TR+LT,CH3,46,32.6,91.3,-0.098,16,15,15,-0.179,-0.357,0.247,-0.523,-0.114,-0.171,2,False,-0.357
+TV TV Chandelier Exit sell (22/3),SELL,TR+LT,EMA20,50,28.0,2.0,-0.109,17,16,17,-0.11,-0.238,0.012,-0.235,-0.119,-0.094,2,False,-0.238
+TV TV Chandelier Exit sell (22/3),SELL,TR+LT,F2x2_20,48,50.0,37.5,0.012,16,15,17,-0.006,-0.156,0.175,-0.53,0.182,0.101,4,False,-0.156
+TV TV Chandelier Exit sell (22/3),SELL,TR+LT,F2x3_40,43,39.5,53.5,0.006,15,15,13,-0.239,-0.227,0.558,-0.708,-0.089,-0.163,3,False,-0.239
+TV TV Chandelier Exit sell (22/3),SELL,TR+LT,F3x2_40,37,56.8,32.4,0.214,12,14,11,0.041,-0.1,0.803,0.136,-0.204,0.065,6,False,-0.1
+TV TV Chandelier Exit sell (22/3),SELL,none,CH3,146,32.9,93.2,-0.083,32,45,69,0.006,-0.295,0.014,-0.068,-0.356,-0.145,5,False,-0.295
+TV TV Chandelier Exit sell (22/3),SELL,none,EMA20,168,25.6,1.2,-0.08,34,52,82,0.043,-0.192,-0.059,-0.143,-0.163,-0.061,4,False,-0.192
+TV TV Chandelier Exit sell (22/3),SELL,none,F2x2_20,146,43.2,41.1,-0.016,31,44,71,0.148,-0.208,0.032,0.02,-0.297,-0.224,5,False,-0.208
+TV TV Chandelier Exit sell (22/3),SELL,none,F2x3_40,134,38.8,58.2,0.089,29,40,65,0.286,-0.149,0.148,-0.144,-0.481,-0.226,7,False,-0.149
+TV TV Chandelier Exit sell (22/3),SELL,none,F3x2_40,118,50.0,41.5,0.078,24,36,58,0.33,-0.067,0.065,0.304,-0.387,-0.226,6,False,-0.067
+TV TV EMA 20 crosses below EMA 50,BUY,TR,CH3,63,36.5,95.2,0.4,18,19,26,-0.751,1.418,0.453,-0.597,0.635,0.591,6,False,-0.751
+TV TV EMA 20 crosses below EMA 50,BUY,TR,EMA20,66,31.8,6.1,0.234,18,20,28,-0.536,1.037,0.156,-0.345,0.101,0.345,6,False,-0.536
+TV TV EMA 20 crosses below EMA 50,BUY,TR,F2x2_20,65,41.5,50.8,0.147,18,20,27,-0.767,0.479,0.51,-0.515,0.451,0.196,4,False,-0.767
+TV TV EMA 20 crosses below EMA 50,BUY,TR,F2x3_40,64,34.4,57.8,0.231,17,20,27,-0.658,0.818,0.355,-0.697,0.37,0.364,6,False,-0.658
+TV TV EMA 20 crosses below EMA 50,BUY,TR,F3x2_40,61,39.3,44.3,0.089,16,19,26,-0.612,0.625,0.128,-0.484,0.368,0.365,4,False,-0.612
+TV TV EMA 20 crosses below EMA 50,BUY,none,CH3,63,36.5,95.2,0.4,18,19,26,-0.751,1.418,0.453,-0.254,0.65,0.403,6,False,-0.751
+TV TV EMA 20 crosses below EMA 50,BUY,none,EMA20,66,31.8,6.1,0.234,18,20,28,-0.536,1.037,0.156,-0.198,0.05,0.131,6,False,-0.536
+TV TV EMA 20 crosses below EMA 50,BUY,none,F2x2_20,65,41.5,50.8,0.147,18,20,27,-0.767,0.479,0.51,0.018,0.311,0.114,4,False,-0.767
+TV TV EMA 20 crosses below EMA 50,BUY,none,F2x3_40,64,34.4,57.8,0.231,17,20,27,-0.658,0.818,0.355,-0.267,0.342,0.267,6,False,-0.658
+TV TV EMA 20 crosses below EMA 50,BUY,none,F3x2_40,61,39.3,44.3,0.089,16,19,26,-0.612,0.625,0.128,-0.251,0.317,0.202,4,False,-0.612
+TV TV EMA 20 crosses below EMA 50,SELL,TR,CH3,68,38.2,92.6,-0.054,17,20,31,0.025,-0.315,0.071,-0.458,-0.26,-0.288,5,False,-0.315
+TV TV EMA 20 crosses below EMA 50,SELL,TR,EMA20,69,37.7,7.2,0.069,17,20,32,0.309,-0.108,0.052,-0.222,-0.241,-0.167,7,False,-0.108
+TV TV EMA 20 crosses below EMA 50,SELL,TR,F2x2_20,68,45.6,38.2,0.155,17,20,31,0.449,0.224,-0.05,-0.417,-0.255,-0.117,5,False,-0.05
+TV TV EMA 20 crosses below EMA 50,SELL,TR,F2x3_40,68,47.1,50.0,0.241,17,20,31,0.395,0.233,0.161,-0.621,-0.442,-0.292,5,True,0.161
+TV TV EMA 20 crosses below EMA 50,SELL,TR,F3x2_40,64,51.6,40.6,0.08,14,20,30,0.239,0.01,0.052,0.182,-0.358,-0.129,6,False,0.01
+TV TV EMA 20 crosses below EMA 50,SELL,none,CH3,68,38.2,92.6,-0.054,17,20,31,0.025,-0.315,0.071,-0.068,-0.356,-0.145,5,False,-0.315
+TV TV EMA 20 crosses below EMA 50,SELL,none,EMA20,69,37.7,7.2,0.069,17,20,32,0.309,-0.108,0.052,-0.143,-0.163,-0.061,7,False,-0.108
+TV TV EMA 20 crosses below EMA 50,SELL,none,F2x2_20,68,45.6,38.2,0.155,17,20,31,0.449,0.224,-0.05,0.02,-0.297,-0.224,5,False,-0.05
+TV TV EMA 20 crosses below EMA 50,SELL,none,F2x3_40,68,47.1,50.0,0.241,17,20,31,0.395,0.233,0.161,-0.144,-0.481,-0.226,5,True,0.161
+TV TV EMA 20 crosses below EMA 50,SELL,none,F3x2_40,64,51.6,40.6,0.08,14,20,30,0.239,0.01,0.052,0.304,-0.387,-0.226,6,False,0.01
+"TV TV HalfTrend sell (everget, amp 2)",BUY,LT,CH3,90,45.6,93.3,0.587,12,22,56,-0.586,0.241,0.975,-0.608,0.206,0.555,6,False,-0.586
+"TV TV HalfTrend sell (everget, amp 2)",BUY,LT,EMA20,102,30.4,1.0,0.398,12,22,68,-0.235,0.212,0.57,-0.224,0.092,0.231,6,False,-0.235
+"TV TV HalfTrend sell (everget, amp 2)",BUY,LT,F2x2_20,105,43.8,41.9,0.135,12,23,70,-0.421,-0.054,0.292,-0.465,0.184,0.19,6,False,-0.421
+"TV TV HalfTrend sell (everget, amp 2)",BUY,LT,F2x3_40,87,41.4,57.5,0.199,9,20,58,-0.578,0.178,0.327,-0.854,0.028,0.339,4,False,-0.578
+"TV TV HalfTrend sell (everget, amp 2)",BUY,LT,F3x2_40,79,50.6,38.0,0.175,9,19,51,-0.624,0.134,0.332,-0.654,0.095,0.267,6,False,-0.624
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR,CH3,99,40.4,94.9,0.486,22,27,50,-0.586,0.54,0.929,-0.597,0.635,0.591,5,False,-0.586
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR,EMA20,111,30.6,2.7,0.376,24,28,59,-0.331,0.385,0.659,-0.345,0.101,0.345,4,False,-0.331
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR,F2x2_20,112,39.3,49.1,0.043,23,29,60,-0.602,0.024,0.3,-0.515,0.451,0.196,3,False,-0.602
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR,F2x3_40,98,34.7,61.2,0.152,19,27,52,-0.586,0.391,0.297,-0.697,0.37,0.364,5,False,-0.586
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR,F3x2_40,89,43.8,44.9,0.1,16,24,49,-0.528,0.275,0.22,-0.484,0.368,0.365,4,False,-0.528
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR+LT,CH3,64,45.3,95.3,0.779,7,16,41,-0.722,0.208,1.258,-0.758,0.301,0.77,5,False,-0.722
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR+LT,EMA20,70,31.4,1.4,0.616,7,16,47,-0.264,0.25,0.871,-0.392,0.099,0.433,6,False,-0.264
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR+LT,F2x2_20,73,43.8,43.8,0.164,7,17,49,-0.592,-0.146,0.379,-0.804,0.302,0.236,5,False,-0.592
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR+LT,F2x3_40,62,33.9,62.9,0.13,6,15,41,-0.893,0.071,0.301,-1.057,-0.01,0.508,3,False,-0.893
+"TV TV HalfTrend sell (everget, amp 2)",BUY,TR+LT,F3x2_40,58,43.1,46.6,0.1,5,14,39,-0.836,0.025,0.247,-0.555,0.104,0.518,4,False,-0.836
+"TV TV HalfTrend sell (everget, amp 2)",BUY,none,CH3,183,35.5,94.0,0.223,48,49,86,-0.43,0.39,0.494,-0.254,0.65,0.403,5,False,-0.43
+"TV TV HalfTrend sell (everget, amp 2)",BUY,none,EMA20,209,27.8,1.9,0.148,52,53,104,-0.238,0.239,0.296,-0.198,0.05,0.131,5,False,-0.238
+"TV TV HalfTrend sell (everget, amp 2)",BUY,none,F2x2_20,208,38.0,49.5,-0.058,51,53,104,-0.455,0.004,0.105,0.018,0.311,0.114,4,False,-0.455
+"TV TV HalfTrend sell (everget, amp 2)",BUY,none,F2x3_40,174,35.6,60.3,0.052,41,47,86,-0.308,0.234,0.124,-0.267,0.342,0.267,6,False,-0.308
+"TV TV HalfTrend sell (everget, amp 2)",BUY,none,F3x2_40,151,46.4,41.7,0.089,35,41,75,-0.251,0.219,0.177,-0.251,0.317,0.202,7,False,-0.251
+"TV TV HalfTrend sell (everget, amp 2)",SELL,LT,CH3,76,31.6,93.4,-0.166,24,25,27,-0.105,-0.059,-0.319,-0.432,-0.374,-0.255,3,False,-0.319
+"TV TV HalfTrend sell (everget, amp 2)",SELL,LT,EMA20,92,28.3,2.2,-0.069,31,30,31,-0.059,-0.045,-0.101,-0.148,-0.113,-0.036,3,False,-0.101
+"TV TV HalfTrend sell (everget, amp 2)",SELL,LT,F2x2_20,82,42.7,45.1,-0.091,27,27,28,-0.158,0.11,-0.219,-0.278,-0.188,-0.028,4,False,-0.219
+"TV TV HalfTrend sell (everget, amp 2)",SELL,LT,F2x3_40,70,34.3,58.6,-0.077,24,21,25,-0.094,0.353,-0.421,-0.559,-0.364,-0.2,5,False,-0.421
+"TV TV HalfTrend sell (everget, amp 2)",SELL,LT,F3x2_40,64,40.6,46.9,-0.085,23,20,21,-0.098,0.08,-0.228,0.128,-0.366,-0.223,4,False,-0.228
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR,CH3,119,37.0,91.6,-0.04,33,32,54,0.011,-0.014,-0.088,-0.458,-0.26,-0.288,4,False,-0.088
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR,EMA20,141,34.0,3.5,0.018,41,38,62,-0.051,0.047,0.045,-0.222,-0.241,-0.167,5,False,-0.051
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR,F2x2_20,130,44.6,42.3,-0.031,36,35,59,-0.054,0.1,-0.096,-0.417,-0.255,-0.117,4,False,-0.096
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR,F2x3_40,114,40.4,53.5,0.082,32,28,54,0.122,0.378,-0.095,-0.621,-0.442,-0.292,6,False,-0.095
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR,F3x2_40,104,48.1,42.3,0.013,30,27,47,0.071,0.142,-0.097,0.182,-0.358,-0.129,4,False,-0.097
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR+LT,CH3,68,32.4,94.1,-0.179,23,23,22,-0.181,-0.116,-0.243,-0.523,-0.114,-0.171,3,False,-0.243
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR+LT,EMA20,81,29.6,2.5,-0.062,28,27,26,-0.057,-0.037,-0.094,-0.235,-0.119,-0.094,3,False,-0.094
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR+LT,F2x2_20,72,44.4,43.1,-0.059,25,24,23,-0.17,0.125,-0.13,-0.53,0.182,0.101,4,False,-0.17
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR+LT,F2x3_40,62,35.5,58.1,-0.077,23,19,20,-0.197,0.287,-0.285,-0.708,-0.089,-0.163,4,False,-0.285
+"TV TV HalfTrend sell (everget, amp 2)",SELL,TR+LT,F3x2_40,55,43.6,45.5,-0.06,21,18,16,-0.134,0.035,-0.068,0.136,-0.204,0.065,5,False,-0.134
+"TV TV HalfTrend sell (everget, amp 2)",SELL,none,CH3,182,35.2,93.4,-0.067,39,52,91,0.058,-0.082,-0.112,-0.068,-0.356,-0.145,4,False,-0.112
+"TV TV HalfTrend sell (everget, amp 2)",SELL,none,EMA20,214,30.8,2.3,-0.015,49,61,104,-0.027,0.024,-0.031,-0.143,-0.163,-0.061,4,False,-0.031
+"TV TV HalfTrend sell (everget, amp 2)",SELL,none,F2x2_20,200,40.0,46.0,-0.075,43,57,100,0.019,0.041,-0.182,0.02,-0.297,-0.224,3,False,-0.182
+"TV TV HalfTrend sell (everget, amp 2)",SELL,none,F2x3_40,174,35.6,59.8,-0.004,38,46,90,0.151,0.146,-0.146,-0.144,-0.481,-0.226,5,False,-0.146
+"TV TV HalfTrend sell (everget, amp 2)",SELL,none,F3x2_40,159,40.3,50.9,-0.116,35,42,82,0.093,-0.059,-0.234,0.304,-0.387,-0.226,3,False,-0.234
+TV TV MACD cross below signal (ChrisMoody),BUY,LT,CH3,111,34.2,95.5,0.437,16,28,67,-0.674,0.11,0.839,-0.608,0.206,0.555,5,False,-0.674
+TV TV MACD cross below signal (ChrisMoody),BUY,LT,EMA20,141,36.2,4.3,0.347,18,32,91,-0.352,0.104,0.571,-0.224,0.092,0.231,7,False,-0.352
+TV TV MACD cross below signal (ChrisMoody),BUY,LT,F2x2_20,135,40.7,48.1,0.057,17,33,85,-0.562,-0.084,0.236,-0.465,0.184,0.19,5,False,-0.562
+TV TV MACD cross below signal (ChrisMoody),BUY,LT,F2x3_40,113,38.1,60.2,0.154,14,30,69,-0.632,0.022,0.372,-0.854,0.028,0.339,6,False,-0.632
+TV TV MACD cross below signal (ChrisMoody),BUY,LT,F3x2_40,99,45.5,45.5,0.096,13,27,59,-0.615,-0.105,0.344,-0.654,0.095,0.267,5,False,-0.615
+TV TV MACD cross below signal (ChrisMoody),BUY,TR,CH3,106,33.0,95.3,0.506,17,31,58,-0.601,0.549,0.808,-0.597,0.635,0.591,6,False,-0.601
+TV TV MACD cross below signal (ChrisMoody),BUY,TR,EMA20,131,33.6,3.8,0.427,21,38,72,-0.346,0.379,0.679,-0.345,0.101,0.345,6,False,-0.346
+TV TV MACD cross below signal (ChrisMoody),BUY,TR,F2x2_20,130,36.2,53.1,0.018,19,41,70,-0.648,0.027,0.193,-0.515,0.451,0.196,4,False,-0.648
+TV TV MACD cross below signal (ChrisMoody),BUY,TR,F2x3_40,108,32.4,63.9,0.118,15,36,57,-0.851,0.301,0.258,-0.697,0.37,0.364,5,False,-0.851
+TV TV MACD cross below signal (ChrisMoody),BUY,TR,F3x2_40,96,40.6,52.1,0.041,13,33,50,-0.747,0.05,0.24,-0.484,0.368,0.365,4,False,-0.747
+TV TV MACD cross below signal (ChrisMoody),BUY,TR+LT,CH3,83,31.3,95.2,0.533,10,22,51,-0.846,0.028,1.021,-0.758,0.301,0.77,4,False,-0.846
+TV TV MACD cross below signal (ChrisMoody),BUY,TR+LT,EMA20,96,34.4,6.2,0.52,11,24,61,-0.479,0.119,0.858,-0.392,0.099,0.433,7,False,-0.479
+TV TV MACD cross below signal (ChrisMoody),BUY,TR+LT,F2x2_20,97,37.1,52.6,0.043,11,26,60,-0.774,-0.206,0.3,-0.804,0.302,0.236,5,False,-0.774
+TV TV MACD cross below signal (ChrisMoody),BUY,TR+LT,F2x3_40,84,32.1,66.7,0.101,10,24,50,-0.951,-0.054,0.386,-1.057,-0.01,0.508,5,False,-0.951
+TV TV MACD cross below signal (ChrisMoody),BUY,TR+LT,F3x2_40,74,39.2,54.1,0.041,9,21,44,-0.884,-0.222,0.355,-0.555,0.104,0.518,4,False,-0.884
+TV TV MACD cross below signal (ChrisMoody),BUY,none,CH3,204,35.3,94.6,0.268,47,58,99,-0.322,0.289,0.537,-0.254,0.65,0.403,7,False,-0.322
+TV TV MACD cross below signal (ChrisMoody),BUY,none,EMA20,271,34.7,1.8,0.227,58,76,137,-0.154,0.234,0.385,-0.198,0.05,0.131,6,False,-0.154
+TV TV MACD cross below signal (ChrisMoody),BUY,none,F2x2_20,255,38.0,48.2,-0.016,53,75,127,-0.227,-0.011,0.069,0.018,0.311,0.114,6,False,-0.227
+TV TV MACD cross below signal (ChrisMoody),BUY,none,F2x3_40,209,33.5,61.2,0.049,41,64,104,-0.252,0.027,0.182,-0.267,0.342,0.267,7,False,-0.252
+TV TV MACD cross below signal (ChrisMoody),BUY,none,F3x2_40,177,43.5,45.8,0.042,36,51,90,-0.312,0.009,0.202,-0.251,0.317,0.202,5,False,-0.312
+TV TV MACD cross below signal (ChrisMoody),SELL,LT,CH3,86,25.6,93.0,-0.238,22,29,35,-0.018,-0.345,-0.288,-0.432,-0.374,-0.255,3,False,-0.345
+TV TV MACD cross below signal (ChrisMoody),SELL,LT,EMA20,118,26.3,3.4,-0.126,33,41,44,-0.012,-0.255,-0.09,-0.148,-0.113,-0.036,2,False,-0.255
+TV TV MACD cross below signal (ChrisMoody),SELL,LT,F2x2_20,102,37.3,51.0,-0.143,28,34,40,-0.014,-0.087,-0.281,-0.278,-0.188,-0.028,4,False,-0.281
+TV TV MACD cross below signal (ChrisMoody),SELL,LT,F2x3_40,84,31.0,63.1,-0.177,23,26,35,-0.153,0.059,-0.367,-0.559,-0.364,-0.2,4,False,-0.367
+TV TV MACD cross below signal (ChrisMoody),SELL,LT,F3x2_40,76,36.8,51.3,-0.181,21,25,30,-0.092,-0.193,-0.233,0.128,-0.366,-0.223,4,False,-0.233
+TV TV MACD cross below signal (ChrisMoody),SELL,TR,CH3,110,30.0,93.6,-0.163,29,36,45,0.087,-0.292,-0.222,-0.458,-0.26,-0.288,2,False,-0.292
+TV TV MACD cross below signal (ChrisMoody),SELL,TR,EMA20,148,22.3,2.7,-0.128,42,47,59,-0.021,-0.216,-0.133,-0.222,-0.241,-0.167,3,False,-0.216
+TV TV MACD cross below signal (ChrisMoody),SELL,TR,F2x2_20,133,35.3,52.6,-0.177,37,41,55,0.148,-0.17,-0.4,-0.417,-0.255,-0.117,2,False,-0.4
+TV TV MACD cross below signal (ChrisMoody),SELL,TR,F2x3_40,107,31.8,62.6,-0.156,28,33,46,0.105,-0.109,-0.347,-0.621,-0.442,-0.292,2,False,-0.347
+TV TV MACD cross below signal (ChrisMoody),SELL,TR,F3x2_40,98,41.8,50.0,-0.117,26,30,42,0.077,-0.196,-0.181,0.182,-0.358,-0.129,3,False,-0.196
+TV TV MACD cross below signal (ChrisMoody),SELL,TR+LT,CH3,70,30.0,92.9,-0.165,20,23,27,0.022,-0.318,-0.172,-0.523,-0.114,-0.171,3,False,-0.318
+TV TV MACD cross below signal (ChrisMoody),SELL,TR+LT,EMA20,96,27.1,4.2,-0.129,30,32,34,0.005,-0.281,-0.104,-0.235,-0.119,-0.094,2,False,-0.281
+TV TV MACD cross below signal (ChrisMoody),SELL,TR+LT,F2x2_20,84,39.3,50.0,-0.119,26,26,32,0.079,-0.063,-0.327,-0.53,0.182,0.101,4,False,-0.327
+TV TV MACD cross below signal (ChrisMoody),SELL,TR+LT,F2x3_40,68,32.4,58.8,-0.124,22,19,27,-0.046,-0.003,-0.273,-0.708,-0.089,-0.163,4,False,-0.273
+TV TV MACD cross below signal (ChrisMoody),SELL,TR+LT,F3x2_40,63,41.3,46.0,-0.077,20,19,24,0.003,-0.154,-0.082,0.136,-0.204,0.065,4,False,-0.154
+TV TV MACD cross below signal (ChrisMoody),SELL,none,CH3,224,29.9,94.6,-0.165,41,64,119,0.051,-0.263,-0.187,-0.068,-0.356,-0.145,2,False,-0.263
+TV TV MACD cross below signal (ChrisMoody),SELL,none,EMA20,293,28.3,1.4,-0.072,56,82,155,0.03,-0.136,-0.074,-0.143,-0.163,-0.061,4,False,-0.136
+TV TV MACD cross below signal (ChrisMoody),SELL,none,F2x2_20,260,34.2,54.2,-0.167,48,74,138,0.09,-0.071,-0.309,0.02,-0.297,-0.224,1,False,-0.309
+TV TV MACD cross below signal (ChrisMoody),SELL,none,F2x3_40,221,30.3,65.6,-0.121,39,56,126,0.13,0.011,-0.258,-0.144,-0.481,-0.226,3,False,-0.258
+TV TV MACD cross below signal (ChrisMoody),SELL,none,F3x2_40,191,37.2,54.5,-0.171,34,53,104,0.099,-0.197,-0.246,0.304,-0.387,-0.226,2,False,-0.246
+TV TV QQE MOD turns down (Mihkel00),BUY,LT,CH3,114,36.0,96.5,0.332,18,28,68,-0.639,0.157,0.661,-0.608,0.206,0.555,5,False,-0.639
+TV TV QQE MOD turns down (Mihkel00),BUY,LT,EMA20,156,29.5,4.5,0.311,25,33,98,-0.39,0.259,0.507,-0.224,0.092,0.231,7,False,-0.39
+TV TV QQE MOD turns down (Mihkel00),BUY,LT,F2x2_20,194,50.5,44.3,0.257,21,46,127,-0.368,0.11,0.413,-0.465,0.184,0.19,6,False,-0.368
+TV TV QQE MOD turns down (Mihkel00),BUY,LT,F2x3_40,147,38.1,57.8,0.27,17,37,93,-0.79,-0.138,0.627,-0.854,0.028,0.339,5,False,-0.79
+TV TV QQE MOD turns down (Mihkel00),BUY,LT,F3x2_40,128,51.6,39.1,0.304,14,32,82,-0.592,0.09,0.541,-0.654,0.095,0.267,5,False,-0.592
+TV TV QQE MOD turns down (Mihkel00),BUY,TR,CH3,164,34.1,94.5,0.268,37,42,85,-0.551,0.525,0.497,-0.597,0.635,0.591,6,False,-0.551
+TV TV QQE MOD turns down (Mihkel00),BUY,TR,EMA20,217,31.3,2.8,0.261,52,51,114,-0.329,0.532,0.409,-0.345,0.101,0.345,6,False,-0.329
+TV TV QQE MOD turns down (Mihkel00),BUY,TR,F2x2_20,276,45.3,47.5,0.144,45,76,155,-0.448,0.23,0.273,-0.515,0.451,0.196,6,False,-0.448
+TV TV QQE MOD turns down (Mihkel00),BUY,TR,F2x3_40,213,34.3,62.0,0.173,39,59,115,-0.721,0.175,0.476,-0.697,0.37,0.364,6,False,-0.721
+TV TV QQE MOD turns down (Mihkel00),BUY,TR,F3x2_40,183,44.3,44.8,0.195,34,50,99,-0.59,0.228,0.447,-0.484,0.368,0.365,6,False,-0.59
+TV TV QQE MOD turns down (Mihkel00),BUY,TR+LT,CH3,108,36.1,96.3,0.349,16,26,66,-0.695,0.221,0.652,-0.758,0.301,0.77,5,False,-0.695
+TV TV QQE MOD turns down (Mihkel00),BUY,TR+LT,EMA20,133,30.8,5.3,0.371,20,28,85,-0.481,0.353,0.578,-0.392,0.099,0.433,7,False,-0.481
+TV TV QQE MOD turns down (Mihkel00),BUY,TR+LT,F2x2_20,185,49.7,44.3,0.249,18,44,123,-0.48,0.169,0.384,-0.804,0.302,0.236,6,False,-0.48
+TV TV QQE MOD turns down (Mihkel00),BUY,TR+LT,F2x3_40,140,37.1,59.3,0.281,16,35,89,-0.917,-0.091,0.643,-1.057,-0.01,0.508,5,False,-0.917
+TV TV QQE MOD turns down (Mihkel00),BUY,TR+LT,F3x2_40,123,48.0,42.3,0.27,14,30,79,-0.821,0.02,0.559,-0.555,0.104,0.518,5,False,-0.821
+TV TV QQE MOD turns down (Mihkel00),BUY,none,CH3,193,33.2,94.3,0.193,48,51,94,-0.475,0.292,0.481,-0.254,0.65,0.403,6,False,-0.475
+TV TV QQE MOD turns down (Mihkel00),BUY,none,EMA20,308,26.3,1.9,0.152,84,75,149,-0.252,0.327,0.292,-0.198,0.05,0.131,6,False,-0.252
+TV TV QQE MOD turns down (Mihkel00),BUY,none,F2x2_20,317,44.8,47.3,0.102,59,90,168,-0.373,0.115,0.262,0.018,0.311,0.114,6,False,-0.373
+TV TV QQE MOD turns down (Mihkel00),BUY,none,F2x3_40,240,33.8,60.8,0.134,47,67,126,-0.645,0.143,0.421,-0.267,0.342,0.267,6,False,-0.645
+TV TV QQE MOD turns down (Mihkel00),BUY,none,F3x2_40,203,46.8,41.9,0.199,41,56,106,-0.441,0.306,0.391,-0.251,0.317,0.202,6,False,-0.441
+TV TV QQE MOD turns down (Mihkel00),SELL,LT,CH3,84,32.1,94.0,-0.103,26,27,31,-0.112,-0.195,-0.017,-0.432,-0.374,-0.255,3,False,-0.195
+TV TV QQE MOD turns down (Mihkel00),SELL,LT,EMA20,120,28.3,7.5,-0.044,42,40,38,-0.025,-0.181,0.079,-0.148,-0.113,-0.036,5,False,-0.181
+TV TV QQE MOD turns down (Mihkel00),SELL,LT,F2x2_20,129,40.3,47.3,-0.054,40,41,48,-0.137,-0.044,0.005,-0.278,-0.188,-0.028,4,False,-0.137
+TV TV QQE MOD turns down (Mihkel00),SELL,LT,F2x3_40,92,37.0,57.6,0.009,30,29,33,-0.16,0.024,0.149,-0.559,-0.364,-0.2,4,False,-0.16
+TV TV QQE MOD turns down (Mihkel00),SELL,LT,F3x2_40,86,41.9,44.2,-0.041,29,27,30,-0.127,-0.185,0.173,0.128,-0.366,-0.223,4,False,-0.185
+TV TV QQE MOD turns down (Mihkel00),SELL,TR,CH3,154,37.0,93.5,-0.041,36,49,69,0.051,-0.253,0.06,-0.458,-0.26,-0.288,3,False,-0.253
+TV TV QQE MOD turns down (Mihkel00),SELL,TR,EMA20,217,30.0,5.5,-0.018,56,66,95,0.006,-0.166,0.07,-0.222,-0.241,-0.167,5,False,-0.166
+TV TV QQE MOD turns down (Mihkel00),SELL,TR,F2x2_20,239,40.6,46.4,-0.04,57,69,113,-0.009,-0.17,0.023,-0.417,-0.255,-0.117,4,False,-0.17
+TV TV QQE MOD turns down (Mihkel00),SELL,TR,F2x3_40,168,39.9,55.4,0.086,42,49,77,0.084,-0.057,0.179,-0.621,-0.442,-0.292,4,False,-0.057
+TV TV QQE MOD turns down (Mihkel00),SELL,TR,F3x2_40,151,47.0,43.7,0.01,39,43,69,0.066,-0.19,0.104,0.182,-0.358,-0.129,4,False,-0.19
+TV TV QQE MOD turns down (Mihkel00),SELL,TR+LT,CH3,79,34.2,93.7,-0.061,25,26,28,-0.088,-0.18,0.073,-0.523,-0.114,-0.171,3,False,-0.18
+TV TV QQE MOD turns down (Mihkel00),SELL,TR+LT,EMA20,111,30.6,8.1,-0.031,40,37,34,-0.026,-0.176,0.121,-0.235,-0.119,-0.094,5,False,-0.176
+TV TV QQE MOD turns down (Mihkel00),SELL,TR+LT,F2x2_20,123,42.3,45.5,-0.013,39,39,45,-0.116,0.006,0.06,-0.53,0.182,0.101,6,False,-0.116
+TV TV QQE MOD turns down (Mihkel00),SELL,TR+LT,F2x3_40,87,39.1,55.2,0.066,30,27,30,-0.159,0.102,0.26,-0.708,-0.089,-0.163,4,False,-0.159
+TV TV QQE MOD turns down (Mihkel00),SELL,TR+LT,F3x2_40,81,44.4,42.0,0.02,28,26,27,-0.095,-0.125,0.279,0.136,-0.204,0.065,4,False,-0.125
+TV TV QQE MOD turns down (Mihkel00),SELL,none,CH3,175,37.1,94.3,-0.061,39,52,84,0.047,-0.208,-0.021,-0.068,-0.356,-0.145,2,False,-0.208
+TV TV QQE MOD turns down (Mihkel00),SELL,none,EMA20,284,28.2,4.2,-0.027,64,82,138,-0.01,-0.118,0.019,-0.143,-0.163,-0.061,3,False,-0.118
+TV TV QQE MOD turns down (Mihkel00),SELL,none,F2x2_20,276,40.9,47.8,-0.047,60,80,136,-0.052,-0.087,-0.02,0.02,-0.297,-0.224,4,False,-0.087
+TV TV QQE MOD turns down (Mihkel00),SELL,none,F2x3_40,196,37.2,59.2,0.024,44,53,99,0.039,0.014,0.023,-0.144,-0.481,-0.226,4,False,0.014
+TV TV QQE MOD turns down (Mihkel00),SELL,none,F3x2_40,180,43.9,46.7,-0.053,43,48,89,0.022,-0.115,-0.057,0.304,-0.387,-0.226,3,False,-0.115
+TV TV SMC break of structure down (LuxAlgo-style),BUY,LT,CH3,70,37.1,98.6,0.727,7,18,45,-0.924,-0.071,1.304,-0.608,0.206,0.555,5,False,-0.924
+TV TV SMC break of structure down (LuxAlgo-style),BUY,LT,EMA20,81,35.8,3.7,0.649,8,19,54,-0.787,0.147,1.038,-0.224,0.092,0.231,7,False,-0.787
+TV TV SMC break of structure down (LuxAlgo-style),BUY,LT,F2x2_20,89,48.3,43.8,0.268,8,21,60,-1.04,-0.073,0.561,-0.465,0.184,0.19,4,False,-1.04
+TV TV SMC break of structure down (LuxAlgo-style),BUY,LT,F2x3_40,77,42.9,53.2,0.47,8,20,49,-1.04,-0.16,0.973,-0.854,0.028,0.339,6,False,-1.04
+TV TV SMC break of structure down (LuxAlgo-style),BUY,LT,F3x2_40,72,51.4,40.3,0.311,7,18,47,-0.978,-0.162,0.685,-0.654,0.095,0.267,6,False,-0.978
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR,CH3,107,38.3,97.2,0.571,22,29,56,-0.657,0.609,1.034,-0.597,0.635,0.591,6,False,-0.657
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR,EMA20,123,34.1,4.1,0.516,24,33,66,-0.495,0.561,0.861,-0.345,0.101,0.345,6,False,-0.495
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR,F2x2_20,134,46.3,47.0,0.208,24,37,73,-0.63,0.194,0.491,-0.515,0.451,0.196,6,False,-0.63
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR,F2x3_40,117,41.9,54.7,0.442,23,34,60,-0.652,0.306,0.939,-0.697,0.37,0.364,6,False,-0.652
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR,F3x2_40,110,46.4,43.6,0.26,20,31,59,-0.602,0.145,0.612,-0.484,0.368,0.365,6,False,-0.602
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR+LT,CH3,68,36.8,98.5,0.744,7,17,44,-0.924,-0.023,1.306,-0.758,0.301,0.77,5,False,-0.924
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR+LT,EMA20,75,34.7,4.0,0.695,8,17,50,-0.787,0.116,1.129,-0.392,0.099,0.433,7,False,-0.787
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR+LT,F2x2_20,86,48.8,43.0,0.288,8,20,58,-1.04,-0.025,0.58,-0.804,0.302,0.236,5,False,-1.04
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR+LT,F2x3_40,74,44.6,51.4,0.531,8,19,47,-1.04,-0.114,1.06,-1.057,-0.01,0.508,6,False,-1.04
+TV TV SMC break of structure down (LuxAlgo-style),BUY,TR+LT,F3x2_40,72,45.8,44.4,0.245,7,18,47,-0.978,-0.211,0.602,-0.555,0.104,0.518,6,False,-0.978
+TV TV SMC break of structure down (LuxAlgo-style),BUY,none,CH3,117,37.6,97.4,0.496,23,35,59,-0.672,0.455,0.976,-0.254,0.65,0.403,5,False,-0.672
+TV TV SMC break of structure down (LuxAlgo-style),BUY,none,EMA20,137,35.0,3.6,0.466,25,40,72,-0.489,0.512,0.772,-0.198,0.05,0.131,6,False,-0.489
+TV TV SMC break of structure down (LuxAlgo-style),BUY,none,F2x2_20,145,45.5,47.6,0.185,25,43,77,-0.645,0.205,0.444,0.018,0.311,0.114,6,False,-0.645
+TV TV SMC break of structure down (LuxAlgo-style),BUY,none,F2x3_40,128,41.4,55.5,0.398,24,40,64,-0.667,0.354,0.826,-0.267,0.342,0.267,6,False,-0.667
+TV TV SMC break of structure down (LuxAlgo-style),BUY,none,F3x2_40,118,50.0,41.5,0.286,21,36,61,-0.622,0.218,0.638,-0.251,0.317,0.202,6,False,-0.622
+TV TV SMC break of structure down (LuxAlgo-style),SELL,LT,CH3,53,37.7,90.6,-0.119,16,16,21,-0.008,-0.208,-0.137,-0.432,-0.374,-0.255,3,False,-0.208
+TV TV SMC break of structure down (LuxAlgo-style),SELL,LT,EMA20,68,25.0,7.4,-0.127,18,26,24,0.264,-0.433,-0.088,-0.148,-0.113,-0.036,3,False,-0.433
+TV TV SMC break of structure down (LuxAlgo-style),SELL,LT,F2x2_20,64,37.5,40.6,0.021,18,25,21,0.115,-0.173,0.171,-0.278,-0.188,-0.028,4,False,-0.173
+TV TV SMC break of structure down (LuxAlgo-style),SELL,LT,F2x3_40,54,38.9,55.6,0.078,16,19,19,0.258,-0.228,0.232,-0.559,-0.364,-0.2,4,False,-0.228
+TV TV SMC break of structure down (LuxAlgo-style),SELL,LT,F3x2_40,50,46.0,42.0,0.028,16,16,18,0.034,-0.065,0.105,0.128,-0.366,-0.223,5,False,-0.065
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR,CH3,103,42.7,92.2,-0.076,22,29,52,0.067,-0.316,-0.003,-0.458,-0.26,-0.288,3,False,-0.316
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR,EMA20,122,30.3,9.0,-0.065,24,40,58,0.245,-0.385,0.028,-0.222,-0.241,-0.167,2,False,-0.385
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR,F2x2_20,120,43.3,42.5,0.04,25,39,56,0.243,-0.231,0.138,-0.417,-0.255,-0.117,5,False,-0.231
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR,F2x3_40,101,38.6,55.4,0.087,21,31,49,0.507,-0.276,0.137,-0.621,-0.442,-0.292,4,False,-0.276
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR,F3x2_40,95,46.3,42.1,0.033,21,27,47,0.177,-0.164,0.082,0.182,-0.358,-0.129,4,False,-0.164
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR+LT,CH3,53,37.7,90.6,-0.119,16,16,21,-0.008,-0.208,-0.137,-0.523,-0.114,-0.171,3,False,-0.208
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR+LT,EMA20,68,25.0,7.4,-0.127,18,26,24,0.264,-0.433,-0.088,-0.235,-0.119,-0.094,3,False,-0.433
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR+LT,F2x2_20,64,37.5,40.6,0.021,18,25,21,0.115,-0.173,0.171,-0.53,0.182,0.101,4,False,-0.173
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR+LT,F2x3_40,54,38.9,55.6,0.078,16,19,19,0.258,-0.228,0.232,-0.708,-0.089,-0.163,4,False,-0.228
+TV TV SMC break of structure down (LuxAlgo-style),SELL,TR+LT,F3x2_40,50,46.0,42.0,0.028,16,16,18,0.034,-0.065,0.105,0.136,-0.204,0.065,5,False,-0.065
+TV TV SMC break of structure down (LuxAlgo-style),SELL,none,CH3,105,43.8,92.4,-0.04,23,29,53,0.06,-0.314,0.066,-0.068,-0.356,-0.145,4,False,-0.314
+TV TV SMC break of structure down (LuxAlgo-style),SELL,none,EMA20,128,30.5,8.6,-0.041,25,41,62,0.234,-0.379,0.072,-0.143,-0.163,-0.061,4,False,-0.379
+TV TV SMC break of structure down (LuxAlgo-style),SELL,none,F2x2_20,124,43.5,41.1,0.078,26,40,58,0.233,-0.231,0.221,0.02,-0.297,-0.224,4,False,-0.231
+TV TV SMC break of structure down (LuxAlgo-style),SELL,none,F2x3_40,104,40.4,53.8,0.13,21,31,52,0.62,-0.306,0.192,-0.144,-0.481,-0.226,5,False,-0.306
+TV TV SMC break of structure down (LuxAlgo-style),SELL,none,F3x2_40,98,48.0,40.8,0.063,21,27,50,0.268,-0.186,0.112,0.304,-0.387,-0.226,5,False,-0.186
+TV TV SSL channel turns down (10),BUY,LT,CH3,117,38.5,94.9,0.419,17,28,72,-0.6,0.228,0.734,-0.608,0.206,0.555,5,False,-0.6
+TV TV SSL channel turns down (10),BUY,LT,EMA20,159,33.3,1.3,0.294,19,37,103,-0.193,0.163,0.43,-0.224,0.092,0.231,6,False,-0.193
+TV TV SSL channel turns down (10),BUY,LT,F2x2_20,134,41.8,42.5,0.094,16,32,86,-0.518,0.102,0.204,-0.465,0.184,0.19,4,False,-0.518
+TV TV SSL channel turns down (10),BUY,LT,F2x3_40,113,40.7,56.6,0.207,14,26,73,-0.617,0.272,0.343,-0.854,0.028,0.339,4,False,-0.617
+TV TV SSL channel turns down (10),BUY,LT,F3x2_40,100,49.0,42.0,0.146,14,22,64,-0.548,0.375,0.219,-0.654,0.095,0.267,4,False,-0.548
+TV TV SSL channel turns down (10),BUY,TR,CH3,121,36.4,95.9,0.487,20,33,68,-0.532,0.739,0.664,-0.597,0.635,0.591,7,False,-0.532
+TV TV SSL channel turns down (10),BUY,TR,EMA20,151,31.1,1.3,0.397,23,40,88,-0.232,0.493,0.519,-0.345,0.101,0.345,5,False,-0.232
+TV TV SSL channel turns down (10),BUY,TR,F2x2_20,138,41.3,43.5,0.107,21,40,77,-0.518,0.272,0.191,-0.515,0.451,0.196,5,False,-0.518
+TV TV SSL channel turns down (10),BUY,TR,F2x3_40,117,37.6,59.0,0.229,18,32,67,-0.707,0.632,0.289,-0.697,0.37,0.364,4,False,-0.707
+TV TV SSL channel turns down (10),BUY,TR,F3x2_40,105,45.7,46.7,0.161,17,29,59,-0.618,0.561,0.189,-0.484,0.368,0.365,5,False,-0.618
+TV TV SSL channel turns down (10),BUY,TR+LT,CH3,89,37.1,96.6,0.501,9,23,57,-0.711,0.246,0.795,-0.758,0.301,0.77,4,False,-0.711
+TV TV SSL channel turns down (10),BUY,TR+LT,EMA20,107,31.8,1.9,0.462,9,28,70,-0.327,0.216,0.662,-0.392,0.099,0.433,6,False,-0.327
+TV TV SSL channel turns down (10),BUY,TR+LT,F2x2_20,98,41.8,43.9,0.116,9,26,63,-0.672,0.109,0.232,-0.804,0.302,0.236,4,False,-0.672
+TV TV SSL channel turns down (10),BUY,TR+LT,F2x3_40,83,38.6,59.0,0.228,8,21,54,-0.791,0.487,0.278,-1.057,-0.01,0.508,3,False,-0.791
+TV TV SSL channel turns down (10),BUY,TR+LT,F3x2_40,74,45.9,48.6,0.126,8,18,48,-0.822,0.508,0.14,-0.555,0.104,0.518,4,False,-0.822
+TV TV SSL channel turns down (10),BUY,none,CH3,216,35.2,94.4,0.225,55,58,103,-0.362,0.304,0.494,-0.254,0.65,0.403,6,False,-0.362
+TV TV SSL channel turns down (10),BUY,none,EMA20,303,29.4,0.7,0.181,71,77,155,-0.136,0.297,0.269,-0.198,0.05,0.131,6,False,-0.136
+TV TV SSL channel turns down (10),BUY,none,F2x2_20,258,38.0,45.3,-0.015,60,69,129,-0.292,0.1,0.052,0.018,0.311,0.114,5,False,-0.292
+TV TV SSL channel turns down (10),BUY,none,F2x3_40,213,36.6,59.6,0.085,49,55,109,-0.316,0.254,0.18,-0.267,0.342,0.267,6,False,-0.316
+TV TV SSL channel turns down (10),BUY,none,F3x2_40,178,45.5,42.7,0.085,40,46,92,-0.278,0.272,0.149,-0.251,0.317,0.202,6,False,-0.278
+TV TV SSL channel turns down (10),SELL,LT,CH3,93,30.1,94.6,-0.137,27,27,39,-0.082,-0.027,-0.252,-0.432,-0.374,-0.255,3,False,-0.252
+TV TV SSL channel turns down (10),SELL,LT,EMA20,128,29.7,1.6,-0.043,39,41,48,0.013,-0.101,-0.04,-0.148,-0.113,-0.036,4,False,-0.101
+TV TV SSL channel turns down (10),SELL,LT,F2x2_20,109,43.1,42.2,-0.015,32,33,44,0.059,0.143,-0.187,-0.278,-0.188,-0.028,4,False,-0.187
+TV TV SSL channel turns down (10),SELL,LT,F2x3_40,90,37.8,62.2,-0.042,27,25,38,-0.104,0.133,-0.114,-0.559,-0.364,-0.2,4,False,-0.114
+TV TV SSL channel turns down (10),SELL,LT,F3x2_40,78,43.6,46.2,-0.052,22,23,33,-0.028,-0.018,-0.092,0.128,-0.366,-0.223,5,False,-0.092
+TV TV SSL channel turns down (10),SELL,TR,CH3,126,33.3,92.9,-0.072,32,35,59,0.056,-0.231,-0.047,-0.458,-0.26,-0.288,3,False,-0.231
+TV TV SSL channel turns down (10),SELL,TR,EMA20,171,32.2,2.3,-0.001,47,46,78,0.006,-0.099,0.053,-0.222,-0.241,-0.167,5,False,-0.099
+TV TV SSL channel turns down (10),SELL,TR,F2x2_20,146,42.5,43.8,-0.008,39,39,68,0.091,-0.107,-0.008,-0.417,-0.255,-0.117,4,False,-0.107
+TV TV SSL channel turns down (10),SELL,TR,F2x3_40,119,37.0,61.3,-0.008,31,32,56,-0.0,-0.168,0.079,-0.621,-0.442,-0.292,4,False,-0.168
+TV TV SSL channel turns down (10),SELL,TR,F3x2_40,105,44.8,43.8,-0.005,26,28,51,0.106,-0.141,0.013,0.182,-0.358,-0.129,4,False,-0.141
+TV TV SSL channel turns down (10),SELL,TR+LT,CH3,77,31.2,94.8,-0.151,25,21,31,-0.142,-0.147,-0.16,-0.523,-0.114,-0.171,3,False,-0.16
+TV TV SSL channel turns down (10),SELL,TR+LT,EMA20,105,31.4,1.9,-0.029,35,30,40,0.03,-0.096,-0.031,-0.235,-0.119,-0.094,4,False,-0.096
+TV TV SSL channel turns down (10),SELL,TR+LT,F2x2_20,89,42.7,41.6,-0.001,29,24,36,0.063,0.146,-0.151,-0.53,0.182,0.101,4,False,-0.151
+TV TV SSL channel turns down (10),SELL,TR+LT,F2x3_40,72,38.9,61.1,-0.02,24,17,31,-0.223,0.126,0.058,-0.708,-0.089,-0.163,4,False,-0.223
+TV TV SSL channel turns down (10),SELL,TR+LT,F3x2_40,63,47.6,42.9,-0.011,20,16,27,-0.059,-0.014,0.027,0.136,-0.204,0.065,4,False,-0.059
+TV TV SSL channel turns down (10),SELL,none,CH3,214,34.1,94.4,-0.064,43,59,112,0.129,-0.112,-0.113,-0.068,-0.356,-0.145,5,False,-0.113
+TV TV SSL channel turns down (10),SELL,none,EMA20,302,30.1,1.3,-0.017,62,86,154,0.041,-0.062,-0.016,-0.143,-0.163,-0.061,4,False,-0.062
+TV TV SSL channel turns down (10),SELL,none,F2x2_20,254,41.3,47.2,-0.024,49,71,134,0.197,0.03,-0.133,0.02,-0.297,-0.224,5,False,-0.133
+TV TV SSL channel turns down (10),SELL,none,F2x3_40,212,37.3,62.3,0.004,42,52,118,0.182,0.09,-0.098,-0.144,-0.481,-0.226,6,False,-0.098
+TV TV SSL channel turns down (10),SELL,none,F3x2_40,186,41.4,51.1,-0.066,35,49,102,0.174,-0.1,-0.132,0.304,-0.387,-0.226,4,False,-0.132
+TV TV Squeeze release down (LazyBear),BUY,LT,CH3,35,28.6,97.1,-0.191,2,7,26,-1.046,0.036,-0.186,-0.608,0.206,0.555,2,False,-1.046
+TV TV Squeeze release down (LazyBear),BUY,LT,EMA20,37,18.9,2.7,-0.026,2,7,28,-0.464,-0.09,0.022,-0.224,0.092,0.231,2,False,-0.464
+TV TV Squeeze release down (LazyBear),BUY,LT,F2x2_20,38,36.8,55.3,-0.099,2,7,29,-1.045,-0.362,0.029,-0.465,0.184,0.19,2,False,-1.045
+TV TV Squeeze release down (LazyBear),BUY,LT,F2x3_40,34,32.4,67.6,0.0,2,7,25,-1.045,-0.112,0.115,-0.854,0.028,0.339,3,False,-1.045
+TV TV Squeeze release down (LazyBear),BUY,LT,F3x2_40,33,36.4,60.6,-0.109,2,7,24,-1.045,-0.318,0.03,-0.654,0.095,0.267,2,False,-1.045
+TV TV Squeeze release down (LazyBear),BUY,TR,CH3,66,30.3,95.5,-0.196,16,12,38,-0.726,0.369,-0.151,-0.597,0.635,0.591,2,False,-0.726
+TV TV Squeeze release down (LazyBear),BUY,TR,EMA20,69,23.2,10.1,-0.112,16,12,41,-0.475,0.361,-0.108,-0.345,0.101,0.345,3,False,-0.475
+TV TV Squeeze release down (LazyBear),BUY,TR,F2x2_20,72,34.7,58.3,-0.099,16,12,44,-0.674,0.29,0.004,-0.515,0.451,0.196,3,False,-0.674
+TV TV Squeeze release down (LazyBear),BUY,TR,F2x3_40,64,32.8,65.6,0.048,15,12,37,-0.673,0.503,0.193,-0.697,0.37,0.364,5,False,-0.673
+TV TV Squeeze release down (LazyBear),BUY,TR,F3x2_40,59,40.7,52.5,0.027,13,11,35,-0.634,0.409,0.152,-0.484,0.368,0.365,5,False,-0.634
+TV TV Squeeze release down (LazyBear),BUY,TR+LT,CH3,35,28.6,97.1,-0.191,2,7,26,-1.046,0.036,-0.186,-0.758,0.301,0.77,2,False,-1.046
+TV TV Squeeze release down (LazyBear),BUY,TR+LT,EMA20,37,18.9,2.7,-0.026,2,7,28,-0.464,-0.09,0.022,-0.392,0.099,0.433,2,False,-0.464
+TV TV Squeeze release down (LazyBear),BUY,TR+LT,F2x2_20,38,36.8,55.3,-0.099,2,7,29,-1.045,-0.362,0.029,-0.804,0.302,0.236,2,False,-1.045
+TV TV Squeeze release down (LazyBear),BUY,TR+LT,F2x3_40,34,32.4,67.6,0.0,2,7,25,-1.045,-0.112,0.115,-1.057,-0.01,0.508,3,False,-1.045
+TV TV Squeeze release down (LazyBear),BUY,TR+LT,F3x2_40,33,36.4,60.6,-0.109,2,7,24,-1.045,-0.318,0.03,-0.555,0.104,0.518,2,False,-1.045
+TV TV Squeeze release down (LazyBear),BUY,none,CH3,71,29.6,94.4,-0.188,16,16,39,-0.726,0.314,-0.172,-0.254,0.65,0.403,2,False,-0.726
+TV TV Squeeze release down (LazyBear),BUY,none,EMA20,74,21.6,9.5,-0.129,16,16,42,-0.475,0.18,-0.116,-0.198,0.05,0.131,3,False,-0.475
+TV TV Squeeze release down (LazyBear),BUY,none,F2x2_20,77,33.8,59.7,-0.142,16,16,45,-0.674,0.049,-0.021,0.018,0.311,0.114,3,False,-0.674
+TV TV Squeeze release down (LazyBear),BUY,none,F2x3_40,69,31.9,66.7,0.026,15,16,38,-0.673,0.368,0.159,-0.267,0.342,0.267,5,False,-0.673
+TV TV Squeeze release down (LazyBear),BUY,none,F3x2_40,64,40.6,53.1,0.008,13,15,36,-0.634,0.299,0.119,-0.251,0.317,0.202,5,False,-0.634
+TV TV Squeeze release down (LazyBear),SELL,TR,CH3,49,30.6,91.8,-0.163,14,12,23,-0.343,-0.481,0.112,-0.458,-0.26,-0.288,4,False,-0.481
+TV TV Squeeze release down (LazyBear),SELL,TR,EMA20,54,27.8,5.6,-0.085,15,14,25,-0.091,-0.304,0.042,-0.222,-0.241,-0.167,4,False,-0.304
+TV TV Squeeze release down (LazyBear),SELL,TR,F2x2_20,51,45.1,41.2,0.06,14,12,25,0.017,0.06,0.085,-0.417,-0.255,-0.117,5,False,0.017
+TV TV Squeeze release down (LazyBear),SELL,TR,F2x3_40,48,39.6,60.4,0.091,13,12,23,0.278,-0.321,0.199,-0.621,-0.442,-0.292,7,False,-0.321
+TV TV Squeeze release down (LazyBear),SELL,TR,F3x2_40,46,47.8,43.5,-0.008,13,12,21,0.159,-0.374,0.098,0.182,-0.358,-0.129,6,False,-0.374
+TV TV Squeeze release down (LazyBear),SELL,none,CH3,52,32.7,92.3,-0.135,14,12,26,-0.343,-0.481,0.136,-0.068,-0.356,-0.145,4,False,-0.481
+TV TV Squeeze release down (LazyBear),SELL,none,EMA20,57,31.6,5.3,-0.05,15,14,28,-0.091,-0.304,0.099,-0.143,-0.163,-0.061,4,False,-0.304
+TV TV Squeeze release down (LazyBear),SELL,none,F2x2_20,55,47.3,40.0,0.084,14,12,29,0.017,0.06,0.126,0.02,-0.297,-0.224,5,False,0.017
+TV TV Squeeze release down (LazyBear),SELL,none,F2x3_40,51,41.2,58.8,0.112,13,12,26,0.278,-0.321,0.229,-0.144,-0.481,-0.226,7,False,-0.321
+TV TV Squeeze release down (LazyBear),SELL,none,F3x2_40,49,49.0,40.8,0.015,13,12,24,0.159,-0.374,0.132,0.304,-0.387,-0.226,6,False,-0.374
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,LT,CH3,52,36.5,98.1,0.378,6,14,32,-0.869,0.322,0.637,-0.608,0.206,0.555,5,False,-0.869
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,LT,EMA20,52,30.8,11.5,0.287,6,14,32,-0.517,0.458,0.362,-0.224,0.092,0.231,5,False,-0.517
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,LT,F2x2_20,52,48.1,50.0,0.167,6,14,32,-1.07,0.178,0.394,-0.465,0.184,0.19,5,False,-1.07
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,LT,F2x3_40,49,38.8,57.1,0.249,6,13,30,-1.07,0.166,0.549,-0.854,0.028,0.339,4,False,-1.07
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,LT,F3x2_40,48,47.9,43.8,0.183,6,13,29,-1.038,0.089,0.477,-0.654,0.095,0.267,5,False,-1.038
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR,CH3,96,34.4,95.8,0.18,22,28,46,-0.736,0.515,0.414,-0.597,0.635,0.591,5,False,-0.736
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR,EMA20,96,30.2,8.3,0.184,22,28,46,-0.442,0.562,0.254,-0.345,0.101,0.345,5,False,-0.442
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR,F2x2_20,96,38.5,55.2,0.006,22,28,46,-0.715,0.187,0.24,-0.515,0.451,0.196,5,False,-0.715
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR,F2x3_40,94,34.0,63.8,0.137,22,27,45,-0.624,0.356,0.379,-0.697,0.37,0.364,6,False,-0.624
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR,F3x2_40,92,44.6,45.7,0.148,21,27,44,-0.595,0.321,0.395,-0.484,0.368,0.365,7,False,-0.595
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR+LT,CH3,51,35.3,98.0,0.381,6,14,31,-0.869,0.322,0.65,-0.758,0.301,0.77,5,False,-0.869
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR+LT,EMA20,51,31.4,11.8,0.295,6,14,31,-0.517,0.458,0.378,-0.392,0.099,0.433,5,False,-0.517
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR+LT,F2x2_20,51,47.1,51.0,0.164,6,14,31,-1.07,0.178,0.396,-0.804,0.302,0.236,4,False,-1.07
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR+LT,F2x3_40,49,38.8,57.1,0.273,6,13,30,-1.07,0.166,0.588,-1.057,-0.01,0.508,4,False,-1.07
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,TR+LT,F3x2_40,48,47.9,43.8,0.199,6,13,29,-1.038,0.089,0.504,-0.555,0.104,0.518,5,False,-1.038
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,none,CH3,106,34.9,95.3,0.214,25,32,49,-0.749,0.689,0.395,-0.254,0.65,0.403,5,False,-0.749
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,none,EMA20,106,29.2,7.5,0.147,25,32,49,-0.465,0.502,0.227,-0.198,0.05,0.131,5,False,-0.465
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,none,F2x2_20,106,39.6,54.7,0.02,25,32,49,-0.755,0.316,0.222,0.018,0.311,0.114,4,False,-0.755
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,none,F2x3_40,102,34.3,64.7,0.129,25,30,47,-0.675,0.405,0.38,-0.267,0.342,0.267,6,False,-0.675
+TV TV SuperTrend 10/3 turns red (Kivanc),BUY,none,F3x2_40,98,44.9,45.9,0.15,23,29,46,-0.592,0.369,0.383,-0.251,0.317,0.202,6,False,-0.592
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,LT,CH3,39,30.8,100.0,-0.191,14,13,12,0.013,-0.327,-0.281,-0.432,-0.374,-0.255,3,False,-0.327
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,LT,EMA20,39,30.8,5.1,-0.062,14,13,12,0.198,-0.221,-0.191,-0.148,-0.113,-0.036,2,False,-0.221
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,LT,F2x2_20,39,35.9,46.2,-0.127,14,13,12,-0.174,0.022,-0.234,-0.278,-0.188,-0.028,3,False,-0.234
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,LT,F2x3_40,39,33.3,64.1,-0.218,14,13,12,-0.077,-0.048,-0.567,-0.559,-0.364,-0.2,1,False,-0.567
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,LT,F3x2_40,36,47.2,41.7,-0.015,13,12,11,0.106,-0.114,-0.051,0.128,-0.366,-0.223,2,False,-0.114
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR,CH3,82,32.9,93.9,-0.128,22,26,34,0.065,-0.454,-0.003,-0.458,-0.26,-0.288,2,False,-0.454
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR,EMA20,82,30.5,4.9,-0.116,22,26,34,0.116,-0.3,-0.125,-0.222,-0.241,-0.167,3,False,-0.3
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR,F2x2_20,81,42.0,42.0,-0.019,22,25,34,0.124,-0.25,0.058,-0.417,-0.255,-0.117,5,False,-0.25
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR,F2x3_40,78,39.7,56.4,-0.002,22,23,33,0.266,-0.126,-0.095,-0.621,-0.442,-0.292,4,False,-0.126
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR,F3x2_40,74,51.4,40.5,0.058,20,22,32,0.353,-0.238,0.077,0.182,-0.358,-0.129,6,False,-0.238
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR+LT,CH3,38,31.6,100.0,-0.178,14,13,11,0.013,-0.327,-0.244,-0.523,-0.114,-0.171,3,False,-0.327
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR+LT,EMA20,38,31.6,5.3,-0.057,14,13,11,0.198,-0.221,-0.187,-0.235,-0.119,-0.094,2,False,-0.221
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR+LT,F2x2_20,38,36.8,47.4,-0.123,14,13,11,-0.174,0.022,-0.23,-0.53,0.182,0.101,3,False,-0.23
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR+LT,F2x3_40,38,34.2,63.2,-0.197,14,13,11,-0.077,-0.048,-0.526,-0.708,-0.089,-0.163,1,False,-0.526
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,TR+LT,F3x2_40,35,48.6,42.9,-0.014,13,12,10,0.106,-0.114,-0.05,0.136,-0.204,0.065,2,False,-0.114
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,none,CH3,104,32.7,95.2,-0.125,23,32,49,0.028,-0.395,-0.021,-0.068,-0.356,-0.145,4,False,-0.395
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,none,EMA20,104,26.0,3.8,-0.11,23,32,49,0.095,-0.295,-0.085,-0.143,-0.163,-0.061,4,False,-0.295
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,none,F2x2_20,103,38.8,42.7,-0.031,23,31,49,0.074,-0.253,0.061,0.02,-0.297,-0.224,5,False,-0.253
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,none,F2x3_40,100,39.0,58.0,-0.009,23,29,48,0.21,-0.089,-0.065,-0.144,-0.481,-0.226,4,False,-0.089
+TV TV SuperTrend 10/3 turns red (Kivanc),SELL,none,F3x2_40,94,48.9,42.6,0.039,21,27,46,0.378,-0.17,0.008,0.304,-0.387,-0.226,6,False,-0.17
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,LT,CH3,139,36.7,95.7,0.335,20,40,79,-0.523,0.265,0.587,-0.608,0.206,0.555,5,False,-0.523
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,LT,EMA20,209,37.3,1.0,0.203,27,50,132,-0.164,0.006,0.354,-0.224,0.092,0.231,6,False,-0.164
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,LT,F2x2_20,187,44.9,45.5,0.108,23,44,120,-0.425,0.136,0.199,-0.465,0.184,0.19,5,False,-0.425
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,LT,F2x3_40,145,40.0,55.9,0.234,18,35,92,-0.64,0.181,0.426,-0.854,0.028,0.339,5,False,-0.64
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,LT,F3x2_40,125,48.8,43.2,0.181,15,28,82,-0.596,0.21,0.313,-0.654,0.095,0.267,4,False,-0.596
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR,CH3,129,38.8,96.9,0.416,25,36,68,-0.52,0.631,0.647,-0.597,0.635,0.591,7,False,-0.52
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR,EMA20,185,35.7,1.6,0.293,34,46,105,-0.247,0.278,0.474,-0.345,0.101,0.345,6,False,-0.247
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR,F2x2_20,176,43.2,48.3,0.11,28,45,103,-0.499,0.143,0.261,-0.515,0.451,0.196,6,False,-0.499
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR,F2x3_40,141,36.9,57.4,0.251,23,38,80,-0.685,0.336,0.48,-0.697,0.37,0.364,5,False,-0.685
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR,F3x2_40,120,46.7,43.3,0.215,18,33,69,-0.504,0.344,0.341,-0.484,0.368,0.365,6,False,-0.504
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR+LT,CH3,96,37.5,96.9,0.392,11,25,60,-0.766,0.273,0.654,-0.758,0.301,0.77,4,False,-0.766
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR+LT,EMA20,132,36.4,1.5,0.351,14,31,87,-0.318,0.049,0.566,-0.392,0.099,0.433,7,False,-0.318
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR+LT,F2x2_20,131,43.5,49.6,0.101,13,29,89,-0.734,0.074,0.232,-0.804,0.302,0.236,3,False,-0.734
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR+LT,F2x3_40,107,35.5,60.7,0.205,12,25,70,-0.872,0.193,0.393,-1.057,-0.01,0.508,5,False,-0.872
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,TR+LT,F3x2_40,89,46.1,47.2,0.192,9,21,59,-0.803,0.353,0.286,-0.555,0.104,0.518,4,False,-0.803
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,none,CH3,239,36.4,94.6,0.231,58,69,112,-0.317,0.397,0.411,-0.254,0.65,0.403,5,False,-0.317
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,none,EMA20,393,34.1,0.8,0.122,94,100,199,-0.138,0.186,0.213,-0.198,0.05,0.131,6,False,-0.138
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,none,F2x2_20,324,42.3,44.4,0.047,70,87,167,-0.247,0.133,0.124,0.018,0.311,0.114,6,False,-0.247
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,none,F2x3_40,253,37.9,56.9,0.176,56,69,128,-0.376,0.271,0.367,-0.267,0.342,0.267,7,False,-0.376
+"TV TV UT Bot sell (key 1, ATR 10)",BUY,none,F3x2_40,213,45.1,41.8,0.131,48,53,112,-0.351,0.291,0.262,-0.251,0.317,0.202,7,False,-0.351
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,LT,CH3,110,37.3,91.8,-0.098,34,33,43,-0.075,-0.093,-0.119,-0.432,-0.374,-0.255,3,False,-0.119
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,LT,EMA20,180,34.4,1.7,-0.043,59,55,66,-0.031,-0.062,-0.039,-0.148,-0.113,-0.036,6,False,-0.062
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,LT,F2x2_20,139,42.4,46.8,-0.009,50,39,50,-0.02,0.041,-0.038,-0.278,-0.188,-0.028,4,False,-0.038
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,LT,F2x3_40,109,38.5,56.9,-0.022,35,31,43,-0.131,-0.141,0.154,-0.559,-0.364,-0.2,4,False,-0.141
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,LT,F3x2_40,95,43.2,44.2,-0.061,31,27,37,-0.118,-0.154,0.055,0.128,-0.366,-0.223,4,False,-0.154
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR,CH3,124,38.7,92.7,-0.099,34,33,57,-0.081,-0.217,-0.041,-0.458,-0.26,-0.288,3,False,-0.217
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR,EMA20,193,29.5,1.0,-0.038,53,50,90,-0.013,-0.131,-0.0,-0.222,-0.241,-0.167,5,False,-0.131
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR,F2x2_20,156,39.1,44.2,-0.028,46,42,68,0.013,-0.086,-0.02,-0.417,-0.255,-0.117,5,False,-0.086
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR,F2x3_40,124,33.9,61.3,-0.122,37,34,53,-0.163,-0.292,0.015,-0.621,-0.442,-0.292,3,False,-0.292
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR,F3x2_40,109,46.8,37.6,0.026,31,29,49,0.118,-0.204,0.103,0.182,-0.358,-0.129,4,False,-0.204
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR+LT,CH3,73,35.6,91.8,-0.149,26,19,28,-0.23,-0.164,-0.063,-0.523,-0.114,-0.171,4,False,-0.23
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR+LT,EMA20,124,29.8,2.4,-0.067,42,33,49,-0.046,-0.094,-0.067,-0.235,-0.119,-0.094,5,False,-0.094
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR+LT,F2x2_20,98,36.7,45.9,-0.089,37,26,35,-0.172,-0.003,-0.067,-0.53,0.182,0.101,5,False,-0.172
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR+LT,F2x3_40,78,34.6,61.5,-0.126,30,19,29,-0.234,-0.307,0.106,-0.708,-0.089,-0.163,4,False,-0.307
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,TR+LT,F3x2_40,69,44.9,37.7,-0.003,26,17,26,-0.094,-0.181,0.205,0.136,-0.204,0.065,4,False,-0.181
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,none,CH3,268,35.1,93.7,-0.117,50,71,147,0.16,-0.121,-0.209,-0.068,-0.356,-0.145,3,False,-0.209
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,none,EMA20,426,34.5,0.7,-0.023,86,112,228,0.044,-0.01,-0.054,-0.143,-0.163,-0.061,3,False,-0.054
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,none,F2x2_20,326,39.0,50.9,-0.073,67,87,172,0.216,-0.042,-0.202,0.02,-0.297,-0.224,4,False,-0.202
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,none,F2x3_40,263,33.1,63.5,-0.101,49,66,148,0.171,-0.119,-0.183,-0.144,-0.481,-0.226,4,False,-0.183
+"TV TV UT Bot sell (key 1, ATR 10)",SELL,none,F3x2_40,221,40.3,50.2,-0.124,43,57,121,0.186,-0.165,-0.215,0.304,-0.387,-0.226,4,False,-0.215
+TV TV WaveTrend cross down above +53 (LazyBear),BUY,none,CH3,55,43.6,96.4,0.106,12,13,30,0.181,0.06,0.096,-0.254,0.65,0.403,5,False,0.06
+TV TV WaveTrend cross down above +53 (LazyBear),BUY,none,EMA20,57,47.4,0.0,0.094,12,13,32,0.016,0.323,0.031,-0.198,0.05,0.131,5,False,0.016
+TV TV WaveTrend cross down above +53 (LazyBear),BUY,none,F2x2_20,55,52.7,34.5,0.157,12,13,30,0.505,0.208,-0.004,0.018,0.311,0.114,6,False,-0.004
+TV TV WaveTrend cross down above +53 (LazyBear),BUY,none,F2x3_40,55,52.7,41.8,0.408,12,13,30,0.765,0.423,0.26,-0.267,0.342,0.267,7,False,0.26
+TV TV WaveTrend cross down above +53 (LazyBear),BUY,none,F3x2_40,54,57.4,35.2,0.238,12,12,30,0.426,0.414,0.093,-0.251,0.317,0.202,6,False,0.093
+TV TV WaveTrend cross down above +53 (LazyBear),SELL,none,CH3,91,26.4,95.6,-0.257,3,24,64,-0.782,-0.02,-0.321,-0.068,-0.356,-0.145,2,False,-0.782
+TV TV WaveTrend cross down above +53 (LazyBear),SELL,none,EMA20,114,33.3,2.6,-0.079,4,31,79,-0.247,0.001,-0.102,-0.143,-0.163,-0.061,2,False,-0.247
+TV TV WaveTrend cross down above +53 (LazyBear),SELL,none,F2x2_20,97,28.9,63.9,-0.329,3,26,68,-0.63,0.199,-0.518,0.02,-0.297,-0.224,3,False,-0.63
+TV TV WaveTrend cross down above +53 (LazyBear),SELL,none,F2x3_40,95,24.2,75.8,-0.311,3,25,67,-0.253,0.219,-0.511,-0.144,-0.481,-0.226,3,False,-0.511
+TV TV WaveTrend cross down above +53 (LazyBear),SELL,none,F3x2_40,82,29.3,67.1,-0.314,3,23,56,-0.393,0.044,-0.457,0.304,-0.387,-0.226,3,False,-0.457
