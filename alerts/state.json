@@ -8890,16 +8890,16 @@
   "n": 4
  },
  "scan": {
-  "seq": 863,
-  "started": "2026-11-24 14:17:01.659075",
-  "finished": "2026-11-24 14:21:34.555661",
-  "seconds": 272,
+  "seq": 864,
+  "started": "2026-11-24 14:22:10.893377",
+  "finished": "2026-11-24 14:23:50.071902",
+  "seconds": 99,
   "status": "SUCCESS",
-  "note": "api requests 92 ok 81 rate-limited 11 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 62 ok 61 rate-limited 1 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 92,
-   "ok": 81,
-   "rate_limited": 11,
+   "calls": 62,
+   "ok": 61,
+   "rate_limited": 1,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
@@ -19386,12 +19386,12 @@
  "feed": {
   "MCX": {
    "day": "2026-11-24",
-   "dead_scans": 19,
+   "dead_scans": 20,
    "warned": "2026-11-24 09:47:01.821246"
   },
   "NFO": {
    "day": "2026-11-24",
-   "dead_scans": 18,
+   "dead_scans": 19,
    "warned": "2026-11-24 10:02:01.780489"
   }
  },
