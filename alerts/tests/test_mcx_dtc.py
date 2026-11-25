@@ -30,6 +30,13 @@ now = day + pd.Timedelta(hours=13, minutes=2)
 s = D.evaluate(c15, h1, dd, now)
 check(s["side"] == "BUY" and s["checkpoint"] == "13:00" and abs(s["stop_dist"] - 500) < 1, "13:00 candle, uptrend, above VWAP, 0.6 ATR above open -> BUY, stop 0.5 ATR")
 check(D.evaluate(c15.iloc[:-1], h1, dd, now)["side"] is None, "12:45 candle is not a checkpoint -> nothing")
+down = pd.DataFrame(dict(time=pd.bdate_range(end=day - pd.Timedelta(days=1), periods=80)))
+down["close"] = np.linspace(130000, 109000, 80); down["open"] = down.close; down["high"] = down.close + 500; down["low"] = down.close - 500
+r_ = D.evaluate(c15, h1, down, now)
+check(r_["side"] is None and "against the daily trend" in r_["why"], "25-Nov: BUY setup while the daily trend is down -> skipped")
+up = down.copy(); up["close"] = np.linspace(90000, 109000, 80); up["open"] = up.close; up["high"] = up.close + 500; up["low"] = up.close - 500
+check(D.evaluate(c15, h1, up, now)["side"] == "BUY", "25-Nov: BUY setup with the daily trend up -> BUY")
+check(D.daily_trend(dd) == 0, "short daily history (< 55 days) -> no daily-trend filter")
 weak = c15.copy(); weak["close"] = 110100.0
 check(D.evaluate(weak, h1, dd, now)["side"] is None, "only 0.1 ATR from the open -> nothing")
 st, msgs = {"day": {"date": str(day.date())}}, []
