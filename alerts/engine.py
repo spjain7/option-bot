@@ -303,6 +303,26 @@ def oi_reading(state, symbol, q, now):
     return out
 
 
+def oi_eod_note(state, name, symbol, oi, now):
+    """25-Nov-2026: last OI reading of each session per MCX commodity (Angel serves no MCX OI history, AB1012)."""
+    book = state.setdefault("oi_eod", {}).setdefault(name, {})
+    book[str(pd.Timestamp(now).date())] = [symbol, float(oi)]
+    for k in sorted(book)[:-6]:
+        del book[k]
+
+
+def oi_prev_day_change(state, name, now):
+    """Yesterday's OI change in % (last reading of the previous session vs the one before), same contract only; else None."""
+    book = (state.get("oi_eod") or {}).get(name) or {}
+    days = [d for d in sorted(book) if d < str(pd.Timestamp(now).date())]
+    if len(days) < 2:
+        return None
+    (s1, a), (s2, b) = book[days[-2]], book[days[-1]]
+    if s1 != s2 or not a or a <= 0:
+        return None
+    return (b / a - 1) * 100
+
+
 # ─────────────── scan ───────────────
 def new_state():
     return dict(schema=1, seen=[], active=[], last_eval={}, switches={}, day=None, history=[])
@@ -412,6 +432,8 @@ def scan(api, master, now, state, only=None):
         q = quotes.get(c["token"])
         oi = oi_reading(state, c["symbol"], q, now)
         info["oi"] = "n/a" if not oi else f"{oi['oi']:,.0f}" + ("" if oi.get("chg_pct") is None else f" ({oi['chg_pct']:+.2f}%)")
+        if oi and ex == "MCX":
+            oi_eod_note(state, name, c["symbol"], oi["oi"], now)
         _breakouts(state, msgs, info, name, ex, c, full_1h, cl.get("15m"), now, oi, q, sw_day=_switch_day(state, c, d), master=master, api=api)
         if ex == "MCX" and name in ("GOLD", "SILVER"):          # 6-Nov MCXD-002: intraday day-trend continuation – SHADOW only
             try:
@@ -419,7 +441,8 @@ def scan(api, master, now, state, only=None):
                 dd_ = BO.daily_candles(full_1h, None)
                 dd_ = dd_[dd_["time"].dt.normalize() < now.normalize()] if dd_ is not None else None
                 DTC.track(state, name, q, now, msgs)
-                info["dtc"] = DTC.run(state, msgs, name, c, cl.get("15m"), full_1h, dd_, q, now).get("why")
+                info["dtc"] = DTC.run(state, msgs, name, c, cl.get("15m"), full_1h, dd_, q, now,
+                                      oi_prev=oi_prev_day_change(state, name, now)).get("why")
             except Exception as e_:
                 print(f"[mcx-dtc] {name} skipped: {type(e_).__name__}: {e_}")
         try:                                               # 4-Nov: MFE / MAE of open calls on this contract (live ledger)
