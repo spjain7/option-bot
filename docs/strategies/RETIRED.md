@@ -7,7 +7,7 @@ consider them again in strategy research or analysis. The list lives in code as 
 | Strategy | Live record before retirement |
 |---|---|
 | Stock daily hanging-man breakdown SELL (`STK_HANGMAN`) | 3 closed, 1 won, −0.5R |
-| MCX 1-hour OI / volume breakout, experimental (`RB_MCX_1h_*_EXP`) | 9 closed, 2 won, −2.9R |
+| MCX 1-hour 20-candle breakout without OI, experimental (`RB_MCX_1h_BO20X_BUY_EXP`) | 7 closed, 0 won |
 | Stock 4-hour breakdown SELL (`FH_STK_SELL`) | 7 closed, 0 won, −3.4R |
 | Stock 3-hour MACD zero-cross SELL (`RB_STK_3h_MACD0_SELL`) | 5 closed, 0 won, −2.4R |
 | Stock 3-hour EMA 9/21 SELL (`RB_STK_3h_EMA921_SELL`) | 4 closed, 1 won, −1.2R |
@@ -15,3 +15,5 @@ consider them again in strategy research or analysis. The list lives in code as 
 
 Research rule: any new search must exclude these families / timeframes in these forms; a similar idea needs a clearly
 different rule and the owner's go-ahead before it is tested.
+
+Note 25-Nov: the OI-confirmed MCX 1h breakout (`RB_MCX_1h_OIBO_*_EXP`) is NOT retired – it was grouped with the plain 1h breakout by mistake (own record 2 calls, 2 targets) and runs log-only to collect evidence.
