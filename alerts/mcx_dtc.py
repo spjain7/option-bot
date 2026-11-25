@@ -10,6 +10,7 @@ Evidence (5-min front-month data 2023-26, realistic MCX costs, 2 x stress): 542 
 costs), DEV 2025-11…06 +0.13R, VALID 2026-07…11 +0.26R, older 2023-25 +0.19R, every year positive; 54 / 54 neighbouring
 parameter sets positive in the older history. Does NOT transfer to CRUDEOIL / COPPER (≈ 0).
 STATUS: SHADOW – the owner's rule: experimental strategies are never sent to Telegram before live shadow evidence.
+25-Nov-2026: BUY skipped when yesterday's OI fell (OI-INTRA-001).
 25-Nov-2026: skipped when the commodity's daily trend (EMA20/50, previous day) is against the call.
 Live differences vs research: VWAP from 15-minute candles (research: 5-minute), entry at the scan's live price.
 """
@@ -61,7 +62,7 @@ def trend60(h1, upto):
     return 0
 
 
-def evaluate(c15, h1, dd, now):
+def evaluate(c15, h1, dd, now, oi_prev=None):
     """-> dict(side, checkpoint, close, vwap, day_open, atr_d, stop_dist, why) or dict(side=None, why=...)."""
     if c15 is None or not len(c15):
         return dict(side=None, why="no 15m candles")
@@ -93,6 +94,12 @@ def evaluate(c15, h1, dd, now):
     dtr = daily_trend(dd)
     for s in (1, -1):
         if tr == s and s * (close - vwap) > 0 and s * (close - day_open) >= K_OPEN * a:
+            if s > 0 and oi_prev is not None and oi_prev < 0:
+                # 25-Nov-2026 (owner: "can we trust OI mixed with other indicators – intraday"; OI-INTRA-001): BUY only when
+                # yesterday's OI rose (fresh positions). 5-min GOLD/SILVER 2023-26 with the daily-trend filter: BUY after an OI
+                # fall -0.07R/trade (negative on both metals, 2024 and 2026), after an OI rise +0.33R; whole rule +0.22R ->
+                # +0.39R/trade, 58 % won, total R higher. Live: last OI reading of each session, same contract.
+                return dict(side=None, why=f"BUY setup but yesterday's OI fell ({oi_prev:+.2f}%) – skipped")
             if dtr == -s:
                 # 25-Nov-2026 (owner: "check and improve"): no call against the commodity's daily trend. Live 11..25-Nov: the
                 # day-trend BUYs against a falling daily trend lost (SILVER -1.0R, -0.77R). 5-min backtest GOLD / SILVER
@@ -110,11 +117,11 @@ def store(state):
     return state.setdefault("mcxdtc", dict(open=[], closed=[], seen=[]))
 
 
-def run(state, msgs, name, c, c15, h1, dd, q, now):
+def run(state, msgs, name, c, c15, h1, dd, q, now, oi_prev=None):
     """Shadow: record a signal at a checkpoint, never send. Returns the evaluation dict."""
     from alerts import funnel as FN
     st = store(state)
-    sig = evaluate(c15, h1, dd, now)
+    sig = evaluate(c15, h1, dd, now, oi_prev=oi_prev)
     if not sig.get("side"):
         return sig
     key = f"{name}|{pd.Timestamp(now).date()}|{sig['checkpoint']}"

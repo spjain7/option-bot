@@ -37,6 +37,17 @@ check(r_["side"] is None and "against the daily trend" in r_["why"], "25-Nov: BU
 up = down.copy(); up["close"] = np.linspace(90000, 109000, 80); up["open"] = up.close; up["high"] = up.close + 500; up["low"] = up.close - 500
 check(D.evaluate(c15, h1, up, now)["side"] == "BUY", "25-Nov: BUY setup with the daily trend up -> BUY")
 check(D.daily_trend(dd) == 0, "short daily history (< 55 days) -> no daily-trend filter")
+check(D.evaluate(c15, h1, dd, now, oi_prev=-0.8)["side"] is None and "OI fell" in D.evaluate(c15, h1, dd, now, oi_prev=-0.8)["why"],
+      "25-Nov: BUY skipped when yesterday's OI fell")
+check(D.evaluate(c15, h1, dd, now, oi_prev=+0.8)["side"] == "BUY" and D.evaluate(c15, h1, dd, now, oi_prev=None)["side"] == "BUY",
+      "25-Nov: BUY kept when yesterday's OI rose or is unknown")
+import alerts.engine as E
+st_ = {}
+for d_, v_ in (("2026-11-23", 100.0), ("2026-11-24", 103.0)):
+    E.oi_eod_note(st_, "GOLD", "GOLD04DEC26FUT", v_, pd.Timestamp(d_ + " 23:20"))
+check(abs(E.oi_prev_day_change(st_, "GOLD", pd.Timestamp("2026-11-25 13:02")) - 3.0) < 1e-9, "yesterday's OI change from the session-end readings")
+E.oi_eod_note(st_, "GOLD", "GOLD05FEB27FUT", 50.0, pd.Timestamp("2026-11-25 23:20"))
+check(E.oi_prev_day_change(st_, "GOLD", pd.Timestamp("2026-11-26 13:02")) is None, "contract changed -> no OI filter")
 weak = c15.copy(); weak["close"] = 110100.0
 check(D.evaluate(weak, h1, dd, now)["side"] is None, "only 0.1 ATR from the open -> nothing")
 st, msgs = {"day": {"date": str(day.date())}}, []
