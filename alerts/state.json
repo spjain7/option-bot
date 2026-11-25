@@ -9343,18 +9343,19 @@
    "iraqrefusestoacceptopecassessmentofitsproductioncapacitycrudeoilpricestodayoilpr",
    "lowerinflationusratecutsmaytriggerrecoveryingoldsilverpricesbusinessstandard",
    "naturalgaswtioilbrentoilforecastsoilralliesashouthisattacksaudiarabiasrastanurar",
-   "silverxagforecastfedratehikeoutlookkeepssellersincontrolfxempire"
+   "silverxagforecastfedratehikeoutlookkeepssellersincontrolfxempire",
+   "westofsuezbrentlsgocracksclimbonrastanuraattacksquantumcommodityintelligence"
   ],
   "day": "2026-11-26",
-  "n": 3
+  "n": 4
  },
  "scan": {
-  "seq": 966,
-  "started": "2026-11-26 00:17:02.117142",
-  "finished": "2026-11-26 00:17:08.367122",
-  "seconds": 6,
+  "seq": 967,
+  "started": "2026-11-26 00:19:31.271274",
+  "finished": "2026-11-26 00:19:38.893606",
+  "seconds": 7,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -9366,7 +9367,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 2
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
