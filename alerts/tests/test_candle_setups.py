@@ -158,6 +158,14 @@ def _hangman_logic():
 
 
 def test_ema_cross():
+    _off, CS.NO_NEW = CS.NO_NEW, set()                  # 25-Nov: MCX_EMA1348 retired; pattern logic still tested with the switch lifted
+    try:
+        _ema_cross()
+    finally:
+        CS.NO_NEW = _off
+
+
+def _ema_cross():
     n = 200
     t = pd.date_range("2026-06-01 09:00", periods=n, freq="3h")
     k = np.arange(150)

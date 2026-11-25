@@ -179,6 +179,35 @@ def evaluate_weekly(df):
     return dict(out, side=side, why=None if side else "no 20-week breakout")
 
 
+WK_SELL_CAP_DATR, WK_SELL_MIN_SUP_R, WK_SELL_TARGET_R = 2.0, 2.0, 3.0
+
+
+def weekly_sell_levels(fr, daily, sig):
+    """25-Nov-2026 (owner: "weekly breakdown SELL – too far SL and target; use proper support / resistance"; WK-SELL-SR-001).
+    SL just above RESISTANCE = the breakdown week's high + 0.1 weekly ATR, never more than 2 daily ATR from the signal close;
+    target = the next SUPPORT (lowest weekly low of the 52 weeks before) when it is at least 2R away, else 3R.
+    MCX 2022-26 (88 signals): SL median 4.2 % (was 11 %), target 13.9 % (was 34 %), +0.11R/trade (old levels -0.01R) –
+    positive only in falling years (2023, 2026). -> dict(k=stop in ATR of sig['atr'], tr=target R, why=...) or None."""
+    try:
+        a_w = float(sig["atr"]); close = float(sig["close"])
+        wk_hi = float(fr["high"].iloc[-1]) + 0.1 * a_w
+        a_d = float(I.atr(daily, 14).iloc[-1]) if daily is not None and len(daily) >= 20 else None
+        dist = wk_hi - close
+        how = "breakdown week's high"
+        if a_d and dist > WK_SELL_CAP_DATR * a_d:
+            dist, how = WK_SELL_CAP_DATR * a_d, f"{WK_SELL_CAP_DATR:g} daily ATR (week high too far)"
+        if not (dist > 0 and a_w > 0):
+            return None
+        sup = float(fr["low"].iloc[-53:-1].min()) if len(fr) >= 3 else None
+        if sup is not None and close - sup >= WK_SELL_MIN_SUP_R * dist:
+            tr, tw = (close - sup) / dist, f"next support {sup:,.2f} (52-week low)"
+        else:
+            tr, tw = WK_SELL_TARGET_R, f"{WK_SELL_TARGET_R:g}R (no support at least {WK_SELL_MIN_SUP_R:g}R away)"
+        return dict(k=dist / a_w, tr=tr, why=f"SL above resistance: {how}; target: {tw}")
+    except Exception:
+        return None
+
+
 def htf_levels(daily):
     """Support / resistance from completed daily candles: last week's and last month's high / low, monthly pivot."""
     if daily is None or len(daily) < 30:

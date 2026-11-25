@@ -763,8 +763,13 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
         live = (q or {}).get("ltp")
         live = float(live) if live not in (None, "", 0) else None
         s_ = 1 if sig["side"] == "BUY" else -1
+        k_, tr_ = BO.stop_k(tf), BO.target_r(tf, ex, sig["side"])
+        if tf == "1w" and sig["side"] == "SELL" and not sig.get("pattern"):     # 25-Nov owner: weekly SELL on S/R levels
+            ws_ = BO.weekly_sell_levels(fr, dd, sig)
+            if ws_:
+                k_, tr_ = ws_["k"], ws_["tr"]; sig["sr_note"] = ws_["why"]
         plan = TP.futures_plan(name=name, ex=ex, contract=c["symbol"], tf=tf, side=sig["side"], signal_time=sig["candle"],
-                               signal_close=sig.get("close"), atr=sig.get("atr"), stop_mult=BO.stop_k(tf), target_r=BO.target_r(tf, ex, sig["side"]),
+                               signal_close=sig.get("close"), atr=sig.get("atr"), stop_mult=k_, target_r=tr_,
                                tick=c.get("tick"), lot=c.get("lot"), mult=RP.mult_for(name, ex, c.get("lot")),
                                max_sl_pct=BO.MAX_SL_PCT.get(tf, 4.0), live=live, quote=q, now=now, require_live=is_open(ex, now),
                                levels=lv)
@@ -801,6 +806,8 @@ def _breakouts(state, msgs, info, name, ex, c, h1full, c15, now, oi, q, sw_day=N
                                     + "; ".join((gi["reasons_for"] + gi["reasons_against"])[:4]) + "\nNot investment advice.")
         if plan.get("warn"):
             reason = reason.replace("Not investment advice.", f"• Note    : {plan['warn']}\nNot investment advice.")
+        if sig.get("sr_note"):
+            reason = reason.replace("Not investment advice.", f"• Levels  : {sig['sr_note']}\nNot investment advice.")
         ev_ = ST.evidence_line(ST.bo_id(tf, sig["side"]))
         if ev_:
             reason = reason.replace("Not investment advice.", ev_ + "\nNot investment advice.")

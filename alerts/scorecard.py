@@ -17,6 +17,14 @@ def _r(row):
     return s * (x - e) / risk if risk > 0 else None
 
 
+def _retired(name):
+    try:
+        from alerts.strategies import retired
+        return retired(name)
+    except Exception:
+        return False
+
+
 def strategy_of(row):
     """Registry id of a ledger row, from its key (alerts/strategies.py ids)."""
     k = str(row.get("key") or "")
@@ -52,6 +60,8 @@ def build(state):
     for r in state.get("ledger", []):
         note = str(r.get("note", "")).lower()
         if r.get("cat") != "FUTURES" or r.get("status") != "CLOSED" or "cancel" in note or "withdrawn" in note:
+            continue
+        if _retired(strategy_of(r)):                              # 25-Nov owner: kept in the ledger, not shown
             continue
         groups.setdefault(strategy_of(r), []).append(r)
     for k, rows in groups.items():

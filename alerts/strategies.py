@@ -29,7 +29,7 @@ S = {
     "BO_1m_SELL":    ("SHADOW", "-", "monthly breakout SELL", 24, 54, 0.09, 1.20, "fewer than 30 trades"),
     "BO_1w_BUY":     ("LIVE",   "A", "weekly 20-week breakout BUY", 146, 49, 0.64, None,
                       "6-Nov WKMO-001, 20 years MCX: 2006-12 +0.70 / 2013-19 +0.24 / 2020-26 +0.85; index weekly BUY +0.31"),
-    "BO_1w_SELL":    ("SHADOW", "-", "weekly 20-week breakdown SELL", 92, 35, -0.23, None, "negative in every 20-year period"),
+    "BO_1w_SELL":    ("LIVE",   "B", "weekly 20-week breakdown SELL (S/R levels)", 88, 31, 0.11, None, "25-Nov owner: live with S/R levels (SL above the breakdown week's high, max 2 daily ATR; target next support or 3R) – MCX 2022-26 88 trades +0.11R, only in falling years; 20-year test with the old 3 ATR levels was negative"),
     "BO_1M_BUY":     ("LIVE",   "A", "monthly-candle breakout BUY", 104, 62, 0.68, None,
                       "6-Nov WKMO-001, MCX 2006-26: +0.76 / +0.26 / +0.96, all 7 commodities positive"),
     "BO_1M_SELL":    ("SHADOW", "-", "monthly-candle breakdown SELL", 103, 28, -0.49, None, "negative in every 20-year period"),
@@ -44,7 +44,7 @@ S = {
     "STK_ENGULF_SELL": ("LIVE", "B", "stock bearish engulfing SELL", 120, 59, 0.20, 1.65, "train/valid/test +0.06/+0.22/+0.35"),
     "MCX_HAMMER":    ("LIVE",   "B", "MCX daily hammer breakout BUY", 413, 41, 0.20, 1.33,
                       "VERIFIED bhavcopy re-test (DATA-AUDIT-001): 2024-26 positive, 2022-23 and SILVER/NATURALGAS negative"),
-    "MCX_EMA1348":   ("LIVE",   "B", "MCX 3-hour EMA 13/48 BUY", 79, 48, 0.67, None, "small sample, GOLD-heavy"),
+    "MCX_EMA1348":   ("OFF",    "-", "MCX 3-hour EMA 13/48 BUY", 79, 48, 0.67, None, "25-Nov owner: retired (live 1 closed, stop-loss); open calls finish"),
     "STK_HANGMAN":   ("OFF",    "-", "stock hanging-man breakdown SELL", 1217, 44, 0.18, None, "19-Nov owner: switched off (live 2 closed, both stop-loss; open calls finish)"),
     "STK_SWEEP3H":   ("LIVE",   "B", "stock 3-hour sweep SELL", 387, 58, 0.15, None, "every year positive"),
     "E_BUY_v1":      ("PAPER",  "-", "MCX 1-hour compression breakout BUY", 174, 60, 0.21, None, "prospective test VAL-EBUY-001"),
@@ -179,3 +179,21 @@ SHADOW_MARK = "SHADOW_ONLY"          # messages of shadow calls carry this; aler
 
 def mark(text, shadow):
     return f"{SHADOW_MARK} {text}" if shadow else text
+
+
+# 25-Nov-2026 (owner: "never consider in our strategy analysis – keep in record but don't show; in future searches don't go
+# for these strategies"). Their past calls stay in the ledger; scorecards, reports and research summaries leave them out,
+# and they are not to be re-proposed. Keys = scorecard.strategy_of() names.
+RETIRED = {
+    "STK_HANGMAN": "stock daily hanging-man breakdown SELL – live 3 closed, 1 won, -0.5R (off 19-Nov)",
+    "1-hour BO (EXPERIMENTAL)": "MCX 1-hour OI / volume breakout – live 9 closed, 2 won, -2.9R (off 17-Nov)",
+    "FH_STK_SELL": "stock 4-hour breakdown SELL – live 7 closed, 0 won, -3.4R (off 19-Nov)",
+    "3-hour MACD": "stock 3-hour MACD zero-cross SELL (RB_STK_3h_MACD0_SELL) – live 5 closed, 0 won, -2.4R",
+    "3-hour EMAX": "stock 3-hour EMA 9/21 SELL (RB_STK_3h_EMA921_SELL) – live 4 closed, 1 won, -1.2R",
+    "MCX_EMA1348": "MCX 3-hour EMA 13/48 BUY – live 1 closed, stop-loss (off 25-Nov)",
+}
+RETIRED_RULES = ("RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL", "RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP")
+
+
+def retired(name):
+    return name in RETIRED

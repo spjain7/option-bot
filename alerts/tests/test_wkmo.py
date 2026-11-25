@@ -35,8 +35,8 @@ mo = BO.monthly_candles(daily(n=600, slope=0.002), pd.Timestamp("2026-11-06"))
 check(len(mo) >= 25 and pd.Timestamp(mo["time"].iloc[-1]).to_period("M") == pd.Period("2026-10", "M"), "monthly candles exclude the running month")
 m = BO.evaluate_monthly_candle(mo)
 check(m["side"] in ("BUY", None) and m.get("monthly_candle") and m["hh"] == float(mo["high"].iloc[-2]), "1M compares with last month's high")
-check(("1w", "SELL") in E.SHADOW_ONLY and ("1M", "SELL") in E.SHADOW_ONLY and ST.is_live("BO_1w_BUY") and ST.is_live("BO_1M_BUY"),
-      "weekly / monthly-candle SELL logged only, BUY live")
+check(("1w", "SELL") not in E.SHADOW_ONLY and ("1M", "SELL") in E.SHADOW_ONLY and ST.is_live("BO_1w_BUY") and ST.is_live("BO_1M_BUY"),
+      "monthly-candle SELL logged only, BUY live; 25-Nov owner: weekly SELL live (S/R levels)")
 
 
 class Api:
