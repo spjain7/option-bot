@@ -59,14 +59,61 @@ def in_rollover_window(day):
 def universe(master, now):
     m = master[(master["exch_seg"] == "NFO") & (master["instrumenttype"] == "FUTSTK") & (master["expiry_dt"] >= now.normalize())
                & (master["lotsize"] < MAX_LOT)].sort_values("expiry_dt")
-    out = {}
+    out, near = {}, {}
     for r in m.itertuples():
-        if r.name in out or CD.trading_days_between(now.normalize(), r.expiry_dt) <= 2:
+        if r.name in out:
+            continue
+        if CD.trading_days_between(now.normalize(), r.expiry_dt) <= 2:
+            near.setdefault(r.name, str(r.token))              # expiring contract: calls move to next month
             continue
         tk = getattr(r, "tick", None)
         out[r.name] = dict(symbol=r.symbol, token=str(r.token), expiry=str(r.expiry_dt.date()), lot=int(r.lotsize),
-                           tick=float(tk) if tk is not None and tk == tk and tk > 0 else None)
+                           tick=float(tk) if tk is not None and tk == tk and tk > 0 else None, prev_token=near.get(r.name))
     return out
+
+
+def blocked(api):
+    """23-Nov fix: the Angel client also skips every call once the scan's time budget (ANGEL_DEADLINE) is used up. That
+    returned empty candles that were counted as 'scanned' (23-Nov 15:30: 166 of 207 stocks never checked). Treat the
+    budget like a rate-limit block: the stock is left for the next cycle."""
+    return (hasattr(api, "failfast") and api.failfast()) or (hasattr(api, "over_budget") and bool(api.over_budget()))
+
+
+def stitch_roll(nxt, front):
+    """23-Nov fix (owner: "calls stay on next expiry"): in the last 2 sessions before expiry the stock calls move to next
+    month's contract, whose own 1-hour history is short (every stock rulebook rule - including the reversal SELL basket -
+    then saw 'insufficient candles'). Indicators use the expiring contract's longer history before the switch day, shifted
+    by the measured price gap; the candles from the switch day on, and every call, stay on next month's contract.
+    Uses alerts.engine.stitch_prev (the MCX / index roll fix of 29-Oct); while the expiring contract still leads on volume
+    the switch day is the last common day."""
+    from alerts.engine import stitch_prev
+    if nxt is None or front is None or nxt.empty or front.empty:
+        return nxt
+    out, sw, gap = stitch_prev(nxt, front)
+    if sw is not None:
+        return out
+    m = front[["time", "close"]].merge(nxt[["time", "close"]], on="time", suffixes=("_f", "_n"))
+    if len(m) < 10:
+        return nxt
+    day = m["time"].dt.normalize(); last = day.max()
+    ref = m[day == (day[day < last].max() if (day < last).any() else last)]
+    gap = float((ref["close_n"] - ref["close_f"]).median())
+    old = front[front["time"] < last].copy()
+    old[["open", "high", "low", "close"]] = old[["open", "high", "low", "close"]] + gap
+    return pd.concat([old, nxt[nxt["time"] >= last]], ignore_index=True).sort_values("time").drop_duplicates("time").reset_index(drop=True)
+
+
+def candles_1h(api, c, now, days):
+    """1-hour candles of the stock's call contract; in the 2 sessions before expiry joined with the expiring contract's history."""
+    h = api.candles("NFO", c["token"], "ONE_HOUR", now - pd.Timedelta(days=days), now)
+    if c.get("prev_token") and h is not None and not h.empty:
+        try:
+            f = api.candles("NFO", c["prev_token"], "ONE_HOUR", now - pd.Timedelta(days=days), now)
+            h = stitch_roll(h.sort_values("time").drop_duplicates("time").reset_index(drop=True),
+                            None if f is None else f.sort_values("time").drop_duplicates("time").reset_index(drop=True))
+        except Exception as e_:
+            print(f"[stocks] {c.get('symbol')} roll stitch skipped: {type(e_).__name__}: {e_}")
+    return h
 
 
 PREFETCH_SEC = 150
@@ -82,7 +129,7 @@ def prefetch_oi_daily(api, uni, now, budget=PREFETCH_SEC):
     for name, c in uni.items():
         if api.oi_daily("NFO", c["token"], now, fetch=False) is not None:
             n += 1; continue
-        if time.monotonic() - t0 > budget or (hasattr(api, "failfast") and api.failfast()):
+        if time.monotonic() - t0 > budget or blocked(api):
             break
         if api.oi_daily("NFO", c["token"], now) is not None:
             n += 1
@@ -375,14 +422,14 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
     for name, c in uni.items():
         if name in prog["done"]:
             continue
-        if time.monotonic() - t0 > SCAN4H_BUDGET_SEC or (hasattr(api, "failfast") and api.failfast()):
+        if time.monotonic() - t0 > SCAN4H_BUDGET_SEC or blocked(api):
             complete = False; break
         try:
-            h = api.candles("NFO", c["token"], "ONE_HOUR", now - pd.Timedelta(days=200), now)
+            h = candles_1h(api, c, now, 200)
         except Exception:
             h = None
         if h is None or h.empty:
-            if hasattr(api, "failfast") and api.failfast():
+            if blocked(api):                                   # 23-Nov: incl. the scan time budget -> resume next cycle
                 complete = False; break
             prog["done"].append(name); continue
         prog["done"].append(name)
@@ -524,16 +571,19 @@ def rev_catchup(api, now, state, msgs, uni, engine):
     for name, c in uni.items():
         if name in prog["done"]:
             continue
-        if time.monotonic() - t0 > REV_CATCHUP_BUDGET_SEC or (hasattr(api, "failfast") and api.failfast()):
+        if time.monotonic() - t0 > REV_CATCHUP_BUDGET_SEC or blocked(api):
             return f"{len(prog['done'])}/{len(uni)} stocks (resumes next scan)"
         prog["done"].append(name)
         if name in holds:
             continue
         try:
-            h = api.candles("NFO", c["token"], "ONE_HOUR", now - pd.Timedelta(days=400), now)
+            h = candles_1h(api, c, now, 400)
         except Exception:
             h = None
         if h is None or h.empty:
+            if blocked(api):                                   # 23-Nov: not fetched -> resume next scan
+                prog["done"].remove(name)
+                return f"{len(prog['done'])}/{len(uni)} stocks (resumes next scan)"
             continue
         h = engine.closed(h.sort_values("time").drop_duplicates("time").reset_index(drop=True), "NFO", 60, now)
         d = BO.daily_candles(h, None)
@@ -670,14 +720,14 @@ def scan(api, master, now, state, msgs, rep, engine):
 
         def _fetch(_c=c):
             try:
-                h_ = api.candles("NFO", _c["token"], "ONE_HOUR", now - pd.Timedelta(days=400 if daily_block else 200), now)
+                h_ = candles_1h(api, _c, now, 400 if daily_block else 200)
                 oi_ = _oi_daily(api, _c, now, qoi) if daily_block else None
             except Exception:
                 h_, oi_ = None, None
             return h_, oi_
         h, oi = _fetch()
-        blocked = lambda: hasattr(api, "failfast") and api.failfast()
-        if (h is None or h.empty) and blocked() and hasattr(api, "wait_clear") and api.wait_clear():
+        blocked_ = lambda: blocked(api)
+        if (h is None or h.empty) and blocked_() and hasattr(api, "wait_clear") and api.wait_clear():
             h, oi = _fetch()                                   # 29-Oct: wait out an Angel rate-limit pause once, then retry
         if h is None or h.empty:
             try:
@@ -685,7 +735,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                 FN_.note(state, "STOCK data", "data", key=f"{name}|{blk}", now=now)
             except Exception:
                 pass
-            if blocked():                                      # still blocked: this stock was NOT scanned -> resume next
+            if blocked_():                                      # still blocked: this stock was NOT scanned -> resume next
                 prog["done"].remove(name)                      # cycle (was: counted as done, the 12:15 scan of 29-Oct
                 complete = False                               # skipped all 207 stocks and reported "done")
                 break
