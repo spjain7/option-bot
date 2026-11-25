@@ -9341,16 +9341,18 @@
    "goldslidesdespiteweakerusdollarasfedhikebetsdominatefxstreet",
    "oilfuturescrudeupfromlowsastankerattacksoffsetsurplusfearsquantumcommodityintell",
    "iraqrefusestoacceptopecassessmentofitsproductioncapacitycrudeoilpricestodayoilpr",
-   "lowerinflationusratecutsmaytriggerrecoveryingoldsilverpricesbusinessstandard"
+   "lowerinflationusratecutsmaytriggerrecoveryingoldsilverpricesbusinessstandard",
+   "naturalgaswtioilbrentoilforecastsoilralliesashouthisattacksaudiarabiasrastanurar",
+   "silverxagforecastfedratehikeoutlookkeepssellersincontrolfxempire"
   ],
   "day": "2026-11-26",
-  "n": 1
+  "n": 3
  },
  "scan": {
-  "seq": 965,
-  "started": "2026-11-26 00:02:02.224069",
-  "finished": "2026-11-26 00:02:13.044892",
-  "seconds": 10,
+  "seq": 966,
+  "started": "2026-11-26 00:17:02.117142",
+  "finished": "2026-11-26 00:17:08.367122",
+  "seconds": 6,
   "status": "SUCCESS",
   "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 2",
   "api": {
