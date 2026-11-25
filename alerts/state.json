@@ -8904,21 +8904,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 906,
-  "started": "2026-11-25 08:42:21.702436",
-  "finished": "2026-11-25 08:44:58.673426",
-  "seconds": 156,
+  "seq": 907,
+  "started": "2026-11-25 08:47:01.943438",
+  "finished": "2026-11-25 08:47:19.907988",
+  "seconds": 17,
   "status": "SUCCESS",
-  "note": "api requests 200 ok 189 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 20 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 200,
-   "ok": 189,
+   "calls": 20,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 0
+   "disk_hits": 189
   },
   "errors": 0,
   "messages": 0
