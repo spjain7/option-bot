@@ -30,6 +30,8 @@ def strategy_of(row):
     k = str(row.get("key") or "")
     side = row.get("side") or "?"
     parts = k.split("|")
+    if "OIBO" in k:                                        # 25-Nov: OI-confirmed 1h breakout (MCX shadow, index live) kept apart
+        return "1-hour OI breakout (EXPERIMENTAL)"
     if parts[0] in ("MCX_HAMMER", "MCX_EMA1348", "STK_HANGMAN", "STK_SWEEP3H"):
         return parts[0]
     if parts[0] == "4H":

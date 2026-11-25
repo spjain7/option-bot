@@ -19,8 +19,8 @@ def check(c, name):
 
 
 R = RB.RULES
-check(all(R[k]["status"] == "OFF" for k in ("RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP")),
-      "the 3 MCX 1-hour EXPERIMENTAL rules are off")
+check(R["RB_MCX_1h_BO20X_BUY_EXP"]["status"] == "OFF" and all(R[k]["status"] == "SHADOW" for k in ("RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP")),
+      "the MCX 1-hour EXPERIMENTAL rules are not sent (plain breakout off; OI breakout log-only since 25-Nov)")
 check(R["RB_IDX_1h_OIBO_BUY_EXP"]["status"] == "LIVE" and R["RB_IDX_1h_OIBO_SELL_EXP"]["status"] == "LIVE", "index 1-hour OI rules unchanged")
 new = {k: v for k, v in R.items() if v.get("half_t1")}
 check(sorted(v["names"][0] + " " + v["tf"] for v in new.values()) == ["COPPER 1d", "GOLD 3h", "GOLD 4h", "SILVER 1d", "ZINC 1d"],

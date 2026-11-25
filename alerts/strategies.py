@@ -186,13 +186,13 @@ def mark(text, shadow):
 # and they are not to be re-proposed. Keys = scorecard.strategy_of() names.
 RETIRED = {
     "STK_HANGMAN": "stock daily hanging-man breakdown SELL – live 3 closed, 1 won, -0.5R (off 19-Nov)",
-    "1-hour BO (EXPERIMENTAL)": "MCX 1-hour OI / volume breakout – live 9 closed, 2 won, -2.9R (off 17-Nov)",
+    "1-hour BO (EXPERIMENTAL)": "MCX 1-hour 20-candle breakout without OI (BO20X) – live 7 closed, 0 won (off 17-Nov)",
     "FH_STK_SELL": "stock 4-hour breakdown SELL – live 7 closed, 0 won, -3.4R (off 19-Nov)",
     "3-hour MACD": "stock 3-hour MACD zero-cross SELL (RB_STK_3h_MACD0_SELL) – live 5 closed, 0 won, -2.4R",
     "3-hour EMAX": "stock 3-hour EMA 9/21 SELL (RB_STK_3h_EMA921_SELL) – live 4 closed, 1 won, -1.2R",
     "MCX_EMA1348": "MCX 3-hour EMA 13/48 BUY – live 1 closed, stop-loss (off 25-Nov)",
 }
-RETIRED_RULES = ("RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL", "RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP")
+RETIRED_RULES = ("RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL", "RB_MCX_1h_BO20X_BUY_EXP")   # 25-Nov: MCX 1h OI breakout back (SHADOW)
 
 
 def retired(name):

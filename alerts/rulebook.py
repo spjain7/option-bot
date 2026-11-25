@@ -104,6 +104,11 @@ for _mkt in ("MCX", "INDEX"):
 # Natural gas and crude had no setup that held on the newest data with these targets -> none added.
 for _rid in ("RB_MCX_1h_BO20X_BUY_EXP", "RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP"):
     RULES[_rid]["status"] = "OFF"
+# 25-Nov-2026 (owner: "do what looks good"): the OI-CONFIRMED 1h breakout was retired by mistake together with the plain 1h
+# breakout (BO20X: 7 live calls, 6 stop-losses). Its own live record: 2 calls, 2 targets (ZINC SELL, BANKNIFTY BUY).
+# MCX OI breakout back as SHADOW (logged with outcomes, not sent) to collect evidence; BO20X stays retired.
+for _rid in ("RB_MCX_1h_OIBO_BUY_EXP", "RB_MCX_1h_OIBO_SELL_EXP"):
+    RULES[_rid]["status"] = "SHADOW"
 # 19-Nov-2026 (owner: "remove ... 2H squeeze"): no new calls are sent; signals are still logged as SHADOW so the outcome
 # stays measured. Calls already sent keep their own record (no shadow flag) and are managed to the end as before.
 RULES["RB_STK_2h_SQZ_SELL"]["status"] = "SHADOW"

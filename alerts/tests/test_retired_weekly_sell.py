@@ -48,4 +48,11 @@ check("week high too far -> SL capped at 2 daily ATR", abs(x2["k"] * 4.0 - 4.0) 
 w3 = w.copy(); w3["low"] = 103.5; w3.loc[w3.index[-1], "low"] = 103.0
 x3 = BO.weekly_sell_levels(w3, d, sig)
 check("no support 2R away -> 3R target", x3["tr"] == 3.0)
+from alerts import rulebook as RB2  # noqa: E402
+check("25-Nov: MCX OI-confirmed 1h breakout back as log-only, plain 1h breakout stays off",
+      RB2.RULES["RB_MCX_1h_OIBO_BUY_EXP"]["status"] == "SHADOW" and RB2.RULES["RB_MCX_1h_OIBO_SELL_EXP"]["status"] == "SHADOW"
+      and RB2.RULES["RB_MCX_1h_BO20X_BUY_EXP"]["status"] == "OFF")
+check("OI-breakout calls are not hidden as retired",
+      SCD.strategy_of(dict(key="RB|RB_IDX_1h_OIBO_BUY_EXP|BANKNIFTY|x", type="1-hour BO (EXPERIMENTAL)")) == "1-hour OI breakout (EXPERIMENTAL)"
+      and not ST.retired("1-hour OI breakout (EXPERIMENTAL)"))
 print(f"{ok} checks passed")
