@@ -13,6 +13,7 @@ price story in the screenshot is turned into testable rules on public day-start 
           all close by 23:15. Stop checked first. Costs 0.05 % round trip. Entries 10:00-22:00. First signal per setup,
           side and filter per day.
 Data: MCX GOLD / SILVER Dec-26 5-min (Jul-2023 .. Nov-2026, Angel).   python research/program/gold_levels.py"""
+import os
 import sys
 from pathlib import Path
 import numpy as np
@@ -97,7 +98,7 @@ def day_signals(g, lv, sym, day):
         if tm[j] < t0 or tm[j] > t1:
             continue
         for lvname in ("PD", "MR"):
-            if lvname == "MR" and tm[j] < mr_end:
+            if lvname == "MR" and tm[j] < mr_end and os.environ.get("LV") != "FIB":
                 continue
             for side_lv, L in ((1, lv[lvname + "H"]), (-1, lv[lvname + "L"])):     # side_lv +1 = upper level
                 if not np.isfinite(L):
@@ -148,8 +149,12 @@ def run(sym):
         if abs(g.open.iat[0] / p.c - 1) > 0.06:
             continue
         mr = g[g.time.dt.time < pd.Timestamp("12:00").time()]
-        lv = dict(PDH=p.h, PDL=p.l, MRH=mr.high.max(), MRL=mr.low.min())
-        lv["ladder"] = [p.h + 0.5 * rg, p.h, p.c, p.l, p.l - 0.5 * rg, lv["MRH"], lv["MRL"]]
+        if os.environ.get("LV") == "FIB":   # GOLD-LVL-002: AI Quant-X fit – zones = previous range extended 0.382 / 1.0 beyond PDH / PDL
+            lv = dict(PDH=p.h + 0.382 * rg, PDL=p.l - 0.382 * rg, MRH=p.h + rg, MRL=p.l - rg)
+            lv["ladder"] = [p.h + 1.618 * rg, p.h + rg, p.h + 0.382 * rg, p.h, p.l, p.l - 0.382 * rg, p.l - rg, p.l - 1.618 * rg]
+        else:
+            lv = dict(PDH=p.h, PDL=p.l, MRH=mr.high.max(), MRL=mr.low.min())
+            lv["ladder"] = [p.h + 0.5 * rg, p.h, p.c, p.l, p.l - 0.5 * rg, lv["MRH"], lv["MRL"]]
         g = g.reset_index(drop=True)
         g._o, g._h, g._l, g._c, g._a = (g[x].values for x in ("open", "high", "low", "close", "atr"))
         g._vw, g._e60, g._e150, g._tm = g.vwap.values, g.e60.values, g.e150.values, g.time.dt.time.values
@@ -163,13 +168,13 @@ def main():
     T = pd.DataFrame(rows, columns=["sym", "day", "setup", "lvl", "side", "flt", "tgt", "R", "risk_atr", "nextR", "costR"])
     T["gross"] = T.R + T.costR; T["R02"] = T.gross - 0.4 * T.costR   # R at 0.02 % round trip
     T["per"] = np.where(T.day < "2025-01-01", "23-24", np.where(T.day < "2026-01-01", "2025", "2026"))
-    T.to_parquet(OUT / "gold_levels_trades.parquet")
+    T.to_parquet(OUT / f"gold_levels_trades{os.environ.get('LV', '')}.parquet")
     pd.set_option("display.width", 220); pd.set_option("display.max_rows", 300)
     S = T.groupby(["setup", "side", "flt", "tgt"]).apply(lambda x: pd.Series(dict(
         n=len(x), win=round(100 * (x.R > 0).mean()), R=round(x.R.mean(), 3), gross=round(x.gross.mean(), 3), R02=round(x.R02.mean(), 3), riskATR=round(x.risk_atr.median(), 2), costR=round(x.costR.median(), 2), GOLD=round(x[x.sym == "GOLD"].R.mean(), 3),
         SILVER=round(x[x.sym == "SILVER"].R.mean(), 3), **{p: round(x[x.per == p].R.mean(), 3) for p in ("23-24", "2025", "2026")})))
     print(S.to_string())
-    S.to_csv(OUT / "gold_levels_summary.csv")
+    S.to_csv(OUT / f"gold_levels_summary{os.environ.get('LV', '')}.csv")
 
 
 if __name__ == "__main__":
