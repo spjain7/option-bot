@@ -111,6 +111,9 @@ RULES["RB_STK_2h_SQZ_SELL"]["status"] = "SHADOW"
 # (4h MACD 2, 3h MACD 2, 3h EMA 9/21 1: -3R). Same treatment: logged as SHADOW, not sent; calls already sent run to the end.
 for _rid in ("RB_STK_4h_MACD0_SELL", "RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL"):
     RULES[_rid]["status"] = "SHADOW"
+# 25-Nov-2026 (owner): 3h MACD and 3h EMA 9/21 stock SELL retired – not even logged any more (strategies.RETIRED)
+for _rid in ("RB_STK_3h_MACD0_SELL", "RB_STK_3h_EMA921_SELL"):
+    RULES[_rid]["status"] = "OFF"
 for _rid, _tf, _nm, _n, _win, _R, _per in (
         ("RB_MCX_3h_BO10_GOLD_BUY", "3h", "GOLD", 225, 63, 0.32, "+0.26/+0.41/+0.31 · OOS 74 trades 61 % won"),
         ("RB_MCX_4h_BO10_GOLD_BUY", "4h", "GOLD", 189, 64, 0.34, "+0.28/+0.42/+0.34 · OOS 58 trades 64 % won"),

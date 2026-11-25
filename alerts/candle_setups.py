@@ -30,7 +30,7 @@ ENABLED = {"MCX_HAMMER": True, "STK_HANGMAN": True, "MCX_EMA1348": True, "STK_SW
 # 19-Nov-2026 (owner: "remove hanging man breakdown"): no NEW calls from these setups. Calls already OPEN are still managed
 # and their exit is still sent; calls still WAITING for the trigger are cancelled (no entry). Live record 28-Oct..19-Nov:
 # STK_HANGMAN 2 closed, both stop-loss (-2R), 28 of 30 waiting calls never triggered.
-NO_NEW = {"STK_HANGMAN"}
+NO_NEW = {"STK_HANGMAN", "MCX_EMA1348"}                # 25-Nov owner: MCX 3h EMA 13/48 retired too
 SWEEP15_LOG = True        # 15-minute stock sweep: every sweep is recorded (both sides) for review
 SWEEP15_SEND = False      # 1-Nov (owner "yes all"): OFF – 15-min sweeps only had 2-month evidence; still logged (SWEEP15_LOG)
 HOURLY_SKIP = ("14:15", "15:15")
