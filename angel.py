@@ -379,6 +379,20 @@ class Angel:
             pass
         return df
 
+    def day_hist_cached(self, exch, token, interval, now):
+        """26-Nov: True when today's history-before-today for this series is already on disk."""
+        day0 = pd.Timestamp(now).normalize()
+        return (self._dir / f"day_candles_{exch}_{token}_{interval}_{day0:%Y%m%d}.pkl").exists()
+
+    def prefetch_day_hist(self, exch, token, interval, now):
+        """26-Nov permanent rate-limit fix: fetch the bars BEFORE today once, in the quiet pre-open window. During the session
+        candles() then joins this disk copy with today's WebSocket bars, so the 12:15 / 15:30 stock scans need no candle
+        requests (the disk copy is carried between the day's loop jobs by the workflow cache). True when cached."""
+        if self.day_hist_cached(exch, token, interval, now):
+            return True
+        day0 = pd.Timestamp(now).normalize()
+        return self._day_hist("candles", exch, token, interval, day0 - pd.Timedelta(days=self.DAY_EXT.get(interval, 30)), day0) is not None
+
     def _pre(self, kind, exch, token, interval, day0, ws_start):
         """Today's REST bars up to the moment the collector started (only when it started after the open)."""
         p = self._dir / f"pre_{kind}_{exch}_{token}_{interval}_{ws_start:%Y%m%d%H%M%S}.pkl"

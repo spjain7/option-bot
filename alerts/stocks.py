@@ -79,6 +79,28 @@ def blocked(api):
     return (hasattr(api, "failfast") and api.failfast()) or (hasattr(api, "over_budget") and bool(api.over_budget()))
 
 
+def refusals(api):
+    """26-Nov fix: Angel refusals so far in this run (rate-limited + skipped + failed requests)."""
+    st_ = getattr(api, "stats", None)
+    return sum(int(st_.get(k, 0)) for k in ("rate_limited", "skipped", "failed")) if isinstance(st_, dict) else 0
+
+
+MAX_DEFER = 3
+
+
+def defer(api, prog, name, before):
+    """26-Nov fix: an EMPTY candle fetch is 'not scanned' (retry next cycle) when Angel blocked us OR refused any request
+    while this stock was fetched. The 12:15 scan of 26-Nov counted 172 of 207 stocks as scanned with no candles: after
+    wait_clear() the block streak restarts at 0, a stock's 3 refused retries stay below the fail-fast streak, so blocked()
+    said 'not blocked'. A stock is deferred at most MAX_DEFER times per block (a contract with really no data is not
+    retried forever)."""
+    if not (blocked(api) or refusals(api) > before):
+        return False
+    n = prog.setdefault("defer", {}).get(name, 0) + 1
+    prog["defer"][name] = n
+    return n <= MAX_DEFER
+
+
 def stitch_roll(nxt, front):
     """23-Nov fix (owner: "calls stay on next expiry"): in the last 2 sessions before expiry the stock calls move to next
     month's contract, whose own 1-hour history is short (every stock rulebook rule - including the reversal SELL basket -
@@ -134,6 +156,34 @@ def prefetch_oi_daily(api, uni, now, budget=PREFETCH_SEC):
         if api.oi_daily("NFO", c["token"], now) is not None:
             n += 1
     return n
+
+
+HIST_PREFETCH_SEC = 240
+
+
+def prefetch_history(api, uni, now, budget=HIST_PREFETCH_SEC):
+    """26-Nov permanent rate-limit fix: before the NSE open (08:40-09:13 IST, Angel quota idle) cache every stock future's
+    1-hour history up to yesterday (and the expiring contract's in the 2 roll sessions). The 12:15 / 15:30 scans then build
+    candles from this copy + today's WebSocket bars instead of ~210 history requests in the middle of the session (26-Nov
+    12:15: 172 of 207 stocks lost to rate limits). Resumable across the early scans; returns (cached, total)."""
+    if not hasattr(api, "prefetch_day_hist"):
+        return 0, 0
+    t0, n, tot = time.monotonic(), 0, 0
+    for name, c in uni.items():
+        for tok in (c["token"], c.get("prev_token")):
+            if not tok:
+                continue
+            tot += 1
+            if api.day_hist_cached("NFO", tok, "ONE_HOUR", now):
+                n += 1; continue
+            if time.monotonic() - t0 > budget or blocked(api):
+                continue
+            try:
+                if api.prefetch_day_hist("NFO", tok, "ONE_HOUR", now):
+                    n += 1
+            except Exception:
+                pass
+    return n, tot
 
 
 def _oi_daily(api, c, now, qoi):
@@ -424,12 +474,13 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
             continue
         if time.monotonic() - t0 > SCAN4H_BUDGET_SEC or blocked(api):
             complete = False; break
+        rf0 = refusals(api)
         try:
             h = candles_1h(api, c, now, 200)
         except Exception:
             h = None
         if h is None or h.empty:
-            if blocked(api):                                   # 23-Nov: incl. the scan time budget -> resume next cycle
+            if defer(api, prog, name, rf0):                    # 23-Nov / 26-Nov: blocked, budget or refused -> next cycle
                 complete = False; break
             prog["done"].append(name); continue
         prog["done"].append(name)
@@ -682,6 +733,12 @@ def scan(api, master, now, state, msgs, rep, engine):
             rep["stocks"]["oi_prefetch"] = prefetch_oi_daily(api, uni, now)
         except Exception as e_:
             print(f"[stocks] OI prefetch skipped: {type(e_).__name__}: {e_}")
+        try:                                                    # 26-Nov: 1-hour history too (permanent rate-limit fix)
+            n_, t_ = prefetch_history(api, uni, now)
+            rep["stocks"]["hist_prefetch"] = f"{n_}/{t_}"
+            state.setdefault("health", {})["hist_prefetch"] = dict(day=str(now.date()), cached=n_, total=t_)
+        except Exception as e_:
+            print(f"[stocks] history prefetch skipped: {type(e_).__name__}: {e_}")
     blk = last_block_end(now)
     if st.get("rev_v") != 1:                                   # 19-Nov one-time: reversal SELL rules went live after today's close
         if blk is not None and blk.endswith("15:30:00") and st["last_block"] == blk:
@@ -725,6 +782,7 @@ def scan(api, master, now, state, msgs, rep, engine):
             except Exception:
                 h_, oi_ = None, None
             return h_, oi_
+        rf0 = refusals(api)
         h, oi = _fetch()
         blocked_ = lambda: blocked(api)
         if (h is None or h.empty) and blocked_() and hasattr(api, "wait_clear") and api.wait_clear():
@@ -735,7 +793,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                 FN_.note(state, "STOCK data", "data", key=f"{name}|{blk}", now=now)
             except Exception:
                 pass
-            if blocked_():                                      # still blocked: this stock was NOT scanned -> resume next
+            if defer(api, prog, name, rf0):                     # blocked / refused: this stock was NOT scanned -> resume next
                 prog["done"].remove(name)                      # cycle (was: counted as done, the 12:15 scan of 29-Oct
                 complete = False                               # skipped all 207 stocks and reported "done")
                 break
