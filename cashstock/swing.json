@@ -23,8 +23,8 @@
    "t1": 633.44,
    "half_done": false,
    "hi": 532.3,
-   "lo": 507.3,
-   "checked": "2026-11-25",
+   "lo": 499.2,
+   "checked": "2026-11-26",
    "version": "cash-swing-0.1 (weekly retest+delivery, weekly 52w+delivery, monthly ATH confirmed)"
   },
   {
@@ -49,8 +49,8 @@
    "t1": 602.66,
    "half_done": false,
    "hi": 554.95,
-   "lo": 524.95,
-   "checked": "2026-11-25",
+   "lo": 523.8,
+   "checked": "2026-11-26",
    "version": "cash-swing-0.1 (weekly retest+delivery, weekly 52w+delivery, monthly ATH confirmed)"
   }
  ],
@@ -60,6 +60,6 @@
   "INE0J5401028|2026-11-20|W_HI52_DP"
  ],
  "last_candidates": {},
- "lowdp_day": "2026-11-25",
- "asof": "2026-11-25"
+ "lowdp_day": "2026-11-26",
+ "asof": "2026-11-26"
 }
