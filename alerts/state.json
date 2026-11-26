@@ -735,14 +735,12 @@
   ]
  },
  "day": {
-  "date": "2026-11-26",
-  "alerts": 2,
+  "date": "2026-11-27",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
+  "startup_sent": false,
   "eod_sent": false,
-  "outcomes": [],
-  "watch1h_sum_NFO": true,
-  "rep_nse": true
+  "outcomes": []
  },
  "history": [],
  "oi": {
@@ -9477,30 +9475,33 @@
    "lowerinflationusratecutsmaytriggerrecoveryingoldsilverpricesbusinessstandard",
    "naturalgaswtioilbrentoilforecastsoilralliesashouthisattacksaudiarabiasrastanurar",
    "silverxagforecastfedratehikeoutlookkeepssellersincontrolfxempire",
-   "westofsuezbrentlsgocracksclimbonrastanuraattacksquantumcommodityintelligence"
+   "westofsuezbrentlsgocracksclimbonrastanuraattacksquantumcommodityintelligence",
+   "iraqsoilrevenueshit88bnasitpreparestoaskforhigheropecquotathenational",
+   "goldpricestallsnear3570asfedhikebetskeepbullsatbayfxstreet\u0634\u0628\u0643\u0629\u062a\u0648\u0627\u0635\u0644\u0627\u0644\u0625\u062e\u0628\u0627\u0631\u064a\u0629",
+   "copperandironoreriseasmarketsdigestustariffplansminingcomau"
   ],
-  "day": "2026-11-26",
-  "n": 4
+  "day": "2026-11-27",
+  "n": 3
  },
  "scan": {
-  "seq": 1024,
-  "started": "2026-11-26 23:47:01.228490",
-  "finished": "2026-11-26 23:47:08.185477",
-  "seconds": 6,
+  "seq": 1025,
+  "started": "2026-11-27 00:02:02.087192",
+  "finished": "2026-11-27 00:02:12.755797",
+  "seconds": 10,
   "status": "SUCCESS",
-  "note": "api requests 2 ok 2 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 4",
   "api": {
-   "calls": 2,
-   "ok": 2,
+   "calls": 0,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 17
+   "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 4
  },
  "paper": {
   "E_BUY_v1": {
