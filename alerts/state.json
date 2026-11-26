@@ -9478,18 +9478,19 @@
    "westofsuezbrentlsgocracksclimbonrastanuraattacksquantumcommodityintelligence",
    "iraqsoilrevenueshit88bnasitpreparestoaskforhigheropecquotathenational",
    "goldpricestallsnear3570asfedhikebetskeepbullsatbayfxstreet\u0634\u0628\u0643\u0629\u062a\u0648\u0627\u0635\u0644\u0627\u0644\u0625\u062e\u0628\u0627\u0631\u064a\u0629",
-   "copperandironoreriseasmarketsdigestustariffplansminingcomau"
+   "copperandironoreriseasmarketsdigestustariffplansminingcomau",
+   "oilfuturescrudeat3wkhighonfreshroundofgulfattacksquantumcommodityintelligence"
   ],
   "day": "2026-11-27",
-  "n": 3
+  "n": 4
  },
  "scan": {
-  "seq": 1025,
-  "started": "2026-11-27 00:02:02.087192",
-  "finished": "2026-11-27 00:02:12.755797",
-  "seconds": 10,
+  "seq": 1026,
+  "started": "2026-11-27 00:17:01.233366",
+  "finished": "2026-11-27 00:17:04.511891",
+  "seconds": 3,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 4",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
    "calls": 0,
    "ok": 0,
@@ -9501,7 +9502,7 @@
    "disk_hits": 0
   },
   "errors": 0,
-  "messages": 4
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
