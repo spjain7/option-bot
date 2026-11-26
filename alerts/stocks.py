@@ -79,6 +79,28 @@ def blocked(api):
     return (hasattr(api, "failfast") and api.failfast()) or (hasattr(api, "over_budget") and bool(api.over_budget()))
 
 
+def refusals(api):
+    """26-Nov fix: Angel refusals so far in this run (rate-limited + skipped + failed requests)."""
+    st_ = getattr(api, "stats", None)
+    return sum(int(st_.get(k, 0)) for k in ("rate_limited", "skipped", "failed")) if isinstance(st_, dict) else 0
+
+
+MAX_DEFER = 3
+
+
+def defer(api, prog, name, before):
+    """26-Nov fix: an EMPTY candle fetch is 'not scanned' (retry next cycle) when Angel blocked us OR refused any request
+    while this stock was fetched. The 12:15 scan of 26-Nov counted 172 of 207 stocks as scanned with no candles: after
+    wait_clear() the block streak restarts at 0, a stock's 3 refused retries stay below the fail-fast streak, so blocked()
+    said 'not blocked'. A stock is deferred at most MAX_DEFER times per block (a contract with really no data is not
+    retried forever)."""
+    if not (blocked(api) or refusals(api) > before):
+        return False
+    n = prog.setdefault("defer", {}).get(name, 0) + 1
+    prog["defer"][name] = n
+    return n <= MAX_DEFER
+
+
 def stitch_roll(nxt, front):
     """23-Nov fix (owner: "calls stay on next expiry"): in the last 2 sessions before expiry the stock calls move to next
     month's contract, whose own 1-hour history is short (every stock rulebook rule - including the reversal SELL basket -
@@ -424,12 +446,13 @@ def scan4h(api, now, state, msgs, uni, engine, rep):
             continue
         if time.monotonic() - t0 > SCAN4H_BUDGET_SEC or blocked(api):
             complete = False; break
+        rf0 = refusals(api)
         try:
             h = candles_1h(api, c, now, 200)
         except Exception:
             h = None
         if h is None or h.empty:
-            if blocked(api):                                   # 23-Nov: incl. the scan time budget -> resume next cycle
+            if defer(api, prog, name, rf0):                    # 23-Nov / 26-Nov: blocked, budget or refused -> next cycle
                 complete = False; break
             prog["done"].append(name); continue
         prog["done"].append(name)
@@ -725,6 +748,7 @@ def scan(api, master, now, state, msgs, rep, engine):
             except Exception:
                 h_, oi_ = None, None
             return h_, oi_
+        rf0 = refusals(api)
         h, oi = _fetch()
         blocked_ = lambda: blocked(api)
         if (h is None or h.empty) and blocked_() and hasattr(api, "wait_clear") and api.wait_clear():
@@ -735,7 +759,7 @@ def scan(api, master, now, state, msgs, rep, engine):
                 FN_.note(state, "STOCK data", "data", key=f"{name}|{blk}", now=now)
             except Exception:
                 pass
-            if blocked_():                                      # still blocked: this stock was NOT scanned -> resume next
+            if defer(api, prog, name, rf0):                     # blocked / refused: this stock was NOT scanned -> resume next
                 prog["done"].remove(name)                      # cycle (was: counted as done, the 12:15 scan of 29-Oct
                 complete = False                               # skipped all 207 stocks and reported "done")
                 break
