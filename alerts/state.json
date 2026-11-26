@@ -9483,21 +9483,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 1007,
-  "started": "2026-11-26 19:47:02.249318",
-  "finished": "2026-11-26 19:47:10.963862",
-  "seconds": 8,
+  "seq": 1008,
+  "started": "2026-11-26 19:48:13.706468",
+  "finished": "2026-11-26 19:49:06.146852",
+  "seconds": 52,
   "status": "SUCCESS",
-  "note": "api requests 2 ok 2 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 30 ok 30 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 2,
-   "ok": 2,
+   "calls": 30,
+   "ok": 30,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 17
+   "disk_hits": 0
   },
   "errors": 0,
   "messages": 0
@@ -21350,7 +21350,7 @@
    ],
    "2026-11-26": [
     "CRUDEOIL18DEC26FUT",
-    823300.0
+    823400.0
    ]
   },
   "NATURALGAS": {
@@ -21360,7 +21360,7 @@
    ],
    "2026-11-26": [
     "NATURALGAS28DEC26FUT",
-    25017500.0
+    25002500.0
    ]
   },
   "GOLD": {
@@ -21370,7 +21370,7 @@
    ],
    "2026-11-26": [
     "GOLD04DEC26FUT",
-    7018.0
+    7028.0
    ]
   },
   "SILVER": {
@@ -21380,7 +21380,7 @@
    ],
    "2026-11-26": [
     "SILVER04DEC26FUT",
-    268830.0
+    268980.0
    ]
   },
   "COPPER": {
