@@ -4941,8 +4941,8 @@
    "date": "2026-11-25",
    "uhi": 26093.0,
    "ulo": 25810.1,
-   "ulast": 25948.0,
-   "uat": "2026-11-26 14:17:01.282707",
+   "ulast": 25945.0,
+   "uat": "2026-11-26 14:20:55.981676",
    "best_px": 26093.0,
    "worst_px": 25768.0,
    "mfe_R": 0.114,
@@ -5028,8 +5028,8 @@
    "call_entry": 25935.0,
    "uhi": 26085.0,
    "ulo": 25908.0,
-   "ulast": 25948.0,
-   "uat": "2026-11-26 14:17:01.282707",
+   "ulast": 25945.0,
+   "uat": "2026-11-26 14:20:55.981676",
    "best_px": 26093.0,
    "worst_px": 25834.4,
    "mfe_R": 0.217,
@@ -5061,8 +5061,8 @@
    "call_entry": 63930.0,
    "uhi": 64279.2,
    "ulo": 63580.0,
-   "ulast": 63759.8,
-   "uat": "2026-11-26 14:17:01.282707",
+   "ulast": 63809.8,
+   "uat": "2026-11-26 14:20:55.981676",
    "best_px": 64339.0,
    "worst_px": 63520.0,
    "mfe_R": 0.187,
@@ -9476,23 +9476,23 @@
   "n": 4
  },
  "scan": {
-  "seq": 987,
-  "started": "2026-11-26 14:17:01.282707",
-  "finished": "2026-11-26 14:19:59.399095",
-  "seconds": 178,
+  "seq": 988,
+  "started": "2026-11-26 14:20:55.981676",
+  "finished": "2026-11-26 14:24:54.627878",
+  "seconds": 238,
   "status": "RATE_LIMITED",
-  "note": "api requests 30 ok 22 rate-limited 8 skipped 0 (budget 0) failed 1 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 24 ok 12 rate-limited 12 skipped 27 (budget 0) failed 1 \u00b7 errors 14 \u00b7 messages 0",
   "api": {
-   "calls": 30,
-   "ok": 22,
-   "rate_limited": 8,
-   "skipped": 0,
+   "calls": 24,
+   "ok": 12,
+   "rate_limited": 12,
+   "skipped": 27,
    "deadline_skips": 0,
    "failed": 1,
    "mem_hits": 0,
-   "disk_hits": 4
+   "disk_hits": 0
   },
-  "errors": 0,
+  "errors": 14,
   "messages": 0
  },
  "paper": {
@@ -16564,14 +16564,24 @@
     "rejected": {},
     "shadow": 0,
     "sent": 0,
-    "data": 3,
+    "data": 13,
     "early": 0,
     "setup": 0,
     "triggered": 0,
     "keys": [
      "data|NATURALGAS|1h|2026-11-26 10",
      "data|ALUMINIUM|1h|2026-11-26 12",
-     "data|NATURALGAS|15m|2026-11-26 13"
+     "data|NATURALGAS|15m|2026-11-26 13",
+     "data|GOLD|15m|2026-11-26 14",
+     "data|GOLD|1h|2026-11-26 14",
+     "data|SILVER|15m|2026-11-26 14",
+     "data|SILVER|1h|2026-11-26 14",
+     "data|COPPER|15m|2026-11-26 14",
+     "data|COPPER|1h|2026-11-26 14",
+     "data|ZINC|15m|2026-11-26 14",
+     "data|ZINC|1h|2026-11-26 14",
+     "data|ALUMINIUM|15m|2026-11-26 14",
+     "data|ALUMINIUM|1h|2026-11-26 14"
     ]
    },
    "STOCK data": {
@@ -16824,6 +16834,22 @@
     "keys": [
      "signal|BAJAJFINSV|2026-11-26 09:15:00",
      "rejected|BAJAJFINSV|2026-11-26 09:15:00"
+    ]
+   },
+   "INDEX data": {
+    "signal": 0,
+    "rejected": {},
+    "shadow": 0,
+    "sent": 0,
+    "data": 4,
+    "early": 0,
+    "setup": 0,
+    "triggered": 0,
+    "keys": [
+     "data|NIFTY|15m|2026-11-26 14",
+     "data|NIFTY|1h|2026-11-26 14",
+     "data|BANKNIFTY|15m|2026-11-26 14",
+     "data|BANKNIFTY|1h|2026-11-26 14"
     ]
    }
   }
@@ -21064,7 +21090,7 @@
    ],
    "2026-11-26": [
     "CRUDEOIL18DEC26FUT",
-    815200.0
+    814400.0
    ]
   },
   "NATURALGAS": {
@@ -21074,7 +21100,7 @@
    ],
    "2026-11-26": [
     "NATURALGAS28DEC26FUT",
-    23706250.0
+    23861250.0
    ]
   },
   "GOLD": {
@@ -21084,7 +21110,7 @@
    ],
    "2026-11-26": [
     "GOLD04DEC26FUT",
-    7474.0
+    7480.0
    ]
   },
   "SILVER": {
@@ -21094,7 +21120,7 @@
    ],
    "2026-11-26": [
     "SILVER04DEC26FUT",
-    261390.0
+    261840.0
    ]
   },
   "COPPER": {
@@ -21104,7 +21130,7 @@
    ],
    "2026-11-26": [
     "COPPER31DEC26FUT",
-    16215000.0
+    16222500.0
    ]
   },
   "ZINC": {
@@ -21114,7 +21140,7 @@
    ],
    "2026-11-26": [
     "ZINC31DEC26FUT",
-    8270.0
+    8285.0
    ]
   },
   "ALUMINIUM": {
@@ -21124,7 +21150,7 @@
    ],
    "2026-11-26": [
     "ALUMINIUM31DEC26FUT",
-    21060.0
+    21080.0
    ]
   }
  }
