@@ -1,0 +1,66 @@
+time,seg,name,side,strategy,status,R,lab,doi,dp,oi_txt,agree,strict,oiup,buyoiup
+30-Oct 09:00,MCX,CRUDEOIL,BUY,MCX_HAMMER,CLOSED,-1.0,LU,-14.02,-0.91,,False,False,False,False
+30-Oct 16:17,NSE,DIVISLAB,BUY,STK_OI_BUY,CLOSED,0.0,LB,0.83,0.95,,True,True,True,True
+30-Oct 16:17,NSE,DIVISLAB,BUY,STK_OI_BUY,CLOSED,0.0,LB,0.83,0.95,,True,True,True,True
+30-Oct 16:17,NSE,GODREJCP,SELL,STK_OI_SELL,CLOSED,-0.0,LB,1.33,2.6,,False,False,True,True
+30-Oct 16:17,NSE,GODREJCP,BUY,STK_OI_BUY,CLOSED,0.0,LB,1.33,2.6,,True,True,True,True
+30-Oct 16:17,NSE,ZYDUSLIFE,BUY,STK_OI_BUY,CLOSED,0.0,SC,-0.45,0.89,,True,False,False,False
+30-Oct 16:17,NSE,ZYDUSLIFE,BUY,STK_OI_BUY,CLOSED,0.0,SC,-0.45,0.89,,True,False,False,False
+30-Oct 12:47,MCX,GOLD,SELL,BO_3h_SELL,CLOSED,2.0,SB,0.51,-0.77,,True,True,True,True
+30-Oct 12:47,MCX,SILVER,SELL,BO_3h_SELL,CLOSED,2.0,SB,7.47,-2.51,,True,True,True,True
+30-Oct 21:02,MCX,GOLD,SELL,BO_3h_SELL,CLOSED,-1.0,SB,0.51,-0.77,,True,True,True,True
+30-Oct 23:32,MCX,GOLD,SELL,BO_1d_SELL,CLOSED,-1.0,SB,0.51,-0.77,,True,True,True,True
+02-Nov 11:30,MCX,NATURALGAS,BUY,MCX_HAMMER,CLOSED,2.0,LU,-3.59,-1.67,,False,False,False,False
+02-Nov 17:02,NSE,PETRONET,BUY,STK_OI_BUY,CLOSED,0.0,LU,-1.24,-0.03,,False,False,False,False
+04-Nov 15:32,NSE,GLENMARK,BUY,STK_OI_BUY,CLOSED,1.2,LB,1.16,1.03,,True,True,True,True
+04-Nov 15:32,NSE,TITAN,BUY,STK_OI_BUY,CLOSED,-0.35,SC,-2.35,1.68,,True,False,False,False
+05-Nov 12:47,NSE,NIFTY,BUY,BO_3h_BUY,CLOSED,2.0,SC,-1.39,0.8,,True,False,False,False
+05-Nov 12:47,NSE,BANKNIFTY,BUY,BO_3h_BUY,CLOSED,2.0,LB,1.66,0.75,OI Long buildup,True,True,True,True
+06-Nov 15:32,NSE,NIFTY,BUY,Daily EMAX,CLOSED,1.57,SC,-4.56,2.58,,True,False,False,False
+06-Nov 15:32,NSE,BANKNIFTY,BUY,Daily RSICONT,CLOSED,2.0,LB,6.58,3.36,,True,True,True,True
+06-Nov 15:32,NSE,ICICIBANK,BUY,Daily RSICONT,CLOSED,1.03,SC,-2.85,5.31,,True,False,False,False
+09-Nov 09:17,NSE,NIFTY,BUY,BO_1w_BUY,OPEN,0.31,SC,-2.95,1.81,,True,False,False,False
+09-Nov 09:17,NSE,BANKNIFTY,BUY,BO_1w_BUY,OPEN,1.07,SC,-3.87,1.93,,True,False,False,False
+09-Nov 15:32,NSE,INDIANB,BUY,STK_OI_BUY,CLOSED,-0.26,SC,-1.4,0.65,,True,False,False,False
+11-Nov 13:02,MCX,SILVER,BUY,Intraday day-trend (EXPERIMENTAL),CLOSED,-1.0,SB,1.08,-2.43,,False,False,True,True
+11-Nov 14:45,MCX,CRUDEOIL,BUY,MCX_HAMMER,CLOSED,0.45,SB,6.15,-1.62,,False,False,True,True
+11-Nov 15:32,NSE,PHOENIXLTD,BUY,STK_OI_BUY,CLOSED,1.05,SC,-1.83,0.53,,True,False,False,False
+11-Nov 17:02,MCX,SILVER,BUY,Intraday day-trend (EXPERIMENTAL),CLOSED,-0.77,SB,1.08,-2.43,,False,False,True,True
+12-Nov 15:32,NSE,BAJFINANCE,BUY,STK_OI_BUY,CLOSED,0.0,LB,1.89,0.77,,True,True,True,True
+12-Nov 15:32,NSE,BANKBARODA,BUY,Daily RSICONT,CLOSED,0.75,SC,-3.67,5.36,,True,False,False,False
+12-Nov 17:02,MCX,GOLD,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,1.8,SB,0.34,-0.58,,True,True,True,True
+13-Nov 13:02,MCX,ZINC,SELL,1-hour OI breakout (EXPERIMENTAL),CLOSED,1.98,SB,4.88,-0.75,"OI +3.16% with price down → Short build-up (live 1-min OI, signal hour)",True,True,True,True
+13-Nov 17:02,MCX,SILVER,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,0.59,SB,5.96,-3.14,,True,True,True,True
+16-Nov 13:17,MCX,GOLD,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,-0.29,SC,-1.58,0.35,,False,False,False,True
+17-Nov 17:02,MCX,GOLD,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,-0.14,LU,-0.88,-1.58,,True,False,False,True
+16-Nov 09:47,NSE,COCHINSHIP,SELL,4-hour MACD,CLOSED,0.99,SB,3.69,-0.75,,True,True,True,True
+16-Nov 09:47,NSE,OFSS,SELL,2-hour SQZ,CLOSED,0.33,SB,2.44,-0.79,,True,True,True,True
+16-Nov 09:47,NSE,ONGC,SELL,4-hour MACD,CLOSED,0.4,SC,-2.77,0.53,,False,False,False,True
+17-Nov 09:15,NSE,BANKNIFTY,BUY,Daily BO,CLOSED,1.69,LB,0.67,0.83,,True,True,True,True
+17-Nov 09:17,NSE,BDL,SELL,4-hour MACD,CLOSED,-0.0,LB,2.2,0.15,,False,False,True,True
+17-Nov 09:17,NSE,TATAPOWER,SELL,4-hour MACD,CLOSED,0.82,SB,0.74,-0.63,,True,True,True,True
+17-Nov 09:17,NSE,COALINDIA,SELL,2-hour SQZ,CLOSED,1.37,SB,2.64,-1.33,,True,True,True,True
+17-Nov 16:02,NSE,POLYCAB,SELL,4-hour MACD,CLOSED,-0.0,LB,0.22,0.16,,False,False,True,True
+18-Nov 09:17,NSE,AMBER,SELL,4-hour MACD,CLOSED,-1.0,LB,5.56,0.24,,False,False,True,True
+18-Nov 13:17,NSE,KPITTECH,SELL,4-hour MACD,CLOSED,0.25,LU,-0.89,-1.36,,True,False,False,True
+18-Nov 13:17,NSE,GODFRYPHLP,SELL,2-hour SQZ,CLOSED,-1.0,SB,2.4,-1.35,,True,True,True,True
+18-Nov 13:17,NSE,MAZDOCK,SELL,2-hour SQZ,CLOSED,0.14,SB,1.36,-1.32,,True,True,True,True
+18-Nov 13:17,NSE,MAZDOCK,SELL,4-hour MACD,CLOSED,0.11,SB,1.36,-1.32,,True,True,True,True
+18-Nov 13:17,NSE,JUBLFOOD,SELL,4-hour MACD,CLOSED,-0.56,SB,1.28,-0.66,,True,True,True,True
+18-Nov 13:17,NSE,NATIONALUM,SELL,Swing (3-hour),CLOSED,0.65,SC,-1.38,0.91,OI Long unwinding,False,False,False,True
+18-Nov 13:17,NSE,POLYCAB,SELL,Swing (3-hour),CLOSED,-0.48,SB,3.29,-2.76,OI Short buildup,True,True,True,True
+18-Nov 13:17,NSE,RECLTD,SELL,Swing (3-hour),CLOSED,-0.53,LB,1.24,0.08,OI Long unwinding,False,False,True,True
+18-Nov 13:47,NSE,ALKEM,SELL,4-hour MACD,CLOSED,0.28,SC,-0.94,1.1,,False,False,False,True
+18-Nov 13:47,NSE,NATIONALUM,SELL,4-hour MACD,CLOSED,0.58,SC,-1.38,0.91,,False,False,False,True
+19-Nov 09:17,NSE,TORNTPHARM,SELL,4-hour MACD,CLOSED,-0.78,SB,1.25,-0.51,,True,True,True,True
+19-Nov 09:17,NSE,RECLTD,SELL,4-hour MACD,CLOSED,-0.48,LU,-1.92,-2.15,,True,False,False,True
+18-Nov 17:02,MCX,SILVER,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,0.65,LB,4.75,1.1,,False,False,True,True
+19-Nov 10:17,NSE,BANKNIFTY,BUY,1-hour OI breakout (EXPERIMENTAL),CLOSED,2.0,LU,-0.61,-0.59,"OI +18.25% with price up → Long build-up (live 1-min OI, signal hour)",False,False,False,False
+20-Nov 13:02,MCX,GOLD,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,0.46,LU,-2.52,-1.82,,True,False,False,True
+23-Nov 09:17,NSE,BANKNIFTY,BUY,Daily BO,CLOSED,-1.0,SC,-2.09,2.34,,True,False,False,False
+23-Nov 09:30,MCX,CRUDEOIL,BUY,MCX_HAMMER,CLOSED,-1.0,LU,-27.79,-1.43,,False,False,False,False
+25-Nov 12:17,NSE,NIFTY,BUY,BO_3h_BUY,OPEN,-0.18,SB,11.0,-1.57,,False,False,True,True
+25-Nov 13:02,MCX,GOLD,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,0.48,LU,-0.97,-2.91,,True,False,False,True
+25-Nov 13:02,MCX,SILVER,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,0.84,LU,-0.23,-5.69,,True,False,False,True
+25-Nov 17:02,MCX,GOLD,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,0.3,LU,-0.97,-2.91,,True,False,False,True
+25-Nov 17:02,MCX,SILVER,SELL,Intraday day-trend (EXPERIMENTAL),CLOSED,0.53,LU,-0.23,-5.69,,True,False,False,True
