@@ -10,6 +10,7 @@ Checked after every scan (alerts/run.py):
 Outside the scan:
   job-failed  a market-loop job failed (workflow step, `python -m alerts.health job-failed <job> <url>`)
   watchdog    no scan saved for >= 40 min during 09:20-23:50 IST (health-watchdog.yml, every 30 min)
+  freshness   once a weekday after 09:20: every research data branch updated after the previous session
 One message when an issue starts, a reminder every 2 h while it lasts (max 4 a day per issue), one when it is resolved."""
 import json
 import sys
@@ -165,6 +166,37 @@ def watchdog(scan_json, mem_path, now):
     return out, mem
 
 
+FRESH_SOURCES = {          # branch -> (what, due hour IST on the previous weekday)
+    "research-nse-bhav": ("NSE F&O bhavcopy (daily OI, options)", 19),
+    "research-nse-fut": ("NSE futures history with OI", 19),
+    "research-stocks": ("stock futures 1-hour + OI (Angel, after midnight)", 23),
+    "research-mcx-bhav": ("MCX bhavcopy with OI", 23),
+    "ws-bars": ("live 1-minute bars + OI archive (WebSocket)", 23),
+}
+
+
+def freshness(updated, now, mem):
+    """26-Nov (owner: research data must not silently stop): once a weekday after 09:20 IST, every research data branch
+    must have been updated after the previous weekday's session. updated = {branch: Timestamp IST or None}."""
+    out = []
+    if now.weekday() >= 5 or now.hour * 60 + now.minute < 9 * 60 + 20 or mem.get("fresh_day") == str(now.date()):
+        return out
+    prev = now.normalize() - pd.Timedelta(days=1)
+    while prev.weekday() >= 5:
+        prev -= pd.Timedelta(days=1)
+    late = []
+    for br, (what, hh) in FRESH_SOURCES.items():
+        due = prev + pd.Timedelta(hours=hh)
+        u = updated.get(br)
+        if u is None or u < due:
+            late.append(f"• {what} [{br}] – last update {'never' if u is None else f'{u:%d-%b %H:%M}'}")
+    if late:
+        out.append(f"{TAG} – research data NOT refreshed after {prev:%d-%b}'s session:\n" + "\n".join(late)
+                   + "\nLive calls are not affected; research / backtests will miss these days until it is fixed.")
+    mem["fresh_day"] = str(now.date())
+    return out
+
+
 def _send(lines):
     import notify
     for t in lines:
@@ -181,6 +213,13 @@ def main(argv):
     if argv[:1] == ["watchdog"]:
         scan_json, mem_path = argv[1], argv[2]
         out, mem = watchdog(scan_json, mem_path, now_ist())
+        if len(argv) > 3:                                     # optional: branch update times (JSON {branch: iso time})
+            try:
+                upd = {k: (pd.Timestamp(v).tz_convert("Asia/Kolkata").tz_localize(None) if v else None)
+                       for k, v in json.loads(Path(argv[3]).read_text()).items()}
+                out += freshness(upd, now_ist(), mem)
+            except Exception as e:
+                print(f"[watchdog] freshness check skipped: {type(e).__name__}: {e}")
         Path(mem_path).parent.mkdir(parents=True, exist_ok=True)
         Path(mem_path).write_text(json.dumps(mem))
         print("[watchdog]", out or "ok")

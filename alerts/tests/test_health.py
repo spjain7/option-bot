@@ -106,4 +106,18 @@ with tempfile.TemporaryDirectory() as d:
           g.prefetch_day_hist("NFO", "9", "ONE_HOUR", T) and g.day_hist_cached("NFO", "9", "ONE_HOUR", T) and len(calls) == 1)
     check("second call served from disk", g.prefetch_day_hist("NFO", "9", "ONE_HOUR", T) and len(calls) == 1)
     check("history covers 400 days and stops before today", calls[0][0] <= T.normalize() - pd.Timedelta(days=400) and calls[0][1] < T.normalize())
+# FRESHNESS (research data branches)
+now = pd.Timestamp("2026-11-26 09:30")
+good = {b: pd.Timestamp("2026-11-26 01:30") for b in HL.FRESH_SOURCES}
+check("freshness: all branches updated after the previous session -> silent", HL.freshness(good, now, {}) == [])
+bad = dict(good, **{"research-stocks": pd.Timestamp("2026-11-24 01:30")})
+m = HL.freshness(bad, now, {})
+check("freshness: stale branch -> one notice naming it", len(m) == 1 and "research-stocks" in m[0] and "research-nse-bhav" not in m[0])
+mem = {}; HL.freshness(bad, now, mem)
+check("freshness: once a day", HL.freshness(bad, now + pd.Timedelta(minutes=30), mem) == [])
+mon = pd.Timestamp("2026-11-30 09:30")                       # Monday: Friday's session counts
+fri = {b: pd.Timestamp("2026-11-28 01:30") for b in HL.FRESH_SOURCES}
+check("freshness: Monday checks Friday's session", HL.freshness(fri, mon, {}) == [])
+check("freshness: before 09:20 / weekend silent", HL.freshness(bad, pd.Timestamp("2026-11-26 09:00"), {}) == []
+      and HL.freshness(bad, pd.Timestamp("2026-11-28 10:00"), {}) == [])
 print(f"{ok} checks passed")

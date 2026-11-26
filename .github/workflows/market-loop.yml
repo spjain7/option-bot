@@ -165,3 +165,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api -X POST "repos/${{ github.repository }}/actions/workflows/standby.yml/dispatches" -f ref=main || echo "standby start failed – the cron starts remain"
+      - name: Start tonight's research download (26-Nov - GitHub often starts the 01:22 cron hours late, inside loop hours)
+        if: ${{ always() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/actions/workflows/research-stocks.yml/dispatches" -f ref=main || echo "research start failed – the cron start remains"

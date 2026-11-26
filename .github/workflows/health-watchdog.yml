@@ -3,6 +3,7 @@ name: Health watchdog – tell the owner when scans stop (no alerts, no Angel ca
 # GitHub skipped the start, runner lost). Every 30 min during 09:20-23:50 IST this reads the last saved scan
 # (alerts-state/alerts/scan.json); no scan for >= 40 min -> Telegram notice (repeated every 2 h at most), and one
 # "resumed" notice when scans are back. GitHub may skip some cron runs; the next one still checks.
+# Also once a weekday after 09:20 IST: every research data branch must be updated after the previous session.
 on:
   schedule:
     - cron: "7,37 3-18 * * 1-5"     # 08:37-00:07 IST; the script only alerts between 09:20 and 23:50 IST
@@ -29,9 +30,22 @@ jobs:
           path: .cache/watchdog.json
           key: watchdog-${{ steps.d.outputs.day }}-${{ github.run_id }}
           restore-keys: watchdog-${{ steps.d.outputs.day }}-
-      - run: |
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           git fetch -q --depth 1 origin alerts-state && git show FETCH_HEAD:alerts/scan.json > /tmp/scan.json || echo '{}' > /tmp/scan.json
-          python -m alerts.health watchdog /tmp/scan.json .cache/watchdog.json
+          # research data freshness (26-Nov): last commit time of each research data branch
+          python - <<'PY' > /tmp/updated.json
+          import json, subprocess
+          out = {}
+          for b in ("research-nse-bhav", "research-nse-fut", "research-stocks", "research-mcx-bhav", "ws-bars"):
+              r = subprocess.run(["gh", "api", f"repos/${{ github.repository }}/branches/{b}", "--jq", ".commit.commit.committer.date"],
+                                 capture_output=True, text=True)
+              out[b] = r.stdout.strip() if r.returncode == 0 and r.stdout.strip() else None
+          print(json.dumps(out))
+          PY
+          cat /tmp/updated.json
+          python -m alerts.health watchdog /tmp/scan.json .cache/watchdog.json /tmp/updated.json
       - uses: actions/cache/save@v4
         if: ${{ always() }}
         with:

@@ -17,6 +17,17 @@ def busy(now_ist):
 
 if __name__ == "__main__":
     now = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
+    # 26-Nov: a job started by the evening loop job (00:20) waits the last few minutes of the loop window instead of failing
+    wait_max = int(os.getenv("WAIT_MIN", "0") or 0) * 60
+    if busy(now) and wait_max:
+        import time
+        end = now.replace(hour=0, minute=31, second=0, microsecond=0)
+        if end < now:
+            end += timedelta(days=1)
+        if (end - now).total_seconds() <= wait_max:
+            print(f"{now:%H:%M} IST – waiting {(end - now).total_seconds() / 60:.0f} min for the live loop window to end")
+            time.sleep((end - now).total_seconds())
+            now = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
     if busy(now) and os.getenv("FORCE", "") != "1":
         print(f"::error::{now:%a %H:%M} IST – live market loop hours (Mon-Fri 08:30-00:30 IST). This job shares the Angel "
               "API key with the live bot; run it after 00:30 IST or at the weekend (or set force=1 knowingly).")
