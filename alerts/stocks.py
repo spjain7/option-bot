@@ -158,6 +158,34 @@ def prefetch_oi_daily(api, uni, now, budget=PREFETCH_SEC):
     return n
 
 
+HIST_PREFETCH_SEC = 240
+
+
+def prefetch_history(api, uni, now, budget=HIST_PREFETCH_SEC):
+    """26-Nov permanent rate-limit fix: before the NSE open (08:40-09:13 IST, Angel quota idle) cache every stock future's
+    1-hour history up to yesterday (and the expiring contract's in the 2 roll sessions). The 12:15 / 15:30 scans then build
+    candles from this copy + today's WebSocket bars instead of ~210 history requests in the middle of the session (26-Nov
+    12:15: 172 of 207 stocks lost to rate limits). Resumable across the early scans; returns (cached, total)."""
+    if not hasattr(api, "prefetch_day_hist"):
+        return 0, 0
+    t0, n, tot = time.monotonic(), 0, 0
+    for name, c in uni.items():
+        for tok in (c["token"], c.get("prev_token")):
+            if not tok:
+                continue
+            tot += 1
+            if api.day_hist_cached("NFO", tok, "ONE_HOUR", now):
+                n += 1; continue
+            if time.monotonic() - t0 > budget or blocked(api):
+                continue
+            try:
+                if api.prefetch_day_hist("NFO", tok, "ONE_HOUR", now):
+                    n += 1
+            except Exception:
+                pass
+    return n, tot
+
+
 def _oi_daily(api, c, now, qoi):
     """daily OI for the 15:31 scan: cached history + today's quote OI; falls back to the old REST call."""
     if hasattr(api, "oi_daily"):
@@ -705,6 +733,12 @@ def scan(api, master, now, state, msgs, rep, engine):
             rep["stocks"]["oi_prefetch"] = prefetch_oi_daily(api, uni, now)
         except Exception as e_:
             print(f"[stocks] OI prefetch skipped: {type(e_).__name__}: {e_}")
+        try:                                                    # 26-Nov: 1-hour history too (permanent rate-limit fix)
+            n_, t_ = prefetch_history(api, uni, now)
+            rep["stocks"]["hist_prefetch"] = f"{n_}/{t_}"
+            state.setdefault("health", {})["hist_prefetch"] = dict(day=str(now.date()), cached=n_, total=t_)
+        except Exception as e_:
+            print(f"[stocks] history prefetch skipped: {type(e_).__name__}: {e_}")
     blk = last_block_end(now)
     if st.get("rev_v") != 1:                                   # 19-Nov one-time: reversal SELL rules went live after today's close
         if blk is not None and blk.endswith("15:30:00") and st["last_block"] == blk:

@@ -69,9 +69,31 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
+      - id: d                    # 26-Nov: trading day (00:00-05:00 IST still belongs to the previous MCX session)
+        run: echo "day=$(TZ=Asia/Kolkata date -d '-5 hours' +%F)" >> "$GITHUB_OUTPUT"
+      - name: Restore today's Angel history cache (carried between the day's jobs – permanent rate-limit fix)
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .cache/api/day_*.pkl
+            .cache/api/oid_*.pkl
+          key: angel-hist-${{ steps.d.outputs.day }}-${{ github.run_id }}-${{ github.job }}
+          restore-keys: angel-hist-${{ steps.d.outputs.day }}-
       - run: python -m alerts.tests.test_alerts
       - run: python -m alerts.tests.test_tradeplan
       - run: bash scripts/market_loop.sh 14:50
+      - name: Save today's Angel history cache for the next job
+        if: ${{ always() }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .cache/api/day_*.pkl
+            .cache/api/oid_*.pkl
+          key: angel-hist-${{ steps.d.outputs.day }}-${{ github.run_id }}-${{ github.job }}
+        continue-on-error: true
+      - name: Tell the owner when this job failed (26-Nov health alerts)
+        if: ${{ failure() }}
+        run: python -m alerts.health job-failed "${{ github.job }}" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
   afternoon:
     needs: morning
     if: ${{ !cancelled() }}
@@ -82,7 +104,29 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
+      - id: d                    # 26-Nov: trading day (00:00-05:00 IST still belongs to the previous MCX session)
+        run: echo "day=$(TZ=Asia/Kolkata date -d '-5 hours' +%F)" >> "$GITHUB_OUTPUT"
+      - name: Restore today's Angel history cache (carried between the day's jobs – permanent rate-limit fix)
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .cache/api/day_*.pkl
+            .cache/api/oid_*.pkl
+          key: angel-hist-${{ steps.d.outputs.day }}-${{ github.run_id }}-${{ github.job }}
+          restore-keys: angel-hist-${{ steps.d.outputs.day }}-
       - run: bash scripts/market_loop.sh 19:50
+      - name: Save today's Angel history cache for the next job
+        if: ${{ always() }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .cache/api/day_*.pkl
+            .cache/api/oid_*.pkl
+          key: angel-hist-${{ steps.d.outputs.day }}-${{ github.run_id }}-${{ github.job }}
+        continue-on-error: true
+      - name: Tell the owner when this job failed (26-Nov health alerts)
+        if: ${{ failure() }}
+        run: python -m alerts.health job-failed "${{ github.job }}" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
   evening:
     needs: afternoon
     if: ${{ !cancelled() }}
@@ -93,7 +137,29 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
+      - id: d                    # 26-Nov: trading day (00:00-05:00 IST still belongs to the previous MCX session)
+        run: echo "day=$(TZ=Asia/Kolkata date -d '-5 hours' +%F)" >> "$GITHUB_OUTPUT"
+      - name: Restore today's Angel history cache (carried between the day's jobs – permanent rate-limit fix)
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .cache/api/day_*.pkl
+            .cache/api/oid_*.pkl
+          key: angel-hist-${{ steps.d.outputs.day }}-${{ github.run_id }}-${{ github.job }}
+          restore-keys: angel-hist-${{ steps.d.outputs.day }}-
       - run: bash scripts/market_loop.sh 00:20
+      - name: Save today's Angel history cache for the next job
+        if: ${{ always() }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .cache/api/day_*.pkl
+            .cache/api/oid_*.pkl
+          key: angel-hist-${{ steps.d.outputs.day }}-${{ github.run_id }}-${{ github.job }}
+        continue-on-error: true
+      - name: Tell the owner when this job failed (26-Nov health alerts)
+        if: ${{ failure() }}
+        run: python -m alerts.health job-failed "${{ github.job }}" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" || true
       - name: Start tomorrow's loop (standby.yml waits until 08:41 IST, then starts this workflow)
         if: ${{ always() }}
         env:
