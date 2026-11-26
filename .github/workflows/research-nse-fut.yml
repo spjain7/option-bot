@@ -1,0 +1,50 @@
+name: Research - NSE futures history with OI (nightly + backfill, no alerts, no Angel)
+# NSE-FUT-001 (26-Nov-2026): years of official NSE end-of-day futures data (all stock + index futures, OHLC, contracts,
+# turnover, OPEN INTEREST) from NSE's public archive, compact parquet per year on the branch "research-nse-fut".
+# Nightly: adds the last 10 days. Manual: backfill from a start date (resumable – run again to continue).
+on:
+  schedule:
+    - cron: "56 14 * * 1-5"          # 20:26 IST, after NSE publishes the day's file
+  workflow_dispatch:
+    inputs:
+      start: { description: "backfill from (YYYY-MM-DD); empty = last 10 days only", default: "" }
+concurrency:
+  group: research-nse-fut
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install requests pandas pyarrow
+      - name: Restore saved years
+        run: |
+          mkdir -p research/data/nse_fut
+          if git ls-remote --exit-code --heads origin research-nse-fut > /dev/null 2>&1; then
+            git fetch -q --depth 1 origin research-nse-fut && git archive FETCH_HEAD research/data/nse_fut | tar -x
+          fi
+      - name: Fetch
+        run: |
+          if [ -n "${{ github.event.inputs.start }}" ]; then
+            python -m research.adapters.nse_fut_hist backfill "${{ github.event.inputs.start }}" "$(date +%F)" 19800 || echo "::warning::backfill stopped – run again to resume"
+          else
+            python -m research.adapters.nse_fut_hist today || echo "::warning::nightly fetch failed"
+          fi
+      - name: Save to research-nse-fut (also after a partial backfill)
+        if: ${{ always() }}
+        run: |
+          git config user.name "option-bot research"; git config user.email "bot@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp -r research/data/nse_fut /tmp/keep/ || exit 0
+          if git ls-remote --exit-code --heads origin research-nse-fut > /dev/null 2>&1; then
+            git fetch -q --depth 1 origin research-nse-fut && git switch -q -f -C research-nse-fut FETCH_HEAD
+          else
+            git switch -q -f --orphan research-nse-fut && git rm -rqf --cached . > /dev/null 2>&1 || true
+          fi
+          rm -rf research/data/nse_fut && mkdir -p research/data && cp -r /tmp/keep/nse_fut research/data/
+          git add -f research/data/nse_fut && (git diff --cached --quiet || git commit -qm "nse futures $(date -u +%F_%H%M)") && git push -q origin HEAD:research-nse-fut
+          ls -la research/data/nse_fut | tail -n 15

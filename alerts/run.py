@@ -95,6 +95,14 @@ def scan():
     import share                                              # prices for the website, with this same Angel session
     print("website price snapshot:", share.push(api, master, now))
     state["scan"] = scan_record(state.get("scan"), now, now_ist(), getattr(api, "stats", {}), rep, len(msgs))
+    try:                                                      # 26-Nov: system-health notices to the owner (information only)
+        from alerts import health as HL
+        hl = HL.check(state, now, state["scan"], getattr(api, "stats", {}) or {}, E.is_open("NFO", now) or E.is_open("MCX", now))
+        if hl:
+            msgs = msgs + hl
+            print(f"[health] {len(hl)} notice(s): " + " | ".join(m[:90] for m in hl))
+    except Exception as e:
+        print(f"::warning::health check failed: {type(e).__name__}: {e}")
     print(f"[scan] outcome {state['scan']['status']} · seq {state['scan']['seq']} · {state['scan']['started'][11:19]}–"
           f"{state['scan']['finished'][11:19]} IST ({state['scan']['seconds']} s) · {state['scan']['note']}")
     tmp = STATE.with_suffix(".tmp"); tmp.write_text(json.dumps(state, indent=1, default=str)); os.replace(tmp, STATE)

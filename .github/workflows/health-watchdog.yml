@@ -1,0 +1,54 @@
+name: Health watchdog – tell the owner when scans stop (no alerts, no Angel calls)
+# 26-Nov-2026 (owner: "it should inform us when any issue"): the market loop cannot report its own death (job killed,
+# GitHub skipped the start, runner lost). Every 30 min during 09:20-23:50 IST this reads the last saved scan
+# (alerts-state/alerts/scan.json); no scan for >= 40 min -> Telegram notice (repeated every 2 h at most), and one
+# "resumed" notice when scans are back. GitHub may skip some cron runs; the next one still checks.
+# Also once a weekday after 09:20 IST: every research data branch must be updated after the previous session.
+on:
+  schedule:
+    - cron: "7,37 3-18 * * 1-5"     # 08:37-00:07 IST; the script only alerts between 09:20 and 23:50 IST
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - id: d
+        run: echo "day=$(TZ=Asia/Kolkata date +%F)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@v4
+        with:
+          path: .cache/watchdog.json
+          key: watchdog-${{ steps.d.outputs.day }}-${{ github.run_id }}
+          restore-keys: watchdog-${{ steps.d.outputs.day }}-
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch -q --depth 1 origin alerts-state && git show FETCH_HEAD:alerts/scan.json > /tmp/scan.json || echo '{}' > /tmp/scan.json
+          # research data freshness (26-Nov): last commit time of each research data branch
+          python - <<'PY' > /tmp/updated.json
+          import json, subprocess
+          out = {}
+          for b in ("research-nse-bhav", "research-nse-fut", "research-stocks", "research-mcx-bhav", "ws-bars"):
+              r = subprocess.run(["gh", "api", f"repos/${{ github.repository }}/branches/{b}", "--jq", ".commit.commit.committer.date"],
+                                 capture_output=True, text=True)
+              out[b] = r.stdout.strip() if r.returncode == 0 and r.stdout.strip() else None
+          print(json.dumps(out))
+          PY
+          cat /tmp/updated.json
+          python -m alerts.health watchdog /tmp/scan.json .cache/watchdog.json /tmp/updated.json
+      - uses: actions/cache/save@v4
+        if: ${{ always() }}
+        with:
+          path: .cache/watchdog.json
+          key: watchdog-${{ steps.d.outputs.day }}-${{ github.run_id }}
+        continue-on-error: true
