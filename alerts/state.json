@@ -735,14 +735,12 @@
   ]
  },
  "day": {
-  "date": "2026-11-27",
-  "alerts": 2,
+  "date": "2026-11-28",
+  "alerts": 0,
   "watches": 0,
-  "startup_sent": true,
+  "startup_sent": false,
   "eod_sent": false,
-  "outcomes": [],
-  "watch1h_sum_NFO": true,
-  "rep_nse": true
+  "outcomes": []
  },
  "history": [],
  "oi": {
@@ -9657,28 +9655,28 @@
    "copperandironoreriseasmarketsdigestustariffplansminingcomau",
    "oilfuturescrudeat3wkhighonfreshroundofgulfattacksquantumcommodityintelligence"
   ],
-  "day": "2026-11-27",
-  "n": 4
+  "day": "2026-11-28",
+  "n": 0
  },
  "scan": {
-  "seq": 1087,
-  "started": "2026-11-27 23:47:01.017245",
-  "finished": "2026-11-27 23:47:08.728431",
-  "seconds": 7,
+  "seq": 1088,
+  "started": "2026-11-28 00:02:01.133582",
+  "finished": "2026-11-28 00:02:50.014179",
+  "seconds": 48,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 1",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 0,
+   "ok": 0,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 17
+   "disk_hits": 0
   },
   "errors": 0,
-  "messages": 0
+  "messages": 1
  },
  "paper": {
   "E_BUY_v1": {
