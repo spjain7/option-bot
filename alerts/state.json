@@ -755,14 +755,14 @@
    "ltp": 297.4
   },
   "GOLD04DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 6062.0,
-   "ltp": 125927.0
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 6080.0,
+   "ltp": 125947.0
   },
   "SILVER04DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 258780.0,
-   "ltp": 154177.0
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 258240.0,
+   "ltp": 154593.0
   },
   "COPPER30OCT26FUT": {
    "time": "2026-10-23 23:47:30.350263",
@@ -815,39 +815,39 @@
    "ltp": 322.75
   },
   "CRUDEOIL18DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 839900.0,
-   "ltp": 7991.0
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 844400.0,
+   "ltp": 7995.0
   },
   "NATURALGAS28DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 25752500.0,
-   "ltp": 335.3
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 25808750.0,
+   "ltp": 336.0
   },
   "NIFTY29DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 12574120.0,
-   "ltp": 25783.0
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 12566840.0,
+   "ltp": 25775.0
   },
   "BANKNIFTY29DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 1535040.0,
-   "ltp": 63450.0
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 1535970.0,
+   "ltp": 63455.0
   },
   "COPPER31DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 16450000.0,
-   "ltp": 1187.5
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 16325000.0,
+   "ltp": 1188.0
   },
   "ZINC31DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 8940.0,
-   "ltp": 373.4
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 9045.0,
+   "ltp": 374.25
   },
   "ALUMINIUM31DEC26FUT": {
-   "time": "2026-11-27 14:17:00.967756",
-   "oi": 21040.0,
-   "ltp": 311.25
+   "time": "2026-11-27 14:29:51.116353",
+   "oi": 21070.0,
+   "ltp": 312.55
   }
  },
  "bo_active": [
@@ -4941,8 +4941,8 @@
    "date": "2026-11-25",
    "uhi": 26093.0,
    "ulo": 25725.0,
-   "ulast": 25782.0,
-   "uat": "2026-11-27 14:17:00.967756",
+   "ulast": 25744.4,
+   "uat": "2026-11-27 14:29:51.116353",
    "best_px": 26093.0,
    "worst_px": 25725.0,
    "mfe_R": 0.114,
@@ -5028,8 +5028,8 @@
    "call_entry": 25935.0,
    "uhi": 26085.0,
    "ulo": 25725.0,
-   "ulast": 25782.0,
-   "uat": "2026-11-27 14:17:00.967756",
+   "ulast": 25744.4,
+   "uat": "2026-11-27 14:29:51.116353",
    "best_px": 26093.0,
    "worst_px": 25725.0,
    "mfe_R": 0.217,
@@ -5061,8 +5061,8 @@
    "call_entry": 63930.0,
    "uhi": 64279.2,
    "ulo": 63300.0,
-   "ulast": 63462.2,
-   "uat": "2026-11-27 14:17:00.967756",
+   "ulast": 63400.0,
+   "uat": "2026-11-27 14:29:51.116353",
    "best_px": 64339.0,
    "worst_px": 63300.0,
    "mfe_R": 0.187,
@@ -5144,10 +5144,10 @@
    "time": "2026-11-27 12:02:01.595882",
    "status": "OPEN",
    "date": "2026-11-27",
-   "uhi": 125951.0,
+   "uhi": 126124.0,
    "ulo": 124909.0,
-   "ulast": 125951.0,
-   "uat": "2026-11-27 14:17:00.967756",
+   "ulast": 126124.0,
+   "uat": "2026-11-27 14:29:51.116353",
    "best_px": 125955.0,
    "worst_px": 124850.0,
    "mfe_R": 0.314,
@@ -9691,7 +9691,9 @@
     "CIPLA",
     "RELIANCE",
     "TATAPOWER",
-    "SOLARINDS"
+    "SOLARINDS",
+    "AMBER",
+    "RADICO"
    ],
    "sent": 0
   }
@@ -9784,21 +9786,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 1050,
-  "started": "2026-11-27 14:17:00.967756",
-  "finished": "2026-11-27 14:28:57.411792",
-  "seconds": 716,
+  "seq": 1051,
+  "started": "2026-11-27 14:29:51.116353",
+  "finished": "2026-11-27 14:46:41.145904",
+  "seconds": 1010,
   "status": "RATE_LIMITED",
-  "note": "api requests 67 ok 35 rate-limited 32 skipped 1 (budget 0) failed 4 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 97 ok 49 rate-limited 48 skipped 2 (budget 0) failed 6 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 67,
-   "ok": 35,
-   "rate_limited": 32,
-   "skipped": 1,
+   "calls": 97,
+   "ok": 49,
+   "rate_limited": 48,
+   "skipped": 2,
    "deadline_skips": 0,
-   "failed": 4,
-   "mem_hits": 0,
-   "disk_hits": 4
+   "failed": 6,
+   "mem_hits": 1,
+   "disk_hits": 0
   },
   "errors": 0,
   "messages": 0
@@ -17119,16 +17121,6 @@
   }
  },
  "rulebook_seen": [
-  "RB_STK_1d_REV_TD9_SELL|BHEL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_WPR20_SELL|BHEL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_STOCH80_SELL|BHEL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_FISHER_SELL|BHEL|2026-11-26 09:15:00",
-  "RB_STK_1d_RSI80_BUY|COLPAL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_TD9P_SELL|COLPAL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_TD9_SELL|COLPAL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_WPR20_SELL|COLPAL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_STOCH80_SELL|COLPAL|2026-11-26 09:15:00",
-  "RB_STK_1d_REV_FISHER_SELL|COLPAL|2026-11-26 09:15:00",
   "RB_STK_1d_RSI80_BUY|CUMMINSIND|2026-11-26 09:15:00",
   "RB_STK_1d_REV_TD9P_SELL|CUMMINSIND|2026-11-26 09:15:00",
   "RB_STK_1d_REV_TD9_SELL|CUMMINSIND|2026-11-26 09:15:00",
@@ -20118,7 +20110,17 @@
   "RB_STK_4h_MACD0_SELL|SOLARINDS|2026-11-27 09:15:00",
   "RB_STK_4h_REV_TD9P_SELL|SOLARINDS|2026-11-27 09:15:00",
   "RB_STK_4h_REV_TD9_SELL|SOLARINDS|2026-11-27 09:15:00",
-  "RB_STK_4h_REV_CCI200_SELL|SOLARINDS|2026-11-27 09:15:00"
+  "RB_STK_4h_REV_CCI200_SELL|SOLARINDS|2026-11-27 09:15:00",
+  "RB_STK_2h_SQZ_SELL|AMBER|2026-11-27 11:15:00",
+  "RB_STK_4h_MACD0_SELL|AMBER|2026-11-27 09:15:00",
+  "RB_STK_4h_REV_TD9P_SELL|AMBER|2026-11-27 09:15:00",
+  "RB_STK_4h_REV_TD9_SELL|AMBER|2026-11-27 09:15:00",
+  "RB_STK_4h_REV_CCI200_SELL|AMBER|2026-11-27 09:15:00",
+  "RB_STK_2h_SQZ_SELL|RADICO|2026-11-27 11:15:00",
+  "RB_STK_4h_MACD0_SELL|RADICO|2026-11-27 09:15:00",
+  "RB_STK_4h_REV_TD9P_SELL|RADICO|2026-11-27 09:15:00",
+  "RB_STK_4h_REV_TD9_SELL|RADICO|2026-11-27 09:15:00",
+  "RB_STK_4h_REV_CCI200_SELL|RADICO|2026-11-27 09:15:00"
  ],
  "mcxdtc": {
   "open": [],
@@ -21358,7 +21360,7 @@
    ],
    "2026-11-27": [
     "CRUDEOIL18DEC26FUT",
-    839900.0
+    844400.0
    ]
   },
   "NATURALGAS": {
@@ -21372,7 +21374,7 @@
    ],
    "2026-11-27": [
     "NATURALGAS28DEC26FUT",
-    25752500.0
+    25808750.0
    ]
   },
   "GOLD": {
@@ -21386,7 +21388,7 @@
    ],
    "2026-11-27": [
     "GOLD04DEC26FUT",
-    6062.0
+    6080.0
    ]
   },
   "SILVER": {
@@ -21400,7 +21402,7 @@
    ],
    "2026-11-27": [
     "SILVER04DEC26FUT",
-    258780.0
+    258240.0
    ]
   },
   "COPPER": {
@@ -21414,7 +21416,7 @@
    ],
    "2026-11-27": [
     "COPPER31DEC26FUT",
-    16450000.0
+    16325000.0
    ]
   },
   "ZINC": {
@@ -21428,7 +21430,7 @@
    ],
    "2026-11-27": [
     "ZINC31DEC26FUT",
-    8940.0
+    9045.0
    ]
   },
   "ALUMINIUM": {
@@ -21442,7 +21444,7 @@
    ],
    "2026-11-27": [
     "ALUMINIUM31DEC26FUT",
-    21040.0
+    21070.0
    ]
   }
  }
