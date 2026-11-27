@@ -9485,15 +9485,15 @@
   "n": 4
  },
  "scan": {
-  "seq": 1027,
-  "started": "2026-11-27 00:19:31.962064",
-  "finished": "2026-11-27 00:19:38.488199",
-  "seconds": 6,
+  "seq": 1028,
+  "started": "2026-11-27 08:42:13.850750",
+  "finished": "2026-11-27 08:44:51.312266",
+  "seconds": 157,
   "status": "SUCCESS",
-  "note": "api requests 0 ok 0 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 195 ok 191 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 0,
-   "ok": 0,
+   "calls": 195,
+   "ok": 191,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
