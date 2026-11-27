@@ -5148,8 +5148,8 @@
    "date": "2026-11-27",
    "uhi": 126124.0,
    "ulo": 124474.0,
-   "ulast": 124474.0,
-   "uat": "2026-11-27 19:47:01.837035",
+   "ulast": 124490.0,
+   "uat": "2026-11-27 19:48:09.614226",
    "best_px": 126251.0,
    "worst_px": 124296.0,
    "mfe_R": 0.403,
@@ -5179,8 +5179,8 @@
    "date": "2026-11-27",
    "uhi": 125888.0,
    "ulo": 124474.0,
-   "ulast": 124474.0,
-   "uat": "2026-11-27 19:47:01.837035",
+   "ulast": 124490.0,
+   "uat": "2026-11-27 19:48:09.614226",
    "best_px": 125816.0,
    "worst_px": 124296.0,
    "mfe_R": -0.02,
@@ -9661,21 +9661,21 @@
   "n": 4
  },
  "scan": {
-  "seq": 1070,
-  "started": "2026-11-27 19:47:01.837035",
-  "finished": "2026-11-27 19:47:09.896906",
-  "seconds": 8,
+  "seq": 1071,
+  "started": "2026-11-27 19:48:09.614226",
+  "finished": "2026-11-27 19:49:00.867582",
+  "seconds": 51,
   "status": "SUCCESS",
-  "note": "api requests 3 ok 3 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
+  "note": "api requests 30 ok 30 rate-limited 0 skipped 0 (budget 0) failed 0 \u00b7 errors 0 \u00b7 messages 0",
   "api": {
-   "calls": 3,
-   "ok": 3,
+   "calls": 30,
+   "ok": 30,
    "rate_limited": 0,
    "skipped": 0,
    "deadline_skips": 0,
    "failed": 0,
    "mem_hits": 0,
-   "disk_hits": 17
+   "disk_hits": 0
   },
   "errors": 0,
   "messages": 0
@@ -21563,7 +21563,7 @@
    ],
    "2026-11-27": [
     "CRUDEOIL18DEC26FUT",
-    851300.0
+    851400.0
    ]
   },
   "NATURALGAS": {
@@ -21577,7 +21577,7 @@
    ],
    "2026-11-27": [
     "NATURALGAS28DEC26FUT",
-    26726250.0
+    26722500.0
    ]
   },
   "GOLD": {
@@ -21591,7 +21591,7 @@
    ],
    "2026-11-27": [
     "GOLD04DEC26FUT",
-    6087.0
+    6088.0
    ]
   },
   "SILVER": {
