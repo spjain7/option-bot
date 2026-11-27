@@ -1,5 +1,66 @@
 {
- "pending": [],
+ "pending": [
+  {
+   "key": "INE646L01027",
+   "setup": "W_RETEST_DP",
+   "symbol": "INDIGO",
+   "day": "2026-11-27",
+   "close": 5659.6,
+   "atr": 305.07,
+   "turnover_cr": 310.7,
+   "segment": "F&O",
+   "low": 5508.0,
+   "lvl": 5448.96,
+   "dp": 56.7,
+   "dpx": 1.12,
+   "rs": 0.828
+  },
+  {
+   "key": "INE930H01031",
+   "setup": "W_HI52_DP",
+   "symbol": "KPRMILL",
+   "day": "2026-11-27",
+   "close": 1217.3,
+   "atr": 86.15,
+   "turnover_cr": 23.7,
+   "segment": "cash-only",
+   "low": 1164.1,
+   "lvl": null,
+   "dp": 71.9,
+   "dpx": 1.46,
+   "rs": 0.796
+  },
+  {
+   "key": "INE596F01018",
+   "setup": "W_HI52_DP",
+   "symbol": "PTCIL",
+   "day": "2026-11-27",
+   "close": 25460.0,
+   "atr": 1647.58,
+   "turnover_cr": 50.6,
+   "segment": "cash-only",
+   "low": 23825.0,
+   "lvl": null,
+   "dp": 46.6,
+   "dpx": 1.22,
+   "rs": 0.936
+  },
+  {
+   "key": "INE301A01014",
+   "setup": "W_HI52_DP",
+   "symbol": "RAYMOND",
+   "day": "2026-11-27",
+   "close": 1278.6,
+   "atr": 109.73,
+   "turnover_cr": 107.4,
+   "segment": "cash-only",
+   "low": 1163.5,
+   "lvl": null,
+   "dp": 32.5,
+   "dpx": 1.5,
+   "rs": 0.991
+  }
+ ],
  "open": [
   {
    "key": "INE511C01022",
@@ -23,8 +84,8 @@
    "t1": 633.44,
    "half_done": false,
    "hi": 532.3,
-   "lo": 499.2,
-   "checked": "2026-11-26",
+   "lo": 490.25,
+   "checked": "2026-11-27",
    "version": "cash-swing-0.1 (weekly retest+delivery, weekly 52w+delivery, monthly ATH confirmed)"
   },
   {
@@ -49,17 +110,30 @@
    "t1": 602.66,
    "half_done": false,
    "hi": 554.95,
-   "lo": 523.8,
-   "checked": "2026-11-26",
+   "lo": 507.75,
+   "checked": "2026-11-27",
    "version": "cash-swing-0.1 (weekly retest+delivery, weekly 52w+delivery, monthly ATH confirmed)"
   }
  ],
  "closed": [],
  "seen": [
   "INE511C01022|2026-11-20|W_RETEST_DP",
-  "INE0J5401028|2026-11-20|W_HI52_DP"
+  "INE0J5401028|2026-11-20|W_HI52_DP",
+  "INE646L01027|2026-11-27|W_RETEST_DP",
+  "INE930H01031|2026-11-27|W_HI52_DP",
+  "INE596F01018|2026-11-27|W_HI52_DP",
+  "INE301A01014|2026-11-27|W_HI52_DP"
  ],
- "last_candidates": {},
- "lowdp_day": "2026-11-26",
- "asof": "2026-11-26"
+ "last_candidates": {
+  "W_RETEST_DP": [
+   "INDIGO"
+  ],
+  "W_HI52_DP": [
+   "KPRMILL",
+   "PTCIL",
+   "RAYMOND"
+  ]
+ },
+ "lowdp_day": "2026-11-27",
+ "asof": "2026-11-27"
 }
